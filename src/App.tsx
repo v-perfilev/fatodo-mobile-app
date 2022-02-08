@@ -1,13 +1,17 @@
 import React from 'react';
-import {Text} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {View} from 'react-native';
+import withNavigationContainer from './shared/hocs/withNavigationContainer';
+import Test from './screens/Test';
+
+import './shared/i18n';
+import './shared/axios';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Text>Test</Text>
-    </NavigationContainer>
+    <View>
+      <Test />
+    </View>
   );
 };
 
-export default App;
+export default withNavigationContainer(App);
