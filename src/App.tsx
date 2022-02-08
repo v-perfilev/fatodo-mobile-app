@@ -1,6 +1,8 @@
 import React from 'react';
-import {View} from 'react-native';
+import {flowRight} from 'lodash';
 import withNavigationContainer from './shared/hocs/withNavigationContainer';
+import withStore from './shared/hocs/withStore';
+import {View} from 'react-native';
 import Test from './screens/Test';
 
 import './shared/i18n';
@@ -14,4 +16,4 @@ const App = () => {
   );
 };
 
-export default withNavigationContainer(App);
+export default flowRight([withStore, withNavigationContainer])(App);
