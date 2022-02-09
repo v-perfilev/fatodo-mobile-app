@@ -1,19 +1,19 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {flowRight} from 'lodash';
 import withNavigationContainer from './shared/hocs/withNavigationContainer';
 import withStore from './shared/hocs/withStore';
-import {View} from 'react-native';
-import Test from './screens/Test';
 
 import './shared/i18n';
 import './shared/axios';
+import withAuthState from './shared/hocs/withAuthState';
+import {AuthState} from './store/rerducers/AuthReducer';
+import RootNavigator from './navigators/RootNavigator';
+import AuthNavigator from './navigators/AuthNavigator';
 
-const App = () => {
-  return (
-    <View>
-      <Test />
-    </View>
-  );
+type AppProps = AuthState;
+
+const App: FC<AppProps> = ({isAuthenticated}) => {
+  return isAuthenticated ? <RootNavigator /> : <AuthNavigator />;
 };
 
-export default flowRight([withStore, withNavigationContainer])(App);
+export default flowRight([withStore, withAuthState, withNavigationContainer])(App);
