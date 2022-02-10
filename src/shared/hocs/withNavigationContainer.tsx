@@ -1,7 +1,7 @@
 import React, {ComponentType, FC, ReactElement} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 
-const withVerticalPadding =
+const withNavigationContainer =
   (Component: ComponentType): FC =>
   (props): ReactElement => {
     return (
@@ -11,4 +11,4 @@ const withVerticalPadding =
     );
   };
 
-export default withVerticalPadding;
+export default withNavigationContainer;

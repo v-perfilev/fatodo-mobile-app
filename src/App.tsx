@@ -9,6 +9,7 @@ import withAuthState from './shared/hocs/withAuthState';
 import {AuthState} from './store/rerducers/AuthReducer';
 import RootNavigator from './navigators/RootNavigator';
 import AuthNavigator from './navigators/AuthNavigator';
+import withNativeBase from './shared/hocs/withNativeBase';
 
 type AppProps = AuthState;
 
@@ -16,4 +17,4 @@ const App: FC<AppProps> = ({isAuthenticated}) => {
   return isAuthenticated ? <RootNavigator /> : <AuthNavigator />;
 };
 
-export default flowRight([withStore, withAuthState, withNavigationContainer])(App);
+export default flowRight([withStore, withAuthState, withNativeBase, withNavigationContainer])(App);
