@@ -1,13 +1,15 @@
 import {login, requestAccountData} from '../../store/actions/AuthActaions';
 import {connect, ConnectedProps} from 'react-redux';
 import {FormikBag, FormikProps, withFormik} from 'formik';
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {SecurityUtils} from '../../shared/utils/SecurityUtils';
 import AuthService from '../../services/AuthService';
 import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {flowRight} from 'lodash';
 import * as Yup from 'yup';
 import i18n from '../../shared/i18n';
+import withCaptcha, {CaptchaProps} from '../../shared/hocs/withCaptcha';
+import {LoginDTO} from '../../models/dto/LoginDTO';
 
 const logoImg = require('../../../assets/images/logo.png');
 
@@ -17,20 +19,46 @@ const connector = connect(null, mapDispatchToProps);
 type SignInFormValues = {
   user: string;
   password: string;
+  token: string;
 };
 
 const defaultSignInFormValues: Readonly<SignInFormValues> = {
   user: '',
   password: '',
+  token: '',
 };
 
 type SignInFormProps = FormikProps<SignInFormValues> &
+  CaptchaProps &
   ConnectedProps<typeof connector> & {
     loading: boolean;
     setLoading: (loading: boolean) => void;
   };
 
-const SignInForm: FC<SignInFormProps> = ({values, isValid, handleChange, handleBlur, handleSubmit}) => {
+const SignInForm: FC<SignInFormProps> = ({
+  values,
+  isValid,
+  handleChange,
+  handleBlur,
+  handleSubmit,
+  captchaToken,
+  requestCaptchaToken,
+  loading,
+  setLoading,
+}) => {
+  const send = (): void => {
+    setLoading(true);
+    requestCaptchaToken();
+  };
+
+  useEffect(() => {
+    if (captchaToken === 'error' && loading) {
+      setLoading(false);
+    } else if (captchaToken && loading) {
+      handleSubmit();
+    }
+  }, [captchaToken, handleSubmit, loading, setLoading]);
+
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={logoImg} />
@@ -58,7 +86,7 @@ const SignInForm: FC<SignInFormProps> = ({values, isValid, handleChange, handleB
       <TouchableOpacity style={styles.forgotBtn}>
         <Text>Forgot Password?</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.loginBtn} disabled={!isValid} onPress={handleSubmit}>
+      <TouchableOpacity style={styles.loginBtn} disabled={!isValid} onPress={send}>
         <Text>Login</Text>
       </TouchableOpacity>
     </View>
@@ -116,12 +144,13 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
     values: SignInFormValues,
     {setSubmitting, props}: FormikBag<SignInFormProps, SignInFormValues>,
   ) => {
-    const {login, requestAccountData, setLoading} = props;
+    const {login, requestAccountData, captchaToken, setLoading} = props;
 
     const dto = {
       user: values.user.trim(),
       password: values.password.trim(),
-    };
+      token: captchaToken,
+    } as LoginDTO;
 
     setLoading(true);
     AuthService.authenticate(dto)
@@ -137,4 +166,4 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
   },
 });
 
-export default flowRight([connector, formik])(SignInForm);
+export default flowRight([withCaptcha, connector, formik])(SignInForm);
