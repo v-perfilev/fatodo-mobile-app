@@ -1,8 +1,15 @@
-import React, {FC} from 'react';
-import {Text} from 'react-native';
+import React, {FC, useState} from 'react';
+import {StatusBar} from 'react-native';
+import SignInForm from './SignInForm';
 
 const SignIn: FC = () => {
-  return <Text>SignIn</Text>;
+  const [loading, setLoading] = useState<boolean>(false);
+  return (
+    <>
+      <StatusBar />
+      <SignInForm {...{loading, setLoading}} />
+    </>
+  );
 };
 
 export default SignIn;

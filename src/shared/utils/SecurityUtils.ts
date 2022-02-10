@@ -16,11 +16,11 @@ export class SecurityUtils {
     return credentials ? credentials.password : '';
   };
 
-  public static parseTokenFromResponse = (response: AxiosResponse): string | null => {
+  public static parseTokenFromResponse = (response: AxiosResponse): string => {
     const token = response?.headers?.[AUTHORIZATION_HEADER];
     const prefixLength = AUTHORIZATION_PREFIX.length;
     return token && token.slice(0, prefixLength) === AUTHORIZATION_PREFIX
       ? token.slice(prefixLength, token.length)
-      : null;
+      : '';
   };
 }
