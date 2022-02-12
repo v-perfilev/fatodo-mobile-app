@@ -1,12 +1,14 @@
 import React, {FC} from 'react';
-import {Box} from 'native-base';
 import SignInForm from './SignInForm';
+import Logo from '../../components/layouts/Logo';
+import {Center} from 'native-base';
 
 const SignIn: FC = () => {
   return (
-    <Box safeArea py="5" w="90%" mx="auto" maxW="300">
+    <Center safeArea py="5" mx="auto" w="90%" maxW="300" minH="100%">
+      <Logo withText />
       <SignInForm />
-    </Box>
+    </Center>
   );
 };
 

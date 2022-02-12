@@ -10,10 +10,8 @@ import i18n from '../../shared/i18n';
 import withCaptcha, {CaptchaProps} from '../../shared/hocs/withCaptcha';
 import {LoginDTO} from '../../models/dto/LoginDTO';
 import {Button, VStack} from 'native-base';
-import FormikTextInput from '../../components/formik/FormikTextInput';
-import FormikPasswordInput from '../../components/formik/FormikPasswordInput';
-
-// const logoImg = require('../../../assets/images/logo.png');
+import FormikTextInput from '../../components/inputs/FormikTextInput';
+import FormikPasswordInput from '../../components/inputs/FormikPasswordInput';
 
 const mapDispatchToProps = {login, requestAccountData};
 const connector = connect(null, mapDispatchToProps);
@@ -49,10 +47,10 @@ const SignInForm: FC<SignInFormProps> = (props) => {
   }, [captchaToken, handleSubmit, isSubmitting, setSubmitting]);
 
   return (
-    <VStack w="100%" space="3" mt="5">
+    <VStack w="100%" space="3" mt="7">
       <FormikTextInput name="user" label="User" placeholder="User" {...props} />
       <FormikPasswordInput name="password" label="Password" placeholder="Password" {...props} />
-      <Button mt="2" isDisabled={!isValid || isSubmitting} onPress={submit}>
+      <Button colorScheme="secondary" mt="5" size="lg" isDisabled={!isValid || isSubmitting} onPress={submit}>
         Submit
       </Button>
     </VStack>

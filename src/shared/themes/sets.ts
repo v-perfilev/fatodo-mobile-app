@@ -75,14 +75,16 @@ export const fontConfig = {
       italic: 'Roboto-Italic',
     },
     500: {
-      normal: 'Roboto-Medium',
+      normal: 'Roboto-Regular',
+      italic: 'Roboto-Italic',
     },
     600: {
       normal: 'Roboto-Medium',
       italic: 'Roboto-MediumItalic',
     },
     700: {
-      normal: 'Roboto-Bold',
+      normal: 'Roboto-Medium',
+      italic: 'Roboto-MediumItalic',
     },
     800: {
       normal: 'Roboto-Bold',
