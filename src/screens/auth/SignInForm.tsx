@@ -9,9 +9,10 @@ import * as Yup from 'yup';
 import i18n from '../../shared/i18n';
 import withCaptcha, {CaptchaProps} from '../../shared/hocs/withCaptcha';
 import {LoginDTO} from '../../models/dto/LoginDTO';
-import {Button, VStack} from 'native-base';
+import {Box, Button, VStack} from 'native-base';
 import FormikTextInput from '../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../components/inputs/FormikPasswordInput';
+import {useTranslation} from 'react-i18next';
 
 const mapDispatchToProps = {login, requestAccountData};
 const connector = connect(null, mapDispatchToProps);
@@ -32,6 +33,7 @@ type SignInFormProps = FormikProps<SignInFormValues> & CaptchaProps & ConnectedP
 
 const SignInForm: FC<SignInFormProps> = (props) => {
   const {isValid, handleSubmit, isSubmitting, setSubmitting, captchaToken, requestCaptchaToken} = props;
+  const {t} = useTranslation();
 
   const submit = (): void => {
     setSubmitting(true);
@@ -48,11 +50,14 @@ const SignInForm: FC<SignInFormProps> = (props) => {
 
   return (
     <VStack w="100%" space="3" mt="7">
-      <FormikTextInput name="user" label="User" placeholder="User" {...props} />
-      <FormikPasswordInput name="password" label="Password" placeholder="Password" {...props} />
-      <Button colorScheme="secondary" mt="5" size="lg" isDisabled={!isValid || isSubmitting} onPress={submit}>
-        Submit
-      </Button>
+      <FormikTextInput name="user" label={t('account:fields.user.label')} {...props} />
+      <FormikPasswordInput name="password" label={t('account:fields.password.label')} {...props} />
+      <Box>
+        <Button colorScheme="secondary" mt="5" size="lg" isDisabled={!isValid || isSubmitting} onPress={submit}>
+          {t('account:login.submit')}
+          {/*<Spinner />*/}
+        </Button>
+      </Box>
     </VStack>
   );
 };
@@ -63,7 +68,7 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
     user: Yup.string().required(() => i18n.t('account:fields.user.required')),
     password: Yup.string().required(() => i18n.t('account:fields.password.required')),
   }),
-  validateOnMount: false,
+  validateOnMount: true,
 
   handleSubmit: async (
     values: SignInFormValues,

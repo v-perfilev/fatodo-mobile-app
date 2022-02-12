@@ -1,0 +1,57 @@
+{
+  "login": {
+    "header": "Log In",
+    "submit": "Log In"
+  },
+  "register": {
+    "header": "Sign Up",
+    "submit": "Sign Up"
+  },
+  "forgotPassword": {
+    "header": "Forgot password?",
+    "submit": "Request code"
+  },
+  "resetPassword": {
+    "header": "Reset password",
+    "submit": "Submit"
+  },
+  "fields": {
+    "user": {
+      "label": "Username / Email",
+      "required": "Required"
+    },
+    "password": {
+      "label": "Password",
+      "required": "Required",
+      "invalid": "Can contain only uppercase and lowercase characters and numbers",
+      "strength": "Should contain uppercase and lowercase characters and numbers",
+      "min8": "Can not be shorter than 8 characters",
+      "max20": "Can not be longer than 20 characters"
+    },
+    "oldPassword": {
+      "label": "Current password"
+    },
+    "newPassword": {
+      "label": "New password"
+    },
+    "repeatPassword": {
+      "label": "Confirm password",
+      "required": "Required",
+      "notEqual": "Passwords are not equals"
+    },
+    "email": {
+      "label": "Email",
+      "required": "Required",
+      "notValid": "Should contain correct email",
+      "notUnique": "Should be unique"
+    },
+    "username": {
+      "label": "Username",
+      "required": "Required",
+      "invalid": "Can contain only uppercase and lowercase characters and numbers",
+      "min5": "Can not be shorter than 5 characters",
+      "max20": "Can not be longer than 20 characters",
+      "notUnique": "Should be unique"
+    }
+  }
+}

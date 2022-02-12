@@ -16,7 +16,7 @@ const FormikTextInput: FC<FormikTextInputProps> = (props) => {
   const isError = name in errors;
 
   return (
-    <FormControl isInvalid={isError}>
+    <FormControl isInvalid={isTouched && isError}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <Input
         type="text"
