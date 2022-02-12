@@ -1,4 +1,4 @@
-export default interface Snack {
+export interface Snack {
   message: string;
   color: string;
 }

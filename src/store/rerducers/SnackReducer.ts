@@ -1,4 +1,4 @@
-import Snack from '../../models/Snack';
+import {Snack} from '../../models/Snack';
 import {ACTION_TYPES} from '../actions/SnackActions';
 
 export interface ReduxSnack extends Snack {

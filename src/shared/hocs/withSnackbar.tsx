@@ -5,7 +5,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {flowRight} from 'lodash';
 import {RootState} from '../../store';
 import {closeReduxSnack, enqueueReduxSnack, removeReduxSnack} from '../../store/actions/SnackActions';
-import Snack, {SnackBuilder} from '../../models/Snack';
+import {Snack, SnackBuilder} from '../../models/Snack';
 import {useToast} from 'native-base';
 import {ReduxSnack, ReduxSnackState} from '../../store/rerducers/SnackReducer';
 import {ResponseUtils} from '../utils/ResponseUtils';
