@@ -4,14 +4,16 @@ import {FormikBag, FormikProps, withFormik} from 'formik';
 import React, {FC, useEffect} from 'react';
 import {SecurityUtils} from '../../shared/utils/SecurityUtils';
 import AuthService from '../../services/AuthService';
-import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {flowRight} from 'lodash';
 import * as Yup from 'yup';
 import i18n from '../../shared/i18n';
 import withCaptcha, {CaptchaProps} from '../../shared/hocs/withCaptcha';
 import {LoginDTO} from '../../models/dto/LoginDTO';
+import {Button, VStack} from 'native-base';
+import FormikTextInput from '../../components/formik/FormikTextInput';
+import FormikPasswordInput from '../../components/formik/FormikPasswordInput';
 
-const logoImg = require('../../../assets/images/logo.png');
+// const logoImg = require('../../../assets/images/logo.png');
 
 const mapDispatchToProps = {login, requestAccountData};
 const connector = connect(null, mapDispatchToProps);
@@ -28,109 +30,34 @@ const defaultSignInFormValues: Readonly<SignInFormValues> = {
   token: '',
 };
 
-type SignInFormProps = FormikProps<SignInFormValues> &
-  CaptchaProps &
-  ConnectedProps<typeof connector> & {
-    loading: boolean;
-    setLoading: (loading: boolean) => void;
-  };
+type SignInFormProps = FormikProps<SignInFormValues> & CaptchaProps & ConnectedProps<typeof connector>;
 
-const SignInForm: FC<SignInFormProps> = ({
-  values,
-  isValid,
-  handleChange,
-  handleBlur,
-  handleSubmit,
-  captchaToken,
-  requestCaptchaToken,
-  loading,
-  setLoading,
-}) => {
-  const send = (): void => {
-    setLoading(true);
+const SignInForm: FC<SignInFormProps> = (props) => {
+  const {isValid, handleSubmit, isSubmitting, setSubmitting, captchaToken, requestCaptchaToken} = props;
+
+  const submit = (): void => {
+    setSubmitting(true);
     requestCaptchaToken();
   };
 
   useEffect(() => {
-    if (captchaToken === 'error' && loading) {
-      setLoading(false);
-    } else if (captchaToken && loading) {
+    if (captchaToken === 'error' && isSubmitting) {
+      setSubmitting(false);
+    } else if (captchaToken && isSubmitting) {
       handleSubmit();
     }
-  }, [captchaToken, handleSubmit, loading, setLoading]);
+  }, [captchaToken, handleSubmit, isSubmitting, setSubmitting]);
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={logoImg} />
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="User"
-          placeholderTextColor="#003f5c"
-          onChangeText={handleChange('user')}
-          onBlur={handleBlur('user')}
-          value={values.user}
-        />
-      </View>
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={handleChange('password')}
-          onBlur={handleBlur('password')}
-          value={values.password}
-        />
-      </View>
-      <TouchableOpacity style={styles.forgotBtn}>
-        <Text>Forgot Password?</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.loginBtn} disabled={!isValid} onPress={send}>
-        <Text>Login</Text>
-      </TouchableOpacity>
-    </View>
+    <VStack w="100%" space="3" mt="5">
+      <FormikTextInput name="user" label="User" placeholder="User" {...props} />
+      <FormikPasswordInput name="password" label="Password" placeholder="Password" {...props} />
+      <Button mt="2" isDisabled={!isValid || isSubmitting} onPress={submit}>
+        Submit
+      </Button>
+    </VStack>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  image: {
-    marginBottom: 40,
-  },
-  inputView: {
-    backgroundColor: '#FFC0CB',
-    borderRadius: 30,
-    width: '70%',
-    height: 45,
-    marginBottom: 20,
-    alignItems: 'center',
-  },
-  textInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 20,
-  },
-  forgotBtn: {
-    height: 30,
-    marginBottom: 30,
-  },
-  loginBtn: {
-    width: '80%',
-    borderRadius: 25,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 40,
-    backgroundColor: '#FF1493',
-  },
-});
 
 const formik = withFormik<SignInFormProps, SignInFormValues>({
   mapPropsToValues: (): SignInFormValues => defaultSignInFormValues,
@@ -138,13 +65,13 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
     user: Yup.string().required(() => i18n.t('account:fields.user.required')),
     password: Yup.string().required(() => i18n.t('account:fields.password.required')),
   }),
-  validateOnMount: true,
+  validateOnMount: false,
 
   handleSubmit: async (
     values: SignInFormValues,
     {setSubmitting, props}: FormikBag<SignInFormProps, SignInFormValues>,
   ) => {
-    const {login, requestAccountData, captchaToken, setLoading} = props;
+    const {login, requestAccountData, captchaToken} = props;
 
     const dto = {
       user: values.user.trim(),
@@ -152,16 +79,17 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
       token: captchaToken,
     } as LoginDTO;
 
-    setLoading(true);
     AuthService.authenticate(dto)
       .then((response) => {
         const token = SecurityUtils.parseTokenFromResponse(response);
         login(dto.user, token);
         requestAccountData();
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e.status);
+      })
+      .finally(() => {
         setSubmitting(false);
-        setLoading(false);
       });
   },
 });

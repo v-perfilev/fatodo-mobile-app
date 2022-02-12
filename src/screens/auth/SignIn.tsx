@@ -1,14 +1,12 @@
-import React, {FC, useState} from 'react';
-import {StatusBar} from 'react-native';
+import React, {FC} from 'react';
+import {Box} from 'native-base';
 import SignInForm from './SignInForm';
 
 const SignIn: FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
   return (
-    <>
-      <StatusBar />
-      <SignInForm {...{loading, setLoading}} />
-    </>
+    <Box safeArea py="5" w="90%" mx="auto" maxW="300">
+      <SignInForm />
+    </Box>
   );
 };
 
