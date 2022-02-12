@@ -1,12 +1,13 @@
 import React, {FC} from 'react';
-import {FormControl, Input} from 'native-base';
+import {FormControl, IFormControlProps, Input} from 'native-base';
 import {FormikProps} from 'formik';
 
-type FormikTextInputProps = FormikProps<any> & {
-  name: string;
-  label?: string;
-  placeholder?: string;
-};
+type FormikTextInputProps = IFormControlProps &
+  FormikProps<any> & {
+    name: string;
+    label?: string;
+    placeholder?: string;
+  };
 
 const FormikTextInput: FC<FormikTextInputProps> = (props) => {
   const {name, label, placeholder} = props;
@@ -16,7 +17,7 @@ const FormikTextInput: FC<FormikTextInputProps> = (props) => {
   const isError = name in errors;
 
   return (
-    <FormControl isInvalid={isTouched && isError}>
+    <FormControl isInvalid={isTouched && isError} {...props}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <Input
         type="text"
