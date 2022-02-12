@@ -9,10 +9,11 @@ import * as Yup from 'yup';
 import i18n from '../../shared/i18n';
 import withCaptcha, {CaptchaProps} from '../../shared/hocs/withCaptcha';
 import {LoginDTO} from '../../models/dto/LoginDTO';
-import {Box, Button, VStack} from 'native-base';
+import {VStack} from 'native-base';
 import FormikTextInput from '../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
+import LoadableButton from '../../components/controls/LoadableButton';
 
 const mapDispatchToProps = {login, requestAccountData};
 const connector = connect(null, mapDispatchToProps);
@@ -52,12 +53,15 @@ const SignInForm: FC<SignInFormProps> = (props) => {
     <VStack w="100%" space="3" mt="7">
       <FormikTextInput name="user" label={t('account:fields.user.label')} {...props} />
       <FormikPasswordInput name="password" label={t('account:fields.password.label')} {...props} />
-      <Box>
-        <Button colorScheme="secondary" mt="5" size="lg" isDisabled={!isValid || isSubmitting} onPress={submit}>
-          {t('account:login.submit')}
-          {/*<Spinner />*/}
-        </Button>
-      </Box>
+      <LoadableButton
+        colorScheme="secondary"
+        mt="5"
+        size="lg"
+        text={t('account:login.submit')}
+        loading={isSubmitting}
+        isDisabled={!isValid || isSubmitting}
+        onPress={submit}
+      />
     </VStack>
   );
 };
