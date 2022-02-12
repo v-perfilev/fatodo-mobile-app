@@ -1,0 +1,52 @@
+{
+  "default": "Error on server",
+  "connection": "Connection with server failed",
+  "form": {
+    "invalid": "Form data is invalid"
+  },
+  "auth": {
+    "alreadyActivated": "Account is already activated",
+    "notActivated": "Account is not activated",
+    "wrongPassword": "Wrong current password",
+    "wrongProvider": "Operation not possible for your account provider"
+  },
+  "security": {
+    "forbidden": "Access is forbidden",
+    "unauthorized": "You are unauthorized",
+    "notRegistered": "User is not registered yet",
+    "wrongPassword": "Wrong password, try again",
+    "wrongProvider": {
+      "google": "User is registered with Google",
+      "facebook": "User is registered with Facebook"
+    },
+    "oauth2": {
+      "notRegistered": "User is not registered with remote provider",
+      "internal": "Something went wrong with remote provider",
+      "providerNotSupported": "You try to login with unsupported provider",
+      "wrongProvider": "User registered with another provider"
+    }
+  },
+  "model": {
+    "exists": "Object already exists in database",
+    "duplicated": "At least one of unique fields is duplicated",
+    "notFound": "Object not found",
+    "invalid": "Object contains invalid parameter"
+  },
+  "permission": {
+    "restricted": "Not enough rights to perform this operation",
+    "usersNotAllowed": "Users not from contact list"
+  },
+  "service": {
+    "group": {
+      "invalid": "Group contains invalid data"
+    }
+  },
+  "contact": {
+    "relation": {
+      "exists": "Relation already exists"
+    },
+    "request": {
+      "exists": "Request already sent"
+    }
+  }
+}

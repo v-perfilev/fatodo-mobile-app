@@ -1,4 +1,4 @@
-import {ACTION_TYPES} from '../actions/AuthActaions';
+import {ACTION_TYPES} from '../actions/AuthActions';
 import {UserAccount} from '../../models/User';
 
 const initialState = {
@@ -6,9 +6,9 @@ const initialState = {
   account: {} as UserAccount,
 };
 
-export type AuthState = Readonly<typeof initialState>;
+export type ReduxAuthState = Readonly<typeof initialState>;
 
-export default (state: AuthState = initialState, action: any): AuthState => {
+export default (state: ReduxAuthState = initialState, action: any): ReduxAuthState => {
   switch (action.type) {
     case ACTION_TYPES.LOGIN:
       return {

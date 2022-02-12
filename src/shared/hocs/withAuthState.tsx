@@ -3,16 +3,16 @@ import {ComponentType, FC, PropsWithChildren, ReactElement, useMemo} from 'react
 import {connect, ConnectedProps} from 'react-redux';
 import {flowRight} from 'lodash';
 import {RootState} from '../../store';
-import {AuthState} from '../../store/rerducers/AuthReducer';
+import {ReduxAuthState} from '../../store/rerducers/AuthReducer';
 import {UserAccount} from '../../models/User';
 
-const mapStateToProps = (state: RootState): {authState: AuthState} => ({authState: state.authState});
+const mapStateToProps = (state: RootState): {authState: ReduxAuthState} => ({authState: state.authState});
 const connector = connect(mapStateToProps);
 
 type Props = PropsWithChildren<ConnectedProps<typeof connector>>;
 
 const withAuthState =
-  (Component: ComponentType<AuthState>): FC<any> =>
+  (Component: ComponentType<ReduxAuthState>): FC<any> =>
   (props: Props): ReactElement => {
     const {authState, ...propsWithoutAuthState} = props;
 

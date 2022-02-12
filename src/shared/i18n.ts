@@ -7,6 +7,9 @@ import translationRU from '../../assets/locales/ru/translation.json';
 // account
 import accountEN from '../../assets/locales/en/account.json';
 import accountRU from '../../assets/locales/ru/account.json';
+// feedback
+import feedbackEN from '../../assets/locales/en/feedback.json';
+import feedbackRU from '../../assets/locales/ru/feedback.json';
 
 export const languages = [
   {
@@ -23,10 +26,12 @@ const resources = {
   en: {
     translation: translationEN,
     account: accountEN,
+    feedback: feedbackEN,
   },
   ru: {
     translation: translationRU,
     account: accountRU,
+    feedback: feedbackRU,
   },
 };
 
@@ -35,7 +40,7 @@ i18next.use(initReactI18next).init({
   compatibilityJSON: 'v3',
   resources,
   lng: 'en',
-  ns: ['translation', 'account'],
+  ns: ['translation', 'account', 'feedback'],
   defaultNS: 'translation',
   interpolation: {
     escapeValue: false, // react already safes from xss

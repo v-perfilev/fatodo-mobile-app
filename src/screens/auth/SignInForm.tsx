@@ -1,4 +1,4 @@
-import {login, requestAccountData} from '../../store/actions/AuthActaions';
+import {login, requestAccountData} from '../../store/actions/AuthActions';
 import {connect, ConnectedProps} from 'react-redux';
 import {FormikBag, FormikProps, withFormik} from 'formik';
 import React, {FC, useEffect} from 'react';
@@ -14,6 +14,9 @@ import FormikTextInput from '../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
 import LoadableButton from '../../components/controls/LoadableButton';
+import {withSnackContext} from '../../shared/hocs/withSnackbar';
+import {SnackState} from '../../shared/contexts/SnackContext';
+import {AxiosError} from 'axios';
 
 const mapDispatchToProps = {login, requestAccountData};
 const connector = connect(null, mapDispatchToProps);
@@ -30,7 +33,7 @@ const defaultSignInFormValues: Readonly<SignInFormValues> = {
   token: '',
 };
 
-type SignInFormProps = FormikProps<SignInFormValues> & CaptchaProps & ConnectedProps<typeof connector>;
+type SignInFormProps = FormikProps<SignInFormValues> & SnackState & CaptchaProps & ConnectedProps<typeof connector>;
 
 const SignInForm: FC<SignInFormProps> = (props) => {
   const {isValid, handleSubmit, isSubmitting, setSubmitting, captchaToken, requestCaptchaToken} = props;
@@ -51,8 +54,13 @@ const SignInForm: FC<SignInFormProps> = (props) => {
 
   return (
     <VStack w="100%" space="3" mt="7">
-      <FormikTextInput name="user" label={t('account:fields.user.label')} {...props} />
-      <FormikPasswordInput name="password" label={t('account:fields.password.label')} {...props} />
+      <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={isSubmitting} {...props} />
+      <FormikPasswordInput
+        name="password"
+        label={t('account:fields.password.label')}
+        isDisabled={isSubmitting}
+        {...props}
+      />
       <LoadableButton
         colorScheme="secondary"
         mt="5"
@@ -78,7 +86,7 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
     values: SignInFormValues,
     {setSubmitting, props}: FormikBag<SignInFormProps, SignInFormValues>,
   ) => {
-    const {login, requestAccountData, captchaToken} = props;
+    const {login, requestAccountData, captchaToken, handleResponse} = props;
 
     const dto = {
       user: values.user.trim(),
@@ -92,8 +100,8 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
         login(dto.user, token);
         requestAccountData();
       })
-      .catch((e) => {
-        console.log(e.status);
+      .catch(({response}: AxiosError) => {
+        handleResponse(response!);
       })
       .finally(() => {
         setSubmitting(false);
@@ -101,4 +109,4 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
   },
 });
 
-export default flowRight([withCaptcha, connector, formik])(SignInForm);
+export default flowRight([withSnackContext, withCaptcha, connector, formik])(SignInForm);

@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
-import authState, {AuthState} from './rerducers/AuthReducer';
+import authState, {ReduxAuthState} from './rerducers/AuthReducer';
+import snackState, {ReduxSnackState} from './rerducers/SnackReducer';
 
 export interface RootState {
-  readonly authState: AuthState;
+  readonly authState: ReduxAuthState;
+  readonly snackState: ReduxSnackState;
 }
 
-export default combineReducers<RootState>({authState});
+export default combineReducers<RootState>({authState, snackState});
