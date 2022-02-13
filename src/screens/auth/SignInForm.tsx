@@ -33,15 +33,21 @@ const defaultSignInFormValues: Readonly<SignInFormValues> = {
   token: '',
 };
 
-type SignInFormProps = FormikProps<SignInFormValues> & SnackState & CaptchaProps & ConnectedProps<typeof connector>;
+type SignInFormProps = FormikProps<SignInFormValues> &
+  SnackState &
+  CaptchaProps &
+  ConnectedProps<typeof connector> & {
+    isLoading: boolean;
+    setLoading: (isLoading: boolean) => void;
+  };
 
 const SignInForm: FC<SignInFormProps> = (props) => {
-  const {isValid, handleSubmit, isSubmitting, setSubmitting, captchaToken, requestCaptchaToken} = props;
+  const {isValid, handleSubmit, isLoading, setLoading, captchaToken, requestCaptchaToken} = props;
   const {t} = useTranslation();
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   const submit = (): void => {
-    setSubmitting(true);
+    setLoading(true);
     requestCaptchaToken();
   };
 
@@ -50,28 +56,28 @@ const SignInForm: FC<SignInFormProps> = (props) => {
   }, []);
 
   useEffect(() => {
-    if (captchaToken === 'error' && isSubmitting) {
-      setSubmitting(false);
-    } else if (captchaToken && isSubmitting) {
+    if (captchaToken === 'error' && isLoading) {
+      setLoading(false);
+    } else if (captchaToken && isLoading) {
       handleSubmit();
     }
-  }, [captchaToken, handleSubmit, isSubmitting, setSubmitting]);
+  }, [captchaToken, handleSubmit, isLoading, setLoading]);
 
   return (
     <VStack w="100%" space="3" mt="7">
-      <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={isSubmitting} {...props} />
+      <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={isLoading} {...props} />
       <FormikPasswordInput
         name="password"
         label={t('account:fields.password.label')}
-        isDisabled={isSubmitting}
+        isDisabled={isLoading}
         {...props}
       />
       <LoadableButton
         colorScheme="secondary"
         mt="5"
         size="lg"
-        loading={isSubmitting}
-        isDisabled={!isInitialized || !isValid || isSubmitting}
+        loading={isLoading}
+        isDisabled={!isInitialized || !isValid || isLoading}
         onPress={submit}
       >
         {t('account:login.submit')}
@@ -88,11 +94,8 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
   }),
   validateOnMount: true,
 
-  handleSubmit: async (
-    values: SignInFormValues,
-    {setSubmitting, props}: FormikBag<SignInFormProps, SignInFormValues>,
-  ) => {
-    const {login, requestAccountData, captchaToken, handleResponse} = props;
+  handleSubmit: async (values: SignInFormValues, {props}: FormikBag<SignInFormProps, SignInFormValues>) => {
+    const {login, requestAccountData, captchaToken, handleResponse, setLoading} = props;
 
     const dto = {
       user: values.user.trim(),
@@ -108,7 +111,7 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
       })
       .catch(({response}: AxiosError) => {
         handleResponse(response!);
-        setSubmitting(false);
+        setLoading(false);
       });
   },
 });

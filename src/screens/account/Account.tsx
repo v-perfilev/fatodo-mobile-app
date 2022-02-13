@@ -1,8 +1,29 @@
 import React, {FC} from 'react';
 import {Text} from 'react-native';
+import {Center} from 'native-base';
+import SolidButton from '../../components/controls/SolidButton';
+import {logout} from '../../store/actions/AuthActions';
+import {connect, ConnectedProps} from 'react-redux';
+import {flowRight} from 'lodash';
 
-const Account: FC = () => {
-  return <Text>Account</Text>;
+const mapDispatchToProps = {logout};
+const connector = connect(null, mapDispatchToProps);
+
+type AccountProps = ConnectedProps<typeof connector>;
+
+const Account: FC<AccountProps> = ({logout}) => {
+  const handlePress = (): void => {
+    logout();
+  };
+
+  return (
+    <Center safeArea w="100%" h="100%">
+      <Text>Account</Text>
+      <SolidButton mt="10" onPress={handlePress}>
+        Log Out
+      </SolidButton>
+    </Center>
+  );
 };
 
-export default Account;
+export default flowRight([connector])(Account);
