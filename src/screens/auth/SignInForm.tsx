@@ -108,8 +108,6 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
       })
       .catch(({response}: AxiosError) => {
         handleResponse(response!);
-      })
-      .finally(() => {
         setSubmitting(false);
       });
   },

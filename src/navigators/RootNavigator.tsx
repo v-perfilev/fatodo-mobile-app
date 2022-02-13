@@ -1,8 +1,14 @@
 import React, {FC} from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import TabNavigator from './TabNavigator';
 
-const Stack = createNativeStackNavigator();
+type RootStackParamList = {
+  Tab: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const RootNavigator: FC = () => {
   return (
