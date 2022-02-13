@@ -1,14 +1,9 @@
-import {login, requestAccountData} from '../../store/actions/AuthActions';
-import {connect, ConnectedProps} from 'react-redux';
 import {FormikBag, FormikProps, withFormik} from 'formik';
 import React, {FC, useEffect, useState} from 'react';
-import {SecurityUtils} from '../../shared/utils/SecurityUtils';
 import AuthService from '../../services/AuthService';
 import {flowRight} from 'lodash';
 import * as Yup from 'yup';
-import i18n from '../../shared/i18n';
 import withCaptcha, {CaptchaProps} from '../../shared/hocs/withCaptcha';
-import {LoginDTO} from '../../models/dto/LoginDTO';
 import {VStack} from 'native-base';
 import FormikTextInput from '../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../components/inputs/FormikPasswordInput';
@@ -16,27 +11,32 @@ import {useTranslation} from 'react-i18next';
 import LoadableButton from '../../components/controls/LoadableButton';
 import {withSnackContext} from '../../shared/hocs/withSnackbar';
 import {SnackState} from '../../shared/contexts/SnackContext';
-import {AxiosError, AxiosResponse} from 'axios';
+import {emailValidator, passwordValidator, usernameValidator} from './ForgotPasswordValidators';
+import {AxiosError} from 'axios';
+import {RegistrationDTO} from '../../models/dto/RegistrationDTO';
+import i18n from '../../shared/i18n';
+import {DateUtils} from '../../shared/utils/DateUtils';
+import {PasswordStrengthBar} from './PasswordStrengthBar';
 
-const mapDispatchToProps = {login, requestAccountData};
-const connector = connect(null, mapDispatchToProps);
-
-type SignInFormValues = {
-  user: string;
+export interface SignUpFormValues {
+  email: string;
+  username: string;
   password: string;
-  token: string;
-};
+}
 
-const defaultSignInFormValues: Readonly<SignInFormValues> = {
-  user: '',
+const defaultSignUpFormValues: Readonly<SignUpFormValues> = {
+  email: '',
+  username: '',
   password: '',
-  token: '',
 };
 
-type SignInFormProps = FormikProps<SignInFormValues> & SnackState & CaptchaProps & ConnectedProps<typeof connector>;
-
-const SignInForm: FC<SignInFormProps> = (props) => {
-  const {isValid, handleSubmit, isSubmitting, setSubmitting, captchaToken, requestCaptchaToken} = props;
+type SignUpFormProps = FormikProps<SignUpFormValues> &
+  SnackState &
+  CaptchaProps & {
+    onSuccess?: () => void;
+  };
+const SignUpForm: FC<SignUpFormProps> = (props) => {
+  const {isValid, handleSubmit, isSubmitting, setSubmitting, captchaToken, requestCaptchaToken, values} = props;
   const {t} = useTranslation();
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
@@ -59,13 +59,20 @@ const SignInForm: FC<SignInFormProps> = (props) => {
 
   return (
     <VStack w="100%" space="3" mt="7">
-      <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={isSubmitting} {...props} />
+      <FormikTextInput name="email" label={t('account:fields.email.label')} isDisabled={isSubmitting} {...props} />
+      <FormikTextInput
+        name="username"
+        label={t('account:fields.username.label')}
+        isDisabled={isSubmitting}
+        {...props}
+      />
       <FormikPasswordInput
         name="password"
         label={t('account:fields.password.label')}
         isDisabled={isSubmitting}
         {...props}
       />
+      <PasswordStrengthBar password={values.password} />
       <LoadableButton
         colorScheme="secondary"
         mt="5"
@@ -74,37 +81,45 @@ const SignInForm: FC<SignInFormProps> = (props) => {
         isDisabled={!isInitialized || !isValid || isSubmitting}
         onPress={submit}
       >
-        {t('account:login.submit')}
+        {t('account:register.submit')}
       </LoadableButton>
     </VStack>
   );
 };
 
-const formik = withFormik<SignInFormProps, SignInFormValues>({
-  mapPropsToValues: (): SignInFormValues => defaultSignInFormValues,
+const formik = withFormik<SignUpFormProps, SignUpFormValues>({
+  mapPropsToValues: (): SignUpFormValues => defaultSignUpFormValues,
   validationSchema: Yup.object().shape({
-    user: Yup.string().required(() => i18n.t('account:fields.user.required')),
-    password: Yup.string().required(() => i18n.t('account:fields.password.required')),
+    email: emailValidator.check(),
+    username: usernameValidator.check(),
+    password: passwordValidator,
   }),
   validateOnMount: true,
 
   handleSubmit: async (
-    values: SignInFormValues,
-    {setSubmitting, props}: FormikBag<SignInFormProps, SignInFormValues>,
+    values: SignUpFormValues,
+    {setSubmitting, props}: FormikBag<SignUpFormProps, SignUpFormValues>,
   ) => {
-    const {login, requestAccountData, captchaToken, handleResponse} = props;
+    const {captchaToken, handleCode, handleResponse, onSuccess} = props;
+
+    const language = i18n.language;
+    const timezone = DateUtils.getTimezone();
 
     const dto = {
-      user: values.user.trim(),
+      email: values.email.trim(),
+      username: values.username.trim(),
       password: values.password.trim(),
+      language,
+      timezone,
       token: captchaToken,
-    } as LoginDTO;
+    } as RegistrationDTO;
 
-    AuthService.authenticate(dto)
-      .then((response: AxiosResponse) => {
-        const token = SecurityUtils.parseTokenFromResponse(response);
-        login(dto.user, token);
-        requestAccountData();
+    AuthService.register(dto)
+      .then(() => {
+        handleCode('auth.registered', 'info');
+        if (onSuccess) {
+          onSuccess();
+        }
       })
       .catch(({response}: AxiosError) => {
         handleResponse(response!);
@@ -115,4 +130,4 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
   },
 });
 
-export default flowRight([withSnackContext, withCaptcha, connector, formik])(SignInForm);
+export default flowRight([withSnackContext, withCaptcha, formik])(SignUpForm);

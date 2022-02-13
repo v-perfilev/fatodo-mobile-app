@@ -8,12 +8,12 @@ type LogoProps = {
   withText?: boolean;
 };
 
-const Logo: FC<LogoProps> = ({size = 50, withText}) => {
+const Logo: FC<LogoProps> = ({size = 60, withText}) => {
   return (
     <HStack space="3" alignItems="center">
       <Image source={img} width={size} height={size} alt="Fatodo logo" />
       {withText && (
-        <Heading size="2xl" fontWeight="medium" color="primary.500" mr="5">
+        <Heading size="3xl" color="primary.500">
           Fatodo
         </Heading>
       )}

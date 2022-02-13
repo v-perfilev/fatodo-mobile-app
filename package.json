@@ -14,10 +14,13 @@
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "@types/lodash": "^4.14.178",
+    "@types/yup": "^0.29.13",
     "axios": "^0.25.0",
     "formik": "^2.2.9",
     "i18next": "^21.6.11",
     "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.34",
     "native-base": "^3.3.6",
     "react": "17.0.2",
     "react-i18next": "^11.15.3",
@@ -32,7 +35,7 @@
     "redux": "^4.1.2",
     "redux-promise-middleware": "^6.1.2",
     "redux-thunk": "^2.4.1",
-    "yup": "^0.32.11"
+    "yup": "^0.29.3"
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
