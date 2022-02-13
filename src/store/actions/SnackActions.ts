@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux';
-import Snack from '../../models/Snack';
+import {Snack} from '../../models/Snack';
 
 export const ACTION_TYPES = {
   ENQUEUE_SNACKBAR: 'snackState/ENQUEUE_SNACKBAR',
