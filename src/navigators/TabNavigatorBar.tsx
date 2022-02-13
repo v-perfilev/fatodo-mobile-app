@@ -18,14 +18,19 @@ type TabNavigatorItemProps = {
 
 const TabNavigatorItem: FC<TabNavigatorItemProps> = ({routeName, routeKey, state, descriptors, navigation, index}) => {
   const {options} = descriptors[routeKey];
+  const isFocused = state.index === index;
   const label = options.tabBarLabel || options.title || routeName;
-  const opacity = state.index === index ? 1 : 0.5;
+  const icon = options.tabBarIcon;
+  const opacity = isFocused ? 1 : 0.5;
 
   const onPress = () => navigation.navigate(routeName);
+
+  // console.log(icon);
 
   return (
     <Pressable flex={1} p="3" cursor="pointer" opacity={opacity} onPress={onPress}>
       <Center>
+        {icon && icon({focused: isFocused, color: 'white', size: 6})}
         <Text color="white" fontSize="10">
           {label}
         </Text>
