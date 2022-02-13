@@ -6,14 +6,15 @@ const img = require('../../../assets/images/logo.png');
 type LogoProps = {
   size?: number;
   withText?: boolean;
+  centerText?: boolean;
 };
 
-const Logo: FC<LogoProps> = ({size = 60, withText}) => {
+const Logo: FC<LogoProps> = ({size = 50, withText, centerText}) => {
   return (
     <HStack space="3" alignItems="center">
       <Image source={img} width={size} height={size} alt="Fatodo logo" />
       {withText && (
-        <Heading size="3xl" color="primary.500">
+        <Heading size="3xl" color="primary.500" mr={centerText ? size : 0}>
           Fatodo
         </Heading>
       )}

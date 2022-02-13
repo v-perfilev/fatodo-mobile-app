@@ -16,7 +16,7 @@ const SignIn: FC = () => {
 
   return (
     <Center safeArea py="5" mx="auto" w="90%" maxW="300" minH="100%">
-      <Logo withText />
+      <Logo withText centerText />
       <SignInForm />
       <Stack mt="5" space="2">
         <LinkButton onPress={goToForgotPassword}>{t('account:forgotPassword.header')}</LinkButton>

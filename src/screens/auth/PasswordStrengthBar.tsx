@@ -26,7 +26,7 @@ export const PasswordStrengthBar: FC<Props> = ({password}: Props) => {
     subItems.push(<Box flexGrow={1} mx={1} bgColor="primary.500" key={i} />);
   }
   for (let i = counter; i < rulesCount; i++) {
-    subItems.push(<Box flexGrow={1} mx={1} bgColor="secondary.500" key={i} />);
+    subItems.push(<Box flexGrow={1} mx={1} bgColor="warning.500" key={i} />);
   }
 
   return (
