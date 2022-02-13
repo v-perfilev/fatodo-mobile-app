@@ -18,15 +18,15 @@
     "formik": "^2.2.9",
     "i18next": "^21.6.11",
     "lodash": "^4.17.21",
-    "native-base": "^3.2.2",
+    "native-base": "^3.3.6",
     "react": "17.0.2",
     "react-i18next": "^11.15.3",
     "react-native": "^0.67.2",
     "react-native-keychain": "^8.0.0",
     "react-native-recaptcha-that-works": "^1.2.0",
-    "react-native-safe-area-context": "^3.3.2",
-    "react-native-screens": "^3.10.2",
-    "react-native-svg": "^9.12.0",
+    "react-native-safe-area-context": "^3.1.9",
+    "react-native-screens": "^3.11.1",
+    "react-native-svg": "^12.1.0",
     "react-native-webview": "^11.17.2",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
@@ -35,20 +35,20 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
-    "@babel/runtime": "^7.12.5",
+    "@babel/core": "^7.17.2",
+    "@babel/runtime": "^7.17.2",
     "@react-native-community/eslint-config": "^2.0.0",
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^27.4.0",
     "@types/react-native": "^0.66.15",
     "@types/react-test-renderer": "^17.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.7.0",
-    "@typescript-eslint/parser": "^5.7.0",
-    "babel-jest": "^26.6.3",
-    "eslint": "^7.14.0",
-    "jest": "^26.6.3",
-    "metro-react-native-babel-preset": "^0.66.2",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "babel-jest": "^27.5.1",
+    "eslint": "^7.32.0",
+    "jest": "^27.5.1",
+    "metro-react-native-babel-preset": "^0.68.0",
     "react-test-renderer": "17.0.2",
-    "typescript": "^4.4.4"
+    "typescript": "^4.5.5"
   },
   "resolutions": {
     "@types/react": "^17"
@@ -65,6 +65,8 @@
     ]
   },
   "rnpm": {
-    "assets": ["./src/assets/fonts/Roboto"]
+    "assets": [
+      "./src/assets/fonts/Roboto"
+    ]
   }
 }
