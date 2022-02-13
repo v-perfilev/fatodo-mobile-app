@@ -65,11 +65,12 @@ const SignInForm: FC<SignInFormProps> = (props) => {
         colorScheme="secondary"
         mt="5"
         size="lg"
-        text={t('account:login.submit')}
         loading={isSubmitting}
         isDisabled={!isValid || isSubmitting}
         onPress={submit}
-      />
+      >
+        {t('account:login.submit')}
+      </LoadableButton>
     </VStack>
   );
 };

@@ -26,9 +26,9 @@ const FormikPasswordInput: FC<FormikPasswordInputProps> = (props) => {
   };
 
   const InputRightElement = showPassword ? (
-    <VisibleOffIcon color="primary.500" size="sm" mx="2" onPress={toggleShowPassword} />
+    <VisibleOffIcon color="gray.300" size="sm" mx="2" onPress={toggleShowPassword} />
   ) : (
-    <VisibleOnIcon color="primary.500" size="sm" mx="2" onPress={toggleShowPassword} />
+    <VisibleOnIcon color="gray.300" size="sm" mx="2" onPress={toggleShowPassword} />
   );
 
   return (

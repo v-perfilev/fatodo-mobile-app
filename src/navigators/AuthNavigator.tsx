@@ -1,15 +1,27 @@
 import React, {FC} from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import SignIn from '../screens/auth/SignIn';
+import SignUp from '../screens/auth/SignUp';
+import ForgotPassword from '../screens/auth/ForgotPassword';
 
-const Stack = createNativeStackNavigator();
+type AuthStackParamList = {
+  SignIn: undefined;
+  SignUp: undefined;
+  ForgotPassword: undefined;
+};
 
-const PublicNavigator: FC = () => {
+const Stack = createNativeStackNavigator<AuthStackParamList>();
+
+export type AuthStackNavigationProp = NativeStackNavigationProp<AuthStackParamList>;
+
+const AuthNavigator: FC = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="SignIn">
       <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
     </Stack.Navigator>
   );
 };
 
-export default PublicNavigator;
+export default AuthNavigator;
