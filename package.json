@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.2.0",
+    "@react-navigation/drawer": "^6.3.1",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "@types/lodash": "^4.14.178",
@@ -25,7 +26,9 @@
     "react": "17.0.2",
     "react-i18next": "^11.15.3",
     "react-native": "^0.67.2",
+    "react-native-gesture-handler": "^2.2.0",
     "react-native-keychain": "^8.0.0",
+    "react-native-reanimated": "^2.4.1",
     "react-native-recaptcha-that-works": "^1.2.0",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^3.11.1",
