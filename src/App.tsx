@@ -15,7 +15,7 @@ import withSnackbar from './shared/hocs/withSnackbar';
 type AppProps = ReduxAuthState;
 
 const App: FC<AppProps> = ({isAuthenticated}) => {
-  return isAuthenticated ? <RootNavigator /> : <AuthNavigator />;
+  return !isAuthenticated ? <RootNavigator /> : <AuthNavigator />;
 };
 
 export default flowRight([withStore, withNativeBase, withNavigationContainer, withSnackbar, withAuthState])(App);

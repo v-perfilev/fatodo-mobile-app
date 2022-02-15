@@ -1,8 +1,9 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {DrawerContentComponentProps, DrawerContentScrollView, DrawerNavigationEventMap} from '@react-navigation/drawer';
 import {Center, Pressable, Text, VStack} from 'native-base';
 import {DrawerNavigationState, NavigationHelpers, ParamListBase} from '@react-navigation/native';
 import {DrawerDescriptorMap} from '@react-navigation/drawer/lib/typescript/src/types';
+import {useDrawerContext} from '../../shared/contexts/DrawerContext';
 
 type RootNavigatorItemProps = {
   routeName: string;
@@ -43,6 +44,13 @@ const RootNavigatorItem: FC<RootNavigatorItemProps> = ({
 
 const RootNavigatorDrawer: FC<DrawerContentComponentProps> = (props) => {
   const {state, descriptors, navigation} = props;
+  const {setToggleDrawer} = useDrawerContext();
+
+  useEffect(() => {
+    if (navigation.toggleDrawer) {
+      setToggleDrawer(() => navigation.toggleDrawer);
+    }
+  }, [navigation.toggleDrawer, setToggleDrawer]);
 
   return (
     <DrawerContentScrollView {...props}>
