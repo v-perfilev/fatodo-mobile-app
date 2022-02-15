@@ -1,6 +1,6 @@
 import React, {FC, ReactNode} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import TabNavigatorBar from './TabNavigatorBar';
+import TabNavigatorBar from '../components/layouts/TabNavigatorBar';
 import GroupNavigator from './GroupNavigator';
 import ContactNavigator from './ContactNavigator';
 import ChatNavigator from './ChatNavigator';

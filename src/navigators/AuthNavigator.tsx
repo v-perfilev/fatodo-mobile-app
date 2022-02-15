@@ -4,15 +4,15 @@ import SignIn from '../screens/auth/SignIn';
 import SignUp from '../screens/auth/SignUp';
 import ForgotPassword from '../screens/auth/ForgotPassword';
 
-type AuthStackParamList = {
+type AuthParamList = {
   SignIn: undefined;
   SignUp: undefined;
   ForgotPassword: undefined;
 };
 
-const Stack = createNativeStackNavigator<AuthStackParamList>();
+const Stack = createNativeStackNavigator<AuthParamList>();
 
-export type AuthStackNavigationProp = NativeStackNavigationProp<AuthStackParamList>;
+export type AuthNavigationProp = NativeStackNavigationProp<AuthParamList>;
 
 const AuthNavigator: FC = () => {
   return (

@@ -2,13 +2,13 @@ import React, {FC} from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ChatList from '../screens/chats/ChatList';
 
-type ChatStackParamList = {
+type ChatParamList = {
   ChatList: undefined;
 };
 
-const Stack = createNativeStackNavigator<ChatStackParamList>();
+const Stack = createNativeStackNavigator<ChatParamList>();
 
-export type ChatStackNavigationProp = NativeStackNavigationProp<ChatStackParamList>;
+export type ChatNavigationProp = NativeStackNavigationProp<ChatParamList>;
 
 const ChatNavigator: FC = () => {
   return (

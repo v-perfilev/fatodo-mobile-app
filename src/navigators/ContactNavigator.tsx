@@ -2,13 +2,13 @@ import React, {FC} from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ContactList from '../screens/contacts/ContactList';
 
-type ContactStackParamList = {
+type ContactParamList = {
   ContactList: undefined;
 };
 
-const Stack = createNativeStackNavigator<ContactStackParamList>();
+const Stack = createNativeStackNavigator<ContactParamList>();
 
-export type ContactStackNavigationProp = NativeStackNavigationProp<ContactStackParamList>;
+export type ContactNavigationProp = NativeStackNavigationProp<ContactParamList>;
 
 const ContactNavigator: FC = () => {
   return (

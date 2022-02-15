@@ -5,10 +5,10 @@ import {Center, Stack} from 'native-base';
 import LinkButton from '../../components/controls/LinkButton';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
-import {AuthStackNavigationProp} from '../../navigators/AuthNavigator';
+import {AuthNavigationProp} from '../../navigators/AuthNavigator';
 
 const SignIn: FC = () => {
-  const navigation = useNavigation<AuthStackNavigationProp>();
+  const navigation = useNavigation<AuthNavigationProp>();
   const {t} = useTranslation();
   const [isLoading, setLoading] = useState<boolean>(false);
 

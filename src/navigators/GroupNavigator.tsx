@@ -2,13 +2,13 @@ import React, {FC} from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import GroupList from '../screens/groups/GroupList';
 
-type GroupStackParamList = {
+type GroupParamList = {
   GroupList: undefined;
 };
 
-const Stack = createNativeStackNavigator<GroupStackParamList>();
+const Stack = createNativeStackNavigator<GroupParamList>();
 
-export type GroupStackNavigationProp = NativeStackNavigationProp<GroupStackParamList>;
+export type GroupNavigationProp = NativeStackNavigationProp<GroupParamList>;
 
 const GroupNavigator: FC = () => {
   return (
