@@ -41,8 +41,8 @@ const TabNavigatorItem: FC<TabNavigatorItemProps> = ({routeName, routeKey, state
 
 const TabNavigatorBar: FC<TabNavigatorBarProps> = ({state, descriptors, navigation}) => {
   return (
-    <Box safeAreaTop width="100%">
-      <HStack bg="primary.500" safeAreaBottom shadow={6}>
+    <Box safeAreaBottom width="100%">
+      <HStack bg="primary.500">
         {state.routes.map((route, index) => (
           <TabNavigatorItem
             routeKey={route.key}

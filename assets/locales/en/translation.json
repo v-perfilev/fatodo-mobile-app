@@ -4,6 +4,9 @@
     "Account": "Account",
     "Groups": "Groups",
     "Contacts": "Contacts",
-    "Chats": "Chats"
+    "Chats": "Chats",
+    "GroupList": "Groups",
+    "ContactList": "Contacts",
+    "ChatList": "Chats"
   }
 }

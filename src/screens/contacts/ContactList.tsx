@@ -1,6 +1,8 @@
 import React, {FC} from 'react';
 import {Text} from 'react-native';
 import {Center} from 'native-base';
+import {flowRight} from 'lodash';
+import withHeader from '../../shared/hocs/withHeader';
 
 const ContactList: FC = () => {
   return (
@@ -10,4 +12,4 @@ const ContactList: FC = () => {
   );
 };
 
-export default ContactList;
+export default flowRight([withHeader])(ContactList);

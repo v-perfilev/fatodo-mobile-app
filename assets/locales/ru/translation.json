@@ -4,6 +4,9 @@
     "Account": "Аккаунт",
     "Groups": "Группы",
     "Contacts": "Контакты",
-    "Chats": "Чаты"
+    "Chats": "Чаты",
+    "GroupList": "Группы",
+    "ContactList": "Контакты",
+    "ChatList": "Чаты"
   }
 }

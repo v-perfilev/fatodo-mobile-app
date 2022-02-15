@@ -1,5 +1,5 @@
 import React, {ComponentType, FC, ReactElement} from 'react';
-import Header from '../../components/layouts/header';
+import Header from '../../components/layouts/Header';
 
 const withHeader =
   (Component: ComponentType): FC =>

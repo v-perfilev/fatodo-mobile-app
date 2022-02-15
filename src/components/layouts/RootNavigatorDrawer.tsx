@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {DrawerContentComponentProps, DrawerContentScrollView, DrawerNavigationEventMap} from '@react-navigation/drawer';
-import {Center, Pressable, Text, VStack} from 'native-base';
+import {HStack, Pressable, Text, VStack} from 'native-base';
 import {DrawerNavigationState, NavigationHelpers, ParamListBase} from '@react-navigation/native';
 import {DrawerDescriptorMap} from '@react-navigation/drawer/lib/typescript/src/types';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
@@ -28,18 +28,18 @@ const RootNavigatorItem: FC<RootNavigatorItemProps> = ({
   const isFocused = state.index === index;
   const label = t('routes.' + routeName);
   const icon = options.drawerIcon;
-  const opacity = isFocused ? 1 : 0.5;
+  const color = isFocused ? 'primary.600' : 'gray.700';
 
   const onPress = () => navigation.navigate(routeName);
 
   return (
-    <Pressable flex={1} p="3" cursor="pointer" opacity={opacity} onPress={onPress}>
-      <Center>
-        {icon && icon({focused: isFocused, color: 'white', size: 6})}
-        <Text color="white" fontSize="10">
+    <Pressable flex={1} cursor="pointer" onPress={onPress}>
+      <HStack space="5" alignItems="center">
+        {icon && icon({focused: isFocused, color: color, size: 7})}
+        <Text fontWeight="600" color={color} fontSize="16">
           {label}
         </Text>
-      </Center>
+      </HStack>
     </Pressable>
   );
 };
@@ -56,7 +56,7 @@ const RootNavigatorDrawer: FC<DrawerContentComponentProps> = (props) => {
 
   return (
     <DrawerContentScrollView {...props}>
-      <VStack space={6} my={2} mx={1}>
+      <VStack space={8} my={6} mx={8}>
         {state.routes.map((route, index) => (
           <RootNavigatorItem
             routeKey={route.key}

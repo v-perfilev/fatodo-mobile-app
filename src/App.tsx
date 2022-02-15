@@ -11,11 +11,20 @@ import RootNavigator from './navigators/RootNavigator';
 import AuthNavigator from './navigators/AuthNavigator';
 import withNativeBase from './shared/hocs/withNativeBase';
 import withSnackbar from './shared/hocs/withSnackbar';
+import {StatusBar, useTheme} from 'native-base';
 
 type AppProps = ReduxAuthState;
 
 const App: FC<AppProps> = ({isAuthenticated}) => {
-  return !isAuthenticated ? <RootNavigator /> : <AuthNavigator />;
+  const theme = useTheme();
+  const backgroundColor = theme.colors.gray['100'];
+
+  return (
+    <>
+      <StatusBar backgroundColor={backgroundColor} barStyle="dark-content" />
+      {!isAuthenticated ? <RootNavigator /> : <AuthNavigator />}
+    </>
+  );
 };
 
 export default flowRight([withStore, withNativeBase, withNavigationContainer, withSnackbar, withAuthState])(App);
