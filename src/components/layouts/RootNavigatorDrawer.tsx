@@ -5,6 +5,7 @@ import {DrawerNavigationState, NavigationHelpers, ParamListBase} from '@react-na
 import {DrawerDescriptorMap} from '@react-navigation/drawer/lib/typescript/src/types';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
 import {useTranslation} from 'react-i18next';
+import LanguageMenu from './LanguageMenu';
 
 type RootNavigatorItemProps = {
   routeName: string;
@@ -28,7 +29,7 @@ const RootNavigatorItem: FC<RootNavigatorItemProps> = ({
   const isFocused = state.index === index;
   const label = t('routes.' + routeName);
   const icon = options.drawerIcon;
-  const color = isFocused ? 'primary.600' : 'gray.700';
+  const color = isFocused ? 'primary.500' : 'gray.600';
 
   const onPress = () => navigation.navigate(routeName);
 
@@ -68,6 +69,7 @@ const RootNavigatorDrawer: FC<DrawerContentComponentProps> = (props) => {
             key={index}
           />
         ))}
+        <LanguageMenu />
       </VStack>
     </DrawerContentScrollView>
   );
