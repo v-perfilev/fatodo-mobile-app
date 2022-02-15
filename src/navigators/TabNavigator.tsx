@@ -4,11 +4,9 @@ import TabNavigatorBar from '../components/layouts/TabNavigatorBar';
 import GroupNavigator from './GroupNavigator';
 import ContactNavigator from './ContactNavigator';
 import ChatNavigator from './ChatNavigator';
-import Account from '../screens/account/Account';
 import GroupsIcon from '../components/icons/GroupsIcon';
 import ContactsIcon from '../components/icons/ContactsIcon';
 import ChatsIcon from '../components/icons/ChatsIcon';
-import AccountIcon from '../components/icons/AccountIcon';
 
 type TabParamList = {
   Groups: undefined;
@@ -17,7 +15,7 @@ type TabParamList = {
   Account: undefined;
 };
 
-type TabBarIconProps = {
+type TabIconProps = {
   focused: boolean;
   color: string;
   size: number;
@@ -25,10 +23,9 @@ type TabBarIconProps = {
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-const groupsIcon = ({color, size}: TabBarIconProps): ReactNode => <GroupsIcon color={color} size={size} />;
-const contactsIcon = ({color, size}: TabBarIconProps): ReactNode => <ContactsIcon color={color} size={size} />;
-const chatsIcon = ({color, size}: TabBarIconProps): ReactNode => <ChatsIcon color={color} size={size} />;
-const accountIcon = ({color, size}: TabBarIconProps): ReactNode => <AccountIcon color={color} size={size} />;
+const groupsIcon = ({color, size}: TabIconProps): ReactNode => <GroupsIcon color={color} size={size} />;
+const contactsIcon = ({color, size}: TabIconProps): ReactNode => <ContactsIcon color={color} size={size} />;
+const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={color} size={size} />;
 
 const TabNavigator: FC = () => {
   return (
@@ -55,14 +52,6 @@ const TabNavigator: FC = () => {
         options={{
           tabBarLabel: 'Chats',
           tabBarIcon: chatsIcon,
-        }}
-      />
-      <Tab.Screen
-        name="Account"
-        component={Account}
-        options={{
-          tabBarLabel: 'Account',
-          tabBarIcon: accountIcon,
         }}
       />
     </Tab.Navigator>
