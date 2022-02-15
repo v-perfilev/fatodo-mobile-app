@@ -5,6 +5,7 @@ import SolidButton from '../../components/controls/SolidButton';
 import {logout} from '../../store/actions/AuthActions';
 import {connect, ConnectedProps} from 'react-redux';
 import {flowRight} from 'lodash';
+import withHeader from '../../shared/hocs/withHeader';
 
 const mapDispatchToProps = {logout};
 const connector = connect(null, mapDispatchToProps);
@@ -26,4 +27,4 @@ const Account: FC<AccountProps> = ({logout}) => {
   );
 };
 
-export default flowRight([connector])(Account);
+export default flowRight([withHeader, connector])(Account);

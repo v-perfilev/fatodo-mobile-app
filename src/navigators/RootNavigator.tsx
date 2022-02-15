@@ -39,22 +39,8 @@ const RootNavigator: FC = () => {
       screenOptions={{headerShown: false, drawerType: 'back', drawerStyle}}
       drawerContent={RootNavigatorDrawer}
     >
-      <Drawer.Screen
-        name="Home"
-        component={TabNavigator}
-        options={{
-          drawerLabel: 'Home',
-          drawerIcon: groupsIcon,
-        }}
-      />
-      <Drawer.Screen
-        name="Account"
-        component={Account}
-        options={{
-          drawerLabel: 'Account',
-          drawerIcon: accountIcon,
-        }}
-      />
+      <Drawer.Screen name="Home" component={TabNavigator} options={{drawerIcon: groupsIcon}} />
+      <Drawer.Screen name="Account" component={Account} options={{drawerIcon: accountIcon}} />
     </Drawer.Navigator>
   );
 };

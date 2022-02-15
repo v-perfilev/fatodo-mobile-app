@@ -12,7 +12,6 @@ type TabParamList = {
   Groups: undefined;
   Contacts: undefined;
   Chats: undefined;
-  Account: undefined;
 };
 
 type TabIconProps = {
@@ -30,30 +29,9 @@ const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={
 const TabNavigator: FC = () => {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Groups" tabBar={TabNavigatorBar}>
-      <Tab.Screen
-        name="Groups"
-        component={GroupNavigator}
-        options={{
-          tabBarLabel: 'Groups',
-          tabBarIcon: groupsIcon,
-        }}
-      />
-      <Tab.Screen
-        name="Contacts"
-        component={ContactNavigator}
-        options={{
-          tabBarLabel: 'Contacts',
-          tabBarIcon: contactsIcon,
-        }}
-      />
-      <Tab.Screen
-        name="Chats"
-        component={ChatNavigator}
-        options={{
-          tabBarLabel: 'Chats',
-          tabBarIcon: chatsIcon,
-        }}
-      />
+      <Tab.Screen name="Groups" component={GroupNavigator} options={{tabBarIcon: groupsIcon}} />
+      <Tab.Screen name="Contacts" component={ContactNavigator} options={{tabBarIcon: contactsIcon}} />
+      <Tab.Screen name="Chats" component={ChatNavigator} options={{tabBarIcon: chatsIcon}} />
     </Tab.Navigator>
   );
 };

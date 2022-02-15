@@ -4,6 +4,7 @@ import {Center, Pressable, Text, VStack} from 'native-base';
 import {DrawerNavigationState, NavigationHelpers, ParamListBase} from '@react-navigation/native';
 import {DrawerDescriptorMap} from '@react-navigation/drawer/lib/typescript/src/types';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
+import {useTranslation} from 'react-i18next';
 
 type RootNavigatorItemProps = {
   routeName: string;
@@ -22,9 +23,10 @@ const RootNavigatorItem: FC<RootNavigatorItemProps> = ({
   navigation,
   index,
 }) => {
+  const {t} = useTranslation();
   const {options} = descriptors[routeKey];
   const isFocused = state.index === index;
-  const label = options.drawerLabel || routeName;
+  const label = t('routes.' + routeName);
   const icon = options.drawerIcon;
   const opacity = isFocused ? 1 : 0.5;
 

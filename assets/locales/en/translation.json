@@ -1,3 +1,9 @@
 {
-  "hello": "Hello"
+  "routes": {
+    "Home": "Home",
+    "Account": "Account",
+    "Groups": "Groups",
+    "Contacts": "Contacts",
+    "Chats": "Chats"
+  }
 }

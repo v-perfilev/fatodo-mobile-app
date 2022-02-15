@@ -4,6 +4,7 @@ import {Box, Center, HStack, Pressable, Text} from 'native-base';
 import {BottomTabDescriptorMap} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import {NavigationHelpers, ParamListBase, TabNavigationState} from '@react-navigation/native';
 import {BottomTabNavigationEventMap} from '@react-navigation/bottom-tabs/src/types';
+import {useTranslation} from 'react-i18next';
 
 type TabNavigatorBarProps = BottomTabBarProps;
 
@@ -17,9 +18,10 @@ type TabNavigatorItemProps = {
 };
 
 const TabNavigatorItem: FC<TabNavigatorItemProps> = ({routeName, routeKey, state, descriptors, navigation, index}) => {
+  const {t} = useTranslation();
   const {options} = descriptors[routeKey];
   const isFocused = state.index === index;
-  const label = options.tabBarLabel || options.title || routeName;
+  const label = t('routes.' + routeName);
   const icon = options.tabBarIcon;
   const opacity = isFocused ? 1 : 0.5;
 
