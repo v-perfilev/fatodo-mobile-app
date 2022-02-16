@@ -14,10 +14,10 @@ const ForgotPassword: FC = () => {
 
   const goToSignIn = (): void => navigation.navigate('SignIn');
 
-  const scrollViewContainerStyle = {flexGrow: 1};
+  const containerStyle = {flexGrow: 1};
 
   return (
-    <ScrollView _contentContainerStyle={scrollViewContainerStyle}>
+    <ScrollView _contentContainerStyle={containerStyle}>
       <Center flex={1} flexGrow={1} pt="10" pb="5">
         <Box w="90%" maxW="300">
           <Center flex={1}>

@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {DrawerContentComponentProps, DrawerContentScrollView, DrawerNavigationEventMap} from '@react-navigation/drawer';
-import {HStack, Pressable, Text, VStack} from 'native-base';
+import {Box, HStack, Pressable, Text, VStack} from 'native-base';
 import {DrawerNavigationState, NavigationHelpers, ParamListBase} from '@react-navigation/native';
 import {DrawerDescriptorMap} from '@react-navigation/drawer/lib/typescript/src/types';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
@@ -55,22 +55,30 @@ const RootNavigatorDrawer: FC<DrawerContentComponentProps> = (props) => {
     }
   }, [navigation.toggleDrawer, setToggleDrawer]);
 
+  const containerStyle = {flexGrow: 1};
+
   return (
-    <DrawerContentScrollView {...props}>
-      <VStack space={8} my={6} mx={8}>
-        {state.routes.map((route, index) => (
-          <RootNavigatorItem
-            routeKey={route.key}
-            routeName={route.name}
-            state={state}
-            descriptors={descriptors}
-            navigation={navigation}
-            index={index}
-            key={index}
-          />
-        ))}
-        <LanguageMenu space={5} />
-      </VStack>
+    <DrawerContentScrollView {...props} contentContainerStyle={containerStyle}>
+      <Box flex={1} flexGrow={1}>
+        <VStack space={8} my={6} mx={8}>
+          {state.routes.map((route, index) => (
+            <RootNavigatorItem
+              routeKey={route.key}
+              routeName={route.name}
+              state={state}
+              descriptors={descriptors}
+              navigation={navigation}
+              index={index}
+              key={index}
+            />
+          ))}
+        </VStack>
+      </Box>
+      <Box flex={1} flexGrow={0}>
+        <VStack space={8} my={6} mx={8}>
+          <LanguageMenu space={5} />
+        </VStack>
+      </Box>
     </DrawerContentScrollView>
   );
 };
