@@ -23,7 +23,7 @@ const withUserList =
             return [...uniqueUsers];
           });
         })
-        .catch((response) => {
+        .catch(({response}) => {
           handleResponse(response);
         })
         .finally(() => {

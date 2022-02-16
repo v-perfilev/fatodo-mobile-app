@@ -13,7 +13,7 @@ export class SecurityUtils {
 
   public static getAuthToken = async (): Promise<string> => {
     const credentials = await Keychain.getGenericPassword();
-    return credentials ? credentials.password : '';
+    return credentials ? credentials.password : null;
   };
 
   public static parseTokenFromResponse = (response: AxiosResponse): string => {

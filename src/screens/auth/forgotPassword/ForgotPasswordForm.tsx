@@ -11,7 +11,6 @@ import {useTranslation} from 'react-i18next';
 import LoadableButton from '../../../components/controls/LoadableButton';
 import {withSnackContext} from '../../../shared/hocs/withSnackbar';
 import {SnackState} from '../../../shared/contexts/SnackContext';
-import {AxiosError} from 'axios';
 import {ForgotPasswordDTO} from '../../../models/dto/ForgotPasswordDTO';
 
 export interface ForgotPasswordFormValues {
@@ -48,7 +47,7 @@ const ForgotPasswordForm: FC<ForgotPasswordFormProps> = (props) => {
     } else if (captchaToken && isSubmitting) {
       handleSubmit();
     }
-  }, [captchaToken, handleSubmit, isSubmitting, setSubmitting]);
+  }, [captchaToken, isSubmitting]);
 
   return (
     <VStack w="100%" space="3" mt="7">
@@ -92,8 +91,8 @@ const formik = withFormik<ForgotPasswordFormProps, ForgotPasswordFormValues>({
           onSuccess();
         }
       })
-      .catch(({response}: AxiosError) => {
-        handleResponse(response!);
+      .catch(({response}) => {
+        handleResponse(response);
       })
       .finally(() => {
         setSubmitting(false);

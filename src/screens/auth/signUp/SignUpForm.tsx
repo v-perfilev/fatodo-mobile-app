@@ -12,7 +12,6 @@ import LoadableButton from '../../../components/controls/LoadableButton';
 import {withSnackContext} from '../../../shared/hocs/withSnackbar';
 import {SnackState} from '../../../shared/contexts/SnackContext';
 import {emailValidator, passwordValidator, usernameValidator} from '../forgotPassword/ForgotPasswordValidators';
-import {AxiosError} from 'axios';
 import {RegistrationDTO} from '../../../models/dto/RegistrationDTO';
 import i18n from '../../../shared/i18n';
 import {DateUtils} from '../../../shared/utils/DateUtils';
@@ -55,7 +54,7 @@ const SignUpForm: FC<SignUpFormProps> = (props) => {
     } else if (captchaToken && isSubmitting) {
       handleSubmit();
     }
-  }, [captchaToken, handleSubmit, isSubmitting, setSubmitting]);
+  }, [captchaToken, isSubmitting]);
 
   return (
     <VStack w="100%" space="3" mt="7">
@@ -121,8 +120,8 @@ const formik = withFormik<SignUpFormProps, SignUpFormValues>({
           onSuccess();
         }
       })
-      .catch(({response}: AxiosError) => {
-        handleResponse(response!);
+      .catch(({response}) => {
+        handleResponse(response);
       })
       .finally(() => {
         setSubmitting(false);

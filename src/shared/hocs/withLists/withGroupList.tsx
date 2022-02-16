@@ -18,7 +18,7 @@ const withGroupList =
         .then((response) => {
           setGroups(response.data);
         })
-        .catch((response) => {
+        .catch(({response}) => {
           handleResponse(response);
         })
         .finally(() => {

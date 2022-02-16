@@ -57,7 +57,7 @@ const withItemList =
           });
           setCount(response.data.count);
         })
-        .catch((response) => {
+        .catch(({response}) => {
           handleResponse(response);
         })
         .finally(() => {

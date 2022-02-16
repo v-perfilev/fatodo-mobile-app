@@ -16,7 +16,6 @@ import {useTranslation} from 'react-i18next';
 import LoadableButton from '../../../components/controls/LoadableButton';
 import {withSnackContext} from '../../../shared/hocs/withSnackbar';
 import {SnackState} from '../../../shared/contexts/SnackContext';
-import {AxiosError, AxiosResponse} from 'axios';
 
 const mapDispatchToProps = {login, requestAccountData};
 const connector = connect(null, mapDispatchToProps);
@@ -61,7 +60,7 @@ const SignInForm: FC<SignInFormProps> = (props) => {
     } else if (captchaToken && isLoading) {
       handleSubmit();
     }
-  }, [captchaToken, handleSubmit, isLoading, setLoading]);
+  }, [captchaToken, isLoading]);
 
   return (
     <VStack w="100%" space="3" mt="7">
@@ -104,13 +103,13 @@ const formik = withFormik<SignInFormProps, SignInFormValues>({
     } as LoginDTO;
 
     AuthService.authenticate(dto)
-      .then((response: AxiosResponse) => {
+      .then((response) => {
         const token = SecurityUtils.parseTokenFromResponse(response);
         login(dto.user, token);
         requestAccountData();
       })
-      .catch(({response}: AxiosError) => {
-        handleResponse(response!);
+      .catch(({response}) => {
+        handleResponse(response);
         setLoading(false);
       });
   },

@@ -5,14 +5,12 @@ import {connect, ConnectedProps} from 'react-redux';
 import {flowRight} from 'lodash';
 import {RootState} from '../../store';
 import {closeReduxSnack, enqueueReduxSnack, removeReduxSnack} from '../../store/actions/SnackActions';
-import {Snack, SnackBuilder} from '../../models/Snack';
+import {Snack, SnackBuilder, SnackVariant} from '../../models/Snack';
 import {useToast} from 'native-base';
 import {ReduxSnack, ReduxSnackState} from '../../store/rerducers/SnackReducer';
 import {ResponseUtils} from '../utils/ResponseUtils';
 import {TranslationUtils} from '../utils/TranslationUtils';
 import {SnackContext, SnackState} from '../contexts/SnackContext';
-
-export type SnackVariant = 'info' | 'warning' | 'error';
 
 const mapStateToProps = (state: RootState): {snackState: ReduxSnackState} => ({snackState: state.snackState});
 const mapDispatchToProps = {enqueueReduxSnack, closeReduxSnack, removeReduxSnack};
@@ -28,25 +26,6 @@ const withSnack =
 
     const addDisplayed = (key: string): void => setDisplayed((prevState) => [...prevState, key]);
     const removeDisplayed = (key: string): void => setDisplayed((prevState) => prevState.filter((k) => k !== key));
-    const getVariantFromStatus = (status: number): SnackVariant => {
-      if (status >= 400 && status < 500) {
-        return 'warning';
-      } else if (status >= 500) {
-        return 'error';
-      } else {
-        return 'info';
-      }
-    };
-
-    const getColorFromVariant = (variant: SnackVariant): string => {
-      if (variant === 'info') {
-        return 'info.500';
-      } else if (variant === 'warning') {
-        return 'warning.500';
-      } else {
-        return 'error.500';
-      }
-    };
 
     const enqueueSnack = useCallback((snack: Snack): void => enqueueReduxSnack(snack), [enqueueReduxSnack]);
 
@@ -62,10 +41,10 @@ const withSnack =
           (excludedCodes === '' || !excludedCodes.includes(feedbackCode));
         const isStatusCorrect = status && status < 500;
         const message = TranslationUtils.getFeedbackTranslation(feedbackCode);
-        const variant = getVariantFromStatus(status);
-        const color = getColorFromVariant(variant);
         const snack =
-          isFeedBackCorrect && isStatusCorrect && message ? new SnackBuilder(message).setColor(color).build() : null;
+          isFeedBackCorrect && isStatusCorrect && message
+            ? new SnackBuilder(message).setStatusColor(status).build()
+            : null;
         if (snack) {
           enqueueSnack(snack);
         }
@@ -76,8 +55,7 @@ const withSnack =
     const handleCode = useCallback(
       (code: string, variant: SnackVariant): void => {
         const message = TranslationUtils.getSnackTranslation(code);
-        const color = getColorFromVariant(variant);
-        const snack = message ? new SnackBuilder(message).setColor(color).build() : null;
+        const snack = message ? new SnackBuilder(message).setVariantColor(variant).build() : null;
         if (snack) {
           enqueueSnack(snack);
         }

@@ -53,7 +53,7 @@ const RootNavigatorDrawer: FC<DrawerContentComponentProps> = (props) => {
     if (navigation.toggleDrawer) {
       setToggleDrawer(() => navigation.toggleDrawer);
     }
-  }, [navigation.toggleDrawer, setToggleDrawer]);
+  }, [navigation.toggleDrawer]);
 
   const containerStyle = {flexGrow: 1};
 

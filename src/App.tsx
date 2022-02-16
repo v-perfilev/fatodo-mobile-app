@@ -12,6 +12,18 @@ import withSnackbar from './shared/hocs/withSnackbar';
 import {StatusBar, useTheme} from 'native-base';
 import RootNavigator from './navigators/RootNavigator';
 import AuthNavigator from './navigators/AuthNavigator';
+import {bindActionCreators} from 'redux';
+import {enqueueReduxSnack} from './store/actions/SnackActions';
+import setupAxiosInterceptors from './shared/axios';
+import {clearAuth} from './store/actions/AuthActions';
+import store from './store/store';
+
+// setup axios
+const axiosActions = bindActionCreators({clearAuth, enqueueReduxSnack}, store.dispatch);
+setupAxiosInterceptors({
+  onUnauthenticated: axiosActions.clearAuth,
+  enqueueReduxSnackbar: axiosActions.enqueueReduxSnack,
+});
 
 type AppProps = ReduxAuthState;
 

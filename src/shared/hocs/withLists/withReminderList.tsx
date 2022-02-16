@@ -18,7 +18,7 @@ const withReminderList =
         .then((response) => {
           setReminders(response.data);
         })
-        .catch((response) => {
+        .catch(({response}) => {
           if (response.status !== 404) {
             handleResponse(response);
           }

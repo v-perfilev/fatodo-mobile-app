@@ -10,6 +10,7 @@ module.exports = {
         '@typescript-eslint/no-shadow': ['off'],
         'no-shadow': 'off',
         'no-undef': 'off',
+        'react-hooks/exhaustive-deps': 0,
       },
     },
   ],
