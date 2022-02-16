@@ -1,20 +1,28 @@
 import React, {FC} from 'react';
 import {HStack, Menu, Pressable, Text} from 'native-base';
-import {useTranslation} from 'react-i18next';
-import LanguageIcon from '../icons/LanguageIcon';
 import {languages} from '../../shared/i18n';
+import LanguageIcon from '../icons/LanguageIcon';
+import {LanguageUtils} from '../../shared/utils/LanguageUtils';
+
+type LanguageMenuProps = {
+  space?: number;
+};
 
 type LanguageMenuItemProps = {
   name: string;
   code: string;
 };
 
-const LanguageMenuButton: FC = () => {
-  const {i18n} = useTranslation();
-  const language = languages.find((l) => l.code === i18n.language).name;
+type LanguageMenuButtonProps = {
+  space: number;
+};
+
+const LanguageMenuButton: FC<LanguageMenuButtonProps> = ({space}) => {
+  const languageCode = LanguageUtils.getLanguage();
+  const language = languages.find((l) => l.code === languageCode).name;
 
   return (
-    <HStack space="5" alignItems="center">
+    <HStack space={space} alignItems="center">
       <LanguageIcon size="7" color="primary.500" />
       <Text fontWeight="600" fontSize="16" color="primary.500">
         {language}
@@ -24,22 +32,20 @@ const LanguageMenuButton: FC = () => {
 };
 
 const LanguageMenuItem: FC<LanguageMenuItemProps> = ({name, code}) => {
-  const {i18n} = useTranslation();
-
   const changeLanguage = (): void => {
-    i18n.changeLanguage(code).catch(console.log);
+    LanguageUtils.setLanguage(code);
   };
 
   return <Menu.Item onPress={changeLanguage}>{name}</Menu.Item>;
 };
 
-const LanguageMenu: FC = () => {
+const LanguageMenu: FC<LanguageMenuProps> = ({space = 2}) => {
   return (
     <Menu
       defaultIsOpen={false}
       trigger={(triggerProps) => (
-        <Pressable {...triggerProps}>
-          <LanguageMenuButton />
+        <Pressable {...triggerProps} _pressed={{opacity: 0.5}}>
+          <LanguageMenuButton space={space} />
         </Pressable>
       )}
     >

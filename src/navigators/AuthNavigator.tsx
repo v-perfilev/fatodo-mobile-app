@@ -16,7 +16,7 @@ export type AuthNavigationProp = NativeStackNavigationProp<AuthParamList>;
 
 const AuthNavigator: FC = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="SignIn">
+    <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="SignIn">
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />

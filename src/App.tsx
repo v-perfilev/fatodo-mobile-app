@@ -22,7 +22,7 @@ const App: FC<AppProps> = ({isAuthenticated}) => {
   return (
     <>
       <StatusBar backgroundColor={backgroundColor} barStyle="dark-content" />
-      {isAuthenticated ? <RootNavigator /> : <AuthNavigator />}
+      {!isAuthenticated ? <RootNavigator /> : <AuthNavigator />}
     </>
   );
 };

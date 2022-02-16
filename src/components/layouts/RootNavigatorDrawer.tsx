@@ -35,7 +35,7 @@ const RootNavigatorItem: FC<RootNavigatorItemProps> = ({
 
   return (
     <Pressable flex={1} cursor="pointer" onPress={onPress}>
-      <HStack space="5" alignItems="center">
+      <HStack space={5} alignItems="center">
         {icon && icon({focused: isFocused, color: color, size: 7})}
         <Text fontWeight="600" color={color} fontSize="16">
           {label}
@@ -69,7 +69,7 @@ const RootNavigatorDrawer: FC<DrawerContentComponentProps> = (props) => {
             key={index}
           />
         ))}
-        <LanguageMenu />
+        <LanguageMenu space={5} />
       </VStack>
     </DrawerContentScrollView>
   );
