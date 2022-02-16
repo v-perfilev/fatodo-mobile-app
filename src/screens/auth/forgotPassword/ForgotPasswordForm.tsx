@@ -1,18 +1,18 @@
 import {FormikBag, FormikProps, withFormik} from 'formik';
 import React, {FC, useEffect, useState} from 'react';
-import AuthService from '../../services/AuthService';
+import AuthService from '../../../services/AuthService';
 import {flowRight} from 'lodash';
 import * as Yup from 'yup';
-import i18n from '../../shared/i18n';
-import withCaptcha, {CaptchaProps} from '../../shared/hocs/withCaptcha';
+import i18n from '../../../shared/i18n';
+import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
 import {VStack} from 'native-base';
-import FormikTextInput from '../../components/inputs/FormikTextInput';
+import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import {useTranslation} from 'react-i18next';
-import LoadableButton from '../../components/controls/LoadableButton';
-import {withSnackContext} from '../../shared/hocs/withSnackbar';
-import {SnackState} from '../../shared/contexts/SnackContext';
+import LoadableButton from '../../../components/controls/LoadableButton';
+import {withSnackContext} from '../../../shared/hocs/withSnackbar';
+import {SnackState} from '../../../shared/contexts/SnackContext';
 import {AxiosError} from 'axios';
-import {ForgotPasswordDTO} from '../../models/dto/ForgotPasswordDTO';
+import {ForgotPasswordDTO} from '../../../models/dto/ForgotPasswordDTO';
 
 export interface ForgotPasswordFormValues {
   user: string;

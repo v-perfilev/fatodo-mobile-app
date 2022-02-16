@@ -1,12 +1,12 @@
 import React, {FC, useState} from 'react';
 import SignInForm from './SignInForm';
-import Logo from '../../components/layouts/Logo';
+import Logo from '../../../components/layouts/Logo';
 import {Box, Center, ScrollView, Stack} from 'native-base';
-import LinkButton from '../../components/controls/LinkButton';
+import LinkButton from '../../../components/controls/LinkButton';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
-import {AuthNavigationProp} from '../../navigators/AuthNavigator';
-import LanguageMenu from '../../components/layouts/LanguageMenu';
+import {AuthNavigationProp} from '../../../navigators/AuthNavigator';
+import LanguageMenu from '../../../components/layouts/LanguageMenu';
 
 const SignIn: FC = () => {
   const navigation = useNavigation<AuthNavigationProp>();

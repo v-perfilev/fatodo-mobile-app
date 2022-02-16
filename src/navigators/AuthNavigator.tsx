@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
-import SignIn from '../screens/auth/SignIn';
-import SignUp from '../screens/auth/SignUp';
-import ForgotPassword from '../screens/auth/ForgotPassword';
+import SignIn from '../screens/auth/signIn/SignIn';
+import SignUp from '../screens/auth/signUp/SignUp';
+import ForgotPassword from '../screens/auth/forgotPassword/ForgotPassword';
 
 type AuthParamList = {
   SignIn: undefined;

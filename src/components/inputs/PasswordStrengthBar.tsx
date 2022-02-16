@@ -1,6 +1,10 @@
 import * as React from 'react';
 import {FC} from 'react';
-import {passwordStrengthMap, passwordStrengthPostfix, passwordStrengthPrefix} from './ForgotPasswordValidators';
+import {
+  passwordStrengthMap,
+  passwordStrengthPostfix,
+  passwordStrengthPrefix,
+} from '../../screens/auth/forgotPassword/ForgotPasswordValidators';
 import {Box} from 'native-base';
 
 type Props = {

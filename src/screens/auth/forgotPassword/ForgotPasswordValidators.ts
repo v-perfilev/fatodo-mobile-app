@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
-import UserService from '../../services/UserService';
-import i18n from '../../shared/i18n';
-import {AsyncValidator} from '../../shared/utils/YupUtils';
+import UserService from '../../../services/UserService';
+import i18n from '../../../shared/i18n';
+import {AsyncValidator} from '../../../shared/utils/YupUtils';
 
 export const usernameRegex = /^[A-Za-z\d]+$/;
 export const passwordRegex = /^[A-Za-z\d]+$/;

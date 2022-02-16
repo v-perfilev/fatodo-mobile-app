@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
-import GroupList from '../screens/groups/GroupList';
+import GroupList from '../screens/groups/groupList/GroupList';
 
 type GroupParamList = {
   GroupList: undefined;

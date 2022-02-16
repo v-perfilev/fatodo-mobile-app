@@ -1,14 +1,14 @@
 import React, {FC} from 'react';
-import Logo from '../../components/layouts/Logo';
+import Logo from '../../../components/layouts/Logo';
 import {Box, Center, ScrollView, Stack} from 'native-base';
-import LinkButton from '../../components/controls/LinkButton';
+import LinkButton from '../../../components/controls/LinkButton';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
-import {AuthNavigationProp} from '../../navigators/AuthNavigator';
-import ForgotPasswordForm from './ForgotPasswordForm';
-import LanguageMenu from '../../components/layouts/LanguageMenu';
+import {AuthNavigationProp} from '../../../navigators/AuthNavigator';
+import SignUpForm from './SignUpForm';
+import LanguageMenu from '../../../components/layouts/LanguageMenu';
 
-const ForgotPassword: FC = () => {
+const SignUp: FC = () => {
   const navigation = useNavigation<AuthNavigationProp>();
   const {t} = useTranslation();
 
@@ -23,7 +23,7 @@ const ForgotPassword: FC = () => {
           <Center flex={1}>
             <Logo withText centerText />
           </Center>
-          <ForgotPasswordForm onSuccess={goToSignIn} />
+          <SignUpForm onSuccess={goToSignIn} />
           <Stack mt="5" space="2">
             <LinkButton onPress={goToSignIn}>{t('account:login.header')}</LinkButton>
           </Stack>
@@ -36,4 +36,4 @@ const ForgotPassword: FC = () => {
   );
 };
 
-export default ForgotPassword;
+export default SignUp;

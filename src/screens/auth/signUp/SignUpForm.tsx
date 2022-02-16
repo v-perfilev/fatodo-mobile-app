@@ -1,22 +1,22 @@
 import {FormikBag, FormikProps, withFormik} from 'formik';
 import React, {FC, useEffect, useState} from 'react';
-import AuthService from '../../services/AuthService';
+import AuthService from '../../../services/AuthService';
 import {flowRight} from 'lodash';
 import * as Yup from 'yup';
-import withCaptcha, {CaptchaProps} from '../../shared/hocs/withCaptcha';
+import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
 import {VStack} from 'native-base';
-import FormikTextInput from '../../components/inputs/FormikTextInput';
-import FormikPasswordInput from '../../components/inputs/FormikPasswordInput';
+import FormikTextInput from '../../../components/inputs/FormikTextInput';
+import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
-import LoadableButton from '../../components/controls/LoadableButton';
-import {withSnackContext} from '../../shared/hocs/withSnackbar';
-import {SnackState} from '../../shared/contexts/SnackContext';
-import {emailValidator, passwordValidator, usernameValidator} from './ForgotPasswordValidators';
+import LoadableButton from '../../../components/controls/LoadableButton';
+import {withSnackContext} from '../../../shared/hocs/withSnackbar';
+import {SnackState} from '../../../shared/contexts/SnackContext';
+import {emailValidator, passwordValidator, usernameValidator} from '../forgotPassword/ForgotPasswordValidators';
 import {AxiosError} from 'axios';
-import {RegistrationDTO} from '../../models/dto/RegistrationDTO';
-import i18n from '../../shared/i18n';
-import {DateUtils} from '../../shared/utils/DateUtils';
-import {PasswordStrengthBar} from './PasswordStrengthBar';
+import {RegistrationDTO} from '../../../models/dto/RegistrationDTO';
+import i18n from '../../../shared/i18n';
+import {DateUtils} from '../../../shared/utils/DateUtils';
+import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBar';
 
 export interface SignUpFormValues {
   email: string;
