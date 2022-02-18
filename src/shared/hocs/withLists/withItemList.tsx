@@ -8,7 +8,7 @@ import {ItemListContext} from '../../contexts/listContexts/itemListContext';
 
 const withItemList =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     const {handleResponse} = useSnackContext();
     const [items, setItems] = useState<Item[]>([]);
     const [count, setCount] = useState<number>(0);

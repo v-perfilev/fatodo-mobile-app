@@ -9,7 +9,7 @@ import {GroupListItemsContext} from '../../contexts/listContexts/groupListItemsC
 
 const withGroupListItems =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     const {handleResponse} = useSnackContext();
     const [items, setItems] = useState<Map<string, Item[]>>(new Map());
     const [counts, setCounts] = useState<Map<string, number>>(new Map());

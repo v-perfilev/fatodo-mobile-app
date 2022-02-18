@@ -3,7 +3,7 @@ import Header from '../../components/layouts/Header';
 
 const withHeader =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     return (
       <>
         <Header {...props} />

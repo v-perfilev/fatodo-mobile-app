@@ -3,6 +3,7 @@ import {useGroupListContext} from '../../../shared/contexts/listContexts/groupLi
 import DraggableFlatList, {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
 import {Group} from '../../../models/Group';
 import GroupListItem from './GroupListItem';
+import {Box} from 'native-base';
 
 type GroupListContainerProps = {
   sorting: boolean;
@@ -18,13 +19,17 @@ const GroupListContainer: FC<GroupListContainerProps> = ({sorting}) => {
   const renderItem = (props: RenderItemParams<Group>) => {
     return (
       <ScaleDecorator>
-        <GroupListItem sorting={sorting} {...props} />
+        <Box px="2" py="1">
+          <GroupListItem sorting={sorting} {...props} />
+        </Box>
       </ScaleDecorator>
     );
   };
 
   return (
-    <DraggableFlatList data={groups} onDragEnd={handleDragEnd} keyExtractor={extractKey} renderItem={renderItem} />
+    <Box pt="2">
+      <DraggableFlatList data={groups} onDragEnd={handleDragEnd} keyExtractor={extractKey} renderItem={renderItem} />
+    </Box>
   );
 };
 

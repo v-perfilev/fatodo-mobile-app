@@ -7,7 +7,7 @@ import {GroupListContext} from '../../contexts/listContexts/groupListContext';
 
 const withGroupList =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     const {handleResponse} = useSnackContext();
     const [groups, setGroups] = useState<Group[]>([]);
     const [loading, setLoading] = useState<boolean>(false);

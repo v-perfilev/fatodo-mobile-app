@@ -8,7 +8,7 @@ import {ItemViewContext} from '../../contexts/viewContexts/itemViewContext';
 
 const withItemView =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     const {handleResponse} = useSnackContext();
     const [item, setItem] = useState<Item>();
     const [loading, setLoading] = useState<boolean>(false);

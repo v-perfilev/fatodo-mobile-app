@@ -8,7 +8,7 @@ import {GroupViewContext} from '../../contexts/viewContexts/groupViewContext';
 
 const withGroupView =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     const {handleResponse} = useSnackContext();
     const [group, setGroup] = useState<Group>();
     const [loading, setLoading] = useState<boolean>(false);

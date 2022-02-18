@@ -1,11 +1,19 @@
 import React, {ComponentType, FC, ReactElement} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 
 const withNavigationContainer =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
+    const theme = {
+      ...DefaultTheme,
+      colors: {
+        ...DefaultTheme.colors,
+        background: 'white',
+      },
+    };
+
     return (
-      <NavigationContainer>
+      <NavigationContainer theme={theme}>
         <Component {...props} />
       </NavigationContainer>
     );

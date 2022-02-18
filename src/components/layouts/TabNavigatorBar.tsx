@@ -28,7 +28,7 @@ const TabNavigatorItem: FC<TabNavigatorItemProps> = ({routeName, routeKey, state
   const onPress = () => navigation.navigate(routeName);
 
   return (
-    <Pressable flex={1} p="3" cursor="pointer" opacity={opacity} onPress={onPress}>
+    <Pressable flex="1" p="2" cursor="pointer" opacity={opacity} onPress={onPress}>
       <Center>
         {icon && icon({focused: isFocused, color: 'white', size: 6})}
         <Text color="white" fontSize="10">

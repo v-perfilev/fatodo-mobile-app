@@ -11,7 +11,7 @@ export type CaptchaProps = {
 
 const withCaptcha =
   (Component: ComponentType<CaptchaProps>): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     const recaptcha = useRef<any>();
     const [token, setToken] = useState<string>('');
 

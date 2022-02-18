@@ -18,11 +18,11 @@ const GroupListCardContent: FC<GroupListCardContentProps> = ({items, count}) => 
   }, [group, listLoading]);
 
   return (
-    <Box flex={1} bg="secondary.500">
+    <Box flex="1" bg="white">
       {!loading && count > 0 && (
-        <VStack flex={1}>
+        <VStack flex="1">
           {items.map((item) => (
-            <Box flex={1} key={item.id}>
+            <Box flex="1" key={item.id}>
               {item.title}
             </Box>
           ))}

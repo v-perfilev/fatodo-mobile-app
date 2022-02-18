@@ -3,7 +3,7 @@ import {DrawerContext} from '../contexts/DrawerContext';
 
 const withDrawer =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     const [toggleDrawer, setToggleDrawer] = useState<() => void>(() => () => {});
 
     const value = {toggleDrawer, setToggleDrawer};

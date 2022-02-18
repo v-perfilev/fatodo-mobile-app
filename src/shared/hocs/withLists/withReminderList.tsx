@@ -7,7 +7,7 @@ import {ReminderListContext} from '../../contexts/listContexts/reminderListConte
 
 const withReminderList =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     const {handleResponse} = useSnackContext();
     const [reminders, setReminders] = useState<Reminder[]>([]);
     const [loading, setLoading] = useState<boolean>(false);

@@ -6,16 +6,18 @@ import {useUserListContext} from '../../../../shared/contexts/listContexts/userL
 import {ThemeFactory} from '../../../../shared/themes/ThemeFactory';
 import withAuthState from '../../../../shared/hocs/withAuthState';
 import {flowRight} from 'lodash';
-import {NativeBaseProvider} from 'native-base';
+import {Box, NativeBaseProvider} from 'native-base';
 import {ReduxAuthState} from '../../../../store/rerducers/AuthReducer';
 import GroupListCardHeader from './GroupListCardHeader';
-import Collapsible from 'react-native-collapsible';
 import GroupListCardContent from './GroupListCardContent';
+import {RenderItemParams} from 'react-native-draggable-flatlist';
+import {Group} from '../../../../models/Group';
+import Collapsible from 'react-native-collapsible';
 
-type GroupListCardProps = ReduxAuthState & {
-  sorting: boolean;
-  drag: () => void;
-};
+type GroupListCardProps = ReduxAuthState &
+  RenderItemParams<Group> & {
+    sorting: boolean;
+  };
 
 const GroupListCard: FC<GroupListCardProps> = ({account, sorting, drag}) => {
   const {group} = useGroupViewContext();
@@ -60,10 +62,14 @@ const GroupListCard: FC<GroupListCardProps> = ({account, sorting, drag}) => {
 
   return (
     <NativeBaseProvider theme={theme}>
-      <Collapsible collapsed={collapsed}>
-        <GroupListCardHeader account={account} sorting={sorting} drag={drag} />
-        <GroupListCardContent items={items} count={count} />
-      </Collapsible>
+      <Box borderRadius="3" shadow="9" pt="0" pb="1" px="1">
+        <Box borderRadius="3" overflow={'hidden'}>
+          <GroupListCardHeader account={account} sorting={sorting} drag={drag} />
+          <Collapsible collapsed={collapsed}>
+            <GroupListCardContent items={items} count={count} />
+          </Collapsible>
+        </Box>
+      </Box>
     </NativeBaseProvider>
   );
 };

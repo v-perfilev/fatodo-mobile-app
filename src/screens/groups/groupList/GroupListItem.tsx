@@ -7,24 +7,19 @@ import {flowRight} from 'lodash';
 import withGroupView from '../../../shared/hocs/withViews/withGroupView';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import GroupListCard from './groupListCard/GroupListCard';
-import {Pressable} from 'native-base';
 
 type GroupListItemProps = RenderItemParams<Group> & {
   sorting: boolean;
 };
 
-const GroupListItem: FC<GroupListItemProps> = ({item, drag, isActive, sorting}) => {
+const GroupListItem: FC<GroupListItemProps> = ({item, ...props}) => {
   const {group, setGroup} = useGroupViewContext();
 
   useEffect(() => {
     setGroup(item);
   }, [item]);
 
-  return group ? (
-    <Pressable onLongPress={drag} bg={isActive ? 'red.500' : 'black'}>
-      <GroupListCard sorting={sorting} drag={drag} />
-    </Pressable>
-  ) : null;
+  return group ? <GroupListCard {...props} /> : null;
 };
 
 export default flowRight([withGroupView, withItemList, withUserList])(GroupListItem);

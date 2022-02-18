@@ -8,7 +8,7 @@ import {UserListContext} from '../../contexts/listContexts/userListContext';
 
 const withUserList =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     const {handleResponse} = useSnackContext();
     const [users, setUsers] = useState<User[]>([]);
     const [loadingIds, setLoadingIds] = useState<string[]>([]);

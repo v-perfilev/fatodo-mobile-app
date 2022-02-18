@@ -4,19 +4,19 @@ import './shared/axios';
 import React, {FC} from 'react';
 import {flowRight} from 'lodash';
 import {ReduxAuthState} from './store/rerducers/AuthReducer';
-import withNavigationContainer from './shared/hocs/withNavigationContainer';
-import withStore from './shared/hocs/withStore';
-import withAuthState from './shared/hocs/withAuthState';
-import withNativeBase from './shared/hocs/withNativeBase';
-import withSnackbar from './shared/hocs/withSnackbar';
 import {StatusBar, useTheme} from 'native-base';
-import RootNavigator from './navigators/RootNavigator';
-import AuthNavigator from './navigators/AuthNavigator';
 import {bindActionCreators} from 'redux';
 import {enqueueReduxSnack} from './store/actions/SnackActions';
 import setupAxiosInterceptors from './shared/axios';
 import {clearAuth} from './store/actions/AuthActions';
 import store from './store/store';
+import withStore from './shared/hocs/withStore';
+import AuthNavigator from './navigators/AuthNavigator';
+import RootNavigator from './navigators/RootNavigator';
+import withNativeBase from './shared/hocs/withNativeBase';
+import withNavigationContainer from './shared/hocs/withNavigationContainer';
+import withSnackbar from './shared/hocs/withSnackbar';
+import withAuthState from './shared/hocs/withAuthState';
 
 // setup axios
 const axiosActions = bindActionCreators({clearAuth, enqueueReduxSnack}, store.dispatch);
@@ -29,7 +29,7 @@ type AppProps = ReduxAuthState;
 
 const App: FC<AppProps> = ({isAuthenticated}) => {
   const theme = useTheme();
-  const backgroundColor = theme.colors.gray['100'];
+  const backgroundColor = theme.colors.white;
 
   return (
     <>

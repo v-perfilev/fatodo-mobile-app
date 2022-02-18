@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
 import MenuIcon from '../icons/MenuIcon';
 
-type HeaderProps = {
+export type HeaderProps = {
   route: RouteProp<ParamListBase>;
 };
 

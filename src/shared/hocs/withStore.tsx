@@ -5,7 +5,7 @@ import store from '../../store/store';
 
 const withStore =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     return (
       <Provider store={store}>
         <Component {...props} />

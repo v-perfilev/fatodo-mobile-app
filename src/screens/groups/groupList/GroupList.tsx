@@ -1,5 +1,4 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Box, Center, Spinner} from 'native-base';
 import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import withGroupListItems from '../../../shared/hocs/withLists/withGroupListItems';
@@ -9,6 +8,8 @@ import GroupListContainer from './GroupListContainer';
 import {useGroupListItemsContext} from '../../../shared/contexts/listContexts/groupListItemsContext';
 import ItemService from '../../../services/ItemService';
 import {useSnackContext} from '../../../shared/contexts/SnackContext';
+import CentredSpinner from '../../../components/layouts/CentredSpinner';
+import withContainer from '../../../shared/hocs/withContainer';
 
 const GroupList: FC = () => {
   const {handleCode, handleResponse} = useSnackContext();
@@ -60,17 +61,9 @@ const GroupList: FC = () => {
       const groupIds = groups.map((g) => g.id);
       loadInitialState(groupIds);
     }
-  }, [groups]);
+  }, [groups.length]);
 
-  return groupsLoading ? (
-    <Center flex={1}>
-      <Spinner />
-    </Center>
-  ) : (
-    <Box flex={1}>
-      <GroupListContainer sorting={sorting} />
-    </Box>
-  );
+  return groupsLoading ? <CentredSpinner /> : <GroupListContainer sorting={sorting} />;
 };
 
-export default flowRight([withHeader, withGroupList, withGroupListItems])(GroupList);
+export default flowRight([withHeader, withContainer, withGroupList, withGroupListItems])(GroupList);

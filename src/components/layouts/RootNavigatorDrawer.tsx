@@ -34,8 +34,8 @@ const RootNavigatorItem: FC<RootNavigatorItemProps> = ({
   const onPress = () => navigation.navigate(routeName);
 
   return (
-    <Pressable flex={1} cursor="pointer" onPress={onPress}>
-      <HStack space={5} alignItems="center">
+    <Pressable flex="1" cursor="pointer" onPress={onPress}>
+      <HStack space="5" alignItems="center">
         {icon && icon({focused: isFocused, color: color, size: 7})}
         <Text fontWeight="600" color={color} fontSize="16">
           {label}
@@ -59,8 +59,8 @@ const RootNavigatorDrawer: FC<DrawerContentComponentProps> = (props) => {
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={containerStyle}>
-      <Box flex={1} flexGrow={1}>
-        <VStack space={8} my={6} mx={8}>
+      <Box flex="1" flexGrow="1">
+        <VStack space="8" my="6" mx="8">
           {state.routes.map((route, index) => (
             <RootNavigatorItem
               routeKey={route.key}
@@ -74,9 +74,9 @@ const RootNavigatorDrawer: FC<DrawerContentComponentProps> = (props) => {
           ))}
         </VStack>
       </Box>
-      <Box flex={1} flexGrow={0}>
-        <VStack space={8} my={6} mx={8}>
-          <LanguageMenu space={5} />
+      <Box flex="1" flexGrow="0">
+        <VStack space="8" my="6" mx="8">
+          <LanguageMenu space="5" />
         </VStack>
       </Box>
     </DrawerContentScrollView>

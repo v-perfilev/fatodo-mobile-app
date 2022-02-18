@@ -5,7 +5,7 @@ import LanguageIcon from '../icons/LanguageIcon';
 import {LanguageUtils} from '../../shared/utils/LanguageUtils';
 
 type LanguageMenuProps = {
-  space?: number;
+  space?: string;
 };
 
 type LanguageMenuItemProps = {
@@ -14,7 +14,7 @@ type LanguageMenuItemProps = {
 };
 
 type LanguageMenuButtonProps = {
-  space: number;
+  space: string;
 };
 
 const LanguageMenuButton: FC<LanguageMenuButtonProps> = ({space}) => {
@@ -39,7 +39,7 @@ const LanguageMenuItem: FC<LanguageMenuItemProps> = ({name, code}) => {
   return <Menu.Item onPress={changeLanguage}>{name}</Menu.Item>;
 };
 
-const LanguageMenu: FC<LanguageMenuProps> = ({space = 2}) => {
+const LanguageMenu: FC<LanguageMenuProps> = ({space = '2'}) => {
   return (
     <Menu
       defaultIsOpen={false}

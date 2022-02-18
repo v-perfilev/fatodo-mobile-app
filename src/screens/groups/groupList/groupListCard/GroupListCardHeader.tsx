@@ -13,10 +13,8 @@ const GroupListCardHeader: FC<Props> = ({account, sorting, drag}: Props) => {
   const {group} = useGroupViewContext();
 
   return (
-    <Box flex={1} bg="primary.500" mt={10}>
-      <Box>
-        <Text>{group.title}</Text>
-      </Box>
+    <Box flex="1" bg="primary.500">
+      <Text>{group.title}</Text>
     </Box>
   );
 };

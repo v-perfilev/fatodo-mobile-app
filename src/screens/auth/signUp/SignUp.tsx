@@ -18,9 +18,9 @@ const SignUp: FC = () => {
 
   return (
     <ScrollView _contentContainerStyle={containerStyle}>
-      <Center flex={1} flexGrow={1} pt="10" pb="5">
+      <Center flex="1" flexGrow="1" pt="10" pb="5">
         <Box w="90%" maxW="300">
-          <Center flex={1}>
+          <Center flex="1">
             <Logo withText centerText />
           </Center>
           <SignUpForm onSuccess={goToSignIn} />
@@ -29,7 +29,7 @@ const SignUp: FC = () => {
           </Stack>
         </Box>
       </Center>
-      <Center flex={1} flexGrow={0} pt="5" pb="10">
+      <Center flex="1" flexGrow="0" pt="5" pb="10">
         <LanguageMenu />
       </Center>
     </ScrollView>

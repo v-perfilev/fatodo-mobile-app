@@ -8,7 +8,7 @@ import ItemService from '../../../services/ItemService';
 
 const withItemList =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     const {handleResponse} = useSnackContext();
     const [items, setItems] = useState<Item[]>([]);
     const [count, setCount] = useState<number>(0);
