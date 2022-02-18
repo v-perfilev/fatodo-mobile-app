@@ -3,7 +3,7 @@ import {useGroupListContext} from '../../../shared/contexts/listContexts/groupLi
 import DraggableFlatList, {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
 import {Group} from '../../../models/Group';
 import GroupListItem from './GroupListItem';
-import {Box} from 'native-base';
+import {Box, useTheme} from 'native-base';
 
 type GroupListContainerProps = {
   sorting: boolean;
@@ -11,6 +11,7 @@ type GroupListContainerProps = {
 
 const GroupListContainer: FC<GroupListContainerProps> = ({sorting}) => {
   const {groups, setGroups} = useGroupListContext();
+  const theme = useTheme();
 
   const extractKey = (group: Group): string => group.id;
 
@@ -19,17 +20,25 @@ const GroupListContainer: FC<GroupListContainerProps> = ({sorting}) => {
   const renderItem = (props: RenderItemParams<Group>) => {
     return (
       <ScaleDecorator>
-        <Box px="2" py="1">
+        <Box mx="2" mb="2">
           <GroupListItem sorting={sorting} {...props} />
         </Box>
       </ScaleDecorator>
     );
   };
 
+  const containerStyle = {
+    paddingTop: theme.sizes['3'],
+  };
+
   return (
-    <Box pt="2">
-      <DraggableFlatList data={groups} onDragEnd={handleDragEnd} keyExtractor={extractKey} renderItem={renderItem} />
-    </Box>
+    <DraggableFlatList
+      data={groups}
+      onDragEnd={handleDragEnd}
+      keyExtractor={extractKey}
+      renderItem={renderItem}
+      contentContainerStyle={containerStyle}
+    />
   );
 };
 

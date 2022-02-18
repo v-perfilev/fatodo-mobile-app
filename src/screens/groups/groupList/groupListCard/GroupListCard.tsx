@@ -62,8 +62,8 @@ const GroupListCard: FC<GroupListCardProps> = ({account, sorting, drag}) => {
 
   return (
     <NativeBaseProvider theme={theme}>
-      <Box borderRadius="3" shadow="9" pt="0" pb="1" px="1">
-        <Box borderRadius="3" overflow={'hidden'}>
+      <Box borderRadius="4" shadow="7" pt="0" pb="1" px="1">
+        <Box borderRadius="4" overflow="hidden">
           <GroupListCardHeader account={account} sorting={sorting} drag={drag} />
           <Collapsible collapsed={collapsed}>
             <GroupListCardContent items={items} count={count} />
