@@ -1,6 +1,6 @@
 import React, {FC, useMemo} from 'react';
 import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
-import {Box, VStack} from 'native-base';
+import {Box, Text, VStack} from 'native-base';
 import {Item} from '../../../../models/Item';
 import {useGroupListItemsContext} from '../../../../shared/contexts/listContexts/groupListItemsContext';
 
@@ -18,12 +18,12 @@ const GroupListCardContent: FC<GroupListCardContentProps> = ({items, count}) => 
   }, [group, listLoading]);
 
   return (
-    <Box flex="1" bg="white">
+    <Box bg="white">
       {!loading && count > 0 && (
-        <VStack flex="1">
+        <VStack py="1">
           {items.map((item) => (
-            <Box flex="1" key={item.id}>
-              {item.title}
+            <Box px="2" py="1" key={item.id}>
+              <Text>{item.title}</Text>
             </Box>
           ))}
         </VStack>
