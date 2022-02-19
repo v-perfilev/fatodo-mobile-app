@@ -4,7 +4,6 @@ import './shared/axios';
 import React, {FC} from 'react';
 import {flowRight} from 'lodash';
 import {ReduxAuthState} from './store/rerducers/AuthReducer';
-import {StatusBar, useTheme} from 'native-base';
 import {bindActionCreators} from 'redux';
 import {enqueueReduxSnack} from './store/actions/SnackActions';
 import setupAxiosInterceptors from './shared/axios';
@@ -17,6 +16,7 @@ import withNativeBase from './shared/hocs/withNativeBase';
 import withNavigationContainer from './shared/hocs/withNavigationContainer';
 import withSnackbar from './shared/hocs/withSnackbar';
 import withAuthState from './shared/hocs/withAuthState';
+import {StatusBar, useTheme} from 'native-base';
 
 // setup axios
 const axiosActions = bindActionCreators({clearAuth, enqueueReduxSnack}, store.dispatch);

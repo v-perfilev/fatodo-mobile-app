@@ -66,7 +66,7 @@ const GroupListCard: FC<GroupListCardProps> = ({account, sorting, drag}) => {
       <Box borderRadius="4" shadow="7" pt="0" pb="1" px="1">
         <Box borderRadius="4" overflow="hidden">
           <GroupListCardHeader account={account} sorting={sorting} drag={drag} />
-          <Collapsible collapsed={collapsed}>
+          <Collapsible collapsed={collapsed} duration={300}>
             <GroupListCardContent items={items} count={count} />
           </Collapsible>
         </Box>

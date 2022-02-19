@@ -5,7 +5,7 @@ import {DrawerNavigationState, NavigationHelpers, ParamListBase} from '@react-na
 import {DrawerDescriptorMap} from '@react-navigation/drawer/lib/typescript/src/types';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
 import {useTranslation} from 'react-i18next';
-import LanguageMenu from './LanguageMenu';
+import LanguageMenu from '../controls/LanguageMenu';
 
 type RootNavigatorItemProps = {
   routeName: string;

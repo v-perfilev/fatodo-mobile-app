@@ -1,8 +1,9 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC, memo, useMemo} from 'react';
 import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
 import {Box, Text, VStack} from 'native-base';
 import {Item} from '../../../../models/Item';
 import {useGroupListItemsContext} from '../../../../shared/contexts/listContexts/groupListItemsContext';
+import {flowRight} from 'lodash';
 
 type GroupListCardContentProps = {
   items: Item[];
@@ -32,4 +33,4 @@ const GroupListCardContent: FC<GroupListCardContentProps> = ({items, count}) => 
   );
 };
 
-export default GroupListCardContent;
+export default flowRight([memo])(GroupListCardContent);

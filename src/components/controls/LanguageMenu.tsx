@@ -1,8 +1,9 @@
 import React, {FC} from 'react';
-import {HStack, Menu, Pressable, Text} from 'native-base';
+import {HStack, Pressable, Text} from 'native-base';
 import {languages} from '../../shared/i18n';
 import LanguageIcon from '../icons/LanguageIcon';
 import {LanguageUtils} from '../../shared/utils/LanguageUtils';
+import Menu, {MenuItem} from './menu/Menu';
 
 type LanguageMenuProps = {
   space?: string;
@@ -36,15 +37,14 @@ const LanguageMenuItem: FC<LanguageMenuItemProps> = ({name, code}) => {
     LanguageUtils.setLanguage(code);
   };
 
-  return <Menu.Item onPress={changeLanguage}>{name}</Menu.Item>;
+  return <MenuItem action={changeLanguage} text={name} />;
 };
 
 const LanguageMenu: FC<LanguageMenuProps> = ({space = '2'}) => {
   return (
     <Menu
-      defaultIsOpen={false}
       trigger={(triggerProps) => (
-        <Pressable {...triggerProps} _pressed={{opacity: 0.5}}>
+        <Pressable {...triggerProps} _pressed={{opacity: 0.7}}>
           <LanguageMenuButton space={space} />
         </Pressable>
       )}

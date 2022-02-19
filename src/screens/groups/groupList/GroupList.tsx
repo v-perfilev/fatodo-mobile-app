@@ -8,7 +8,7 @@ import GroupListContainer from './GroupListContainer';
 import {useGroupListItemsContext} from '../../../shared/contexts/listContexts/groupListItemsContext';
 import ItemService from '../../../services/ItemService';
 import {useSnackContext} from '../../../shared/contexts/SnackContext';
-import CentredSpinner from '../../../components/layouts/CentredSpinner';
+import CentredSpinner from '../../../components/surfaces/CentredSpinner';
 import withContainer from '../../../shared/hocs/withContainer';
 
 const GroupList: FC = () => {

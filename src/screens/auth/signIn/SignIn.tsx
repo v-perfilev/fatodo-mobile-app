@@ -6,7 +6,7 @@ import LinkButton from '../../../components/controls/LinkButton';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {AuthNavigationProp} from '../../../navigators/AuthNavigator';
-import LanguageMenu from '../../../components/layouts/LanguageMenu';
+import LanguageMenu from '../../../components/controls/LanguageMenu';
 
 const SignIn: FC = () => {
   const navigation = useNavigation<AuthNavigationProp>();
