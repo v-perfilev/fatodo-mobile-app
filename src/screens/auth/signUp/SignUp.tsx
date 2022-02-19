@@ -17,7 +17,7 @@ const SignUp: FC = () => {
   const containerStyle = {flexGrow: 1};
 
   return (
-    <ScrollView _contentContainerStyle={containerStyle}>
+    <ScrollView keyboardShouldPersistTaps="handled" _contentContainerStyle={containerStyle}>
       <Center flex="1" flexGrow="1" pt="10" pb="5">
         <Box w="90%" maxW="300">
           <Center flex="1">

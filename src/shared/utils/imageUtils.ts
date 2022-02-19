@@ -1,4 +1,4 @@
-import {IMAGE_API_URL} from '../../constants';
+import {IMAGE_URL} from '../../constants';
 
 export class ImageUtils {
   private static thumbnailPostfix = '/thumbnail';
@@ -8,7 +8,7 @@ export class ImageUtils {
   public static getThumbnail = (url: string): string => ImageUtils.handleUrl(url, true);
 
   private static handleUrl = (url: string, isThumbnail: boolean): string => {
-    return ImageUtils.isUrl(url) ? url : IMAGE_API_URL + url + (isThumbnail ? ImageUtils.thumbnailPostfix : '');
+    return ImageUtils.isUrl(url) ? url : IMAGE_URL + url + (isThumbnail ? ImageUtils.thumbnailPostfix : '');
   };
 
   private static isUrl = (url: string): boolean => {
