@@ -1,16 +1,13 @@
-import {NativeBaseProvider} from 'native-base';
 import React, {ComponentType, FC, ReactElement} from 'react';
-import {ThemeFactory} from '../themes/ThemeFactory';
-
-const defaultTheme = ThemeFactory.getDefaultTheme();
+import ThemeProvider from '../../components/layouts/ThemeProvider';
 
 const withNativeBase =
   (Component: ComponentType): FC =>
-  (props): ReactElement => {
+  (props: any): ReactElement => {
     return (
-      <NativeBaseProvider theme={defaultTheme}>
+      <ThemeProvider>
         <Component {...props} />
-      </NativeBaseProvider>
+      </ThemeProvider>
     );
   };
 

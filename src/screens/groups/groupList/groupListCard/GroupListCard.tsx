@@ -6,13 +6,14 @@ import {useUserListContext} from '../../../../shared/contexts/listContexts/userL
 import {ThemeFactory} from '../../../../shared/themes/ThemeFactory';
 import withAuthState from '../../../../shared/hocs/withAuthState';
 import {flowRight} from 'lodash';
-import {Box, NativeBaseProvider} from 'native-base';
+import {Box} from 'native-base';
 import {ReduxAuthState} from '../../../../store/rerducers/AuthReducer';
 import GroupListCardHeader from './GroupListCardHeader';
 import GroupListCardContent from './GroupListCardContent';
 import {RenderItemParams} from 'react-native-draggable-flatlist';
 import {Group} from '../../../../models/Group';
 import Collapsible from 'react-native-collapsible';
+import ThemeProvider from '../../../../components/layouts/ThemeProvider';
 
 type GroupListCardProps = ReduxAuthState &
   RenderItemParams<Group> & {
@@ -61,7 +62,7 @@ const GroupListCard: FC<GroupListCardProps> = ({account, sorting, drag}) => {
   const theme = ThemeFactory.getTheme(group?.color);
 
   return (
-    <NativeBaseProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Box borderRadius="4" shadow="7" pt="0" pb="1" px="1">
         <Box borderRadius="4" overflow="hidden">
           <GroupListCardHeader account={account} sorting={sorting} drag={drag} />
@@ -70,7 +71,7 @@ const GroupListCard: FC<GroupListCardProps> = ({account, sorting, drag}) => {
           </Collapsible>
         </Box>
       </Box>
-    </NativeBaseProvider>
+    </ThemeProvider>
   );
 };
 

@@ -12,8 +12,16 @@ type Props = {
 const GroupListCardHeader: FC<Props> = ({account, sorting, drag}: Props) => {
   const {group} = useGroupViewContext();
 
+  const linearGradient = {
+    linearGradient: {
+      colors: ['primary.500', 'primary.300'],
+      start: [0, 0],
+      end: [1, 1],
+    },
+  };
+
   return (
-    <Box px="2" py="1.5" bg="primary.500">
+    <Box px="2" py="1.5" bg={linearGradient}>
       <Text fontWeight="600" fontSize="14" color="white">
         {group.title}
       </Text>
