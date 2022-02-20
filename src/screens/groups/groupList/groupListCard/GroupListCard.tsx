@@ -63,13 +63,11 @@ const GroupListCard: FC<GroupListCardProps> = ({account, sorting, drag}) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box borderRadius="4" shadow="7" pt="0" pb="1" px="1">
-        <Box borderRadius="4" overflow="hidden">
-          <GroupListCardHeader account={account} sorting={sorting} drag={drag} />
-          <Collapsible collapsed={collapsed} duration={300}>
-            <GroupListCardContent items={items} count={count} />
-          </Collapsible>
-        </Box>
+      <Box borderRadius="4" shadow="6" mb="1" mx="1" overflow="hidden">
+        <GroupListCardHeader account={account} sorting={sorting} drag={drag} />
+        <Collapsible collapsed={collapsed} duration={300}>
+          <GroupListCardContent items={items} count={count} />
+        </Collapsible>
       </Box>
     </ThemeProvider>
   );
