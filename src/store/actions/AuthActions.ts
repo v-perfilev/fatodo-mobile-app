@@ -18,9 +18,11 @@ export const clearAuth =
   };
 
 export const login =
-  (username: string, token: string) =>
+  (username?: string, token?: string) =>
   async (dispatch: Dispatch): Promise<void> => {
-    await SecurityUtils.saveAuthToken(username, token);
+    if (username && token) {
+      await SecurityUtils.saveAuthToken(username, token);
+    }
     dispatch({type: ACTION_TYPES.LOGIN});
   };
 

@@ -5,8 +5,8 @@
     "Groups": "Groups",
     "Contacts": "Contacts",
     "Chats": "Chats",
-    "GroupList": "Groups",
-    "ContactList": "Contacts",
-    "ChatList": "Chats"
+    "GroupList": "GroupList",
+    "ContactList": "ContactList",
+    "ChatList": "ChatList"
   }
 }
