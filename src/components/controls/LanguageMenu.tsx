@@ -44,7 +44,7 @@ const LanguageMenu: FC<LanguageMenuProps> = ({space = '2'}) => {
   return (
     <Menu
       trigger={(triggerProps) => (
-        <Pressable {...triggerProps} _pressed={{opacity: 0.7}}>
+        <Pressable _pressed={{opacity: 0.7}} {...triggerProps}>
           <LanguageMenuButton space={space} />
         </Pressable>
       )}

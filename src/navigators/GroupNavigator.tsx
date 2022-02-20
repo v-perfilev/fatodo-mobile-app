@@ -18,7 +18,7 @@ export type GroupNavigationProp = NativeStackNavigationProp<GroupParamList>;
 
 const GroupNavigator: FC = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="GroupList">
+    <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="GroupList">
       <Stack.Screen name="GroupList" component={GroupList} />
       <Stack.Screen name="GroupView" component={GroupView} />
       <Stack.Screen name="GroupCreate" component={GroupCreate} />

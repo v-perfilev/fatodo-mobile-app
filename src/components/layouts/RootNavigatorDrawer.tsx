@@ -34,7 +34,7 @@ const RootNavigatorItem: FC<RootNavigatorItemProps> = ({
   const onPress = () => navigation.navigate(routeName);
 
   return (
-    <Pressable flex="1" cursor="pointer" onPress={onPress}>
+    <Pressable flex="1" _pressed={{opacity: 0.7}} onPress={onPress}>
       <HStack space="5" alignItems="center">
         {icon && icon({focused: isFocused, color: color, size: 7})}
         <Text fontWeight="600" color={color} fontSize="16">

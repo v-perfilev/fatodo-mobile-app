@@ -12,7 +12,7 @@ export type ChatNavigationProp = NativeStackNavigationProp<ChatParamList>;
 
 const ChatNavigator: FC = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="ChatList">
+    <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="ChatList">
       <Stack.Screen name="ChatList" component={ChatList} />
     </Stack.Navigator>
   );

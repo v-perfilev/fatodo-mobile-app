@@ -30,15 +30,15 @@ const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({account}) =>
   const canEdit = group && GroupUtils.canEdit(account, group);
   const canAdmin = group && GroupUtils.canAdmin(account, group);
 
-  const redirectToItemCreate = (): void => {
+  const goToItemCreate = (): void => {
     navigation.navigate('GroupCreate');
   };
 
-  const redirectToGroupView = (): void => {
+  const goToGroupView = (): void => {
     navigation.navigate('GroupView');
   };
 
-  const redirectToGroupEdit = (): void => {
+  const goToGroupEdit = (): void => {
     navigation.navigate('GroupEdit');
   };
 
@@ -50,18 +50,18 @@ const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({account}) =>
 
   const menuItems = [
     {
-      action: redirectToItemCreate,
+      action: goToItemCreate,
       icon: <PlusIcon size="sm" color="primary.500" />,
       text: t('group:menu.createItem'),
       show: canEdit,
     },
     {
-      action: redirectToGroupView,
+      action: goToGroupView,
       icon: <EyeIcon size="sm" color="primary.500" />,
       text: t('group:menu.viewGroup'),
     },
     {
-      action: redirectToGroupEdit,
+      action: goToGroupEdit,
       icon: <EditIcon size="sm" color="primary.500" />,
       text: t('group:menu.editGroup'),
       show: canAdmin,
@@ -77,7 +77,7 @@ const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({account}) =>
   return (
     <Menu
       trigger={(triggerProps) => (
-        <Pressable {...triggerProps} _pressed={{opacity: 0.7}}>
+        <Pressable _pressed={{opacity: 0.7}} {...triggerProps}>
           <RoundButton withoutPressable>
             <DotsVerticalIcon size="6" color="white" />
           </RoundButton>

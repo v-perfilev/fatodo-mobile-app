@@ -12,7 +12,7 @@ export type ContactNavigationProp = NativeStackNavigationProp<ContactParamList>;
 
 const ContactNavigator: FC = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="ContactList">
+    <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="ContactList">
       <Stack.Screen name="ContactList" component={ContactList} />
     </Stack.Navigator>
   );
