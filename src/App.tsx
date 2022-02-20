@@ -1,7 +1,7 @@
 import './shared/i18n';
 import './shared/axios';
 
-import React, {FC, PropsWithChildren, useEffect} from 'react';
+import React, {FC, PropsWithChildren, useEffect, useState} from 'react';
 import {flowRight} from 'lodash';
 import {ReduxAuthState} from './store/rerducers/AuthReducer';
 import {bindActionCreators} from 'redux';
@@ -33,21 +33,25 @@ const connector = connect(null, mapDispatchToProps);
 type AppProps = ReduxAuthState & PropsWithChildren<ConnectedProps<typeof connector>>;
 
 const App: FC<AppProps> = ({isAuthenticated, login, requestAccountData}) => {
+  const [ready, setReady] = useState(false);
   const theme = useTheme();
   const backgroundColor = theme.colors.white;
 
   useEffect(() => {
-    const token = SecurityUtils.getAuthToken();
-    if (token) {
-      login();
-      requestAccountData();
-    }
+    SecurityUtils.getAuthToken().then((token) => {
+      if (token) {
+        login();
+        requestAccountData();
+      }
+      setReady(true);
+    });
   }, []);
 
   return (
     <>
       <StatusBar backgroundColor={backgroundColor} barStyle="dark-content" />
-      {isAuthenticated ? <RootNavigator /> : <AuthNavigator />}
+      {ready && isAuthenticated && <RootNavigator />}
+      {ready && !isAuthenticated && <AuthNavigator />}
     </>
   );
 };

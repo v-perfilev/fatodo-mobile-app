@@ -38,7 +38,7 @@ const setupAxiosInterceptors = ({onUnauthenticated, enqueueReduxSnackbar}: Setup
   const onResponseError = (err: AxiosError): AxiosPromise => {
     handleErrorFeedback(err.response);
     handleErrorStatus(err.response);
-    return Promise.reject(err.response);
+    return Promise.reject(err);
   };
 
   const onRequestSuccess = async (request: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
