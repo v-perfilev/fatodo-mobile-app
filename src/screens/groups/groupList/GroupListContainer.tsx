@@ -17,15 +17,13 @@ const GroupListContainer: FC<GroupListContainerProps> = ({sorting}) => {
 
   const handleDragEnd = ({data}: DragEndParams<Group>): void => setGroups(data);
 
-  const renderItem = (props: RenderItemParams<Group>) => {
-    return (
-      <ScaleDecorator>
-        <Box mx="2" mb="2">
-          <GroupListItem sorting={sorting} {...props} />
-        </Box>
-      </ScaleDecorator>
-    );
-  };
+  const renderItem = (props: RenderItemParams<Group>) => (
+    <ScaleDecorator>
+      <Box mx="2" mb="2">
+        <GroupListItem sorting={sorting} {...props} />
+      </Box>
+    </ScaleDecorator>
+  );
 
   const containerStyle = {
     paddingTop: theme.sizes['3'],

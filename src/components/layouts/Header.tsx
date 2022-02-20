@@ -17,7 +17,7 @@ const Header: FC<HeaderProps> = ({navigation, route}) => {
   const {toggleDrawer} = useDrawerContext();
   const label = t('routes.' + route.name);
 
-  const canGoBack = navigation.canGoBack();
+  const canGoBack = navigation.canGoBack() && navigation.getState().routes.length > 1;
   const goBack = (): void => navigation.goBack();
 
   const backgroundColor = theme.colors.primary['500'];

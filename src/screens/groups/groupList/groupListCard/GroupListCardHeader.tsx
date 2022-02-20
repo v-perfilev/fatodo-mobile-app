@@ -1,20 +1,21 @@
 import {UserAccount} from '../../../../models/User';
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
 import {Box, HStack, Pressable, Text} from 'native-base';
-import UrlPic from '../../../../components/surfaces/UrlPic';
 import GroupListCardCollapseButton from './GroupListCardCollapseButton';
-import GroupListCardMenuButton from './GroupListCardMenuButton';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
+import {flowRight} from 'lodash';
+import UrlPic from '../../../../components/surfaces/UrlPic';
+import GroupListCardMenuButton from './GroupListCardMenuButton';
 
-type Props = {
+type GroupListCardHeaderProps = {
   account: UserAccount;
   sorting: boolean;
   drag: () => void;
 };
 
-const GroupListCardHeader: FC<Props> = ({account, sorting, drag}: Props) => {
+const GroupListCardHeader: FC<GroupListCardHeaderProps> = ({account, sorting, drag}: GroupListCardHeaderProps) => {
   const {group} = useGroupViewContext();
   const navigation = useNavigation<GroupNavigationProp>();
 
@@ -48,4 +49,4 @@ const GroupListCardHeader: FC<Props> = ({account, sorting, drag}: Props) => {
   );
 };
 
-export default GroupListCardHeader;
+export default flowRight([memo])(GroupListCardHeader);

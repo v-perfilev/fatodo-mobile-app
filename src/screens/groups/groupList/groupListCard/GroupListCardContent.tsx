@@ -1,23 +1,15 @@
-import React, {FC, memo, useMemo} from 'react';
-import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
+import React, {FC, memo} from 'react';
 import {Box, Text, VStack} from 'native-base';
-import {Item} from '../../../../models/Item';
-import {useGroupListItemsContext} from '../../../../shared/contexts/listContexts/groupListItemsContext';
 import {flowRight} from 'lodash';
+import {Item} from '../../../../models/Item';
 
 type GroupListCardContentProps = {
   items: Item[];
   count: number;
+  loading: boolean;
 };
 
-const GroupListCardContent: FC<GroupListCardContentProps> = ({items, count}) => {
-  const {group} = useGroupViewContext();
-  const {loading: listLoading} = useGroupListItemsContext();
-
-  const loading = useMemo<boolean>(() => {
-    return group && listLoading.has(group.id) ? listLoading.get(group.id) : false;
-  }, [group, listLoading]);
-
+const GroupListCardContent: FC<GroupListCardContentProps> = ({items, count, loading}) => {
   return (
     <Box bg="white">
       {!loading && count > 0 && (

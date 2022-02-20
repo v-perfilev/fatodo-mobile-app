@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useContext} from 'react';
-import {Item} from '../../../models/item.model';
+import {Item} from '../../../models/Item';
 
 export interface GroupListItemsState {
   items: Map<string, Item[]>;
