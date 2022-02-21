@@ -1,17 +1,16 @@
-import React, {FC} from 'react';
-import {ArrowBackIcon, Box, HStack, Pressable, StatusBar, Text, useTheme} from 'native-base';
-import {RouteProp} from '@react-navigation/native';
+import React, {FC, PropsWithChildren} from 'react';
+import {ArrowBackIcon, Box, HStack, StatusBar, Text, useTheme} from 'native-base';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
 import MenuIcon from '../icons/MenuIcon';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import PressableButton from '../controls/PressableButton';
 
-export type HeaderProps = {
-  navigation: NativeStackNavigationProp<any>;
-  route: RouteProp<any>;
-};
+type HeaderProps = PropsWithChildren<any>;
 
-const Header: FC<HeaderProps> = ({navigation, route}) => {
+const Header: FC<HeaderProps> = ({children}) => {
+  const navigation = useNavigation();
+  const route = useRoute();
   const {t} = useTranslation();
   const theme = useTheme();
   const {toggleDrawer} = useDrawerContext();
@@ -26,18 +25,21 @@ const Header: FC<HeaderProps> = ({navigation, route}) => {
     <>
       <StatusBar backgroundColor={backgroundColor} barStyle="light-content" />
       <Box safeAreaBottom width="100%">
-        <HStack space="5" px="4" py="2.5" bg="primary.500" alignItems="center">
+        <HStack h="12" space="5" px="4" bg="primary.500" alignItems="center">
           {canGoBack && (
-            <Pressable _pressed={{opacity: 0.7}} onPress={goBack}>
-              <ArrowBackIcon color="white" size="8" />
-            </Pressable>
+            <PressableButton onPress={goBack}>
+              <ArrowBackIcon color="white" size="7" />
+            </PressableButton>
           )}
-          <Pressable _pressed={{opacity: 0.7}} onPress={toggleDrawer}>
-            <MenuIcon color="white" size="8" />
-          </Pressable>
+          <PressableButton onPress={toggleDrawer}>
+            <MenuIcon color="white" size="7" />
+          </PressableButton>
           <Text fontWeight="800" fontSize="20" color="white">
             {label}
           </Text>
+          <HStack flex="1" space="2" alignItems="center" justifyContent="flex-end">
+            {children}
+          </HStack>
         </HStack>
       </Box>
     </>

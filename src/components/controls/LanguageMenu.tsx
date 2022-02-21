@@ -25,7 +25,7 @@ const LanguageMenuButton: FC<LanguageMenuButtonProps> = ({space}) => {
   return (
     <HStack space={space} alignItems="center">
       <LanguageIcon size="7" color="primary.500" />
-      <Text fontWeight="600" fontSize="16" color="primary.500">
+      <Text fontWeight="400" fontSize="16" color="primary.500">
         {language}
       </Text>
     </HStack>

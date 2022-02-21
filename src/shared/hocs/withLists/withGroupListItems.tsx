@@ -86,7 +86,7 @@ const withGroupListItems =
     };
 
     const allCollapsed = useMemo<boolean>(() => {
-      return Array.from(collapsed.values()).every(Boolean);
+      return collapsed.size ? Array.from(collapsed.values()).every(Boolean) : false;
     }, [collapsed]);
 
     const setAllCollapsed = (value: boolean): void => {

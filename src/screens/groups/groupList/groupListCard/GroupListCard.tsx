@@ -20,7 +20,7 @@ type GroupListCardProps = ReduxAuthState &
     sorting: boolean;
   };
 
-const GroupListCard: FC<GroupListCardProps> = ({account, sorting, drag}) => {
+const GroupListCard: FC<GroupListCardProps> = ({sorting, drag}) => {
   const {handleUserIds} = useUserListContext();
   const {group} = useGroupViewContext();
   const {
@@ -62,8 +62,8 @@ const GroupListCard: FC<GroupListCardProps> = ({account, sorting, drag}) => {
   return (
     <ThemeProvider theme={theme}>
       <Box borderRadius="4" shadow="6" mb="1" mx="1" overflow="hidden">
-        <GroupListCardHeader account={account} sorting={sorting} drag={drag} />
-        <Collapsible collapsed={collapsed} duration={300}>
+        <GroupListCardHeader sorting={sorting} drag={drag} />
+        <Collapsible collapsed={collapsed}>
           <GroupListCardContent items={items} count={count} loading={loading} />
         </Collapsible>
       </Box>

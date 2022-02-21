@@ -1,4 +1,3 @@
-import {UserAccount} from '../../../../models/User';
 import React, {FC, memo} from 'react';
 import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
 import {Box, HStack, Pressable, Text} from 'native-base';
@@ -8,14 +7,15 @@ import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import {flowRight} from 'lodash';
 import UrlPic from '../../../../components/surfaces/UrlPic';
 import GroupListCardMenuButton from './GroupListCardMenuButton';
+import PressableButton from '../../../../components/controls/PressableButton';
+import ReorderIcon from '../../../../components/icons/ReorderIcon';
 
 type GroupListCardHeaderProps = {
-  account: UserAccount;
   sorting: boolean;
   drag: () => void;
 };
 
-const GroupListCardHeader: FC<GroupListCardHeaderProps> = ({account, sorting, drag}: GroupListCardHeaderProps) => {
+const GroupListCardHeader: FC<GroupListCardHeaderProps> = ({sorting, drag}: GroupListCardHeaderProps) => {
   const {group} = useGroupViewContext();
   const navigation = useNavigation<GroupNavigationProp>();
 
@@ -40,8 +40,18 @@ const GroupListCardHeader: FC<GroupListCardHeaderProps> = ({account, sorting, dr
             {group.title}
           </Text>
           <HStack flex="1" space="2" alignItems="center" justifyContent="flex-end">
-            <GroupListCardMenuButton />
-            <GroupListCardCollapseButton />
+            {sorting ? (
+              <>
+                <PressableButton onPressIn={drag}>
+                  <ReorderIcon color="white" size="6" />
+                </PressableButton>
+              </>
+            ) : (
+              <>
+                <GroupListCardMenuButton />
+                <GroupListCardCollapseButton />
+              </>
+            )}
           </HStack>
         </HStack>
       </Box>

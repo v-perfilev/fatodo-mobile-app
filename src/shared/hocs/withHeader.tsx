@@ -6,7 +6,7 @@ const withHeader =
   (props: any): ReactElement => {
     return (
       <>
-        <Header {...props} />
+        <Header />
         <Component {...props} />
       </>
     );

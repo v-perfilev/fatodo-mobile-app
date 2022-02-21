@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
-import {Box, Center, Pressable} from 'native-base';
+import {Box, Center} from 'native-base';
 import {IPressableProps} from 'native-base/lib/typescript/components/primitives/Pressable/types';
+import PressableButton from './PressableButton';
 
 type RoundButtonProps = IPressableProps & {
   size?: number;
@@ -14,13 +15,7 @@ const RoundButton: FC<RoundButtonProps> = ({children, size = 7, withoutPressable
     </Box>
   );
 
-  return withoutPressable ? (
-    box
-  ) : (
-    <Pressable _pressed={{opacity: 0.7}} {...props}>
-      {box}
-    </Pressable>
-  );
+  return withoutPressable ? box : <PressableButton {...props}>{box}</PressableButton>;
 };
 
 export default RoundButton;

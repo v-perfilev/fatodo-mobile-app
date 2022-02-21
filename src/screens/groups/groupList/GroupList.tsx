@@ -1,6 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
 import {flowRight} from 'lodash';
-import withHeader from '../../../shared/hocs/withHeader';
 import withGroupListItems from '../../../shared/hocs/withLists/withGroupListItems';
 import withGroupList from '../../../shared/hocs/withLists/withGroupList';
 import {useGroupListContext} from '../../../shared/contexts/listContexts/groupListContext';
@@ -9,9 +8,19 @@ import {useGroupListItemsContext} from '../../../shared/contexts/listContexts/gr
 import ItemService from '../../../services/ItemService';
 import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import CentredSpinner from '../../../components/surfaces/CentredSpinner';
-import withContainer from '../../../shared/hocs/withContainer';
+import Header from '../../../components/layouts/Header';
+import CollapsedIcon from '../../../components/icons/CollapsedIcon';
+import PlusIcon from '../../../components/icons/PlusIcon';
+import {useNavigation} from '@react-navigation/native';
+import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
+import ReorderIcon from '../../../components/icons/ReorderIcon';
+import CheckIcon from '../../../components/icons/CheckIcon';
+import CloseIcon from '../../../components/icons/CloseIcon';
+import PressableButton from '../../../components/controls/PressableButton';
+import {Box} from 'native-base';
 
 const GroupList: FC = () => {
+  const navigation = useNavigation<GroupNavigationProp>();
   const {handleCode, handleResponse} = useSnackContext();
   const {groups, load: loadGroups, loading: groupsLoading} = useGroupListContext();
   const {loadInitialState, allCollapsed, setAllCollapsed} = useGroupListItemsContext();
@@ -28,8 +37,7 @@ const GroupList: FC = () => {
       });
   };
 
-  const collapseAll = (): void => setAllCollapsed(true);
-  const expandAll = (): void => setAllCollapsed(false);
+  const switchCollapsed = (): void => setAllCollapsed(!allCollapsed);
 
   const enableSorting = (): void => {
     setAllCollapsed(true);
@@ -37,7 +45,7 @@ const GroupList: FC = () => {
       () => {
         setSorting(true);
       },
-      allCollapsed ? 0 : 500,
+      allCollapsed ? 0 : 300,
     );
   };
 
@@ -52,6 +60,10 @@ const GroupList: FC = () => {
     setSorting(false);
   };
 
+  const goToGroupCreate = (): void => {
+    navigation.navigate('GroupCreate');
+  };
+
   useEffect(() => {
     loadGroups();
   }, []);
@@ -63,7 +75,35 @@ const GroupList: FC = () => {
     }
   }, [groups.length]);
 
-  return groupsLoading ? <CentredSpinner /> : <GroupListContainer sorting={sorting} />;
+  return (
+    <>
+      <Header>
+        {sorting ? (
+          <>
+            <PressableButton onPress={saveSorting}>
+              <CheckIcon color="white" size="8" />
+            </PressableButton>
+            <PressableButton onPress={cancelSorting}>
+              <CloseIcon color="white" size="8" />
+            </PressableButton>
+          </>
+        ) : (
+          <>
+            <PressableButton onPress={goToGroupCreate}>
+              <PlusIcon color="white" size="8" />
+            </PressableButton>
+            <PressableButton onPress={enableSorting}>
+              <ReorderIcon color="white" size="6" />
+            </PressableButton>
+            <PressableButton onPress={switchCollapsed}>
+              <CollapsedIcon visible={!allCollapsed} color="white" size="8" />
+            </PressableButton>
+          </>
+        )}
+      </Header>
+      <Box flex="1">{groupsLoading ? <CentredSpinner /> : <GroupListContainer sorting={sorting} />}</Box>
+    </>
+  );
 };
 
-export default flowRight([withHeader, withContainer, withGroupList, withGroupListItems])(GroupList);
+export default flowRight([withGroupList, withGroupListItems])(GroupList);
