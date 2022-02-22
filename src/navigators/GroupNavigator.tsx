@@ -8,14 +8,14 @@ import ItemEdit from '../screens/items/itemEdit/ItemEdit';
 import ItemCreate from '../screens/items/itemCreate/ItemCreate';
 import ItemView from '../screens/items/itemView/ItemView';
 
-type GroupParamList = {
+export type GroupParamList = {
   GroupList: undefined;
-  GroupView: undefined;
+  GroupView: {groupId: string};
   GroupCreate: undefined;
-  GroupEdit: undefined;
-  ItemView: undefined;
-  ItemCreate: undefined;
-  ItemEdit: undefined;
+  GroupEdit: {groupId: string};
+  ItemView: {itemId: string};
+  ItemCreate: {groupId: string};
+  ItemEdit: {itemId: string};
 };
 
 const Stack = createNativeStackNavigator<GroupParamList>();

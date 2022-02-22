@@ -20,7 +20,7 @@ const GroupListCardHeader: FC<GroupListCardHeaderProps> = ({sorting, drag}: Grou
   const navigation = useNavigation<GroupNavigationProp>();
 
   const goToGroupView = (): void => {
-    navigation.navigate('GroupView');
+    navigation.navigate('GroupView', {groupId: group.id});
   };
 
   const linearGradient = {
@@ -36,7 +36,7 @@ const GroupListCardHeader: FC<GroupListCardHeaderProps> = ({sorting, drag}: Grou
       <Box h="45px" px="2" bg={linearGradient} justifyContent="center">
         <HStack space="2" alignItems="center">
           {group.imageFilename && <UrlPic url={group.imageFilename} size="9" border={1} invertedBorder />}
-          <Text fontWeight="600" fontSize="14" color="white">
+          <Text fontWeight="600" fontSize="14" color="white" isTruncated>
             {group.title}
           </Text>
           <HStack flex="1" space="2" alignItems="center" justifyContent="flex-end">

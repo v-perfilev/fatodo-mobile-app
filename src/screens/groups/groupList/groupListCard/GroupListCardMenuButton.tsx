@@ -31,15 +31,15 @@ const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({account}) =>
   const canAdmin = group && GroupUtils.canAdmin(account, group);
 
   const goToItemCreate = (): void => {
-    navigation.navigate('GroupCreate');
+    navigation.navigate('ItemCreate', {groupId: group.id});
   };
 
   const goToGroupView = (): void => {
-    navigation.navigate('GroupView');
+    navigation.navigate('GroupView', {groupId: group.id});
   };
 
   const goToGroupEdit = (): void => {
-    navigation.navigate('GroupEdit');
+    navigation.navigate('GroupEdit', {groupId: group.id});
   };
 
   const openGroupDeleteDialog = (): void => {

@@ -6,15 +6,17 @@ import {useDrawerContext} from '../../shared/contexts/DrawerContext';
 import MenuIcon from '../icons/MenuIcon';
 import PressableButton from '../controls/PressableButton';
 
-type HeaderProps = PropsWithChildren<any>;
+type HeaderProps = PropsWithChildren<any> & {
+  title?: string;
+};
 
-const Header: FC<HeaderProps> = ({children}) => {
+const Header: FC<HeaderProps> = ({children, title}) => {
   const navigation = useNavigation();
   const route = useRoute();
   const {t} = useTranslation();
   const theme = useTheme();
   const {toggleDrawer} = useDrawerContext();
-  const label = t('routes.' + route.name);
+  const label = title || t('routes.' + route.name);
 
   const canGoBack = navigation.canGoBack() && navigation.getState().routes.length > 1;
   const goBack = (): void => navigation.goBack();
@@ -34,7 +36,7 @@ const Header: FC<HeaderProps> = ({children}) => {
           <PressableButton onPress={toggleDrawer}>
             <MenuIcon color="white" size="7" />
           </PressableButton>
-          <Text fontWeight="800" fontSize="20" color="white">
+          <Text fontWeight="800" fontSize="20" color="white" isTruncated>
             {label}
           </Text>
           <HStack flex="1" space="2" alignItems="center" justifyContent="flex-end">

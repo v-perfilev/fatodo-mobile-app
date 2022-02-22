@@ -6,7 +6,7 @@ import {ArchivedItemListContext} from '../../contexts/listContexts/archivedItemL
 import {ArrayUtils} from '../../utils/ArrayUtils';
 import ItemService from '../../../services/ItemService';
 
-const withItemList =
+const withArchivedItemList =
   (Component: ComponentType): FC =>
   (props: any): ReactElement => {
     const {handleResponse} = useSnackContext();
@@ -74,4 +74,4 @@ const withItemList =
     );
   };
 
-export default withItemList;
+export default withArchivedItemList;
