@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {Text} from 'react-native';
 import {Center} from 'native-base';
-import withHeader from '../../shared/hocs/withHeader';
+import withHeader from '../../../shared/hocs/withHeader';
 import {flowRight} from 'lodash';
 
 const ContactList: FC = () => {

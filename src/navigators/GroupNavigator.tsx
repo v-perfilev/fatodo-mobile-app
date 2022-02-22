@@ -4,12 +4,18 @@ import GroupList from '../screens/groups/groupList/GroupList';
 import GroupView from '../screens/groups/groupView/GroupView';
 import GroupCreate from '../screens/groups/groupCreate/GroupCreate';
 import GroupEdit from '../screens/groups/groupEdit/GroupEdit';
+import ItemEdit from '../screens/items/itemEdit/ItemEdit';
+import ItemCreate from '../screens/items/itemCreate/ItemCreate';
+import ItemView from '../screens/items/itemView/ItemView';
 
 type GroupParamList = {
   GroupList: undefined;
   GroupView: undefined;
   GroupCreate: undefined;
   GroupEdit: undefined;
+  ItemView: undefined;
+  ItemCreate: undefined;
+  ItemEdit: undefined;
 };
 
 const Stack = createNativeStackNavigator<GroupParamList>();
@@ -23,6 +29,9 @@ const GroupNavigator: FC = () => {
       <Stack.Screen name="GroupView" component={GroupView} />
       <Stack.Screen name="GroupCreate" component={GroupCreate} />
       <Stack.Screen name="GroupEdit" component={GroupEdit} />
+      <Stack.Screen name="ItemView" component={ItemView} />
+      <Stack.Screen name="ItemCreate" component={ItemCreate} />
+      <Stack.Screen name="ItemEdit" component={ItemEdit} />
     </Stack.Navigator>
   );
 };
