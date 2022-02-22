@@ -5,8 +5,17 @@
     "Groups": "Группы",
     "Contacts": "Контакты",
     "Chats": "Чаты",
-    "GroupList": "Список групп",
-    "ContactList": "Список контактов",
-    "ChatList": "Список чатов"
+    "GroupList": "Группы",
+    "GroupView": "Группа",
+    "GroupCreate": "Создать группу",
+    "GroupEdit": "Редактировать группу",
+    "ItemView": "Запись",
+    "ItemCreate": "Создать запись",
+    "ItemEdit": "Редактировать запись",
+    "ContactList": "Контакты",
+    "IncomingRequestList": "Входящие запросы",
+    "OutcomingRequestList": "Исходящие запросы",
+    "ChatList": "Чаты",
+    "ChatView": "Чат"
   }
 }

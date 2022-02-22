@@ -5,8 +5,17 @@
     "Groups": "Groups",
     "Contacts": "Contacts",
     "Chats": "Chats",
-    "GroupList": "GroupList",
-    "ContactList": "ContactList",
-    "ChatList": "ChatList"
+    "GroupList": "Groups",
+    "GroupView": "Group",
+    "GroupCreate": "Create group",
+    "GroupEdit": "Edit group",
+    "ItemView": "Item",
+    "ItemCreate": "Create item",
+    "ItemEdit": "Edit item",
+    "ContactList": "Contacts",
+    "IncomingRequestList": "Incoming requests",
+    "OutcomingRequestList": "Outcoming requests",
+    "ChatList": "Chats",
+    "ChatView": "Chat"
   }
 }
