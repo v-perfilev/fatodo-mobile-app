@@ -14,3 +14,6 @@ export const BASE_URL = 'http://75.119.154.167';
 
 // AVATARS
 export const AVATARS_IN_CARD = 3;
+
+// GROUPS
+export const CARD_ITEMS_COUNT = 5;

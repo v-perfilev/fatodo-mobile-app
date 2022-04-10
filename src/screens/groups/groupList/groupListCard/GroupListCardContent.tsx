@@ -2,8 +2,9 @@ import React, {FC, memo} from 'react';
 import {Box, HStack, VStack} from 'native-base';
 import {flowRight} from 'lodash';
 import {Item} from '../../../../models/Item';
-import GroupListCardItem from '../groupListCardItem/GroupListCardItem';
+import GroupListCardSkeleton from '../groupListCardSkeleton/GroupListCardSkeleton';
 import GroupListCardInfo from './GroupListCardInfo';
+import GroupListCardItem from '../groupListCardItem/GroupListCardItem';
 
 type GroupListCardContentProps = {
   items: Item[];
@@ -14,6 +15,7 @@ type GroupListCardContentProps = {
 const GroupListCardContent: FC<GroupListCardContentProps> = ({items, count, loading}) => {
   return (
     <Box bg="white">
+      {loading && <GroupListCardSkeleton />}
       {!loading && count > 0 && (
         <VStack mx="2" mt="1" mb="-1">
           {items.map((item) => (
