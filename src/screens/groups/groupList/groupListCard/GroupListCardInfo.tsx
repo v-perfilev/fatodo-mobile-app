@@ -39,7 +39,7 @@ const GroupListCardInfo: FC<GroupListCardHeaderProps> = ({items, count}) => {
         {showButtonToGroupView && <LinkButton onPress={goToGroupView}>{t('group:actions.showAll')}</LinkButton>}
         {showButtonToCreateItem && <LinkButton onPress={goToItemCreate}>{t('group:actions.createItem')}</LinkButton>}
       </HStack>
-      <HStack>
+      <HStack mr="0.5">
         <BoxWithIcon icon={<ItemsIcon color="primary.500" size="sm" />}>{count || 0}</BoxWithIcon>
       </HStack>
     </>

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, memo, useCallback} from 'react';
 import {useGroupListContext} from '../../../shared/contexts/listContexts/groupListContext';
 import DraggableFlatList, {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
 import {Group} from '../../../models/Group';
@@ -17,12 +17,15 @@ const GroupListContainer: FC<GroupListContainerProps> = ({sorting}) => {
 
   const handleDragEnd = ({data}: DragEndParams<Group>): void => setGroups(data);
 
-  const renderItem = (props: RenderItemParams<Group>) => (
-    <ScaleDecorator activeScale={1.03}>
-      <Box px="2" pb="2">
-        <GroupListItem sorting={sorting} {...props} />
-      </Box>
-    </ScaleDecorator>
+  const renderItem = useCallback(
+    (props: RenderItemParams<Group>) => (
+      <ScaleDecorator activeScale={1.03}>
+        <Box px="2" pb="2">
+          <GroupListItem sorting={sorting} {...props} />
+        </Box>
+      </ScaleDecorator>
+    ),
+    [sorting],
   );
 
   const containerStyle = {
@@ -40,4 +43,4 @@ const GroupListContainer: FC<GroupListContainerProps> = ({sorting}) => {
   );
 };
 
-export default GroupListContainer;
+export default memo(GroupListContainer);
