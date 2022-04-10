@@ -1,8 +1,7 @@
 import {AxiosResponse} from 'axios';
 import * as React from 'react';
 import {useContext} from 'react';
-import {Snack} from '../../models/Snack';
-import {SnackVariant} from '../hocs/withSnackbar';
+import {Snack, SnackVariant} from '../../models/Snack';
 
 export interface SnackState {
   handleResponse: (response: AxiosResponse, allowedCodes?: string[] | '*', excludedCodes?: string[] | '') => void;
