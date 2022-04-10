@@ -18,6 +18,7 @@ import CheckIcon from '../../../components/icons/CheckIcon';
 import CloseIcon from '../../../components/icons/CloseIcon';
 import PressableButton from '../../../components/controls/PressableButton';
 import {Box} from 'native-base';
+import withUserList from '../../../shared/hocs/withLists/withUserList';
 
 const GroupList: FC = () => {
   const navigation = useNavigation<GroupNavigationProp>();
@@ -106,4 +107,4 @@ const GroupList: FC = () => {
   );
 };
 
-export default flowRight([withGroupList, withGroupListItems])(GroupList);
+export default flowRight([withGroupList, withGroupListItems, withUserList])(GroupList);
