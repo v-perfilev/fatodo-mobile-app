@@ -33,7 +33,7 @@ const GroupListCardHeader: FC<GroupListCardHeaderProps> = ({sorting, drag}) => {
 
   return (
     <Pressable onPress={goToGroupView}>
-      <Box h="45px" px="2" bg={linearGradient} justifyContent="center">
+      <Box h="45" px="2" bg={linearGradient} justifyContent="center">
         <HStack space="2" alignItems="center">
           {group.imageFilename && <UrlPic url={group.imageFilename} size="9" border={1} invertedBorder />}
           <Text fontWeight="600" fontSize="14" color="white" isTruncated>

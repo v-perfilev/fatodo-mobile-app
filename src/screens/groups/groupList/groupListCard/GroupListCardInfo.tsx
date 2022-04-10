@@ -1,9 +1,8 @@
-import React, {FC, memo, useMemo} from 'react';
+import React, {FC, useMemo} from 'react';
 import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
 import {HStack} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
-import {flowRight} from 'lodash';
 import {Item} from '../../../../models/Item';
 import {useTranslation} from 'react-i18next';
 import BoxWithIcon from '../../../../components/surfaces/BoxWithIcon';
@@ -46,4 +45,4 @@ const GroupListCardInfo: FC<GroupListCardHeaderProps> = ({items, count}) => {
   );
 };
 
-export default flowRight([memo])(GroupListCardInfo);
+export default GroupListCardInfo;
