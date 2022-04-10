@@ -11,3 +11,6 @@ export const AUTHORIZATION_PREFIX = 'Bearer ';
 // CAPTCHA
 export const BASE_URL = 'http://75.119.154.167';
 ***REMOVED***
+
+// AVATARS
+export const AVATARS_IN_CARD = 3;

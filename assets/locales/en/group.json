@@ -1,0 +1,6 @@
+{
+  "actions": {
+    "showAll": "Show all items",
+    "createItem": "Create item"
+  }
+}

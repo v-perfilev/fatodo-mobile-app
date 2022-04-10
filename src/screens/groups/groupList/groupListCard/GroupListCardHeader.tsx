@@ -15,7 +15,7 @@ type GroupListCardHeaderProps = {
   drag: () => void;
 };
 
-const GroupListCardHeader: FC<GroupListCardHeaderProps> = ({sorting, drag}: GroupListCardHeaderProps) => {
+const GroupListCardHeader: FC<GroupListCardHeaderProps> = ({sorting, drag}) => {
   const {group} = useGroupViewContext();
   const navigation = useNavigation<GroupNavigationProp>();
 

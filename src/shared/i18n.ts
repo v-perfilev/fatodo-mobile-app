@@ -13,6 +13,9 @@ import accountRU from '../../assets/locales/ru/account.json';
 // feedback
 import feedbackEN from '../../assets/locales/en/feedback.json';
 import feedbackRU from '../../assets/locales/ru/feedback.json';
+// group
+import groupEN from '../../assets/locales/en/group.json';
+import groupRU from '../../assets/locales/ru/group.json';
 
 export const languages = [
   {
@@ -31,12 +34,14 @@ const resources = {
     common: commonEN,
     account: accountEN,
     feedback: feedbackEN,
+    group: groupEN,
   },
   ru: {
     translation: translationRU,
     common: commonRU,
     account: accountRU,
     feedback: feedbackRU,
+    group: groupRU,
   },
 };
 
@@ -45,7 +50,7 @@ i18next.use(initReactI18next).init({
   compatibilityJSON: 'v3',
   resources,
   lng: 'en',
-  ns: ['translation', 'common', 'account', 'feedback'],
+  ns: ['translation', 'common', 'account', 'feedback', 'group'],
   defaultNS: 'translation',
   interpolation: {
     escapeValue: false, // react already safes from xss
