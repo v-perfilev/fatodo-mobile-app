@@ -16,7 +16,6 @@ import withNativeBase from './shared/hocs/withNativeBase';
 import withNavigationContainer from './shared/hocs/withNavigationContainer';
 import withSnackbar from './shared/hocs/withSnackbar';
 import withAuthState from './shared/hocs/withAuthState';
-import {StatusBar, useTheme} from 'native-base';
 import {SecurityUtils} from './shared/utils/SecurityUtils';
 import {connect, ConnectedProps} from 'react-redux';
 
@@ -34,8 +33,6 @@ type AppProps = ReduxAuthState & PropsWithChildren<ConnectedProps<typeof connect
 
 const App: FC<AppProps> = ({isAuthenticated, login, requestAccountData}) => {
   const [ready, setReady] = useState(false);
-  const theme = useTheme();
-  const backgroundColor = theme.colors.white;
 
   useEffect(() => {
     SecurityUtils.getAuthToken().then((token) => {
@@ -49,7 +46,6 @@ const App: FC<AppProps> = ({isAuthenticated, login, requestAccountData}) => {
 
   return (
     <>
-      <StatusBar backgroundColor={backgroundColor} barStyle="dark-content" />
       {ready && isAuthenticated && <RootNavigator />}
       {ready && !isAuthenticated && <AuthNavigator />}
     </>

@@ -27,7 +27,7 @@ const GroupListCard: FC<GroupListCardProps> = ({items, count, loading, collapsed
 
   return (
     <ThemeProvider theme={theme}>
-      <Box borderRadius="4" shadow="6" mb="1" mx="1" overflow="hidden">
+      <Box borderRadius="4" mb="1" mx="1" overflow="hidden">
         <GroupListCardHeader sorting={sorting} drag={drag} />
         <Collapsible collapsed={collapsed}>
           <GroupListCardContent items={items} count={count} loading={loading} />

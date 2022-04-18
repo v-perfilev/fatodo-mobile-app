@@ -5,6 +5,7 @@ import {BottomTabDescriptorMap} from '@react-navigation/bottom-tabs/lib/typescri
 import {NavigationHelpers, ParamListBase, TabNavigationState} from '@react-navigation/native';
 import {BottomTabNavigationEventMap} from '@react-navigation/bottom-tabs/src/types';
 import {useTranslation} from 'react-i18next';
+import {SafeAreaView} from 'react-native';
 
 type TabNavigatorBarProps = BottomTabBarProps;
 
@@ -41,21 +42,19 @@ const TabNavigatorItem: FC<TabNavigatorItemProps> = ({routeName, routeKey, state
 
 const TabNavigatorBar: FC<TabNavigatorBarProps> = ({state, descriptors, navigation}) => {
   return (
-    <Box safeAreaBottom width="100%">
-      <HStack bg="primary.500">
-        {state.routes.map((route, index) => (
-          <TabNavigatorItem
-            routeKey={route.key}
-            routeName={route.name}
-            state={state}
-            descriptors={descriptors}
-            navigation={navigation}
-            index={index}
-            key={index}
-          />
-        ))}
-      </HStack>
-    </Box>
+    <HStack bg="primary.500">
+      {state.routes.map((route, index) => (
+        <TabNavigatorItem
+          routeKey={route.key}
+          routeName={route.name}
+          state={state}
+          descriptors={descriptors}
+          navigation={navigation}
+          index={index}
+          key={index}
+        />
+      ))}
+    </HStack>
   );
 };
 

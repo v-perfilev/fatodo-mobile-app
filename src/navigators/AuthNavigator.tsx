@@ -3,6 +3,8 @@ import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navi
 import SignIn from '../screens/auth/signIn/SignIn';
 import SignUp from '../screens/auth/signUp/SignUp';
 import ForgotPassword from '../screens/auth/forgotPassword/ForgotPassword';
+import CustomStatusBar from '../components/layouts/CustomStatusBar';
+import {useTheme} from 'native-base';
 
 type AuthParamList = {
   SignIn: undefined;
@@ -15,12 +17,18 @@ const Stack = createNativeStackNavigator<AuthParamList>();
 export type AuthNavigationProp = NativeStackNavigationProp<AuthParamList>;
 
 const AuthNavigator: FC = () => {
+  const theme = useTheme();
+  const backgroundColor = theme.colors.white;
+
   return (
-    <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="SignIn">
-      <Stack.Screen name="SignIn" component={SignIn} />
-      <Stack.Screen name="SignUp" component={SignUp} />
-      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-    </Stack.Navigator>
+    <>
+      <CustomStatusBar bgColor={backgroundColor} barStyle="dark-content" />
+      <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="SignIn">
+        <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+      </Stack.Navigator>
+    </>
   );
 };
 

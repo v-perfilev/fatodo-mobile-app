@@ -14,7 +14,7 @@ type GroupListCardContentProps = {
 
 const GroupListCardContent: FC<GroupListCardContentProps> = ({items, count, loading}) => {
   return (
-    <Box bg="white">
+    <Box bg="white" borderWidth="1" borderColor="gray.200" borderRadius="3">
       {loading && <GroupListCardSkeleton />}
       {!loading && count > 0 && (
         <VStack mx="2" mt="1" mb="-1">
