@@ -8,10 +8,10 @@ import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
 import {VStack} from 'native-base';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import {useTranslation} from 'react-i18next';
-import LoadableButton from '../../../components/controls/LoadableButton';
 import {withSnackContext} from '../../../shared/hocs/withSnackbar';
 import {SnackState} from '../../../shared/contexts/SnackContext';
 import {ForgotPasswordDTO} from '../../../models/dto/ForgotPasswordDTO';
+import SolidButton from '../../../components/controls/SolidButton';
 
 export interface ForgotPasswordFormValues {
   user: string;
@@ -52,16 +52,16 @@ const ForgotPasswordForm: FC<ForgotPasswordFormProps> = (props) => {
   return (
     <VStack w="100%" space="3" mt="7">
       <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={isSubmitting} {...props} />
-      <LoadableButton
+      <SolidButton
         colorScheme="secondary"
         mt="5"
         size="lg"
-        loading={isSubmitting}
+        isLoading={isSubmitting}
         isDisabled={!isInitialized || !isValid || isSubmitting}
         onPress={submit}
       >
         {t('account:forgotPassword.submit')}
-      </LoadableButton>
+      </SolidButton>
     </VStack>
   );
 };

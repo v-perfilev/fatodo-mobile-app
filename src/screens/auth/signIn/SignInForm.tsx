@@ -13,9 +13,9 @@ import {VStack} from 'native-base';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
-import LoadableButton from '../../../components/controls/LoadableButton';
 import {withSnackContext} from '../../../shared/hocs/withSnackbar';
 import {SnackState} from '../../../shared/contexts/SnackContext';
+import SolidButton from '../../../components/controls/SolidButton';
 
 const mapDispatchToProps = {login, requestAccountData};
 const connector = connect(null, mapDispatchToProps);
@@ -71,16 +71,16 @@ const SignInForm: FC<SignInFormProps> = (props) => {
         isDisabled={isLoading}
         {...props}
       />
-      <LoadableButton
+      <SolidButton
         colorScheme="secondary"
         mt="5"
         size="lg"
-        loading={isLoading}
+        isLoading={isLoading}
         isDisabled={!isInitialized || !isValid || isLoading}
         onPress={submit}
       >
         {t('account:login.submit')}
-      </LoadableButton>
+      </SolidButton>
     </VStack>
   );
 };

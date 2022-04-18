@@ -1,7 +1,14 @@
 {
   "actions": {
     "showAll": "Show all items",
-    "createItem": "Create item"
+    "createItem": "Create item",
+    "groups": "Groups",
+    "create": "Create",
+    "edit": "Edit",
+    "members": "Members",
+    "addMembers": "Add members",
+    "leave": "Leave",
+    "delete": "Delete"
   },
   "menu": {
     "createGroup": "Create group",

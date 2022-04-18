@@ -7,7 +7,6 @@ import ChatNavigator from './ChatNavigator';
 import GroupsIcon from '../components/icons/GroupsIcon';
 import ContactsIcon from '../components/icons/ContactsIcon';
 import ChatsIcon from '../components/icons/ChatsIcon';
-import {SafeAreaView} from 'react-native';
 
 type TabParamList = {
   Groups: undefined;

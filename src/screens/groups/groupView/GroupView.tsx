@@ -15,6 +15,7 @@ import Header from '../../../components/layouts/Header';
 import CentredSpinner from '../../../components/surfaces/CentredSpinner';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
+import GroupViewMenu from './GroupViewMenu';
 
 type GroupViewProps = ReduxAuthState;
 
@@ -44,18 +45,19 @@ const GroupView: FC<GroupViewProps> = ({account}) => {
   const theme = group ? ThemeFactory.getTheme(group.color) : ThemeFactory.getDefaultTheme();
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Header title={group?.title} imageFilename={group?.imageFilename} showMenu={false} />
       <Box flex="1">
         {!group ? (
           <CentredSpinner />
         ) : (
-          <ThemeProvider theme={theme}>
+          <>
+            <GroupViewMenu account={account} />
             <Text>{group.title}</Text>
-          </ThemeProvider>
+          </>
         )}
       </Box>
-    </>
+    </ThemeProvider>
   );
 };
 

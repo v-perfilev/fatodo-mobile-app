@@ -8,7 +8,6 @@ import {VStack} from 'native-base';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
-import LoadableButton from '../../../components/controls/LoadableButton';
 import {withSnackContext} from '../../../shared/hocs/withSnackbar';
 import {SnackState} from '../../../shared/contexts/SnackContext';
 import {emailValidator, passwordValidator, usernameValidator} from '../forgotPassword/ForgotPasswordValidators';
@@ -16,6 +15,7 @@ import {RegistrationDTO} from '../../../models/dto/RegistrationDTO';
 import i18n from '../../../shared/i18n';
 import {DateUtils} from '../../../shared/utils/DateUtils';
 import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBar';
+import SolidButton from '../../../components/controls/SolidButton';
 
 export interface SignUpFormValues {
   email: string;
@@ -72,16 +72,16 @@ const SignUpForm: FC<SignUpFormProps> = (props) => {
         {...props}
       />
       <PasswordStrengthBar password={values.password} />
-      <LoadableButton
+      <SolidButton
         colorScheme="secondary"
         mt="5"
         size="lg"
-        loading={isSubmitting}
+        isLoading={isSubmitting}
         isDisabled={!isInitialized || !isValid || isSubmitting}
         onPress={submit}
       >
         {t('account:register.submit')}
-      </LoadableButton>
+      </SolidButton>
     </VStack>
   );
 };

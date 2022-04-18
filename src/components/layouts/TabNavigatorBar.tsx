@@ -1,11 +1,10 @@
 import React, {FC} from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {Box, Center, HStack, Pressable, Text} from 'native-base';
+import {Center, HStack, Pressable, Text} from 'native-base';
 import {BottomTabDescriptorMap} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import {NavigationHelpers, ParamListBase, TabNavigationState} from '@react-navigation/native';
 import {BottomTabNavigationEventMap} from '@react-navigation/bottom-tabs/src/types';
 import {useTranslation} from 'react-i18next';
-import {SafeAreaView} from 'react-native';
 
 type TabNavigatorBarProps = BottomTabBarProps;
 
