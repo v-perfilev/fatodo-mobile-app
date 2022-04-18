@@ -5,7 +5,7 @@ import {Path} from 'react-native-svg';
 const ReorderIcon: FC<IIconProps> = (props) => {
   return (
     <Icon viewBox="0 0 24 24" {...props}>
-      <Path fill="currentColor" d="M10,8H6L12,2L18,8H14V16H18L12,22L6,16H10V8Z" />
+      <Path fill="currentColor" d="M9,3L5,7H8V14H10V7H13M16,17V10H14V17H11L15,21L19,17H16Z" />
     </Icon>
   );
 };
