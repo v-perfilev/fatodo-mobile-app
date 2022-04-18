@@ -2,5 +2,12 @@
   "actions": {
     "showAll": "Показать все записи",
     "createItem": "Добавить запись"
+  },
+  "menu": {
+    "createGroup": "Добавить группу",
+    "createItem": "Добавить запись",
+    "viewGroup": "Открыть",
+    "editGroup": "Редактировать",
+    "deleteGroup": "Удалить"
   }
 }

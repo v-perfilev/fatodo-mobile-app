@@ -2,5 +2,12 @@
   "actions": {
     "showAll": "Show all items",
     "createItem": "Create item"
+  },
+  "menu": {
+    "createGroup": "Create group",
+    "createItem": "Create item",
+    "viewGroup": "View",
+    "editGroup": "Edit",
+    "deleteGroup": "Delete"
   }
 }
