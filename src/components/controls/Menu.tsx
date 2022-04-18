@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 import {GestureResponderEvent} from 'react-native';
 import {HStack, Menu as NbMenu, Text} from 'native-base';
-import CentredSpinner from '../../surfaces/CentredSpinner';
+import CentredSpinner from '../surfaces/CentredSpinner';
 
 export type MenuProps = {
   trigger: (_props: any, state: {open: boolean}) => JSX.Element;

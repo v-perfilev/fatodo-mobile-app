@@ -1,14 +1,16 @@
 import {Button, IButtonProps} from 'native-base';
-import React, {FC} from 'react';
+import React, {MutableRefObject} from 'react';
 
 type SolidButtonProps = IButtonProps;
 
-const SolidButton: FC<SolidButtonProps> = ({children, ...props}) => {
+const SolidButton = React.forwardRef<HTMLElement, SolidButtonProps>((props, ref) => {
+  const {children, ...other} = props;
+
   return (
-    <Button variant="solid" {...props}>
+    <Button variant="solid" {...other} ref={ref as MutableRefObject<any>}>
       {children}
     </Button>
   );
-};
+});
 
 export default SolidButton;

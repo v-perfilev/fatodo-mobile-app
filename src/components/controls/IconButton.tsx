@@ -8,13 +8,14 @@ const CustomIconButton = React.forwardRef<HTMLElement, CustomIconButtonProps>((p
 
   return (
     <IconButton
-      ref={ref}
       variant="ghost"
       borderRadius="full"
       bg={color + ':alpha.10'}
       icon={icon}
       _icon={{color: color, size: size}}
+      _pressed={{opacity: 0.7}}
       {...other}
+      ref={ref}
     />
   );
 });

@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
-import Menu, {MenuItem, MenuItemProps} from '../../../../components/controls/menu/Menu';
+import Menu, {MenuItem, MenuItemProps} from '../../../../components/controls/Menu';
 import {UserAccount} from '../../../../models/User';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {useTranslation} from 'react-i18next';
@@ -13,7 +13,6 @@ import EyeIcon from '../../../../components/icons/EyeIcon';
 import EditIcon from '../../../../components/icons/EditIcon';
 import DeleteIcon from '../../../../components/icons/DeleteIcon';
 import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
-import {Pressable} from 'native-base';
 import RoundButton from '../../../../components/controls/RoundButton';
 
 type GroupListCardMenuButtonProps = {
@@ -77,11 +76,9 @@ const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({account}) =>
   return (
     <Menu
       trigger={(triggerProps) => (
-        <Pressable _pressed={{opacity: 0.7}} {...triggerProps}>
-          <RoundButton withoutPressable>
-            <DotsVerticalIcon size="6" color="white" />
-          </RoundButton>
-        </Pressable>
+        <RoundButton {...triggerProps}>
+          <DotsVerticalIcon size="6" color="white" />
+        </RoundButton>
       )}
     >
       {menuItems.map((itemProps, index) => (
