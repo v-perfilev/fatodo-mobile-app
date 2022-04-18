@@ -21,6 +21,7 @@ const FormikTextInput: FC<FormikTextInputProps> = (props) => {
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <Input
         type="text"
+        autoCapitalize="none"
         placeholder={placeholder}
         onChangeText={handleChange(name)}
         onBlur={handleBlur(name)}

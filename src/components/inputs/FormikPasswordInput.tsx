@@ -36,6 +36,7 @@ const FormikPasswordInput: FC<FormikPasswordInputProps> = (props) => {
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <Input
         type={showPassword ? 'text' : 'password'}
+        autoCapitalize="none"
         placeholder={placeholder}
         onChangeText={handleChange(name)}
         onBlur={handleBlur(name)}
