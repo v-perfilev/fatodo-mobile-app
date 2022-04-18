@@ -45,7 +45,7 @@ const GroupView: FC<GroupViewProps> = ({account}) => {
 
   return (
     <>
-      <Header title={group?.title} />
+      <Header title={group?.title} imageFilename={group?.imageFilename} showMenu={false} />
       <Box flex="1">
         {!group ? (
           <CentredSpinner />
