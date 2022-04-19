@@ -3,7 +3,6 @@ import {MenuElement} from '../../../models/MenuElement';
 import DeleteIcon from '../../../components/icons/DeleteIcon';
 import EditIcon from '../../../components/icons/EditIcon';
 import PlusIcon from '../../../components/icons/PlusIcon';
-import GroupsIcon from '../../../components/icons/GroupsIcon';
 import {useTranslation} from 'react-i18next';
 import LeaveIcon from '../../../components/icons/LeaveIcon';
 import UserPlusIcon from '../../../components/icons/UserPlusIcon';
@@ -30,10 +29,6 @@ const GroupViewMenu: FC<GroupViewMenuProps> = ({account}) => {
 
   const goToGroupEdit = (): void => {
     navigation.navigate('GroupEdit', {groupId: group.id});
-  };
-
-  const goToGroupList = (): void => {
-    navigation.navigate('GroupList');
   };
 
   const openGroupMembersDialog = (): void => {
@@ -65,12 +60,6 @@ const GroupViewMenu: FC<GroupViewMenuProps> = ({account}) => {
   const canLeave = group && GroupUtils.canLeave(account, group);
 
   const menuElements = [
-    {
-      icon: <GroupsIcon />,
-      action: goToGroupList,
-      text: t('group:actions.groups'),
-      hiddenInControlMenu: true,
-    },
     {icon: <PlusIcon />, action: goToItemCreate, text: t('group:actions.create'), hidden: !canEdit},
     {icon: <EditIcon />, action: goToGroupEdit, text: t('group:actions.edit'), hidden: !canAdmin},
     {icon: <MembersIcon />, action: openGroupMembersDialog, text: t('group:actions.members')},

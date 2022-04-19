@@ -7,6 +7,9 @@ import ChatNavigator from './ChatNavigator';
 import GroupsIcon from '../components/icons/GroupsIcon';
 import ContactsIcon from '../components/icons/ContactsIcon';
 import ChatsIcon from '../components/icons/ChatsIcon';
+import {useTabBarContext} from '../shared/contexts/TabBarContext';
+import {flowRight} from 'lodash';
+import withTabBar from '../shared/hocs/withTabBar';
 
 type TabParamList = {
   Groups: undefined;
@@ -27,8 +30,11 @@ const contactsIcon = ({color, size}: TabIconProps): ReactNode => <ContactsIcon c
 const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={color} size={size} />;
 
 const TabNavigator: FC = () => {
+  const {theme} = useTabBarContext();
+  const color = theme?.colors.primary['500'] || 'primary.500';
+
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Groups" tabBar={TabNavigatorBar}>
+    <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Groups" tabBar={TabNavigatorBar(color)}>
       <Tab.Screen name="Groups" component={GroupNavigator} options={{tabBarIcon: groupsIcon}} />
       <Tab.Screen name="Contacts" component={ContactNavigator} options={{tabBarIcon: contactsIcon}} />
       <Tab.Screen name="Chats" component={ChatNavigator} options={{tabBarIcon: chatsIcon}} />
@@ -36,4 +42,4 @@ const TabNavigator: FC = () => {
   );
 };
 
-export default TabNavigator;
+export default flowRight([withTabBar])(TabNavigator);

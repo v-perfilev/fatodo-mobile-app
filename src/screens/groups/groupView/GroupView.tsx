@@ -40,6 +40,7 @@ const GroupView: FC<GroupViewProps> = ({account}) => {
 
   useEffect(() => {
     group && loadGroupUsers();
+    group && navigation.setParams({...route.params, color: group?.color});
   }, [group]);
 
   const theme = group ? ThemeFactory.getTheme(group.color) : ThemeFactory.getDefaultTheme();

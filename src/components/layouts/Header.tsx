@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
 import MenuIcon from '../icons/MenuIcon';
 import PressableButton from '../controls/PressableButton';
-import CustomStatusBar from './CustomStatusBar';
+import ColoredStatusBar from './ColoredStatusBar';
 import UrlPic from '../surfaces/UrlPic';
 
 type HeaderProps = PropsWithChildren<any> & {
@@ -27,7 +27,7 @@ const Header: FC<HeaderProps> = ({children, title, imageFilename, showMenu = tru
 
   return (
     <>
-      <CustomStatusBar />
+      <ColoredStatusBar />
       <HStack h="12" space="3" px="4" bg="primary.500" alignItems="center">
         {canGoBack && (
           <PressableButton onPress={goBack}>

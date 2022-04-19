@@ -29,12 +29,12 @@ const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({account}) =>
   const canEdit = group && GroupUtils.canEdit(account, group);
   const canAdmin = group && GroupUtils.canAdmin(account, group);
 
-  const goToItemCreate = (): void => {
-    navigation.navigate('ItemCreate', {groupId: group.id});
-  };
-
   const goToGroupView = (): void => {
     navigation.navigate('GroupView', {groupId: group.id});
+  };
+
+  const goToItemCreate = (): void => {
+    navigation.navigate('ItemCreate', {groupId: group.id});
   };
 
   const goToGroupEdit = (): void => {
@@ -49,15 +49,15 @@ const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({account}) =>
 
   const menuItems = [
     {
+      action: goToGroupView,
+      icon: <EyeIcon size="sm" color="primary.500" />,
+      text: t('group:menu.viewGroup'),
+    },
+    {
       action: goToItemCreate,
       icon: <PlusIcon size="sm" color="primary.500" />,
       text: t('group:menu.createItem'),
       show: canEdit,
-    },
-    {
-      action: goToGroupView,
-      icon: <EyeIcon size="sm" color="primary.500" />,
-      text: t('group:menu.viewGroup'),
     },
     {
       action: goToGroupEdit,

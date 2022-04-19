@@ -3,7 +3,7 @@ import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navi
 import SignIn from '../screens/auth/signIn/SignIn';
 import SignUp from '../screens/auth/signUp/SignUp';
 import ForgotPassword from '../screens/auth/forgotPassword/ForgotPassword';
-import CustomStatusBar from '../components/layouts/CustomStatusBar';
+import ColoredStatusBar from '../components/layouts/ColoredStatusBar';
 import {useTheme} from 'native-base';
 
 type AuthParamList = {
@@ -22,7 +22,7 @@ const AuthNavigator: FC = () => {
 
   return (
     <>
-      <CustomStatusBar bgColor={backgroundColor} barStyle="dark-content" />
+      <ColoredStatusBar bgColor={backgroundColor} barStyle="dark-content" />
       <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="SignIn">
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
