@@ -2,7 +2,7 @@ import React, {FC, memo} from 'react';
 import {Box, HStack, VStack} from 'native-base';
 import {flowRight} from 'lodash';
 import {Item} from '../../../../models/Item';
-import GroupListCardSkeleton from '../groupListCardSkeleton/GroupListCardSkeleton';
+import GroupListCardSkeleton from '../groupListSkeletons/GroupListCardSkeleton';
 import GroupListCardInfo from './GroupListCardInfo';
 import GroupListCardItem from '../groupListCardItem/GroupListCardItem';
 

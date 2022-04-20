@@ -15,7 +15,7 @@ const ControlMenu: FC<Props> = ({menu, disabled}: Props) => {
   }, [menu]);
 
   return (
-    <Flex m="1" flexDirection="row" flexWrap="wrap" justifyContent="space-around">
+    <Flex flexDirection="row" flexWrap="wrap" justifyContent="space-around">
       {filteredMenu?.map((action, index) => (
         <Tooltip key={index} label={action.text}>
           <CustomIconButton
@@ -24,7 +24,8 @@ const ControlMenu: FC<Props> = ({menu, disabled}: Props) => {
             disabled={disabled || action.disabled}
             color={action.color || 'primary.500'}
             size="sm"
-            m="1"
+            mx="1"
+            my="1"
           />
         </Tooltip>
       ))}

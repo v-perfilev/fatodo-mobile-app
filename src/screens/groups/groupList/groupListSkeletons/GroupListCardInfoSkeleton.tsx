@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {Box, Skeleton} from 'native-base';
 
-const GroupListCardSkeletonInfo: FC = () => {
+const GroupListCardInfoSkeleton: FC = () => {
   return (
     <>
       <Skeleton w="20" h="8" rounded="lg" />
@@ -12,4 +12,4 @@ const GroupListCardSkeletonInfo: FC = () => {
   );
 };
 
-export default GroupListCardSkeletonInfo;
+export default GroupListCardInfoSkeleton;

@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Text} from 'native-base';
+import {Box, HStack, Text} from 'native-base';
 import {User} from '../../models/User';
 import UrlPic from '../surfaces/UrlPic';
 import {ISizes} from 'native-base/lib/typescript/theme/base/sizes';
@@ -19,11 +19,11 @@ export const UserView: FC<UserViewProps> = (props) => {
   const {withUserPic = true, withUsername = false, withPaperBox = false, withInvertedBorder = false} = props;
 
   const imageWithUsername = (
-    <>
+    <HStack alignItems="center">
       {withUserPic && <UrlPic url={user.imageFilename} size={picSize} border={1} invertedBorder={withInvertedBorder} />}
-      {/*{withUserPic && withUsername && <Emp />}*/}
-      {withUsername && <Text>{user.username}</Text>}
-    </>
+      {withUserPic && withUsername && <Box m="0.5" />}
+      {withUsername && <Text fontSize="12">{user.username}</Text>}
+    </HStack>
   );
 
   return withPaperBox ? <PaperBox>{imageWithUsername}</PaperBox> : imageWithUsername;
