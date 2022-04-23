@@ -4,12 +4,15 @@
     "showArchived": "Show archived",
     "createItem": "Create item",
     "groups": "Groups",
+    "view": "Open",
     "create": "Create",
     "edit": "Edit",
     "members": "Members",
     "addMembers": "Add members",
     "leave": "Leave",
-    "delete": "Delete"
+    "delete": "Delete",
+    "moveToArchive": "Move to archive",
+    "removeFromArchive": "Remove from archive"
   },
   "menu": {
     "createGroup": "Create group",

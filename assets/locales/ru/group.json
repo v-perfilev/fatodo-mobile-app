@@ -4,12 +4,15 @@
     "showArchived": "Показать архив",
     "createItem": "Добавить запись",
     "groups": "Группы",
+    "view": "Открыть",
     "create": "Добавить",
     "edit": "Изменить",
     "members": "Участники",
     "addMembers": "Добавить участников",
     "leave": "Покинуть",
-    "delete": "Удалить"
+    "delete": "Удалить",
+    "moveToArchive": "Перенести в архив",
+    "removeFromArchive": "Удалить из архива"
   },
   "menu": {
     "createGroup": "Добавить группу",

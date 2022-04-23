@@ -17,7 +17,9 @@ const GroupViewItemsArchivedSwitch: FC<GroupViewItemsArchivedSwitchProps> = ({sh
 
   return (
     <HStack alignItems="center">
-      <Text mr="1" color="gray.500">{t('group:actions.showArchived')}</Text>
+      <Text mr="1" color="gray.500">
+        {t('group:actions.showArchived')}
+      </Text>
       <Switch isChecked={showArchived} onChange={toggleArchived} color="primary.500" />
     </HStack>
   );

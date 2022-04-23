@@ -49,15 +49,15 @@ const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({account}) =>
 
   const menuItems = [
     {
-      action: goToGroupView,
-      icon: <EyeIcon size="sm" color="primary.500" />,
-      text: t('group:menu.viewGroup'),
-    },
-    {
       action: goToItemCreate,
       icon: <PlusIcon size="sm" color="primary.500" />,
       text: t('group:menu.createItem'),
       show: canEdit,
+    },
+    {
+      action: goToGroupView,
+      icon: <EyeIcon size="sm" color="primary.500" />,
+      text: t('group:menu.viewGroup'),
     },
     {
       action: goToGroupEdit,

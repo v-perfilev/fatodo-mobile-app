@@ -1,5 +1,5 @@
-import React, {FC, useMemo} from 'react';
-import {Center, HStack, Text} from 'native-base';
+import React, {FC} from 'react';
+import {HStack, Text} from 'native-base';
 import ArrowDownIcon from '../../../../components/icons/ArrowDownIcon';
 import RoundButton from '../../../../components/controls/RoundButton';
 import ArrowUpIcon from '../../../../components/icons/ArrowUpIcon';
@@ -11,8 +11,6 @@ type GroupViewItemsPaginationProps = {
 };
 
 const GroupViewItemsPagination: FC<GroupViewItemsPaginationProps> = ({page, setPage, totalPages}) => {
-  const isMultiPage = useMemo<boolean>(() => totalPages > 1, [totalPages]);
-
   const onUpClick = (): void => {
     if (page > 0) {
       setPage(page - 1);
@@ -24,17 +22,16 @@ const GroupViewItemsPagination: FC<GroupViewItemsPaginationProps> = ({page, setP
       setPage(page + 1);
     }
   };
-  const paginationElement = (
+
+  return (
     <HStack alignItems="center">
-      <RoundButton leftIcon={<ArrowUpIcon size="sm" />} isDisabled={page === 0} onPress={onUpClick} />
+      <RoundButton leftIcon={<ArrowUpIcon size="md" />} isDisabled={page === 0} onPress={onUpClick} />
       <Text mx="1" fontSize="14" fontWeight="bold">
         {page + 1} / {totalPages}
       </Text>
-      <RoundButton leftIcon={<ArrowDownIcon size="sm" />} isDisabled={page === totalPages - 1} onPress={onDownClick} />
+      <RoundButton leftIcon={<ArrowDownIcon size="md" />} isDisabled={page === totalPages - 1} onPress={onDownClick} />
     </HStack>
   );
-
-  return isMultiPage ? paginationElement : null;
 };
 
 export default GroupViewItemsPagination;

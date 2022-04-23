@@ -4,7 +4,7 @@ import StatusCreatedIcon from '../icons/StatusCreatedIcon';
 import StatusWipIcon from '../icons/StatusWipIcon';
 import StatusClosedIcon from '../icons/StatusClosedIcon';
 import StatusCompletedIcon from '../icons/StatusCompletedIcon';
-import Menu, {MenuItem} from '../controls/Menu';
+import Menu, {MenuItem, MenuItemProps} from '../controls/Menu';
 import SolidButton from '../controls/SolidButton';
 import {Box} from 'native-base';
 
@@ -57,6 +57,25 @@ export const StatusSelect: FC<Props> = ({statusType, setStatusType, loading}: Pr
     }
   };
 
+  const menuItems = [
+    {
+      action: setStatusToCreated,
+      icon: <StatusCreatedIcon color="primary.500" size="sm" />,
+    },
+    {
+      action: setStatusToWip,
+      icon: <StatusWipIcon color="primary.500" size="sm" />,
+    },
+    {
+      action: setStatusToCompleted,
+      icon: <StatusCompletedIcon color="primary.500" size="sm" />,
+    },
+    {
+      action: setStatusToClosed,
+      icon: <StatusClosedIcon color="primary.500" size="sm" />,
+    },
+  ] as MenuItemProps[];
+
   return (
     <Box mx="1">
       <Menu
@@ -64,10 +83,9 @@ export const StatusSelect: FC<Props> = ({statusType, setStatusType, loading}: Pr
           <SolidButton w="30" h="30" isLoading={loading} leftIcon={iconByStatusType(statusType)} {...triggerProps} />
         )}
       >
-        <MenuItem action={setStatusToCreated} icon={<StatusCreatedIcon color="primary.500" size="sm" />} />
-        <MenuItem action={setStatusToWip} icon={<StatusWipIcon color="primary.500" size="sm" />} />
-        <MenuItem action={setStatusToCompleted} icon={<StatusCompletedIcon color="primary.500" size="sm" />} />
-        <MenuItem action={setStatusToClosed} icon={<StatusClosedIcon color="primary.500" size="sm" />} />
+        {menuItems.map((itemProps, index) => (
+          <MenuItem {...itemProps} key={index} />
+        ))}
       </Menu>
     </Box>
   );
