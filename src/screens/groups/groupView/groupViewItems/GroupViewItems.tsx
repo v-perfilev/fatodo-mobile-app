@@ -3,23 +3,25 @@ import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/grou
 import {UserAccount} from '../../../../models/User';
 import {useUserListContext} from '../../../../shared/contexts/listContexts/userListContext';
 import {useLoadingState} from '../../../../shared/hooks/useLoadingState';
-import {Flex} from 'native-base';
+import {Flex, HStack} from 'native-base';
 import {useArchivedItemListContext} from '../../../../shared/contexts/listContexts/archivedItemListContext';
 import {useItemListContext} from '../../../../shared/contexts/listContexts/itemListContext';
 import {Item} from '../../../../models/Item';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {CARD_ITEMS_COUNT, GROUP_ITEMS_COUNT} from '../../../../constants';
 import GroupViewItemsSkeleton from '../groupViewSkeletons/GroupViewItemsSkeleton';
-import GroupViewItemsPagination from './GroupViewItemsPagination';
 import GroupViewItemsCreateButton from './GroupViewItemsCreateButton';
 import GroupViewItem from '../groupViewItem/GroupViewItem';
+import GroupViewItemsPagination from './GroupViewItemsPagination';
+import GroupViewItemsArchivedSwitch from './GroupViewItemsArchivedSwitch';
 
 type GroupViewItemsProps = {
   showArchived: boolean;
+  setShowArchived: (archived: boolean) => void;
   account: UserAccount;
 };
 
-const GroupViewItems: FC<GroupViewItemsProps> = ({showArchived, account}) => {
+const GroupViewItems: FC<GroupViewItemsProps> = ({showArchived, setShowArchived, account}) => {
   const {handleUserIds} = useUserListContext();
   const {group} = useGroupViewContext();
   const {items: active, count: activeCount, load: loadActive, loading: activeLoading} = useItemListContext();
@@ -105,10 +107,13 @@ const GroupViewItems: FC<GroupViewItemsProps> = ({showArchived, account}) => {
 
   return (
     <Flex m="1">
-      <GroupViewItemsCreateButton group={group} />
+      <HStack my="1" alignItems="center" justifyContent="space-between">
+        <GroupViewItemsPagination page={page} setPage={setPage} totalPages={totalPages} />
+        <GroupViewItemsArchivedSwitch showArchived={showArchived} setShowArchived={setShowArchived} />
+      </HStack>
       {loading && <GroupViewItemsSkeleton />}
+      {!loading && !showArchived && <GroupViewItemsCreateButton group={group} />}
       {!loading && itemsToShow.map((item) => <GroupViewItem item={item} canEdit={canEdit} key={item.id} />)}
-      {!loading && <GroupViewItemsPagination page={page} totalPages={totalPages} setPage={setPage} />}
     </Flex>
   );
 };

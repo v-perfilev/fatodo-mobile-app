@@ -1,6 +1,7 @@
 {
   "actions": {
     "showAll": "Show all items",
+    "showArchived": "Show archived",
     "createItem": "Create item",
     "groups": "Groups",
     "create": "Create",

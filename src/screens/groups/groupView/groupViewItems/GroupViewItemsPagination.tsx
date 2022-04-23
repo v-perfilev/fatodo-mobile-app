@@ -25,19 +25,13 @@ const GroupViewItemsPagination: FC<GroupViewItemsPaginationProps> = ({page, setP
     }
   };
   const paginationElement = (
-    <Center m="2">
-      <HStack alignItems="center">
-        <RoundButton leftIcon={<ArrowUpIcon size="sm" />} isDisabled={page === 0} onPress={onUpClick} />
-        <Text mx="1" fontSize="14" fontWeight="bold">
-          {page + 1} / {totalPages}
-        </Text>
-        <RoundButton
-          leftIcon={<ArrowDownIcon size="sm" />}
-          isDisabled={page === totalPages - 1}
-          onPress={onDownClick}
-        />
-      </HStack>
-    </Center>
+    <HStack alignItems="center">
+      <RoundButton leftIcon={<ArrowUpIcon size="sm" />} isDisabled={page === 0} onPress={onUpClick} />
+      <Text mx="1" fontSize="14" fontWeight="bold">
+        {page + 1} / {totalPages}
+      </Text>
+      <RoundButton leftIcon={<ArrowDownIcon size="sm" />} isDisabled={page === totalPages - 1} onPress={onDownClick} />
+    </HStack>
   );
 
   return isMultiPage ? paginationElement : null;

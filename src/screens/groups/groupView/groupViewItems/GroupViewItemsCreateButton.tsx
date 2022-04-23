@@ -1,10 +1,10 @@
 import React, {FC, useMemo} from 'react';
-import {Flex} from 'native-base';
 import {Group} from '../../../../models/Group';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
-import SolidButton from '../../../../components/controls/SolidButton';
+import OutlinedButton from '../../../../components/controls/OutlinedButton';
+import PlusIcon from '../../../../components/icons/PlusIcon';
 
 type GroupViewItemsCreateButtonProps = {
   group: Group;
@@ -21,9 +21,16 @@ const GroupViewItemsCreateButton: FC<GroupViewItemsCreateButtonProps> = ({group}
   const text = useMemo<string>(() => t('group:menu.createItem'), [i18n.language]);
 
   return (
-    <Flex>
-      <SolidButton onPress={goToItemCreate}>{text}</SolidButton>
-    </Flex>
+    <OutlinedButton
+      my="1"
+      h="45px"
+      rounded="xs"
+      borderColor="gray.200"
+      leftIcon={<PlusIcon size="sm" />}
+      onPress={goToItemCreate}
+    >
+      {text}
+    </OutlinedButton>
   );
 };
 

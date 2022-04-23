@@ -1,6 +1,7 @@
 {
   "actions": {
     "showAll": "Показать все записи",
+    "showArchived": "Показать архив",
     "createItem": "Добавить запись",
     "groups": "Группы",
     "create": "Добавить",

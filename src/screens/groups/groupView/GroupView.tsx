@@ -54,10 +54,12 @@ const GroupView: FC<GroupViewProps> = ({account}) => {
         {!group ? (
           <CentredSpinner />
         ) : (
-          <ScrollView p="1">
-            <GroupViewMenu account={account} />
-            <GroupViewUsers />
-            <GroupViewItems account={account} showArchived={showArchived} />
+          <ScrollView>
+            <Box p="1">
+              <GroupViewMenu account={account} />
+              <GroupViewUsers />
+              <GroupViewItems account={account} showArchived={showArchived} setShowArchived={setShowArchived} />
+            </Box>
           </ScrollView>
         )}
       </Box>
