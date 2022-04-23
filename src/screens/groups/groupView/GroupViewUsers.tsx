@@ -5,7 +5,7 @@ import {useUserListContext} from '../../../shared/contexts/listContexts/userList
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 import {Box, Flex} from 'native-base';
 import UserView from '../../../components/views/UserView';
-import GroupViewSkeletonUsers from './groupViewSkeletons/GroupViewUsersSkeleton';
+import GroupViewUsersSkeleton from './groupViewSkeletons/GroupViewUsersSkeleton';
 
 const GroupViewMenu: FC = () => {
   const {group} = useGroupViewContext();
@@ -33,7 +33,7 @@ const GroupViewMenu: FC = () => {
 
   return (
     <Flex m="1" flexDirection="row" flexWrap="wrap">
-      {loading && <GroupViewSkeletonUsers />}
+      {loading && <GroupViewUsersSkeleton />}
       {!loading &&
         usersToShow.map((user) => (
           <Box mr="1.5" mb="1.5" key={user.id}>

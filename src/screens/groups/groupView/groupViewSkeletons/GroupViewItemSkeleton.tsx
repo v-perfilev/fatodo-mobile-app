@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {HStack, Skeleton, VStack} from 'native-base';
 
-const GroupListCardItemSkeleton: FC = () => {
+const GroupViewItemSkeleton: FC = () => {
   return (
     <HStack my="1" px="1" py="1" borderWidth="1" borderColor="gray.100" borderRadius="2">
       <HStack alignItems="center">
@@ -22,4 +22,4 @@ const GroupListCardItemSkeleton: FC = () => {
   );
 };
 
-export default GroupListCardItemSkeleton;
+export default GroupViewItemSkeleton;

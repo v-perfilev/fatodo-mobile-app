@@ -13,6 +13,7 @@ import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {UserAccount} from '../../../models/User';
+import {Box} from 'native-base';
 
 type GroupViewMenuProps = {
   account: UserAccount;
@@ -85,7 +86,11 @@ const GroupViewMenu: FC<GroupViewMenuProps> = ({account}) => {
     },
   ] as MenuElement[];
 
-  return <ControlMenu menu={menuElements} />;
+  return (
+    <Box my="1">
+      <ControlMenu menu={menuElements} />
+    </Box>
+  );
 };
 
 export default GroupViewMenu;

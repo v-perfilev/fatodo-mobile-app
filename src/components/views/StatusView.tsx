@@ -28,7 +28,6 @@ const StatusView: FC<StatusViewProps> = ({statusType, ...props}) => {
   }, [statusType]);
 
   return <Center>{icon}</Center>;
-  // return <>{icon}</>;
 };
 
 export default StatusView;

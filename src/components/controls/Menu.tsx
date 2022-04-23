@@ -10,7 +10,7 @@ export type MenuProps = {
 export type MenuItemProps = {
   action: (e?: GestureResponderEvent) => void;
   icon?: ReactElement;
-  text: string;
+  text?: string;
   loading?: boolean;
   disabled?: boolean;
   show?: boolean;
@@ -23,7 +23,7 @@ export const MenuItem: FC<MenuItemProps> = ({action, icon, text, loading, disabl
         <HStack space="1" alignItems="center">
           {loading && <CentredSpinner size="sm" />}
           {!loading && icon}
-          <Text>{text}</Text>
+          {!loading && <Text>{text}</Text>}
         </HStack>
       </NbMenu.Item>
     )

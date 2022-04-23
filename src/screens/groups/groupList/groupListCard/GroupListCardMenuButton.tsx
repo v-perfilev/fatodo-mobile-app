@@ -76,9 +76,12 @@ const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({account}) =>
   return (
     <Menu
       trigger={(triggerProps) => (
-        <RoundButton {...triggerProps}>
-          <DotsVerticalIcon size="6" color="white" />
-        </RoundButton>
+        <RoundButton
+          {...triggerProps}
+          borderColor="white"
+          _pressed={{borderColor: 'white'}}
+          leftIcon={<DotsVerticalIcon color="white" size="sm" />}
+        />
       )}
     >
       {menuItems.map((itemProps, index) => (

@@ -20,9 +20,12 @@ const GroupListCardCollapseButton: FC = () => {
   };
 
   return (
-    <RoundButton onPress={handlePress}>
-      <CollapsedIcon visible={!collapsed} size="6" color="white" />
-    </RoundButton>
+    <RoundButton
+      borderColor="white"
+      _pressed={{borderColor: 'white'}}
+      leftIcon={<CollapsedIcon visible={!collapsed} color="white" size="sm" />}
+      onPress={handlePress}
+    />
   );
 };
 

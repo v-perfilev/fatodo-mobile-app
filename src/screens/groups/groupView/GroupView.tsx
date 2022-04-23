@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {Box, Text} from 'native-base';
+import {Box, ScrollView} from 'native-base';
 import {flowRight} from 'lodash';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
@@ -17,6 +17,7 @@ import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import GroupViewMenu from './GroupViewMenu';
 import GroupViewUsers from './GroupViewUsers';
+import GroupViewItems from './groupViewItems/GroupViewItems';
 
 type GroupViewProps = ReduxAuthState;
 
@@ -24,7 +25,7 @@ const GroupView: FC<GroupViewProps> = ({account}) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'GroupView'>>();
   const groupId = route.params.groupId;
-  const {users, handleUserIds} = useUserListContext();
+  const {handleUserIds} = useUserListContext();
   const {group, load: loadGroup} = useGroupViewContext();
   const [showArchived, setShowArchived] = useState<boolean>(false);
 
@@ -49,14 +50,15 @@ const GroupView: FC<GroupViewProps> = ({account}) => {
   return (
     <ThemeProvider theme={theme}>
       <Header title={group?.title} imageFilename={group?.imageFilename} showMenu={false} />
-      <Box flex="1" p="1">
+      <Box flex="1">
         {!group ? (
           <CentredSpinner />
         ) : (
-          <>
+          <ScrollView p="1">
             <GroupViewMenu account={account} />
             <GroupViewUsers />
-          </>
+            <GroupViewItems account={account} showArchived={showArchived} />
+          </ScrollView>
         )}
       </Box>
     </ThemeProvider>
