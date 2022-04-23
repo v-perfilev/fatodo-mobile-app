@@ -8,7 +8,7 @@ import {useArchivedItemListContext} from '../../../../shared/contexts/listContex
 import {useItemListContext} from '../../../../shared/contexts/listContexts/itemListContext';
 import {Item} from '../../../../models/Item';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
-import {CARD_ITEMS_COUNT, GROUP_ITEMS_COUNT} from '../../../../constants';
+import {GROUP_ITEMS_COUNT} from '../../../../constants';
 import GroupViewItemsSkeleton from '../groupViewSkeletons/GroupViewItemsSkeleton';
 import GroupViewItemsCreateButton from './GroupViewItemsCreateButton';
 import GroupViewItem from '../groupViewItem/GroupViewItem';
@@ -67,7 +67,7 @@ const GroupViewItems: FC<GroupViewItemsProps> = ({showArchived, setShowArchived,
   const loadMoreIfNeeded = (load: (groupId: string, offset: number, size: number) => void): void => {
     const firstShownItem = GROUP_ITEMS_COUNT * page;
     if (items.length < count && items.length < firstShownItem + GROUP_ITEMS_COUNT) {
-      load(group.id, items.length, CARD_ITEMS_COUNT * 2);
+      load(group.id, items.length, GROUP_ITEMS_COUNT * 2);
     }
   };
 
@@ -83,9 +83,9 @@ const GroupViewItems: FC<GroupViewItemsProps> = ({showArchived, setShowArchived,
 
   useEffect(() => {
     resetPage();
-    if (showArchived) {
+    if (showArchived && !archivedCount) {
       loadInitial(loadArchived);
-    } else {
+    } else if (!showArchived && !activeCount) {
       loadInitial(loadActive);
     }
   }, [group.id, showArchived]);

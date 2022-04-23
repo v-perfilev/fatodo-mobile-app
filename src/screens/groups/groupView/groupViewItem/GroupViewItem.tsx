@@ -28,7 +28,7 @@ const GroupViewItem: FC<GroupViewItemProps> = ({item, canEdit}) => {
             <Text isTruncated>{item.title}</Text>
             <GroupViewItemChanges item={item} />
           </VStack>
-          <GroupViewItemMenu item={item} />
+          <GroupViewItemMenu item={item} canEdit={canEdit} />
         </HStack>
       </Pressable>
     </VStack>
