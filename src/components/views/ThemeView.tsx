@@ -1,0 +1,20 @@
+import React, {FC, useMemo} from 'react';
+import {Box} from 'native-base';
+import {ColorScheme, LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
+import ThemeProvider from '../layouts/ThemeProvider';
+
+type ThemeViewProps = {
+  color: ColorScheme;
+};
+
+export const ThemeView: FC<ThemeViewProps> = ({color}) => {
+  const theme = useMemo(() => ThemeFactory.getTheme(color), [color]);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Box flex="1" bg={LINEAR_GRADIENT} />
+    </ThemeProvider>
+  );
+};
+
+export default ThemeView;

@@ -10,7 +10,17 @@ import {
 } from './sets';
 import {extendTheme, Theme} from 'native-base';
 
-type ColorScheme = 'yellow' | 'turquoise' | 'purple' | 'green' | 'blue';
+export const colorSchemes: ColorScheme[] = ['yellow', 'turquoise', 'purple', 'green', 'blue'];
+
+export type ColorScheme = 'yellow' | 'turquoise' | 'purple' | 'green' | 'blue';
+
+export const LINEAR_GRADIENT = {
+  linearGradient: {
+    colors: ['tertiary.500', 'tertiary.300'],
+    start: [0, 0],
+    end: [1, 1],
+  },
+};
 
 export class ThemeFactory {
   private static yellowTheme = extendTheme({

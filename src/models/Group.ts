@@ -1,5 +1,5 @@
-import {ColorScheme} from '../shared/theme/colors';
 import {User} from './User';
+import {ColorScheme} from '../shared/themes/ThemeFactory';
 
 export interface Group {
   id: string;

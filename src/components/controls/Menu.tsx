@@ -16,7 +16,7 @@ export type MenuItemProps = {
   show?: boolean;
 };
 
-export const MenuItem: FC<MenuItemProps> = ({action, icon, text, loading, disabled, show = true}) => {
+export const MenuItem: FC<MenuItemProps> = ({action, icon, text, children, loading, disabled, show = true}) => {
   return (
     show && (
       <NbMenu.Item onPress={action} disabled={disabled}>
@@ -24,6 +24,7 @@ export const MenuItem: FC<MenuItemProps> = ({action, icon, text, loading, disabl
           {loading && <CentredSpinner size="sm" />}
           {!loading && icon}
           {!loading && <Text>{text}</Text>}
+          {!loading && children}
         </HStack>
       </NbMenu.Item>
     )

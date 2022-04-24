@@ -1,4 +1,21 @@
 {
+  "headers": {
+    "create": "Create group",
+    "edit": "Edit group"
+  },
+  "fields": {
+    "title": {
+      "label": "Title",
+      "required": "Required"
+    },
+    "color": {
+      "label": "Color",
+      "required": "Required"
+    },
+    "image": {
+      "label": "Image"
+    }
+  },
   "actions": {
     "showAll": "Show all items",
     "showArchived": "Show archived",

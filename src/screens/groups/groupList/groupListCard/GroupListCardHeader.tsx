@@ -9,6 +9,7 @@ import UrlPic from '../../../../components/surfaces/UrlPic';
 import GroupListCardMenuButton from './GroupListCardMenuButton';
 import PressableButton from '../../../../components/controls/PressableButton';
 import ReorderIcon from '../../../../components/icons/ReorderIcon';
+import {LINEAR_GRADIENT} from '../../../../shared/themes/ThemeFactory';
 
 type GroupListCardHeaderProps = {
   sorting: boolean;
@@ -23,17 +24,9 @@ const GroupListCardHeader: FC<GroupListCardHeaderProps> = ({sorting, drag}) => {
     navigation.navigate('GroupView', {groupId: group.id});
   };
 
-  const linearGradient = {
-    linearGradient: {
-      colors: ['primary.500', 'primary.300'],
-      start: [0, 0],
-      end: [1, 1],
-    },
-  };
-
   return (
     <Pressable onPress={goToGroupView}>
-      <Box h="45" px="2" bg={linearGradient} justifyContent="center">
+      <Box h="45" px="2" bg={LINEAR_GRADIENT} justifyContent="center">
         <HStack space="2" alignItems="center">
           {group.imageFilename && <UrlPic url={group.imageFilename} size="9" border={1} invertedBorder />}
           <Text fontWeight="600" fontSize="14" color="white" isTruncated>
