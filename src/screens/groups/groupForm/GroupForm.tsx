@@ -12,7 +12,7 @@ import {useTranslation} from 'react-i18next';
 import {SnackState} from '../../../shared/contexts/SnackContext';
 import {withSnackContext} from '../../../shared/hocs/withSnackbar';
 import FormikThemeInput from '../../../components/inputs/FormikThemeInput';
-import ThemeView from '../../../components/views/ThemeView';
+import ImageUpload from '../../../components/inputs/imageUpload/ImageUpload';
 
 export interface GroupFormValues {
   title: string;
@@ -48,6 +48,14 @@ const GroupForm: FC<GroupFormProps> = (props) => {
     <VStack w="100%" space="3" mt="7">
       <FormikTextInput name="title" label={t('group:fields.title.label')} isDisabled={isSubmitting} {...props} />
       <FormikThemeInput name="color" label={t('group:fields.color.label')} isDisabled={isSubmitting} {...props} />
+      <ImageUpload
+        filenameName="imageFilename"
+        contentName="imageContent"
+        label={t('group:fields.image.label')}
+        preview
+        crop
+        {...props}
+      />
       <SolidButton
         colorScheme="secondary"
         mt="5"

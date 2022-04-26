@@ -1,9 +1,9 @@
 import {Button, IButtonProps} from 'native-base';
 import React, {MutableRefObject} from 'react';
 
-type SolidButtonProps = IButtonProps;
+type OutlinedButtonProps = IButtonProps;
 
-const SolidButton = React.forwardRef<HTMLElement, SolidButtonProps>((props, ref) => {
+const OutlinedButton = React.forwardRef<HTMLElement, OutlinedButtonProps>((props, ref) => {
   const {children, ...other} = props;
 
   return (
@@ -13,4 +13,4 @@ const SolidButton = React.forwardRef<HTMLElement, SolidButtonProps>((props, ref)
   );
 });
 
-export default SolidButton;
+export default OutlinedButton;

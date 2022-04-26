@@ -1,4 +1,4 @@
 export interface Image {
-  filename: string;
+  filename?: string;
   content?: Blob;
 }
