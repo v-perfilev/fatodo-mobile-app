@@ -29,7 +29,10 @@
     "leave": "Покинуть",
     "delete": "Удалить",
     "moveToArchive": "Перенести в архив",
-    "removeFromArchive": "Удалить из архива"
+    "removeFromArchive": "Удалить из архива",
+    "save": "Добавить",
+    "update": "Изменить",
+    "cancel": "Отменить"
   },
   "menu": {
     "createGroup": "Добавить группу",

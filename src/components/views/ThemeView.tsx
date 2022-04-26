@@ -12,7 +12,7 @@ export const ThemeView: FC<ThemeViewProps> = ({color}) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box flex="1" bg={LINEAR_GRADIENT} />
+      <Box flex="1" minW="200" bg={LINEAR_GRADIENT} />
     </ThemeProvider>
   );
 };

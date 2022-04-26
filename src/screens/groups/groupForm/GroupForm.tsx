@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {VStack} from 'native-base';
+import {HStack, VStack} from 'native-base';
 import {flowRight} from 'lodash';
 import {FormikBag, FormikProps, withFormik} from 'formik';
 import {Group} from '../../../models/Group';
@@ -31,11 +31,12 @@ const defaultGroupFormValues: Readonly<GroupFormValues> = {
 type GroupFormProps = FormikProps<GroupFormValues> &
   SnackState & {
     group?: Group;
-    setSaveCallback: (callback: () => () => void) => void;
     request: (formData: FormData, stopSubmitting: () => void) => void;
+    cancel: () => void;
   };
 
 const GroupForm: FC<GroupFormProps> = (props) => {
+  const {cancel} = props;
   const {isValid, isSubmitting, handleSubmit} = props;
   const {t} = useTranslation();
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
@@ -45,7 +46,7 @@ const GroupForm: FC<GroupFormProps> = (props) => {
   }, []);
 
   return (
-    <VStack w="100%" space="3" mt="7">
+    <VStack w="100%" space="3">
       <FormikTextInput name="title" label={t('group:fields.title.label')} isDisabled={isSubmitting} {...props} />
       <FormikThemeInput name="color" label={t('group:fields.color.label')} isDisabled={isSubmitting} {...props} />
       <ImageUpload
@@ -56,16 +57,26 @@ const GroupForm: FC<GroupFormProps> = (props) => {
         crop
         {...props}
       />
-      <SolidButton
-        colorScheme="secondary"
-        mt="5"
-        size="lg"
-        isLoading={isSubmitting}
-        isDisabled={!isInitialized || !isValid || isSubmitting}
-        onPress={handleSubmit}
-      >
-        {t('account:login.submit')}
-      </SolidButton>
+      <HStack space="3" justifyContent="flex-end">
+        <SolidButton
+          colorScheme="primary"
+          size="md"
+          isLoading={isSubmitting}
+          isDisabled={!isInitialized || !isValid || isSubmitting}
+          onPress={handleSubmit}
+        >
+          {t('group:actions.save')}
+        </SolidButton>
+        <SolidButton
+          colorScheme="secondary"
+          size="md"
+          isLoading={isSubmitting}
+          isDisabled={!isInitialized || isSubmitting}
+          onPress={cancel}
+        >
+          {t('group:actions.cancel')}
+        </SolidButton>
+      </HStack>
     </VStack>
   );
 };
@@ -101,7 +112,9 @@ const formik = withFormik<GroupFormProps, GroupFormValues>({
       addValueToForm(formData, 'id', group?.id);
       addValueToForm(formData, 'title', values.title);
       addValueToForm(formData, 'color', values.color);
-      addValueToForm(formData, 'imageFilename', values.imageFilename);
+      if (!values.imageContent) {
+        addValueToForm(formData, 'imageFilename', values.imageFilename);
+      }
       addValueToForm(formData, 'imageContent', values.imageContent);
       return formData;
     };

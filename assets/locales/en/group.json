@@ -29,7 +29,10 @@
     "leave": "Leave",
     "delete": "Delete",
     "moveToArchive": "Move to archive",
-    "removeFromArchive": "Remove from archive"
+    "removeFromArchive": "Remove from archive",
+    "save": "Save",
+    "update": "Update",
+    "cancel": "Cancel"
   },
   "menu": {
     "createGroup": "Create group",

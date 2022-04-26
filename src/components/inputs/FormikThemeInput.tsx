@@ -42,7 +42,7 @@ const FormikThemeInput: FC<FormikThemeInputProps> = (props) => {
       >
         {Object.values(colorSchemes).map((color, index) => (
           <MenuItem action={() => setTheme(color)} key={index}>
-            <Box w="100%" h="40px">
+            <Box h="40px">
               <ThemeView color={color} />
             </Box>
           </MenuItem>

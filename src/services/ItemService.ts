@@ -1,4 +1,4 @@
-import axios, {AxiosPromise} from 'axios';
+import axios, {AxiosPromise, AxiosRequestConfig} from 'axios';
 import {Group, GroupMember} from '../models/Group';
 import {PageableList} from '../models/PageableList';
 import {Item} from '../models/Item';
@@ -21,13 +21,21 @@ export default class ItemService {
 
   public static createGroup = (formData: FormData): AxiosPromise => {
     const url = ItemService.baseUrl + '/groups';
-    const config = {headers: {'content-type': 'multipart/form-data'}};
+    console.log('4');
+    const config = {
+      headers: {'content-type': 'multipart/form-data'},
+      transformRequest: (_) => formData,
+    } as AxiosRequestConfig;
+    console.log('5');
     return axios.post(url, formData, config);
   };
 
   public static updateGroup = (formData: FormData): AxiosPromise => {
     const url = ItemService.baseUrl + '/groups';
-    const config = {headers: {'content-type': 'multipart/form-data'}};
+    const config = {
+      headers: {'content-type': 'multipart/form-data'},
+      transformRequest: (_) => formData,
+    } as AxiosRequestConfig;
     return axios.put(url, formData, config);
   };
 
