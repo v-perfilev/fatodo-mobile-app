@@ -1,9 +1,10 @@
-import React, {FC} from 'react';
+import React, {FC, memo} from 'react';
 import {Item} from '../../../../models/Item';
 import {HStack, Text, VStack} from 'native-base';
 import GroupListCardItemIcons from './GroupListCardItemIcons';
 import GroupListCardItemChanges from './GroupListCardItemChanges';
 import GroupListCardItemMenu from './GroupListCardItemMenu';
+import {flowRight} from 'lodash';
 
 type GroupListCardItemProps = {
   item: Item;
@@ -22,4 +23,4 @@ const GroupListCardItem: FC<GroupListCardItemProps> = ({item}) => {
   );
 };
 
-export default GroupListCardItem;
+export default flowRight([memo])(GroupListCardItem);

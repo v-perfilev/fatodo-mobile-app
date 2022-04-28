@@ -1,7 +1,5 @@
 import React, {FC} from 'react';
-import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
 import Menu, {MenuItem, MenuItemProps} from '../../../../components/controls/Menu';
-import {UserAccount} from '../../../../models/User';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
@@ -14,15 +12,16 @@ import EditIcon from '../../../../components/icons/EditIcon';
 import DeleteIcon from '../../../../components/icons/DeleteIcon';
 import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
 import RoundButton from '../../../../components/controls/RoundButton';
+import {Group} from '../../../../models/Group';
+import {ReduxAuthState} from '../../../../store/rerducers/AuthReducer';
 
-type GroupListCardMenuButtonProps = {
-  account: UserAccount;
+type GroupListCardMenuButtonProps = ReduxAuthState & {
+  group: Group;
 };
 
-const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({account}) => {
+const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({group, account}) => {
   const {t} = useTranslation();
   const navigation = useNavigation<GroupNavigationProp>();
-  const {group} = useGroupViewContext();
   // const {load: loadGroups} = useGroupListContext();
   // const {showGroupDeleteDialog} = useGroupDialogContext();
 

@@ -1,14 +1,13 @@
-import React, {FC, memo, useMemo} from 'react';
-import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
-import {ThemeFactory} from '../../../../shared/themes/ThemeFactory';
-import {flowRight} from 'lodash';
+import React, {FC, memo} from 'react';
 import {Box} from 'native-base';
 import GroupListCardHeader from './GroupListCardHeader';
-import {Group} from '../../../../models/Group';
 import Collapsible from 'react-native-collapsible';
 import ThemeProvider from '../../../../components/layouts/ThemeProvider';
 import {Item} from '../../../../models/Item';
 import GroupListCardContent from './GroupListCardContent';
+import {Theme} from 'native-base/src/theme';
+import {flowRight} from 'lodash';
+import {Group} from '../../../../models/Group';
 
 type GroupListCardProps = {
   group: Group;
@@ -16,21 +15,20 @@ type GroupListCardProps = {
   count: number;
   loading: boolean;
   collapsed: boolean;
-  drag: () => void;
   sorting: boolean;
+  drag: () => void;
+  theme: Theme;
 };
 
-const GroupListCard: FC<GroupListCardProps> = ({items, count, loading, collapsed, sorting, drag}) => {
-  const {group} = useGroupViewContext();
-
-  const theme = useMemo(() => ThemeFactory.getTheme(group?.color), [group]);
+const GroupListCard: FC<GroupListCardProps> = (props) => {
+  const {group, items, count, loading, collapsed, sorting, drag, theme} = props;
 
   return (
     <ThemeProvider theme={theme}>
       <Box borderRadius="4" mb="1" mx="1" overflow="hidden">
-        <GroupListCardHeader sorting={sorting} drag={drag} />
+        <GroupListCardHeader group={group} collapsed={collapsed} sorting={sorting} drag={drag} />
         <Collapsible collapsed={collapsed}>
-          <GroupListCardContent items={items} count={count} loading={loading} />
+          <GroupListCardContent group={group} items={items} count={count} loading={loading} />
         </Collapsible>
       </Box>
     </ThemeProvider>

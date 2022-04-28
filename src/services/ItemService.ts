@@ -21,12 +21,10 @@ export default class ItemService {
 
   public static createGroup = (formData: FormData): AxiosPromise => {
     const url = ItemService.baseUrl + '/groups';
-    console.log('4');
     const config = {
       headers: {'content-type': 'multipart/form-data'},
       transformRequest: (_) => formData,
     } as AxiosRequestConfig;
-    console.log('5');
     return axios.post(url, formData, config);
   };
 

@@ -1,5 +1,4 @@
 import React, {FC, useMemo} from 'react';
-import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
 import {HStack} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
@@ -9,14 +8,15 @@ import BoxWithIcon from '../../../../components/surfaces/BoxWithIcon';
 import ItemsIcon from '../../../../components/icons/ItemsIcon';
 import GroupListCardAvatars from './GroupListCardAvatars';
 import LinkButton from '../../../../components/controls/LinkButton';
+import {Group} from '../../../../models/Group';
 
 type GroupListCardHeaderProps = {
+  group: Group;
   items: Item[];
   count: number;
 };
 
-const GroupListCardInfo: FC<GroupListCardHeaderProps> = ({items, count}) => {
-  const {group} = useGroupViewContext();
+const GroupListCardInfo: FC<GroupListCardHeaderProps> = ({group, items, count}) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
 
@@ -33,7 +33,7 @@ const GroupListCardInfo: FC<GroupListCardHeaderProps> = ({items, count}) => {
 
   return (
     <>
-      <GroupListCardAvatars />
+      <GroupListCardAvatars group={group} />
       <HStack flex="1" justifyContent="center">
         {showButtonToGroupView && <LinkButton onPress={goToGroupView}>{t('group:actions.showAll')}</LinkButton>}
         {showButtonToCreateItem && <LinkButton onPress={goToItemCreate}>{t('group:actions.createItem')}</LinkButton>}

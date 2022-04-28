@@ -1,17 +1,17 @@
-import React, {FC, useMemo} from 'react';
-import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
+import React, {FC} from 'react';
 import {useGroupListItemsContext} from '../../../../shared/contexts/listContexts/groupListItemsContext';
 import {GestureResponderEvent} from 'react-native';
 import RoundButton from '../../../../components/controls/RoundButton';
 import CollapsedIcon from '../../../../components/icons/CollapsedIcon';
+import {Group} from '../../../../models/Group';
 
-const GroupListCardCollapseButton: FC = () => {
-  const {group} = useGroupViewContext();
-  const {collapsed: previewCollapsed, setCollapsed} = useGroupListItemsContext();
+type GroupListCardCollapseButtonProps = {
+  group: Group;
+  collapsed: boolean;
+};
 
-  const collapsed = useMemo<boolean>(() => {
-    return group && previewCollapsed.has(group.id) ? previewCollapsed.get(group.id) : false;
-  }, [group, previewCollapsed]);
+const GroupListCardCollapseButton: FC<GroupListCardCollapseButtonProps> = ({group, collapsed}) => {
+  const {setCollapsed} = useGroupListItemsContext();
 
   const handlePress = (e: GestureResponderEvent): void => {
     e.preventDefault();

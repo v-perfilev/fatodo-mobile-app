@@ -1,13 +1,22 @@
-import React, {FC, memo, useCallback} from 'react';
+import React, {FC} from 'react';
 import {useGroupListContext} from '../../../shared/contexts/listContexts/groupListContext';
 import DraggableFlatList, {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
 import {Group} from '../../../models/Group';
-import GroupListItem from './GroupListItem';
 import {Box, useTheme} from 'native-base';
+import GroupListItem from './GroupListItem';
 
 type GroupListContainerProps = {
   sorting: boolean;
 };
+
+const renderer = (sorting: boolean) => (props: RenderItemParams<Group>) =>
+  (
+    <ScaleDecorator activeScale={1.03}>
+      <Box px="2" pb="2">
+        <GroupListItem sorting={sorting} {...props} />
+      </Box>
+    </ScaleDecorator>
+  );
 
 const GroupListContainer: FC<GroupListContainerProps> = ({sorting}) => {
   const {groups, setGroups} = useGroupListContext();
@@ -16,17 +25,6 @@ const GroupListContainer: FC<GroupListContainerProps> = ({sorting}) => {
   const extractKey = (group: Group): string => group.id;
 
   const handleDragEnd = ({data}: DragEndParams<Group>): void => setGroups(data);
-
-  const renderItem = useCallback(
-    (props: RenderItemParams<Group>) => (
-      <ScaleDecorator activeScale={1.03}>
-        <Box px="2" pb="2">
-          <GroupListItem sorting={sorting} {...props} />
-        </Box>
-      </ScaleDecorator>
-    ),
-    [sorting],
-  );
 
   const containerStyle = {
     paddingTop: theme.sizes['3'],
@@ -37,10 +35,10 @@ const GroupListContainer: FC<GroupListContainerProps> = ({sorting}) => {
       data={groups}
       onDragEnd={handleDragEnd}
       keyExtractor={extractKey}
-      renderItem={renderItem}
+      renderItem={renderer(sorting)}
       contentContainerStyle={containerStyle}
     />
   );
 };
 
-export default memo(GroupListContainer);
+export default GroupListContainer;
