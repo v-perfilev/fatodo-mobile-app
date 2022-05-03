@@ -1,8 +1,8 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Icon, IIconProps} from 'native-base';
 import {Path} from 'react-native-svg';
 
-const LowPriorityIcon: FC<IIconProps> = (props) => {
+const LowPriorityIcon = (props: IIconProps) => {
   return (
     <Icon viewBox="0 0 24 24" {...props}>
       <Path d="M2.5 14.5H6.5V20.5H2.5V14.5Z" fill="currentColor" />

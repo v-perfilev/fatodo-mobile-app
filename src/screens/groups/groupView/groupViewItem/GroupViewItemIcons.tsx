@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Item} from '../../../../models/Item';
 import {Box, HStack, VStack} from 'native-base';
 import PriorityView from '../../../../components/views/PriorityView';
@@ -10,7 +10,7 @@ type GroupViewItemIconsProps = {
   canEdit: boolean;
 };
 
-const GroupViewItemIcons: FC<GroupViewItemIconsProps> = ({item, canEdit}) => {
+const GroupViewItemIcons = ({item, canEdit}: GroupViewItemIconsProps) => {
   return (
     <HStack alignItems="center">
       <GroupViewItemStatus item={item} canEdit={canEdit} />

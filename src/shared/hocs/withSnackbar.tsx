@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ComponentType, FC, PropsWithChildren, ReactElement, useCallback, useEffect, useState} from 'react';
+import {ComponentType, PropsWithChildren, ReactElement, useCallback, useEffect, useState} from 'react';
 import {AxiosResponse} from 'axios';
 import {connect, ConnectedProps} from 'react-redux';
 import {flowRight} from 'lodash';
@@ -19,8 +19,8 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type Props = PropsWithChildren<ConnectedProps<typeof connector>>;
 
 const withSnack =
-  (Component: ComponentType): FC<Props> =>
-  ({snackState, enqueueReduxSnack, closeReduxSnack, removeReduxSnack, ...props}: Props): ReactElement => {
+  (Component: ComponentType) =>
+  ({snackState, enqueueReduxSnack, closeReduxSnack, removeReduxSnack, ...props}: Props) => {
     const [displayed, setDisplayed] = useState<string[]>([]);
     const {show, close} = useToast();
 
@@ -85,12 +85,8 @@ const withSnack =
     );
   };
 
-export const withSnackContext =
-  (Component: ComponentType<SnackState>): FC =>
-  (props): ReactElement => {
-    return (
-      <SnackContext.Consumer>{(value): ReactElement => <Component {...props} {...value} />}</SnackContext.Consumer>
-    );
-  };
+export const withSnackContext = (Component: ComponentType<SnackState>) => (props: any) => {
+  return <SnackContext.Consumer>{(value): ReactElement => <Component {...props} {...value} />}</SnackContext.Consumer>;
+};
 
 export default flowRight([connector, withSnack]);

@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useMemo} from 'react';
+import React, {ReactElement, useMemo} from 'react';
 import {Box, HStack, VStack} from 'native-base';
 import {Item} from '../../../../models/Item';
 import GroupListCardSkeleton from '../groupListSkeletons/GroupListCardSkeleton';
@@ -13,7 +13,7 @@ type GroupListCardContentProps = {
   loading: boolean;
 };
 
-const GroupListCardContent: FC<GroupListCardContentProps> = ({group, items, count, loading}) => {
+const GroupListCardContent = ({group, items, count, loading}: GroupListCardContentProps) => {
   const skeleton = useMemo<ReactElement>(() => <GroupListCardSkeleton />, []);
 
   const itemsView = (

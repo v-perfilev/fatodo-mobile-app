@@ -1,4 +1,4 @@
-import React, {FC, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {Item} from '../../../../models/Item';
 import {HStack, Text} from 'native-base';
 import {useUserListContext} from '../../../../shared/contexts/listContexts/userListContext';
@@ -8,7 +8,7 @@ type GroupViewItemChangesProps = {
   item: Item;
 };
 
-const GroupViewItemChanges: FC<GroupViewItemChangesProps> = ({item}) => {
+const GroupViewItemChanges = ({item}: GroupViewItemChangesProps) => {
   const {users} = useUserListContext();
 
   const name = useMemo<string>(() => {

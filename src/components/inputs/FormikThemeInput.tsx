@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, FormControl, IFormControlProps, Input} from 'native-base';
 import {FormikProps} from 'formik';
 import ThemeView from '../views/ThemeView';
@@ -13,7 +13,7 @@ type FormikThemeInputProps = IFormControlProps &
     label?: string;
   };
 
-const FormikThemeInput: FC<FormikThemeInputProps> = (props) => {
+const FormikThemeInput = (props: FormikThemeInputProps) => {
   const {name, label} = props;
   const {values, errors, touched, handleChange, handleBlur} = props;
   const [theme, setTheme] = useState<ColorScheme>();

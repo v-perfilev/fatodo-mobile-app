@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Text} from 'react-native';
 import {Center} from 'native-base';
 import SolidButton from '../../components/controls/SolidButton';
@@ -12,7 +12,7 @@ const connector = connect(null, mapDispatchToProps);
 
 type AccountProps = ConnectedProps<typeof connector>;
 
-const Account: FC<AccountProps> = ({logout}) => {
+const Account = ({logout}: AccountProps) => {
   const handlePress = (): void => {
     logout();
   };

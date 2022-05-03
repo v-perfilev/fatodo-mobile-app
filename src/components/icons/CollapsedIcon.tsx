@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {IIconProps, PresenceTransition} from 'native-base';
 import ArrowDownIcon from './ArrowDownIcon';
 
@@ -6,7 +6,7 @@ type CollapsedIconProps = IIconProps & {
   visible: boolean;
 };
 
-const CollapsedIcon: FC<CollapsedIconProps> = ({visible, ...props}) => {
+const CollapsedIcon = ({visible, ...props}: CollapsedIconProps) => {
   const initial = {
     rotate: '0deg',
   };

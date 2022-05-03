@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {ScrollView} from 'native-base';
 import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
@@ -8,7 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import {useSnackContext} from '../../../shared/contexts/SnackContext';
 
-const GroupCreate: FC = () => {
+const GroupCreate = () => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {handleCode, handleResponse} = useSnackContext();
 

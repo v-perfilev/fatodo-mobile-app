@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {FC} from 'react';
 import {
   passwordStrengthMap,
   passwordStrengthPostfix,
@@ -7,11 +6,11 @@ import {
 } from '../../screens/auth/forgotPassword/ForgotPasswordValidators';
 import {Box} from 'native-base';
 
-type Props = {
+type PasswordStrengthBardProps = {
   password: string;
 };
 
-export const PasswordStrengthBar: FC<Props> = ({password}: Props) => {
+export const PasswordStrengthBar = ({password}: PasswordStrengthBardProps) => {
   const rulesCount = 4;
   let counter = 0;
   if (password.length >= 8) {

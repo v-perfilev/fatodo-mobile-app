@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import SignInForm from './SignInForm';
 import Logo from '../../../components/layouts/Logo';
 import {Box, Center, ScrollView, Stack} from 'native-base';
@@ -8,7 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {AuthNavigationProp} from '../../../navigators/AuthNavigator';
 import LanguageMenu from '../../../components/controls/LanguageMenu';
 
-const SignIn: FC = () => {
+const SignIn = () => {
   const navigation = useNavigation<AuthNavigationProp>();
   const {t} = useTranslation();
   const [isLoading, setLoading] = useState<boolean>(false);

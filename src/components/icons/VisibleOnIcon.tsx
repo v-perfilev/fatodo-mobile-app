@@ -1,8 +1,8 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Icon, IIconProps} from 'native-base';
 import {Path} from 'react-native-svg';
 
-const VisibleOnIcon: FC<IIconProps> = (props) => {
+const VisibleOnIcon = (props: IIconProps) => {
   return (
     <Icon viewBox="0 0 24 24" {...props}>
       <Path fill="none" d="M0 0h24v24H0z" />

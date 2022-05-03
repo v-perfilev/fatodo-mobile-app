@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Box, HStack, Pressable, Text} from 'native-base';
 import {User} from '../../models/User';
 import {AVATARS_IN_CARD} from '../../constants';
@@ -10,7 +10,7 @@ type AvatarGroupProps = {
   withInvertedBorder?: boolean;
 };
 
-const AvatarGroup: FC<AvatarGroupProps> = ({users, onClick, withInvertedBorder}) => {
+const AvatarGroup = ({users, onClick, withInvertedBorder}: AvatarGroupProps) => {
   const usersToShow = users.slice(0, AVATARS_IN_CARD);
   const moreThanLimit = users.length > AVATARS_IN_CARD ? users.length - AVATARS_IN_CARD : 0;
 

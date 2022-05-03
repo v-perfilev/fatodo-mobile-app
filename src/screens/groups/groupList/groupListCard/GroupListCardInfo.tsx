@@ -1,4 +1,4 @@
-import React, {FC, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {HStack} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
@@ -16,7 +16,7 @@ type GroupListCardHeaderProps = {
   count: number;
 };
 
-const GroupListCardInfo: FC<GroupListCardHeaderProps> = ({group, items, count}) => {
+const GroupListCardInfo = ({group, items, count}: GroupListCardHeaderProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
 

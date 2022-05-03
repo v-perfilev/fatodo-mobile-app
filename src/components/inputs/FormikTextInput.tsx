@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {FormControl, IFormControlProps, Input} from 'native-base';
 import {FormikProps} from 'formik';
 
@@ -9,7 +9,7 @@ type FormikTextInputProps = IFormControlProps &
     placeholder?: string;
   };
 
-const FormikTextInput: FC<FormikTextInputProps> = (props) => {
+const FormikTextInput = (props: FormikTextInputProps) => {
   const {name, label, placeholder} = props;
   const {values, errors, touched, handleChange, handleBlur} = props;
 

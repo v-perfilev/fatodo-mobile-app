@@ -1,8 +1,8 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Icon, IIconProps} from 'native-base';
 import {Path} from 'react-native-svg';
 
-const PackageDownIcon: FC<IIconProps> = (props) => {
+const PackageDownIcon = (props: IIconProps) => {
   return (
     <Icon viewBox="0 0 24 24" {...props}>
       <Path

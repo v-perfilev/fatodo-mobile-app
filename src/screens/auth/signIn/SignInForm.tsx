@@ -1,7 +1,7 @@
 import {login, requestAccountData} from '../../../store/actions/AuthActions';
 import {connect, ConnectedProps} from 'react-redux';
 import {FormikBag, FormikProps, withFormik} from 'formik';
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SecurityUtils} from '../../../shared/utils/SecurityUtils';
 import AuthService from '../../../services/AuthService';
 import {flowRight} from 'lodash';
@@ -40,7 +40,7 @@ type SignInFormProps = FormikProps<SignInFormValues> &
     setLoading: (isLoading: boolean) => void;
   };
 
-const SignInForm: FC<SignInFormProps> = (props) => {
+const SignInForm = (props: SignInFormProps) => {
   const {isValid, handleSubmit, isLoading, setLoading, captchaToken, requestCaptchaToken} = props;
   const {t} = useTranslation();
   const [isInitialized, setIsInitialized] = useState<boolean>(false);

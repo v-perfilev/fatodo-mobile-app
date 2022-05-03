@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Item} from '../../../../models/Item';
 import EyeIcon from '../../../../components/icons/EyeIcon';
 import {useNavigation} from '@react-navigation/native';
@@ -22,7 +22,7 @@ type GroupViewItemMenuProps = {
   canEdit: boolean;
 };
 
-const GroupViewItemMenu: FC<GroupViewItemMenuProps> = ({item, canEdit}) => {
+const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
   const {handleResponse} = useSnackContext();

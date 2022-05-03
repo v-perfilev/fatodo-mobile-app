@@ -1,7 +1,7 @@
 import './shared/i18n';
 import './shared/axios';
 
-import React, {FC, PropsWithChildren, useEffect, useState} from 'react';
+import React, {PropsWithChildren, useEffect, useState} from 'react';
 import {flowRight} from 'lodash';
 import {ReduxAuthState} from './store/rerducers/AuthReducer';
 import {bindActionCreators} from 'redux';
@@ -31,7 +31,7 @@ const connector = connect(null, mapDispatchToProps);
 
 type AppProps = ReduxAuthState & PropsWithChildren<ConnectedProps<typeof connector>>;
 
-const App: FC<AppProps> = ({isAuthenticated, login, requestAccountData}) => {
+const App = ({isAuthenticated, login, requestAccountData}: AppProps) => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {

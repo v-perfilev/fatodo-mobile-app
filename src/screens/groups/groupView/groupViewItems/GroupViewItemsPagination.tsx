@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {HStack, Text} from 'native-base';
 import ArrowDownIcon from '../../../../components/icons/ArrowDownIcon';
 import RoundButton from '../../../../components/controls/RoundButton';
@@ -10,7 +10,7 @@ type GroupViewItemsPaginationProps = {
   totalPages: number;
 };
 
-const GroupViewItemsPagination: FC<GroupViewItemsPaginationProps> = ({page, setPage, totalPages}) => {
+const GroupViewItemsPagination = ({page, setPage, totalPages}: GroupViewItemsPaginationProps) => {
   const onUpClick = (): void => {
     if (page > 0) {
       setPage(page - 1);

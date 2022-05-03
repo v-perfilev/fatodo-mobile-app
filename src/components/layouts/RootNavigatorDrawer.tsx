@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {DrawerContentComponentProps, DrawerContentScrollView, DrawerNavigationEventMap} from '@react-navigation/drawer';
 import {Box, HStack, Pressable, Text, VStack} from 'native-base';
 import {DrawerNavigationState, NavigationHelpers, ParamListBase} from '@react-navigation/native';
@@ -16,14 +16,7 @@ type RootNavigatorItemProps = {
   index: number;
 };
 
-const RootNavigatorItem: FC<RootNavigatorItemProps> = ({
-  routeName,
-  routeKey,
-  state,
-  descriptors,
-  navigation,
-  index,
-}) => {
+const RootNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, index}: RootNavigatorItemProps) => {
   const {t} = useTranslation();
   const {options} = descriptors[routeKey];
   const isFocused = state.index === index;
@@ -45,7 +38,7 @@ const RootNavigatorItem: FC<RootNavigatorItemProps> = ({
   );
 };
 
-const RootNavigatorDrawer: FC<DrawerContentComponentProps> = (props) => {
+const RootNavigatorDrawer = (props: DrawerContentComponentProps) => {
   const {state, descriptors, navigation} = props;
   const {setToggleDrawer} = useDrawerContext();
 
@@ -76,7 +69,7 @@ const RootNavigatorDrawer: FC<DrawerContentComponentProps> = (props) => {
       </Box>
       <Box flex="1" flexGrow="0">
         <VStack space="8" my="6" mx="8">
-          <LanguageMenu space="5" />
+          <LanguageMenu />
         </VStack>
       </Box>
     </DrawerContentScrollView>

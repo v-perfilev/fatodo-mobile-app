@@ -1,4 +1,4 @@
-import React, {FC, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {RenderItemParams} from 'react-native-draggable-flatlist';
 import {Theme} from 'native-base/src/theme';
 import GroupListCard from './groupListCard/GroupListCard';
@@ -11,7 +11,7 @@ type GroupListItemProps = RenderItemParams<Group> & {
   sorting: boolean;
 };
 
-const GroupListItem: FC<GroupListItemProps> = ({item: group, sorting, drag}) => {
+const GroupListItem = ({item: group, sorting, drag}: GroupListItemProps) => {
   const {
     items: listItems,
     counts: listCounts,

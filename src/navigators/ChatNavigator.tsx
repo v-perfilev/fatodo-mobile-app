@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ChatList from '../screens/chats/chatList/ChatList';
 import ChatView from '../screens/chats/chatView/ChatView';
@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator<ChatParamList>();
 
 export type ChatNavigationProp = NativeStackNavigationProp<ChatParamList>;
 
-const ChatNavigator: FC = () => {
+const ChatNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="ChatList">
       <Stack.Screen name="ChatList" component={ChatList} />

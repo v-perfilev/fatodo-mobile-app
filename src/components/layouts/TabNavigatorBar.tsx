@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import {Center, HStack, Pressable, Text} from 'native-base';
 import {BottomTabDescriptorMap} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
@@ -18,7 +18,7 @@ type TabNavigatorItemProps = {
   index: number;
 };
 
-const TabNavigatorItem: FC<TabNavigatorItemProps> = ({routeName, routeKey, state, descriptors, navigation, index}) => {
+const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, index}: TabNavigatorItemProps) => {
   const {t} = useTranslation();
   const {options} = descriptors[routeKey];
   const isFocused = state.index === index;
@@ -41,8 +41,8 @@ const TabNavigatorItem: FC<TabNavigatorItemProps> = ({routeName, routeKey, state
 };
 
 const TabNavigatorBar =
-  (color: ColorType): FC<TabNavigatorBarProps> =>
-  ({state, descriptors, navigation}) => {
+  (color: ColorType) =>
+  ({state, descriptors, navigation}: TabNavigatorBarProps) => {
     return (
       <HStack bg={color}>
         {state.routes.map((route, index) => (

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Item} from '../../../../models/Item';
 import PressableButton from '../../../../components/controls/PressableButton';
 import EyeIcon from '../../../../components/icons/EyeIcon';
@@ -10,7 +10,7 @@ type GroupListCardItemMenuProps = {
   item: Item;
 };
 
-const GroupListCardItemMenu: FC<GroupListCardItemMenuProps> = ({item}) => {
+const GroupListCardItemMenu = ({item}: GroupListCardItemMenuProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
 
   const goToItemView = (): void => {

@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FormikProps} from 'formik';
 import {Image} from '../../../models/Image';
 import {Box, FormControl, IFormControlProps} from 'native-base';
@@ -14,7 +14,7 @@ type ImageUploadProps = IFormControlProps &
     preview?: boolean;
   };
 
-const ImageUpload: FC<ImageUploadProps> = (props) => {
+const ImageUpload = (props: ImageUploadProps) => {
   const {filenameName, contentName, label, crop, preview = false} = props;
   const {values, setFieldValue} = props;
   const [image, setImage] = useState<Image>(null);

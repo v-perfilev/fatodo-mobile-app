@@ -1,14 +1,12 @@
-import React, {ComponentType, FC, ReactElement} from 'react';
+import React, {ComponentType} from 'react';
 import {Box} from 'native-base';
 
-const withContainer =
-  (Component: ComponentType): FC =>
-  (props): ReactElement => {
-    return (
-      <Box flex={1}>
-        <Component {...props} />
-      </Box>
-    );
-  };
+const withContainer = (Component: ComponentType) => (props: any) => {
+  return (
+    <Box flex={1}>
+      <Component {...props} />
+    </Box>
+  );
+};
 
 export default withContainer;

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ContactList from '../screens/contacts/contactList/ContactList';
 import OutcomingRequestList from '../screens/contacts/outcomingRequestList/OutcomingRequestList';
@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator<ContactParamList>();
 
 export type ContactNavigationProp = NativeStackNavigationProp<ContactParamList>;
 
-const ContactNavigator: FC = () => {
+const ContactNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="ContactList">
       <Stack.Screen name="ContactList" component={ContactList} />

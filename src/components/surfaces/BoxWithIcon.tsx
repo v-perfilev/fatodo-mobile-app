@@ -1,11 +1,11 @@
-import React, {FC, ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import {HStack, IBoxProps, Text} from 'native-base';
 
 type BoxWithIconProps = IBoxProps & {
   icon: ReactNode;
 };
 
-const BoxWithIcon: FC<BoxWithIconProps> = ({icon, children}) => {
+const BoxWithIcon = ({icon, children}: BoxWithIconProps) => {
   return (
     <HStack alignItems="center">
       {icon}

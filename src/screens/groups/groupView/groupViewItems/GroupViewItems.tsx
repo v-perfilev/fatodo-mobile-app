@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
 import {UserAccount} from '../../../../models/User';
 import {useUserListContext} from '../../../../shared/contexts/listContexts/userListContext';
@@ -21,7 +21,7 @@ type GroupViewItemsProps = {
   account: UserAccount;
 };
 
-const GroupViewItems: FC<GroupViewItemsProps> = ({showArchived, setShowArchived, account}) => {
+const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItemsProps) => {
   const {handleUserIds} = useUserListContext();
   const {group} = useGroupViewContext();
   const {items: active, count: activeCount, load: loadActive, loading: activeLoading} = useItemListContext();

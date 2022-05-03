@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Box, HStack, Pressable, Text} from 'native-base';
 import GroupListCardCollapseButton from './GroupListCardCollapseButton';
 import {useNavigation} from '@react-navigation/native';
@@ -17,7 +17,7 @@ type GroupListCardHeaderProps = {
   drag: () => void;
 };
 
-const GroupListCardHeader: FC<GroupListCardHeaderProps> = ({group, collapsed, sorting, drag}) => {
+const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHeaderProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
 
   const goToGroupView = (): void => {

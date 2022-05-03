@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {Item, ItemStatusType} from '../../../../models/Item';
 import StatusView from '../../../../components/views/StatusView';
 import {useSnackContext} from '../../../../shared/contexts/SnackContext';
@@ -12,7 +12,7 @@ type GroupViewItemStatusProps = {
   canEdit: boolean;
 };
 
-const GroupViewItemStatus: FC<GroupViewItemStatusProps> = ({item, canEdit}) => {
+const GroupViewItemStatus = ({item, canEdit}: GroupViewItemStatusProps) => {
   const {handleResponse} = useSnackContext();
   const {updateItem: updateActive} = useItemListContext();
   const {updateItem: updateArchived} = useArchivedItemListContext();

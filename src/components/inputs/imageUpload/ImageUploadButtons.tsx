@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {Image} from '../../../models/Image';
 import {HStack, Theme, useTheme} from 'native-base';
 import SolidButton from '../../controls/SolidButton';
@@ -26,7 +26,7 @@ const imageOptions = (theme: Theme, crop: boolean): Options => ({
   // ios
 });
 
-const ImageUploadButtons: FC<ImageUploadButtonsProps> = ({image, setImage, crop}) => {
+const ImageUploadButtons = ({image, setImage, crop}: ImageUploadButtonsProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const {t} = useTranslation();
   const theme = useTheme();

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {useGroupListItemsContext} from '../../../../shared/contexts/listContexts/groupListItemsContext';
 import {GestureResponderEvent} from 'react-native';
 import RoundButton from '../../../../components/controls/RoundButton';
@@ -10,7 +10,7 @@ type GroupListCardCollapseButtonProps = {
   collapsed: boolean;
 };
 
-const GroupListCardCollapseButton: FC<GroupListCardCollapseButtonProps> = ({group, collapsed}) => {
+const GroupListCardCollapseButton = ({group, collapsed}: GroupListCardCollapseButtonProps) => {
   const {setCollapsed} = useGroupListItemsContext();
 
   const handlePress = (e: GestureResponderEvent): void => {

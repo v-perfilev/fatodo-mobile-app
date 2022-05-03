@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import GroupList from '../screens/groups/groupList/GroupList';
 import GroupView from '../screens/groups/groupView/GroupView';
@@ -22,7 +22,7 @@ const Stack = createNativeStackNavigator<GroupParamList>();
 
 export type GroupNavigationProp = NativeStackNavigationProp<GroupParamList>;
 
-const GroupNavigator: FC = () => {
+const GroupNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="GroupList">
       <Stack.Screen name="GroupList" component={GroupList} />

@@ -1,5 +1,5 @@
 import {FormikBag, FormikProps, withFormik} from 'formik';
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AuthService from '../../../services/AuthService';
 import {flowRight} from 'lodash';
 import * as Yup from 'yup';
@@ -27,7 +27,7 @@ type ForgotPasswordFormProps = FormikProps<ForgotPasswordFormValues> &
     onSuccess?: () => void;
   };
 
-const ForgotPasswordForm: FC<ForgotPasswordFormProps> = (props) => {
+const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
   const {isValid, handleSubmit, isSubmitting, setSubmitting, captchaToken, requestCaptchaToken} = props;
   const {t} = useTranslation();
   const [isInitialized, setIsInitialized] = useState<boolean>(false);

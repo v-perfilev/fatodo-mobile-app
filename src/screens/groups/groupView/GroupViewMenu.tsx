@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {MenuElement} from '../../../models/MenuElement';
 import DeleteIcon from '../../../components/icons/DeleteIcon';
 import EditIcon from '../../../components/icons/EditIcon';
@@ -19,7 +19,7 @@ type GroupViewMenuProps = {
   account: UserAccount;
 };
 
-const GroupViewMenu: FC<GroupViewMenuProps> = ({account}) => {
+const GroupViewMenu = ({account}: GroupViewMenuProps) => {
   const {group} = useGroupViewContext();
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();

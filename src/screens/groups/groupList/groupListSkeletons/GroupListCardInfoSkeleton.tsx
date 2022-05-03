@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Box, Skeleton} from 'native-base';
 
-const GroupListCardInfoSkeleton: FC = () => {
+const GroupListCardInfoSkeleton = () => {
   return (
     <>
       <Skeleton w="20" h="8" rounded="lg" />

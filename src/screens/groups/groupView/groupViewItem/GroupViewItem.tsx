@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {HStack, Pressable, Text, VStack} from 'native-base';
 import {Item} from '../../../../models/Item';
 import {useNavigation} from '@react-navigation/native';
@@ -12,7 +12,7 @@ type GroupViewItemProps = {
   canEdit: boolean;
 };
 
-const GroupViewItem: FC<GroupViewItemProps> = ({item, canEdit}) => {
+const GroupViewItem = ({item, canEdit}: GroupViewItemProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
 
   const goToItemView = (): void => {

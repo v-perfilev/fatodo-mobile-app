@@ -3,7 +3,7 @@ import React, {MutableRefObject} from 'react';
 
 type LinkButtonProps = IButtonProps;
 
-const LinkButton = React.forwardRef<HTMLElement, LinkButtonProps>((props, ref) => {
+const LinkButton = React.forwardRef((props: LinkButtonProps, ref: HTMLElement) => {
   const {children, ...other} = props;
 
   return (

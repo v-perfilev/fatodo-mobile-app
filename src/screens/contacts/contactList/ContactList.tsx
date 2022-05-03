@@ -1,10 +1,10 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Text} from 'react-native';
 import {Center} from 'native-base';
 import withHeader from '../../../shared/hocs/withHeader';
 import {flowRight} from 'lodash';
 
-const ContactList: FC = () => {
+const ContactList = () => {
   return (
     <Center safeArea w="100%" h="100%">
       <Text>Contact List</Text>

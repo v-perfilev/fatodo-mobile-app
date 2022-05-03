@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {ImageUtils} from '../../shared/utils/imageUtils';
 import {Avatar, Image} from 'native-base';
 import {ISizes} from 'native-base/lib/typescript/theme/base/sizes';
@@ -12,7 +12,7 @@ type UrlPicProps = {
   invertedBorder?: boolean;
 };
 
-const UrlPic: FC<UrlPicProps> = ({url, size, border = 0, invertedBorder}) => {
+const UrlPic = ({url, size, border = 0, invertedBorder}: UrlPicProps) => {
   const isBigImage = size === 'lg' || size === 'xl' || size === '2xl';
 
   const uri = isBigImage ? ImageUtils.getImage(url) : ImageUtils.getThumbnail(url);

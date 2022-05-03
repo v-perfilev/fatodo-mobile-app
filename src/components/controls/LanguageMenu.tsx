@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {languages} from '../../shared/i18n';
 import LanguageIcon from '../icons/LanguageIcon';
 import {LanguageUtils} from '../../shared/utils/LanguageUtils';
@@ -10,7 +10,7 @@ type LanguageMenuItemProps = {
   code: string;
 };
 
-const LanguageMenuItem: FC<LanguageMenuItemProps> = ({name, code}) => {
+const LanguageMenuItem = ({name, code}: LanguageMenuItemProps) => {
   const changeLanguage = (): void => {
     LanguageUtils.setLanguage(code);
   };
@@ -18,7 +18,7 @@ const LanguageMenuItem: FC<LanguageMenuItemProps> = ({name, code}) => {
   return <MenuItem action={changeLanguage} text={name} />;
 };
 
-const LanguageMenu: FC = () => {
+const LanguageMenu = () => {
   const languageCode = LanguageUtils.getLanguage();
   const language = languages.find((l) => l.code === languageCode).name;
 

@@ -3,7 +3,7 @@ import React, {MutableRefObject} from 'react';
 
 type SolidButtonProps = IButtonProps;
 
-const SolidButton = React.forwardRef<HTMLElement, SolidButtonProps>((props, ref) => {
+const SolidButton = React.forwardRef((props: SolidButtonProps, ref: HTMLElement) => {
   const {children, ...other} = props;
 
   return (

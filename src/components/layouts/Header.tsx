@@ -1,4 +1,4 @@
-import React, {FC, PropsWithChildren} from 'react';
+import React, {PropsWithChildren} from 'react';
 import {ArrowBackIcon, HStack, Text} from 'native-base';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
@@ -8,13 +8,13 @@ import PressableButton from '../controls/PressableButton';
 import ColoredStatusBar from './ColoredStatusBar';
 import UrlPic from '../surfaces/UrlPic';
 
-type HeaderProps = PropsWithChildren<any> & {
+type HeaderProps = PropsWithChildren<{
   title?: string;
   imageFilename?: string;
   showMenu?: boolean;
-};
+}>;
 
-const Header: FC<HeaderProps> = ({children, title, imageFilename, showMenu = true}) => {
+const Header = ({children, title, imageFilename, showMenu = true}: HeaderProps) => {
   const navigation = useNavigation();
   const route = useRoute();
   const {t} = useTranslation();

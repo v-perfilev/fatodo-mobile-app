@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {useGroupListContext} from '../../../shared/contexts/listContexts/groupListContext';
 import DraggableFlatList, {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
 import {Group} from '../../../models/Group';
@@ -18,7 +18,7 @@ const renderer = (sorting: boolean) => (props: RenderItemParams<Group>) =>
     </ScaleDecorator>
   );
 
-const GroupListContainer: FC<GroupListContainerProps> = ({sorting}) => {
+const GroupListContainer = ({sorting}: GroupListContainerProps) => {
   const {groups, setGroups} = useGroupListContext();
   const theme = useTheme();
 

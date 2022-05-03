@@ -1,4 +1,4 @@
-import React, {FC, ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import TabNavigator from './TabNavigator';
 import {createDrawerNavigator, DrawerNavigationProp} from '@react-navigation/drawer';
 import RootNavigatorDrawer from '../components/layouts/RootNavigatorDrawer';
@@ -27,7 +27,7 @@ export type RootNavigationProp = DrawerNavigationProp<RootParamList>;
 const groupsIcon = ({color, size}: RootIconProps): ReactNode => <GroupsIcon color={color} size={size} />;
 const accountIcon = ({color, size}: RootIconProps): ReactNode => <AccountIcon color={color} size={size} />;
 
-const RootNavigator: FC = () => {
+const RootNavigator = () => {
   const theme = useTheme();
 
   const drawerStyle = {

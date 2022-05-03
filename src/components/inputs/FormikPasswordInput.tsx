@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {FormControl, IFormControlProps, Input} from 'native-base';
 import {FormikProps} from 'formik';
 import VisibleOffIcon from '../icons/VisibleOffIcon';
@@ -12,7 +12,7 @@ type FormikPasswordInputProps = IFormControlProps &
     placeholder?: string;
   };
 
-const FormikPasswordInput: FC<FormikPasswordInputProps> = (props) => {
+const FormikPasswordInput = (props: FormikPasswordInputProps) => {
   const {name, label, placeholder} = props;
   const {values, errors, touched, handleChange, handleBlur} = props;
   const [showPassword, setShowPassword] = useState<boolean>(false);

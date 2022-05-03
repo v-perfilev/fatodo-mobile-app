@@ -3,7 +3,7 @@ import React, {MutableRefObject} from 'react';
 
 type OutlinedButtonProps = IButtonProps;
 
-const OutlinedButton = React.forwardRef<HTMLElement, OutlinedButtonProps>((props, ref) => {
+const OutlinedButton = React.forwardRef((props: OutlinedButtonProps, ref: HTMLElement) => {
   const {children, ...other} = props;
 
   return (

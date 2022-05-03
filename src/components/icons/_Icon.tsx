@@ -1,8 +1,8 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Icon, IIconProps} from 'native-base';
 import {Path} from 'react-native-svg';
 
-const _Icon: FC<IIconProps> = (props) => {
+const _Icon = (props: IIconProps) => {
   return (
     <Icon viewBox="0 0 24 24" {...props}>
       <Path fill="currentColor" d="" />

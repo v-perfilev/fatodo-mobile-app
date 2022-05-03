@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import Menu, {MenuItem, MenuItemProps} from '../../../../components/controls/Menu';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {useTranslation} from 'react-i18next';
@@ -19,7 +19,7 @@ type GroupListCardMenuButtonProps = ReduxAuthState & {
   group: Group;
 };
 
-const GroupListCardMenuButton: FC<GroupListCardMenuButtonProps> = ({group, account}) => {
+const GroupListCardMenuButton = ({group, account}: GroupListCardMenuButtonProps) => {
   const {t} = useTranslation();
   const navigation = useNavigation<GroupNavigationProp>();
   // const {load: loadGroups} = useGroupListContext();

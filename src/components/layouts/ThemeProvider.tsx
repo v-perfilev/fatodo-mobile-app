@@ -1,10 +1,10 @@
-import React, {FC} from 'react';
+import React, {PropsWithChildren} from 'react';
 import {ITheme, NativeBaseProvider} from 'native-base';
 import {ThemeFactory} from '../../shared/themes/ThemeFactory';
 
-type ThemeProviderProps = {
+type ThemeProviderProps = PropsWithChildren<{
   theme?: ITheme;
-};
+}>;
 
 const defaultTheme = ThemeFactory.getDefaultTheme();
 
@@ -14,7 +14,7 @@ const config = {
   },
 };
 
-const ThemeProvider: FC<ThemeProviderProps> = ({theme = defaultTheme, children}) => {
+const ThemeProvider = ({theme = defaultTheme, children}: ThemeProviderProps) => {
   return (
     <NativeBaseProvider theme={theme} config={config}>
       {children}

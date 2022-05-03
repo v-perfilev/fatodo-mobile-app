@@ -1,15 +1,15 @@
 import * as React from 'react';
-import {FC, useMemo} from 'react';
+import {useMemo} from 'react';
 import {MenuElement} from '../../models/MenuElement';
 import {Flex} from 'native-base';
 import CustomIconButton from '../controls/IconButton';
 
-type Props = {
+type ControlMenuProps = {
   menu: MenuElement[];
   disabled?: boolean;
 };
 
-const ControlMenu: FC<Props> = ({menu, disabled}: Props) => {
+const ControlMenu = ({menu, disabled}: ControlMenuProps) => {
   const filteredMenu = useMemo<MenuElement[]>(() => {
     return menu?.filter((action) => !action.hidden);
   }, [menu]);

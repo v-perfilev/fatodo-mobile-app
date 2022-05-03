@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Item} from '../../../../models/Item';
 import {Box, HStack, VStack} from 'native-base';
 import StatusView from '../../../../components/views/StatusView';
@@ -9,7 +9,7 @@ type GroupListCardItemIconsProps = {
   item: Item;
 };
 
-const GroupListCardItemIcons: FC<GroupListCardItemIconsProps> = ({item}) => {
+const GroupListCardItemIcons = ({item}: GroupListCardItemIconsProps) => {
   return (
     <HStack alignItems="center">
       <StatusView statusType={item.status} size="sm" />

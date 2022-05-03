@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {flowRight} from 'lodash';
 import withGroupListItems from '../../../shared/hocs/withLists/withGroupListItems';
 import withGroupList from '../../../shared/hocs/withLists/withGroupList';
@@ -11,7 +11,7 @@ import withUserList from '../../../shared/hocs/withLists/withUserList';
 import GroupListHeader from './GroupListHeader';
 import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 
-const GroupList: FC = () => {
+const GroupList = () => {
   const {handleUserIds} = useUserListContext();
   const {groups, load: loadGroups, loading: groupsLoading} = useGroupListContext();
   const {items, loadInitialState} = useGroupListItemsContext();

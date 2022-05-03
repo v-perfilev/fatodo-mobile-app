@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {User} from '../../../models/User';
 import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
@@ -7,7 +7,7 @@ import {Box, Flex} from 'native-base';
 import UserView from '../../../components/views/UserView';
 import GroupViewUsersSkeleton from './groupViewSkeletons/GroupViewUsersSkeleton';
 
-const GroupViewMenu: FC = () => {
+const GroupViewMenu = () => {
   const {group} = useGroupViewContext();
   const {users} = useUserListContext();
   const [usersToShow, setUsersToShow] = useState<User[]>([]);

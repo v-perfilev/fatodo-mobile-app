@@ -1,4 +1,4 @@
-import React, {FC, memo} from 'react';
+import React, {memo} from 'react';
 import {Item} from '../../../../models/Item';
 import {HStack, Text, VStack} from 'native-base';
 import GroupListCardItemIcons from './GroupListCardItemIcons';
@@ -10,7 +10,7 @@ type GroupListCardItemProps = {
   item: Item;
 };
 
-const GroupListCardItem: FC<GroupListCardItemProps> = ({item}) => {
+const GroupListCardItem = ({item}: GroupListCardItemProps) => {
   return (
     <HStack my="1" px="1" py="1" borderWidth="1" borderColor="gray.200" borderRadius="2">
       <GroupListCardItemIcons item={item} />

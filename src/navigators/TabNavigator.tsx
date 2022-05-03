@@ -1,4 +1,4 @@
-import React, {FC, ReactNode} from 'react';
+import React, {ReactNode} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TabNavigatorBar from '../components/layouts/TabNavigatorBar';
 import GroupNavigator from './GroupNavigator';
@@ -29,7 +29,7 @@ const groupsIcon = ({color, size}: TabIconProps): ReactNode => <GroupsIcon color
 const contactsIcon = ({color, size}: TabIconProps): ReactNode => <ContactsIcon color={color} size={size} />;
 const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={color} size={size} />;
 
-const TabNavigator: FC = () => {
+const TabNavigator = () => {
   const {theme} = useTabBarContext();
   const color = theme?.colors.primary['500'] || 'primary.500';
 

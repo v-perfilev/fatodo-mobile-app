@@ -1,4 +1,4 @@
-import React, {FC, memo} from 'react';
+import React, {memo} from 'react';
 import {Box} from 'native-base';
 import GroupListCardHeader from './GroupListCardHeader';
 import Collapsible from 'react-native-collapsible';
@@ -20,7 +20,7 @@ type GroupListCardProps = {
   theme: Theme;
 };
 
-const GroupListCard: FC<GroupListCardProps> = (props) => {
+const GroupListCard = (props: GroupListCardProps) => {
   const {group, items, count, loading, collapsed, sorting, drag, theme} = props;
 
   return (

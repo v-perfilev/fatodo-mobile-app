@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {HStack, Skeleton, VStack} from 'native-base';
 
-const GroupViewItemSkeleton: FC = () => {
+const GroupViewItemSkeleton = () => {
   return (
     <HStack my="1" px="1" py="1" borderWidth="1" borderColor="gray.100" borderRadius="2">
       <HStack alignItems="center">

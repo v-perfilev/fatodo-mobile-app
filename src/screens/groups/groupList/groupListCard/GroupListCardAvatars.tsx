@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AvatarGroup from '../../../../components/surfaces/AvatarGroup';
 import {User} from '../../../../models/User';
 import {useUserListContext} from '../../../../shared/contexts/listContexts/userListContext';
@@ -8,7 +8,7 @@ type GroupListCardAvatarsProps = {
   group: Group;
 };
 
-const GroupListCardAvatars: FC<GroupListCardAvatarsProps> = ({group}) => {
+const GroupListCardAvatars = ({group}: GroupListCardAvatarsProps) => {
   const {users} = useUserListContext();
 
   const [usersToShow, setUsersToShow] = useState<User[]>([]);

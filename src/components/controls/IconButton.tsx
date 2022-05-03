@@ -1,9 +1,9 @@
 import {IconButton, IIconButtonProps} from 'native-base';
-import React from 'react';
+import React, {MutableRefObject} from 'react';
 
 type CustomIconButtonProps = IIconButtonProps;
 
-const CustomIconButton = React.forwardRef<HTMLElement, CustomIconButtonProps>((props, ref) => {
+const CustomIconButton = React.forwardRef((props: CustomIconButtonProps, ref: HTMLElement) => {
   const {icon, color, size, ...other} = props;
 
   return (
@@ -15,7 +15,7 @@ const CustomIconButton = React.forwardRef<HTMLElement, CustomIconButtonProps>((p
       _icon={{color: color, size: size}}
       _pressed={{opacity: 0.7}}
       {...other}
-      ref={ref}
+      ref={ref as MutableRefObject<any>}
     />
   );
 });

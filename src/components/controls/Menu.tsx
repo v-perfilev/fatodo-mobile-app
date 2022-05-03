@@ -1,22 +1,22 @@
-import React, {FC, ReactElement} from 'react';
+import React, {PropsWithChildren, ReactElement} from 'react';
 import {GestureResponderEvent} from 'react-native';
 import {HStack, Menu as NbMenu, Text} from 'native-base';
 import CentredSpinner from '../surfaces/CentredSpinner';
 
-export type MenuProps = {
+export type MenuProps = PropsWithChildren<{
   trigger: (_props: any, state: {open: boolean}) => JSX.Element;
-};
+}>;
 
-export type MenuItemProps = {
+export type MenuItemProps = PropsWithChildren<{
   action: (e?: GestureResponderEvent) => void;
   icon?: ReactElement;
   text?: string;
   loading?: boolean;
   disabled?: boolean;
   show?: boolean;
-};
+}>;
 
-export const MenuItem: FC<MenuItemProps> = ({action, icon, text, children, loading, disabled, show = true}) => {
+export const MenuItem = ({action, icon, text, children, loading, disabled, show = true}: MenuItemProps) => {
   return (
     show && (
       <NbMenu.Item onPress={action} disabled={disabled}>
@@ -31,7 +31,7 @@ export const MenuItem: FC<MenuItemProps> = ({action, icon, text, children, loadi
   );
 };
 
-const Menu: FC<MenuProps> = ({trigger, children}) => {
+const Menu = ({trigger, children}: MenuProps) => {
   return (
     <NbMenu defaultIsOpen={false} trigger={trigger}>
       {children}

@@ -1,4 +1,4 @@
-import React, {FC, memo} from 'react';
+import React, {memo} from 'react';
 import Header from '../../../components/layouts/Header';
 import PressableButton from '../../../components/controls/PressableButton';
 import CheckIcon from '../../../components/icons/CheckIcon';
@@ -19,7 +19,7 @@ type GroupListHeaderProps = {
   setSorting: (sorting: boolean) => void;
 };
 
-const GroupListHeader: FC<GroupListHeaderProps> = ({sorting, setSorting}) => {
+const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {handleCode, handleResponse} = useSnackContext();
   const {groups} = useGroupListContext();

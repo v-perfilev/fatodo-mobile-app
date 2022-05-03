@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Box, IBoxProps} from 'native-base';
 
 type PaperBoxProps = IBoxProps;
 
-const PaperBox: FC<PaperBoxProps> = ({children, ...props}) => {
+const PaperBox = ({children, ...props}: PaperBoxProps) => {
   return (
     <Box px="1" py="0.5" borderWidth="1" borderColor="gray.200" rounded="md" {...props}>
       {children}

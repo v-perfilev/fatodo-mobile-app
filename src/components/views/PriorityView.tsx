@@ -1,4 +1,4 @@
-import React, {FC, ReactNode, useMemo} from 'react';
+import React, {ReactNode, useMemo} from 'react';
 import {ItemPriorityType} from '../../models/Item';
 import {useTranslation} from 'react-i18next';
 import {Center, HStack, IIconProps, Text} from 'native-base';
@@ -11,7 +11,7 @@ type PriorityViewProps = IIconProps & {
   withoutText?: boolean;
 };
 
-export const PriorityView: FC<PriorityViewProps> = ({priority, withoutText, ...props}) => {
+export const PriorityView = ({priority, withoutText, ...props}: PriorityViewProps) => {
   const {t, i18n} = useTranslation();
 
   const icon = useMemo<ReactNode>(() => {

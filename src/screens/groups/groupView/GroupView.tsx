@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, ScrollView} from 'native-base';
 import {flowRight} from 'lodash';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -21,7 +21,7 @@ import GroupViewItems from './groupViewItems/GroupViewItems';
 
 type GroupViewProps = ReduxAuthState;
 
-const GroupView: FC<GroupViewProps> = ({account}) => {
+const GroupView = ({account}: GroupViewProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'GroupView'>>();
   const groupId = route.params.groupId;

@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Box, Text} from 'native-base';
 import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 
-const ItemCreate: FC = () => {
+const ItemCreate = () => {
   return (
     <Box flex="1">
       <Text>Page</Text>

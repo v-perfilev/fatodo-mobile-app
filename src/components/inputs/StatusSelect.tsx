@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useCallback} from 'react';
+import React, {ReactElement, useCallback} from 'react';
 import {ItemStatusType} from '../../models/Item';
 import StatusCreatedIcon from '../icons/StatusCreatedIcon';
 import StatusWipIcon from '../icons/StatusWipIcon';
@@ -8,13 +8,13 @@ import Menu, {MenuItem, MenuItemProps} from '../controls/Menu';
 import SolidButton from '../controls/SolidButton';
 import {Box} from 'native-base';
 
-type Props = {
+type StatusSelectProps = {
   statusType: ItemStatusType;
   setStatusType: (statusType: ItemStatusType) => void;
   loading?: boolean;
 };
 
-export const StatusSelect: FC<Props> = ({statusType, setStatusType, loading}: Props) => {
+export const StatusSelect = ({statusType, setStatusType, loading}: StatusSelectProps) => {
   const iconByStatusType = useCallback(
     (statusType: ItemStatusType): ReactElement => {
       switch (statusType) {

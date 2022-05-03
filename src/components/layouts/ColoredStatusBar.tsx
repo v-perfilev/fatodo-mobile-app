@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Box, StatusBar, useTheme} from 'native-base';
 import {SafeAreaView, StatusBarStyle} from 'react-native';
 import {useTabBarContext} from '../../shared/contexts/TabBarContext';
@@ -9,7 +9,7 @@ type ColoredStatusBarProps = {
   barStyle?: StatusBarStyle;
 };
 
-const ColoredStatusBar: FC<ColoredStatusBarProps> = ({bgColor, barStyle}) => {
+const ColoredStatusBar = ({bgColor, barStyle}: ColoredStatusBarProps) => {
   const isFocused = useIsFocused();
   const theme = useTheme();
   const {setTheme} = useTabBarContext();

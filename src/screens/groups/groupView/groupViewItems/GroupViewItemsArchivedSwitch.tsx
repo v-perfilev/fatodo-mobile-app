@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {FC} from 'react';
 import {useTranslation} from 'react-i18next';
 import {HStack, Switch, Text} from 'native-base';
 
@@ -8,7 +7,7 @@ type GroupViewItemsArchivedSwitchProps = {
   setShowArchived: (archived: boolean) => void;
 };
 
-const GroupViewItemsArchivedSwitch: FC<GroupViewItemsArchivedSwitchProps> = ({showArchived, setShowArchived}) => {
+const GroupViewItemsArchivedSwitch = ({showArchived, setShowArchived}: GroupViewItemsArchivedSwitchProps) => {
   const {t} = useTranslation();
 
   const toggleArchived = (): void => {

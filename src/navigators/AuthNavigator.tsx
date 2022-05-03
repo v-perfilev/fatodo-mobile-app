@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import SignIn from '../screens/auth/signIn/SignIn';
 import SignUp from '../screens/auth/signUp/SignUp';
@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator<AuthParamList>();
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthParamList>;
 
-const AuthNavigator: FC = () => {
+const AuthNavigator = () => {
   const theme = useTheme();
   const backgroundColor = theme.colors.white;
 

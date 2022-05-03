@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import Logo from '../../../components/layouts/Logo';
 import {Box, Center, ScrollView, Stack} from 'native-base';
 import LinkButton from '../../../components/controls/LinkButton';
@@ -8,7 +8,7 @@ import {AuthNavigationProp} from '../../../navigators/AuthNavigator';
 import ForgotPasswordForm from './ForgotPasswordForm';
 import LanguageMenu from '../../../components/controls/LanguageMenu';
 
-const ForgotPassword: FC = () => {
+const ForgotPassword = () => {
   const navigation = useNavigation<AuthNavigationProp>();
   const {t} = useTranslation();
 

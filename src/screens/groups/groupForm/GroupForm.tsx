@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {HStack, VStack} from 'native-base';
 import {flowRight} from 'lodash';
 import {FormikBag, FormikProps, withFormik} from 'formik';
@@ -35,7 +35,7 @@ type GroupFormProps = FormikProps<GroupFormValues> &
     cancel: () => void;
   };
 
-const GroupForm: FC<GroupFormProps> = (props) => {
+const GroupForm = (props: GroupFormProps) => {
   const {cancel} = props;
   const {isValid, isSubmitting, handleSubmit} = props;
   const {t} = useTranslation();

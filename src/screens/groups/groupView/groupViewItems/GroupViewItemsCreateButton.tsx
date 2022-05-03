@@ -1,4 +1,4 @@
-import React, {FC, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {Group} from '../../../../models/Group';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
@@ -10,7 +10,7 @@ type GroupViewItemsCreateButtonProps = {
   group: Group;
 };
 
-const GroupViewItemsCreateButton: FC<GroupViewItemsCreateButtonProps> = ({group}) => {
+const GroupViewItemsCreateButton = ({group}: GroupViewItemsCreateButtonProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t, i18n} = useTranslation();
 

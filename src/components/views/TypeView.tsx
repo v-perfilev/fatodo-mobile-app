@@ -1,4 +1,4 @@
-import React, {FC, ReactNode, useMemo} from 'react';
+import React, {ReactNode, useMemo} from 'react';
 import {ItemType} from '../../models/Item';
 import {useTranslation} from 'react-i18next';
 import {Center, HStack, IIconProps, Text} from 'native-base';
@@ -12,7 +12,7 @@ type TypeViewProps = IIconProps & {
   withoutText?: boolean;
 };
 
-export const TypeView: FC<TypeViewProps> = ({type, withoutText, ...props}) => {
+export const TypeView = ({type, withoutText, ...props}: TypeViewProps) => {
   const {t, i18n} = useTranslation();
 
   const icon = useMemo<ReactNode>(() => {

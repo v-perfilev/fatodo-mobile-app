@@ -5,7 +5,7 @@ type RoundButtonProps = IButtonProps & {
   size?: number;
 };
 
-const RoundButton = React.forwardRef<HTMLElement, RoundButtonProps>((props, ref) => {
+const RoundButton = React.forwardRef((props: RoundButtonProps, ref: HTMLElement) => {
   const {children, size = 7, ...other} = props;
 
   return (

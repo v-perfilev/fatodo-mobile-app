@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Box, HStack, Text} from 'native-base';
 import {User} from '../../models/User';
 import UrlPic from '../surfaces/UrlPic';
@@ -14,7 +14,7 @@ type UserViewProps = {
   withInvertedBorder?: boolean;
 };
 
-export const UserView: FC<UserViewProps> = (props) => {
+export const UserView = (props: UserViewProps) => {
   const {user, picSize = 'xs'} = props;
   const {withUserPic = true, withUsername = false, withPaperBox = false, withInvertedBorder = false} = props;
 
