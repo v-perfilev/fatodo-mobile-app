@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Image} from '../../../models/Image';
 import {HStack, Theme, useTheme} from 'native-base';
 import SolidButton from '../../controls/SolidButton';
@@ -11,6 +11,8 @@ type ImageUploadButtonsProps = {
   image: Image;
   setImage: (image: Image) => void;
   crop: boolean;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 };
 
 const imageOptions = (theme: Theme, crop: boolean): Options => ({
@@ -26,8 +28,7 @@ const imageOptions = (theme: Theme, crop: boolean): Options => ({
   // ios
 });
 
-const ImageUploadButtons = ({image, setImage, crop}: ImageUploadButtonsProps) => {
-  const [loading, setLoading] = useState<boolean>(false);
+const ImageUploadButtons = ({image, setImage, crop, loading, setLoading}: ImageUploadButtonsProps) => {
   const {t} = useTranslation();
   const theme = useTheme();
 
@@ -56,9 +57,11 @@ const ImageUploadButtons = ({image, setImage, crop}: ImageUploadButtonsProps) =>
       <SolidButton size="sm" onPress={selectImage} isLoading={loading}>
         {image ? t('common:imageUpload.buttons.update') : t('common:imageUpload.buttons.upload')}
       </SolidButton>
-      <SolidButton size="sm" colorScheme="secondary" onPress={clearImage}>
-        {t('common:imageUpload.buttons.clear')}
-      </SolidButton>
+      {image?.filename && (
+        <SolidButton size="sm" colorScheme="secondary" isDisabled={loading} onPress={clearImage}>
+          {t('common:imageUpload.buttons.clear')}
+        </SolidButton>
+      )}
     </HStack>
   );
 };

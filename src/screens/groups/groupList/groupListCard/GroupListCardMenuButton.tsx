@@ -78,7 +78,7 @@ const GroupListCardMenuButton = ({group, account}: GroupListCardMenuButtonProps)
         <RoundButton
           {...triggerProps}
           borderColor="white"
-          _pressed={{borderColor: 'white'}}
+          _pressed={{bg: 'white:alpha.20'}}
           leftIcon={<DotsVerticalIcon color="white" size="sm" />}
         />
       )}

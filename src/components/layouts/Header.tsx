@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {ArrowBackIcon, HStack, Text} from 'native-base';
+import {HStack, Text} from 'native-base';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
@@ -7,6 +7,7 @@ import MenuIcon from '../icons/MenuIcon';
 import PressableButton from '../controls/PressableButton';
 import ColoredStatusBar from './ColoredStatusBar';
 import UrlPic from '../surfaces/UrlPic';
+import ArrowBackIcon from '../icons/ArrowBackIcon';
 
 type HeaderProps = PropsWithChildren<{
   title?: string;
@@ -28,7 +29,8 @@ const Header = ({children, title, imageFilename, showMenu = true}: HeaderProps) 
   return (
     <>
       <ColoredStatusBar />
-      <HStack h="12" space="3" px="4" bg="primary.500" alignItems="center">
+      {/*<HStack h="12" space="2" px="4" bg="primary.500" alignItems="center">*/}
+      <HStack h="12" space="2" px="2" bg="primary.500" alignItems="center">
         {canGoBack && (
           <PressableButton onPress={goBack}>
             <ArrowBackIcon color="white" size="7" />

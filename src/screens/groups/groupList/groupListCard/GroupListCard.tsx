@@ -27,9 +27,11 @@ const GroupListCard = (props: GroupListCardProps) => {
     <ThemeProvider theme={theme}>
       <Box borderRadius="4" mb="1" mx="1" overflow="hidden">
         <GroupListCardHeader group={group} collapsed={collapsed} sorting={sorting} drag={drag} />
-        <Collapsible collapsed={collapsed}>
-          <GroupListCardContent group={group} items={items} count={count} loading={loading} />
-        </Collapsible>
+        <Box bg="white" borderWidth="1" borderTopWidth="0" borderColor="gray.200" borderBottomRadius="3">
+          <Collapsible collapsed={collapsed}>
+            <GroupListCardContent group={group} items={items} count={count} loading={loading} />
+          </Collapsible>
+        </Box>
       </Box>
     </ThemeProvider>
   );

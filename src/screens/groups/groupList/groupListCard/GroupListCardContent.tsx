@@ -1,5 +1,5 @@
 import React, {ReactElement, useMemo} from 'react';
-import {Box, HStack, VStack} from 'native-base';
+import {HStack, VStack} from 'native-base';
 import {Item} from '../../../../models/Item';
 import GroupListCardSkeleton from '../groupListSkeletons/GroupListCardSkeleton';
 import GroupListCardInfo from './GroupListCardInfo';
@@ -25,17 +25,17 @@ const GroupListCardContent = ({group, items, count, loading}: GroupListCardConte
   );
 
   const groupInfo = (
-    <HStack mx="2" my="2" alignItems="center">
+    <HStack h="45" mx="2" alignItems="center">
       <GroupListCardInfo group={group} items={items} count={count} />
     </HStack>
   );
 
   return (
-    <Box bg="white" borderWidth="1" borderColor="gray.200" borderBottomRadius="3">
+    <>
       {loading && skeleton}
       {!loading && count > 0 && itemsView}
       {!loading && groupInfo}
-    </Box>
+    </>
   );
 };
 

@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {FormikProps} from 'formik';
 import {Image} from '../../../models/Image';
 import {Box, FormControl, IFormControlProps} from 'native-base';
 import ImageUploadPreview from './ImageUploadPreview';
 import ImageUploadButtons from './ImageUploadButtons';
+import {flowRight} from 'lodash';
 
 type ImageUploadProps = IFormControlProps &
   FormikProps<any> & {
@@ -15,9 +16,10 @@ type ImageUploadProps = IFormControlProps &
   };
 
 const ImageUpload = (props: ImageUploadProps) => {
-  const {filenameName, contentName, label, crop, preview = false} = props;
+  const {filenameName, contentName, setFieldError, label, crop, preview = false} = props;
   const {values, setFieldValue} = props;
   const [image, setImage] = useState<Image>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const filenameValue = values[filenameName];
 
@@ -33,6 +35,10 @@ const ImageUpload = (props: ImageUploadProps) => {
     setFieldValue(contentName, image?.content);
   }, [image]);
 
+  useEffect(() => {
+    setFieldError(filenameName, loading ? 'loading' : undefined);
+  }, [loading]);
+
   return (
     <FormControl {...props}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
@@ -42,10 +48,10 @@ const ImageUpload = (props: ImageUploadProps) => {
         </Box>
       )}
       <Box my="0.5">
-        <ImageUploadButtons image={image} setImage={setImage} crop={crop} />
+        <ImageUploadButtons image={image} setImage={setImage} crop={crop} loading={loading} setLoading={setLoading} />
       </Box>
     </FormControl>
   );
 };
 
-export default ImageUpload;
+export default flowRight([memo])(ImageUpload);

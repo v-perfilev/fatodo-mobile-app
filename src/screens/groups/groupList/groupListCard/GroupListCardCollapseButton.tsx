@@ -22,7 +22,7 @@ const GroupListCardCollapseButton = ({group, collapsed}: GroupListCardCollapseBu
   return (
     <RoundButton
       borderColor="white"
-      _pressed={{borderColor: 'white'}}
+      _pressed={{bg: 'white:alpha.20'}}
       leftIcon={<CollapsedIcon visible={!collapsed} color="white" size="sm" />}
       onPress={handlePress}
     />

@@ -11,25 +11,30 @@ type GroupViewItemsPaginationProps = {
 };
 
 const GroupViewItemsPagination = ({page, setPage, totalPages}: GroupViewItemsPaginationProps) => {
+  const totalPageToShow = totalPages > 0 ? totalPages : 1;
+
+  const upDisabled = page === 0;
+  const downDisabled = page === totalPageToShow - 1;
+
   const onUpClick = (): void => {
-    if (page > 0) {
+    if (!upDisabled) {
       setPage(page - 1);
     }
   };
 
   const onDownClick = (): void => {
-    if (page < totalPages - 1) {
+    if (!downDisabled) {
       setPage(page + 1);
     }
   };
 
   return (
     <HStack alignItems="center">
-      <RoundButton leftIcon={<ArrowUpIcon size="md" />} isDisabled={page === 0} onPress={onUpClick} />
+      <RoundButton leftIcon={<ArrowUpIcon size="md" />} isDisabled={upDisabled} onPress={onUpClick} />
       <Text mx="1" fontSize="14" fontWeight="bold">
-        {page + 1} / {totalPages}
+        {page + 1} / {totalPageToShow}
       </Text>
-      <RoundButton leftIcon={<ArrowDownIcon size="md" />} isDisabled={page === totalPages - 1} onPress={onDownClick} />
+      <RoundButton leftIcon={<ArrowDownIcon size="md" />} isDisabled={downDisabled} onPress={onDownClick} />
     </HStack>
   );
 };
