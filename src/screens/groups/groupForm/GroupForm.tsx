@@ -67,13 +67,7 @@ const GroupForm: FC<GroupFormProps> = (props) => {
         >
           {t('group:actions.save')}
         </SolidButton>
-        <SolidButton
-          colorScheme="secondary"
-          size="md"
-          isLoading={isSubmitting}
-          isDisabled={!isInitialized || isSubmitting}
-          onPress={cancel}
-        >
+        <SolidButton colorScheme="secondary" size="md" isDisabled={!isInitialized || isSubmitting} onPress={cancel}>
           {t('group:actions.cancel')}
         </SolidButton>
       </HStack>
@@ -101,6 +95,8 @@ const formik = withFormik<GroupFormProps, GroupFormValues>({
   handleSubmit: (values: GroupFormValues, {setSubmitting, props}: FormikBag<GroupFormProps, GroupFormValues>) => {
     const {request, group} = props;
 
+    console.log('send form');
+
     const addValueToForm = (formData: FormData, name: string, value: any): void => {
       if (value) {
         formData.append(name, value);
@@ -112,9 +108,7 @@ const formik = withFormik<GroupFormProps, GroupFormValues>({
       addValueToForm(formData, 'id', group?.id);
       addValueToForm(formData, 'title', values.title);
       addValueToForm(formData, 'color', values.color);
-      if (!values.imageContent) {
-        addValueToForm(formData, 'imageFilename', values.imageFilename);
-      }
+      addValueToForm(formData, 'imageFilename', values.imageFilename);
       addValueToForm(formData, 'imageContent', values.imageContent);
       return formData;
     };

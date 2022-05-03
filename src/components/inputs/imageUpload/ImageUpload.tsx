@@ -20,11 +20,10 @@ const ImageUpload: FC<ImageUploadProps> = (props) => {
   const [image, setImage] = useState<Image>(null);
 
   const filenameValue = values[filenameName];
-  const contentValue = values[contentName];
 
   useEffect(() => {
     if (filenameValue) {
-      const image = {filename: filenameValue, content: contentValue};
+      const image = {filename: filenameValue};
       setImage(image);
     }
   }, []);
