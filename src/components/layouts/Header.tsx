@@ -41,7 +41,7 @@ const Header = ({children, title, imageFilename, showMenu = true}: HeaderProps) 
             <MenuIcon color="white" size="7" />
           </PressableButton>
         )}
-        {!!imageFilename && <UrlPic url={imageFilename} size="9" border={1} invertedBorder />}
+        {!!imageFilename && <UrlPic file={imageFilename} size="9" border={1} invertedBorder />}
         <Text fontWeight="800" fontSize="20" color="white" isTruncated>
           {label}
         </Text>

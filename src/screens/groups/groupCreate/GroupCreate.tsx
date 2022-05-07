@@ -25,6 +25,7 @@ const GroupCreate = () => {
         goToGroupView(id);
       })
       .catch((response) => {
+        console.log(response);
         handleResponse(response);
         stopSubmitting();
       });

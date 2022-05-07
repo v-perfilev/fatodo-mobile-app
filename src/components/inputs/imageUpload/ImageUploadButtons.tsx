@@ -4,8 +4,8 @@ import {HStack, Theme, useTheme} from 'native-base';
 import SolidButton from '../../controls/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {openPicker, Options} from 'react-native-image-crop-picker';
-import {ImageUtils} from '../../../shared/utils/imageUtils';
 import {IMAGE_SIZE} from '../../../constants';
+import {ImageUtils} from '../../../shared/utils/imageUtils';
 
 type ImageUploadButtonsProps = {
   image: Image;
@@ -20,6 +20,7 @@ const imageOptions = (theme: Theme, crop: boolean): Options => ({
   width: IMAGE_SIZE,
   height: IMAGE_SIZE,
   cropping: crop,
+  compressImageQuality: 0.4,
   // android
   cropperStatusBarColor: theme.colors.primary['700'],
   cropperActiveWidgetColor: theme.colors.secondary['500'],
@@ -36,9 +37,9 @@ const ImageUploadButtons = ({image, setImage, crop, loading, setLoading}: ImageU
     setLoading(true);
     openPicker({...imageOptions(theme, crop), mediaType: 'photo'})
       .then((image) => {
-        const uri = ImageUtils.base64ToUrl(image.mime, image?.data);
-        const blob = ImageUtils.base64ToBlob(image.data);
-        setImage({filename: uri, content: blob});
+        const filename = ImageUtils.convertPathToUri(image.path);
+        const content = ImageUtils.convertPathToContent(image.path);
+        setImage({filename, content});
       })
       .catch(() => {
         // skip

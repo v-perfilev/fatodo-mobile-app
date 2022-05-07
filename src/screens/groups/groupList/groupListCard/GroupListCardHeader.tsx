@@ -28,7 +28,7 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
     <Pressable onPress={goToGroupView}>
       <Box h="45" px="2" bg={LINEAR_GRADIENT} justifyContent="center">
         <HStack space="2" alignItems="center">
-          {group?.imageFilename && <UrlPic url={group.imageFilename} size="9" border={1} invertedBorder />}
+          {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} invertedBorder />}
           <Text fontWeight="600" fontSize="14" color="white" isTruncated>
             {group?.title}
           </Text>

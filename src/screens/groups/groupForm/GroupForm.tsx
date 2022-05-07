@@ -95,10 +95,8 @@ const formik = withFormik<GroupFormProps, GroupFormValues>({
   handleSubmit: (values: GroupFormValues, {setSubmitting, props}: FormikBag<GroupFormProps, GroupFormValues>) => {
     const {request, group} = props;
 
-    console.log('send form');
-
-    const addValueToForm = (formData: FormData, name: string, value: any): void => {
-      if (value) {
+    const addValueToForm = (formData: FormData, name: string, value: any, condition = true): void => {
+      if (condition && value) {
         formData.append(name, value);
       }
     };
@@ -108,7 +106,7 @@ const formik = withFormik<GroupFormProps, GroupFormValues>({
       addValueToForm(formData, 'id', group?.id);
       addValueToForm(formData, 'title', values.title);
       addValueToForm(formData, 'color', values.color);
-      addValueToForm(formData, 'imageFilename', values.imageFilename);
+      addValueToForm(formData, 'imageFilename', values.imageFilename, !values.imageContent);
       addValueToForm(formData, 'imageContent', values.imageContent);
       return formData;
     };

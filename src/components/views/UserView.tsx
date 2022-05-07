@@ -20,7 +20,9 @@ export const UserView = (props: UserViewProps) => {
 
   const imageWithUsername = (
     <HStack alignItems="center">
-      {withUserPic && <UrlPic url={user.imageFilename} size={picSize} border={1} invertedBorder={withInvertedBorder} />}
+      {withUserPic && (
+        <UrlPic file={user.imageFilename} size={picSize} border={1} invertedBorder={withInvertedBorder} />
+      )}
       {withUserPic && withUsername && <Box m="0.5" />}
       {withUsername && <Text fontSize="12">{user.username}</Text>}
     </HStack>

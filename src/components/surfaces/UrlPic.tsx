@@ -7,23 +7,23 @@ import {flowRight} from 'lodash';
 const img = require('../../../assets/images/fallback.jpg');
 
 type UrlPicProps = {
-  url: string;
+  file: string;
   size: ISizes;
   border?: number;
   invertedBorder?: boolean;
 };
 
-const UrlPic = ({url, size, border = 0, invertedBorder}: UrlPicProps) => {
+const UrlPic = ({file, size, border = 0, invertedBorder}: UrlPicProps) => {
   const isBigImage = size === 'lg' || size === 'xl' || size === '2xl';
 
-  const source = useMemo(() => {
-    return url ? {uri: isBigImage ? ImageUtils.getImage(url) : ImageUtils.getThumbnail(url)} : null;
-  }, [url, isBigImage]);
+  const source = useMemo<string>(() => {
+    return !file || ImageUtils.isUrl(file) ? file : ImageUtils.buildImageUri(file, !isBigImage);
+  }, [file, isBigImage]);
 
   const borderColor = invertedBorder ? 'white' : 'tertiary.500';
 
   return (
-    <Avatar source={source} size={size} borderWidth={border} borderColor={borderColor} overflow="hidden">
+    <Avatar source={{uri: source}} size={size} borderWidth={border} borderColor={borderColor} overflow="hidden">
       <Image source={img} width="100%" height="100%" alt="Fatodo fallback image" />
     </Avatar>
   );
