@@ -5,6 +5,7 @@ import {Item} from '../../../models/Item';
 export interface GroupListItemsState {
   items: Map<string, Item[]>;
   counts: Map<string, number>;
+  deleteGroup: (groupId: string) => void;
   loadInitialState: (groupIds: string[]) => void;
   loadMore: (groupId: string, offset: number, size: number) => void;
   loading: Map<string, boolean>;

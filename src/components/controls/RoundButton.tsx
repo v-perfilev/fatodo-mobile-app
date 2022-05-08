@@ -9,7 +9,7 @@ const RoundButton = React.forwardRef((props: RoundButtonProps, ref: HTMLElement)
   const {children, size = 7, ...other} = props;
 
   return (
-    <Button width={size} height={size} variant="outline" rounded="full" {...other} ref={ref as MutableRefObject<any>}>
+    <Button {...other} width={size} height={size} variant="outline" rounded="full" ref={ref as MutableRefObject<any>}>
       {children}
     </Button>
   );

@@ -17,5 +17,9 @@
     "OutcomingRequestList": "Outcoming requests",
     "ChatList": "Chats",
     "ChatView": "Chat"
+  },
+  "buttons": {
+    "agree": "Agree",
+    "disagree": "Disagree"
   }
 }

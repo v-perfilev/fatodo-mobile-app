@@ -40,5 +40,9 @@
     "viewGroup": "View",
     "editGroup": "Edit",
     "deleteGroup": "Delete"
+  },
+  "deleteGroup": {
+    "title": "Delete group",
+    "text": "Are you sure you want to delete the group \"{{title}}\"?"
   }
 }

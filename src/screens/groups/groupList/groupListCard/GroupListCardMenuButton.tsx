@@ -14,6 +14,9 @@ import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
 import RoundButton from '../../../../components/controls/RoundButton';
 import {Group} from '../../../../models/Group';
 import {ReduxAuthState} from '../../../../store/rerducers/AuthReducer';
+import {useGroupDialogContext} from '../../../../shared/contexts/dialogContexts/GroupDialogContext';
+import {useGroupListContext} from '../../../../shared/contexts/listContexts/groupListContext';
+import {useGroupListItemsContext} from '../../../../shared/contexts/listContexts/groupListItemsContext';
 
 type GroupListCardMenuButtonProps = ReduxAuthState & {
   group: Group;
@@ -22,8 +25,9 @@ type GroupListCardMenuButtonProps = ReduxAuthState & {
 const GroupListCardMenuButton = ({group, account}: GroupListCardMenuButtonProps) => {
   const {t} = useTranslation();
   const navigation = useNavigation<GroupNavigationProp>();
-  // const {load: loadGroups} = useGroupListContext();
-  // const {showGroupDeleteDialog} = useGroupDialogContext();
+  const {deleteGroup} = useGroupListContext();
+  const {deleteGroup: deleteGroupItems} = useGroupListItemsContext();
+  const {showGroupDeleteDialog} = useGroupDialogContext();
 
   const canEdit = group && GroupUtils.canEdit(account, group);
   const canAdmin = group && GroupUtils.canAdmin(account, group);
@@ -41,9 +45,11 @@ const GroupListCardMenuButton = ({group, account}: GroupListCardMenuButtonProps)
   };
 
   const openGroupDeleteDialog = (): void => {
-    // const onSuccess = (): void => loadGroups();
-    // showGroupDeleteDialog(group, onSuccess);
-    console.log('deleteGroup');
+    const onSuccess = (): void => {
+      deleteGroup(group.id);
+      deleteGroupItems(group.id);
+    };
+    showGroupDeleteDialog(group, onSuccess);
   };
 
   const menuItems = [

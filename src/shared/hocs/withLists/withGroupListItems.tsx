@@ -49,6 +49,25 @@ const withGroupListItems = (Component: ComponentType) => (props: any) => {
     });
   };
 
+  const deleteGroup = (groupId: string): void => {
+    setItems((prevState) => {
+      prevState.delete(groupId);
+      return new Map(prevState);
+    });
+    setCounts((prevState) => {
+      prevState.delete(groupId);
+      return new Map(prevState);
+    });
+    setLoadingMap((prevState) => {
+      prevState.delete(groupId);
+      return new Map(prevState);
+    });
+    setCollapsedMap((prevState) => {
+      prevState.delete(groupId);
+      return new Map(prevState);
+    });
+  };
+
   const loadInitialState = (groupIds: string[]): void => {
     setLoading(groupIds, true);
     ItemService.getPreviewItemsByGroupIds(groupIds)
@@ -94,6 +113,7 @@ const withGroupListItems = (Component: ComponentType) => (props: any) => {
   const context = {
     items,
     counts,
+    deleteGroup,
     loadInitialState,
     loadMore,
     loading,

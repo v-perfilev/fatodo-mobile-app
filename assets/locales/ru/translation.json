@@ -17,5 +17,9 @@
     "OutcomingRequestList": "Исходящие запросы",
     "ChatList": "Чаты",
     "ChatView": "Чат"
+  },
+  "buttons": {
+    "agree": "Подтвердить",
+    "disagree": "Отменить"
   }
 }

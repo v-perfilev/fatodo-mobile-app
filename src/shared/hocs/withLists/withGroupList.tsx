@@ -10,6 +10,10 @@ const withGroupList = (Component: ComponentType) => (props: any) => {
   const [groups, setGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const deleteGroup = (groupId: string): void => {
+    setGroups((prevState) => prevState.filter((g) => g.id !== groupId));
+  };
+
   const load = (): void => {
     setLoading(true);
     ItemService.getAllGroups()
@@ -24,7 +28,7 @@ const withGroupList = (Component: ComponentType) => (props: any) => {
       });
   };
 
-  const context = {groups, setGroups, load, loading};
+  const context = {groups, setGroups, deleteGroup, load, loading};
 
   return (
     <GroupListContext.Provider value={context}>

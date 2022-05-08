@@ -5,6 +5,7 @@ import {Group} from '../../../models/Group';
 type GroupListState = {
   groups: Group[];
   setGroups: (groups: Group[]) => void;
+  deleteGroup: (groupId: string) => void;
   load: () => void;
   loading: boolean;
 };

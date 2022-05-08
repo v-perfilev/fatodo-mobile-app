@@ -7,7 +7,7 @@ const LinkButton = React.forwardRef((props: LinkButtonProps, ref: HTMLElement) =
   const {children, ...other} = props;
 
   return (
-    <Button variant="link" {...other} _pressed={{opacity: 0.7}} ref={ref as MutableRefObject<any>}>
+    <Button {...other} variant="link" _pressed={{opacity: 0.7}} ref={ref as MutableRefObject<any>}>
       {children}
     </Button>
   );
