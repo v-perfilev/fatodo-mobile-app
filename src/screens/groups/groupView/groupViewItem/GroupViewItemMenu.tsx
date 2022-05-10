@@ -48,7 +48,7 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
         removeFromPreviousList(item.id);
         addToNextList(updatedItem);
       })
-      .catch((response) => {
+      .catch(({response}) => {
         handleResponse(response);
         setArchivedLoading(false);
       });

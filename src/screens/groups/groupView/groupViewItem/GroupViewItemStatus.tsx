@@ -27,7 +27,7 @@ const GroupViewItemStatus = ({item, canEdit}: GroupViewItemStatusProps) => {
         const updatedItem = {...item, status};
         updateItem(updatedItem);
       })
-      .catch((response) => {
+      .catch(({response}) => {
         handleResponse(response);
       })
       .finally(() => {

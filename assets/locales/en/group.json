@@ -41,6 +41,10 @@
     "editGroup": "Edit",
     "deleteGroup": "Delete"
   },
+  "leaveGroup": {
+    "title": "Leave group",
+    "text": "Are you sure you want to leave the group \"{{title}}\"?"
+  },
   "deleteGroup": {
     "title": "Delete group",
     "text": "Are you sure you want to delete the group \"{{title}}\"?"

@@ -24,7 +24,7 @@ const GroupCreate = () => {
         const id = response.data.id;
         goToGroupView(id);
       })
-      .catch((response) => {
+      .catch(({response}) => {
         handleResponse(response);
         stopSubmitting();
       });

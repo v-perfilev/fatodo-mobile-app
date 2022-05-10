@@ -21,8 +21,8 @@ const ControlMenu = ({menu, disabled}: ControlMenuProps) => {
           key={index}
           icon={action.icon}
           onPress={action.action}
-          disabled={disabled || action.disabled}
-          color={action.color || 'primary.500'}
+          isDisabled={disabled || action.disabled}
+          colorScheme={action.color || 'primary'}
           size="sm"
           mx="1"
           my="1"

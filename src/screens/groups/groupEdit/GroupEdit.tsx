@@ -28,7 +28,7 @@ const GroupEdit = () => {
         handleCode('group.updated', 'info');
         goToGroupView();
       })
-      .catch((response) => {
+      .catch(({response}) => {
         handleResponse(response);
         stopSubmitting();
       });

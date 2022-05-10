@@ -5,6 +5,7 @@ import {Item} from '../../../models/Item';
 import ItemService from '../../../services/ItemService';
 import {ResponseUtils} from '../../utils/ResponseUtils';
 import {ItemViewContext} from '../../contexts/viewContexts/itemViewContext';
+import {AxiosError} from 'axios';
 
 const withItemView = (Component: ComponentType) => (props: any) => {
   const {handleResponse} = useSnackContext();
@@ -17,7 +18,7 @@ const withItemView = (Component: ComponentType) => (props: any) => {
       .then((response) => {
         setItem(response.data);
       })
-      .catch((response) => {
+      .catch(({response}: AxiosError) => {
         const status = ResponseUtils.getStatus(response);
         if (status === 404 && notFoundAction) {
           notFoundAction();

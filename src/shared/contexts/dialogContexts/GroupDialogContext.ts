@@ -7,7 +7,7 @@ interface GroupDialogState {
   // showGroupAddMembersDialog: (group: Group, onSuccess: () => void) => void;
   // showGroupEditMemberDialog: (group: Group, user: GroupUser, onSuccess: () => void) => void;
   // showGroupMembersDialog: (group: Group, users: User[], onSuccess: () => void) => void;
-  // showGroupLeaveDialog: (group: Group, onSuccess: () => void) => void;
+  showGroupLeaveDialog: (group: Group, onSuccess: () => void) => void;
 }
 
 export const GroupDialogContext = React.createContext<GroupDialogState>(null);

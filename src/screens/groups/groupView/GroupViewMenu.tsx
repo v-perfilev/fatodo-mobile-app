@@ -14,6 +14,7 @@ import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupVi
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {UserAccount} from '../../../models/User';
 import {Box} from 'native-base';
+import {useGroupDialogContext} from '../../../shared/contexts/dialogContexts/GroupDialogContext';
 
 type GroupViewMenuProps = {
   account: UserAccount;
@@ -22,7 +23,12 @@ type GroupViewMenuProps = {
 const GroupViewMenu = ({account}: GroupViewMenuProps) => {
   const {group} = useGroupViewContext();
   const navigation = useNavigation<GroupNavigationProp>();
+  const {showGroupLeaveDialog, showGroupDeleteDialog} = useGroupDialogContext();
   const {t} = useTranslation();
+
+  const goToGroupList = (): void => {
+    navigation.navigate('GroupList');
+  };
 
   const goToItemCreate = (): void => {
     navigation.navigate('ItemCreate', {groupId: group.id});
@@ -44,16 +50,14 @@ const GroupViewMenu = ({account}: GroupViewMenuProps) => {
     console.log('addMembers');
   };
 
-  const openGroupDeleteDialog = (): void => {
-    // const onSuccess = (): void => redirectToGroups();
-    // showGroupDeleteDialog(group, onSuccess);
-    console.log('deleteGroup');
+  const openGroupLeaveDialog = (): void => {
+    const onSuccess = (): void => goToGroupList();
+    showGroupLeaveDialog(group, onSuccess);
   };
 
-  const openGroupLeaveDialog = (): void => {
-    // const onSuccess = (): void => redirectToGroups();
-    // showGroupLeaveDialog(group, onSuccess);
-    console.log('leaveGroup');
+  const openGroupDeleteDialog = (): void => {
+    const onSuccess = (): void => goToGroupList();
+    showGroupDeleteDialog(group, onSuccess);
   };
 
   const canAdmin = group && GroupUtils.canAdmin(account, group);
@@ -74,14 +78,14 @@ const GroupViewMenu = ({account}: GroupViewMenuProps) => {
       icon: <LeaveIcon />,
       action: openGroupLeaveDialog,
       text: t('group:actions.leave'),
-      color: 'secondary.500',
+      color: 'secondary',
       disabled: !canLeave,
     },
     {
       icon: <DeleteIcon />,
       action: openGroupDeleteDialog,
       text: t('group:actions.delete'),
-      color: 'secondary.500',
+      color: 'secondary',
       hidden: !canAdmin,
     },
   ] as MenuElement[];
