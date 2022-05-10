@@ -5,11 +5,10 @@ import withGroupList from '../../../shared/hocs/withLists/withGroupList';
 import {useGroupListContext} from '../../../shared/contexts/listContexts/groupListContext';
 import GroupListContainer from './GroupListContainer';
 import {useGroupListItemsContext} from '../../../shared/contexts/listContexts/groupListItemsContext';
-import CentredSpinner from '../../../components/surfaces/CentredSpinner';
-import {Box} from 'native-base';
 import withUserList from '../../../shared/hocs/withLists/withUserList';
 import GroupListHeader from './GroupListHeader';
 import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
+import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 
 const GroupList = () => {
   const {handleUserIds} = useUserListContext();
@@ -43,10 +42,9 @@ const GroupList = () => {
   return (
     <>
       <GroupListHeader sorting={sorting} setSorting={setSorting} />
-      <Box flex="1">
-        {groupsLoading && <CentredSpinner />}
-        {!groupsLoading && <GroupListContainer sorting={sorting} />}
-      </Box>
+      <ConditionalSpinner loading={groupsLoading}>
+        <GroupListContainer sorting={sorting} />
+      </ConditionalSpinner>
     </>
   );
 };

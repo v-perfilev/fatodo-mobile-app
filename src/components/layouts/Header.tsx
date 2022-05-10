@@ -29,7 +29,6 @@ const Header = ({children, title, imageFilename, showMenu = true}: HeaderProps) 
   return (
     <>
       <ColoredStatusBar />
-      {/*<HStack h="12" space="2" px="4" bg="primary.500" alignItems="center">*/}
       <HStack h="12" space="2" px="2" bg="primary.500" alignItems="center">
         {canGoBack && (
           <PressableButton onPress={goBack}>
@@ -42,7 +41,7 @@ const Header = ({children, title, imageFilename, showMenu = true}: HeaderProps) 
           </PressableButton>
         )}
         {!!imageFilename && <UrlPic file={imageFilename} size="9" border={1} invertedBorder />}
-        <Text fontWeight="800" fontSize="20" color="white" isTruncated>
+        <Text fontWeight="800" fontSize="20" lineHeight="24" color="white" isTruncated>
           {label}
         </Text>
         <HStack flex="1" space="2" alignItems="center" justifyContent="flex-end">

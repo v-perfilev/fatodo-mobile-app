@@ -12,12 +12,12 @@ import {ReduxAuthState} from '../../../store/rerducers/AuthReducer';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import Header from '../../../components/layouts/Header';
-import CentredSpinner from '../../../components/surfaces/CentredSpinner';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import GroupViewMenu from './GroupViewMenu';
 import GroupViewUsers from './GroupViewUsers';
 import GroupViewItems from './groupViewItems/GroupViewItems';
+import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 
 type GroupViewProps = ReduxAuthState;
 
@@ -50,19 +50,15 @@ const GroupView = ({account}: GroupViewProps) => {
   return (
     <ThemeProvider theme={theme}>
       <Header title={group?.title} imageFilename={group?.imageFilename} showMenu={false} />
-      <Box flex="1">
-        {!group ? (
-          <CentredSpinner />
-        ) : (
-          <ScrollView>
-            <Box p="1">
-              <GroupViewMenu account={account} />
-              <GroupViewUsers />
-              <GroupViewItems account={account} showArchived={showArchived} setShowArchived={setShowArchived} />
-            </Box>
-          </ScrollView>
-        )}
-      </Box>
+      <ConditionalSpinner loading={!group}>
+        <ScrollView>
+          <Box p="1">
+            <GroupViewMenu account={account} />
+            <GroupViewUsers />
+            <GroupViewItems account={account} showArchived={showArchived} setShowArchived={setShowArchived} />
+          </Box>
+        </ScrollView>
+      </ConditionalSpinner>
     </ThemeProvider>
   );
 };
