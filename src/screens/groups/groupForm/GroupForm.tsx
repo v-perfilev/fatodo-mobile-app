@@ -10,9 +10,9 @@ import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import SolidButton from '../../../components/controls/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {SnackState} from '../../../shared/contexts/SnackContext';
-import {withSnackContext} from '../../../shared/hocs/withSnackbar';
 import FormikThemeInput from '../../../components/inputs/FormikThemeInput';
 import ImageUpload from '../../../components/inputs/imageUpload/ImageUpload';
+import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
 
 export interface GroupFormValues {
   title: string;

@@ -11,7 +11,7 @@ type ModalDialogProps = {
 };
 
 const ModalDialog = ({open, close, title, content, actions}: ModalDialogProps) => (
-  <Modal isOpen={open} onClose={close}>
+  <Modal isOpen={open} onClose={close} _backdrop={{bg: 'gray.300'}}>
     <Modal.Content>
       <Modal.CloseButton bgColor={null} _pressed={{bgColor: 'none'}} _icon={{color: 'white'}} />
       <Modal.Header bg={LINEAR_GRADIENT} borderBottomWidth="0" _text={{color: 'white'}}>

@@ -8,7 +8,6 @@ import {VStack} from 'native-base';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
-import {withSnackContext} from '../../../shared/hocs/withSnackbar';
 import {SnackState} from '../../../shared/contexts/SnackContext';
 import {emailValidator, passwordValidator, usernameValidator} from '../forgotPassword/ForgotPasswordValidators';
 import {RegistrationDTO} from '../../../models/dto/RegistrationDTO';
@@ -16,6 +15,7 @@ import i18n from '../../../shared/i18n';
 import {DateUtils} from '../../../shared/utils/DateUtils';
 import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBar';
 import SolidButton from '../../../components/controls/SolidButton';
+import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
 
 export interface SignUpFormValues {
   email: string;

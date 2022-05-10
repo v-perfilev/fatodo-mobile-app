@@ -13,9 +13,9 @@ import {VStack} from 'native-base';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
-import {withSnackContext} from '../../../shared/hocs/withSnackbar';
 import {SnackState} from '../../../shared/contexts/SnackContext';
 import SolidButton from '../../../components/controls/SolidButton';
+import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
 
 const mapDispatchToProps = {login, requestAccountData};
 const connector = connect(null, mapDispatchToProps);

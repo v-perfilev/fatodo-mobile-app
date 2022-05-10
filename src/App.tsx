@@ -14,11 +14,12 @@ import AuthNavigator from './navigators/AuthNavigator';
 import RootNavigator from './navigators/RootNavigator';
 import withNativeBase from './shared/hocs/withNativeBase';
 import withNavigationContainer from './shared/hocs/withNavigationContainer';
-import withSnackbar from './shared/hocs/withSnackbar';
 import withAuthState from './shared/hocs/withAuthState';
 import {SecurityUtils} from './shared/utils/SecurityUtils';
 import {connect, ConnectedProps} from 'react-redux';
 import withDialogs from './shared/hocs/withDialogs/withDialogs';
+import withSnackProvider from './shared/hocs/withSnack/withSnackProvider';
+import withSnackDisplay from './shared/hocs/withSnack/withSnackDisplay';
 
 // setup axios
 const axiosActions = bindActionCreators({clearAuth, enqueueReduxSnack}, store.dispatch);
@@ -56,9 +57,10 @@ const App = ({isAuthenticated, login, requestAccountData}: AppProps) => {
 export default flowRight([
   withStore,
   connector,
+  withSnackDisplay,
+  withSnackProvider,
   withNativeBase,
   withNavigationContainer,
-  withSnackbar,
   withAuthState,
   withDialogs,
 ])(App);

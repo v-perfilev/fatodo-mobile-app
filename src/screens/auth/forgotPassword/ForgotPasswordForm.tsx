@@ -8,10 +8,10 @@ import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
 import {VStack} from 'native-base';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import {useTranslation} from 'react-i18next';
-import {withSnackContext} from '../../../shared/hocs/withSnackbar';
 import {SnackState} from '../../../shared/contexts/SnackContext';
 import {ForgotPasswordDTO} from '../../../models/dto/ForgotPasswordDTO';
 import SolidButton from '../../../components/controls/SolidButton';
+import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
 
 export interface ForgotPasswordFormValues {
   user: string;
