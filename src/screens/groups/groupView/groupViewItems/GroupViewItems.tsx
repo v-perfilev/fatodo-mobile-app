@@ -111,8 +111,8 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
         <GroupViewItemsPagination page={page} setPage={setPage} totalPages={totalPages} />
         <GroupViewItemsArchivedSwitch showArchived={showArchived} setShowArchived={setShowArchived} />
       </HStack>
+      {!showArchived && <GroupViewItemsCreateButton group={group} />}
       {loading && <GroupViewItemsSkeleton />}
-      {!loading && !showArchived && <GroupViewItemsCreateButton group={group} />}
       {!loading && itemsToShow.map((item) => <GroupViewItem item={item} canEdit={canEdit} key={item.id} />)}
     </Flex>
   );
