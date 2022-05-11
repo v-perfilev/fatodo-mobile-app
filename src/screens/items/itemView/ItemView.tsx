@@ -17,15 +17,14 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ItemViewMenu from './ItemViewMenu';
 import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
-import ItemViewInfo from './itemViewInfo/itemViewInfo';
 import ItemViewDescription from './ItemViewDescription';
-import ItemReminders from './ItemViewReminders';
 import ItemViewTags from './ItemViewTags';
 import ItemViewChanges from './ItemViewChanges';
-import ItemViewInfoGroup from './itemViewInfo/itemViewInfoGroup';
-import ItemViewInfoType from './itemViewInfo/itemViewInfoType';
-import ItemViewInfoPriority from './itemViewInfo/itemViewInfoPriority';
-import ItemViewInfoDate from './itemViewInfo/itemViewInfoDate';
+import ItemViewDate from './itemViewDate';
+import ItemViewPriority from './itemViewPriority';
+import ItemViewType from './itemViewType';
+import ItemViewGroup from './itemViewGroup';
+import ItemReminders from './ItemReminders';
 
 type ItemViewProps = ReduxAuthState;
 
@@ -70,10 +69,10 @@ const ItemView = ({account}: ItemViewProps) => {
           <Box p="1">
             <ItemViewMenu account={account} />
             <Box>
-              <ItemViewInfoGroup />
-              <ItemViewInfoType />
-              <ItemViewInfoPriority />
-              <ItemViewInfoDate />
+              <ItemViewGroup />
+              <ItemViewType />
+              <ItemViewPriority />
+              <ItemViewDate />
             </Box>
             <ItemViewDescription />
             <ItemReminders />

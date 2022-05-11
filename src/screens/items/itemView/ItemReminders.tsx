@@ -1,6 +1,9 @@
 import React, {FC} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useReminderListContext} from '../../../shared/contexts/listContexts/reminderListContext';
+import LabeledBox from '../../../components/surfaces/LabeledBox';
+import ReminderView from '../../../components/views/ReminderView';
+import PaperBox from '../../../components/surfaces/PaperBox';
 
 const ItemReminders: FC = () => {
   const {t} = useTranslation();
@@ -12,7 +15,9 @@ const ItemReminders: FC = () => {
     showReminders && (
       <LabeledBox label={t('item:labels.reminders')}>
         {reminders.map((reminder) => (
-          <Chip key={reminder.id} size="medium" label={<ReminderView reminder={reminder} />} />
+          <PaperBox key={reminder.id}>
+            <ReminderView reminder={reminder} />
+          </PaperBox>
         ))}
       </LabeledBox>
     )

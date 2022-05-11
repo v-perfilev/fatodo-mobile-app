@@ -4,7 +4,8 @@ import {useItemViewContext} from '../../../shared/contexts/viewContexts/itemView
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import UserService from '../../../services/UserService';
 import {User} from '../../../models/User';
-import {Box} from 'native-base';
+import {Box, HStack} from 'native-base';
+import LabeledBox from '../../../components/surfaces/LabeledBox';
 
 const ItemViewChanges = () => {
   const {t} = useTranslation();
@@ -47,24 +48,24 @@ const ItemViewChanges = () => {
   return (
     <Box>
       {creator && (
-        <Box>
-          <LabeledBox label={t('item:labels.createdBy')}>
-            <Box>{creator}</Box>
+        <HStack>
+          <LabeledBox label={t('item:labels.createdBy')} isText>
+            {creator}
           </LabeledBox>
-          <LabeledBox label={t('item:labels.createdAt')}>
-            <Box>{getDate(item.createdAt)}</Box>
+          <LabeledBox label={t('item:labels.createdAt')} isText>
+            {getDate(item.createdAt)}
           </LabeledBox>
-        </Box>
+        </HStack>
       )}
       {updater && item.createdAt !== item.lastModifiedAt && (
-        <Box>
-          <LabeledBox label={t('item:labels.updatedBy')}>
-            <Box>{updater}</Box>
+        <HStack>
+          <LabeledBox label={t('item:labels.updatedBy')} isText>
+            {updater}
           </LabeledBox>
-          <LabeledBox label={t('item:labels.updatedAt')}>
-            <Box>{getDate(item.lastModifiedAt)}</Box>
+          <LabeledBox label={t('item:labels.updatedAt')} isText>
+            {getDate(item.lastModifiedAt)}
           </LabeledBox>
-        </Box>
+        </HStack>
       )}
     </Box>
   );
