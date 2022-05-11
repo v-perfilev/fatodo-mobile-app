@@ -97,9 +97,18 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
   return (
     <VStack>
       <ClearableTextInput placeholder={t('inputs.search')} onChangeText={handleFilterChange} />
-      {usersToShow.map((user, index) => (
-        <UsersSelectItem user={user} isSelected={isSelected(user)} toggleSelected={toggleSelected(user)} key={index} />
-      ))}
+      {usersToShow.length > 0 && (
+        <VStack mt="3" mb="1">
+          {usersToShow.map((user, index) => (
+            <UsersSelectItem
+              user={user}
+              isSelected={isSelected(user)}
+              toggleSelected={toggleSelected(user)}
+              key={index}
+            />
+          ))}
+        </VStack>
+      )}
       {usersToShow.length === 0 && (
         <Center mt="3" mb="1">
           <Text color="gray.400">{t('common:usersSelect.usersNotFound')}</Text>

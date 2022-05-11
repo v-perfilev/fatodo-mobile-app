@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ComponentType, useCallback, useEffect} from 'react';
-import {Group} from '../../../models/Group';
+import {Group, GroupUser} from '../../../models/Group';
 import GroupDeleteDialog, {
   defaultGroupDeleteDialogProps,
   GroupDeleteDialogProps,
@@ -15,9 +15,20 @@ import GroupAddMembersDialog, {
   defaultGroupAddMembersDialogProps,
   GroupAddMembersDialogProps,
 } from '../../../screens/groups/dialogs/GroupAddMembersDialog';
+import {User} from '../../../models/User';
+import GroupMembersDialog, {
+  defaultGroupMembersDialogProps,
+  GroupMembersDialogProps,
+} from '../../../screens/groups/dialogs/groupMembersDialog/GroupMembersDialog';
+import GroupEditMemberDialog, {
+  defaultGroupEditMemberDialogProps,
+  GroupEditMemberDialogProps,
+} from '../../../screens/groups/dialogs/GroupEditMemberDialog';
 
 enum GroupDialogs {
   ADD_MEMBERS = 'GROUP_ADD_MEMBERS_DIALOG',
+  EDIT_MEMBER = 'GROUP_EDIT_MEMBER_DIALOG',
+  MEMBERS = 'GROUP_MEMBERS_DIALOG',
   DELETE = 'GROUP_DELETE_DIALOG',
   LEAVE = 'GROUP_LEAVE_DIALOG',
 }
@@ -33,6 +44,42 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
       setDialogProps(GroupDialogs.ADD_MEMBERS, props);
     },
     [setDialogProps, updateDialogProps],
+  );
+
+  const showGroupEditMemberDialog = useCallback(
+    (group: Group, user: GroupUser, onSuccess: () => void): void => {
+      const show = true;
+      const close = (): void => updateDialogProps(GroupDialogs.EDIT_MEMBER, {show: false});
+      const props = {group, user, show, close, onSuccess} as GroupEditMemberDialogProps;
+      setDialogProps(GroupDialogs.EDIT_MEMBER, props);
+    },
+    [setDialogProps, updateDialogProps],
+  );
+
+  const showGroupMembersDialog = useCallback(
+    (group: Group, users: User[], onSuccess: () => void): void => {
+      const show = true;
+      const close = (): void => updateDialogProps(GroupDialogs.MEMBERS, {show: false});
+      const switchToAddMembers = (): void => {
+        updateDialogProps(GroupDialogs.MEMBERS, {show: false});
+        showGroupAddMembersDialog(group, onSuccess);
+      };
+      const switchToEditMember = (user: GroupUser): void => {
+        updateDialogProps(GroupDialogs.MEMBERS, {show: false});
+        showGroupEditMemberDialog(group, user, onSuccess);
+      };
+      const props = {
+        group,
+        users,
+        show,
+        close,
+        onSuccess,
+        switchToAddMembers,
+        switchToEditMember,
+      } as GroupMembersDialogProps;
+      setDialogProps(GroupDialogs.MEMBERS, props);
+    },
+    [setDialogProps, updateDialogProps, showGroupAddMembersDialog],
   );
 
   const showGroupLeaveDialog = useCallback(
@@ -57,6 +104,8 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
 
   const initDialogs = (): void => {
     handleDialog(GroupDialogs.ADD_MEMBERS, GroupAddMembersDialog, defaultGroupAddMembersDialogProps);
+    handleDialog(GroupDialogs.EDIT_MEMBER, GroupEditMemberDialog, defaultGroupEditMemberDialogProps);
+    handleDialog(GroupDialogs.MEMBERS, GroupMembersDialog, defaultGroupMembersDialogProps);
     handleDialog(GroupDialogs.LEAVE, GroupLeaveDialog, defaultGroupLeaveDialogProps);
     handleDialog(GroupDialogs.DELETE, GroupDeleteDialog, defaultGroupDeleteDialogProps);
   };
@@ -67,6 +116,8 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
 
   const context = {
     showGroupAddMembersDialog,
+    showGroupEditMemberDialog,
+    showGroupMembersDialog,
     showGroupLeaveDialog,
     showGroupDeleteDialog,
   };

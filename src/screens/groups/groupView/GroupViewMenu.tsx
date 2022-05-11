@@ -15,19 +15,26 @@ import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {UserAccount} from '../../../models/User';
 import {Box} from 'native-base';
 import {useGroupDialogContext} from '../../../shared/contexts/dialogContexts/GroupDialogContext';
+import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 
 type GroupViewMenuProps = {
   account: UserAccount;
 };
 
 const GroupViewMenu = ({account}: GroupViewMenuProps) => {
-  const {group, load: loadGroup} = useGroupViewContext();
   const navigation = useNavigation<GroupNavigationProp>();
-  const {showGroupAddMembersDialog, showGroupLeaveDialog, showGroupDeleteDialog} = useGroupDialogContext();
+  const {group, load: loadGroup} = useGroupViewContext();
+  const {users} = useUserListContext();
+  const {showGroupMembersDialog, showGroupAddMembersDialog, showGroupLeaveDialog, showGroupDeleteDialog} =
+    useGroupDialogContext();
   const {t} = useTranslation();
 
   const goToGroupList = (): void => {
     navigation.navigate('GroupList');
+  };
+
+  const goToGroupView = (): void => {
+    navigation.navigate('GroupView', {groupId: group.id});
   };
 
   const goToItemCreate = (): void => {
@@ -39,13 +46,12 @@ const GroupViewMenu = ({account}: GroupViewMenuProps) => {
   };
 
   const openGroupMembersDialog = (): void => {
-    // const onSuccess = (): void => loadGroup(groupId, redirectToNotFound, redirectToGroups);
-    // showGroupMembersDialog(group, users, onSuccess);
-    console.log('groupMembers');
+    const onSuccess = (): void => loadGroup(group.id, goToGroupView, goToGroupList);
+    showGroupMembersDialog(group, users, onSuccess);
   };
 
   const openGroupAddMembersDialog = (): void => {
-    const onSuccess = (): void => loadGroup(group.id, goToGroupList, goToGroupList);
+    const onSuccess = (): void => loadGroup(group.id, goToGroupView, goToGroupList);
     showGroupAddMembersDialog(group, onSuccess);
   };
 
