@@ -21,9 +21,9 @@ type GroupViewMenuProps = {
 };
 
 const GroupViewMenu = ({account}: GroupViewMenuProps) => {
-  const {group} = useGroupViewContext();
+  const {group, load: loadGroup} = useGroupViewContext();
   const navigation = useNavigation<GroupNavigationProp>();
-  const {showGroupLeaveDialog, showGroupDeleteDialog} = useGroupDialogContext();
+  const {showGroupAddMembersDialog, showGroupLeaveDialog, showGroupDeleteDialog} = useGroupDialogContext();
   const {t} = useTranslation();
 
   const goToGroupList = (): void => {
@@ -45,9 +45,8 @@ const GroupViewMenu = ({account}: GroupViewMenuProps) => {
   };
 
   const openGroupAddMembersDialog = (): void => {
-    // const onSuccess = (): void => loadGroup(groupId, redirectToNotFound, redirectToGroups);
-    // showGroupAddMembersDialog(group, onSuccess);
-    console.log('addMembers');
+    const onSuccess = (): void => loadGroup(group.id, goToGroupList, goToGroupList);
+    showGroupAddMembersDialog(group, onSuccess);
   };
 
   const openGroupLeaveDialog = (): void => {

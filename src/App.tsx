@@ -20,6 +20,8 @@ import {connect, ConnectedProps} from 'react-redux';
 import withDialogs from './shared/hocs/withDialogs/withDialogs';
 import withSnackProvider from './shared/hocs/withSnack/withSnackProvider';
 import withSnackDisplay from './shared/hocs/withSnack/withSnackDisplay';
+import withContactInfo from './shared/hocs/withContacts/withContactInfo';
+import withContacts from './shared/hocs/withContacts/withContacts';
 
 // setup axios
 const axiosActions = bindActionCreators({clearAuth, enqueueReduxSnack}, store.dispatch);
@@ -62,5 +64,7 @@ export default flowRight([
   withNativeBase,
   withNavigationContainer,
   withAuthState,
+  withContactInfo,
+  withContacts,
   withDialogs,
 ])(App);

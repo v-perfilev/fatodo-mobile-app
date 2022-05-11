@@ -21,5 +21,9 @@
   "buttons": {
     "agree": "Подтвердить",
     "disagree": "Отменить"
+  },
+  "inputs": {
+    "search": "Поиск",
+    "filter": "Фильтр"
   }
 }

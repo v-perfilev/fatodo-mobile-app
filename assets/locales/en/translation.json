@@ -21,5 +21,9 @@
   "buttons": {
     "agree": "Agree",
     "disagree": "Disagree"
+  },
+  "inputs": {
+    "search": "Search",
+    "filter": "Filter"
   }
 }
