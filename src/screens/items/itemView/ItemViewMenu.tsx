@@ -9,7 +9,6 @@ import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {UserAccount} from '../../../models/User';
-import {Box} from 'native-base';
 import ItemsIcon from '../../../components/icons/ItemsIcon';
 import {useItemDialogContext} from '../../../shared/contexts/dialogContexts/ItemDialogContext';
 import {useItemViewContext} from '../../../shared/contexts/viewContexts/itemViewContext';
@@ -41,22 +40,18 @@ const ItemViewMenu = ({account}: ItemViewMenuProps) => {
   const canEdit = group && GroupUtils.canAdmin(account, group);
 
   const menuElements = [
-    {icon: <ItemsIcon />, action: goToGroupView, text: t('item:tooltips.list')},
-    {icon: <EditIcon />, action: goToItemEdit, text: t('item:tooltips.edit'), disabled: !canEdit},
+    {icon: <ItemsIcon />, action: goToGroupView, text: t('item:actions.list')},
+    {icon: <EditIcon />, action: goToItemEdit, text: t('item:actions.edit'), disabled: !canEdit},
     {
       icon: <DeleteIcon />,
       action: openItemDeleteDialog,
-      text: t('item:tooltips.delete'),
+      text: t('item:actions.delete'),
       color: 'secondary',
       disabled: !canEdit,
     },
   ] as MenuElement[];
 
-  return (
-    <Box my="1">
-      <ControlMenu menu={menuElements} />
-    </Box>
-  );
+  return <ControlMenu menu={menuElements} />;
 };
 
 export default ItemViewMenu;

@@ -1,0 +1,72 @@
+{
+  "headers": {
+    "create": "Добавление записи в {{group}}",
+    "edit": "Редактирование записи в {{group}}"
+  },
+  "view": {
+    "noDescription": "Без описания"
+  },
+  "labels": {
+    "type": "Тип",
+    "date": "Дата",
+    "priority": "Приоритет",
+    "description": "Описание",
+    "reminders": "Напоминания",
+    "tags": "Тэги",
+    "item": "Запись",
+    "group": "Группа",
+    "createdBy": "Добавлено",
+    "createdAt": "Дата добавления",
+    "updatedBy": "Обновлено",
+    "updatedAt": "Дата обновления"
+  },
+  "fields": {
+    "title": {
+      "label": "Название",
+      "required": "Обязательное поле"
+    },
+    "type": {
+      "label": "Тип",
+      "required": "Обязательное поле"
+    },
+    "priority": {
+      "label": "Приоритет",
+      "required": "Обязательное поле"
+    },
+    "time": {
+      "label": "Время"
+    },
+    "date": {
+      "label": "Дата"
+    },
+    "description": {
+      "label": "Описание"
+    },
+    "tags": {
+      "label": "Теги"
+    },
+    "reminders": {
+      "label": "Напоминания"
+    }
+  },
+  "statuses": {
+    "created": "Создано",
+    "workInProgress": "В процессе",
+    "completed": "Завершено",
+    "closed": "Закрыто"
+  },
+  "actions": {
+    "save": "Сохранить",
+    "cancel": "Отменить",
+    "create": "Создать запись",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "list": "Список записей",
+    "add": "Добавить",
+    "close": "Закрыть"
+  },
+  "deleteItem": {
+    "title": "Удаление записи",
+    "text": "Вы уверены, что хотите удалить запись \"{{title}}\"?"
+  }
+}

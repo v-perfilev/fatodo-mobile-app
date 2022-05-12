@@ -9,7 +9,7 @@ const ItemViewDescription: FC = () => {
   const {item} = useItemViewContext();
 
   return item.description ? (
-    <LabeledBox label={t('item:labels.description')} isText>
+    <LabeledBox label={t('item:labels.description')} isText isVertical>
       {item.description}
     </LabeledBox>
   ) : (

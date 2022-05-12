@@ -1,21 +1,24 @@
-import React, {FC, PropsWithChildren} from 'react';
-import {HStack, Text} from 'native-base';
+import React from 'react';
+import {HStack, ITextProps, Text, VStack} from 'native-base';
 
-type LabeledBoxProps = PropsWithChildren<{
+type LabeledBoxProps = ITextProps & {
   label: string;
   isText?: boolean;
-}>;
+  isVertical?: boolean;
+};
 
-const LabeledBox: FC<LabeledBoxProps> = ({label, isText = false, children}: LabeledBoxProps) => {
-  const content = isText ? <Text>{children}</Text> : children;
+const LabeledBox = ({label, isText = false, isVertical = false, children, ...props}: LabeledBoxProps) => {
+  const Wrapper = isVertical ? VStack : HStack;
+  const content = isText ? <Text {...props}>{children}</Text> : children;
+  const alignItems = isVertical ? null : 'center';
 
   return (
-    <HStack alignItems="center">
-      <Text fontWeight="bold" color="gray.500" mr="1">
+    <Wrapper alignItems={alignItems}>
+      <Text {...props} fontWeight="bold" color="gray.500" mr="1">
         {label}:
       </Text>
       {content}
-    </HStack>
+    </Wrapper>
   );
 };
 

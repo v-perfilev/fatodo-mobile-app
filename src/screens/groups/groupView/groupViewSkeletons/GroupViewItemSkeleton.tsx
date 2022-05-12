@@ -3,7 +3,7 @@ import {HStack, Skeleton, VStack} from 'native-base';
 
 const GroupViewItemSkeleton = () => {
   return (
-    <HStack my="1" px="1" py="1" borderWidth="1" borderColor="gray.100" borderRadius="2">
+    <HStack px="1" py="1" borderWidth="1" borderColor="gray.100" borderRadius="2">
       <HStack alignItems="center">
         <Skeleton mx="1" w="6" h="6" rounded="lg" />
         <VStack mx="1">

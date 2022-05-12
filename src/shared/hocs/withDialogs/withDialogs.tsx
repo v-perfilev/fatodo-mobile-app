@@ -4,6 +4,7 @@ import {flowRight} from 'lodash';
 import {DialogContext} from '../../contexts/dialogContexts/DialogContext';
 import withGroupDialogs from './withGroupDialogs';
 import {Box} from 'native-base';
+import withItemDialogs from './withItemDialogs';
 
 type ComponentWithProps = {
   component: ComponentType;
@@ -79,4 +80,4 @@ const withDialogs = (Component: ComponentType) => (props: any) => {
   );
 };
 
-export default flowRight([withDialogs, withGroupDialogs]);
+export default flowRight([withDialogs, withGroupDialogs, withItemDialogs]);

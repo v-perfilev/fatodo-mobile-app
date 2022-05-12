@@ -2,7 +2,8 @@ import React, {FC} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useItemViewContext} from '../../../shared/contexts/viewContexts/itemViewContext';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
-import PaperBox from '../../../components/surfaces/PaperBox';
+import ChipBox from '../../../components/surfaces/ChipBox';
+import {HStack} from 'native-base';
 
 const ItemViewTags: FC = () => {
   const {t} = useTranslation();
@@ -13,9 +14,11 @@ const ItemViewTags: FC = () => {
   return (
     showTags && (
       <LabeledBox label={t('item:labels.tags')}>
-        {item.tags.map((tag) => (
-          <PaperBox key={tag}>{tag}</PaperBox>
-        ))}
+        <HStack space="2">
+          {item.tags.map((tag) => (
+            <ChipBox key={tag}>{tag}</ChipBox>
+          ))}
+        </HStack>
       </LabeledBox>
     )
   );

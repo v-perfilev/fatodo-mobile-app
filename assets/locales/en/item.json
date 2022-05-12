@@ -1,0 +1,72 @@
+{
+  "headers": {
+    "create": "Create item in {{group}}",
+    "edit": "Edit item in {{group}}"
+  },
+  "view": {
+    "noDescription": "No description"
+  },
+  "labels": {
+    "type": "Type",
+    "date": "Date",
+    "priority": "Priority",
+    "description": "Description",
+    "reminders": "Reminders",
+    "tags": "Tags",
+    "item": "Item",
+    "group": "Group",
+    "createdBy": "Created by",
+    "createdAt": "Created at",
+    "updatedBy": "Updated by",
+    "updatedAt": "Updated at"
+  },
+  "fields": {
+    "title": {
+      "label": "Title",
+      "required": "Required"
+    },
+    "type": {
+      "label": "Type",
+      "required": "Required"
+    },
+    "priority": {
+      "label": "Priority",
+      "required": "Required"
+    },
+    "time": {
+      "label": "Time"
+    },
+    "date": {
+      "label": "Date"
+    },
+    "description": {
+      "label": "Description"
+    },
+    "tags": {
+      "label": "Tags"
+    },
+    "reminders": {
+      "label": "Reminders"
+    }
+  },
+  "statuses": {
+    "created": "Created",
+    "workInProgress": "Work in progress",
+    "completed": "Completed",
+    "closed": "Closed"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "create": "Create item",
+    "edit": "Edit",
+    "delete": "Delete",
+    "list": "List of items",
+    "add": "Add",
+    "close": "Close"
+  },
+  "deleteItem": {
+    "title": "Delete item",
+    "text": "Are you sure you want to delete item \"{{title}}\"?"
+  }
+}

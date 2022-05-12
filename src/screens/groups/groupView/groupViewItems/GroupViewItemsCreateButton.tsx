@@ -22,7 +22,6 @@ const GroupViewItemsCreateButton = ({group}: GroupViewItemsCreateButtonProps) =>
 
   return (
     <OutlinedButton
-      my="1"
       h="45"
       rounded="xs"
       borderColor="gray.200"

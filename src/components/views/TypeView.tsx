@@ -1,4 +1,4 @@
-import React, {ReactNode, useMemo} from 'react';
+import React, {ReactElement, useMemo} from 'react';
 import {ItemType} from '../../models/Item';
 import {useTranslation} from 'react-i18next';
 import {Center, HStack, IIconProps, Text} from 'native-base';
@@ -15,16 +15,18 @@ type TypeViewProps = IIconProps & {
 export const TypeView = ({type, withoutText, ...props}: TypeViewProps) => {
   const {t, i18n} = useTranslation();
 
-  const icon = useMemo<ReactNode>(() => {
+  const icon = useMemo<ReactElement>(() => {
+    let result;
     if (type === 'TASK') {
-      return <TaskIcon color="primary.500" {...props} />;
+      result = <TaskIcon color="primary.500" {...props} />;
     } else if (type === 'EVENT') {
-      return <EventIcon color="primary.500" {...props} />;
+      result = <EventIcon color="primary.500" {...props} />;
     } else if (type === 'REPETITION') {
-      return <RepetitionIcon color="primary.500" {...props} />;
+      result = <RepetitionIcon color="primary.500" {...props} />;
     } else {
-      return <NoteIcon color="primary.500" {...props} />;
+      result = <NoteIcon color="primary.500" {...props} />;
     }
+    return result;
   }, [type]);
 
   const text = useMemo<string>(() => {
@@ -34,8 +36,8 @@ export const TypeView = ({type, withoutText, ...props}: TypeViewProps) => {
   return withoutText ? (
     <Center>{icon}</Center>
   ) : (
-    <HStack alignItems="center">
-      {icon}
+    <HStack space="1" alignItems="center">
+      {React.cloneElement(icon, {...props, mt: 1})}
       <Text>{text}</Text>
     </HStack>
   );

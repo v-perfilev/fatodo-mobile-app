@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Box, ScrollView} from 'native-base';
+import {Divider, HStack, ScrollView, VStack} from 'native-base';
 import {flowRight} from 'lodash';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
@@ -25,6 +25,8 @@ import ItemViewPriority from './itemViewPriority';
 import ItemViewType from './itemViewType';
 import ItemViewGroup from './itemViewGroup';
 import ItemReminders from './ItemReminders';
+import withUserList from '../../../shared/hocs/withLists/withUserList';
+import ItemViewName from './itemViewName';
 
 type ItemViewProps = ReduxAuthState;
 
@@ -66,23 +68,28 @@ const ItemView = ({account}: ItemViewProps) => {
       <Header title={item?.title} showMenu={false} />
       <ConditionalSpinner loading={!group || !item}>
         <ScrollView>
-          <Box p="1">
+          <VStack space="2" p="2">
             <ItemViewMenu account={account} />
-            <Box>
-              <ItemViewGroup />
+            <Divider bg="secondary.500" />
+            <ItemViewName />
+            <ItemViewGroup />
+            <HStack space="3">
               <ItemViewType />
               <ItemViewPriority />
-              <ItemViewDate />
-            </Box>
+            </HStack>
+            <ItemViewDate />
+            <Divider bg="secondary.500" />
             <ItemViewDescription />
+            <Divider bg="secondary.500" />
             <ItemReminders />
             <ItemViewTags />
+            <Divider bg="secondary.500" />
             <ItemViewChanges />
-          </Box>
+          </VStack>
         </ScrollView>
       </ConditionalSpinner>
     </ThemeProvider>
   );
 };
 
-export default flowRight([withGroupView, withItemView, withReminderList, withAuthState])(ItemView);
+export default flowRight([withGroupView, withItemView, withReminderList, withUserList, withAuthState])(ItemView);

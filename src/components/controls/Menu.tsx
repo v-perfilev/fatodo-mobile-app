@@ -23,7 +23,7 @@ export const MenuItem = ({action, icon, text, children, loading, disabled, show 
         <HStack space="1" alignItems="center">
           {loading && <CentredSpinner size="sm" />}
           {!loading && icon}
-          {!loading && <Text>{text}</Text>}
+          {!loading && text && <Text>{text}</Text>}
           {!loading && children}
         </HStack>
       </NbMenu.Item>

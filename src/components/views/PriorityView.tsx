@@ -1,4 +1,4 @@
-import React, {ReactNode, useMemo} from 'react';
+import React, {ReactElement, useMemo} from 'react';
 import {ItemPriorityType} from '../../models/Item';
 import {useTranslation} from 'react-i18next';
 import {Center, HStack, IIconProps, Text} from 'native-base';
@@ -14,14 +14,16 @@ type PriorityViewProps = IIconProps & {
 export const PriorityView = ({priority, withoutText, ...props}: PriorityViewProps) => {
   const {t, i18n} = useTranslation();
 
-  const icon = useMemo<ReactNode>(() => {
+  const icon = useMemo<ReactElement>(() => {
+    let result;
     if (priority === 'LOW') {
-      return <LowPriorityIcon color="gray.500" {...props} />;
+      result = <LowPriorityIcon color="gray.500" />;
     } else if (priority === 'NORMAL') {
-      return <NormalPriorityIcon color="primary.500" {...props} />;
+      result = <NormalPriorityIcon color="primary.500" />;
     } else {
-      return <HighPriorityIcon color="error.500" {...props} />;
+      result = <HighPriorityIcon color="error.500" />;
     }
+    return result;
   }, [priority]);
 
   const text = useMemo<string>(() => {
@@ -31,8 +33,8 @@ export const PriorityView = ({priority, withoutText, ...props}: PriorityViewProp
   return withoutText ? (
     <Center>{icon}</Center>
   ) : (
-    <HStack alignItems="center">
-      {icon}
+    <HStack space="1" alignItems="center">
+      {React.cloneElement(icon, {...props, mt: 1})}
       <Text>{text}</Text>
     </HStack>
   );

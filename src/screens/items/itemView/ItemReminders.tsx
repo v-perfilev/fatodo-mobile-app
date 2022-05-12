@@ -3,7 +3,8 @@ import {useTranslation} from 'react-i18next';
 import {useReminderListContext} from '../../../shared/contexts/listContexts/reminderListContext';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
 import ReminderView from '../../../components/views/ReminderView';
-import PaperBox from '../../../components/surfaces/PaperBox';
+import ChipBox from '../../../components/surfaces/ChipBox';
+import {HStack} from 'native-base';
 
 const ItemReminders: FC = () => {
   const {t} = useTranslation();
@@ -14,11 +15,13 @@ const ItemReminders: FC = () => {
   return (
     showReminders && (
       <LabeledBox label={t('item:labels.reminders')}>
-        {reminders.map((reminder) => (
-          <PaperBox key={reminder.id}>
-            <ReminderView reminder={reminder} />
-          </PaperBox>
-        ))}
+        <HStack space="2">
+          {reminders.map((reminder) => (
+            <ChipBox key={reminder.id}>
+              <ReminderView reminder={reminder} />
+            </ChipBox>
+          ))}
+        </HStack>
       </LabeledBox>
     )
   );

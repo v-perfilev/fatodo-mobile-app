@@ -3,7 +3,6 @@ import {FC} from 'react';
 import {useTranslation} from 'react-i18next';
 import {flowRight} from 'lodash';
 import {ReduxAuthState} from '../../store/rerducers/AuthReducer';
-import {Text} from 'native-base';
 import {Reminder} from '../../models/Reminder';
 import {DateConverters, DateFormatters, DateUtils} from '../../shared/utils/DateUtils';
 import withAuthState from '../../shared/hocs/withAuthState';
@@ -67,7 +66,7 @@ const ReminderView: FC<Props> = ({reminder, account}: Props) => {
   }
 
   const reminderStr = label + description;
-  return <Text>{reminderStr}</Text>;
+  return <>{reminderStr}</>;
 };
 
 export default flowRight([withAuthState])(ReminderView);

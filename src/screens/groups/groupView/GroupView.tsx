@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, ScrollView} from 'native-base';
+import {Divider, ScrollView, VStack} from 'native-base';
 import {flowRight} from 'lodash';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
@@ -52,11 +52,13 @@ const GroupView = ({account}: GroupViewProps) => {
       <Header title={group?.title} imageFilename={group?.imageFilename} showMenu={false} />
       <ConditionalSpinner loading={!group}>
         <ScrollView>
-          <Box p="1">
+          <VStack space="2" p="2">
             <GroupViewMenu account={account} />
+            <Divider bg="secondary.500" />
             <GroupViewUsers />
+            <Divider bg="secondary.500" />
             <GroupViewItems account={account} showArchived={showArchived} setShowArchived={setShowArchived} />
-          </Box>
+          </VStack>
         </ScrollView>
       </ConditionalSpinner>
     </ThemeProvider>

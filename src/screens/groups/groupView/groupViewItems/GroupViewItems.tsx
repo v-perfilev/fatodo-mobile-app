@@ -3,7 +3,7 @@ import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/grou
 import {UserAccount} from '../../../../models/User';
 import {useUserListContext} from '../../../../shared/contexts/listContexts/userListContext';
 import {useLoadingState} from '../../../../shared/hooks/useLoadingState';
-import {Flex, HStack} from 'native-base';
+import {HStack, VStack} from 'native-base';
 import {useArchivedItemListContext} from '../../../../shared/contexts/listContexts/archivedItemListContext';
 import {useItemListContext} from '../../../../shared/contexts/listContexts/itemListContext';
 import {Item} from '../../../../models/Item';
@@ -106,15 +106,15 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
   const canEdit = useMemo<boolean>(() => group && GroupUtils.canEdit(account, group), [group, account]);
 
   return (
-    <Flex m="1">
-      <HStack my="1" alignItems="center" justifyContent="space-between">
+    <VStack space="2">
+      <HStack alignItems="center" justifyContent="space-between">
         <GroupViewItemsPagination page={page} setPage={setPage} totalPages={totalPages} />
         <GroupViewItemsArchivedSwitch showArchived={showArchived} setShowArchived={setShowArchived} />
       </HStack>
       {!showArchived && <GroupViewItemsCreateButton group={group} />}
       {loading && <GroupViewItemsSkeleton />}
       {!loading && itemsToShow.map((item) => <GroupViewItem item={item} canEdit={canEdit} key={item.id} />)}
-    </Flex>
+    </VStack>
   );
 };
 

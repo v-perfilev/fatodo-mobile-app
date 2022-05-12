@@ -10,7 +10,7 @@ const ItemViewDate = () => {
 
   return (
     item?.date && (
-      <LabeledBox label={t('item:labels.date')}>
+      <LabeledBox label={t('item:labels.date')} isText>
         <DateView date={item.date} />
       </LabeledBox>
     )

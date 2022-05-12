@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useItemViewContext} from '../../../shared/contexts/viewContexts/itemViewContext';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import UserService from '../../../services/UserService';
 import {User} from '../../../models/User';
-import {Box, HStack} from 'native-base';
+import {HStack, VStack} from 'native-base';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
 
 const ItemViewChanges = () => {
@@ -45,29 +45,27 @@ const ItemViewChanges = () => {
     loadUsernames();
   }, []);
 
+  const labeledBox = (label: string, text: string): ReactElement => (
+    <LabeledBox label={label} isText fontSize="12" color="gray.500">
+      {text}
+    </LabeledBox>
+  );
+
   return (
-    <Box>
+    <VStack space="2">
       {creator && (
-        <HStack>
-          <LabeledBox label={t('item:labels.createdBy')} isText>
-            {creator}
-          </LabeledBox>
-          <LabeledBox label={t('item:labels.createdAt')} isText>
-            {getDate(item.createdAt)}
-          </LabeledBox>
+        <HStack space="3">
+          {labeledBox(t('item:labels.createdBy'), creator)}
+          {labeledBox(t('item:labels.createdAt'), getDate(item.createdAt))}
         </HStack>
       )}
       {updater && item.createdAt !== item.lastModifiedAt && (
-        <HStack>
-          <LabeledBox label={t('item:labels.updatedBy')} isText>
-            {updater}
-          </LabeledBox>
-          <LabeledBox label={t('item:labels.updatedAt')} isText>
-            {getDate(item.lastModifiedAt)}
-          </LabeledBox>
+        <HStack space="3">
+          {labeledBox(t('item:labels.updatedBy'), updater)}
+          {labeledBox(t('item:labels.createdAt'), getDate(item.lastModifiedAt))}
         </HStack>
       )}
-    </Box>
+    </VStack>
   );
 };
 

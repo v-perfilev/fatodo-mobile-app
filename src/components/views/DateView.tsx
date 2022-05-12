@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useTranslation} from 'react-i18next';
 import {flowRight} from 'lodash';
-import {Text} from 'native-base';
 import {DateParams} from '../../models/DateParams';
 import {ReduxAuthState} from '../../store/rerducers/AuthReducer';
 import {DateConverters, DateFormatters} from '../../shared/utils/DateUtils';
@@ -33,7 +32,7 @@ const DateView = ({date: paramDate, account}: DateViewProps) => {
     description = description.concat(t('common:paramDate.date', {date}));
   }
 
-  return <Text>{description}</Text>;
+  return <>{description}</>;
 };
 
 export default flowRight([withAuthState])(DateView);

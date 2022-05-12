@@ -20,7 +20,7 @@ const GroupViewItem = ({item, canEdit}: GroupViewItemProps) => {
   };
 
   return (
-    <VStack my="1">
+    <VStack>
       <Pressable onPress={goToItemView}>
         <HStack px="1" py="1" borderWidth="1" borderColor="gray.200" borderRadius="2">
           <GroupViewItemIcons item={item} canEdit={canEdit} />
