@@ -1,11 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {Box, FormControl, IFormControlProps, Input} from 'native-base';
+import React from 'react';
+import {Box, IFormControlProps} from 'native-base';
 import {FormikProps} from 'formik';
 import ThemeView from '../views/ThemeView';
 import {ColorScheme, colorSchemes} from '../../shared/themes/ThemeFactory';
-import Menu, {MenuItem} from '../controls/Menu';
-import PressableButton from '../controls/PressableButton';
-import PaperBox from '../surfaces/PaperBox';
+import FormikSelect from './FormikSelect';
 
 type FormikThemeInputProps = IFormControlProps &
   FormikProps<any> & {
@@ -14,44 +12,12 @@ type FormikThemeInputProps = IFormControlProps &
   };
 
 const FormikThemeInput = (props: FormikThemeInputProps) => {
-  const {name, label} = props;
-  const {values, errors, touched, handleChange, handleBlur} = props;
-  const [theme, setTheme] = useState<ColorScheme>();
-
-  const value = values[name];
-  const isTouched = name in touched;
-  const isError = name in errors;
-
-  useEffect(() => {
-    setTheme(value);
-  }, [value]);
-
-  return (
-    <FormControl isInvalid={isTouched && isError} {...props}>
-      {label && <FormControl.Label>{label}</FormControl.Label>}
-      <Input type="text" onChangeText={handleChange(name)} onBlur={handleBlur(name)} value={theme} display="none" />
-
-      <Menu
-        trigger={(triggerProps) => (
-          <PressableButton {...triggerProps}>
-            <PaperBox h="45px">
-              <ThemeView color={theme} />
-            </PaperBox>
-          </PressableButton>
-        )}
-      >
-        {Object.values(colorSchemes).map((color, index) => (
-          <MenuItem action={() => setTheme(color)} key={index}>
-            <Box h="40px">
-              <ThemeView color={color} />
-            </Box>
-          </MenuItem>
-        ))}
-      </Menu>
-
-      {isTouched && <FormControl.ErrorMessage>{errors[name]}</FormControl.ErrorMessage>}
-    </FormControl>
+  const view = (current: ColorScheme) => (
+    <Box minH="40px">
+      <ThemeView color={current} />
+    </Box>
   );
+  return <FormikSelect options={colorSchemes} view={view} {...props} />;
 };
 
 export default FormikThemeInput;
