@@ -24,7 +24,7 @@ const FormikMultilineInput = (props: FormikMultilineInputProps) => {
         onChangeText={handleChange(name)}
         onBlur={handleBlur(name)}
         value={values[name]}
-        h={150}
+        h={120}
         totalLines={20}
         autoCompleteType={undefined}
       />

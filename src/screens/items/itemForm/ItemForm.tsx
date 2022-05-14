@@ -21,6 +21,7 @@ import FormikTimeInput from '../../../components/inputs/FormikTimeInput';
 import FormikDateInput from '../../../components/inputs/FormikDateInput';
 import FormikPriorityInput from '../../../components/inputs/FormikPriorityInput';
 import FormikMultilineInput from '../../../components/inputs/FormikMultilineInput';
+import FormikTagsInput from '../../../components/inputs/FormikTagsInput';
 
 export interface ItemFormValues {
   title: string;
@@ -94,6 +95,8 @@ const ItemForm = (props: ItemFormProps) => {
         isDisabled={isSubmitting}
         {...props}
       />
+
+      <FormikTagsInput name="tags" label={t('item:fields.tags.label')} {...props} />
 
       <HStack mt="3" space="3" justifyContent="flex-end">
         <SolidButton
