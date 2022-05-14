@@ -23,19 +23,20 @@ const FormikTagsInput = (props: FormikTagsInputProps) => {
 
   const viewElement = (value: string): ReactElement => <>{value}</>;
 
-  const inputElement = (addValue: (value: string) => void, close: () => void): ReactElement => (
-    <Box flex="1" minW="30%">
-      <Input
-        h="30"
-        isFullWidth
-        autoFocus={true}
-        variant="subtle"
-        value={input}
-        onChangeText={setInput}
-        onEndEditing={handleEndEditing(addValue, close)}
-      />
-    </Box>
-  );
+  const inputElement = (show: boolean, addValue: (value: string) => void, close: () => void): ReactElement =>
+    show && (
+      <Box flex="1" minW="30%">
+        <Input
+          h="30"
+          isFullWidth
+          autoFocus={true}
+          variant="subtle"
+          value={input}
+          onChangeText={setInput}
+          onEndEditing={handleEndEditing(addValue, close)}
+        />
+      </Box>
+    );
 
   return <FormikChips view={viewElement} input={inputElement} {...props} />;
 };

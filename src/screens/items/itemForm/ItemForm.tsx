@@ -22,6 +22,7 @@ import FormikDateInput from '../../../components/inputs/FormikDateInput';
 import FormikPriorityInput from '../../../components/inputs/FormikPriorityInput';
 import FormikMultilineInput from '../../../components/inputs/FormikMultilineInput';
 import FormikTagsInput from '../../../components/inputs/FormikTagsInput';
+import FormikRemindersInput from '../../../components/inputs/formikRemindersInput/FormikRemindersInput';
 
 export interface ItemFormValues {
   title: string;
@@ -95,6 +96,8 @@ const ItemForm = (props: ItemFormProps) => {
         isDisabled={isSubmitting}
         {...props}
       />
+
+      <FormikRemindersInput name="reminders" label={t('item:fields.reminders.label')} {...props} />
 
       <FormikTagsInput name="tags" label={t('item:fields.tags.label')} {...props} />
 

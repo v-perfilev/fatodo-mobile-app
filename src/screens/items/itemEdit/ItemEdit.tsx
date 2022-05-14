@@ -13,6 +13,8 @@ import withItemView from '../../../shared/hocs/withViews/withItemView';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
 import {useItemViewContext} from '../../../shared/contexts/viewContexts/itemViewContext';
 import ItemForm from '../itemForm/ItemForm';
+import withReminderList from '../../../shared/hocs/withLists/withReminderList';
+import {useReminderListContext} from '../../../shared/contexts/listContexts/reminderListContext';
 
 const ItemEdit = () => {
   const navigation = useNavigation<GroupNavigationProp>();
@@ -21,6 +23,7 @@ const ItemEdit = () => {
   const {handleCode, handleResponse} = useSnackContext();
   const {group, load: loadGroup} = useGroupViewContext();
   const {item, load: loadItem} = useItemViewContext();
+  const {reminders, load: loadReminders} = useReminderListContext();
 
   const goToItemView = (): void => {
     navigation.navigate('ItemView', {itemId});
@@ -40,6 +43,7 @@ const ItemEdit = () => {
 
   useEffect(() => {
     loadItem(itemId);
+    loadReminders(itemId);
   }, [itemId]);
 
   useEffect(() => {
@@ -49,12 +53,12 @@ const ItemEdit = () => {
   }, [item]);
 
   return (
-    <ConditionalSpinner loading={!group || !item}>
+    <ConditionalSpinner loading={!group || !item || !reminders}>
       <ScrollView px="3" py="1">
-        <ItemForm group={group} item={item} request={request} cancel={goToItemView} />
+        <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goToItemView} />
       </ScrollView>
     </ConditionalSpinner>
   );
 };
 
-export default flowRight([withHeader, withGroupView, withItemView])(ItemEdit);
+export default flowRight([withHeader, withGroupView, withItemView, withReminderList])(ItemEdit);

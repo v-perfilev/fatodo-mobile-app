@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useMemo} from 'react';
 import {MenuElement} from '../../models/MenuElement';
 import {Flex} from 'native-base';
-import CustomIconButton from '../controls/IconButton';
+import IconButton from '../controls/IconButton';
 
 type ControlMenuProps = {
   menu: MenuElement[];
@@ -17,12 +17,12 @@ const ControlMenu = ({menu, disabled}: ControlMenuProps) => {
   return (
     <Flex flexDirection="row" flexWrap="wrap" justifyContent="space-around">
       {filteredMenu?.map((action, index) => (
-        <CustomIconButton
+        <IconButton
           key={index}
           icon={action.icon}
           onPress={action.action}
           isDisabled={disabled || action.disabled}
-          colorScheme={action.color || 'primary'}
+          colorScheme={action.color}
           size="sm"
           mx="1"
           my="1"

@@ -11,7 +11,7 @@ type FormikChipsProps<T> = IFormControlProps &
     name: string;
     label?: string;
     view: (value: T) => ReactElement;
-    input: (addValue: (value: T) => void, close: () => void) => ReactElement;
+    input: (show: boolean, addValue: (value: T) => void, close: () => void) => ReactElement;
   };
 
 const FormikChips = (props: FormikChipsProps<any>) => {
@@ -19,7 +19,7 @@ const FormikChips = (props: FormikChipsProps<any>) => {
   const {values, setFieldValue} = props;
   const [showInput, setShowInput] = useState<boolean>(false);
 
-  const arrayValue = values[name] as any[];
+  const arrayValue = (values[name] || []) as any[];
 
   const openInput = (): void => setShowInput(true);
   const closeInput = (): void => setShowInput(false);
@@ -47,12 +47,11 @@ const FormikChips = (props: FormikChipsProps<any>) => {
   return (
     <FormControl {...props}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
-
       <PressableButton onPress={openInput}>
         <PaperBox flexDir="row" minH="45px" alignItems="center" px="3" py="2">
           <Flex mb="-1.5" flexDirection="row" flexWrap="wrap">
             {chipsElements}
-            {showInput && input(addValue, closeInput)}
+            {input(showInput, addValue, closeInput)}
           </Flex>
         </PaperBox>
       </PressableButton>
