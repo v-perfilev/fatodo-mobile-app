@@ -25,9 +25,8 @@ const ItemEdit = () => {
   const {item, load: loadItem} = useItemViewContext();
   const {reminders, load: loadReminders} = useReminderListContext();
 
-  const goToItemView = (): void => {
-    navigation.navigate('ItemView', {itemId});
-  };
+  const goToGroupList = (): void => navigation.navigate('GroupList');
+  const goToItemView = (): void => navigation.navigate('ItemView', {itemId});
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
     ItemService.updateItem(dto)
@@ -42,13 +41,13 @@ const ItemEdit = () => {
   };
 
   useEffect(() => {
-    loadItem(itemId);
+    loadItem(itemId, goToItemView);
     loadReminders(itemId);
   }, [itemId]);
 
   useEffect(() => {
     if (item) {
-      loadGroup(item.groupId);
+      loadGroup(item.groupId, goToItemView, goToGroupList);
     }
   }, [item]);
 

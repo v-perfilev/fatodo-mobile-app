@@ -41,9 +41,8 @@ const ItemView = ({account}: ItemViewProps) => {
 
   const theme = ThemeFactory.getTheme(group?.color);
 
-  const goToGroupView = (): void => {
-    navigation.navigate('GroupView', {groupId: group.id});
-  };
+  const goToGroupList = (): void => navigation.navigate('GroupList');
+  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group.id});
 
   useEffect(() => {
     loadItem(itemId, goToGroupView);
@@ -52,7 +51,7 @@ const ItemView = ({account}: ItemViewProps) => {
 
   useEffect(() => {
     if (item) {
-      loadGroup(item.groupId, goToGroupView);
+      loadGroup(item.groupId, goToGroupView, goToGroupList);
     }
   }, [item]);
 

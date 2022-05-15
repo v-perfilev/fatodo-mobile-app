@@ -5,7 +5,7 @@ import {Group} from '../../../models/Group';
 type GroupViewState = {
   group: Group;
   setGroup: (group: Group) => void;
-  load: (groupId: string, notFoundAction?: () => void, failedAction?: () => void) => void;
+  load: (groupId: string, failedAction?: () => void, notFoundAction?: () => void) => void;
   loading: boolean;
 };
 

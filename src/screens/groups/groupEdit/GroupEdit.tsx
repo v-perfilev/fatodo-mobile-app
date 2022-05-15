@@ -18,9 +18,8 @@ const GroupEdit = () => {
   const {handleCode, handleResponse} = useSnackContext();
   const {group, load: loadGroup} = useGroupViewContext();
 
-  const goToGroupView = (): void => {
-    navigation.navigate('GroupView', {groupId});
-  };
+  const goToGroupList = (): void => navigation.navigate('GroupList');
+  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId});
 
   const request = (formData: FormData, stopSubmitting: () => void): void => {
     ItemService.updateGroup(formData)
@@ -35,7 +34,7 @@ const GroupEdit = () => {
   };
 
   useEffect(() => {
-    loadGroup(groupId);
+    loadGroup(groupId, goToGroupView, goToGroupList);
   }, [groupId]);
 
   return (

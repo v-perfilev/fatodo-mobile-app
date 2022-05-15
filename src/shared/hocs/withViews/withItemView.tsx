@@ -12,7 +12,7 @@ const withItemView = (Component: ComponentType) => (props: any) => {
   const [item, setItem] = useState<Item>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const load = (itemId: string, notFoundAction?: () => void, failedAction?: () => void): void => {
+  const load = (itemId: string, failedAction?: () => void, notFoundAction?: () => void): void => {
     setLoading(true);
     ItemService.getItem(itemId)
       .then((response) => {

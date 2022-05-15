@@ -21,13 +21,9 @@ const ItemCreate = () => {
   const {handleCode, handleResponse} = useSnackContext();
   const {group, load: loadGroup} = useGroupViewContext();
 
-  const goToGroupView = (): void => {
-    navigation.navigate('GroupView', {groupId});
-  };
-
-  const goToItemView = (itemId: string): void => {
-    navigation.navigate('ItemView', {itemId});
-  };
+  const goToGroupList = (): void => navigation.navigate('GroupList');
+  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId});
+  const goToItemView = (itemId: string): void => navigation.navigate('ItemView', {itemId});
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
     ItemService.createItem(dto)
@@ -42,7 +38,7 @@ const ItemCreate = () => {
   };
 
   useEffect(() => {
-    loadGroup(groupId);
+    loadGroup(groupId, goToGroupView, goToGroupList);
   }, [groupId]);
 
   return (

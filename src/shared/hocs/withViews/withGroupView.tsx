@@ -11,7 +11,7 @@ const withGroupView = (Component: ComponentType) => (props: any) => {
   const [group, setGroup] = useState<Group>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const load = (groupId: string, notFoundAction?: () => void, failedAction?: () => void): void => {
+  const load = (groupId: string, failedAction?: () => void, notFoundAction?: () => void): void => {
     setLoading(true);
     ItemService.getGroup(groupId)
       .then((response) => {

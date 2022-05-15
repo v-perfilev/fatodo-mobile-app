@@ -5,7 +5,7 @@ import {Item} from '../../../models/Item';
 type ItemViewState = {
   item: Item;
   setItem: (item: Item) => void;
-  load: (itemId: string, notFoundAction?: () => void, failedAction?: () => void) => void;
+  load: (itemId: string, failedAction?: () => void, notFoundAction?: () => void) => void;
   loading: boolean;
 };
 

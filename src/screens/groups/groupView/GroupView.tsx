@@ -37,7 +37,7 @@ const GroupView = ({account}: GroupViewProps) => {
   };
 
   useEffect(() => {
-    loadGroup(groupId, goToGroupList, goToGroupList);
+    loadGroup(groupId, goToGroupList);
   }, []);
 
   useEffect(() => {

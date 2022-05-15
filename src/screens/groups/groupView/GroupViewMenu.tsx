@@ -32,10 +32,6 @@ const GroupViewMenu = ({account}: GroupViewMenuProps) => {
     navigation.navigate('GroupList');
   };
 
-  const goToGroupView = (): void => {
-    navigation.navigate('GroupView', {groupId: group.id});
-  };
-
   const goToItemCreate = (): void => {
     navigation.navigate('ItemCreate', {groupId: group.id});
   };
@@ -45,12 +41,12 @@ const GroupViewMenu = ({account}: GroupViewMenuProps) => {
   };
 
   const openGroupMembersDialog = (): void => {
-    const onSuccess = (): void => loadGroup(group.id, goToGroupView, goToGroupList);
+    const onSuccess = (): void => loadGroup(group.id, goToGroupList);
     showGroupMembersDialog(group, users, onSuccess);
   };
 
   const openGroupAddMembersDialog = (): void => {
-    const onSuccess = (): void => loadGroup(group.id, goToGroupView, goToGroupList);
+    const onSuccess = (): void => loadGroup(group.id, goToGroupList);
     showGroupAddMembersDialog(group, onSuccess);
   };
 
