@@ -4,9 +4,9 @@ import {Group, GroupMember, GroupPermission, GroupUser} from '../../../models/Gr
 import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import ItemService from '../../../services/ItemService';
 import UserView from '../../../components/views/UserView';
-import SolidButton from '../../../components/controls/SolidButton';
 import ModalDialog from '../../../components/modals/ModalDialog';
 import {PermissionSelect} from '../../../components/inputs/permissionSelect/PermissionSelect';
+import GhostButton from '../../../components/controls/GhostButton';
 
 export type GroupEditMemberDialogProps = {
   group: Group;
@@ -61,22 +61,14 @@ const GroupEditMemberDialog: FC<Props> = ({group, user, show, close, onSuccess}:
     </>
   );
 
-  const cancelButton = (
-    <SolidButton colorScheme="primary" isDisabled={isSubmitting} onPress={close}>
-      {t('group:editMember.buttons.cancel')}
-    </SolidButton>
-  );
-
-  const sendButton = (
-    <SolidButton colorScheme="secondary" isDisabled={isSubmitting} isLoading={isSubmitting} onPress={editMember}>
-      {t('group:editMember.buttons.send')}
-    </SolidButton>
-  );
-
   const actions = (
     <>
-      {cancelButton}
-      {sendButton}
+      <GhostButton colorScheme="primary" isDisabled={isSubmitting} isLoading={isSubmitting} onPress={editMember}>
+        {t('group:editMember.buttons.send')}
+      </GhostButton>
+      <GhostButton colorScheme="secondary" isDisabled={isSubmitting} onPress={close}>
+        {t('group:editMember.buttons.cancel')}
+      </GhostButton>
     </>
   );
 

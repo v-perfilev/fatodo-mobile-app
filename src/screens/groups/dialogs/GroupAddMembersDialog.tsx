@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import ItemService from '../../../services/ItemService';
-import SolidButton from '../../../components/controls/SolidButton';
 import ModalDialog from '../../../components/modals/ModalDialog';
 import {Group} from '../../../models/Group';
 import {useContactContext} from '../../../shared/contexts/contactContexts/contactContext';
 import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
+import GhostButton from '../../../components/controls/GhostButton';
 
 export type GroupAddMembersDialogProps = {
   group: Group;
@@ -63,17 +63,17 @@ const GroupAddMembersDialog = ({group, show, close, onSuccess}: GroupAddMembersD
 
   const actions = (
     <>
-      <SolidButton onPress={close} colorScheme="primary" isDisabled={isSubmitting}>
-        {t('group:addMembers.buttons.cancel')}
-      </SolidButton>
-      <SolidButton
-        colorScheme="secondary"
+      <GhostButton
+        colorScheme="primary"
         isDisabled={isSubmitting || isUserIdListEmpty}
         isLoading={isSubmitting}
         onPress={addUsers}
       >
         {t('group:addMembers.buttons.send')}
-      </SolidButton>
+      </GhostButton>
+      <GhostButton onPress={close} colorScheme="secondary" isDisabled={isSubmitting}>
+        {t('group:addMembers.buttons.cancel')}
+      </GhostButton>
     </>
   );
 

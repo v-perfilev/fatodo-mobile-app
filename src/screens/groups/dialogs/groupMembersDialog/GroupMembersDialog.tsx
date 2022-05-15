@@ -5,13 +5,13 @@ import {Group, GroupUser} from '../../../../models/Group';
 import {User} from '../../../../models/User';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import ClearableTextInput from '../../../../components/inputs/ClearableTextInput';
-import SolidButton from '../../../../components/controls/SolidButton';
 import UserPlusIcon from '../../../../components/icons/UserPlusIcon';
 import ModalDialog from '../../../../components/modals/ModalDialog';
 import withAuthState from '../../../../shared/hocs/withAuthState';
 import {flowRight} from 'lodash';
 import {Center, Text, VStack} from 'native-base';
 import GroupMembersDialogMember from './GroupMembersDialogMember';
+import GhostButton from '../../../../components/controls/GhostButton';
 
 export type GroupMembersDialogProps = {
   group: Group;
@@ -100,9 +100,9 @@ const GroupMembersDialog = (props: Props) => {
   );
 
   const actions = group && canAdmin && (
-    <SolidButton startIcon={<UserPlusIcon />} onClick={switchToAddMembers} colorScheme="primary">
+    <GhostButton startIcon={<UserPlusIcon />} onClick={switchToAddMembers} colorScheme="primary">
       {t('group:members.buttons.addUsers')}
-    </SolidButton>
+    </GhostButton>
   );
 
   return (

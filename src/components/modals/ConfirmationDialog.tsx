@@ -1,7 +1,6 @@
 import React, {ReactElement} from 'react';
 import {useTranslation} from 'react-i18next';
 import GhostButton from '../controls/GhostButton';
-import SolidButton from '../controls/SolidButton';
 import ModalDialog from './ModalDialog';
 
 type ConfirmationDialogProps = {
@@ -18,12 +17,12 @@ const ConfirmationDialog = ({open, onAgree, onDisagree, title, content, loading}
 
   const actions = (
     <>
-      <GhostButton colorScheme="primary" isDisabled={loading} onPress={onDisagree}>
+      <GhostButton colorScheme="primary" isDisabled={loading} isLoading={loading} onPress={onAgree}>
+        {t('buttons.agree')}
+      </GhostButton>
+      <GhostButton colorScheme="secondary" isDisabled={loading} onPress={onDisagree}>
         {t('buttons.disagree')}
       </GhostButton>
-      <SolidButton colorScheme="secondary" isDisabled={loading} isLoading={loading} onPress={onAgree}>
-        {t('buttons.agree')}
-      </SolidButton>
     </>
   );
 
