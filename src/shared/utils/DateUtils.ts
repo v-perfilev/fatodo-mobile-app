@@ -238,4 +238,20 @@ export class DateUtils {
     const orderedDays = daysAfterFirstDay.concat(daysBeforeFirstDay);
     return orderedDays.map((d) => dayNames[dayNumbers.indexOf(d)]);
   };
+
+  static isTheSameDay = (date1: Date, date2: Date): boolean => {
+    return moment(date1).isSame(date2, 'date');
+  };
+
+  static isBefore = (date1: Date, date2: Date): boolean => {
+    return moment(date2).isBefore(date1);
+  };
+
+  static addMinutes = (date: Date, minutes: number): Date => {
+    return moment(date).add(minutes, 'm').toDate();
+  };
+
+  static addDays = (date: Date, days: number): Date => {
+    return moment(date).add(days, 'd').startOf('day').toDate();
+  };
 }

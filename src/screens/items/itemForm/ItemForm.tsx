@@ -17,12 +17,11 @@ import {ItemDTO} from '../../../models/dto/ItemDTO';
 import withAuthState from '../../../shared/hocs/withAuthState';
 import {ReduxAuthState} from '../../../store/rerducers/AuthReducer';
 import FormikTypeInput from '../../../components/inputs/FormikTypeInput';
-import FormikTimeInput from '../../../components/inputs/FormikTimeInput';
-import FormikDateInput from '../../../components/inputs/FormikDateInput';
 import FormikPriorityInput from '../../../components/inputs/FormikPriorityInput';
 import FormikMultilineInput from '../../../components/inputs/FormikMultilineInput';
 import FormikTagsInput from '../../../components/inputs/FormikTagsInput';
 import FormikRemindersInput from '../../../components/inputs/formikRemindersInput/FormikRemindersInput';
+import FormikDateTimePicker from '../../../components/inputs/FormikDateTimePicker';
 
 export interface ItemFormValues {
   title: string;
@@ -84,10 +83,22 @@ const ItemForm = (props: ItemFormProps) => {
       </HStack>
       <HStack space="3">
         <Box flexGrow="1" flexBasis="1">
-          <FormikTimeInput name="time" label={t('item:fields.time.label')} isDisabled={isSubmitting} {...props} />
+          <FormikDateTimePicker
+            mode="time"
+            name="time"
+            label={t('item:fields.time.label')}
+            isDisabled={isSubmitting}
+            {...props}
+          />
         </Box>
         <Box flexGrow="1" flexBasis="1">
-          <FormikDateInput name="date" label={t('item:fields.date.label')} isDisabled={isSubmitting} {...props} />
+          <FormikDateTimePicker
+            mode="date"
+            name="date"
+            label={t('item:fields.date.label')}
+            isDisabled={isSubmitting}
+            {...props}
+          />
         </Box>
       </HStack>
       <FormikMultilineInput
