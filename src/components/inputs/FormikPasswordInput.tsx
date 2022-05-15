@@ -4,6 +4,7 @@ import {FormikProps} from 'formik';
 import VisibleOffIcon from '../icons/VisibleOffIcon';
 import {GestureResponderEvent} from 'react-native';
 import VisibleOnIcon from '../icons/VisibleOnIcon';
+import {INPUT_FONT_SIZE} from '../../constants';
 
 type FormikPasswordInputProps = IFormControlProps &
   FormikProps<any> & {
@@ -38,6 +39,7 @@ const FormikPasswordInput = (props: FormikPasswordInputProps) => {
         type={showPassword ? 'text' : 'password'}
         autoCapitalize="none"
         placeholder={placeholder}
+        fontSize={INPUT_FONT_SIZE}
         onChangeText={handleChange(name)}
         onBlur={handleBlur(name)}
         value={values[name]}

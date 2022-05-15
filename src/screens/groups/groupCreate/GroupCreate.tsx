@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView} from 'native-base';
+import {Box, ScrollView} from 'native-base';
 import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import GroupForm from '../groupForm/GroupForm';
@@ -30,8 +30,10 @@ const GroupCreate = () => {
       });
   };
   return (
-    <ScrollView px="3" py="1">
-      <GroupForm request={request} cancel={goToGroupList} />
+    <ScrollView>
+      <Box mx="3" mt="1" mb="2">
+        <GroupForm request={request} cancel={goToGroupList} />
+      </Box>
     </ScrollView>
   );
 };

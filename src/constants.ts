@@ -22,3 +22,6 @@ export const GROUP_ITEMS_COUNT = 10;
 
 // IMAGES
 export const IMAGE_SIZE = 500;
+
+// FORMS
+export const INPUT_FONT_SIZE = 13;

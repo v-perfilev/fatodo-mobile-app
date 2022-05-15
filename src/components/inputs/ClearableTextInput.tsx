@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {GestureResponderEvent} from 'react-native';
 import {Icon, IInputProps, Input} from 'native-base';
 import CloseIcon from '../icons/CloseIcon';
+import {INPUT_FONT_SIZE} from '../../constants';
 
 const ClearableTextInput = ({value, onChangeText, ...props}: IInputProps) => {
   const [updater, setUpdater] = useState<string>(value);
@@ -36,6 +37,7 @@ const ClearableTextInput = ({value, onChangeText, ...props}: IInputProps) => {
       {...props}
       type="text"
       autoCapitalize="none"
+      fontSize={INPUT_FONT_SIZE}
       onChangeText={handleChangeText}
       value={updater}
       InputRightElement={showClearButton && <Icon as={<CloseIcon />} size="4" mx="2" onPress={clear} />}

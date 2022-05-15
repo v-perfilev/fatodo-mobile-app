@@ -1,6 +1,7 @@
 import React from 'react';
 import {FormControl, IFormControlProps, TextArea} from 'native-base';
 import {FormikProps} from 'formik';
+import {INPUT_FONT_SIZE} from '../../constants';
 
 type FormikMultilineInputProps = IFormControlProps &
   FormikProps<any> & {
@@ -21,6 +22,7 @@ const FormikMultilineInput = (props: FormikMultilineInputProps) => {
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <TextArea
         placeholder={placeholder}
+        fontSize={INPUT_FONT_SIZE}
         onChangeText={handleChange(name)}
         onBlur={handleBlur(name)}
         value={values[name]}

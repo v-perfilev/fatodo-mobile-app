@@ -1,6 +1,7 @@
 import React from 'react';
 import {FormControl, IFormControlProps, Input} from 'native-base';
 import {FormikProps} from 'formik';
+import {INPUT_FONT_SIZE} from '../../constants';
 
 type FormikTextInputProps = IFormControlProps &
   FormikProps<any> & {
@@ -22,6 +23,7 @@ const FormikTextInput = (props: FormikTextInputProps) => {
       <Input
         type="text"
         autoCapitalize="none"
+        fontSize={INPUT_FONT_SIZE}
         placeholder={placeholder}
         onChangeText={handleChange(name)}
         onBlur={handleBlur(name)}

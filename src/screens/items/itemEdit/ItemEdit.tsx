@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {ScrollView} from 'native-base';
+import {Box, ScrollView} from 'native-base';
 import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -54,8 +54,10 @@ const ItemEdit = () => {
 
   return (
     <ConditionalSpinner loading={!group || !item || !reminders}>
-      <ScrollView px="3" py="1">
-        <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goToItemView} />
+      <ScrollView>
+        <Box mx="3" mt="1" mb="2">
+          <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goToItemView} />
+        </Box>
       </ScrollView>
     </ConditionalSpinner>
   );

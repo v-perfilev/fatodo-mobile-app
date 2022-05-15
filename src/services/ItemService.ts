@@ -74,12 +74,12 @@ export default class ItemService {
     return axios.get(url);
   };
 
-  public static createItem = (dto: ItemDTO): AxiosPromise => {
+  public static createItem = (dto: ItemDTO): AxiosPromise<Item> => {
     const url = ItemService.baseUrl + '/items';
     return axios.post(url, dto);
   };
 
-  public static updateItem = (dto: ItemDTO): AxiosPromise => {
+  public static updateItem = (dto: ItemDTO): AxiosPromise<Item> => {
     const url = ItemService.baseUrl + '/items';
     return axios.put(url, dto);
   };

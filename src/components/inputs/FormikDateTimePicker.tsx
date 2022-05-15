@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Flex, FormControl, IFormControlProps, useTheme} from 'native-base';
 import {FormikProps} from 'formik';
 import PressableButton from '../controls/PressableButton';
-import {DateFormatters} from '../../shared/utils/DateUtils';
+import {DateFormatters, DateUtils} from '../../shared/utils/DateUtils';
 import ClearableTextInput from './ClearableTextInput';
 import DatePicker from 'react-native-date-picker';
 import withAuthState from '../../shared/hocs/withAuthState';
@@ -25,6 +25,8 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
   const [show, setShow] = useState<boolean>(false);
   const [pickerValue, setPickerValue] = useState<Date>();
 
+  const initialValue = DateUtils.addMinutes(new Date(), 20);
+
   const formatter = mode === 'date' ? DateFormatters.formatDateWithYear : DateFormatters.formatTime;
 
   const value = values[name];
@@ -46,7 +48,7 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
   };
 
   const onAgree = (): void => {
-    setFieldValue(name, pickerValue);
+    setFieldValue(name, pickerValue || initialValue);
     closePicker();
   };
 
@@ -57,7 +59,7 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
   const picker = (
     <Flex alignItems="center">
       <DatePicker
-        date={value}
+        date={value || initialValue}
         onDateChange={handlePickerChange}
         mode={mode}
         locale={locale}
