@@ -19,15 +19,15 @@ export const StatusSelect = ({statusType, setStatusType, loading}: StatusSelectP
     (statusType: ItemStatusType): ReactElement => {
       switch (statusType) {
         case 'CREATED':
-          return <StatusCreatedIcon color="white" size="sm" />;
+          return <StatusCreatedIcon color="white" size="md" />;
         case 'WORK_IN_PROGRESS':
-          return <StatusWipIcon color="white" size="sm" />;
+          return <StatusWipIcon color="white" size="md" />;
         case 'COMPLETED':
-          return <StatusCompletedIcon color="white" size="sm" />;
+          return <StatusCompletedIcon color="white" size="md" />;
         case 'CLOSED':
-          return <StatusClosedIcon color="white" size="sm" />;
+          return <StatusClosedIcon color="white" size="md" />;
         default:
-          return <StatusCreatedIcon color="white" size="sm" />;
+          return <StatusCreatedIcon color="white" size="md" />;
       }
     },
     [statusType, loading],
@@ -60,19 +60,19 @@ export const StatusSelect = ({statusType, setStatusType, loading}: StatusSelectP
   const menuItems = [
     {
       action: setStatusToCreated,
-      icon: <StatusCreatedIcon color="primary.500" size="sm" />,
+      icon: <StatusCreatedIcon color="primary.500" size="md" />,
     },
     {
       action: setStatusToWip,
-      icon: <StatusWipIcon color="primary.500" size="sm" />,
+      icon: <StatusWipIcon color="primary.500" size="md" />,
     },
     {
       action: setStatusToCompleted,
-      icon: <StatusCompletedIcon color="primary.500" size="sm" />,
+      icon: <StatusCompletedIcon color="primary.500" size="md" />,
     },
     {
       action: setStatusToClosed,
-      icon: <StatusClosedIcon color="primary.500" size="sm" />,
+      icon: <StatusClosedIcon color="primary.500" size="md" />,
     },
   ] as MenuItemProps[];
 
