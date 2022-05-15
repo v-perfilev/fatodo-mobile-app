@@ -42,7 +42,7 @@ const FormikRemindersInputToolbar = ({periodicity, setPeriodicity}: FormikRemind
   const yearBg = periodicity === 'YEARLY' ? activeColor : undefined;
 
   return (
-    <VStack bg="primary.500" alignItems="center" p="1" pb="2">
+    <VStack bg="primary.500" alignItems="center" p="2">
       <Button.Group space="1">
         <IconButton whiteIcon size="lg" icon={<OnceIcon />} onPress={handleOnceClick} bg={onceBg} />
         <IconButton whiteIcon size="lg" icon={<DayIcon />} onPress={handleDayClick} bg={dayBg} />

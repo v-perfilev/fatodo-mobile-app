@@ -37,7 +37,7 @@ const FormikChips = (props: FormikChipsProps<any>) => {
   };
 
   const chipsElements = arrayValue.map((value, index) => (
-    <Box mr="1.5" mb="1.5" key={index}>
+    <Box m="1" key={index}>
       <ChipBox h="30" closeAction={deleteValue(index)}>
         {view(value)}
       </ChipBox>
@@ -49,7 +49,7 @@ const FormikChips = (props: FormikChipsProps<any>) => {
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <PressableButton onPress={openInput}>
         <PaperBox flexDir="row" minH="45px" alignItems="center" px="3" py="2">
-          <Flex mb="-1.5" flexDirection="row" flexWrap="wrap">
+          <Flex m="-1" flexDirection="row" flexWrap="wrap">
             {chipsElements}
             {input(showInput, addValue, closeInput)}
           </Flex>
