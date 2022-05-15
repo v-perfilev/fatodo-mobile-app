@@ -4,9 +4,14 @@ import {useTranslation} from 'react-i18next';
 import {ReduxAuthState} from '../../../store/rerducers/AuthReducer';
 import {Reminder, ReminderPeriodicity} from '../../../models/Reminder';
 import withAuthState from '../../../shared/hocs/withAuthState';
-import {Button, Modal, VStack} from 'native-base';
+import {Button, Flex, Modal} from 'native-base';
 import FormikRemindersInputToolbar from './FormikRemindersInputToolbar';
 import GhostButton from '../../controls/GhostButton';
+import FormikRemindersInputOnce from './FormikRemindersInputOnce';
+import FormikRemindersInputDay from './FormikRemindersInputDay';
+import FormikRemindersInputWeek from './FormikRemindersInputWeek';
+import FormikRemindersInputMonth from './FormikRemindersInputMonth';
+import FormikRemindersInputYear from './FormikRemindersInputYear';
 
 type FormikRemindersInputPopoverProps = ReduxAuthState & {
   show: boolean;
@@ -34,13 +39,13 @@ const FormikRemindersInputPopover = ({show, handleClose, account}: FormikReminde
           <FormikRemindersInputToolbar periodicity={periodicity} setPeriodicity={setPeriodicity} />
         </Modal.Header>
         <Modal.Body>
-          <VStack space="3">
-            {/*{periodicity === 'ONCE' && <RemindersInputPopoverOnce setReminder={setReminder} timezone={timezone} />}*/}
-            {/*{periodicity === 'DAILY' && <RemindersInputPopoverDaily setReminder={setReminder} timezone={timezone} />}*/}
-            {/*{periodicity === 'WEEKLY' && <RemindersInputPopoverWeekly setReminder={setReminder} timezone={timezone} />}*/}
-            {/*{periodicity === 'MONTHLY' && <RemindersInputPopoverMonthly setReminder={setReminder} timezone={timezone} />}*/}
-            {/*{periodicity === 'YEARLY' && <RemindersInputPopoverYearly setReminder={setReminder} timezone={timezone} />}*/}
-          </VStack>
+          <Flex alignItems="center">
+            {periodicity === 'ONCE' && <FormikRemindersInputOnce setReminder={setReminder} timezone={timezone} />}
+            {periodicity === 'DAILY' && <FormikRemindersInputDay setReminder={setReminder} timezone={timezone} />}
+            {periodicity === 'WEEKLY' && <FormikRemindersInputWeek setReminder={setReminder} timezone={timezone} />}
+            {periodicity === 'MONTHLY' && <FormikRemindersInputMonth setReminder={setReminder} timezone={timezone} />}
+            {periodicity === 'YEARLY' && <FormikRemindersInputYear setReminder={setReminder} timezone={timezone} />}
+          </Flex>
         </Modal.Body>
         <Modal.Footer pt="0" borderTopWidth="0">
           <Button.Group space="2">
