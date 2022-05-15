@@ -37,12 +37,16 @@ const ItemView = ({account}: ItemViewProps) => {
   const {handleUserIds} = useUserListContext();
   const {item, load: loadItem} = useItemViewContext();
   const {group, load: loadGroup} = useGroupViewContext();
-  const {load: loadReminders} = useReminderListContext();
+  const {reminders, load: loadReminders} = useReminderListContext();
 
   const theme = ThemeFactory.getTheme(group?.color);
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
   const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group.id});
+
+  const showTags = item?.tags.length > 0;
+  const showReminders = reminders?.length > 0;
+  const showDividerAfterDescription = showTags || showReminders;
 
   useEffect(() => {
     loadItem(itemId, goToGroupView);
@@ -79,9 +83,9 @@ const ItemView = ({account}: ItemViewProps) => {
             <ItemViewDate />
             <Divider bg="secondary.500" />
             <ItemViewDescription />
-            <Divider bg="secondary.500" />
-            <ItemReminders />
-            <ItemViewTags />
+            {showDividerAfterDescription && <Divider bg="secondary.500" />}
+            {showReminders && <ItemReminders />}
+            {showTags && <ItemViewTags />}
             <Divider bg="secondary.500" />
             <ItemViewChanges />
           </VStack>

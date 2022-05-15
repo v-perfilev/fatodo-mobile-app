@@ -10,20 +10,16 @@ const ItemReminders: FC = () => {
   const {t} = useTranslation();
   const {reminders} = useReminderListContext();
 
-  const showReminders = reminders?.length > 0;
-
   return (
-    showReminders && (
-      <LabeledBox label={t('item:labels.reminders')}>
-        <HStack space="2">
-          {reminders.map((reminder) => (
-            <ChipBox key={reminder.id}>
-              <ReminderView reminder={reminder} />
-            </ChipBox>
-          ))}
-        </HStack>
-      </LabeledBox>
-    )
+    <LabeledBox label={t('item:labels.reminders')}>
+      <HStack space="2">
+        {reminders.map((reminder) => (
+          <ChipBox key={reminder.id}>
+            <ReminderView reminder={reminder} />
+          </ChipBox>
+        ))}
+      </HStack>
+    </LabeledBox>
   );
 };
 

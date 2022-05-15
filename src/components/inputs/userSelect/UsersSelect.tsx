@@ -32,7 +32,7 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
       if (!prevState.includes(user.id)) {
         return [...prevState, user.id];
       } else {
-        ArrayUtils.deleteItem(prevState, user.id);
+        prevState = ArrayUtils.deleteItem(prevState, user.id);
         return [...prevState];
       }
     });

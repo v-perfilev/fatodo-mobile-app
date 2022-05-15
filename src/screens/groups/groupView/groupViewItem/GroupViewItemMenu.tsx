@@ -16,6 +16,7 @@ import {useSnackContext} from '../../../../shared/contexts/SnackContext';
 import PackageUpIcon from '../../../../components/icons/PackageUpIcon';
 import PackageDownIcon from '../../../../components/icons/PackageDownIcon';
 import PressableButton from '../../../../components/controls/PressableButton';
+import {useItemDialogContext} from '../../../../shared/contexts/dialogContexts/ItemDialogContext';
 
 type GroupViewItemMenuProps = {
   item: Item;
@@ -26,6 +27,7 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
   const {handleResponse} = useSnackContext();
+  const {showItemDeleteDialog} = useItemDialogContext();
   const {addItem: addActive, removeItem: removedActive} = useItemListContext();
   const {addItem: addArchived, removeItem: removeArchived} = useArchivedItemListContext();
   const [archivedLoading, setArchivedLoading] = useState<boolean>(false);
@@ -55,9 +57,9 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
   }, [item, setArchivedLoading, removeArchived, removedActive, addArchived, addActive, handleResponse]);
 
   const openItemDeleteDialog = (): void => {
-    // const onSuccess = (): void => loadGroups();
-    // showGroupDeleteDialog(group, onSuccess);
-    console.log('deleteItem');
+    const remove = item.archived ? removeArchived : removedActive;
+    const onSuccess = (): void => remove(item.id);
+    showItemDeleteDialog(item, onSuccess);
   };
 
   const menuItems = [

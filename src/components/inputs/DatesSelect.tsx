@@ -13,7 +13,7 @@ const DatesSelect = ({label, dates, setDates}: DatesSelectProps) => {
   const handleClickOnDate = (date: number): void => {
     setDates((prevState) => {
       if (prevState.includes(date)) {
-        ArrayUtils.deleteItem(prevState, date);
+        prevState = ArrayUtils.deleteItem(prevState, date);
       } else {
         prevState.push(date);
         prevState.sort();

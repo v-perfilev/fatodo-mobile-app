@@ -9,18 +9,14 @@ const ItemViewTags: FC = () => {
   const {t} = useTranslation();
   const {item} = useItemViewContext();
 
-  const showTags = item.tags?.length > 0;
-
   return (
-    showTags && (
-      <LabeledBox label={t('item:labels.tags')}>
-        <HStack space="2">
-          {item.tags.map((tag) => (
-            <ChipBox key={tag}>{tag}</ChipBox>
-          ))}
-        </HStack>
-      </LabeledBox>
-    )
+    <LabeledBox label={t('item:labels.tags')}>
+      <HStack space="2">
+        {item.tags.map((tag) => (
+          <ChipBox key={tag}>{tag}</ChipBox>
+        ))}
+      </HStack>
+    </LabeledBox>
   );
 };
 

@@ -1,22 +1,25 @@
 export class ArrayUtils {
   public static addItem = (array: any[], item: any): any[] => {
-    array.push(item);
-    return array;
+    const arrayCopy = [...array];
+    arrayCopy.push(item);
+    return arrayCopy;
   };
 
   public static deleteItemByIndex = (array: any[], index: number): any[] => {
+    const arrayCopy = [...array];
     if (index >= 0) {
-      array.splice(index, 1);
+      arrayCopy.splice(index, 1);
     }
-    return array;
+    return arrayCopy;
   };
 
   public static deleteItem = (array: any[], item: any): any[] => {
-    const index = array.indexOf(item);
+    const arrayCopy = [...array];
+    const index = arrayCopy.indexOf(item);
     if (index >= 0) {
-      array.splice(index, 1);
+      arrayCopy.splice(index, 1);
     }
-    return array;
+    return arrayCopy;
   };
 
   public static createdAtComparator = (a: any, b: any): number => {
