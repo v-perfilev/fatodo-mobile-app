@@ -22,6 +22,7 @@ const ReminderView: FC<Props> = ({reminder, account}: Props) => {
 
   const timeDate = DateConverters.getTimeFromParamDate(reminder.date, timezone);
   const dateDate = DateConverters.getDateFromParamDate(reminder.date, timezone);
+
   const time = DateFormatters.formatTime(timeDate);
 
   const buildOnceDescription = (): string => {

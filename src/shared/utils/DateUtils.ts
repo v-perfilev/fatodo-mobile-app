@@ -83,7 +83,7 @@ export class DateConverters {
   };
 
   static getTimeFromParamDate = (paramDate: DateParams, timezone: string): Date => {
-    if (!paramDate || !paramDate.time) {
+    if (!paramDate || paramDate.time === null || paramDate.time === undefined) {
       return null;
     }
     const time = DateConverters.getTimeWithTimezone(paramDate, timezone);
