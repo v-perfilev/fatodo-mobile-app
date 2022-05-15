@@ -10,6 +10,6 @@ type FormikTimeInputProps = IFormControlProps &
   };
 
 const FormikTimeInput = (props: FormikTimeInputProps) => {
-  return <FormikDateTimePicker {...props} mode="time" is24Hour />;
+  return <FormikDateTimePicker {...props} mode="time" />;
 };
 export default FormikTimeInput;

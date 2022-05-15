@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import {useTranslation} from 'react-i18next';
 import GhostButton from '../controls/GhostButton';
 import SolidButton from '../controls/SolidButton';
@@ -9,7 +9,7 @@ type ConfirmationDialogProps = {
   onAgree: () => void;
   onDisagree: () => void;
   title: string;
-  content: string;
+  content: ReactElement | string;
   loading?: boolean;
 };
 
