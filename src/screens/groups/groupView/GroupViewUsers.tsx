@@ -32,11 +32,11 @@ const GroupViewMenu = () => {
   }, [usersToShow]);
 
   return (
-    <Flex mb="-1.5" flexDirection="row" flexWrap="wrap">
+    <Flex m="-1.5" flexDirection="row" flexWrap="wrap">
       {loading && <GroupViewUsersSkeleton />}
       {!loading &&
         usersToShow.map((user) => (
-          <Box mr="1.5" mb="1.5" key={user.id}>
+          <Box m="1.5" key={user.id}>
             <UserView user={user} withUsername withPaperBox />
           </Box>
         ))}

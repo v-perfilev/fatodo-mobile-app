@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import SignInForm from './SignInForm';
 import Logo from '../../../components/layouts/Logo';
-import {Box, Center, ScrollView, Stack} from 'native-base';
 import LinkButton from '../../../components/controls/LinkButton';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {AuthNavigationProp} from '../../../navigators/AuthNavigator';
 import LanguageMenu from '../../../components/controls/LanguageMenu';
+import FScrollView from '../../../components/surfaces/FScrollView';
+import FCenter from '../../../components/surfaces/FCenter';
+import FVStack from '../../../components/surfaces/FVStack';
 
 const SignIn = () => {
   const navigation = useNavigation<AuthNavigationProp>();
@@ -16,26 +18,24 @@ const SignIn = () => {
   const goToForgotPassword = (): void => navigation.navigate('ForgotPassword');
   const goToSignUp = (): void => navigation.navigate('SignUp');
 
-  const containerStyle = {flexGrow: 1};
-
   return (
-    <ScrollView keyboardShouldPersistTaps="handled" _contentContainerStyle={containerStyle}>
-      <Center flex="1" flexGrow="1" pt="10" pb="5">
-        <Box w="90%" maxW="300">
-          <Center flex="1">
+    <FScrollView keyboardShouldPersistTaps="handled">
+      <FCenter grow pt="10" pb="5">
+        <FVStack w="90%" maxW="300px" defaultSpace>
+          <FCenter grow>
             <Logo withText centerText />
-          </Center>
+          </FCenter>
           <SignInForm {...{isLoading, setLoading}} />
-          <Stack mt="5" space="2">
+          <FVStack space="1">
             <LinkButton onPress={goToForgotPassword}>{t('account:forgotPassword.header')}</LinkButton>
             <LinkButton onPress={goToSignUp}>{t('account:register.header')}</LinkButton>
-          </Stack>
-        </Box>
-      </Center>
-      <Center flex="1" flexGrow="0" pt="5" pb="10">
+          </FVStack>
+        </FVStack>
+      </FCenter>
+      <FCenter pt="5" pb="10">
         <LanguageMenu />
-      </Center>
-    </ScrollView>
+      </FCenter>
+    </FScrollView>
   );
 };
 

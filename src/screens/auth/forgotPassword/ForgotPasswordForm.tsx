@@ -5,13 +5,13 @@ import {flowRight} from 'lodash';
 import * as Yup from 'yup';
 import i18n from '../../../shared/i18n';
 import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
-import {VStack} from 'native-base';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import {useTranslation} from 'react-i18next';
 import {SnackState} from '../../../shared/contexts/SnackContext';
 import {ForgotPasswordDTO} from '../../../models/dto/ForgotPasswordDTO';
 import SolidButton from '../../../components/controls/SolidButton';
 import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
+import FVStack from '../../../components/surfaces/FVStack';
 
 export interface ForgotPasswordFormValues {
   user: string;
@@ -50,7 +50,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
   }, [captchaToken, isSubmitting]);
 
   return (
-    <VStack w="100%" space="3" mt="7">
+    <FVStack w="100%">
       <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={isSubmitting} {...props} />
       <SolidButton
         colorScheme="secondary"
@@ -62,7 +62,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
       >
         {t('account:forgotPassword.submit')}
       </SolidButton>
-    </VStack>
+    </FVStack>
   );
 };
 

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useTranslation} from 'react-i18next';
-import {HStack, Switch, Text} from 'native-base';
+import {Switch, Text} from 'native-base';
+import FHStack from '../../../../components/surfaces/FHStack';
 
 type GroupViewItemsArchivedSwitchProps = {
   showArchived: boolean;
@@ -15,12 +16,10 @@ const GroupViewItemsArchivedSwitch = ({showArchived, setShowArchived}: GroupView
   };
 
   return (
-    <HStack alignItems="center">
-      <Text mr="1" color="gray.500">
-        {t('group:actions.showArchived')}
-      </Text>
+    <FHStack space="1" alignItems="center">
+      <Text color="gray.500">{t('group:actions.showArchived')}</Text>
       <Switch isChecked={showArchived} onChange={toggleArchived} color="primary.500" />
-    </HStack>
+    </FHStack>
   );
 };
 

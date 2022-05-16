@@ -1,11 +1,13 @@
 import React, {ReactElement, useMemo} from 'react';
 import {ItemType} from '../../models/Item';
 import {useTranslation} from 'react-i18next';
-import {Center, HStack, IIconProps, Text} from 'native-base';
+import {IIconProps, Text} from 'native-base';
 import TaskIcon from '../icons/TaskIcon';
 import EventIcon from '../icons/EventIcon';
 import RepetitionIcon from '../icons/RepetitionIcon';
 import NoteIcon from '../icons/NoteIcon';
+import FCenter from '../surfaces/FCenter';
+import FHStack from '../surfaces/FHStack';
 
 type TypeViewProps = IIconProps & {
   type: ItemType;
@@ -34,12 +36,12 @@ export const TypeView = ({type, withoutText, ...props}: TypeViewProps) => {
   }, [type, i18n.language]);
 
   return withoutText ? (
-    <Center>{icon}</Center>
+    <FCenter>{icon}</FCenter>
   ) : (
-    <HStack space="1" alignItems="center">
+    <FHStack space="1" alignItems="center">
       {React.cloneElement(icon, {...props, mt: 1})}
       <Text>{text}</Text>
-    </HStack>
+    </FHStack>
   );
 };
 

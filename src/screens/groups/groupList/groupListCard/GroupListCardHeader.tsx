@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, HStack, Pressable, Text} from 'native-base';
+import {Box, Pressable, Text} from 'native-base';
 import GroupListCardCollapseButton from './GroupListCardCollapseButton';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
@@ -9,6 +9,7 @@ import PressableButton from '../../../../components/controls/PressableButton';
 import ReorderIcon from '../../../../components/icons/ReorderIcon';
 import {LINEAR_GRADIENT} from '../../../../shared/themes/ThemeFactory';
 import {Group} from '../../../../models/Group';
+import FHStack from '../../../../components/surfaces/FHStack';
 
 type GroupListCardHeaderProps = {
   group: Group;
@@ -26,13 +27,13 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
 
   return (
     <Pressable onPress={goToGroupView}>
-      <Box h="45" px="2" bg={LINEAR_GRADIENT} justifyContent="center">
-        <HStack space="2" alignItems="center">
+      <Box h="45px" pl="3" pr="2" bg={LINEAR_GRADIENT} justifyContent="center">
+        <FHStack defaultSpace alignItems="center">
           {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} invertedBorder />}
           <Text fontWeight="600" fontSize="14" color="white" isTruncated>
             {group?.title}
           </Text>
-          <HStack flex="1" space="2" alignItems="center" justifyContent="flex-end">
+          <FHStack grow space="2" alignItems="center" justifyContent="flex-end">
             {sorting ? (
               <>
                 <PressableButton onPressIn={drag}>
@@ -45,8 +46,8 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
                 <GroupListCardCollapseButton group={group} collapsed={collapsed} />
               </>
             )}
-          </HStack>
-        </HStack>
+          </FHStack>
+        </FHStack>
       </Box>
     </Pressable>
   );

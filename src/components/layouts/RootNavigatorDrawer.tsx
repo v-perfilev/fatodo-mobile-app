@@ -1,11 +1,13 @@
 import React, {useEffect} from 'react';
 import {DrawerContentComponentProps, DrawerContentScrollView, DrawerNavigationEventMap} from '@react-navigation/drawer';
-import {Box, HStack, Pressable, Text, VStack} from 'native-base';
+import {Box, Pressable, Text} from 'native-base';
 import {DrawerNavigationState, NavigationHelpers, ParamListBase} from '@react-navigation/native';
 import {DrawerDescriptorMap} from '@react-navigation/drawer/lib/typescript/src/types';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
 import {useTranslation} from 'react-i18next';
 import LanguageMenu from '../controls/LanguageMenu';
+import FVStack from '../surfaces/FVStack';
+import FHStack from '../surfaces/FHStack';
 
 type RootNavigatorItemProps = {
   routeName: string;
@@ -27,13 +29,13 @@ const RootNavigatorItem = ({routeName, routeKey, state, descriptors, navigation,
   const onPress = () => navigation.navigate(routeName);
 
   return (
-    <Pressable flex="1" _pressed={{opacity: 0.7}} onPress={onPress}>
-      <HStack space="5" alignItems="center">
+    <Pressable _pressed={{opacity: 0.7}} onPress={onPress}>
+      <FHStack defaultSpace alignItems="center">
         {icon && icon({focused: isFocused, color: color, size: 7})}
         <Text fontWeight="600" color={color} fontSize="16">
           {label}
         </Text>
-      </HStack>
+      </FHStack>
     </Pressable>
   );
 };
@@ -52,8 +54,8 @@ const RootNavigatorDrawer = (props: DrawerContentComponentProps) => {
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={containerStyle}>
-      <Box flex="1" flexGrow="1">
-        <VStack space="8" my="6" mx="8">
+      <Box flexGrow="1" m="8">
+        <FVStack space="6">
           {state.routes.map((route, index) => (
             <RootNavigatorItem
               routeKey={route.key}
@@ -65,12 +67,10 @@ const RootNavigatorDrawer = (props: DrawerContentComponentProps) => {
               key={index}
             />
           ))}
-        </VStack>
+        </FVStack>
       </Box>
-      <Box flex="1" flexGrow="0">
-        <VStack space="8" my="6" mx="8">
-          <LanguageMenu />
-        </VStack>
+      <Box m="8">
+        <LanguageMenu />
       </Box>
     </DrawerContentScrollView>
   );

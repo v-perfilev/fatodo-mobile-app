@@ -1,12 +1,14 @@
 import React from 'react';
 import Logo from '../../../components/layouts/Logo';
-import {Box, Center, ScrollView, Stack} from 'native-base';
 import LinkButton from '../../../components/controls/LinkButton';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {AuthNavigationProp} from '../../../navigators/AuthNavigator';
 import ForgotPasswordForm from './ForgotPasswordForm';
 import LanguageMenu from '../../../components/controls/LanguageMenu';
+import FScrollView from '../../../components/surfaces/FScrollView';
+import FCenter from '../../../components/surfaces/FCenter';
+import FVStack from '../../../components/surfaces/FVStack';
 
 const ForgotPassword = () => {
   const navigation = useNavigation<AuthNavigationProp>();
@@ -14,25 +16,23 @@ const ForgotPassword = () => {
 
   const goToSignIn = (): void => navigation.navigate('SignIn');
 
-  const containerStyle = {flexGrow: 1};
-
   return (
-    <ScrollView keyboardShouldPersistTaps="handled" _contentContainerStyle={containerStyle}>
-      <Center flex="1" flexGrow="1" pt="10" pb="5">
-        <Box w="90%" maxW="300">
-          <Center flex="1">
+    <FScrollView keyboardShouldPersistTaps="handled">
+      <FCenter grow pt="10" pb="5">
+        <FVStack space="5" w="90%" maxW="300">
+          <FCenter grow>
             <Logo withText centerText />
-          </Center>
+          </FCenter>
           <ForgotPasswordForm onSuccess={goToSignIn} />
-          <Stack mt="5" space="2">
+          <FVStack space="1">
             <LinkButton onPress={goToSignIn}>{t('account:login.header')}</LinkButton>
-          </Stack>
-        </Box>
-      </Center>
-      <Center flex="1" flexGrow="0" pt="5" pb="10">
+          </FVStack>
+        </FVStack>
+      </FCenter>
+      <FCenter pt="5" pb="10">
         <LanguageMenu />
-      </Center>
-    </ScrollView>
+      </FCenter>
+    </FScrollView>
   );
 };
 

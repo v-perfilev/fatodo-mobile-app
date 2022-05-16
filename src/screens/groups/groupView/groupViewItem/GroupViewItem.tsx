@@ -1,11 +1,13 @@
 import React from 'react';
-import {HStack, Pressable, Text, VStack} from 'native-base';
+import {Pressable, Text} from 'native-base';
 import {Item} from '../../../../models/Item';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import GroupViewItemIcons from './GroupViewItemIcons';
 import GroupViewItemChanges from './GroupViewItemChanges';
 import GroupViewItemMenu from './GroupViewItemMenu';
+import FVStack from '../../../../components/surfaces/FVStack';
+import FHStack from '../../../../components/surfaces/FHStack';
 
 type GroupViewItemProps = {
   item: Item;
@@ -20,18 +22,18 @@ const GroupViewItem = ({item, canEdit}: GroupViewItemProps) => {
   };
 
   return (
-    <VStack>
-      <Pressable onPress={goToItemView}>
-        <HStack px="1" py="1" borderWidth="1" borderColor="gray.200" borderRadius="2">
-          <GroupViewItemIcons item={item} canEdit={canEdit} />
-          <VStack flex="1" ml="1">
-            <Text isTruncated>{item.title}</Text>
-            <GroupViewItemChanges item={item} />
-          </VStack>
-          <GroupViewItemMenu item={item} canEdit={canEdit} />
-        </HStack>
-      </Pressable>
-    </VStack>
+    <Pressable onPress={goToItemView}>
+      <FHStack space="2" p="1" borderWidth="1" borderColor="gray.200" borderRadius="2" alignItems="center">
+        <GroupViewItemIcons item={item} canEdit={canEdit} />
+        <FVStack grow>
+          <Text isTruncated lineHeight="18">
+            {item.title}
+          </Text>
+          <GroupViewItemChanges item={item} />
+        </FVStack>
+        <GroupViewItemMenu item={item} canEdit={canEdit} />
+      </FHStack>
+    </Pressable>
   );
 };
 

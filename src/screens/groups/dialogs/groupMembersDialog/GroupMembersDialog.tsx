@@ -9,9 +9,11 @@ import UserPlusIcon from '../../../../components/icons/UserPlusIcon';
 import ModalDialog from '../../../../components/modals/ModalDialog';
 import withAuthState from '../../../../shared/hocs/withAuthState';
 import {flowRight} from 'lodash';
-import {Center, Text, VStack} from 'native-base';
+import {Text} from 'native-base';
 import GroupMembersDialogMember from './GroupMembersDialogMember';
 import GhostButton from '../../../../components/controls/GhostButton';
+import FVStack from '../../../../components/surfaces/FVStack';
+import FCenter from '../../../../components/surfaces/FCenter';
 
 export type GroupMembersDialogProps = {
   group: Group;
@@ -76,10 +78,10 @@ const GroupMembersDialog = (props: Props) => {
   }, [group, deletedMemberIds]);
 
   const content = (
-    <VStack>
+    <FVStack>
       <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={filterUsersToShow} />
       {usersToShow.length > 0 && (
-        <VStack mt="3" mb="1">
+        <FVStack mt="3" mb="1">
           {usersToShow.map((user) => (
             <GroupMembersDialogMember
               group={group}
@@ -89,14 +91,14 @@ const GroupMembersDialog = (props: Props) => {
               key={user.id}
             />
           ))}
-        </VStack>
+        </FVStack>
       )}
       {usersToShow.length === 0 && (
-        <Center mt="3" mb="1">
+        <FCenter mt="3" mb="1">
           <Text color="gray.400">{t('group:members.usersNotFound')}</Text>
-        </Center>
+        </FCenter>
       )}
-    </VStack>
+    </FVStack>
   );
 
   const actions = group && canAdmin && (

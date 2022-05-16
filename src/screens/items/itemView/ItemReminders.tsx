@@ -4,7 +4,7 @@ import {useReminderListContext} from '../../../shared/contexts/listContexts/remi
 import LabeledBox from '../../../components/surfaces/LabeledBox';
 import ReminderView from '../../../components/views/ReminderView';
 import ChipBox from '../../../components/surfaces/ChipBox';
-import {HStack} from 'native-base';
+import FHStack from '../../../components/surfaces/FHStack';
 
 const ItemReminders: FC = () => {
   const {t} = useTranslation();
@@ -12,13 +12,13 @@ const ItemReminders: FC = () => {
 
   return (
     <LabeledBox label={t('item:labels.reminders')}>
-      <HStack space="2">
+      <FHStack space="2">
         {reminders.map((reminder) => (
           <ChipBox key={reminder.id}>
             <ReminderView reminder={reminder} />
           </ChipBox>
         ))}
-      </HStack>
+      </FHStack>
     </LabeledBox>
   );
 };

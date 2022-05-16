@@ -1,14 +1,17 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {Center} from 'native-base';
 import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
+import FScrollView from '../../../components/surfaces/FScrollView';
+import FCenter from '../../../components/surfaces/FCenter';
 
 const ChatList = () => {
   return (
-    <Center safeArea w="100%" h="100%">
-      <Text>Chat List</Text>
-    </Center>
+    <FScrollView>
+      <FCenter grow>
+        <Text>Chat List</Text>
+      </FCenter>
+    </FScrollView>
   );
 };
 

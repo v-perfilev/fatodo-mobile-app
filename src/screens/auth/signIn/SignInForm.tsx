@@ -9,13 +9,13 @@ import * as Yup from 'yup';
 import i18n from '../../../shared/i18n';
 import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
 import {LoginDTO} from '../../../models/dto/LoginDTO';
-import {VStack} from 'native-base';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
 import {SnackState} from '../../../shared/contexts/SnackContext';
 import SolidButton from '../../../components/controls/SolidButton';
 import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
+import FVStack from '../../../components/surfaces/FVStack';
 
 const mapDispatchToProps = {login, requestAccountData};
 const connector = connect(null, mapDispatchToProps);
@@ -63,7 +63,7 @@ const SignInForm = (props: SignInFormProps) => {
   }, [captchaToken, isLoading]);
 
   return (
-    <VStack w="100%" space="3" mt="7">
+    <FVStack w="100%" defaultSpace>
       <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={isLoading} {...props} />
       <FormikPasswordInput
         name="password"
@@ -73,7 +73,6 @@ const SignInForm = (props: SignInFormProps) => {
       />
       <SolidButton
         colorScheme="secondary"
-        mt="5"
         size="lg"
         isLoading={isLoading}
         isDisabled={!isInitialized || !isValid || isLoading}
@@ -81,7 +80,7 @@ const SignInForm = (props: SignInFormProps) => {
       >
         {t('account:login.submit')}
       </SolidButton>
-    </VStack>
+    </FVStack>
   );
 };
 

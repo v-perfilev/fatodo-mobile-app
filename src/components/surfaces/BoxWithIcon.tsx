@@ -1,5 +1,6 @@
 import React, {ReactNode} from 'react';
-import {HStack, IBoxProps, Text} from 'native-base';
+import {IBoxProps, Text} from 'native-base';
+import FHStack from './FHStack';
 
 type BoxWithIconProps = IBoxProps & {
   icon: ReactNode;
@@ -7,10 +8,10 @@ type BoxWithIconProps = IBoxProps & {
 
 const BoxWithIcon = ({icon, children}: BoxWithIconProps) => {
   return (
-    <HStack alignItems="center">
+    <FHStack space="1" alignItems="center">
       {icon}
-      <Text ml="1">{children}</Text>
-    </HStack>
+      <Text>{children}</Text>
+    </FHStack>
   );
 };
 

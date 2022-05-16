@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {Box, ScrollView} from 'native-base';
 import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -13,6 +12,7 @@ import ItemForm from '../itemForm/ItemForm';
 import withGroupView from '../../../shared/hocs/withViews/withGroupView';
 import withItemView from '../../../shared/hocs/withViews/withItemView';
 import withReminderList from '../../../shared/hocs/withLists/withReminderList';
+import FScrollView from '../../../components/surfaces/FScrollView';
 
 const ItemCreate = () => {
   const navigation = useNavigation<GroupNavigationProp>();
@@ -43,11 +43,9 @@ const ItemCreate = () => {
 
   return (
     <ConditionalSpinner loading={!group}>
-      <ScrollView>
-        <Box mx="3" mt="1" mb="2">
-          <ItemForm group={group} request={request} cancel={goToGroupView} />
-        </Box>
-      </ScrollView>
+      <FScrollView>
+        <ItemForm group={group} request={request} cancel={goToGroupView} />
+      </FScrollView>
     </ConditionalSpinner>
   );
 };

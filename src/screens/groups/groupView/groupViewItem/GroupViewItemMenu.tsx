@@ -3,7 +3,6 @@ import {Item} from '../../../../models/Item';
 import EyeIcon from '../../../../components/icons/EyeIcon';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
-import {HStack} from 'native-base';
 import Menu, {MenuItem, MenuItemProps} from '../../../../components/controls/Menu';
 import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
 import EditIcon from '../../../../components/icons/EditIcon';
@@ -81,19 +80,17 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
   ] as MenuItemProps[];
 
   return (
-    <HStack ml="1" alignItems="center">
-      <Menu
-        trigger={(triggerProps) => (
-          <PressableButton {...triggerProps}>
-            <DotsVerticalIcon color="primary.500" size="6" />
-          </PressableButton>
-        )}
-      >
-        {menuItems.map((itemProps, index) => (
-          <MenuItem {...itemProps} key={index} />
-        ))}
-      </Menu>
-    </HStack>
+    <Menu
+      trigger={(triggerProps) => (
+        <PressableButton {...triggerProps}>
+          <DotsVerticalIcon color="primary.500" size="6" />
+        </PressableButton>
+      )}
+    >
+      {menuItems.map((itemProps, index) => (
+        <MenuItem {...itemProps} key={index} />
+      ))}
+    </Menu>
   );
 };
 

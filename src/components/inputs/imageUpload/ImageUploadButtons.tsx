@@ -1,11 +1,12 @@
 import React from 'react';
 import {Image} from '../../../models/Image';
-import {HStack, Theme, useTheme} from 'native-base';
+import {Theme, useTheme} from 'native-base';
 import SolidButton from '../../controls/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {openPicker, Options} from 'react-native-image-crop-picker';
 import {IMAGE_SIZE} from '../../../constants';
 import {ImageUtils} from '../../../shared/utils/imageUtils';
+import FHStack from '../../surfaces/FHStack';
 
 type ImageUploadButtonsProps = {
   image: Image;
@@ -54,7 +55,7 @@ const ImageUploadButtons = ({image, setImage, crop, loading, setLoading}: ImageU
   };
 
   return (
-    <HStack space="3">
+    <FHStack defaultSpace>
       <SolidButton size="sm" onPress={selectImage} isLoading={loading}>
         {image ? t('common:imageUpload.buttons.update') : t('common:imageUpload.buttons.upload')}
       </SolidButton>
@@ -63,7 +64,7 @@ const ImageUploadButtons = ({image, setImage, crop, loading, setLoading}: ImageU
           {t('common:imageUpload.buttons.clear')}
         </SolidButton>
       )}
-    </HStack>
+    </FHStack>
   );
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {VStack} from 'native-base';
 import {GroupPermission} from '../../../models/Group';
 import PermissionSelectItem from './PermissionSelectItem';
+import FVStack from '../../surfaces/FVStack';
 
 type PermissionSelectProps = {
   permission: GroupPermission;
@@ -25,10 +25,10 @@ export const PermissionSelect = ({permission, setPermission}: PermissionSelectPr
   };
 
   return (
-    <VStack my="1">
+    <FVStack my="1" space="1">
       <PermissionSelectItem title={t('group:roles.read')} active={permission === 'READ'} onPress={selectRead} />
       <PermissionSelectItem title={t('group:roles.edit')} active={permission === 'EDIT'} onPress={selectEdit} />
       <PermissionSelectItem title={t('group:roles.admin')} active={permission === 'ADMIN'} onPress={selectAdmin} />
-    </VStack>
+    </FVStack>
   );
 };

@@ -1,9 +1,10 @@
 import React from 'react';
 import {Item} from '../../../../models/Item';
-import {Box, HStack, VStack} from 'native-base';
 import PriorityView from '../../../../components/views/PriorityView';
 import TypeView from '../../../../components/views/TypeView';
 import GroupViewItemStatus from './GroupViewItemStatus';
+import FVStack from '../../../../components/surfaces/FVStack';
+import FHStack from '../../../../components/surfaces/FHStack';
 
 type GroupViewItemIconsProps = {
   item: Item;
@@ -12,17 +13,13 @@ type GroupViewItemIconsProps = {
 
 const GroupViewItemIcons = ({item, canEdit}: GroupViewItemIconsProps) => {
   return (
-    <HStack alignItems="center">
+    <FHStack space="1" alignItems="center">
       <GroupViewItemStatus item={item} canEdit={canEdit} />
-      <VStack mx="0.5">
-        <Box m="0.5">
-          <TypeView type={item.type} withoutText size="xs" />
-        </Box>
-        <Box m="0.5">
-          <PriorityView priority={item.priority} withoutText size="xs" />
-        </Box>
-      </VStack>
-    </HStack>
+      <FVStack space="1.5">
+        <TypeView type={item.type} withoutText size="sm" />
+        <PriorityView priority={item.priority} withoutText size="sm" />
+      </FVStack>
+    </FHStack>
   );
 };
 

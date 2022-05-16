@@ -1,14 +1,17 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {Center} from 'native-base';
 import withHeader from '../../../shared/hocs/withHeader';
 import {flowRight} from 'lodash';
+import FScrollView from '../../../components/surfaces/FScrollView';
+import FCenter from '../../../components/surfaces/FCenter';
 
 const OutcomingRequestList = () => {
   return (
-    <Center safeArea w="100%" h="100%">
-      <Text>Contact List</Text>
-    </Center>
+    <FScrollView>
+      <FCenter grow>
+        <Text>Contact List</Text>
+      </FCenter>
+    </FScrollView>
   );
 };
 

@@ -27,7 +27,7 @@ const FormikTagsInput = (props: FormikTagsInputProps) => {
     show && (
       <Box flex="1" minW="30%">
         <Input
-          h="30"
+          h="30px"
           isFullWidth
           autoFocus={true}
           variant="subtle"

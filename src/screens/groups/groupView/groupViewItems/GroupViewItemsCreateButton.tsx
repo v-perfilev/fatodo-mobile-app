@@ -22,7 +22,7 @@ const GroupViewItemsCreateButton = ({group}: GroupViewItemsCreateButtonProps) =>
 
   return (
     <OutlinedButton
-      h="45"
+      h="45px"
       rounded="xs"
       borderColor="gray.200"
       leftIcon={<PlusIcon size="sm" />}

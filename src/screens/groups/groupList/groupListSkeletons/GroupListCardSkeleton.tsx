@@ -2,22 +2,20 @@ import React, {useMemo} from 'react';
 import {CARD_ITEMS_COUNT} from '../../../../constants';
 import GroupListCardInfoSkeleton from './GroupListCardInfoSkeleton';
 import GroupListCardItemSkeleton from './GroupListCardItemSkeleton';
-import {HStack, VStack} from 'native-base';
+import FVStack from '../../../../components/surfaces/FVStack';
 
 const GroupListCardSkeleton = () => {
   const indexArray = useMemo(() => Array.from(Array(CARD_ITEMS_COUNT).keys()), []);
 
   return (
-    <>
-      <VStack mx="2" mt="1" mb="-1">
+    <FVStack>
+      <FVStack mt="2" space="2">
         {indexArray.map((index) => (
           <GroupListCardItemSkeleton key={index} />
         ))}
-      </VStack>
-      <HStack mx="2" my="2" alignItems="center">
-        <GroupListCardInfoSkeleton />
-      </HStack>
-    </>
+      </FVStack>
+      <GroupListCardInfoSkeleton />
+    </FVStack>
   );
 };
 

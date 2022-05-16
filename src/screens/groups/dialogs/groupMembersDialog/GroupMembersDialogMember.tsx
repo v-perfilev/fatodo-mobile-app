@@ -9,12 +9,12 @@ import ConfirmationDialog from '../../../../components/modals/ConfirmationDialog
 import EditIcon from '../../../../components/icons/EditIcon';
 import {flowRight} from 'lodash';
 import withAuthState from '../../../../shared/hocs/withAuthState';
-import {HStack} from 'native-base';
 import UserView from '../../../../components/views/UserView';
 import UserMinusIcon from '../../../../components/icons/UserMinusIcon';
 import {PermissionView} from '../../../../components/views/PermissionView';
 import {MenuElement} from '../../../../models/MenuElement';
 import ControlMenu from '../../../../components/layouts/ControlMenu';
+import FHStack from '../../../../components/surfaces/FHStack';
 
 type Props = ReduxAuthState & {
   group: Group;
@@ -81,14 +81,14 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete, ac
   ] as MenuElement[];
 
   return (
-    <HStack my="1">
-      <HStack alignItems="center">
+    <FHStack my="1">
+      <FHStack alignItems="center">
         <UserView user={user} withUsername withUserPic picSize="sm" />
         <PermissionView permission={user.permission} />
-      </HStack>
+      </FHStack>
       <ControlMenu menu={menuElements} />
       {removingConfirmation}
-    </HStack>
+    </FHStack>
   );
 };
 

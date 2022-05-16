@@ -26,14 +26,14 @@ export const PasswordStrengthBar = ({password}: PasswordStrengthBardProps) => {
 
   const subItems = [];
   for (let i = 0; i < counter; i++) {
-    subItems.push(<Box flexGrow={1} mx={1} bgColor="primary.500" key={i} />);
+    subItems.push(<Box flexGrow="1" mx="1" bgColor="primary.500" key={i} />);
   }
   for (let i = counter; i < rulesCount; i++) {
-    subItems.push(<Box flexGrow={1} mx={1} bgColor="warning.500" key={i} />);
+    subItems.push(<Box flexGrow="1" mx="1" bgColor="warning.500" key={i} />);
   }
 
   return (
-    <Box w="100%" h="1.5" mt="1" flexDir="row" justifyContent="space-between">
+    <Box w="100%" h="6px" flexDir="row" justifyContent="space-between">
       {subItems}
     </Box>
   );

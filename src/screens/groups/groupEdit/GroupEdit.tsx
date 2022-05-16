@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {Box, ScrollView} from 'native-base';
 import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
@@ -10,6 +9,7 @@ import GroupForm from '../groupForm/GroupForm';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import withGroupView from '../../../shared/hocs/withViews/withGroupView';
+import FScrollView from '../../../components/surfaces/FScrollView';
 
 const GroupEdit = () => {
   const navigation = useNavigation<GroupNavigationProp>();
@@ -39,11 +39,9 @@ const GroupEdit = () => {
 
   return (
     <ConditionalSpinner loading={!group}>
-      <ScrollView>
-        <Box mx="3" mt="1" mb="2">
-          <GroupForm group={group} request={request} cancel={goToGroupView} />
-        </Box>
-      </ScrollView>
+      <FScrollView>
+        <GroupForm group={group} request={request} cancel={goToGroupView} />
+      </FScrollView>
     </ConditionalSpinner>
   );
 };

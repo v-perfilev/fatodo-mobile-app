@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {ReduxAuthState} from '../../../store/rerducers/AuthReducer';
 import {Reminder, ReminderPeriodicity} from '../../../models/Reminder';
 import withAuthState from '../../../shared/hocs/withAuthState';
-import {Button, Modal, VStack} from 'native-base';
+import {Button, Modal} from 'native-base';
 import FormikRemindersInputToolbar from './FormikRemindersInputToolbar';
 import GhostButton from '../../controls/GhostButton';
 import FormikRemindersInputOnce from './FormikRemindersInputOnce';
@@ -12,6 +12,7 @@ import FormikRemindersInputDaily from './FormikRemindersInputDaily';
 import FormikRemindersInputWeekly from './FormikRemindersInputWeekly';
 import FormikRemindersInputMonthly from './FormikRemindersInputMonthly';
 import FormikRemindersInputYearly from './FormikRemindersInputYearly';
+import FVStack from '../../surfaces/FVStack';
 
 type FormikRemindersInputPopoverProps = ReduxAuthState & {
   show: boolean;
@@ -40,7 +41,7 @@ const FormikRemindersInputPopover = ({show, handleClose, account}: FormikReminde
           <FormikRemindersInputToolbar periodicity={periodicity} setPeriodicity={setPeriodicity} />
         </Modal.Header>
         <Modal.Body>
-          <VStack position="relative" width="100%" minH="225" space="3" alignItems="center">
+          <FVStack defaultSpace position="relative" width="100%" minH="225" alignItems="center">
             {periodicity === 'ONCE' && (
               <FormikRemindersInputOnce setReminder={setReminder} locale={locale} timezone={timezone} />
             )}
@@ -56,7 +57,7 @@ const FormikRemindersInputPopover = ({show, handleClose, account}: FormikReminde
             {periodicity === 'YEARLY' && (
               <FormikRemindersInputYearly setReminder={setReminder} locale={locale} timezone={timezone} />
             )}
-          </VStack>
+          </FVStack>
         </Modal.Body>
         <Modal.Footer pt="0" borderTopWidth="0">
           <Button.Group space="2">

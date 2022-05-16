@@ -1,11 +1,13 @@
 import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {Center, HStack, Pressable, Text} from 'native-base';
+import {Pressable, Text} from 'native-base';
 import {BottomTabDescriptorMap} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import {NavigationHelpers, ParamListBase, TabNavigationState} from '@react-navigation/native';
 import {BottomTabNavigationEventMap} from '@react-navigation/bottom-tabs/src/types';
 import {useTranslation} from 'react-i18next';
 import {ColorType} from 'native-base/lib/typescript/components/types';
+import FHStack from '../surfaces/FHStack';
+import FCenter from '../surfaces/FCenter';
 
 type TabNavigatorBarProps = BottomTabBarProps;
 
@@ -30,12 +32,12 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
 
   return (
     <Pressable flex="1" p="2" opacity={opacity} onPress={onPress}>
-      <Center>
+      <FCenter>
         {icon && icon({focused: isFocused, color: 'white', size: 6})}
         <Text color="white" fontSize="10">
           {label}
         </Text>
-      </Center>
+      </FCenter>
     </Pressable>
   );
 };
@@ -44,7 +46,7 @@ const TabNavigatorBar =
   (color: ColorType) =>
   ({state, descriptors, navigation}: TabNavigatorBarProps) => {
     return (
-      <HStack bg={color}>
+      <FHStack bg={color}>
         {state.routes.map((route, index) => (
           <TabNavigatorItem
             routeKey={route.key}
@@ -56,7 +58,7 @@ const TabNavigatorBar =
             key={index}
           />
         ))}
-      </HStack>
+      </FHStack>
     );
   };
 

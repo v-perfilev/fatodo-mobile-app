@@ -1,8 +1,9 @@
 import React from 'react';
-import {HStack, Text} from 'native-base';
 import ArrowDownIcon from '../../../../components/icons/ArrowDownIcon';
 import RoundButton from '../../../../components/controls/RoundButton';
 import ArrowUpIcon from '../../../../components/icons/ArrowUpIcon';
+import FHStack from '../../../../components/surfaces/FHStack';
+import {Text} from 'native-base';
 
 type GroupViewItemsPaginationProps = {
   page: number;
@@ -29,13 +30,13 @@ const GroupViewItemsPagination = ({page, setPage, totalPages}: GroupViewItemsPag
   };
 
   return (
-    <HStack alignItems="center">
+    <FHStack space="1" alignItems="center">
       <RoundButton leftIcon={<ArrowUpIcon size="md" />} isDisabled={upDisabled} onPress={onUpClick} />
-      <Text mx="1" fontSize="14" fontWeight="bold">
+      <Text fontSize="14" fontWeight="bold">
         {page + 1} / {totalPageToShow}
       </Text>
       <RoundButton leftIcon={<ArrowDownIcon size="md" />} isDisabled={downDisabled} onPress={onDownClick} />
-    </HStack>
+    </FHStack>
   );
 };
 

@@ -1,10 +1,12 @@
 import React, {memo} from 'react';
 import {Item} from '../../../../models/Item';
-import {HStack, Text, VStack} from 'native-base';
+import {Text} from 'native-base';
 import GroupListCardItemIcons from './GroupListCardItemIcons';
 import GroupListCardItemChanges from './GroupListCardItemChanges';
 import GroupListCardItemMenu from './GroupListCardItemMenu';
 import {flowRight} from 'lodash';
+import FVStack from '../../../../components/surfaces/FVStack';
+import FHStack from '../../../../components/surfaces/FHStack';
 
 type GroupListCardItemProps = {
   item: Item;
@@ -12,14 +14,16 @@ type GroupListCardItemProps = {
 
 const GroupListCardItem = ({item}: GroupListCardItemProps) => {
   return (
-    <HStack my="1" px="1" py="1" borderWidth="1" borderColor="gray.200" borderRadius="2">
+    <FHStack space="2" p="1" borderWidth="1" borderColor="gray.200" borderRadius="2" alignItems="center">
       <GroupListCardItemIcons item={item} />
-      <VStack flex="1" ml="1">
-        <Text isTruncated>{item.title}</Text>
+      <FVStack grow>
+        <Text isTruncated lineHeight="18">
+          {item.title}
+        </Text>
         <GroupListCardItemChanges item={item} />
-      </VStack>
+      </FVStack>
       <GroupListCardItemMenu item={item} />
-    </HStack>
+    </FHStack>
   );
 };
 

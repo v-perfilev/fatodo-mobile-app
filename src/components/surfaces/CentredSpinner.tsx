@@ -1,6 +1,7 @@
 import React from 'react';
-import {Center, Spinner} from 'native-base';
+import {Spinner} from 'native-base';
 import {ResponsiveValue} from 'native-base/src/components/types';
+import FCenter from './FCenter';
 
 type CentredSpinnerProps = {
   size?: ResponsiveValue<'sm' | 'lg'>;
@@ -8,9 +9,9 @@ type CentredSpinnerProps = {
 
 const CentredSpinner = ({size = 'lg'}: CentredSpinnerProps) => {
   return (
-    <Center flex="1">
+    <FCenter grow>
       <Spinner size={size} />
-    </Center>
+    </FCenter>
   );
 };
 

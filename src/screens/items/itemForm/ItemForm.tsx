@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, HStack, VStack} from 'native-base';
+import {Box} from 'native-base';
 import {flowRight} from 'lodash';
 import {FormikBag, FormikProps, withFormik} from 'formik';
 import {Group} from '../../../models/Group';
@@ -22,6 +22,8 @@ import FormikMultilineInput from '../../../components/inputs/FormikMultilineInpu
 import FormikTagsInput from '../../../components/inputs/FormikTagsInput';
 import FormikRemindersInput from '../../../components/inputs/formikRemindersInput/FormikRemindersInput';
 import FormikDateTimePicker from '../../../components/inputs/FormikDateTimePicker';
+import FVStack from '../../../components/surfaces/FVStack';
+import FHStack from '../../../components/surfaces/FHStack';
 
 export interface ItemFormValues {
   title: string;
@@ -66,9 +68,9 @@ const ItemForm = (props: ItemFormProps) => {
   }, []);
 
   return (
-    <VStack space="3">
+    <FVStack defaultSpace>
       <FormikTextInput name="title" label={t('item:fields.title.label')} isDisabled={isSubmitting} {...props} />
-      <HStack space="3">
+      <FHStack defaultSpace>
         <Box flexGrow="1" flexBasis="1">
           <FormikTypeInput name="type" label={t('item:fields.type.label')} isDisabled={isSubmitting} {...props} />
         </Box>
@@ -80,8 +82,8 @@ const ItemForm = (props: ItemFormProps) => {
             {...props}
           />
         </Box>
-      </HStack>
-      <HStack space="3">
+      </FHStack>
+      <FHStack defaultSpace>
         <Box flexGrow="1" flexBasis="1">
           <FormikDateTimePicker
             mode="time"
@@ -100,7 +102,7 @@ const ItemForm = (props: ItemFormProps) => {
             {...props}
           />
         </Box>
-      </HStack>
+      </FHStack>
       <FormikMultilineInput
         name="description"
         label={t('item:fields.description.label')}
@@ -112,7 +114,7 @@ const ItemForm = (props: ItemFormProps) => {
 
       <FormikTagsInput name="tags" label={t('item:fields.tags.label')} {...props} />
 
-      <HStack mt="3" space="3" justifyContent="flex-end">
+      <FHStack defaultSpace mt="3" justifyContent="flex-end">
         <SolidButton
           colorScheme="primary"
           size="md"
@@ -125,8 +127,8 @@ const ItemForm = (props: ItemFormProps) => {
         <SolidButton colorScheme="secondary" size="md" isDisabled={!isInitialized || isSubmitting} onPress={cancel}>
           {t('item:actions.cancel')}
         </SolidButton>
-      </HStack>
-    </VStack>
+      </FHStack>
+    </FVStack>
   );
 };
 

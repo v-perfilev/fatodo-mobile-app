@@ -38,7 +38,7 @@ const FormikChips = (props: FormikChipsProps<any>) => {
 
   const chipsElements = arrayValue.map((value, index) => (
     <Box m="1" key={index}>
-      <ChipBox h="30" closeAction={deleteValue(index)}>
+      <ChipBox h="30px" closeAction={deleteValue(index)}>
         {view(value)}
       </ChipBox>
     </Box>

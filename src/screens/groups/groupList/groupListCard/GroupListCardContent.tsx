@@ -1,10 +1,10 @@
 import React, {ReactElement, useMemo} from 'react';
-import {HStack, VStack} from 'native-base';
 import {Item} from '../../../../models/Item';
 import GroupListCardSkeleton from '../groupListSkeletons/GroupListCardSkeleton';
 import GroupListCardInfo from './GroupListCardInfo';
 import GroupListCardItem from '../groupListCardItem/GroupListCardItem';
 import {Group} from '../../../../models/Group';
+import FVStack from '../../../../components/surfaces/FVStack';
 
 type GroupListCardContentProps = {
   group: Group;
@@ -17,25 +17,21 @@ const GroupListCardContent = ({group, items, count, loading}: GroupListCardConte
   const skeleton = useMemo<ReactElement>(() => <GroupListCardSkeleton />, []);
 
   const itemsView = (
-    <VStack mx="2" mt="1" mb="-1">
+    <FVStack mt="2" space="2">
       {items.map((item) => (
         <GroupListCardItem item={item} key={item.id} />
       ))}
-    </VStack>
+    </FVStack>
   );
 
-  const groupInfo = (
-    <HStack h="45" mx="2" alignItems="center">
-      <GroupListCardInfo group={group} items={items} count={count} />
-    </HStack>
-  );
+  const groupInfo = <GroupListCardInfo group={group} items={items} count={count} />;
 
   return (
-    <>
+    <FVStack mx="2">
       {loading && skeleton}
       {!loading && count > 0 && itemsView}
       {!loading && groupInfo}
-    </>
+    </FVStack>
   );
 };
 

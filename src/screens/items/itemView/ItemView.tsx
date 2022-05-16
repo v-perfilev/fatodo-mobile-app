@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Divider, HStack, ScrollView, VStack} from 'native-base';
+import {Divider} from 'native-base';
 import {flowRight} from 'lodash';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
@@ -27,6 +27,9 @@ import ItemViewGroup from './itemViewGroup';
 import ItemReminders from './ItemReminders';
 import withUserList from '../../../shared/hocs/withLists/withUserList';
 import ItemViewName from './itemViewName';
+import FScrollView from '../../../components/surfaces/FScrollView';
+import FVStack from '../../../components/surfaces/FVStack';
+import FHStack from '../../../components/surfaces/FHStack';
 
 type ItemViewProps = ReduxAuthState;
 
@@ -70,16 +73,16 @@ const ItemView = ({account}: ItemViewProps) => {
     <ThemeProvider theme={theme}>
       <Header title={item?.title} showMenu={false} />
       <ConditionalSpinner loading={!group || !item}>
-        <ScrollView>
-          <VStack space="2" p="2">
+        <FScrollView>
+          <FVStack defaultSpace>
             <ItemViewMenu account={account} />
             <Divider bg="secondary.500" />
             <ItemViewName />
             <ItemViewGroup />
-            <HStack space="3">
+            <FHStack defaultSpace>
               <ItemViewType />
               <ItemViewPriority />
-            </HStack>
+            </FHStack>
             <ItemViewDate />
             <Divider bg="secondary.500" />
             <ItemViewDescription />
@@ -88,8 +91,8 @@ const ItemView = ({account}: ItemViewProps) => {
             {showTags && <ItemViewTags />}
             <Divider bg="secondary.500" />
             <ItemViewChanges />
-          </VStack>
-        </ScrollView>
+          </FVStack>
+        </FScrollView>
       </ConditionalSpinner>
     </ThemeProvider>
   );

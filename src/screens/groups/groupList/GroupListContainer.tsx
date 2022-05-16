@@ -12,7 +12,7 @@ type GroupListContainerProps = {
 const renderer = (sorting: boolean) => (props: RenderItemParams<Group>) =>
   (
     <ScaleDecorator activeScale={1.03}>
-      <Box px="2" pb="2">
+      <Box my={1.5}>
         <GroupListItem sorting={sorting} {...props} />
       </Box>
     </ScaleDecorator>
@@ -27,7 +27,9 @@ const GroupListContainer = ({sorting}: GroupListContainerProps) => {
   const handleDragEnd = ({data}: DragEndParams<Group>): void => setGroups(data);
 
   const containerStyle = {
-    paddingTop: theme.sizes['3'],
+    padding: theme.sizes['3'],
+    paddingTop: theme.sizes['1.5'],
+    paddingBottom: theme.sizes['1.5'],
   };
 
   return (

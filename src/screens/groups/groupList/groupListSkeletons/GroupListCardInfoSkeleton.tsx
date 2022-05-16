@@ -1,14 +1,15 @@
 import React from 'react';
 import {Box, Skeleton} from 'native-base';
+import FHStack from '../../../../components/surfaces/FHStack';
 
 const GroupListCardInfoSkeleton = () => {
   return (
-    <>
-      <Skeleton w="20" h="8" rounded="lg" />
+    <FHStack space="1" h="45px" mx="0.5" alignItems="center">
+      <Skeleton w="100px" h="30px" rounded="lg" />
       <Box flex="1" />
-      <Skeleton w="6" h="6" rounded="lg" />
-      <Skeleton.Text size="12" lines={1} w="3" ml="1" mr="0.5" />
-    </>
+      <Skeleton w="24px" h="24px" rounded="lg" />
+      <Skeleton.Text size="12" lines={1} w="15px" />
+    </FHStack>
   );
 };
 

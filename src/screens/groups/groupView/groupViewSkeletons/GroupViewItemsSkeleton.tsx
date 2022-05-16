@@ -1,17 +1,17 @@
 import React, {useMemo} from 'react';
 import {GROUP_ITEMS_COUNT} from '../../../../constants';
 import GroupViewItemSkeleton from './GroupViewItemSkeleton';
-import {VStack} from 'native-base';
+import FVStack from '../../../../components/surfaces/FVStack';
 
 const GroupViewItemsSkeleton = () => {
   const indexArray = useMemo(() => Array.from(Array(GROUP_ITEMS_COUNT).keys()), []);
 
   return (
-    <VStack space="2">
+    <FVStack space="2">
       {indexArray.map((index) => (
         <GroupViewItemSkeleton key={index} />
       ))}
-    </VStack>
+    </FVStack>
   );
 };
 

@@ -1,9 +1,10 @@
 import React from 'react';
-import {Box, HStack, Text} from 'native-base';
+import {Text} from 'native-base';
 import {User} from '../../models/User';
 import UrlPic from '../surfaces/UrlPic';
 import {ISizes} from 'native-base/lib/typescript/theme/base/sizes';
 import PaperBox from '../surfaces/PaperBox';
+import FHStack from '../surfaces/FHStack';
 
 type UserViewProps = {
   user: User;
@@ -19,13 +20,12 @@ export const UserView = (props: UserViewProps) => {
   const {withUserPic = true, withUsername = false, withPaperBox = false, withInvertedBorder = false} = props;
 
   const imageWithUsername = (
-    <HStack alignItems="center">
+    <FHStack alignItems="center" space="0.5">
       {withUserPic && (
         <UrlPic file={user.imageFilename} size={picSize} border={1} invertedBorder={withInvertedBorder} />
       )}
-      {withUserPic && withUsername && <Box m="0.5" />}
       {withUsername && <Text fontSize="12">{user.username}</Text>}
-    </HStack>
+    </FHStack>
   );
 
   return withPaperBox ? <PaperBox>{imageWithUsername}</PaperBox> : imageWithUsername;

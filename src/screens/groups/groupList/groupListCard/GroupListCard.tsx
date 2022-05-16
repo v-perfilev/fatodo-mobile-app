@@ -25,7 +25,7 @@ const GroupListCard = (props: GroupListCardProps) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box borderRadius="4" mb="1" mx="1" overflow="hidden">
+      <Box borderRadius="4" overflow="hidden">
         <GroupListCardHeader group={group} collapsed={collapsed} sorting={sorting} drag={drag} />
         <Box bg="white" borderWidth="1" borderTopWidth="0" borderColor="gray.200" borderBottomRadius="3">
           <Collapsible collapsed={collapsed}>

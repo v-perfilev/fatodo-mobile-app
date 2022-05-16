@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {HStack, VStack} from 'native-base';
 import {flowRight} from 'lodash';
 import {FormikBag, FormikProps, withFormik} from 'formik';
 import {Group} from '../../../models/Group';
@@ -13,6 +12,8 @@ import {SnackState} from '../../../shared/contexts/SnackContext';
 import FormikThemeInput from '../../../components/inputs/FormikThemeInput';
 import ImageUpload from '../../../components/inputs/imageUpload/ImageUpload';
 import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
+import FVStack from '../../../components/surfaces/FVStack';
+import FHStack from '../../../components/surfaces/FHStack';
 
 export interface GroupFormValues {
   title: string;
@@ -46,7 +47,7 @@ const GroupForm = (props: GroupFormProps) => {
   }, []);
 
   return (
-    <VStack w="100%" space="3">
+    <FVStack grow defaultSpace>
       <FormikTextInput name="title" label={t('group:fields.title.label')} isDisabled={isSubmitting} {...props} />
       <FormikThemeInput name="color" label={t('group:fields.color.label')} isDisabled={isSubmitting} {...props} />
       <ImageUpload
@@ -57,7 +58,7 @@ const GroupForm = (props: GroupFormProps) => {
         crop
         {...props}
       />
-      <HStack space="3" justifyContent="flex-end">
+      <FHStack defaultSpace justifyContent="flex-end">
         <SolidButton
           colorScheme="primary"
           size="md"
@@ -70,8 +71,8 @@ const GroupForm = (props: GroupFormProps) => {
         <SolidButton colorScheme="secondary" size="md" isDisabled={!isInitialized || isSubmitting} onPress={cancel}>
           {t('group:actions.cancel')}
         </SolidButton>
-      </HStack>
-    </VStack>
+      </FHStack>
+    </FVStack>
   );
 };
 

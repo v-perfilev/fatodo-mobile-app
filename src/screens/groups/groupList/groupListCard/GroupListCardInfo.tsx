@@ -1,5 +1,4 @@
 import React, {useMemo} from 'react';
-import {HStack} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import {Item} from '../../../../models/Item';
@@ -9,6 +8,7 @@ import ItemsIcon from '../../../../components/icons/ItemsIcon';
 import GroupListCardAvatars from './GroupListCardAvatars';
 import LinkButton from '../../../../components/controls/LinkButton';
 import {Group} from '../../../../models/Group';
+import FHStack from '../../../../components/surfaces/FHStack';
 
 type GroupListCardHeaderProps = {
   group: Group;
@@ -32,16 +32,14 @@ const GroupListCardInfo = ({group, items, count}: GroupListCardHeaderProps) => {
   };
 
   return (
-    <>
+    <FHStack space="1" h="45px" mx="0.5" alignItems="center">
       <GroupListCardAvatars group={group} />
-      <HStack flex="1" justifyContent="center">
+      <FHStack grow justifyContent="center">
         {showButtonToGroupView && <LinkButton onPress={goToGroupView}>{t('group:actions.showAll')}</LinkButton>}
         {showButtonToCreateItem && <LinkButton onPress={goToItemCreate}>{t('group:actions.createItem')}</LinkButton>}
-      </HStack>
-      <HStack mr="0.5">
-        <BoxWithIcon icon={<ItemsIcon color="primary.500" size="sm" />}>{count || 0}</BoxWithIcon>
-      </HStack>
-    </>
+      </FHStack>
+      <BoxWithIcon icon={<ItemsIcon color="primary.500" size="sm" />}>{count || 0}</BoxWithIcon>
+    </FHStack>
   );
 };
 

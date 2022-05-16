@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ReminderPeriodicity} from '../../../models/Reminder';
-import {Button, PresenceTransition, Text, VStack} from 'native-base';
+import {Button, PresenceTransition, Text} from 'native-base';
 import OnceIcon from '../../icons/OnceIcon';
 import DayIcon from '../../icons/DayIcon';
 import WeekIcon from '../../icons/WeekIcon';
 import MonthIcon from '../../icons/MonthIcon';
 import YearIcon from '../../icons/YearIcon';
 import IconButton from '../../controls/IconButton';
+import FVStack from '../../surfaces/FVStack';
 
 type FormikRemindersInputToolbarProps = {
   periodicity: ReminderPeriodicity;
@@ -42,7 +43,7 @@ const FormikRemindersInputToolbar = ({periodicity, setPeriodicity}: FormikRemind
   const yearBg = periodicity === 'YEARLY' ? activeColor : undefined;
 
   return (
-    <VStack bg="primary.500" alignItems="center" p="2">
+    <FVStack bg="primary.500" alignItems="center" p="2">
       <Button.Group space="1">
         <IconButton whiteIcon size="lg" icon={<OnceIcon />} onPress={handleOnceClick} bg={onceBg} />
         <IconButton whiteIcon size="lg" icon={<DayIcon />} onPress={handleDayClick} bg={dayBg} />
@@ -59,7 +60,7 @@ const FormikRemindersInputToolbar = ({periodicity, setPeriodicity}: FormikRemind
           {t('common:reminders.periodicity.' + periodicity)}
         </Text>
       </PresenceTransition>
-    </VStack>
+    </FVStack>
   );
 };
 

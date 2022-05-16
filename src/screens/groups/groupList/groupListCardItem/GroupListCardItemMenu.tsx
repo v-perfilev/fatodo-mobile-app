@@ -4,7 +4,6 @@ import PressableButton from '../../../../components/controls/PressableButton';
 import EyeIcon from '../../../../components/icons/EyeIcon';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
-import {HStack} from 'native-base';
 
 type GroupListCardItemMenuProps = {
   item: Item;
@@ -18,11 +17,9 @@ const GroupListCardItemMenu = ({item}: GroupListCardItemMenuProps) => {
   };
 
   return (
-    <HStack ml="1" alignItems="center">
-      <PressableButton ml="1" onPress={goToItemView}>
-        <EyeIcon color="primary.500" size="6" />
-      </PressableButton>
-    </HStack>
+    <PressableButton onPress={goToItemView}>
+      <EyeIcon color="primary.500" size="6" />
+    </PressableButton>
   );
 };
 

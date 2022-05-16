@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Divider, ScrollView, VStack} from 'native-base';
+import {Divider} from 'native-base';
 import {flowRight} from 'lodash';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
@@ -18,6 +18,8 @@ import GroupViewMenu from './GroupViewMenu';
 import GroupViewUsers from './GroupViewUsers';
 import GroupViewItems from './groupViewItems/GroupViewItems';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
+import FScrollView from '../../../components/surfaces/FScrollView';
+import FVStack from '../../../components/surfaces/FVStack';
 
 type GroupViewProps = ReduxAuthState;
 
@@ -51,15 +53,15 @@ const GroupView = ({account}: GroupViewProps) => {
     <ThemeProvider theme={theme}>
       <Header title={group?.title} imageFilename={group?.imageFilename} showMenu={false} />
       <ConditionalSpinner loading={!group}>
-        <ScrollView>
-          <VStack space="2" p="2">
+        <FScrollView>
+          <FVStack defaultSpace>
             <GroupViewMenu account={account} />
             <Divider bg="secondary.500" />
             <GroupViewUsers />
             <Divider bg="secondary.500" />
             <GroupViewItems account={account} showArchived={showArchived} setShowArchived={setShowArchived} />
-          </VStack>
-        </ScrollView>
+          </FVStack>
+        </FScrollView>
       </ConditionalSpinner>
     </ThemeProvider>
   );

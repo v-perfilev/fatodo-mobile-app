@@ -1,10 +1,12 @@
 import React, {ReactElement, useMemo} from 'react';
 import {ItemPriorityType} from '../../models/Item';
 import {useTranslation} from 'react-i18next';
-import {Center, HStack, IIconProps, Text} from 'native-base';
+import {IIconProps, Text} from 'native-base';
 import LowPriorityIcon from '../icons/LowPriorityIcon';
 import NormalPriorityIcon from '../icons/NormalPriorityIcon';
 import HighPriorityIcon from '../icons/HighPriorityIcon';
+import FCenter from '../surfaces/FCenter';
+import FHStack from '../surfaces/FHStack';
 
 type PriorityViewProps = IIconProps & {
   priority: ItemPriorityType;
@@ -31,12 +33,12 @@ export const PriorityView = ({priority, withoutText, ...props}: PriorityViewProp
   }, [priority, i18n.language]);
 
   return withoutText ? (
-    <Center>{icon}</Center>
+    <FCenter>{icon}</FCenter>
   ) : (
-    <HStack space="1" alignItems="center">
+    <FHStack space="1" alignItems="center">
       {React.cloneElement(icon, {...props, mt: 1})}
       <Text>{text}</Text>
-    </HStack>
+    </FHStack>
   );
 };
 

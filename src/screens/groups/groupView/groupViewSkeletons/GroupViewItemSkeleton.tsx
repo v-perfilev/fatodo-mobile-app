@@ -1,24 +1,24 @@
 import React from 'react';
-import {HStack, Skeleton, VStack} from 'native-base';
+import {Skeleton} from 'native-base';
+import FHStack from '../../../../components/surfaces/FHStack';
+import FVStack from '../../../../components/surfaces/FVStack';
 
 const GroupViewItemSkeleton = () => {
   return (
-    <HStack px="1" py="1" borderWidth="1" borderColor="gray.100" borderRadius="2">
-      <HStack alignItems="center">
-        <Skeleton mx="1" w="6" h="6" rounded="lg" />
-        <VStack mx="1">
-          <Skeleton w="4" h="4" rounded="md" />
-          <Skeleton w="4" h="4" mt="1" rounded="md" />
-        </VStack>
-      </HStack>
-      <VStack flex="1" mx="2" justifyContent="center">
+    <FHStack space="2" p="1" borderWidth="1" borderColor="gray.100" borderRadius="2" alignItems="center">
+      <FHStack space="1" alignItems="center">
+        <Skeleton w="24px" h="24px" rounded="lg" />
+        <FVStack space="2">
+          <Skeleton w="12px" h="12px" rounded="md" />
+          <Skeleton w="12px" h="12px" rounded="md" />
+        </FVStack>
+      </FHStack>
+      <FVStack grow space="1.5" justifyContent="center">
         <Skeleton.Text size="14" lines={1} />
-        <Skeleton.Text size="11" lines={1} w="30%" mt="1" />
-      </VStack>
-      <HStack alignItems="center">
-        <Skeleton w="6" h="6" rounded="lg" />
-      </HStack>
-    </HStack>
+        <Skeleton.Text size="11" lines={1} w="30%" />
+      </FVStack>
+      <Skeleton w="24px" h="24px" rounded="lg" />
+    </FHStack>
   );
 };
 

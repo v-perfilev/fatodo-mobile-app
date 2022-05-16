@@ -1,8 +1,9 @@
 import React, {useMemo} from 'react';
 import {Item} from '../../../../models/Item';
-import {HStack, Text} from 'native-base';
+import {Text} from 'native-base';
 import {useUserListContext} from '../../../../shared/contexts/listContexts/userListContext';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
+import FHStack from '../../../../components/surfaces/FHStack';
 
 type GroupListCardItemChangesProps = {
   item: Item;
@@ -21,18 +22,14 @@ const GroupListCardItemChanges = ({item}: GroupListCardItemChangesProps) => {
     return DateFormatters.formatDependsOnDay(timestampToDate(item.createdAt));
   }, [item]);
 
+  const textProps = {color: 'gray.400', fontSize: '11'};
+
   return (
-    <HStack>
-      <Text color="gray.400" fontSize="11">
-        {name}
-      </Text>
-      <Text color="gray.400" mx="1" fontSize="11">
-        /
-      </Text>
-      <Text color="gray.400" fontSize="11">
-        {formattedDate}
-      </Text>
-    </HStack>
+    <FHStack space="1">
+      <Text {...textProps}>{name}</Text>
+      <Text {...textProps}>/</Text>
+      <Text {...textProps}>{formattedDate}</Text>
+    </FHStack>
   );
 };
 

@@ -80,7 +80,13 @@ export const StatusSelect = ({statusType, setStatusType, loading}: StatusSelectP
     <Box mx="1">
       <Menu
         trigger={(triggerProps) => (
-          <SolidButton w="30" h="30" isLoading={loading} leftIcon={iconByStatusType(statusType)} {...triggerProps} />
+          <SolidButton
+            w="30px"
+            h="30px"
+            isLoading={loading}
+            leftIcon={iconByStatusType(statusType)}
+            {...triggerProps}
+          />
         )}
       >
         {menuItems.map((itemProps, index) => (

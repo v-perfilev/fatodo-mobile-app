@@ -3,7 +3,6 @@ import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/grou
 import {UserAccount} from '../../../../models/User';
 import {useUserListContext} from '../../../../shared/contexts/listContexts/userListContext';
 import {useLoadingState} from '../../../../shared/hooks/useLoadingState';
-import {HStack, VStack} from 'native-base';
 import {useArchivedItemListContext} from '../../../../shared/contexts/listContexts/archivedItemListContext';
 import {useItemListContext} from '../../../../shared/contexts/listContexts/itemListContext';
 import {Item} from '../../../../models/Item';
@@ -14,6 +13,8 @@ import GroupViewItemsCreateButton from './GroupViewItemsCreateButton';
 import GroupViewItem from '../groupViewItem/GroupViewItem';
 import GroupViewItemsPagination from './GroupViewItemsPagination';
 import GroupViewItemsArchivedSwitch from './GroupViewItemsArchivedSwitch';
+import FVStack from '../../../../components/surfaces/FVStack';
+import FHStack from '../../../../components/surfaces/FHStack';
 
 type GroupViewItemsProps = {
   showArchived: boolean;
@@ -106,15 +107,15 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
   const canEdit = useMemo<boolean>(() => group && GroupUtils.canEdit(account, group), [group, account]);
 
   return (
-    <VStack space="2">
-      <HStack alignItems="center" justifyContent="space-between">
+    <FVStack space="2">
+      <FHStack alignItems="center" justifyContent="space-between">
         <GroupViewItemsPagination page={page} setPage={setPage} totalPages={totalPages} />
         <GroupViewItemsArchivedSwitch showArchived={showArchived} setShowArchived={setShowArchived} />
-      </HStack>
+      </FHStack>
       {!showArchived && <GroupViewItemsCreateButton group={group} />}
       {loading && <GroupViewItemsSkeleton />}
       {!loading && itemsToShow.map((item) => <GroupViewItem item={item} canEdit={canEdit} key={item.id} />)}
-    </VStack>
+    </FVStack>
   );
 };
 

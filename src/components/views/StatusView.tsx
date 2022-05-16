@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {ReactNode, useMemo} from 'react';
-import {Center, IIconProps} from 'native-base';
+import {IIconProps} from 'native-base';
 import {ItemStatusType} from '../../models/Item';
 import StatusCreatedIcon from '../icons/StatusCreatedIcon';
 import StatusWipIcon from '../icons/StatusWipIcon';
 import StatusClosedIcon from '../icons/StatusClosedIcon';
 import StatusCompletedIcon from '../icons/StatusCompletedIcon';
+import FCenter from '../surfaces/FCenter';
 
 type StatusViewProps = IIconProps & {
   statusType: ItemStatusType;
@@ -27,7 +28,7 @@ const StatusView = ({statusType, ...props}: StatusViewProps) => {
     }
   }, [statusType]);
 
-  return <Center>{icon}</Center>;
+  return <FCenter>{icon}</FCenter>;
 };
 
 export default StatusView;

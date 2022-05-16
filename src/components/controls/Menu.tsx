@@ -1,7 +1,8 @@
 import React, {PropsWithChildren, ReactElement} from 'react';
 import {GestureResponderEvent} from 'react-native';
-import {HStack, Menu as NbMenu, Text} from 'native-base';
+import {Menu as NbMenu, Text} from 'native-base';
 import CentredSpinner from '../surfaces/CentredSpinner';
+import FHStack from '../surfaces/FHStack';
 
 export type MenuProps = PropsWithChildren<{
   trigger: (_props: any, state: {open: boolean}) => JSX.Element;
@@ -20,12 +21,12 @@ export const MenuItem = ({action, icon, text, children, loading, disabled, show 
   return (
     show && (
       <NbMenu.Item onPress={action} disabled={disabled}>
-        <HStack space="1" alignItems="center">
+        <FHStack space="1" alignItems="center">
           {loading && <CentredSpinner size="sm" />}
           {!loading && icon}
           {!loading && text && <Text>{text}</Text>}
           {!loading && children}
-        </HStack>
+        </FHStack>
       </NbMenu.Item>
     )
   );

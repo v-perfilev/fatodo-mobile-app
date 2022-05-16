@@ -4,7 +4,6 @@ import AuthService from '../../../services/AuthService';
 import {flowRight} from 'lodash';
 import * as Yup from 'yup';
 import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
-import {VStack} from 'native-base';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
@@ -16,6 +15,7 @@ import {DateUtils} from '../../../shared/utils/DateUtils';
 import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBar';
 import SolidButton from '../../../components/controls/SolidButton';
 import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
+import FVStack from '../../../components/surfaces/FVStack';
 
 export interface SignUpFormValues {
   email: string;
@@ -58,7 +58,7 @@ const SignUpForm = (props: SignUpFormProps) => {
   }, [captchaToken, isSubmitting]);
 
   return (
-    <VStack w="100%" space="3" mt="7">
+    <FVStack w="100%" defaultSpace>
       <FormikTextInput name="email" label={t('account:fields.email.label')} isDisabled={isSubmitting} {...props} />
       <FormikTextInput
         name="username"
@@ -75,7 +75,6 @@ const SignUpForm = (props: SignUpFormProps) => {
       <PasswordStrengthBar password={values.password} />
       <SolidButton
         colorScheme="secondary"
-        mt="5"
         size="lg"
         isLoading={isSubmitting}
         isDisabled={!isInitialized || !isValid || isSubmitting}
@@ -83,7 +82,7 @@ const SignUpForm = (props: SignUpFormProps) => {
       >
         {t('account:register.submit')}
       </SolidButton>
-    </VStack>
+    </FVStack>
   );
 };
 

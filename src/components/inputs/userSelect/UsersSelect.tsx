@@ -5,11 +5,13 @@ import {useUserListContext} from '../../../shared/contexts/listContexts/userList
 import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import {User} from '../../../models/User';
 import UserService from '../../../services/UserService';
-import {Center, Text, VStack} from 'native-base';
+import {Text} from 'native-base';
 import withUserList from '../../../shared/hocs/withLists/withUserList';
 import {ArrayUtils} from '../../../shared/utils/ArrayUtils';
 import ClearableTextInput from '../ClearableTextInput';
 import UsersSelectItem from './UsersSelectItem';
+import FVStack from '../../surfaces/FVStack';
+import FCenter from '../../surfaces/FCenter';
 
 type Props = {
   allowedIds: string[];
@@ -95,10 +97,10 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
   }, [users, selectedIds, ignoredIds, filter]);
 
   return (
-    <VStack>
+    <FVStack defaultSpace>
       <ClearableTextInput placeholder={t('inputs.search')} onChangeText={handleFilterChange} />
       {usersToShow.length > 0 && (
-        <VStack mt="3" mb="1">
+        <FVStack defaultSpace>
           {usersToShow.map((user, index) => (
             <UsersSelectItem
               user={user}
@@ -107,14 +109,14 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
               key={index}
             />
           ))}
-        </VStack>
+        </FVStack>
       )}
       {usersToShow.length === 0 && (
-        <Center mt="3" mb="1">
+        <FCenter>
           <Text color="gray.400">{t('common:usersSelect.usersNotFound')}</Text>
-        </Center>
+        </FCenter>
       )}
-    </VStack>
+    </FVStack>
   );
 };
 export default flowRight(withUserList)(UsersSelect);

@@ -4,8 +4,9 @@ import {useItemViewContext} from '../../../shared/contexts/viewContexts/itemView
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import UserService from '../../../services/UserService';
 import {User} from '../../../models/User';
-import {HStack, VStack} from 'native-base';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
+import FVStack from '../../../components/surfaces/FVStack';
+import FHStack from '../../../components/surfaces/FHStack';
 
 const ItemViewChanges = () => {
   const {t} = useTranslation();
@@ -52,20 +53,20 @@ const ItemViewChanges = () => {
   );
 
   return (
-    <VStack space="2">
+    <FVStack defaultSpace>
       {creator && (
-        <HStack space="3">
+        <FHStack defaultSpace>
           {labeledBox(t('item:labels.createdBy'), creator)}
           {labeledBox(t('item:labels.createdAt'), getDate(item.createdAt))}
-        </HStack>
+        </FHStack>
       )}
       {updater && item.createdAt !== item.lastModifiedAt && (
-        <HStack space="3">
+        <FHStack defaultSpace>
           {labeledBox(t('item:labels.updatedBy'), updater)}
           {labeledBox(t('item:labels.createdAt'), getDate(item.lastModifiedAt))}
-        </HStack>
+        </FHStack>
       )}
-    </VStack>
+    </FVStack>
   );
 };
 
