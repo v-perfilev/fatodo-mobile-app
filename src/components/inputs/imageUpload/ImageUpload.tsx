@@ -1,10 +1,11 @@
 import React, {memo, useEffect, useState} from 'react';
 import {FormikProps} from 'formik';
 import {Image} from '../../../models/Image';
-import {Box, FormControl, IFormControlProps} from 'native-base';
+import {FormControl, IFormControlProps} from 'native-base';
 import ImageUploadPreview from './ImageUploadPreview';
 import ImageUploadButtons from './ImageUploadButtons';
 import {flowRight} from 'lodash';
+import FVStack from '../../surfaces/FVStack';
 
 type ImageUploadProps = IFormControlProps &
   FormikProps<any> & {
@@ -42,14 +43,10 @@ const ImageUpload = (props: ImageUploadProps) => {
   return (
     <FormControl {...props}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
-      {preview && (
-        <Box my="0.5">
-          <ImageUploadPreview image={image} />
-        </Box>
-      )}
-      <Box my="0.5">
+      <FVStack space="1">
+        {preview && <ImageUploadPreview image={image} />}
         <ImageUploadButtons image={image} setImage={setImage} crop={crop} loading={loading} setLoading={setLoading} />
-      </Box>
+      </FVStack>
     </FormControl>
   );
 };

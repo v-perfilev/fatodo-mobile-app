@@ -1,10 +1,11 @@
 import React, {ReactElement, useState} from 'react';
-import {Box, Flex, FormControl, IFormControlProps} from 'native-base';
+import {FormControl, IFormControlProps} from 'native-base';
 import {FormikProps} from 'formik';
 import PaperBox from '../surfaces/PaperBox';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import ChipBox from '../surfaces/ChipBox';
 import PressableButton from '../controls/PressableButton';
+import FContainer from '../surfaces/FContainer';
 
 type FormikChipsProps<T> = IFormControlProps &
   FormikProps<any> & {
@@ -37,11 +38,9 @@ const FormikChips = (props: FormikChipsProps<any>) => {
   };
 
   const chipsElements = arrayValue.map((value, index) => (
-    <Box m="1" key={index}>
-      <ChipBox h="30px" closeAction={deleteValue(index)}>
-        {view(value)}
-      </ChipBox>
-    </Box>
+    <ChipBox h="30px" closeAction={deleteValue(index)} key={index}>
+      {view(value)}
+    </ChipBox>
   ));
 
   return (
@@ -49,10 +48,10 @@ const FormikChips = (props: FormikChipsProps<any>) => {
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <PressableButton onPress={openInput}>
         <PaperBox flexDir="row" minH="45px" alignItems="center" px="3" py="2">
-          <Flex m="-1" flexDirection="row" flexWrap="wrap">
+          <FContainer itemM="1">
             {chipsElements}
             {input(showInput, addValue, closeInput)}
-          </Flex>
+          </FContainer>
         </PaperBox>
       </PressableButton>
     </FormControl>

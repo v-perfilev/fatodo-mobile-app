@@ -18,7 +18,7 @@ export const PermissionView = ({permission}: PermissionViewProps) => {
   }
 
   return (
-    <Text color="gray.400" fontSize="12" mx="2" isTruncated>
+    <Text color="gray.400" fontSize="12" isTruncated>
       {title}
     </Text>
   );

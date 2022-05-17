@@ -78,10 +78,10 @@ const GroupMembersDialog = (props: Props) => {
   }, [group, deletedMemberIds]);
 
   const content = (
-    <FVStack>
+    <FVStack defaultSpace>
       <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={filterUsersToShow} />
       {usersToShow.length > 0 && (
-        <FVStack mt="3" mb="1">
+        <FVStack defaultSpace>
           {usersToShow.map((user) => (
             <GroupMembersDialogMember
               group={group}
@@ -94,7 +94,7 @@ const GroupMembersDialog = (props: Props) => {
         </FVStack>
       )}
       {usersToShow.length === 0 && (
-        <FCenter mt="3" mb="1">
+        <FCenter>
           <Text color="gray.400">{t('group:members.usersNotFound')}</Text>
         </FCenter>
       )}

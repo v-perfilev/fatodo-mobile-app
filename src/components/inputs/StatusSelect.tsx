@@ -6,7 +6,6 @@ import StatusClosedIcon from '../icons/StatusClosedIcon';
 import StatusCompletedIcon from '../icons/StatusCompletedIcon';
 import Menu, {MenuItem, MenuItemProps} from '../controls/Menu';
 import SolidButton from '../controls/SolidButton';
-import {Box} from 'native-base';
 
 type StatusSelectProps = {
   statusType: ItemStatusType;
@@ -77,22 +76,14 @@ export const StatusSelect = ({statusType, setStatusType, loading}: StatusSelectP
   ] as MenuItemProps[];
 
   return (
-    <Box mx="1">
-      <Menu
-        trigger={(triggerProps) => (
-          <SolidButton
-            w="30px"
-            h="30px"
-            isLoading={loading}
-            leftIcon={iconByStatusType(statusType)}
-            {...triggerProps}
-          />
-        )}
-      >
-        {menuItems.map((itemProps, index) => (
-          <MenuItem {...itemProps} key={index} />
-        ))}
-      </Menu>
-    </Box>
+    <Menu
+      trigger={(triggerProps) => (
+        <SolidButton w="30px" h="30px" isLoading={loading} leftIcon={iconByStatusType(statusType)} {...triggerProps} />
+      )}
+    >
+      {menuItems.map((itemProps, index) => (
+        <MenuItem {...itemProps} key={index} />
+      ))}
+    </Menu>
   );
 };

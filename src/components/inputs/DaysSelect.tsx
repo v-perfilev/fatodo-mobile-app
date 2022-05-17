@@ -1,8 +1,9 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import {DateUtils} from '../../shared/utils/DateUtils';
-import {Flex, FormControl} from 'native-base';
+import {FormControl} from 'native-base';
 import RoundButton from '../controls/RoundButton';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
+import FContainer from '../surfaces/FContainer';
 
 type DaysSelectProps = {
   label: string;
@@ -33,7 +34,7 @@ const DaysSelect = ({label, days, setDays}: DaysSelectProps) => {
     const handleClick = (): void => handleClickOnDay(dayNumber);
 
     return (
-      <RoundButton mx="2" my="1" size="10" bg={active ? 'grey.50' : undefined} onPress={handleClick} key={index}>
+      <RoundButton size="10" bg={active ? 'grey.50' : undefined} onPress={handleClick} key={index}>
         {weekday}
       </RoundButton>
     );
@@ -42,9 +43,9 @@ const DaysSelect = ({label, days, setDays}: DaysSelectProps) => {
   return (
     <FormControl>
       {<FormControl.Label>{label}</FormControl.Label>}
-      <Flex flexDir="row" mx="-2" my="-1" wrap="wrap" justifyContent="center">
+      <FContainer itemMx="2" itemMy="1" justifyContent="center">
         {weekdays}
-      </Flex>
+      </FContainer>
     </FormControl>
   );
 };

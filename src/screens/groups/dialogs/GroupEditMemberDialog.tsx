@@ -5,8 +5,9 @@ import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import ItemService from '../../../services/ItemService';
 import UserView from '../../../components/views/UserView';
 import ModalDialog from '../../../components/modals/ModalDialog';
-import {PermissionSelect} from '../../../components/inputs/permissionSelect/PermissionSelect';
 import GhostButton from '../../../components/controls/GhostButton';
+import FVStack from '../../../components/surfaces/FVStack';
+import PermissionSelect from '../../../components/inputs/permissionSelect/PermissionSelect';
 
 export type GroupEditMemberDialogProps = {
   group: Group;
@@ -55,10 +56,10 @@ const GroupEditMemberDialog: FC<Props> = ({group, user, show, close, onSuccess}:
   }, [group, user]);
 
   const content = group && user && (
-    <>
+    <FVStack defaultSpace>
       <UserView user={user} withUsername />
       <PermissionSelect permission={permission} setPermission={setPermission} />
-    </>
+    </FVStack>
   );
 
   const actions = (

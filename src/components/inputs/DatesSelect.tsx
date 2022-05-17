@@ -1,7 +1,8 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import {Flex, FormControl} from 'native-base';
+import {FormControl} from 'native-base';
 import RoundButton from '../controls/RoundButton';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
+import FContainer from '../surfaces/FContainer';
 
 type DatesSelectProps = {
   label: string;
@@ -28,7 +29,7 @@ const DatesSelect = ({label, dates, setDates}: DatesSelectProps) => {
     const active = dates.includes(date);
     const handleClick = (): void => handleClickOnDate(date);
     return (
-      <RoundButton m="1" size="9" bg={active ? 'grey.50' : undefined} onPress={handleClick} key={index}>
+      <RoundButton size="9" bg={active ? 'grey.50' : undefined} onPress={handleClick} key={index}>
         {date}
       </RoundButton>
     );
@@ -37,11 +38,7 @@ const DatesSelect = ({label, dates, setDates}: DatesSelectProps) => {
   return (
     <FormControl>
       {<FormControl.Label>{label}</FormControl.Label>}
-      <Flex flexGrow="1" alignItems="center">
-        <Flex flexDir="row" m="-1" wrap="wrap">
-          {monthDates}
-        </Flex>
-      </Flex>
+      <FContainer itemM="1">{monthDates}</FContainer>
     </FormControl>
   );
 };

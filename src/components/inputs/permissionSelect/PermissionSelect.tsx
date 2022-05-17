@@ -9,7 +9,7 @@ type PermissionSelectProps = {
   setPermission: (permission: GroupPermission) => void;
 };
 
-export const PermissionSelect = ({permission, setPermission}: PermissionSelectProps) => {
+const PermissionSelect = ({permission, setPermission}: PermissionSelectProps) => {
   const {t} = useTranslation();
 
   const selectRead = (): void => {
@@ -25,10 +25,12 @@ export const PermissionSelect = ({permission, setPermission}: PermissionSelectPr
   };
 
   return (
-    <FVStack my="1" space="1">
+    <FVStack space="1">
       <PermissionSelectItem title={t('group:roles.read')} active={permission === 'READ'} onPress={selectRead} />
       <PermissionSelectItem title={t('group:roles.edit')} active={permission === 'EDIT'} onPress={selectEdit} />
       <PermissionSelectItem title={t('group:roles.admin')} active={permission === 'ADMIN'} onPress={selectAdmin} />
     </FVStack>
   );
 };
+
+export default PermissionSelect;

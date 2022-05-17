@@ -81,7 +81,7 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete, ac
   ] as MenuElement[];
 
   return (
-    <FHStack my="1">
+    <FHStack>
       <FHStack alignItems="center">
         <UserView user={user} withUsername withUserPic picSize="sm" />
         <PermissionView permission={user.permission} />

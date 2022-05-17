@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react';
-import {Box, IFormControlProps, Input} from 'native-base';
+import {IFormControlProps, Input} from 'native-base';
 import {FormikProps} from 'formik';
 import FormikChips from './FormikChips';
 
@@ -25,17 +25,16 @@ const FormikTagsInput = (props: FormikTagsInputProps) => {
 
   const inputElement = (show: boolean, addValue: (value: string) => void, close: () => void): ReactElement =>
     show && (
-      <Box flex="1" minW="30%">
-        <Input
-          h="30px"
-          isFullWidth
-          autoFocus={true}
-          variant="subtle"
-          value={input}
-          onChangeText={setInput}
-          onEndEditing={handleEndEditing(addValue, close)}
-        />
-      </Box>
+      <Input
+        minW="40%"
+        h="30px"
+        isFullWidth
+        autoFocus={true}
+        variant="subtle"
+        value={input}
+        onChangeText={setInput}
+        onEndEditing={handleEndEditing(addValue, close)}
+      />
     );
 
   return <FormikChips view={viewElement} input={inputElement} {...props} />;

@@ -3,9 +3,9 @@ import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupVi
 import {User} from '../../../models/User';
 import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
-import {Box, Flex} from 'native-base';
 import UserView from '../../../components/views/UserView';
-import GroupViewUsersSkeleton from './groupViewSkeletons/GroupViewUsersSkeleton';
+import FContainer from '../../../components/surfaces/FContainer';
+import GroupViewUserSkeleton from './groupViewSkeletons/GroupViewUserSkeleton';
 
 const GroupViewMenu = () => {
   const {group} = useGroupViewContext();
@@ -31,16 +31,25 @@ const GroupViewMenu = () => {
     }
   }, [usersToShow]);
 
+  const skeletonsArray = Array.from({length: 3}, (_, i) => i);
+
   return (
-    <Flex m="-1.5" flexDirection="row" flexWrap="wrap">
-      {loading && <GroupViewUsersSkeleton />}
-      {!loading &&
-        usersToShow.map((user) => (
-          <Box m="1.5" key={user.id}>
-            <UserView user={user} withUsername withPaperBox />
-          </Box>
-        ))}
-    </Flex>
+    <>
+      {loading && (
+        <FContainer itemM="1.5">
+          {skeletonsArray.map((skeleton) => (
+            <GroupViewUserSkeleton key={skeleton} />
+          ))}
+        </FContainer>
+      )}
+      {!loading && (
+        <FContainer itemM="1.5">
+          {usersToShow.map((user) => (
+            <UserView user={user} withUsername withPaperBox key={user.id} />
+          ))}
+        </FContainer>
+      )}
+    </>
   );
 };
 
