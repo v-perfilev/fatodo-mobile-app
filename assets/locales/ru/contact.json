@@ -1,0 +1,37 @@
+{
+  "relations": {
+    "title": "Контакты",
+    "remove": "Удалить",
+    "relationsNotFound": "Пока контактов нет"
+  },
+  "outcoming": {
+    "title": "Исходящие",
+    "remove": "Удалить",
+    "requestsNotFound": "Исходящих заявок нет"
+  },
+  "incoming": {
+    "title": "Входящие",
+    "accept": "Принять",
+    "decline": "Отклонить",
+    "requestsNotFound": "Входящих заявок нет"
+  },
+  "addContact": {
+    "title": "Добавить пользователя в список контактов",
+    "fields": {
+      "user": {
+        "label": "Имя пользователя / Email",
+        "required": "Обязательное поле",
+        "current": "Введите идентификатор другого пользователя",
+        "notRegistered": "Пользователь не зарегистрирован"
+      },
+      "message": {
+        "label": "Сообщение"
+      }
+    },
+    "send": "Отправить запрос",
+    "cancel": "Отменить"
+  },
+  "actions": {
+    "addContact": "Добавить контакт"
+  }
+}

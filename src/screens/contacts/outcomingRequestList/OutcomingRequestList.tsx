@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text} from 'react-native';
-import withHeader from '../../../shared/hocs/withHeader';
 import {flowRight} from 'lodash';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import FCenter from '../../../components/surfaces/FCenter';
+import withUserList from '../../../shared/hocs/withLists/withUserList';
 
 const OutcomingRequestList = () => {
   return (
@@ -15,4 +15,4 @@ const OutcomingRequestList = () => {
   );
 };
 
-export default flowRight([withHeader])(OutcomingRequestList);
+export default flowRight([withUserList])(OutcomingRequestList);

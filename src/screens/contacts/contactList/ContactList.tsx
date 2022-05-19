@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import withHeader from '../../../shared/hocs/withHeader';
 import {flowRight} from 'lodash';
 import withUserList from '../../../shared/hocs/withLists/withUserList';
 import {useContactContext} from '../../../shared/contexts/contactContexts/contactContext';
@@ -52,7 +51,7 @@ const ContactList = () => {
   return (
     <ConditionalSpinner loading={loading}>
       <FScrollView>
-        <FVStack>
+        <FVStack grow>
           <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={setFilter} />
           <ContactListContainer relations={userRelations} filter={filter} />
         </FVStack>
@@ -61,4 +60,4 @@ const ContactList = () => {
   );
 };
 
-export default flowRight([withHeader, withUserList])(ContactList);
+export default flowRight([withUserList])(ContactList);

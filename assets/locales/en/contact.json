@@ -1,0 +1,37 @@
+{
+  "relations": {
+    "title": "Contacts",
+    "remove": "Remove",
+    "relationsNotFound": "No contacts yet"
+  },
+  "outcoming": {
+    "title": "Outcoming",
+    "remove": "Remove",
+    "requestsNotFound": "No outcoming requests"
+  },
+  "incoming": {
+    "title": "Incoming",
+    "accept": "Accept",
+    "decline": "Decline",
+    "requestsNotFound": "No incoming requests"
+  },
+  "addContact": {
+    "title": "Add user to list of contacts",
+    "fields": {
+      "user": {
+        "label": "Username / Email",
+        "required": "Required",
+        "current": "Enter identifier of another user",
+        "notRegistered": "User not registered"
+      },
+      "message": {
+        "label": "Message"
+      }
+    },
+    "send": "Send request",
+    "cancel": "Cancel"
+  },
+  "actions": {
+    "addContact": "Add contact"
+  }
+}

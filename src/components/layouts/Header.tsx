@@ -13,10 +13,19 @@ import FHStack from '../surfaces/FHStack';
 type HeaderProps = PropsWithChildren<{
   title?: string;
   imageFilename?: string;
+  showGoBack?: boolean;
   showMenu?: boolean;
+  showTitle?: boolean;
 }>;
 
-const Header = ({children, title, imageFilename, showMenu = true}: HeaderProps) => {
+const Header = ({
+  children,
+  title,
+  imageFilename,
+  showGoBack = true,
+  showMenu = true,
+  showTitle = false,
+}: HeaderProps) => {
   const navigation = useNavigation();
   const route = useRoute();
   const {t} = useTranslation();
@@ -31,7 +40,7 @@ const Header = ({children, title, imageFilename, showMenu = true}: HeaderProps) 
     <>
       <ColoredStatusBar />
       <FHStack h="50px" defaultSpace px="2" bg="primary.500" alignItems="center">
-        {canGoBack && (
+        {showGoBack && canGoBack && (
           <PressableButton onPress={goBack}>
             <ArrowBackIcon color="white" size="7" />
           </PressableButton>
@@ -41,11 +50,15 @@ const Header = ({children, title, imageFilename, showMenu = true}: HeaderProps) 
             <MenuIcon color="white" size="7" />
           </PressableButton>
         )}
-        {!!imageFilename && <UrlPic file={imageFilename} size="9" border={1} invertedBorder />}
-        <Text fontWeight="800" fontSize="20" lineHeight="24" color="white" isTruncated>
-          {label}
-        </Text>
-        <FHStack grow space="2" alignItems="center" justifyContent="flex-end">
+        {showTitle && (
+          <>
+            {!!imageFilename && <UrlPic file={imageFilename} size="9" border="1" invertedBorder />}
+            <Text fontWeight="800" fontSize="20" lineHeight="24" color="white" isTruncated>
+              {label}
+            </Text>
+          </>
+        )}
+        <FHStack grow h="100%" space="2" alignItems="center" justifyContent="flex-end">
           {children}
         </FHStack>
       </FHStack>

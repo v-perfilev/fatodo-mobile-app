@@ -7,7 +7,7 @@ const ContactListStub: FC = () => {
   const {t} = useTranslation();
 
   return (
-    <FCenter grow>
+    <FCenter grow bg="red.100">
       <Text>{t('contact:relations.relationsNotFound')}</Text>
     </FCenter>
   );
