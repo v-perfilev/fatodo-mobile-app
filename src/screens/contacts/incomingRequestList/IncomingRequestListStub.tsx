@@ -8,7 +8,7 @@ const ContactListStub: FC = () => {
 
   return (
     <FCenter grow>
-      <Text>{t('contact:relations.relationsNotFound')}</Text>
+      <Text>{t('contact:incoming.requestsNotFound')}</Text>
     </FCenter>
   );
 };
