@@ -1,11 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Divider} from 'native-base';
-import {flowRight} from 'lodash';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import withArchivedItemList from '../../../shared/hocs/withLists/withArchivedItemList';
-import withItemList from '../../../shared/hocs/withLists/withItemList';
-import withGroupView from '../../../shared/hocs/withViews/withGroupView';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import Header from '../../../components/layouts/Header';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
@@ -65,4 +61,4 @@ const GroupView = () => {
   );
 };
 
-export default flowRight([withGroupView, withItemList, withArchivedItemList])(GroupView);
+export default GroupView;

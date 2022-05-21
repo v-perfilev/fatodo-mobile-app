@@ -11,7 +11,8 @@ import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {UserAccount} from '../../../models/User';
 import ItemsIcon from '../../../components/icons/ItemsIcon';
 import {useItemDialogContext} from '../../../shared/contexts/dialogContexts/ItemDialogContext';
-import {useItemViewContext} from '../../../shared/contexts/viewContexts/itemViewContext';
+import {useAppSelector} from '../../../store/store';
+import ItemSelectors from '../../../store/item/itemSelectors';
 
 type ItemViewMenuProps = {
   account: UserAccount;
@@ -20,9 +21,9 @@ type ItemViewMenuProps = {
 const ItemViewMenu = ({account}: ItemViewMenuProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
-  const {item} = useItemViewContext();
   const {group} = useGroupViewContext();
   const {showItemDeleteDialog} = useItemDialogContext();
+  const item = useAppSelector(ItemSelectors.itemSelector);
 
   const goToGroupView = (): void => {
     navigation.navigate('GroupView', {groupId: group.id});

@@ -4,33 +4,30 @@ import withHeader from '../../../shared/hocs/withHeader';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
-import ItemService from '../../../services/ItemService';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import withGroupView from '../../../shared/hocs/withViews/withGroupView';
-import withItemView from '../../../shared/hocs/withViews/withItemView';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
-import {useItemViewContext} from '../../../shared/contexts/viewContexts/itemViewContext';
 import ItemForm from '../itemForm/ItemForm';
-import withReminderList from '../../../shared/hocs/withLists/withReminderList';
-import {useReminderListContext} from '../../../shared/contexts/listContexts/reminderListContext';
 import FScrollView from '../../../components/surfaces/FScrollView';
-import {useAppDispatch} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
+import ItemSelectors from '../../../store/item/itemSelectors';
+import ItemThunks from '../../../store/item/itemThunks';
 
 const ItemEdit = () => {
   const dispatch = useAppDispatch();
+  const item = useAppSelector(ItemSelectors.itemSelector);
+  const reminders = useAppSelector(ItemSelectors.remindersSelector);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemEdit'>>();
   const itemId = route.params.itemId;
   const {group, load: loadGroup} = useGroupViewContext();
-  const {item, load: loadItem} = useItemViewContext();
-  const {reminders, load: loadReminders} = useReminderListContext();
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
   const goToItemView = (): void => navigation.navigate('ItemView', {itemId});
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
-    ItemService.updateItem(dto)
+    dispatch(ItemThunks.updateItem(dto))
+      .unwrap()
       .then(() => {
         dispatch(SnackActions.handleCode('item.updated', 'info'));
         goToItemView();
@@ -41,8 +38,10 @@ const ItemEdit = () => {
   };
 
   useEffect(() => {
-    loadItem(itemId, goToItemView);
-    loadReminders(itemId);
+    dispatch(ItemThunks.fetchItem(itemId))
+      .unwrap()
+      .catch(() => goToItemView());
+    dispatch(ItemThunks.fetchReminders(itemId));
   }, [itemId]);
 
   useEffect(() => {
@@ -60,4 +59,4 @@ const ItemEdit = () => {
   );
 };
 
-export default flowRight([withHeader, withGroupView, withItemView, withReminderList])(ItemEdit);
+export default flowRight([withHeader])(ItemEdit);

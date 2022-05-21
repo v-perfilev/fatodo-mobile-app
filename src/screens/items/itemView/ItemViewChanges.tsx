@@ -1,16 +1,17 @@
 import React, {ReactElement, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useItemViewContext} from '../../../shared/contexts/viewContexts/itemViewContext';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import UserService from '../../../services/UserService';
 import {User} from '../../../models/User';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
 import FVStack from '../../../components/surfaces/FVStack';
 import FHStack from '../../../components/surfaces/FHStack';
+import {useAppSelector} from '../../../store/store';
+import ItemSelectors from '../../../store/item/itemSelectors';
 
 const ItemViewChanges = () => {
   const {t} = useTranslation();
-  const {item} = useItemViewContext();
+  const item = useAppSelector(ItemSelectors.itemSelector);
   const [creator, setCreator] = useState<string>();
   const [updater, setUpdater] = useState<string>();
 

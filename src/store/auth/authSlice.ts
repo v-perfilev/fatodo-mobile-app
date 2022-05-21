@@ -17,13 +17,13 @@ const authSlice = createSlice({
       ...state,
       isAuthenticated: true,
     }),
-    account: (state: AuthState, actions: PayloadAction<UserAccount>) => ({
+    account: (state: AuthState, action: PayloadAction<UserAccount>) => ({
       ...state,
-      account: actions.payload,
+      account: action.payload,
     }),
-    loading: (state: AuthState, actions: PayloadAction<boolean>) => ({
+    loading: (state: AuthState, action: PayloadAction<boolean>) => ({
       ...state,
-      loading: actions.payload,
+      loading: action.payload,
     }),
     clearAuth: () => ({
       ...initialState,

@@ -1,14 +1,8 @@
 import React, {useEffect} from 'react';
 import {Divider} from 'native-base';
-import {flowRight} from 'lodash';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import {useItemViewContext} from '../../../shared/contexts/viewContexts/itemViewContext';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
-import {useReminderListContext} from '../../../shared/contexts/listContexts/reminderListContext';
-import withReminderList from '../../../shared/hocs/withLists/withReminderList';
-import withItemView from '../../../shared/hocs/withViews/withItemView';
-import withGroupView from '../../../shared/hocs/withViews/withGroupView';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
@@ -29,16 +23,18 @@ import FHStack from '../../../components/surfaces/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import UsersThunks from '../../../store/users/usersThunks';
+import ItemSelectors from '../../../store/item/itemSelectors';
+import ItemThunks from '../../../store/item/itemThunks';
 
 const ItemView = () => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.accountSelector);
+  const item = useAppSelector(ItemSelectors.itemSelector);
+  const reminders = useAppSelector(ItemSelectors.remindersSelector);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemView'>>();
   const itemId = route.params.itemId;
-  const {item, load: loadItem} = useItemViewContext();
   const {group, load: loadGroup} = useGroupViewContext();
-  const {reminders, load: loadReminders} = useReminderListContext();
 
   const theme = ThemeFactory.getTheme(group?.color);
 
@@ -50,8 +46,10 @@ const ItemView = () => {
   const showDividerAfterDescription = showTags || showReminders;
 
   useEffect(() => {
-    loadItem(itemId, goToGroupView);
-    loadReminders(itemId);
+    dispatch(ItemThunks.fetchItem(itemId))
+      .unwrap()
+      .catch(() => goToGroupView());
+    dispatch(ItemThunks.fetchReminders(itemId));
   }, []);
 
   useEffect(() => {
@@ -96,4 +94,4 @@ const ItemView = () => {
   );
 };
 
-export default flowRight([withGroupView, withItemView, withReminderList])(ItemView);
+export default ItemView;

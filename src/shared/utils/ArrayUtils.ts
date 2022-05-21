@@ -5,6 +5,16 @@ export class ArrayUtils {
     return arrayCopy;
   };
 
+  public static updateItem = (array: any[], item: any): any[] => {
+    const arrayCopy = [...array];
+    const itemInList = arrayCopy.find((i) => i.id === item.id);
+    if (itemInList) {
+      const index = arrayCopy.indexOf(itemInList);
+      arrayCopy[index] = item;
+    }
+    return [...arrayCopy];
+  };
+
   public static deleteItemByIndex = (array: any[], index: number): any[] => {
     const arrayCopy = [...array];
     if (index >= 0) {

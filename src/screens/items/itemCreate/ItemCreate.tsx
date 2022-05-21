@@ -5,15 +5,12 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
-import ItemService from '../../../services/ItemService';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import ItemForm from '../itemForm/ItemForm';
-import withGroupView from '../../../shared/hocs/withViews/withGroupView';
-import withItemView from '../../../shared/hocs/withViews/withItemView';
-import withReminderList from '../../../shared/hocs/withLists/withReminderList';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
+import ItemThunks from '../../../store/item/itemThunks';
 
 const ItemCreate = () => {
   const dispatch = useAppDispatch();
@@ -27,10 +24,11 @@ const ItemCreate = () => {
   const goToItemView = (itemId: string): void => navigation.navigate('ItemView', {itemId});
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
-    ItemService.createItem(dto)
-      .then(({data}) => {
+    dispatch(ItemThunks.createItem(dto))
+      .unwrap()
+      .then((item) => {
         dispatch(SnackActions.handleCode('item.created', 'info'));
-        goToItemView(data.id);
+        goToItemView(item.id);
       })
       .catch(() => {
         stopSubmitting();
@@ -50,4 +48,4 @@ const ItemCreate = () => {
   );
 };
 
-export default flowRight([withHeader, withGroupView, withItemView, withReminderList])(ItemCreate);
+export default flowRight([withHeader])(ItemCreate);
