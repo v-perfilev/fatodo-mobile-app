@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Box} from 'native-base';
 import {flowRight} from 'lodash';
-import {FormikBag, FormikProps, withFormik} from 'formik';
+import {Formik, FormikHelpers, FormikProps} from 'formik';
 import {Group} from '../../../models/Group';
 import * as Yup from 'yup';
 import i18n from '../../../shared/i18n';
@@ -14,8 +14,6 @@ import {Item, ItemPriorityType, itemPriorityTypes, ItemType, itemTypes} from '..
 import {Reminder} from '../../../models/Reminder';
 import {DateConverters} from '../../../shared/utils/DateUtils';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
-import withAuthState from '../../../shared/hocs/withAuthState';
-import {ReduxAuthState} from '../../../store/rerducers/AuthReducer';
 import FormikTypeInput from '../../../components/inputs/FormikTypeInput';
 import FormikPriorityInput from '../../../components/inputs/FormikPriorityInput';
 import FormikMultilineInput from '../../../components/inputs/FormikMultilineInput';
@@ -24,6 +22,9 @@ import FormikRemindersInput from '../../../components/inputs/formikRemindersInpu
 import FormikDateTimePicker from '../../../components/inputs/FormikDateTimePicker';
 import FVStack from '../../../components/surfaces/FVStack';
 import FHStack from '../../../components/surfaces/FHStack';
+import {UserAccount} from '../../../models/User';
+import {useAppSelector} from '../../../store/hooks';
+import AuthSelectors from '../../../store/auth/authSelectors';
 
 export interface ItemFormValues {
   title: string;
@@ -47,9 +48,28 @@ const defaultItemFormValues: Readonly<ItemFormValues> = {
   tags: [],
 };
 
+const initialValues = (item: Item, reminders: Reminder[], account: UserAccount): ItemFormValues =>
+  item
+    ? {
+        title: item.title,
+        type: item.type,
+        priority: item.priority,
+        time: DateConverters.getTimeFromParamDate(item.date, account.info.timezone),
+        date: DateConverters.getDateFromParamDate(item.date, account.info.timezone),
+        description: item.description,
+        reminders: reminders,
+        tags: item.tags,
+      }
+    : defaultItemFormValues;
+
+const validationSchema = Yup.object().shape({
+  title: Yup.string().required(() => i18n.t('item:fields.title.required')),
+  type: Yup.string().required(() => i18n.t('item:fields.type.required')),
+  priority: Yup.string().required(() => i18n.t('item:fields.priority.required')),
+});
+
 type ItemFormProps = FormikProps<ItemFormValues> &
-  SnackState &
-  ReduxAuthState & {
+  SnackState & {
     group: Group;
     item?: Item;
     reminders?: Reminder[];
@@ -57,132 +77,111 @@ type ItemFormProps = FormikProps<ItemFormValues> &
     cancel: () => void;
   };
 
-const ItemForm = (props: ItemFormProps) => {
-  const {cancel} = props;
-  const {isValid, isSubmitting, handleSubmit} = props;
+const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
+  const account = useAppSelector(AuthSelectors.accountSelector);
   const {t} = useTranslation();
-  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
-  useEffect(() => {
-    setIsInitialized(true);
-  }, []);
+  const handleSubmit = (values: ItemFormValues, helpers: FormikHelpers<ItemFormValues>): void => {
+    const remindersChanged = JSON.stringify(reminders) !== JSON.stringify(values.reminders);
+    const deleteReminders = remindersChanged && values.reminders.length === 0;
+
+    const dto = {
+      id: item ? item.id : null,
+      title: values.title,
+      type: values.type,
+      priority: values.priority,
+      date: DateConverters.getParamDateFromTimeAndDate(values.time, values.date, account.info.timezone),
+      description: values.description,
+      reminders: !deleteReminders && remindersChanged ? values.reminders : undefined,
+      tags: values.tags,
+      groupId: group.id,
+      deleteReminders: deleteReminders ? true : undefined,
+    } as ItemDTO;
+
+    request(dto, () => helpers.setSubmitting(false));
+  };
 
   return (
-    <FVStack defaultSpace>
-      <FormikTextInput name="title" label={t('item:fields.title.label')} isDisabled={isSubmitting} {...props} />
-      <FHStack defaultSpace>
-        <Box flexGrow="1" flexBasis="1">
-          <FormikTypeInput name="type" label={t('item:fields.type.label')} isDisabled={isSubmitting} {...props} />
-        </Box>
-        <Box flexGrow="1" flexBasis="1">
-          <FormikPriorityInput
-            name="priority"
-            label={t('item:fields.priority.label')}
-            isDisabled={isSubmitting}
-            {...props}
+    <Formik
+      initialValues={initialValues(item, reminders, account)}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {(formikProps) => (
+        <FVStack defaultSpace>
+          <FormikTextInput
+            name="title"
+            label={t('item:fields.title.label')}
+            isDisabled={formikProps.isSubmitting}
+            {...formikProps}
           />
-        </Box>
-      </FHStack>
-      <FHStack defaultSpace>
-        <Box flexGrow="1" flexBasis="1">
-          <FormikDateTimePicker
-            mode="time"
-            name="time"
-            label={t('item:fields.time.label')}
-            isDisabled={isSubmitting}
-            {...props}
+          <FHStack defaultSpace>
+            <Box flexGrow="1" flexBasis="1">
+              <FormikTypeInput
+                name="type"
+                label={t('item:fields.type.label')}
+                isDisabled={formikProps.isSubmitting}
+                {...formikProps}
+              />
+            </Box>
+            <Box flexGrow="1" flexBasis="1">
+              <FormikPriorityInput
+                name="priority"
+                label={t('item:fields.priority.label')}
+                isDisabled={formikProps.isSubmitting}
+                {...formikProps}
+              />
+            </Box>
+          </FHStack>
+          <FHStack defaultSpace>
+            <Box flexGrow="1" flexBasis="1">
+              <FormikDateTimePicker
+                mode="time"
+                name="time"
+                label={t('item:fields.time.label')}
+                isDisabled={formikProps.isSubmitting}
+                {...formikProps}
+              />
+            </Box>
+            <Box flexGrow="1" flexBasis="1">
+              <FormikDateTimePicker
+                mode="date"
+                name="date"
+                label={t('item:fields.date.label')}
+                isDisabled={formikProps.isSubmitting}
+                {...formikProps}
+              />
+            </Box>
+          </FHStack>
+          <FormikMultilineInput
+            name="description"
+            label={t('item:fields.description.label')}
+            isDisabled={formikProps.isSubmitting}
+            {...formikProps}
           />
-        </Box>
-        <Box flexGrow="1" flexBasis="1">
-          <FormikDateTimePicker
-            mode="date"
-            name="date"
-            label={t('item:fields.date.label')}
-            isDisabled={isSubmitting}
-            {...props}
-          />
-        </Box>
-      </FHStack>
-      <FormikMultilineInput
-        name="description"
-        label={t('item:fields.description.label')}
-        isDisabled={isSubmitting}
-        {...props}
-      />
 
-      <FormikRemindersInput name="reminders" label={t('item:fields.reminders.label')} {...props} />
+          <FormikRemindersInput name="reminders" label={t('item:fields.reminders.label')} {...formikProps} />
 
-      <FormikTagsInput name="tags" label={t('item:fields.tags.label')} {...props} />
+          <FormikTagsInput name="tags" label={t('item:fields.tags.label')} {...formikProps} />
 
-      <FHStack defaultSpace mt="3" justifyContent="flex-end">
-        <SolidButton
-          colorScheme="primary"
-          size="md"
-          isLoading={isSubmitting}
-          isDisabled={!isInitialized || !isValid || isSubmitting}
-          onPress={handleSubmit}
-        >
-          {t('item:actions.save')}
-        </SolidButton>
-        <SolidButton colorScheme="secondary" size="md" isDisabled={!isInitialized || isSubmitting} onPress={cancel}>
-          {t('item:actions.cancel')}
-        </SolidButton>
-      </FHStack>
-    </FVStack>
+          <FHStack defaultSpace mt="3" justifyContent="flex-end">
+            <SolidButton
+              colorScheme="primary"
+              size="md"
+              isLoading={formikProps.isSubmitting}
+              isDisabled={!formikProps.isValid || formikProps.isSubmitting}
+              onPress={formikProps.submitForm}
+            >
+              {t('item:actions.save')}
+            </SolidButton>
+            <SolidButton colorScheme="secondary" size="md" isDisabled={formikProps.isSubmitting} onPress={cancel}>
+              {t('item:actions.cancel')}
+            </SolidButton>
+          </FHStack>
+        </FVStack>
+      )}
+    </Formik>
   );
 };
 
-const formik = withFormik<ItemFormProps, ItemFormValues>({
-  mapPropsToValues: ({item, reminders, account}): ItemFormValues =>
-    item
-      ? {
-          title: item.title,
-          type: item.type,
-          priority: item.priority,
-          time: DateConverters.getTimeFromParamDate(item.date, account.info.timezone),
-          date: DateConverters.getDateFromParamDate(item.date, account.info.timezone),
-          description: item.description,
-          reminders: reminders,
-          tags: item.tags,
-        }
-      : defaultItemFormValues,
-
-  validationSchema: Yup.object().shape({
-    title: Yup.string().required(() => i18n.t('item:fields.title.required')),
-    type: Yup.string().required(() => i18n.t('item:fields.type.required')),
-    priority: Yup.string().required(() => i18n.t('item:fields.priority.required')),
-  }),
-  validateOnMount: true,
-
-  handleSubmit: (values: ItemFormValues, {setSubmitting, props}: FormikBag<ItemFormProps, ItemFormValues>) => {
-    const {request, group, item, reminders, account} = props;
-
-    const mapValuesToDTO = (
-      values: ItemFormValues,
-      item: Item,
-      group: Group,
-      reminders: Reminder[],
-      timezone: string,
-    ): ItemDTO => {
-      const remindersChanged = JSON.stringify(reminders) !== JSON.stringify(values.reminders);
-      const deleteReminders = remindersChanged && values.reminders.length === 0;
-      return {
-        id: item ? item.id : null,
-        title: values.title,
-        type: values.type,
-        priority: values.priority,
-        date: DateConverters.getParamDateFromTimeAndDate(values.time, values.date, timezone),
-        description: values.description,
-        reminders: !deleteReminders && remindersChanged ? values.reminders : undefined,
-        tags: values.tags,
-        groupId: group.id,
-        deleteReminders: deleteReminders ? true : undefined,
-      };
-    };
-
-    const dto = mapValuesToDTO(values, item, group, reminders, account.info.timezone);
-    request(dto, () => setSubmitting(false));
-  },
-});
-
-export default flowRight([withSnackContext, withAuthState, formik])(ItemForm);
+export default flowRight([withSnackContext])(ItemForm);

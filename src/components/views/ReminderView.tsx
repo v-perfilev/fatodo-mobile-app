@@ -1,17 +1,17 @@
 import * as React from 'react';
 import {FC} from 'react';
 import {useTranslation} from 'react-i18next';
-import {flowRight} from 'lodash';
-import {ReduxAuthState} from '../../store/rerducers/AuthReducer';
 import {Reminder} from '../../models/Reminder';
 import {DateConverters, DateFormatters, DateUtils} from '../../shared/utils/DateUtils';
-import withAuthState from '../../shared/hocs/withAuthState';
+import {useAppSelector} from '../../store/hooks';
+import AuthSelectors from '../../store/auth/authSelectors';
 
-type Props = ReduxAuthState & {
+type Props = {
   reminder: Reminder;
 };
 
-const ReminderView: FC<Props> = ({reminder, account}: Props) => {
+const ReminderView: FC<Props> = ({reminder}: Props) => {
+  const account = useAppSelector(AuthSelectors.accountSelector);
   const {t} = useTranslation();
   const timezone = account.info.timezone;
 
@@ -70,4 +70,4 @@ const ReminderView: FC<Props> = ({reminder, account}: Props) => {
   return <>{reminderStr}</>;
 };
 
-export default flowRight([withAuthState])(ReminderView);
+export default ReminderView;

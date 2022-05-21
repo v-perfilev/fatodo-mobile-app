@@ -4,8 +4,6 @@ import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
-import {flowRight} from 'lodash';
-import withAuthState from '../../../../shared/hocs/withAuthState';
 import PlusIcon from '../../../../components/icons/PlusIcon';
 import EyeIcon from '../../../../components/icons/EyeIcon';
 import EditIcon from '../../../../components/icons/EditIcon';
@@ -13,16 +11,18 @@ import DeleteIcon from '../../../../components/icons/DeleteIcon';
 import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
 import RoundButton from '../../../../components/controls/RoundButton';
 import {Group} from '../../../../models/Group';
-import {ReduxAuthState} from '../../../../store/rerducers/AuthReducer';
 import {useGroupDialogContext} from '../../../../shared/contexts/dialogContexts/GroupDialogContext';
 import {useGroupListContext} from '../../../../shared/contexts/listContexts/groupListContext';
 import {useGroupListItemsContext} from '../../../../shared/contexts/listContexts/groupListItemsContext';
+import {useAppSelector} from '../../../../store/hooks';
+import AuthSelectors from '../../../../store/auth/authSelectors';
 
-type GroupListCardMenuButtonProps = ReduxAuthState & {
+type GroupListCardMenuButtonProps = {
   group: Group;
 };
 
-const GroupListCardMenuButton = ({group, account}: GroupListCardMenuButtonProps) => {
+const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
+  const account = useAppSelector(AuthSelectors.accountSelector);
   const {t} = useTranslation();
   const navigation = useNavigation<GroupNavigationProp>();
   const {deleteGroup} = useGroupListContext();
@@ -96,4 +96,4 @@ const GroupListCardMenuButton = ({group, account}: GroupListCardMenuButtonProps)
   );
 };
 
-export default flowRight([withAuthState])(GroupListCardMenuButton);
+export default GroupListCardMenuButton;

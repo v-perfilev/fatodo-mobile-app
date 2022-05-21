@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {useTranslation} from 'react-i18next';
-import {flowRight} from 'lodash';
 import {DateParams} from '../../models/DateParams';
-import {ReduxAuthState} from '../../store/rerducers/AuthReducer';
 import {DateConverters, DateFormatters} from '../../shared/utils/DateUtils';
-import withAuthState from '../../shared/hocs/withAuthState';
+import {useAppSelector} from '../../store/hooks';
+import AuthSelectors from '../../store/auth/authSelectors';
 
-type DateViewProps = ReduxAuthState & {
+type DateViewProps = {
   date: DateParams;
 };
 
-const DateView = ({date: paramDate, account}: DateViewProps) => {
+const DateView = ({date: paramDate}: DateViewProps) => {
+  const account = useAppSelector(AuthSelectors.accountSelector);
   const {t} = useTranslation();
   const timezone = account.info.timezone;
 
@@ -35,4 +35,4 @@ const DateView = ({date: paramDate, account}: DateViewProps) => {
   return <>{description}</>;
 };
 
-export default flowRight([withAuthState])(DateView);
+export default DateView;

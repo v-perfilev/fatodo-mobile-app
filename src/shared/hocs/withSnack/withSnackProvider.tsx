@@ -1,24 +1,19 @@
 import * as React from 'react';
-import {ComponentType, PropsWithChildren, useCallback} from 'react';
+import {ComponentType, useCallback} from 'react';
 import {AxiosResponse} from 'axios';
-import {connect, ConnectedProps} from 'react-redux';
-import {flowRight} from 'lodash';
 import {Snack, SnackBuilder, SnackVariant} from '../../../models/Snack';
-import {closeReduxSnack, enqueueReduxSnack} from '../../../store/actions/SnackActions';
 import {ResponseUtils} from '../../utils/ResponseUtils';
 import {TranslationUtils} from '../../utils/TranslationUtils';
 import {SnackContext} from '../../contexts/SnackContext';
+import {useAppDispatch} from '../../../store/hooks';
+import SnackActions from '../../../store/snack/snackActions';
 
-const mapDispatchToProps = {enqueueReduxSnack, closeReduxSnack};
-const connector = connect(null, mapDispatchToProps);
+const withSnackProvider = (Component: ComponentType) => (props: any) => {
+  const dispatch = useAppDispatch();
 
-type Props = PropsWithChildren<ConnectedProps<typeof connector>>;
+  const enqueueSnack = useCallback((snack: Snack): void => dispatch(SnackActions.enqueueSnack(snack)), [dispatch]);
 
-const withSnackProvider = (Component: ComponentType) => (props: Props) => {
-  const {enqueueReduxSnack, closeReduxSnack} = props;
-  const enqueueSnack = useCallback((snack: Snack): void => enqueueReduxSnack(snack), [enqueueReduxSnack]);
-
-  const closeSnack = useCallback((key: string): void => closeReduxSnack(key), [closeReduxSnack]);
+  const closeSnack = useCallback((key: string): void => dispatch(SnackActions.closeSnack(key)), [dispatch]);
 
   const handleResponse = useCallback(
     (response: AxiosResponse, allowedCodes: string[] | '*' = '*', excludedCodes: string[] | '' = ''): void => {
@@ -61,4 +56,4 @@ const withSnackProvider = (Component: ComponentType) => (props: Props) => {
   );
 };
 
-export default flowRight([connector, withSnackProvider]);
+export default withSnackProvider;

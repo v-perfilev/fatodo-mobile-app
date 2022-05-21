@@ -1,18 +1,13 @@
 import * as React from 'react';
-import {ComponentType, PropsWithChildren, useEffect, useState} from 'react';
-import {flowRight} from 'lodash';
+import {ComponentType, useEffect, useState} from 'react';
 import {useSnackContext} from '../../contexts/SnackContext';
-import {ReduxAuthState} from '../../../store/rerducers/AuthReducer';
 import {ContactInfoContext} from '../../contexts/contactContexts/contactInfoContext';
-import withAuthState from '../withAuthState';
 import ContactService from '../../../services/ContactService';
+import {useAppSelector} from '../../../store/hooks';
+import AuthSelectors from '../../../store/auth/authSelectors';
 
-type BaseProps = PropsWithChildren<HTMLElement>;
-
-type Props = ReduxAuthState & BaseProps;
-
-const withContactInfo = (Component: ComponentType) => (props: Props) => {
-  const {isAuthenticated} = props;
+const withContactInfo = (Component: ComponentType) => (props: any) => {
+  const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticatedSelector);
   const {handleResponse} = useSnackContext();
   const [relationCount, setRelationCount] = useState<number>(0);
   const [outcomingRequestCount, setOutcomingRequestCount] = useState<number>(0);
@@ -50,4 +45,4 @@ const withContactInfo = (Component: ComponentType) => (props: Props) => {
   );
 };
 
-export default flowRight([withAuthState, withContactInfo]);
+export default withContactInfo;

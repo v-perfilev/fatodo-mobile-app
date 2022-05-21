@@ -1,6 +1,4 @@
-import React from 'react';
-import {logout} from '../../store/actions/AuthActions';
-import {connect, ConnectedProps} from 'react-redux';
+import React, {useCallback} from 'react';
 import {flowRight} from 'lodash';
 import withHeader from '../../shared/hocs/withHeader';
 import FScrollView from '../../components/surfaces/FScrollView';
@@ -8,21 +6,26 @@ import FCenter from '../../components/surfaces/FCenter';
 import SolidButton from '../../components/controls/SolidButton';
 import FVStack from '../../components/surfaces/FVStack';
 import {Text} from 'native-base';
+import {useAppDispatch} from '../../store/hooks';
+import AuthActions from '../../store/auth/authActions';
 
-const mapDispatchToProps = {logout};
-const connector = connect(null, mapDispatchToProps);
+const Account = () => {
+  const dispatch = useAppDispatch();
 
-type AccountProps = ConnectedProps<typeof connector>;
+  const logout = useCallback((): void => {
+    dispatch(AuthActions.logout());
+  }, [dispatch]);
 
-const Account = ({logout}: AccountProps) => (
-  <FScrollView>
-    <FCenter grow>
-      <FVStack defaultSpace alignItems="center">
-        <Text>Account</Text>
-        <SolidButton onPress={logout}>Log Out</SolidButton>
-      </FVStack>
-    </FCenter>
-  </FScrollView>
-);
+  return (
+    <FScrollView>
+      <FCenter grow>
+        <FVStack defaultSpace alignItems="center">
+          <Text>Account</Text>
+          <SolidButton onPress={logout}>Log Out</SolidButton>
+        </FVStack>
+      </FCenter>
+    </FScrollView>
+  );
+};
 
-export default flowRight([withHeader, connector])(Account);
+export default flowRight([withHeader])(Account);

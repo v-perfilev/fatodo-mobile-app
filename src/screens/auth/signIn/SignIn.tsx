@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import SignInForm from './SignInForm';
 import Logo from '../../../components/layouts/Logo';
 import LinkButton from '../../../components/controls/LinkButton';
@@ -13,7 +13,6 @@ import FVStack from '../../../components/surfaces/FVStack';
 const SignIn = () => {
   const navigation = useNavigation<AuthNavigationProp>();
   const {t} = useTranslation();
-  const [isLoading, setLoading] = useState<boolean>(false);
 
   const goToForgotPassword = (): void => navigation.navigate('ForgotPassword');
   const goToSignUp = (): void => navigation.navigate('SignUp');
@@ -25,7 +24,7 @@ const SignIn = () => {
           <FCenter grow>
             <Logo withText centerText />
           </FCenter>
-          <SignInForm {...{isLoading, setLoading}} />
+          <SignInForm />
           <FVStack space="1">
             <LinkButton onPress={goToForgotPassword}>{t('account:forgotPassword.header')}</LinkButton>
             <LinkButton onPress={goToSignUp}>{t('account:register.header')}</LinkButton>

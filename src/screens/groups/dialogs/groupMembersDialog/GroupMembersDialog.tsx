@@ -1,19 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ReduxAuthState} from '../../../../store/rerducers/AuthReducer';
 import {Group, GroupUser} from '../../../../models/Group';
 import {User} from '../../../../models/User';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import ClearableTextInput from '../../../../components/inputs/ClearableTextInput';
 import UserPlusIcon from '../../../../components/icons/UserPlusIcon';
 import ModalDialog from '../../../../components/modals/ModalDialog';
-import withAuthState from '../../../../shared/hocs/withAuthState';
-import {flowRight} from 'lodash';
 import {Text} from 'native-base';
 import GroupMembersDialogMember from './GroupMembersDialogMember';
 import GhostButton from '../../../../components/controls/GhostButton';
 import FVStack from '../../../../components/surfaces/FVStack';
 import FCenter from '../../../../components/surfaces/FCenter';
+import {useAppSelector} from '../../../../store/hooks';
+import AuthSelectors from '../../../../store/auth/authSelectors';
 
 export type GroupMembersDialogProps = {
   group: Group;
@@ -35,10 +34,10 @@ export const defaultGroupMembersDialogProps: Readonly<GroupMembersDialogProps> =
   switchToEditMember: (): void => undefined,
 };
 
-type Props = ReduxAuthState & GroupMembersDialogProps;
+type Props = GroupMembersDialogProps;
 
-const GroupMembersDialog = (props: Props) => {
-  const {group, users, show, close, onSuccess, switchToAddMembers, switchToEditMember, account} = props;
+const GroupMembersDialog = ({group, users, show, close, onSuccess, switchToAddMembers, switchToEditMember}: Props) => {
+  const account = useAppSelector(AuthSelectors.accountSelector);
   const {t} = useTranslation();
   const [usersToShow, setUsersToShow] = useState<GroupUser[]>([]);
   const [deletedMemberIds, setDeletedMemberIds] = useState<string[]>([]);
@@ -118,4 +117,4 @@ const GroupMembersDialog = (props: Props) => {
   );
 };
 
-export default flowRight([withAuthState])(GroupMembersDialog);
+export default GroupMembersDialog;

@@ -1,9 +1,6 @@
 import React, {useState} from 'react';
-import {flowRight} from 'lodash';
 import {useTranslation} from 'react-i18next';
-import {ReduxAuthState} from '../../../store/rerducers/AuthReducer';
 import {Reminder, ReminderPeriodicity} from '../../../models/Reminder';
-import withAuthState from '../../../shared/hocs/withAuthState';
 import {Button, Modal} from 'native-base';
 import FormikRemindersInputToolbar from './FormikRemindersInputToolbar';
 import GhostButton from '../../controls/GhostButton';
@@ -13,13 +10,16 @@ import FormikRemindersInputWeekly from './FormikRemindersInputWeekly';
 import FormikRemindersInputMonthly from './FormikRemindersInputMonthly';
 import FormikRemindersInputYearly from './FormikRemindersInputYearly';
 import FVStack from '../../surfaces/FVStack';
+import {useAppSelector} from '../../../store/hooks';
+import AuthSelectors from '../../../store/auth/authSelectors';
 
-type FormikRemindersInputPopoverProps = ReduxAuthState & {
+type FormikRemindersInputPopoverProps = {
   show: boolean;
   handleClose: (reminder: Reminder) => void;
 };
 
-const FormikRemindersInputPopover = ({show, handleClose, account}: FormikRemindersInputPopoverProps) => {
+const FormikRemindersInputPopover = ({show, handleClose}: FormikRemindersInputPopoverProps) => {
+  const account = useAppSelector(AuthSelectors.accountSelector);
   const {t} = useTranslation();
   const [reminder, setReminder] = useState<Reminder>(null);
   const [periodicity, setPeriodicity] = useState<ReminderPeriodicity>('ONCE');
@@ -74,4 +74,4 @@ const FormikRemindersInputPopover = ({show, handleClose, account}: FormikReminde
   );
 };
 
-export default flowRight([withAuthState])(FormikRemindersInputPopover);
+export default FormikRemindersInputPopover;

@@ -5,22 +5,21 @@ import PressableButton from '../controls/PressableButton';
 import {DateFormatters, DateUtils} from '../../shared/utils/DateUtils';
 import ClearableTextInput from './ClearableTextInput';
 import DatePicker from 'react-native-date-picker';
-import withAuthState from '../../shared/hocs/withAuthState';
-import {flowRight} from 'lodash';
-import {ReduxAuthState} from '../../store/rerducers/AuthReducer';
 import ConfirmationDialog from '../modals/ConfirmationDialog';
+import {useAppSelector} from '../../store/hooks';
+import AuthSelectors from '../../store/auth/authSelectors';
 
 type FormikDateTimePickerProps = IFormControlProps &
-  FormikProps<any> &
-  ReduxAuthState & {
+  FormikProps<any> & {
     name: string;
     label?: string;
     mode: 'date' | 'time';
   };
 
 const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
-  const {name, label, mode, account} = props;
+  const {name, label, mode} = props;
   const {values, errors, touched, handleBlur, setFieldValue} = props;
+  const account = useAppSelector(AuthSelectors.accountSelector);
   const theme = useTheme();
   const [show, setShow] = useState<boolean>(false);
   const [pickerValue, setPickerValue] = useState<Date>();
@@ -90,4 +89,4 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
     </FormControl>
   );
 };
-export default flowRight([withAuthState])(FormikDateTimePicker);
+export default FormikDateTimePicker;

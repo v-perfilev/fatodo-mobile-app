@@ -1,9 +1,13 @@
-import {applyMiddleware, createStore} from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import promiseMiddleware from 'redux-promise-middleware';
-import reducer from './index';
+import {configureStore} from '@reduxjs/toolkit';
+import authSlice from './auth/authSlice';
+import snackSlice from './snack/snackSlice';
 
-const defaultMiddlewares = [thunkMiddleware, promiseMiddleware];
-const composedMiddlewares = applyMiddleware(...defaultMiddlewares);
+export const store = configureStore({
+  reducer: {
+    auth: authSlice.reducer,
+    snack: snackSlice.reducer,
+  },
+});
 
-export default createStore(reducer, composedMiddlewares);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

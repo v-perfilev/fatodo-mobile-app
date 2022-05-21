@@ -1,24 +1,21 @@
-import {login, requestAccountData} from '../../../store/actions/AuthActions';
-import {connect, ConnectedProps} from 'react-redux';
-import {FormikBag, FormikProps, withFormik} from 'formik';
+import {Formik} from 'formik';
 import React, {useEffect, useState} from 'react';
-import {SecurityUtils} from '../../../shared/utils/SecurityUtils';
-import AuthService from '../../../services/AuthService';
 import {flowRight} from 'lodash';
 import * as Yup from 'yup';
 import i18n from '../../../shared/i18n';
 import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
-import {LoginDTO} from '../../../models/dto/LoginDTO';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
-import {SnackState} from '../../../shared/contexts/SnackContext';
+import {SnackState, useSnackContext} from '../../../shared/contexts/SnackContext';
 import SolidButton from '../../../components/controls/SolidButton';
 import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
 import FVStack from '../../../components/surfaces/FVStack';
-
-const mapDispatchToProps = {login, requestAccountData};
-const connector = connect(null, mapDispatchToProps);
+import {useAppDispatch} from '../../../store/hooks';
+import {LoginDTO} from '../../../models/dto/LoginDTO';
+import AuthService from '../../../services/AuthService';
+import {SecurityUtils} from '../../../shared/utils/SecurityUtils';
+import AuthActions from '../../../store/auth/authActions';
 
 type SignInFormValues = {
   user: string;
@@ -32,86 +29,84 @@ const defaultSignInFormValues: Readonly<SignInFormValues> = {
   token: '',
 };
 
-type SignInFormProps = FormikProps<SignInFormValues> &
-  SnackState &
-  CaptchaProps &
-  ConnectedProps<typeof connector> & {
-    isLoading: boolean;
-    setLoading: (isLoading: boolean) => void;
-  };
+const signInValidationScheme = Yup.object().shape({
+  user: Yup.string().required(() => i18n.t('account:fields.user.required')),
+  password: Yup.string().required(() => i18n.t('account:fields.password.required')),
+});
 
-const SignInForm = (props: SignInFormProps) => {
-  const {isValid, handleSubmit, isLoading, setLoading, captchaToken, requestCaptchaToken} = props;
+type SignInFormProps = SnackState & CaptchaProps;
+
+const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
+  const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const {handleResponse} = useSnackContext();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [formValues, setFormValues] = useState<SignInFormValues>();
 
-  const submit = (): void => {
+  const handleClickOnSubmit = (values: SignInFormValues): void => {
+    setFormValues(values);
     setLoading(true);
     requestCaptchaToken();
   };
 
-  useEffect(() => {
-    setIsInitialized(true);
-  }, []);
-
-  useEffect(() => {
-    if (captchaToken === 'error' && isLoading) {
-      setLoading(false);
-    } else if (captchaToken && isLoading) {
-      handleSubmit();
-    }
-  }, [captchaToken, isLoading]);
-
-  return (
-    <FVStack w="100%" defaultSpace>
-      <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={isLoading} {...props} />
-      <FormikPasswordInput
-        name="password"
-        label={t('account:fields.password.label')}
-        isDisabled={isLoading}
-        {...props}
-      />
-      <SolidButton
-        colorScheme="secondary"
-        size="lg"
-        isLoading={isLoading}
-        isDisabled={!isInitialized || !isValid || isLoading}
-        onPress={submit}
-      >
-        {t('account:login.submit')}
-      </SolidButton>
-    </FVStack>
-  );
-};
-
-const formik = withFormik<SignInFormProps, SignInFormValues>({
-  mapPropsToValues: (): SignInFormValues => defaultSignInFormValues,
-  validationSchema: Yup.object().shape({
-    user: Yup.string().required(() => i18n.t('account:fields.user.required')),
-    password: Yup.string().required(() => i18n.t('account:fields.password.required')),
-  }),
-  validateOnMount: true,
-
-  handleSubmit: async (values: SignInFormValues, {props}: FormikBag<SignInFormProps, SignInFormValues>) => {
-    const {login, requestAccountData, captchaToken, handleResponse, setLoading} = props;
-
+  const handleSubmit = (): void => {
     const dto = {
-      user: values.user.trim(),
-      password: values.password.trim(),
+      user: formValues.user.trim(),
+      password: formValues.password.trim(),
       token: captchaToken,
     } as LoginDTO;
 
     AuthService.authenticate(dto)
       .then((response) => {
         const token = SecurityUtils.parseTokenFromResponse(response);
-        login(dto.user, token);
-        requestAccountData();
+        dispatch(AuthActions.login(dto.user, token));
+        dispatch(AuthActions.requestAccountData());
       })
       .catch(({response}) => {
         handleResponse(response);
+      })
+      .finally(() => {
         setLoading(false);
       });
-  },
-});
+  };
 
-export default flowRight([withSnackContext, withCaptcha, connector, formik])(SignInForm);
+  useEffect(() => {
+    if (captchaToken === 'error' && loading) {
+      setLoading(false);
+    } else if (captchaToken && formValues && loading) {
+      handleSubmit();
+    }
+  }, [captchaToken, loading, formValues]);
+
+  return (
+    <Formik
+      initialValues={defaultSignInFormValues}
+      validationSchema={signInValidationScheme}
+      validateOnMount
+      onSubmit={handleClickOnSubmit}
+    >
+      {(formikProps) => (
+        <FVStack w="100%" defaultSpace>
+          <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={loading} {...formikProps} />
+          <FormikPasswordInput
+            name="password"
+            label={t('account:fields.password.label')}
+            isDisabled={loading}
+            {...formikProps}
+          />
+          <SolidButton
+            colorScheme="secondary"
+            size="lg"
+            isLoading={loading}
+            isDisabled={!formikProps.isValid || loading}
+            onPress={formikProps.submitForm}
+          >
+            {t('account:login.submit')}
+          </SolidButton>
+        </FVStack>
+      )}
+    </Formik>
+  );
+};
+
+export default flowRight([withSnackContext, withCaptcha])(SignInForm);

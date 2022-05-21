@@ -1,29 +1,29 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ReduxAuthState} from '../../../../store/rerducers/AuthReducer';
 import {Group, GroupUser} from '../../../../models/Group';
 import {useSnackContext} from '../../../../shared/contexts/SnackContext';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import ItemService from '../../../../services/ItemService';
 import ConfirmationDialog from '../../../../components/modals/ConfirmationDialog';
 import EditIcon from '../../../../components/icons/EditIcon';
-import {flowRight} from 'lodash';
-import withAuthState from '../../../../shared/hocs/withAuthState';
 import UserView from '../../../../components/views/UserView';
 import UserMinusIcon from '../../../../components/icons/UserMinusIcon';
 import {PermissionView} from '../../../../components/views/PermissionView';
 import {MenuElement} from '../../../../models/MenuElement';
 import ControlMenu from '../../../../components/layouts/ControlMenu';
 import FHStack from '../../../../components/surfaces/FHStack';
+import {useAppSelector} from '../../../../store/hooks';
+import AuthSelectors from '../../../../store/auth/authSelectors';
 
-type Props = ReduxAuthState & {
+type Props = {
   group: Group;
   user: GroupUser;
   switchToEditMember: (user: GroupUser) => void;
   onDelete: (userId: string) => void;
 };
 
-const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete, account}: Props) => {
+const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: Props) => {
+  const account = useAppSelector(AuthSelectors.accountSelector);
   const {handleResponse} = useSnackContext();
   const {t} = useTranslation();
   const [showRemovingConfirmation, setShowRemovingConfirmation] = useState(false);
@@ -92,4 +92,4 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete, ac
   );
 };
 
-export default flowRight([withAuthState])(GroupMembersDialogMember);
+export default GroupMembersDialogMember;

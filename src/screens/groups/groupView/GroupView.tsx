@@ -3,12 +3,10 @@ import {Divider} from 'native-base';
 import {flowRight} from 'lodash';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import withAuthState from '../../../shared/hocs/withAuthState';
 import withUserList from '../../../shared/hocs/withLists/withUserList';
 import withArchivedItemList from '../../../shared/hocs/withLists/withArchivedItemList';
 import withItemList from '../../../shared/hocs/withLists/withItemList';
 import withGroupView from '../../../shared/hocs/withViews/withGroupView';
-import {ReduxAuthState} from '../../../store/rerducers/AuthReducer';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import Header from '../../../components/layouts/Header';
@@ -20,10 +18,11 @@ import GroupViewItems from './groupViewItems/GroupViewItems';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import FVStack from '../../../components/surfaces/FVStack';
+import {useAppSelector} from '../../../store/hooks';
+import AuthSelectors from '../../../store/auth/authSelectors';
 
-type GroupViewProps = ReduxAuthState;
-
-const GroupView = ({account}: GroupViewProps) => {
+const GroupView = () => {
+  const account = useAppSelector(AuthSelectors.accountSelector);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'GroupView'>>();
   const groupId = route.params.groupId;
@@ -67,4 +66,4 @@ const GroupView = ({account}: GroupViewProps) => {
   );
 };
 
-export default flowRight([withGroupView, withItemList, withArchivedItemList, withUserList, withAuthState])(GroupView);
+export default flowRight([withGroupView, withItemList, withArchivedItemList, withUserList])(GroupView);

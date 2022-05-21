@@ -6,11 +6,9 @@ import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavi
 import {useItemViewContext} from '../../../shared/contexts/viewContexts/itemViewContext';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {useReminderListContext} from '../../../shared/contexts/listContexts/reminderListContext';
-import withAuthState from '../../../shared/hocs/withAuthState';
 import withReminderList from '../../../shared/hocs/withLists/withReminderList';
 import withItemView from '../../../shared/hocs/withViews/withItemView';
 import withGroupView from '../../../shared/hocs/withViews/withGroupView';
-import {ReduxAuthState} from '../../../store/rerducers/AuthReducer';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
@@ -30,10 +28,11 @@ import ItemViewName from './itemViewName';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import FVStack from '../../../components/surfaces/FVStack';
 import FHStack from '../../../components/surfaces/FHStack';
+import {useAppSelector} from '../../../store/hooks';
+import AuthSelectors from '../../../store/auth/authSelectors';
 
-type ItemViewProps = ReduxAuthState;
-
-const ItemView = ({account}: ItemViewProps) => {
+const ItemView = () => {
+  const account = useAppSelector(AuthSelectors.accountSelector);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemView'>>();
   const itemId = route.params.itemId;
@@ -98,4 +97,4 @@ const ItemView = ({account}: ItemViewProps) => {
   );
 };
 
-export default flowRight([withGroupView, withItemView, withReminderList, withUserList, withAuthState])(ItemView);
+export default flowRight([withGroupView, withItemView, withReminderList, withUserList])(ItemView);
