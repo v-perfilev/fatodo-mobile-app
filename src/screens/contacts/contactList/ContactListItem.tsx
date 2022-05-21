@@ -6,7 +6,7 @@ import SolidButton from '../../../components/controls/SolidButton';
 import FHStack from '../../../components/surfaces/FHStack';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
-import ContactThunks from '../../../store/contact/contactThunks';
+import ContactsThunks from '../../../store/contacts/contactsThunks';
 
 type ContactListItemProps = {
   relation: ContactRelationWithUser;
@@ -19,7 +19,7 @@ const ContactListItem = ({relation}: ContactListItemProps) => {
 
   const removeRelation = (): void => {
     setDisabled(true);
-    dispatch(ContactThunks.removeRelation(relation.user.id))
+    dispatch(ContactsThunks.removeRelation(relation.user.id))
       .unwrap()
       .then(() => dispatch(SnackActions.handleCode('contact.relationRemoved', 'info')))
       .catch(() => setDisabled(false));

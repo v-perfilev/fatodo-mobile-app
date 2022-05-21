@@ -1,21 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {flowRight} from 'lodash';
 import FScrollView from '../../../components/surfaces/FScrollView';
-import withUserList from '../../../shared/hocs/withLists/withUserList';
-import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import FVStack from '../../../components/surfaces/FVStack';
 import OutcomingRequestListContainer from './OutcomingRequestListContainer';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import ContactSelectors from '../../../store/contact/contactSelectors';
-import ContactThunks from '../../../store/contact/contactThunks';
+import ContactsSelectors from '../../../store/contacts/contactsSelectors';
+import ContactsThunks from '../../../store/contacts/contactsThunks';
+import UsersSelectors from '../../../store/users/usersSelectors';
+import UsersThunks from '../../../store/users/usersThunks';
 
 const OutcomingRequestList = () => {
   const dispatch = useAppDispatch();
-  const outcomingRequests = useAppSelector(ContactSelectors.outcomingRequestsSelector);
-  const {users, handleUserIds} = useUserListContext();
+  const outcomingRequests = useAppSelector(ContactsSelectors.outcomingRequestsSelector);
+  const users = useAppSelector(UsersSelectors.usersSelector);
   const [userRequests, setUserRequests] = useState<ContactRequestWithUser[]>([]);
   const [loading, setLoading] = useLoadingState();
 
@@ -35,12 +34,12 @@ const OutcomingRequestList = () => {
   };
 
   useEffect(() => {
-    dispatch(ContactThunks.fetchOutcomingRequests());
+    dispatch(ContactsThunks.fetchOutcomingRequests());
   }, []);
 
   useEffect(() => {
     const userIds = outcomingRequests.map((r) => r.recipientId);
-    handleUserIds(userIds);
+    dispatch(UsersThunks.handleUserIds(userIds));
   }, [outcomingRequests]);
 
   useEffect(() => {
@@ -62,4 +61,4 @@ const OutcomingRequestList = () => {
   );
 };
 
-export default flowRight([withUserList])(OutcomingRequestList);
+export default OutcomingRequestList;

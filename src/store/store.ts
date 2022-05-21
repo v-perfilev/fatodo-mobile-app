@@ -1,14 +1,16 @@
 import {configureStore} from '@reduxjs/toolkit';
+import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import authSlice from './auth/authSlice';
 import snackSlice from './snack/snackSlice';
-import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
-import contactSlice from './contact/contactSlice';
+import contactsSlice from './contacts/contactsSlice';
+import usersSlice from './users/usersSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
     snack: snackSlice.reducer,
-    contact: contactSlice.reducer,
+    contacts: contactsSlice.reducer,
+    users: usersSlice.reducer,
   },
 });
 

@@ -6,7 +6,7 @@ import UserView from '../../../components/views/UserView';
 import SolidButton from '../../../components/controls/SolidButton';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
-import ContactThunks from '../../../store/contact/contactThunks';
+import ContactsThunks from '../../../store/contacts/contactsThunks';
 
 type OutcomingRequestListItemProps = {
   request: ContactRequestWithUser;
@@ -19,7 +19,7 @@ const OutcomingRequestListItem = ({request}: OutcomingRequestListItemProps) => {
 
   const removeRequest = (): void => {
     setDisabled(true);
-    dispatch(ContactThunks.removeOutcomingRequest(request.user.id))
+    dispatch(ContactsThunks.removeOutcomingRequest(request.user.id))
       .unwrap()
       .then(() => dispatch(SnackActions.handleCode('contact.requestRemoved', 'info')))
       .catch(() => setDisabled(false));

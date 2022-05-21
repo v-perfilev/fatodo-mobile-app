@@ -6,8 +6,8 @@ import {Group} from '../../../models/Group';
 import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
 import GhostButton from '../../../components/controls/GhostButton';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import ContactSelectors from '../../../store/contact/contactSelectors';
-import ContactThunks from '../../../store/contact/contactThunks';
+import ContactsSelectors from '../../../store/contacts/contactsSelectors';
+import ContactsThunks from '../../../store/contacts/contactsThunks';
 
 export type GroupAddMembersDialogProps = {
   group: Group;
@@ -25,7 +25,7 @@ export const defaultGroupAddMembersDialogProps: Readonly<GroupAddMembersDialogPr
 
 const GroupAddMembersDialog = ({group, show, close, onSuccess}: GroupAddMembersDialogProps) => {
   const dispatch = useAppDispatch();
-  const relations = useAppSelector(ContactSelectors.relationsSelector);
+  const relations = useAppSelector(ContactsSelectors.relationsSelector);
   const {t} = useTranslation();
   const [contactIds, setContactIds] = useState<string[]>([]);
   const [userIds, setUserIds] = useState<string[]>([]);
@@ -45,7 +45,7 @@ const GroupAddMembersDialog = ({group, show, close, onSuccess}: GroupAddMembersD
 
   useEffect(() => {
     if (show) {
-      dispatch(ContactThunks.fetchRelations());
+      dispatch(ContactsThunks.fetchRelations());
     }
   }, [show]);
 

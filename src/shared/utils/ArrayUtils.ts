@@ -38,6 +38,10 @@ export class ArrayUtils {
     return arr.findIndex((t) => t.id === item.id) === i;
   };
 
+  public static notUndefinedFilter = (item: any): boolean => {
+    return item !== undefined;
+  };
+
   public static withIdFilter = (item: any): boolean => {
     return item.id !== undefined && item.id !== null;
   };

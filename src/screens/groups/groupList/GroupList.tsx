@@ -5,13 +5,13 @@ import withGroupList from '../../../shared/hocs/withLists/withGroupList';
 import {useGroupListContext} from '../../../shared/contexts/listContexts/groupListContext';
 import GroupListContainer from './GroupListContainer';
 import {useGroupListItemsContext} from '../../../shared/contexts/listContexts/groupListItemsContext';
-import withUserList from '../../../shared/hocs/withLists/withUserList';
 import GroupListHeader from './GroupListHeader';
-import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
+import {useAppDispatch} from '../../../store/store';
+import UsersThunks from '../../../store/users/usersThunks';
 
 const GroupList = () => {
-  const {handleUserIds} = useUserListContext();
+  const dispatch = useAppDispatch();
   const {groups, load: loadGroups, loading: groupsLoading} = useGroupListContext();
   const {items, loadInitialState} = useGroupListItemsContext();
   const [sorting, setSorting] = useState<boolean>(false);
@@ -29,14 +29,14 @@ const GroupList = () => {
 
   useEffect(() => {
     const userIds = groups.reduce((acc, group) => [...acc, group.members], []).map((user) => user.id);
-    handleUserIds(userIds);
+    dispatch(UsersThunks.handleUserIds(userIds));
   }, [groups]);
 
   useEffect(() => {
     const userIds = Array.from(items.values())
       .reduce((acc, i) => [...acc, ...i], [])
       .reduce((acc, item) => [...acc, item.createdBy, item.lastModifiedBy], []);
-    handleUserIds(userIds);
+    dispatch(UsersThunks.handleUserIds(userIds));
   }, [items]);
 
   return (
@@ -49,4 +49,4 @@ const GroupList = () => {
   );
 };
 
-export default flowRight([withGroupList, withGroupListItems, withUserList])(GroupList);
+export default flowRight([withGroupList, withGroupListItems])(GroupList);

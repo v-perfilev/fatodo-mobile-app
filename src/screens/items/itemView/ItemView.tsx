@@ -14,7 +14,6 @@ import Header from '../../../components/layouts/Header';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ItemViewMenu from './ItemViewMenu';
-import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import ItemViewDescription from './ItemViewDescription';
 import ItemViewTags from './ItemViewTags';
 import ItemViewChanges from './ItemViewChanges';
@@ -23,20 +22,20 @@ import ItemViewPriority from './itemViewPriority';
 import ItemViewType from './itemViewType';
 import ItemViewGroup from './itemViewGroup';
 import ItemReminders from './ItemReminders';
-import withUserList from '../../../shared/hocs/withLists/withUserList';
 import ItemViewName from './itemViewName';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import FVStack from '../../../components/surfaces/FVStack';
 import FHStack from '../../../components/surfaces/FHStack';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import UsersThunks from '../../../store/users/usersThunks';
 
 const ItemView = () => {
+  const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.accountSelector);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemView'>>();
   const itemId = route.params.itemId;
-  const {handleUserIds} = useUserListContext();
   const {item, load: loadItem} = useItemViewContext();
   const {group, load: loadGroup} = useGroupViewContext();
   const {reminders, load: loadReminders} = useReminderListContext();
@@ -64,7 +63,7 @@ const ItemView = () => {
   useEffect(() => {
     if (group) {
       const userIds = group.members.map((user) => user.id);
-      handleUserIds(userIds);
+      dispatch(UsersThunks.handleUserIds(userIds));
     }
   }, [group]);
 
@@ -97,4 +96,4 @@ const ItemView = () => {
   );
 };
 
-export default flowRight([withGroupView, withItemView, withReminderList, withUserList])(ItemView);
+export default flowRight([withGroupView, withItemView, withReminderList])(ItemView);

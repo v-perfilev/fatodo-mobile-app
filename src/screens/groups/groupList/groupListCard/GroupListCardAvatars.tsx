@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import AvatarGroup from '../../../../components/surfaces/AvatarGroup';
 import {User} from '../../../../models/User';
-import {useUserListContext} from '../../../../shared/contexts/listContexts/userListContext';
 import {Group} from '../../../../models/Group';
+import {useAppSelector} from '../../../../store/store';
+import UsersSelectors from '../../../../store/users/usersSelectors';
 
 type GroupListCardAvatarsProps = {
   group: Group;
 };
 
 const GroupListCardAvatars = ({group}: GroupListCardAvatarsProps) => {
-  const {users} = useUserListContext();
+  const users = useAppSelector(UsersSelectors.usersSelector);
 
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
 

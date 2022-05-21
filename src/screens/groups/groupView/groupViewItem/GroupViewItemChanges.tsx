@@ -1,16 +1,17 @@
 import React, {useMemo} from 'react';
 import {Item} from '../../../../models/Item';
 import {Text} from 'native-base';
-import {useUserListContext} from '../../../../shared/contexts/listContexts/userListContext';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import FHStack from '../../../../components/surfaces/FHStack';
+import {useAppSelector} from '../../../../store/store';
+import UsersSelectors from '../../../../store/users/usersSelectors';
 
 type GroupViewItemChangesProps = {
   item: Item;
 };
 
 const GroupViewItemChanges = ({item}: GroupViewItemChangesProps) => {
-  const {users} = useUserListContext();
+  const users = useAppSelector(UsersSelectors.usersSelector);
 
   const name = useMemo<string>(() => {
     const user = users.find((user) => user.id === item.createdBy);

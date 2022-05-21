@@ -1,8 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {ContactState} from './contactType';
-import ContactThunks from './contactThunks';
+import {ContactsState} from './contactsType';
+import ContactsThunks from './contactsThunks';
 
-const initialState: ContactState = {
+const initialState: ContactsState = {
   relationCount: 0,
   outcomingRequestCount: 0,
   incomingRequestCount: 0,
@@ -12,26 +12,26 @@ const initialState: ContactState = {
   loading: false,
 };
 
-const contactSlice = createSlice({
-  name: 'contact',
+const contactsSlice = createSlice({
+  name: 'contacts',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     /*
     fetchInfo
     */
-    builder.addCase(ContactThunks.fetchInfo.pending, (state) => ({
+    builder.addCase(ContactsThunks.fetchInfo.pending, (state) => ({
       ...state,
       loading: true,
     }));
-    builder.addCase(ContactThunks.fetchInfo.fulfilled, (state, action) => ({
+    builder.addCase(ContactsThunks.fetchInfo.fulfilled, (state, action) => ({
       ...state,
       relationCount: action.payload.relationCount,
       outcomingRequestCount: action.payload.outcomingRequestCount,
       incomingRequestCount: action.payload.incomingRequestCount,
       loading: false,
     }));
-    builder.addCase(ContactThunks.fetchInfo.rejected, (state) => ({
+    builder.addCase(ContactsThunks.fetchInfo.rejected, (state) => ({
       ...state,
       loading: false,
     }));
@@ -39,16 +39,16 @@ const contactSlice = createSlice({
     /*
     fetchRelations
     */
-    builder.addCase(ContactThunks.fetchRelations.pending, (state) => ({
+    builder.addCase(ContactsThunks.fetchRelations.pending, (state) => ({
       ...state,
       loading: true,
     }));
-    builder.addCase(ContactThunks.fetchRelations.fulfilled, (state, action) => ({
+    builder.addCase(ContactsThunks.fetchRelations.fulfilled, (state, action) => ({
       ...state,
       relations: action.payload,
       loading: false,
     }));
-    builder.addCase(ContactThunks.fetchRelations.rejected, (state) => ({
+    builder.addCase(ContactsThunks.fetchRelations.rejected, (state) => ({
       ...state,
       loading: false,
     }));
@@ -56,16 +56,16 @@ const contactSlice = createSlice({
     /*
     fetchOutcomingRequests
     */
-    builder.addCase(ContactThunks.fetchOutcomingRequests.pending, (state) => ({
+    builder.addCase(ContactsThunks.fetchOutcomingRequests.pending, (state) => ({
       ...state,
       loading: true,
     }));
-    builder.addCase(ContactThunks.fetchOutcomingRequests.fulfilled, (state, action) => ({
+    builder.addCase(ContactsThunks.fetchOutcomingRequests.fulfilled, (state, action) => ({
       ...state,
       outcomingRequests: action.payload,
       loading: false,
     }));
-    builder.addCase(ContactThunks.fetchOutcomingRequests.rejected, (state) => ({
+    builder.addCase(ContactsThunks.fetchOutcomingRequests.rejected, (state) => ({
       ...state,
       loading: false,
     }));
@@ -73,16 +73,16 @@ const contactSlice = createSlice({
     /*
     fetchIncomingRequests
     */
-    builder.addCase(ContactThunks.fetchIncomingRequests.pending, (state) => ({
+    builder.addCase(ContactsThunks.fetchIncomingRequests.pending, (state) => ({
       ...state,
       loading: true,
     }));
-    builder.addCase(ContactThunks.fetchIncomingRequests.fulfilled, (state, action) => ({
+    builder.addCase(ContactsThunks.fetchIncomingRequests.fulfilled, (state, action) => ({
       ...state,
       incomingRequests: action.payload,
       loading: false,
     }));
-    builder.addCase(ContactThunks.fetchIncomingRequests.rejected, (state) => ({
+    builder.addCase(ContactsThunks.fetchIncomingRequests.rejected, (state) => ({
       ...state,
       loading: false,
     }));
@@ -90,7 +90,7 @@ const contactSlice = createSlice({
     /*
     removeRelation
     */
-    builder.addCase(ContactThunks.removeRelation.fulfilled, (state, action) => {
+    builder.addCase(ContactsThunks.removeRelation.fulfilled, (state, action) => {
       const relationCount = state.relationCount - 1;
       const relations = state.relations.filter((relation) => relation.secondUserId !== action.payload);
       return {...state, relationCount, relations};
@@ -99,7 +99,7 @@ const contactSlice = createSlice({
     /*
     acceptIncomingRequest
     */
-    builder.addCase(ContactThunks.acceptIncomingRequest.fulfilled, (state, action) => {
+    builder.addCase(ContactsThunks.acceptIncomingRequest.fulfilled, (state, action) => {
       const relationCount = state.relationCount + 1;
       const incomingRequestCount = state.incomingRequestCount - 1;
       const relations = state.relations;
@@ -111,7 +111,7 @@ const contactSlice = createSlice({
     /*
     declineIncomingRequest
     */
-    builder.addCase(ContactThunks.declineIncomingRequest.fulfilled, (state, action) => {
+    builder.addCase(ContactsThunks.declineIncomingRequest.fulfilled, (state, action) => {
       const incomingRequestCount = state.incomingRequestCount - 1;
       const incomingRequests = state.incomingRequests.filter((request) => request.requesterId !== action.payload);
       return {...state, incomingRequestCount, incomingRequests};
@@ -120,7 +120,7 @@ const contactSlice = createSlice({
     /*
     removeOutcomingRequest
     */
-    builder.addCase(ContactThunks.removeOutcomingRequest.fulfilled, (state, action) => {
+    builder.addCase(ContactsThunks.removeOutcomingRequest.fulfilled, (state, action) => {
       const outcomingRequestCount = state.outcomingRequestCount - 1;
       const outcomingRequests = state.outcomingRequests.filter((request) => request.recipientId !== action.payload);
       return {...state, outcomingRequestCount, outcomingRequests};
@@ -128,4 +128,4 @@ const contactSlice = createSlice({
   },
 });
 
-export default contactSlice;
+export default contactsSlice;

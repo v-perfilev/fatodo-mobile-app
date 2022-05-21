@@ -2,17 +2,17 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import ContactService from '../../services/ContactService';
 
 enum TYPES {
-  FETCH_INFO = 'contact/fetchInfo',
-  FETCH_RELATIONS = 'contact/fetchRelations',
-  FETCH_OUTCOMING_REQUESTS = 'contact/fetchOutcomingRequests',
-  FETCH_INCOMING_REQUESTS = 'contact/fetchIncomingRequests',
-  REMOVE_RELATION = 'contact/removeRelation',
-  ACCEPT_INCOMING_REQUEST = 'contact/acceptIncomingRequest',
-  DECLINE_INCOMING_REQUEST = 'contact/declineIncomingRequest',
-  REMOVE_OUTCOMING_REQUEST = 'contact/removeOutcomingRequest',
+  FETCH_INFO = 'contacts/fetchInfo',
+  FETCH_RELATIONS = 'contacts/fetchRelations',
+  FETCH_OUTCOMING_REQUESTS = 'contacts/fetchOutcomingRequests',
+  FETCH_INCOMING_REQUESTS = 'contacts/fetchIncomingRequests',
+  REMOVE_RELATION = 'contacts/removeRelation',
+  ACCEPT_INCOMING_REQUEST = 'contacts/acceptIncomingRequest',
+  DECLINE_INCOMING_REQUEST = 'contacts/declineIncomingRequest',
+  REMOVE_OUTCOMING_REQUEST = 'contacts/removeOutcomingRequest',
 }
 
-export class ContactThunks {
+export class ContactsThunks {
   static fetchInfo = createAsyncThunk(TYPES.FETCH_INFO, async () => {
     const response = await ContactService.getInfo();
     return response.data;
@@ -54,4 +54,4 @@ export class ContactThunks {
   });
 }
 
-export default ContactThunks;
+export default ContactsThunks;

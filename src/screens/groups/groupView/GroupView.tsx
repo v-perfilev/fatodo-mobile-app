@@ -3,12 +3,10 @@ import {Divider} from 'native-base';
 import {flowRight} from 'lodash';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import withUserList from '../../../shared/hocs/withLists/withUserList';
 import withArchivedItemList from '../../../shared/hocs/withLists/withArchivedItemList';
 import withItemList from '../../../shared/hocs/withLists/withItemList';
 import withGroupView from '../../../shared/hocs/withViews/withGroupView';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
-import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import Header from '../../../components/layouts/Header';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
@@ -18,15 +16,16 @@ import GroupViewItems from './groupViewItems/GroupViewItems';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import FVStack from '../../../components/surfaces/FVStack';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import UsersThunks from '../../../store/users/usersThunks';
 
 const GroupView = () => {
+  const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.accountSelector);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'GroupView'>>();
   const groupId = route.params.groupId;
-  const {handleUserIds} = useUserListContext();
   const {group, load: loadGroup} = useGroupViewContext();
   const [showArchived, setShowArchived] = useState<boolean>(false);
 
@@ -34,7 +33,7 @@ const GroupView = () => {
 
   const loadGroupUsers = (): void => {
     const userIds = group.members.map((user) => user.id);
-    handleUserIds(userIds);
+    dispatch(UsersThunks.handleUserIds(userIds));
   };
 
   useEffect(() => {
@@ -66,4 +65,4 @@ const GroupView = () => {
   );
 };
 
-export default flowRight([withGroupView, withItemList, withArchivedItemList, withUserList])(GroupView);
+export default flowRight([withGroupView, withItemList, withArchivedItemList])(GroupView);

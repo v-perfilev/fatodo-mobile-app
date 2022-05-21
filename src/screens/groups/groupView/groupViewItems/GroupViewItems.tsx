@@ -1,7 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
 import {UserAccount} from '../../../../models/User';
-import {useUserListContext} from '../../../../shared/contexts/listContexts/userListContext';
 import {useLoadingState} from '../../../../shared/hooks/useLoadingState';
 import {useArchivedItemListContext} from '../../../../shared/contexts/listContexts/archivedItemListContext';
 import {useItemListContext} from '../../../../shared/contexts/listContexts/itemListContext';
@@ -15,6 +14,8 @@ import GroupViewItemsPagination from './GroupViewItemsPagination';
 import GroupViewItemsArchivedSwitch from './GroupViewItemsArchivedSwitch';
 import FVStack from '../../../../components/surfaces/FVStack';
 import FHStack from '../../../../components/surfaces/FHStack';
+import {useAppDispatch} from '../../../../store/store';
+import UsersThunks from '../../../../store/users/usersThunks';
 
 type GroupViewItemsProps = {
   showArchived: boolean;
@@ -23,7 +24,7 @@ type GroupViewItemsProps = {
 };
 
 const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItemsProps) => {
-  const {handleUserIds} = useUserListContext();
+  const dispatch = useAppDispatch();
   const {group} = useGroupViewContext();
   const {items: active, count: activeCount, load: loadActive, loading: activeLoading} = useItemListContext();
   const {
@@ -54,7 +55,7 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
 
   const loadItemsUsers = (): void => {
     const userIds = items.reduce((acc, item) => [...acc, item.createdBy, item.lastModifiedBy], []);
-    handleUserIds(userIds);
+    dispatch(UsersThunks.handleUserIds(userIds));
   };
 
   const resetPage = (): void => {

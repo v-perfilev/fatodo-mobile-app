@@ -1,7 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {flowRight} from 'lodash';
-import withUserList from '../../../shared/hocs/withLists/withUserList';
-import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
@@ -11,14 +8,16 @@ import {useTranslation} from 'react-i18next';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import FVStack from '../../../components/surfaces/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import ContactSelectors from '../../../store/contact/contactSelectors';
-import ContactThunks from '../../../store/contact/contactThunks';
+import ContactsThunks from '../../../store/contacts/contactsThunks';
+import ContactsSelectors from '../../../store/contacts/contactsSelectors';
+import UsersSelectors from '../../../store/users/usersSelectors';
+import UsersThunks from '../../../store/users/usersThunks';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();
-  const relations = useAppSelector(ContactSelectors.relationsSelector);
+  const relations = useAppSelector(ContactsSelectors.relationsSelector);
+  const users = useAppSelector(UsersSelectors.usersSelector);
   const {t} = useTranslation();
-  const {users, handleUserIds} = useUserListContext();
   const [userRelations, setUserRelations] = useState<ContactRelationWithUser[]>([]);
   const [loading, setLoading] = useLoadingState();
   const [filter, setFilter] = useState<string>('');
@@ -40,12 +39,12 @@ const ContactList = () => {
 
   useEffect(() => {
     setLoading(true);
-    dispatch(ContactThunks.fetchRelations());
+    dispatch(ContactsThunks.fetchRelations());
   }, []);
 
   useEffect(() => {
     const userIds = relations.map((r) => r.secondUserId);
-    handleUserIds(userIds);
+    dispatch(UsersThunks.handleUserIds(userIds));
   }, [relations]);
 
   useEffect(() => {
@@ -68,4 +67,4 @@ const ContactList = () => {
   );
 };
 
-export default flowRight([withUserList])(ContactList);
+export default ContactList;

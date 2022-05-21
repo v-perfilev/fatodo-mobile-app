@@ -1,16 +1,17 @@
 import React, {FC, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {flowRight} from 'lodash';
-import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import {User} from '../../../models/User';
 import UserService from '../../../services/UserService';
 import {Text} from 'native-base';
-import withUserList from '../../../shared/hocs/withLists/withUserList';
 import {ArrayUtils} from '../../../shared/utils/ArrayUtils';
 import ClearableTextInput from '../ClearableTextInput';
 import UsersSelectItem from './UsersSelectItem';
 import FVStack from '../../surfaces/FVStack';
 import FCenter from '../../surfaces/FCenter';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import UsersSelectors from '../../../store/users/usersSelectors';
+import UsersActions from '../../../store/users/usersActions';
+import UsersThunks from '../../../store/users/usersThunks';
 
 type Props = {
   allowedIds: string[];
@@ -19,7 +20,8 @@ type Props = {
 };
 
 const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => {
-  const {users, handleUserIds, handleUsers} = useUserListContext();
+  const dispatch = useAppDispatch();
+  const users = useAppSelector(UsersSelectors.usersSelector);
   const {t} = useTranslation();
   const [filter, setFilter] = useState<string>('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -69,13 +71,13 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
     if (filter.length > 0) {
       UserService.getAllByUsernamePart(filter).then((response) => {
         const users = response.data;
-        handleUsers(users);
+        dispatch(UsersActions.handleUsers(users));
       });
     }
   };
 
   useEffect(() => {
-    handleUserIds(allowedIds);
+    dispatch(UsersThunks.handleUserIds(allowedIds));
   }, [allowedIds]);
 
   useEffect(() => {
@@ -113,4 +115,4 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
     </FVStack>
   );
 };
-export default flowRight(withUserList)(UsersSelect);
+export default UsersSelect;

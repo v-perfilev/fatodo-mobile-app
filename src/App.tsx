@@ -18,7 +18,7 @@ import AuthActions from './store/auth/authActions';
 import SnackActions from './store/snack/snackActions';
 import RootNavigator from './navigators/RootNavigator';
 import AuthThunks from './store/auth/authThunks';
-import ContactThunks from './store/contact/contactThunks';
+import ContactsThunks from './store/contacts/contactsThunks';
 
 // setup axios
 const axiosActions = bindActionCreators(
@@ -52,7 +52,7 @@ const App = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(ContactThunks.fetchInfo());
+      dispatch(ContactsThunks.fetchInfo());
     }
   }, [isAuthenticated]);
 

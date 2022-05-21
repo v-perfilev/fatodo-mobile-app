@@ -1,21 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {flowRight} from 'lodash';
 import FScrollView from '../../../components/surfaces/FScrollView';
-import withUserList from '../../../shared/hocs/withLists/withUserList';
-import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import FVStack from '../../../components/surfaces/FVStack';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import IncomingRequestListContainer from './IncomingRequestListContainer';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import ContactSelectors from '../../../store/contact/contactSelectors';
-import ContactThunks from '../../../store/contact/contactThunks';
+import ContactsSelectors from '../../../store/contacts/contactsSelectors';
+import ContactsThunks from '../../../store/contacts/contactsThunks';
+import UsersSelectors from '../../../store/users/usersSelectors';
+import UsersThunks from '../../../store/users/usersThunks';
 
 const IncomingRequestList = () => {
   const dispatch = useAppDispatch();
-  const incomingRequests = useAppSelector(ContactSelectors.incomingRequestsSelector);
-  const {users, handleUserIds} = useUserListContext();
+  const incomingRequests = useAppSelector(ContactsSelectors.incomingRequestsSelector);
+  const users = useAppSelector(UsersSelectors.usersSelector);
   const [userRequests, setUserRequests] = useState<ContactRequestWithUser[]>([]);
   const [loading, setLoading] = useLoadingState();
 
@@ -35,12 +34,12 @@ const IncomingRequestList = () => {
   };
 
   useEffect(() => {
-    dispatch(ContactThunks.fetchIncomingRequests());
+    dispatch(ContactsThunks.fetchIncomingRequests());
   }, []);
 
   useEffect(() => {
     const userIds = incomingRequests.map((r) => r.requesterId);
-    handleUserIds(userIds);
+    dispatch(UsersThunks.handleUserIds(userIds));
   }, [incomingRequests]);
 
   useEffect(() => {
@@ -62,4 +61,4 @@ const IncomingRequestList = () => {
   );
 };
 
-export default flowRight([withUserList])(IncomingRequestList);
+export default IncomingRequestList;

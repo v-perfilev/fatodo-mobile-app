@@ -14,16 +14,17 @@ import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupVi
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {UserAccount} from '../../../models/User';
 import {useGroupDialogContext} from '../../../shared/contexts/dialogContexts/GroupDialogContext';
-import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
+import {useAppSelector} from '../../../store/store';
+import UsersSelectors from '../../../store/users/usersSelectors';
 
 type GroupViewMenuProps = {
   account: UserAccount;
 };
 
 const GroupViewMenu = ({account}: GroupViewMenuProps) => {
+  const users = useAppSelector(UsersSelectors.usersSelector);
   const navigation = useNavigation<GroupNavigationProp>();
   const {group, load: loadGroup} = useGroupViewContext();
-  const {users} = useUserListContext();
   const {showGroupMembersDialog, showGroupAddMembersDialog, showGroupLeaveDialog, showGroupDeleteDialog} =
     useGroupDialogContext();
   const {t} = useTranslation();

@@ -6,7 +6,7 @@ import FHStack from '../../../components/surfaces/FHStack';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
-import ContactThunks from '../../../store/contact/contactThunks';
+import ContactsThunks from '../../../store/contacts/contactsThunks';
 
 type IncomingRequestListItemProps = {
   request: ContactRequestWithUser;
@@ -19,7 +19,7 @@ const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
 
   const acceptRequest = (): void => {
     setDisabled(true);
-    dispatch(ContactThunks.acceptIncomingRequest(request.user.id))
+    dispatch(ContactsThunks.acceptIncomingRequest(request.user.id))
       .unwrap()
       .then(() => dispatch(SnackActions.handleCode('contact.requestAccepted', 'info')))
       .catch(() => setDisabled(false));
@@ -27,7 +27,7 @@ const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
 
   const declineRequest = (): void => {
     setDisabled(true);
-    dispatch(ContactThunks.declineIncomingRequest(request.user.id))
+    dispatch(ContactsThunks.declineIncomingRequest(request.user.id))
       .unwrap()
       .then(() => dispatch(SnackActions.handleCode('contact.requestDeclined', 'info')))
       .catch(() => setDisabled(false));
