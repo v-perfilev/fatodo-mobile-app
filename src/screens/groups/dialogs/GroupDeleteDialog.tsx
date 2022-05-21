@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useTranslation} from 'react-i18next';
-import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import ItemService from '../../../services/ItemService';
 import {Group} from '../../../models/Group';
+import {useAppDispatch} from '../../../store/hooks';
+import SnackActions from '../../../store/snack/snackActions';
 
 export type GroupDeleteDialogProps = {
   group: Group;
@@ -20,20 +21,17 @@ export const defaultGroupDeleteDialogProps: Readonly<GroupDeleteDialogProps> = {
 };
 
 const GroupDeleteDialog = ({group, show, close, onSuccess}: GroupDeleteDialogProps) => {
+  const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const {handleCode, handleResponse} = useSnackContext();
   const [loading, setLoading] = useState<boolean>(false);
 
   const onAgree = (): void => {
     setLoading(true);
     ItemService.deleteGroup(group?.id)
       .then(() => {
-        handleCode('group.deleted', 'info');
+        dispatch(SnackActions.handleCode('group.deleted', 'info'));
         close();
         onSuccess();
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setLoading(false);

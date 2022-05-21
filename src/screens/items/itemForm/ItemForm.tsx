@@ -1,14 +1,11 @@
 import React from 'react';
-import {flowRight} from 'lodash';
-import {Formik, FormikHelpers, FormikProps} from 'formik';
+import {Formik, FormikHelpers} from 'formik';
 import {Group} from '../../../models/Group';
 import * as Yup from 'yup';
 import i18n from '../../../shared/i18n';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import SolidButton from '../../../components/controls/SolidButton';
 import {useTranslation} from 'react-i18next';
-import {SnackState} from '../../../shared/contexts/SnackContext';
-import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
 import {Item, ItemPriorityType, itemPriorityTypes, ItemType, itemTypes} from '../../../models/Item';
 import {Reminder} from '../../../models/Reminder';
 import {DateConverters} from '../../../shared/utils/DateUtils';
@@ -67,14 +64,13 @@ const validationSchema = Yup.object().shape({
   priority: Yup.string().required(() => i18n.t('item:fields.priority.required')),
 });
 
-type ItemFormProps = FormikProps<ItemFormValues> &
-  SnackState & {
-    group: Group;
-    item?: Item;
-    reminders?: Reminder[];
-    request: (dto: ItemDTO, stopSubmitting: () => void) => void;
-    cancel: () => void;
-  };
+type ItemFormProps = {
+  group: Group;
+  item?: Item;
+  reminders?: Reminder[];
+  request: (dto: ItemDTO, stopSubmitting: () => void) => void;
+  cancel: () => void;
+};
 
 const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
   const account = useAppSelector(AuthSelectors.accountSelector);
@@ -183,4 +179,4 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
   );
 };
 
-export default flowRight([withSnackContext])(ItemForm);
+export default ItemForm;

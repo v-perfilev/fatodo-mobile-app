@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {ComponentType, useState} from 'react';
-import {useSnackContext} from '../../contexts/SnackContext';
 import {Item} from '../../../models/Item';
 import ItemService from '../../../services/ItemService';
 import {ResponseUtils} from '../../utils/ResponseUtils';
@@ -8,7 +7,6 @@ import {ItemViewContext} from '../../contexts/viewContexts/itemViewContext';
 import {AxiosError} from 'axios';
 
 const withItemView = (Component: ComponentType) => (props: any) => {
-  const {handleResponse} = useSnackContext();
   const [item, setItem] = useState<Item>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -19,11 +17,11 @@ const withItemView = (Component: ComponentType) => (props: any) => {
         setItem(response.data);
       })
       .catch(({response}: AxiosError) => {
+        // TODO handle 404
         const status = ResponseUtils.getStatus(response);
         if (status === 404 && notFoundAction) {
           notFoundAction();
         }
-        handleResponse(response);
         if (failedAction) {
           failedAction();
         }

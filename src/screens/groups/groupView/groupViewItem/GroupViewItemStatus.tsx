@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Item, ItemStatusType} from '../../../../models/Item';
 import StatusView from '../../../../components/views/StatusView';
-import {useSnackContext} from '../../../../shared/contexts/SnackContext';
 import {useItemListContext} from '../../../../shared/contexts/listContexts/itemListContext';
 import {useArchivedItemListContext} from '../../../../shared/contexts/listContexts/archivedItemListContext';
 import ItemService from '../../../../services/ItemService';
@@ -13,7 +12,6 @@ type GroupViewItemStatusProps = {
 };
 
 const GroupViewItemStatus = ({item, canEdit}: GroupViewItemStatusProps) => {
-  const {handleResponse} = useSnackContext();
   const {updateItem: updateActive} = useItemListContext();
   const {updateItem: updateArchived} = useArchivedItemListContext();
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,9 +24,6 @@ const GroupViewItemStatus = ({item, canEdit}: GroupViewItemStatusProps) => {
       .then(() => {
         const updatedItem = {...item, status};
         updateItem(updatedItem);
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setLoading(false);

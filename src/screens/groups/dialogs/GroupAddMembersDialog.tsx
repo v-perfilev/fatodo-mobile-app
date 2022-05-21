@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import ItemService from '../../../services/ItemService';
 import ModalDialog from '../../../components/modals/ModalDialog';
 import {Group} from '../../../models/Group';
@@ -23,7 +22,6 @@ export const defaultGroupAddMembersDialogProps: Readonly<GroupAddMembersDialogPr
 };
 
 const GroupAddMembersDialog = ({group, show, close, onSuccess}: GroupAddMembersDialogProps) => {
-  const {handleResponse} = useSnackContext();
   const {t} = useTranslation();
   const {relations, update} = useContactContext();
   const [contactIds, setContactIds] = useState<string[]>([]);
@@ -36,9 +34,6 @@ const GroupAddMembersDialog = ({group, show, close, onSuccess}: GroupAddMembersD
       .then(() => {
         close();
         onSuccess();
-      })
-      .catch((response) => {
-        handleResponse(response);
       })
       .finally(() => {
         setIsSubmitting(false);

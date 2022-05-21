@@ -2,7 +2,6 @@ import React, {FC, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {flowRight} from 'lodash';
 import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
-import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import {User} from '../../../models/User';
 import UserService from '../../../services/UserService';
 import {Text} from 'native-base';
@@ -21,7 +20,6 @@ type Props = {
 
 const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => {
   const {users, handleUserIds, handleUsers} = useUserListContext();
-  const {handleResponse} = useSnackContext();
   const {t} = useTranslation();
   const [filter, setFilter] = useState<string>('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -69,14 +67,10 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
 
   const loadUserFromFilter = (): void => {
     if (filter.length > 0) {
-      UserService.getAllByUsernamePart(filter)
-        .then((response) => {
-          const users = response.data;
-          handleUsers(users);
-        })
-        .catch(({response}) => {
-          handleResponse(response);
-        });
+      UserService.getAllByUsernamePart(filter).then((response) => {
+        const users = response.data;
+        handleUsers(users);
+      });
     }
   };
 

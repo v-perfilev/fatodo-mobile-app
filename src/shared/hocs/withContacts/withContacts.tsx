@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {ComponentType, useEffect, useState} from 'react';
-import {useSnackContext} from '../../contexts/SnackContext';
 import {ContactRelation} from '../../../models/ContactRelation';
 import {ContactRequest} from '../../../models/ContactRequest';
 import {ContactContext} from '../../contexts/contactContexts/contactContext';
@@ -10,7 +9,6 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 
 const withContacts = (Component: ComponentType) => (props: any) => {
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticatedSelector);
-  const {handleResponse} = useSnackContext();
   const [relations, setRelations] = useState<ContactRelation[]>([]);
   const [outcomingRequests, setOutcomingRequests] = useState<ContactRequest[]>([]);
   const [incomingRequests, setIncomingRequests] = useState<ContactRequest[]>([]);
@@ -25,9 +23,6 @@ const withContacts = (Component: ComponentType) => (props: any) => {
       .then((response) => {
         setRelations(response.data);
       })
-      .catch(({response}) => {
-        handleResponse(response);
-      })
       .finally(() => {
         setRelationsLoading(false);
       });
@@ -39,9 +34,6 @@ const withContacts = (Component: ComponentType) => (props: any) => {
       .then((response) => {
         setOutcomingRequests(response.data);
       })
-      .catch(({response}) => {
-        handleResponse(response);
-      })
       .finally(() => {
         setOutcomingRequestsLoading(false);
       });
@@ -52,9 +44,6 @@ const withContacts = (Component: ComponentType) => (props: any) => {
     ContactService.getIncomingRequests()
       .then((response) => {
         setIncomingRequests(response.data);
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setIncomingRequestsLoading(false);

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {ComponentType, useEffect, useState} from 'react';
 import {flowRight} from 'lodash';
-import {Box, useToast} from 'native-base';
-import withNativeBase from '../withNativeBase';
-import {useAppDispatch, useAppSelector} from '../../../store/hooks';
-import SnackSelectors from '../../../store/snack/snackSelectors';
-import {ReduxSnack} from '../../../store/snack/snackType';
-import SnackActions from '../../../store/snack/snackActions';
+import {useToast} from 'native-base';
+import withNativeBase from './withNativeBase';
+import {useAppDispatch, useAppSelector} from '../../store/hooks';
+import SnackSelectors from '../../store/snack/snackSelectors';
+import {ReduxSnack} from '../../store/snack/snackType';
+import SnackActions from '../../store/snack/snackActions';
 
-const SnackDisplay = () => {
+const withSnackDisplay = (Component: ComponentType) => (props: any) => {
   const dispatch = useAppDispatch();
   const snackList = useAppSelector(SnackSelectors.list);
   const [displayed, setDisplayed] = useState<string[]>([]);
@@ -31,16 +31,7 @@ const SnackDisplay = () => {
     displayed.filter((key) => !keyList.includes(key)).forEach(removeDisplayed);
   });
 
-  return <Box w="0" h="0" />;
-};
-
-const withSnackDisplay = (Component: ComponentType) => (props: any) => {
-  return (
-    <>
-      <SnackDisplay />
-      <Component {...props} />
-    </>
-  );
+  return <Component {...props} />;
 };
 
 export default flowRight([withNativeBase, withSnackDisplay]);

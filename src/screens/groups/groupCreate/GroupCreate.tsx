@@ -5,12 +5,13 @@ import GroupForm from '../groupForm/GroupForm';
 import ItemService from '../../../services/ItemService';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
-import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import FScrollView from '../../../components/surfaces/FScrollView';
+import {useAppDispatch} from '../../../store/hooks';
+import SnackActions from '../../../store/snack/snackActions';
 
 const GroupCreate = () => {
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
-  const {handleCode, handleResponse} = useSnackContext();
 
   const goToGroupView = (id: string): void => {
     navigation.navigate('GroupView', {groupId: id});
@@ -20,12 +21,11 @@ const GroupCreate = () => {
   const request = (formData: FormData, stopSubmitting: () => void): void => {
     ItemService.createGroup(formData)
       .then((response) => {
-        handleCode('group.created', 'info');
+        dispatch(SnackActions.handleCode('group.created', 'info'));
         const id = response.data.id;
         goToGroupView(id);
       })
-      .catch(({response}) => {
-        handleResponse(response);
+      .catch(() => {
         stopSubmitting();
       });
   };

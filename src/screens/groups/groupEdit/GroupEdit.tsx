@@ -3,19 +3,20 @@ import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import ItemService from '../../../services/ItemService';
 import GroupForm from '../groupForm/GroupForm';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import withGroupView from '../../../shared/hocs/withViews/withGroupView';
 import FScrollView from '../../../components/surfaces/FScrollView';
+import {useAppDispatch} from '../../../store/hooks';
+import SnackActions from '../../../store/snack/snackActions';
 
 const GroupEdit = () => {
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'GroupEdit'>>();
   const groupId = route.params.groupId;
-  const {handleCode, handleResponse} = useSnackContext();
   const {group, load: loadGroup} = useGroupViewContext();
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
@@ -24,11 +25,10 @@ const GroupEdit = () => {
   const request = (formData: FormData, stopSubmitting: () => void): void => {
     ItemService.updateGroup(formData)
       .then(() => {
-        handleCode('group.updated', 'info');
+        dispatch(SnackActions.handleCode('group.updated', 'info'));
         goToGroupView();
       })
-      .catch(({response}) => {
-        handleResponse(response);
+      .catch(() => {
         stopSubmitting();
       });
   };

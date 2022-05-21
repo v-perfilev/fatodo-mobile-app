@@ -7,15 +7,15 @@ import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
-import {SnackState, useSnackContext} from '../../../shared/contexts/SnackContext';
 import {emailValidator, passwordValidator, usernameValidator} from '../forgotPassword/ForgotPasswordValidators';
 import {RegistrationDTO} from '../../../models/dto/RegistrationDTO';
 import i18n from '../../../shared/i18n';
 import {DateUtils} from '../../../shared/utils/DateUtils';
 import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBar';
 import SolidButton from '../../../components/controls/SolidButton';
-import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
 import FVStack from '../../../components/surfaces/FVStack';
+import {useAppDispatch} from '../../../store/hooks';
+import SnackActions from '../../../store/snack/snackActions';
 
 export interface SignUpFormValues {
   email: string;
@@ -35,14 +35,13 @@ const validationSchema = Yup.object().shape({
   password: passwordValidator,
 });
 
-type SignUpFormProps = SnackState &
-  CaptchaProps & {
-    onSuccess?: () => void;
-  };
+type SignUpFormProps = CaptchaProps & {
+  onSuccess?: () => void;
+};
 
 const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormProps) => {
+  const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const {handleResponse, handleCode} = useSnackContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<SignUpFormValues>();
 
@@ -67,13 +66,10 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
 
     AuthService.register(dto)
       .then(() => {
-        handleCode('auth.registered', 'info');
+        dispatch(SnackActions.handleCode('auth.registered', 'info'));
         if (onSuccess) {
           onSuccess();
         }
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setLoading(false);
@@ -126,4 +122,4 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
   );
 };
 
-export default flowRight([withSnackContext, withCaptcha])(SignUpForm);
+export default flowRight([withCaptcha])(SignUpForm);

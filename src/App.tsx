@@ -11,8 +11,7 @@ import withNativeBase from './shared/hocs/withNativeBase';
 import withNavigationContainer from './shared/hocs/withNavigationContainer';
 import {SecurityUtils} from './shared/utils/SecurityUtils';
 import withDialogs from './shared/hocs/withDialogs/withDialogs';
-import withSnackProvider from './shared/hocs/withSnack/withSnackProvider';
-import withSnackDisplay from './shared/hocs/withSnack/withSnackDisplay';
+import withSnackDisplay from './shared/hocs/withSnackDisplay';
 import withContactInfo from './shared/hocs/withContacts/withContactInfo';
 import withContacts from './shared/hocs/withContacts/withContacts';
 import {store} from './store/store';
@@ -27,12 +26,14 @@ const axiosActions = bindActionCreators(
   {
     logout: AuthActions.logout,
     enqueueSnack: SnackActions.enqueueSnack,
+    handleResponse: SnackActions.handleResponse,
   },
   store.dispatch,
 );
 setupAxiosInterceptors({
   onUnauthenticated: axiosActions.logout,
   enqueueSnack: axiosActions.enqueueSnack,
+  handleResponse: axiosActions.handleResponse,
 });
 
 const App = () => {
@@ -61,7 +62,6 @@ const App = () => {
 export default flowRight([
   withStore,
   withSnackDisplay,
-  withSnackProvider,
   withNativeBase,
   withNavigationContainer,
   withContactInfo,

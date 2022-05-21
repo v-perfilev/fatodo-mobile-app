@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Group, GroupUser} from '../../../../models/Group';
-import {useSnackContext} from '../../../../shared/contexts/SnackContext';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import ItemService from '../../../../services/ItemService';
 import ConfirmationDialog from '../../../../components/modals/ConfirmationDialog';
@@ -24,7 +23,6 @@ type Props = {
 
 const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: Props) => {
   const account = useAppSelector(AuthSelectors.accountSelector);
-  const {handleResponse} = useSnackContext();
   const {t} = useTranslation();
   const [showRemovingConfirmation, setShowRemovingConfirmation] = useState(false);
   const [removingLoading, setRemovingLoading] = useState(false);
@@ -45,9 +43,6 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: P
     ItemService.removeMembersFromGroup(group.id, [user.id])
       .then(() => {
         onDelete(user.id);
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setRemovingLoading(false);

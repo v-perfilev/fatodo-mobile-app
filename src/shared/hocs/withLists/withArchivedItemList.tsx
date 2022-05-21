@@ -1,13 +1,11 @@
 import * as React from 'react';
 import {ComponentType, useState} from 'react';
-import {useSnackContext} from '../../contexts/SnackContext';
 import {Item} from '../../../models/Item';
 import {ArchivedItemListContext} from '../../contexts/listContexts/archivedItemListContext';
 import {ArrayUtils} from '../../utils/ArrayUtils';
 import ItemService from '../../../services/ItemService';
 
 const withArchivedItemList = (Component: ComponentType) => (props: any) => {
-  const {handleResponse} = useSnackContext();
   const [items, setItems] = useState<Item[]>([]);
   const [count, setCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -51,9 +49,6 @@ const withArchivedItemList = (Component: ComponentType) => (props: any) => {
           return filterItems(combinedItems);
         });
         setCount(response.data.count);
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setLoading(false);

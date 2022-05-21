@@ -8,11 +8,12 @@ import ReorderIcon from '../../../components/icons/ReorderIcon';
 import CollapsedIcon from '../../../components/icons/CollapsedIcon';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
-import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import {useGroupListContext} from '../../../shared/contexts/listContexts/groupListContext';
 import {useGroupListItemsContext} from '../../../shared/contexts/listContexts/groupListItemsContext';
 import ItemService from '../../../services/ItemService';
 import {flowRight} from 'lodash';
+import {useAppDispatch} from '../../../store/hooks';
+import SnackActions from '../../../store/snack/snackActions';
 
 type GroupListHeaderProps = {
   sorting: boolean;
@@ -20,20 +21,16 @@ type GroupListHeaderProps = {
 };
 
 const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
-  const {handleCode, handleResponse} = useSnackContext();
   const {groups} = useGroupListContext();
   const {allCollapsed, setAllCollapsed} = useGroupListItemsContext();
 
   const saveOrder = (): void => {
     const orderedGroupIds = groups.map((g) => g.id);
-    ItemService.setGroupOrder(orderedGroupIds)
-      .then(() => {
-        handleCode('group.sorted', 'info');
-      })
-      .catch(({response}) => {
-        handleResponse(response);
-      });
+    ItemService.setGroupOrder(orderedGroupIds).then(() => {
+      dispatch(SnackActions.handleCode('group.sorted', 'info'));
+    });
   };
 
   const switchCollapsed = (): void => setAllCollapsed(!allCollapsed);

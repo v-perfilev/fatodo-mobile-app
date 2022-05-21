@@ -1,13 +1,11 @@
 import * as React from 'react';
 import {ComponentType, useMemo, useState} from 'react';
-import {useSnackContext} from '../../contexts/SnackContext';
 import {User} from '../../../models/User';
 import UserService from '../../../services/UserService';
 import {ArrayUtils} from '../../utils/ArrayUtils';
 import {UserListContext} from '../../contexts/listContexts/userListContext';
 
 const withUserList = (Component: ComponentType) => (props: any) => {
-  const {handleResponse} = useSnackContext();
   const [users, setUsers] = useState<User[]>([]);
   const [loadingIds, setLoadingIds] = useState<string[]>([]);
 
@@ -20,9 +18,6 @@ const withUserList = (Component: ComponentType) => (props: any) => {
           const uniqueUsers = newUsers.filter(ArrayUtils.uniqueByIdFilter);
           return [...uniqueUsers];
         });
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setLoadingIds((prevState) => {

@@ -3,7 +3,6 @@ import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
 import ItemService from '../../../services/ItemService';
@@ -13,12 +12,14 @@ import withGroupView from '../../../shared/hocs/withViews/withGroupView';
 import withItemView from '../../../shared/hocs/withViews/withItemView';
 import withReminderList from '../../../shared/hocs/withLists/withReminderList';
 import FScrollView from '../../../components/surfaces/FScrollView';
+import {useAppDispatch} from '../../../store/hooks';
+import SnackActions from '../../../store/snack/snackActions';
 
 const ItemCreate = () => {
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemCreate'>>();
   const groupId = route.params.groupId;
-  const {handleCode, handleResponse} = useSnackContext();
   const {group, load: loadGroup} = useGroupViewContext();
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
@@ -28,11 +29,10 @@ const ItemCreate = () => {
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
     ItemService.createItem(dto)
       .then(({data}) => {
-        handleCode('item.created', 'info');
+        dispatch(SnackActions.handleCode('item.created', 'info'));
         goToItemView(data.id);
       })
-      .catch(({response}) => {
-        handleResponse(response);
+      .catch(() => {
         stopSubmitting();
       });
   };

@@ -1,7 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Group, GroupMember, GroupPermission, GroupUser} from '../../../models/Group';
-import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import ItemService from '../../../services/ItemService';
 import UserView from '../../../components/views/UserView';
 import ModalDialog from '../../../components/modals/ModalDialog';
@@ -28,7 +27,6 @@ export const defaultGroupEditMemberDialogProps: Readonly<GroupEditMemberDialogPr
 type Props = GroupEditMemberDialogProps;
 
 const GroupEditMemberDialog: FC<Props> = ({group, user, show, close, onSuccess}: Props) => {
-  const {handleResponse} = useSnackContext();
   const {t} = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [permission, setPermission] = useState<GroupPermission>();
@@ -40,9 +38,6 @@ const GroupEditMemberDialog: FC<Props> = ({group, user, show, close, onSuccess}:
       .then(() => {
         close();
         onSuccess();
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setIsSubmitting(false);

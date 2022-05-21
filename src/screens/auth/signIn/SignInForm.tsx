@@ -7,9 +7,7 @@ import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
-import {SnackState, useSnackContext} from '../../../shared/contexts/SnackContext';
 import SolidButton from '../../../components/controls/SolidButton';
-import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
 import FVStack from '../../../components/surfaces/FVStack';
 import {useAppDispatch} from '../../../store/hooks';
 import {LoginDTO} from '../../../models/dto/LoginDTO';
@@ -34,12 +32,11 @@ const signInValidationScheme = Yup.object().shape({
   password: Yup.string().required(() => i18n.t('account:fields.password.required')),
 });
 
-type SignInFormProps = SnackState & CaptchaProps;
+type SignInFormProps = CaptchaProps;
 
 const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const {handleResponse} = useSnackContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<SignInFormValues>();
 
@@ -61,9 +58,6 @@ const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
         const token = SecurityUtils.parseTokenFromResponse(response);
         dispatch(AuthActions.login(dto.user, token));
         dispatch(AuthActions.requestAccountData());
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setLoading(false);
@@ -109,4 +103,4 @@ const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
   );
 };
 
-export default flowRight([withSnackContext, withCaptcha])(SignInForm);
+export default flowRight([withCaptcha])(SignInForm);

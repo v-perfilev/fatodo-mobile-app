@@ -3,7 +3,6 @@ import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import ItemService from '../../../services/ItemService';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
@@ -15,12 +14,14 @@ import ItemForm from '../itemForm/ItemForm';
 import withReminderList from '../../../shared/hocs/withLists/withReminderList';
 import {useReminderListContext} from '../../../shared/contexts/listContexts/reminderListContext';
 import FScrollView from '../../../components/surfaces/FScrollView';
+import {useAppDispatch} from '../../../store/hooks';
+import SnackActions from '../../../store/snack/snackActions';
 
 const ItemEdit = () => {
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemEdit'>>();
   const itemId = route.params.itemId;
-  const {handleCode, handleResponse} = useSnackContext();
   const {group, load: loadGroup} = useGroupViewContext();
   const {item, load: loadItem} = useItemViewContext();
   const {reminders, load: loadReminders} = useReminderListContext();
@@ -31,11 +32,10 @@ const ItemEdit = () => {
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
     ItemService.updateItem(dto)
       .then(() => {
-        handleCode('item.updated', 'info');
+        dispatch(SnackActions.handleCode('item.updated', 'info'));
         goToItemView();
       })
-      .catch(({response}) => {
-        handleResponse(response);
+      .catch(() => {
         stopSubmitting();
       });
   };

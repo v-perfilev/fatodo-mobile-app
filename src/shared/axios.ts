@@ -11,9 +11,10 @@ axios.defaults.baseURL = API_URL;
 interface SetupAxiosActions {
   onUnauthenticated: () => void;
   enqueueSnack: (snack: Snack) => void;
+  handleResponse: (response: AxiosResponse) => void;
 }
 
-const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack}: SetupAxiosActions): void => {
+const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleResponse}: SetupAxiosActions): void => {
   const enqueueErrorNotification = (message: string): void => {
     const snack = new SnackBuilder(message).setVariantColor('error').build();
     enqueueSnack(snack);
@@ -25,6 +26,8 @@ const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack}: SetupAxiosAct
       enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('default'));
     } else if (!status) {
       enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('connection'));
+    } else {
+      handleResponse(response);
     }
   };
 

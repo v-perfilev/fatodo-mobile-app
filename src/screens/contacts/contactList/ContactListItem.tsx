@@ -1,20 +1,21 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
-import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import {useContactContext} from '../../../shared/contexts/contactContexts/contactContext';
 import {useContactInfoContext} from '../../../shared/contexts/contactContexts/contactInfoContext';
 import ContactService from '../../../services/ContactService';
 import UserView from '../../../components/views/UserView';
 import SolidButton from '../../../components/controls/SolidButton';
 import FHStack from '../../../components/surfaces/FHStack';
+import {useAppDispatch} from '../../../store/hooks';
+import SnackActions from '../../../store/snack/snackActions';
 
 type ContactListItemProps = {
   relation: ContactRelationWithUser;
 };
 
 const ContactListItem = ({relation}: ContactListItemProps) => {
-  const {handleCode, handleResponse} = useSnackContext();
+  const dispatch = useAppDispatch();
   const {update: updateContacts} = useContactContext();
   const {update: updateInfo} = useContactInfoContext();
   const {t} = useTranslation();
@@ -24,12 +25,11 @@ const ContactListItem = ({relation}: ContactListItemProps) => {
     setDisabled(true);
     ContactService.removeRelation(relation.user.id)
       .then(() => {
-        handleCode('contact.relationRemoved', 'info');
+        dispatch(SnackActions.handleCode('contact.relationRemoved', 'info'));
         updateInfo();
         updateContacts();
       })
-      .catch((response) => {
-        handleResponse(response);
+      .catch(() => {
         setDisabled(false);
       });
   };

@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Group} from '../../../models/Group';
-import {useSnackContext} from '../../../shared/contexts/SnackContext';
 import ItemService from '../../../services/ItemService';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
+import {useAppDispatch} from '../../../store/hooks';
+import SnackActions from '../../../store/snack/snackActions';
 
 export type GroupLeaveDialogProps = {
   group: Group;
@@ -20,20 +21,17 @@ export const defaultGroupLeaveDialogProps: Readonly<GroupLeaveDialogProps> = {
 };
 
 const GroupLeaveDialog = ({group, show, close, onSuccess}: GroupLeaveDialogProps) => {
+  const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const {handleCode, handleResponse} = useSnackContext();
   const [loading, setLoading] = useState(false);
 
   const onAgree = (): void => {
     setLoading(true);
     ItemService.leaveGroup(group?.id)
       .then(() => {
-        handleCode('group.left', 'info');
+        dispatch(SnackActions.handleCode('group.left', 'info'));
         close();
         onSuccess();
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setLoading(false);

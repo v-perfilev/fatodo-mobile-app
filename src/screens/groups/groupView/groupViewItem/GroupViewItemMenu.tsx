@@ -11,7 +11,6 @@ import {useTranslation} from 'react-i18next';
 import {useArchivedItemListContext} from '../../../../shared/contexts/listContexts/archivedItemListContext';
 import {useItemListContext} from '../../../../shared/contexts/listContexts/itemListContext';
 import ItemService from '../../../../services/ItemService';
-import {useSnackContext} from '../../../../shared/contexts/SnackContext';
 import PackageUpIcon from '../../../../components/icons/PackageUpIcon';
 import PackageDownIcon from '../../../../components/icons/PackageDownIcon';
 import PressableButton from '../../../../components/controls/PressableButton';
@@ -25,7 +24,6 @@ type GroupViewItemMenuProps = {
 const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
-  const {handleResponse} = useSnackContext();
   const {showItemDeleteDialog} = useItemDialogContext();
   const {addItem: addActive, removeItem: removedActive} = useItemListContext();
   const {addItem: addArchived, removeItem: removeArchived} = useArchivedItemListContext();
@@ -49,11 +47,10 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
         removeFromPreviousList(item.id);
         addToNextList(updatedItem);
       })
-      .catch(({response}) => {
-        handleResponse(response);
+      .catch(() => {
         setArchivedLoading(false);
       });
-  }, [item, setArchivedLoading, removeArchived, removedActive, addArchived, addActive, handleResponse]);
+  }, [item, setArchivedLoading, removeArchived, removedActive, addArchived, addActive]);
 
   const openItemDeleteDialog = (): void => {
     const remove = item.archived ? removeArchived : removedActive;

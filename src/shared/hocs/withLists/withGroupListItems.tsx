@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {ComponentType, useMemo, useState} from 'react';
-import {useSnackContext} from '../../contexts/SnackContext';
 import {Item} from '../../../models/Item';
 import {ArrayUtils} from '../../utils/ArrayUtils';
 import {PageableList} from '../../../models/PageableList';
@@ -8,7 +7,6 @@ import ItemService from '../../../services/ItemService';
 import {GroupListItemsContext} from '../../contexts/listContexts/groupListItemsContext';
 
 const withGroupListItems = (Component: ComponentType) => (props: any) => {
-  const {handleResponse} = useSnackContext();
   const [items, setItems] = useState<Map<string, Item[]>>(new Map());
   const [counts, setCounts] = useState<Map<string, number>>(new Map());
   const [loading, setLoadingMap] = useState<Map<string, boolean>>(new Map());
@@ -75,9 +73,6 @@ const withGroupListItems = (Component: ComponentType) => (props: any) => {
         const itemMap = new Map(Object.entries(response.data));
         updateItems(itemMap);
       })
-      .catch(({response}) => {
-        handleResponse(response);
-      })
       .finally(() => {
         setLoading(groupIds, false);
         setCollapsed(groupIds, false);
@@ -90,9 +85,6 @@ const withGroupListItems = (Component: ComponentType) => (props: any) => {
       .then((response) => {
         const itemMap = new Map([[groupId, response.data]]);
         updateItems(itemMap);
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setLoading([groupId], false);

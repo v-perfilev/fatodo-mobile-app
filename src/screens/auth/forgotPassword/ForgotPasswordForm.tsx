@@ -7,11 +7,11 @@ import i18n from '../../../shared/i18n';
 import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import {useTranslation} from 'react-i18next';
-import {SnackState, useSnackContext} from '../../../shared/contexts/SnackContext';
 import {ForgotPasswordDTO} from '../../../models/dto/ForgotPasswordDTO';
 import SolidButton from '../../../components/controls/SolidButton';
-import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
 import FVStack from '../../../components/surfaces/FVStack';
+import {useAppDispatch} from '../../../store/hooks';
+import SnackActions from '../../../store/snack/snackActions';
 
 export interface ForgotPasswordFormValues {
   user: string;
@@ -25,14 +25,13 @@ const validationSchema = Yup.object().shape({
   user: Yup.string().required(() => i18n.t('account:fields.user.required')),
 });
 
-type ForgotPasswordFormProps = SnackState &
-  CaptchaProps & {
-    onSuccess?: () => void;
-  };
+type ForgotPasswordFormProps = CaptchaProps & {
+  onSuccess?: () => void;
+};
 
 const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: ForgotPasswordFormProps) => {
+  const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const {handleResponse, handleCode} = useSnackContext();
   const [loading, setLoading] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<ForgotPasswordFormValues>();
 
@@ -50,13 +49,10 @@ const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: Forg
 
     AuthService.requestResetPasswordCode(dto)
       .then(() => {
-        handleCode('auth.afterForgotPassword', 'info');
+        dispatch(SnackActions.handleCode('auth.afterForgotPassword', 'info'));
         if (onSuccess) {
           onSuccess();
         }
-      })
-      .catch(({response}) => {
-        handleResponse(response);
       })
       .finally(() => {
         setLoading(false);
@@ -97,4 +93,4 @@ const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: Forg
   );
 };
 
-export default flowRight([withSnackContext, withCaptcha])(ForgotPasswordForm);
+export default flowRight([withCaptcha])(ForgotPasswordForm);
