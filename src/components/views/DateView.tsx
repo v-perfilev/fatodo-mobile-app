@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useTranslation} from 'react-i18next';
 import {DateParams} from '../../models/DateParams';
 import {DateConverters, DateFormatters} from '../../shared/utils/DateUtils';
-import {useAppSelector} from '../../store/hooks';
+import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 
 type DateViewProps = {

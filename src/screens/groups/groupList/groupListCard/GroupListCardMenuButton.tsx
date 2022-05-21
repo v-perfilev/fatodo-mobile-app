@@ -14,7 +14,7 @@ import {Group} from '../../../../models/Group';
 import {useGroupDialogContext} from '../../../../shared/contexts/dialogContexts/GroupDialogContext';
 import {useGroupListContext} from '../../../../shared/contexts/listContexts/groupListContext';
 import {useGroupListItemsContext} from '../../../../shared/contexts/listContexts/groupListItemsContext';
-import {useAppSelector} from '../../../../store/hooks';
+import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 
 type GroupListCardMenuButtonProps = {

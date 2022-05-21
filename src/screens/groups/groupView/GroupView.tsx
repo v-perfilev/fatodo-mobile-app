@@ -18,7 +18,7 @@ import GroupViewItems from './groupViewItems/GroupViewItems';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import FVStack from '../../../components/surfaces/FVStack';
-import {useAppSelector} from '../../../store/hooks';
+import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 
 const GroupView = () => {

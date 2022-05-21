@@ -7,7 +7,7 @@ import ContactService from '../../../services/ContactService';
 import UserView from '../../../components/views/UserView';
 import SolidButton from '../../../components/controls/SolidButton';
 import FHStack from '../../../components/surfaces/FHStack';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 
 type ContactListItemProps = {

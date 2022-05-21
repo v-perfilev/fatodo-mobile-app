@@ -11,7 +11,7 @@ import GroupMembersDialogMember from './GroupMembersDialogMember';
 import GhostButton from '../../../../components/controls/GhostButton';
 import FVStack from '../../../../components/surfaces/FVStack';
 import FCenter from '../../../../components/surfaces/FCenter';
-import {useAppSelector} from '../../../../store/hooks';
+import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 
 export type GroupMembersDialogProps = {

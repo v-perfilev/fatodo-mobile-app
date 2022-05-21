@@ -3,7 +3,7 @@ import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useTranslation} from 'react-i18next';
 import ItemService from '../../../services/ItemService';
 import {Group} from '../../../models/Group';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 
 export type GroupDeleteDialogProps = {

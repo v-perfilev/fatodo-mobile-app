@@ -6,7 +6,7 @@ import {DateFormatters, DateUtils} from '../../shared/utils/DateUtils';
 import ClearableTextInput from './ClearableTextInput';
 import DatePicker from 'react-native-date-picker';
 import ConfirmationDialog from '../modals/ConfirmationDialog';
-import {useAppSelector} from '../../store/hooks';
+import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 
 type FormikDateTimePickerProps = IFormControlProps &

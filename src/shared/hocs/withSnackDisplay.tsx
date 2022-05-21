@@ -3,7 +3,7 @@ import {ComponentType, useEffect, useState} from 'react';
 import {flowRight} from 'lodash';
 import {useToast} from 'native-base';
 import withNativeBase from './withNativeBase';
-import {useAppDispatch, useAppSelector} from '../../store/hooks';
+import {useAppDispatch, useAppSelector} from '../../store/store';
 import SnackSelectors from '../../store/snack/snackSelectors';
 import {ReduxSnack} from '../../store/snack/snackType';
 import SnackActions from '../../store/snack/snackActions';

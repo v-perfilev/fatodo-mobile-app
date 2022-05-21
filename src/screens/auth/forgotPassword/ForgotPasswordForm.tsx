@@ -1,6 +1,5 @@
 import {Formik} from 'formik';
 import React, {useEffect, useState} from 'react';
-import AuthService from '../../../services/AuthService';
 import {flowRight} from 'lodash';
 import * as Yup from 'yup';
 import i18n from '../../../shared/i18n';
@@ -10,8 +9,11 @@ import {useTranslation} from 'react-i18next';
 import {ForgotPasswordDTO} from '../../../models/dto/ForgotPasswordDTO';
 import SolidButton from '../../../components/controls/SolidButton';
 import FVStack from '../../../components/surfaces/FVStack';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
+import AuthSelectors from '../../../store/auth/authSelectors';
+import AuthActions from '../../../store/auth/authActions';
+import AuthThunks from '../../../store/auth/authThunks';
 
 export interface ForgotPasswordFormValues {
   user: string;
@@ -31,13 +33,13 @@ type ForgotPasswordFormProps = CaptchaProps & {
 
 const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: ForgotPasswordFormProps) => {
   const dispatch = useAppDispatch();
+  const loading = useAppSelector(AuthSelectors.loadingSelector);
   const {t} = useTranslation();
-  const [loading, setLoading] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<ForgotPasswordFormValues>();
 
   const handleClickOnSubmit = (values: ForgotPasswordFormValues): void => {
     setFormValues(values);
-    setLoading(true);
+    dispatch(AuthActions.loading(true));
     requestCaptchaToken();
   };
 
@@ -47,21 +49,19 @@ const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: Forg
       token: captchaToken,
     } as ForgotPasswordDTO;
 
-    AuthService.requestResetPasswordCode(dto)
+    dispatch(AuthThunks.forgotPassword(dto))
+      .unwrap()
       .then(() => {
         dispatch(SnackActions.handleCode('auth.afterForgotPassword', 'info'));
         if (onSuccess) {
           onSuccess();
         }
-      })
-      .finally(() => {
-        setLoading(false);
       });
   };
 
   useEffect(() => {
     if (captchaToken === 'error' && loading) {
-      setLoading(false);
+      dispatch(AuthActions.loading(false));
     } else if (captchaToken && formValues && loading) {
       handleSubmit();
     }

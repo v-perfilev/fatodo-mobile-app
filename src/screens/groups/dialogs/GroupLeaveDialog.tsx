@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {Group} from '../../../models/Group';
 import ItemService from '../../../services/ItemService';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 
 export type GroupLeaveDialogProps = {

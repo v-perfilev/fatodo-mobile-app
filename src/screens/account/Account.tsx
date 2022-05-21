@@ -6,7 +6,7 @@ import FCenter from '../../components/surfaces/FCenter';
 import SolidButton from '../../components/controls/SolidButton';
 import FVStack from '../../components/surfaces/FVStack';
 import {Text} from 'native-base';
-import {useAppDispatch} from '../../store/hooks';
+import {useAppDispatch} from '../../store/store';
 import AuthActions from '../../store/auth/authActions';
 
 const Account = () => {

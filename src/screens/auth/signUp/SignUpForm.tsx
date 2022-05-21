@@ -1,6 +1,5 @@
 import {Formik} from 'formik';
 import React, {useEffect, useState} from 'react';
-import AuthService from '../../../services/AuthService';
 import {flowRight} from 'lodash';
 import * as Yup from 'yup';
 import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
@@ -14,8 +13,11 @@ import {DateUtils} from '../../../shared/utils/DateUtils';
 import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBar';
 import SolidButton from '../../../components/controls/SolidButton';
 import FVStack from '../../../components/surfaces/FVStack';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
+import AuthThunks from '../../../store/auth/authThunks';
+import AuthSelectors from '../../../store/auth/authSelectors';
+import AuthActions from '../../../store/auth/authActions';
 
 export interface SignUpFormValues {
   email: string;
@@ -41,13 +43,13 @@ type SignUpFormProps = CaptchaProps & {
 
 const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormProps) => {
   const dispatch = useAppDispatch();
+  const loading = useAppSelector(AuthSelectors.loadingSelector);
   const {t} = useTranslation();
-  const [loading, setLoading] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<SignUpFormValues>();
 
   const handleClickOnSubmit = (values: SignUpFormValues): void => {
     setFormValues(values);
-    setLoading(true);
+    dispatch(AuthActions.loading(true));
     requestCaptchaToken();
   };
 
@@ -64,21 +66,19 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
       token: captchaToken,
     } as RegistrationDTO;
 
-    AuthService.register(dto)
+    dispatch(AuthThunks.register(dto))
+      .unwrap()
       .then(() => {
         dispatch(SnackActions.handleCode('auth.registered', 'info'));
         if (onSuccess) {
           onSuccess();
         }
-      })
-      .finally(() => {
-        setLoading(false);
       });
   };
 
   useEffect(() => {
     if (captchaToken === 'error' && loading) {
-      setLoading(false);
+      dispatch(AuthActions.loading(false));
     } else if (captchaToken && loading) {
       handleSubmit();
     }

@@ -11,7 +11,7 @@ import {PermissionView} from '../../../../components/views/PermissionView';
 import {MenuElement} from '../../../../models/MenuElement';
 import ControlMenu from '../../../../components/layouts/ControlMenu';
 import FHStack from '../../../../components/surfaces/FHStack';
-import {useAppSelector} from '../../../../store/hooks';
+import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 
 type Props = {

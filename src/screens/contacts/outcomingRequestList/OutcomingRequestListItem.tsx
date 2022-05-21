@@ -7,7 +7,7 @@ import {useContactInfoContext} from '../../../shared/contexts/contactContexts/co
 import FHStack from '../../../components/surfaces/FHStack';
 import UserView from '../../../components/views/UserView';
 import SolidButton from '../../../components/controls/SolidButton';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 
 type OutcomingRequestListItemProps = {

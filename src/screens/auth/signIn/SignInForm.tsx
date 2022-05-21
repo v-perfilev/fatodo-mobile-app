@@ -9,11 +9,11 @@ import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput'
 import {useTranslation} from 'react-i18next';
 import SolidButton from '../../../components/controls/SolidButton';
 import FVStack from '../../../components/surfaces/FVStack';
-import {useAppDispatch} from '../../../store/hooks';
 import {LoginDTO} from '../../../models/dto/LoginDTO';
-import AuthService from '../../../services/AuthService';
-import {SecurityUtils} from '../../../shared/utils/SecurityUtils';
 import AuthActions from '../../../store/auth/authActions';
+import AuthSelectors from '../../../store/auth/authSelectors';
+import AuthThunks from '../../../store/auth/authThunks';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 
 type SignInFormValues = {
   user: string;
@@ -36,13 +36,13 @@ type SignInFormProps = CaptchaProps;
 
 const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
   const dispatch = useAppDispatch();
+  const loading = useAppSelector(AuthSelectors.loadingSelector);
   const {t} = useTranslation();
-  const [loading, setLoading] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<SignInFormValues>();
 
   const handleClickOnSubmit = (values: SignInFormValues): void => {
     setFormValues(values);
-    setLoading(true);
+    dispatch(AuthActions.loading(true));
     requestCaptchaToken();
   };
 
@@ -53,20 +53,12 @@ const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
       token: captchaToken,
     } as LoginDTO;
 
-    AuthService.authenticate(dto)
-      .then((response) => {
-        const token = SecurityUtils.parseTokenFromResponse(response);
-        dispatch(AuthActions.login(dto.user, token));
-        dispatch(AuthActions.requestAccountData());
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    dispatch(AuthThunks.authenticate(dto));
   };
 
   useEffect(() => {
     if (captchaToken === 'error' && loading) {
-      setLoading(false);
+      dispatch(AuthActions.loading(false));
     } else if (captchaToken && formValues && loading) {
       handleSubmit();
     }

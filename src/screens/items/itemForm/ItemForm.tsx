@@ -19,7 +19,7 @@ import FormikDateTimePicker from '../../../components/inputs/FormikDateTimePicke
 import FVStack from '../../../components/surfaces/FVStack';
 import FHStack from '../../../components/surfaces/FHStack';
 import {UserAccount} from '../../../models/User';
-import {useAppSelector} from '../../../store/hooks';
+import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 
 export interface ItemFormValues {

@@ -10,7 +10,7 @@ import FormikRemindersInputWeekly from './FormikRemindersInputWeekly';
 import FormikRemindersInputMonthly from './FormikRemindersInputMonthly';
 import FormikRemindersInputYearly from './FormikRemindersInputYearly';
 import FVStack from '../../surfaces/FVStack';
-import {useAppSelector} from '../../../store/hooks';
+import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 
 type FormikRemindersInputPopoverProps = {

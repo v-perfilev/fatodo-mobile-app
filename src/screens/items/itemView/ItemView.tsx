@@ -28,7 +28,7 @@ import ItemViewName from './itemViewName';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import FVStack from '../../../components/surfaces/FVStack';
 import FHStack from '../../../components/surfaces/FHStack';
-import {useAppSelector} from '../../../store/hooks';
+import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 
 const ItemView = () => {

@@ -12,7 +12,7 @@ import withGroupView from '../../../shared/hocs/withViews/withGroupView';
 import withItemView from '../../../shared/hocs/withViews/withItemView';
 import withReminderList from '../../../shared/hocs/withLists/withReminderList';
 import FScrollView from '../../../components/surfaces/FScrollView';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 
 const ItemCreate = () => {

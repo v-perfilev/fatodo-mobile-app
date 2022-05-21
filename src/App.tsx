@@ -15,11 +15,12 @@ import withSnackDisplay from './shared/hocs/withSnackDisplay';
 import withContactInfo from './shared/hocs/withContacts/withContactInfo';
 import withContacts from './shared/hocs/withContacts/withContacts';
 import {store} from './store/store';
-import {useAppDispatch, useAppSelector} from './store/hooks';
+import {useAppDispatch, useAppSelector} from './store/store';
 import AuthSelectors from './store/auth/authSelectors';
 import AuthActions from './store/auth/authActions';
 import SnackActions from './store/snack/snackActions';
 import RootNavigator from './navigators/RootNavigator';
+import AuthThunks from './store/auth/authThunks';
 
 // setup axios
 const axiosActions = bindActionCreators(
@@ -45,7 +46,7 @@ const App = () => {
     SecurityUtils.getAuthToken().then((token) => {
       if (token) {
         dispatch(AuthActions.login());
-        dispatch(AuthActions.requestAccountData());
+        dispatch(AuthThunks.fetchAccount());
       }
       setReady(true);
     });

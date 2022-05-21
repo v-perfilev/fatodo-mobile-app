@@ -12,7 +12,7 @@ import {useGroupListContext} from '../../../shared/contexts/listContexts/groupLi
 import {useGroupListItemsContext} from '../../../shared/contexts/listContexts/groupListItemsContext';
 import ItemService from '../../../services/ItemService';
 import {flowRight} from 'lodash';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 
 type GroupListHeaderProps = {

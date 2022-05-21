@@ -4,7 +4,7 @@ import {ContactRelation} from '../../../models/ContactRelation';
 import {ContactRequest} from '../../../models/ContactRequest';
 import {ContactContext} from '../../contexts/contactContexts/contactContext';
 import ContactService from '../../../services/ContactService';
-import {useAppSelector} from '../../../store/hooks';
+import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 
 const withContacts = (Component: ComponentType) => (props: any) => {

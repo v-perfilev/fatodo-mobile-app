@@ -3,7 +3,7 @@ import {FC} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Reminder} from '../../models/Reminder';
 import {DateConverters, DateFormatters, DateUtils} from '../../shared/utils/DateUtils';
-import {useAppSelector} from '../../store/hooks';
+import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 
 type Props = {

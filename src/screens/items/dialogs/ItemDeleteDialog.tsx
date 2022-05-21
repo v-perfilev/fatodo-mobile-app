@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import ItemService from '../../../services/ItemService';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {Item} from '../../../models/Item';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 
 export type ItemDeleteDialogProps = {

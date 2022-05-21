@@ -6,7 +6,7 @@ import ItemService from '../../../services/ItemService';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import FScrollView from '../../../components/surfaces/FScrollView';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 
 const GroupCreate = () => {

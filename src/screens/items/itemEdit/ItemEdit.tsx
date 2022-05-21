@@ -14,7 +14,7 @@ import ItemForm from '../itemForm/ItemForm';
 import withReminderList from '../../../shared/hocs/withLists/withReminderList';
 import {useReminderListContext} from '../../../shared/contexts/listContexts/reminderListContext';
 import FScrollView from '../../../components/surfaces/FScrollView';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 
 const ItemEdit = () => {

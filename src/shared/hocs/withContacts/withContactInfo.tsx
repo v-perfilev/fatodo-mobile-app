@@ -2,7 +2,7 @@ import * as React from 'react';
 import {ComponentType, useEffect, useState} from 'react';
 import {ContactInfoContext} from '../../contexts/contactContexts/contactInfoContext';
 import ContactService from '../../../services/ContactService';
-import {useAppSelector} from '../../../store/hooks';
+import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 
 const withContactInfo = (Component: ComponentType) => (props: any) => {

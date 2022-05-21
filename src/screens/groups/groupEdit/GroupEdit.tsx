@@ -9,7 +9,7 @@ import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupVi
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import withGroupView from '../../../shared/hocs/withViews/withGroupView';
 import FScrollView from '../../../components/surfaces/FScrollView';
-import {useAppDispatch} from '../../../store/hooks';
+import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 
 const GroupEdit = () => {
