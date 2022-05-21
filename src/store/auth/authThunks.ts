@@ -27,8 +27,8 @@ export class AuthThunks {
   });
 
   static fetchAccount = createAsyncThunk(TYPES.FETCH_ACCOUNT, async () => {
-    const accountResponse = await UserService.getCurrent();
-    const account = accountResponse.data;
+    const response = await UserService.getCurrent();
+    const account = response.data;
     LanguageUtils.setLanguageFromUser(account);
     return account;
   });

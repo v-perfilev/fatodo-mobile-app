@@ -43,6 +43,7 @@ const authSlice = createSlice({
     builder.addCase(AuthThunks.register.rejected, () => ({
       ...initialState,
     }));
+
     /*
     authenticate
      */
@@ -57,6 +58,7 @@ const authSlice = createSlice({
     builder.addCase(AuthThunks.authenticate.rejected, () => ({
       ...initialState,
     }));
+
     /*
     fetchAccount
      */
@@ -73,6 +75,7 @@ const authSlice = createSlice({
     builder.addCase(AuthThunks.fetchAccount.rejected, () => ({
       ...initialState,
     }));
+
     /*
     forgotPassword
     */

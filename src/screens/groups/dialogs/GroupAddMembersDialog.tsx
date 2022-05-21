@@ -3,9 +3,11 @@ import {useTranslation} from 'react-i18next';
 import ItemService from '../../../services/ItemService';
 import ModalDialog from '../../../components/modals/ModalDialog';
 import {Group} from '../../../models/Group';
-import {useContactContext} from '../../../shared/contexts/contactContexts/contactContext';
 import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
 import GhostButton from '../../../components/controls/GhostButton';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import ContactSelectors from '../../../store/contact/contactSelectors';
+import ContactThunks from '../../../store/contact/contactThunks';
 
 export type GroupAddMembersDialogProps = {
   group: Group;
@@ -22,8 +24,9 @@ export const defaultGroupAddMembersDialogProps: Readonly<GroupAddMembersDialogPr
 };
 
 const GroupAddMembersDialog = ({group, show, close, onSuccess}: GroupAddMembersDialogProps) => {
+  const dispatch = useAppDispatch();
+  const relations = useAppSelector(ContactSelectors.relationsSelector);
   const {t} = useTranslation();
-  const {relations, update} = useContactContext();
   const [contactIds, setContactIds] = useState<string[]>([]);
   const [userIds, setUserIds] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,8 +44,8 @@ const GroupAddMembersDialog = ({group, show, close, onSuccess}: GroupAddMembersD
   };
 
   useEffect(() => {
-    if (show && update) {
-      update();
+    if (show) {
+      dispatch(ContactThunks.fetchRelations());
     }
   }, [show]);
 

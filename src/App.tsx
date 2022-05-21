@@ -12,15 +12,13 @@ import withNavigationContainer from './shared/hocs/withNavigationContainer';
 import {SecurityUtils} from './shared/utils/SecurityUtils';
 import withDialogs from './shared/hocs/withDialogs/withDialogs';
 import withSnackDisplay from './shared/hocs/withSnackDisplay';
-import withContactInfo from './shared/hocs/withContacts/withContactInfo';
-import withContacts from './shared/hocs/withContacts/withContacts';
-import {store} from './store/store';
-import {useAppDispatch, useAppSelector} from './store/store';
+import {store, useAppDispatch, useAppSelector} from './store/store';
 import AuthSelectors from './store/auth/authSelectors';
 import AuthActions from './store/auth/authActions';
 import SnackActions from './store/snack/snackActions';
 import RootNavigator from './navigators/RootNavigator';
 import AuthThunks from './store/auth/authThunks';
+import ContactThunks from './store/contact/contactThunks';
 
 // setup axios
 const axiosActions = bindActionCreators(
@@ -52,6 +50,12 @@ const App = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(ContactThunks.fetchInfo());
+    }
+  }, [isAuthenticated]);
+
   return (
     <>
       {ready && isAuthenticated && <RootNavigator />}
@@ -60,12 +64,4 @@ const App = () => {
   );
 };
 
-export default flowRight([
-  withStore,
-  withSnackDisplay,
-  withNativeBase,
-  withNavigationContainer,
-  withContactInfo,
-  withContacts,
-  withDialogs,
-])(App);
+export default flowRight([withStore, withSnackDisplay, withNativeBase, withNavigationContainer, withDialogs])(App);

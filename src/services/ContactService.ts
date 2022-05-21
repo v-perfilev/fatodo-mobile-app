@@ -12,7 +12,7 @@ export default class ContactService {
     return axios.get(url);
   };
 
-  public static getAllRelations = (): AxiosPromise<ContactRelation[]> => {
+  public static getRelations = (): AxiosPromise<ContactRelation[]> => {
     const url = ContactService.baseUrl + '/relations';
     return axios.get(url);
   };

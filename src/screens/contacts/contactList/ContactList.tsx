@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {flowRight} from 'lodash';
 import withUserList from '../../../shared/hocs/withLists/withUserList';
-import {useContactContext} from '../../../shared/contexts/contactContexts/contactContext';
 import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
@@ -11,10 +10,14 @@ import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
 import {useTranslation} from 'react-i18next';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import FVStack from '../../../components/surfaces/FVStack';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import ContactSelectors from '../../../store/contact/contactSelectors';
+import ContactThunks from '../../../store/contact/contactThunks';
 
 const ContactList = () => {
+  const dispatch = useAppDispatch();
+  const relations = useAppSelector(ContactSelectors.relationsSelector);
   const {t} = useTranslation();
-  const {relations} = useContactContext();
   const {users, handleUserIds} = useUserListContext();
   const [userRelations, setUserRelations] = useState<ContactRelationWithUser[]>([]);
   const [loading, setLoading] = useLoadingState();
@@ -34,6 +37,11 @@ const ContactList = () => {
     setUserRelations(userRelations);
     setLoading(false);
   };
+
+  useEffect(() => {
+    setLoading(true);
+    dispatch(ContactThunks.fetchRelations());
+  }, []);
 
   useEffect(() => {
     const userIds = relations.map((r) => r.secondUserId);

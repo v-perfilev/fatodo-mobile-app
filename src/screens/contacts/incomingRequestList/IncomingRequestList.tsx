@@ -2,16 +2,19 @@ import React, {useEffect, useState} from 'react';
 import {flowRight} from 'lodash';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import withUserList from '../../../shared/hocs/withLists/withUserList';
-import {useContactContext} from '../../../shared/contexts/contactContexts/contactContext';
 import {useUserListContext} from '../../../shared/contexts/listContexts/userListContext';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import FVStack from '../../../components/surfaces/FVStack';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import IncomingRequestListContainer from './IncomingRequestListContainer';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import ContactSelectors from '../../../store/contact/contactSelectors';
+import ContactThunks from '../../../store/contact/contactThunks';
 
 const IncomingRequestList = () => {
-  const {incomingRequests} = useContactContext();
+  const dispatch = useAppDispatch();
+  const incomingRequests = useAppSelector(ContactSelectors.incomingRequestsSelector);
   const {users, handleUserIds} = useUserListContext();
   const [userRequests, setUserRequests] = useState<ContactRequestWithUser[]>([]);
   const [loading, setLoading] = useLoadingState();
@@ -30,6 +33,10 @@ const IncomingRequestList = () => {
     setUserRequests(userRequests);
     setLoading(false);
   };
+
+  useEffect(() => {
+    dispatch(ContactThunks.fetchIncomingRequests());
+  }, []);
 
   useEffect(() => {
     const userIds = incomingRequests.map((r) => r.requesterId);
