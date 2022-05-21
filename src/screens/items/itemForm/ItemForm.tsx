@@ -1,5 +1,4 @@
 import React from 'react';
-import {Box} from 'native-base';
 import {flowRight} from 'lodash';
 import {Formik, FormikHelpers, FormikProps} from 'formik';
 import {Group} from '../../../models/Group';
@@ -116,25 +115,25 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
             {...formikProps}
           />
           <FHStack defaultSpace>
-            <Box flexGrow="1" flexBasis="1">
+            <FHStack grow basis>
               <FormikTypeInput
                 name="type"
                 label={t('item:fields.type.label')}
                 isDisabled={formikProps.isSubmitting}
                 {...formikProps}
               />
-            </Box>
-            <Box flexGrow="1" flexBasis="1">
+            </FHStack>
+            <FHStack grow basis>
               <FormikPriorityInput
                 name="priority"
                 label={t('item:fields.priority.label')}
                 isDisabled={formikProps.isSubmitting}
                 {...formikProps}
               />
-            </Box>
+            </FHStack>
           </FHStack>
           <FHStack defaultSpace>
-            <Box flexGrow="1" flexBasis="1">
+            <FHStack grow basis>
               <FormikDateTimePicker
                 mode="time"
                 name="time"
@@ -142,8 +141,8 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
                 isDisabled={formikProps.isSubmitting}
                 {...formikProps}
               />
-            </Box>
-            <Box flexGrow="1" flexBasis="1">
+            </FHStack>
+            <FHStack grow basis>
               <FormikDateTimePicker
                 mode="date"
                 name="date"
@@ -151,7 +150,7 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
                 isDisabled={formikProps.isSubmitting}
                 {...formikProps}
               />
-            </Box>
+            </FHStack>
           </FHStack>
           <FormikMultilineInput
             name="description"

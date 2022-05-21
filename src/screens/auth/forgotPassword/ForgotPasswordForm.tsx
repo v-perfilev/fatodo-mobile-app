@@ -1,4 +1,4 @@
-import {FormikBag, FormikProps, withFormik} from 'formik';
+import {Formik} from 'formik';
 import React, {useEffect, useState} from 'react';
 import AuthService from '../../../services/AuthService';
 import {flowRight} from 'lodash';
@@ -7,7 +7,7 @@ import i18n from '../../../shared/i18n';
 import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import {useTranslation} from 'react-i18next';
-import {SnackState} from '../../../shared/contexts/SnackContext';
+import {SnackState, useSnackContext} from '../../../shared/contexts/SnackContext';
 import {ForgotPasswordDTO} from '../../../models/dto/ForgotPasswordDTO';
 import SolidButton from '../../../components/controls/SolidButton';
 import withSnackContext from '../../../shared/hocs/withSnack/withSnackContext';
@@ -21,66 +21,30 @@ const defaultForgotPasswordFormValues: Readonly<ForgotPasswordFormValues> = {
   user: '',
 };
 
-type ForgotPasswordFormProps = FormikProps<ForgotPasswordFormValues> &
-  SnackState &
+const validationSchema = Yup.object().shape({
+  user: Yup.string().required(() => i18n.t('account:fields.user.required')),
+});
+
+type ForgotPasswordFormProps = SnackState &
   CaptchaProps & {
     onSuccess?: () => void;
   };
 
-const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
-  const {isValid, handleSubmit, isSubmitting, setSubmitting, captchaToken, requestCaptchaToken} = props;
+const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: ForgotPasswordFormProps) => {
   const {t} = useTranslation();
-  const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const {handleResponse, handleCode} = useSnackContext();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [formValues, setFormValues] = useState<ForgotPasswordFormValues>();
 
-  const submit = (): void => {
-    setSubmitting(true);
+  const handleClickOnSubmit = (values: ForgotPasswordFormValues): void => {
+    setFormValues(values);
+    setLoading(true);
     requestCaptchaToken();
   };
 
-  useEffect(() => {
-    setIsInitialized(true);
-  }, []);
-
-  useEffect(() => {
-    if (captchaToken === 'error' && isSubmitting) {
-      setSubmitting(false);
-    } else if (captchaToken && isSubmitting) {
-      handleSubmit();
-    }
-  }, [captchaToken, isSubmitting]);
-
-  return (
-    <FVStack w="100%">
-      <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={isSubmitting} {...props} />
-      <SolidButton
-        colorScheme="secondary"
-        mt="5"
-        size="lg"
-        isLoading={isSubmitting}
-        isDisabled={!isInitialized || !isValid || isSubmitting}
-        onPress={submit}
-      >
-        {t('account:forgotPassword.submit')}
-      </SolidButton>
-    </FVStack>
-  );
-};
-
-const formik = withFormik<ForgotPasswordFormProps, ForgotPasswordFormValues>({
-  mapPropsToValues: (): ForgotPasswordFormValues => defaultForgotPasswordFormValues,
-  validationSchema: Yup.object().shape({
-    user: Yup.string().required(() => i18n.t('account:fields.user.required')),
-  }),
-  validateOnMount: true,
-
-  handleSubmit: async (
-    values: ForgotPasswordFormValues,
-    {setSubmitting, props}: FormikBag<ForgotPasswordFormProps, ForgotPasswordFormValues>,
-  ) => {
-    const {captchaToken, handleCode, handleResponse, onSuccess} = props;
-
+  const handleSubmit = (): void => {
     const dto = {
-      user: values.user.trim(),
+      user: formValues.user.trim(),
       token: captchaToken,
     } as ForgotPasswordDTO;
 
@@ -95,9 +59,42 @@ const formik = withFormik<ForgotPasswordFormProps, ForgotPasswordFormValues>({
         handleResponse(response);
       })
       .finally(() => {
-        setSubmitting(false);
+        setLoading(false);
       });
-  },
-});
+  };
 
-export default flowRight([withSnackContext, withCaptcha, formik])(ForgotPasswordForm);
+  useEffect(() => {
+    if (captchaToken === 'error' && loading) {
+      setLoading(false);
+    } else if (captchaToken && formValues && loading) {
+      handleSubmit();
+    }
+  }, [captchaToken, loading, formValues]);
+
+  return (
+    <Formik
+      initialValues={defaultForgotPasswordFormValues}
+      validationSchema={validationSchema}
+      validateOnMount
+      onSubmit={handleClickOnSubmit}
+    >
+      {(formikProps) => (
+        <FVStack w="100%">
+          <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={loading} {...formikProps} />
+          <SolidButton
+            colorScheme="secondary"
+            mt="5"
+            size="lg"
+            isLoading={loading}
+            isDisabled={!formikProps.isValid || loading}
+            onPress={formikProps.submitForm}
+          >
+            {t('account:forgotPassword.submit')}
+          </SolidButton>
+        </FVStack>
+      )}
+    </Formik>
+  );
+};
+
+export default flowRight([withSnackContext, withCaptcha])(ForgotPasswordForm);

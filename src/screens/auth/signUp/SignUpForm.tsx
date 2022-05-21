@@ -1,4 +1,4 @@
-import {FormikBag, FormikProps, withFormik} from 'formik';
+import {Formik} from 'formik';
 import React, {useEffect, useState} from 'react';
 import AuthService from '../../../services/AuthService';
 import {flowRight} from 'lodash';
@@ -7,7 +7,7 @@ import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
-import {SnackState} from '../../../shared/contexts/SnackContext';
+import {SnackState, useSnackContext} from '../../../shared/contexts/SnackContext';
 import {emailValidator, passwordValidator, usernameValidator} from '../forgotPassword/ForgotPasswordValidators';
 import {RegistrationDTO} from '../../../models/dto/RegistrationDTO';
 import i18n from '../../../shared/i18n';
@@ -29,85 +29,37 @@ const defaultSignUpFormValues: Readonly<SignUpFormValues> = {
   password: '',
 };
 
-type SignUpFormProps = FormikProps<SignUpFormValues> &
-  SnackState &
+const validationSchema = Yup.object().shape({
+  email: emailValidator.check(),
+  username: usernameValidator.check(),
+  password: passwordValidator,
+});
+
+type SignUpFormProps = SnackState &
   CaptchaProps & {
     onSuccess?: () => void;
   };
 
-const SignUpForm = (props: SignUpFormProps) => {
-  const {isValid, handleSubmit, isSubmitting, setSubmitting, captchaToken, requestCaptchaToken, values} = props;
+const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormProps) => {
   const {t} = useTranslation();
-  const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const {handleResponse, handleCode} = useSnackContext();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [formValues, setFormValues] = useState<SignUpFormValues>();
 
-  const submit = (): void => {
-    setSubmitting(true);
+  const handleClickOnSubmit = (values: SignUpFormValues): void => {
+    setFormValues(values);
+    setLoading(true);
     requestCaptchaToken();
   };
 
-  useEffect(() => {
-    setIsInitialized(true);
-  }, []);
-
-  useEffect(() => {
-    if (captchaToken === 'error' && isSubmitting) {
-      setSubmitting(false);
-    } else if (captchaToken && isSubmitting) {
-      handleSubmit();
-    }
-  }, [captchaToken, isSubmitting]);
-
-  return (
-    <FVStack w="100%" defaultSpace>
-      <FormikTextInput name="email" label={t('account:fields.email.label')} isDisabled={isSubmitting} {...props} />
-      <FormikTextInput
-        name="username"
-        label={t('account:fields.username.label')}
-        isDisabled={isSubmitting}
-        {...props}
-      />
-      <FormikPasswordInput
-        name="password"
-        label={t('account:fields.password.label')}
-        isDisabled={isSubmitting}
-        {...props}
-      />
-      <PasswordStrengthBar password={values.password} />
-      <SolidButton
-        colorScheme="secondary"
-        size="lg"
-        isLoading={isSubmitting}
-        isDisabled={!isInitialized || !isValid || isSubmitting}
-        onPress={submit}
-      >
-        {t('account:register.submit')}
-      </SolidButton>
-    </FVStack>
-  );
-};
-
-const formik = withFormik<SignUpFormProps, SignUpFormValues>({
-  mapPropsToValues: (): SignUpFormValues => defaultSignUpFormValues,
-  validationSchema: Yup.object().shape({
-    email: emailValidator.check(),
-    username: usernameValidator.check(),
-    password: passwordValidator,
-  }),
-  validateOnMount: true,
-
-  handleSubmit: async (
-    values: SignUpFormValues,
-    {setSubmitting, props}: FormikBag<SignUpFormProps, SignUpFormValues>,
-  ) => {
-    const {captchaToken, handleCode, handleResponse, onSuccess} = props;
-
+  const handleSubmit = (): void => {
     const language = i18n.language;
     const timezone = DateUtils.getTimezone();
 
     const dto = {
-      email: values.email.trim(),
-      username: values.username.trim(),
-      password: values.password.trim(),
+      email: formValues.email.trim(),
+      username: formValues.username.trim(),
+      password: formValues.password.trim(),
       language,
       timezone,
       token: captchaToken,
@@ -124,9 +76,54 @@ const formik = withFormik<SignUpFormProps, SignUpFormValues>({
         handleResponse(response);
       })
       .finally(() => {
-        setSubmitting(false);
+        setLoading(false);
       });
-  },
-});
+  };
 
-export default flowRight([withSnackContext, withCaptcha, formik])(SignUpForm);
+  useEffect(() => {
+    if (captchaToken === 'error' && loading) {
+      setLoading(false);
+    } else if (captchaToken && loading) {
+      handleSubmit();
+    }
+  }, [captchaToken, loading, formValues]);
+
+  return (
+    <Formik
+      initialValues={defaultSignUpFormValues}
+      validationSchema={validationSchema}
+      validateOnMount
+      onSubmit={handleClickOnSubmit}
+    >
+      {(formikProps) => (
+        <FVStack w="100%" defaultSpace>
+          <FormikTextInput name="email" label={t('account:fields.email.label')} isDisabled={loading} {...formikProps} />
+          <FormikTextInput
+            name="username"
+            label={t('account:fields.username.label')}
+            isDisabled={loading}
+            {...formikProps}
+          />
+          <FormikPasswordInput
+            name="password"
+            label={t('account:fields.password.label')}
+            isDisabled={loading}
+            {...formikProps}
+          />
+          <PasswordStrengthBar password={formikProps.values.password} />
+          <SolidButton
+            colorScheme="secondary"
+            size="lg"
+            isLoading={loading}
+            isDisabled={!formikProps.isValid || loading}
+            onPress={formikProps.submitForm}
+          >
+            {t('account:register.submit')}
+          </SolidButton>
+        </FVStack>
+      )}
+    </Formik>
+  );
+};
+
+export default flowRight([withSnackContext, withCaptcha])(SignUpForm);
