@@ -15,6 +15,7 @@
     "@react-navigation/drawer": "^6.4.1",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
+    "@reduxjs/toolkit": "^1.8.1",
     "axios": "^0.27.1",
     "buffer": "^6.0.3",
     "formik": "^2.2.9",
@@ -41,10 +42,7 @@
     "react-native-svg": "^12.3.0",
     "react-native-tab-view": "^3.1.1",
     "react-native-webview": "^11.18.1",
-    "react-redux": "^7.2.6",
-    "redux": "^4.1.2",
-    "redux-promise-middleware": "^6.1.2",
-    "redux-thunk": "^2.4.1",
+    "react-redux": "^8.0.1",
     "yup": "^0.29.3"
   },
   "devDependencies": {
@@ -54,6 +52,7 @@
     "@types/jest": "^27.4.0",
     "@types/lodash": "^4.14.178",
     "@types/react-native": "^0.66.15",
+    "@types/react-redux": "^7.1.24",
     "@types/react-test-renderer": "^17.0.1",
     "@types/yup": "^0.29.13",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
