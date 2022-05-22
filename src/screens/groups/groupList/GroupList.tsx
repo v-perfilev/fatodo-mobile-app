@@ -1,20 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import {flowRight} from 'lodash';
-import withGroupListItems from '../../../shared/hocs/withLists/withGroupListItems';
-import withGroupList from '../../../shared/hocs/withLists/withGroupList';
-import {useGroupListContext} from '../../../shared/contexts/listContexts/groupListContext';
 import GroupListContainer from './GroupListContainer';
-import {useGroupListItemsContext} from '../../../shared/contexts/listContexts/groupListItemsContext';
 import GroupListHeader from './GroupListHeader';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import {useAppDispatch} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import UsersThunks from '../../../store/users/usersThunks';
+import GroupsSelectors from '../../../store/groups/groupsSelectors';
+import GroupsThunks from '../../../store/groups/groupsThunks';
 
 const GroupList = () => {
   const dispatch = useAppDispatch();
-  const {groups, load: loadGroups, loading: groupsLoading} = useGroupListContext();
-  const {items, loadInitialState} = useGroupListItemsContext();
+  const groups = useAppSelector(GroupsSelectors.groupsSelector);
+  const groupsLoading = useAppSelector(GroupsSelectors.loadingSelector);
+  const items = useAppSelector(GroupsSelectors.itemsSelector);
   const [sorting, setSorting] = useState<boolean>(false);
+
+  const loadGroups = (): void => {
+    dispatch(GroupsThunks.fetchGroups());
+  };
+
+  const loadInitialState = (groupIds: string[]): void => {
+    dispatch(GroupsThunks.fetchItems(groupIds));
+  };
 
   useEffect(() => {
     loadGroups();
@@ -49,4 +55,4 @@ const GroupList = () => {
   );
 };
 
-export default flowRight([withGroupList, withGroupListItems])(GroupList);
+export default GroupList;

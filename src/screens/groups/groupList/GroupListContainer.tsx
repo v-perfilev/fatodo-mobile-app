@@ -1,9 +1,11 @@
 import React from 'react';
-import {useGroupListContext} from '../../../shared/contexts/listContexts/groupListContext';
 import DraggableFlatList, {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
 import {Group} from '../../../models/Group';
 import {Box, useTheme} from 'native-base';
 import GroupListItem from './GroupListItem';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import GroupsSelectors from '../../../store/groups/groupsSelectors';
+import GroupsActions from '../../../store/groups/groupsActions';
 
 type GroupListContainerProps = {
   sorting: boolean;
@@ -19,8 +21,13 @@ const renderer = (sorting: boolean) => (props: RenderItemParams<Group>) =>
   );
 
 const GroupListContainer = ({sorting}: GroupListContainerProps) => {
-  const {groups, setGroups} = useGroupListContext();
+  const dispatch = useAppDispatch();
+  const groups = useAppSelector(GroupsSelectors.groupsSelector);
   const theme = useTheme();
+
+  const setGroups = (groups: Group[]): void => {
+    dispatch(GroupsActions.setGroups(groups));
+  };
 
   const extractKey = (group: Group): string => group.id;
 

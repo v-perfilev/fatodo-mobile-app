@@ -1,9 +1,10 @@
 import React from 'react';
-import {useGroupListItemsContext} from '../../../../shared/contexts/listContexts/groupListItemsContext';
 import {GestureResponderEvent} from 'react-native';
 import RoundButton from '../../../../components/controls/RoundButton';
 import CollapsedIcon from '../../../../components/icons/CollapsedIcon';
 import {Group} from '../../../../models/Group';
+import {useAppDispatch} from '../../../../store/store';
+import GroupsActions from '../../../../store/groups/groupsActions';
 
 type GroupListCardCollapseButtonProps = {
   group: Group;
@@ -11,12 +12,16 @@ type GroupListCardCollapseButtonProps = {
 };
 
 const GroupListCardCollapseButton = ({group, collapsed}: GroupListCardCollapseButtonProps) => {
-  const {setCollapsed} = useGroupListItemsContext();
+  const dispatch = useAppDispatch();
+
+  const setCollapsed = (groupId: string, value: boolean): void => {
+    dispatch(GroupsActions.setCollapsed(groupId, value));
+  };
 
   const handlePress = (e: GestureResponderEvent): void => {
     e.preventDefault();
     e.stopPropagation();
-    setCollapsed([group.id], !collapsed);
+    setCollapsed(group.id, !collapsed);
   };
 
   return (

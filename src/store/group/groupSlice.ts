@@ -95,8 +95,8 @@ const groupSlice = createSlice({
       const activeItemsCount = state.activeItemsCount + (!isArchived ? 1 : -1);
       const archivedItemsCount = state.archivedItemsCount + (isArchived ? 1 : -1);
 
-      const activeFunction = !isArchived ? ArrayUtils.addItem : ArrayUtils.deleteItem;
-      const archivedFunction = isArchived ? ArrayUtils.addItem : ArrayUtils.deleteItem;
+      const activeFunction = !isArchived ? ArrayUtils.addValue : ArrayUtils.deleteValue;
+      const archivedFunction = isArchived ? ArrayUtils.addValue : ArrayUtils.deleteValue;
       const activeItems = filterItems(activeFunction(state.activeItems, item));
       const archivedItems = filterItems(archivedFunction(state.activeItems, item));
 
@@ -116,8 +116,8 @@ const groupSlice = createSlice({
       const item = {...action.meta.arg.item, status: action.meta.arg.status} as Item;
       const isArchived = item.archived;
 
-      const activeItems = !isArchived ? ArrayUtils.updateItem(state.activeItems, item) : state.activeItems;
-      const archivedItems = isArchived ? ArrayUtils.updateItem(state.archivedItems, item) : state.archivedItems;
+      const activeItems = !isArchived ? ArrayUtils.updateValue(state.activeItems, item) : state.activeItems;
+      const archivedItems = isArchived ? ArrayUtils.updateValue(state.archivedItems, item) : state.archivedItems;
 
       return {
         ...state,
@@ -136,8 +136,8 @@ const groupSlice = createSlice({
       const activeItemsCount = state.activeItemsCount + (!isArchived ? -1 : 0);
       const archivedItemsCount = state.archivedItemsCount + (isArchived ? -1 : 0);
 
-      const activeItems = !isArchived ? ArrayUtils.deleteItem(state.activeItems, item) : state.activeItems;
-      const archivedItems = isArchived ? ArrayUtils.deleteItem(state.archivedItems, item) : state.archivedItems;
+      const activeItems = !isArchived ? ArrayUtils.deleteValue(state.activeItems, item) : state.activeItems;
+      const archivedItems = isArchived ? ArrayUtils.deleteValue(state.archivedItems, item) : state.archivedItems;
 
       return {
         ...state,

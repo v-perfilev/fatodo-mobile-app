@@ -12,22 +12,24 @@ import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
 import RoundButton from '../../../../components/controls/RoundButton';
 import {Group} from '../../../../models/Group';
 import {useGroupDialogContext} from '../../../../shared/contexts/dialogContexts/GroupDialogContext';
-import {useGroupListContext} from '../../../../shared/contexts/listContexts/groupListContext';
-import {useGroupListItemsContext} from '../../../../shared/contexts/listContexts/groupListItemsContext';
-import {useAppSelector} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
+import GroupsThunks from '../../../../store/groups/groupsThunks';
 
 type GroupListCardMenuButtonProps = {
   group: Group;
 };
 
 const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
+  const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.accountSelector);
   const {t} = useTranslation();
   const navigation = useNavigation<GroupNavigationProp>();
-  const {deleteGroup} = useGroupListContext();
-  const {deleteGroup: deleteGroupItems} = useGroupListItemsContext();
   const {showGroupDeleteDialog} = useGroupDialogContext();
+
+  const deleteGroup = (groupId: string): void => {
+    dispatch(GroupsThunks.deleteGroup(groupId));
+  };
 
   const canEdit = group && GroupUtils.canEdit(account, group);
   const canAdmin = group && GroupUtils.canAdmin(account, group);
@@ -47,7 +49,6 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
   const openGroupDeleteDialog = (): void => {
     const onSuccess = (): void => {
       deleteGroup(group.id);
-      deleteGroupItems(group.id);
     };
     showGroupDeleteDialog(group, onSuccess);
   };

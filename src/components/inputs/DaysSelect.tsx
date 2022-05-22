@@ -18,7 +18,7 @@ const DaysSelect = ({label, days, setDays}: DaysSelectProps) => {
   const handleClickOnDay = (day: number): void => {
     setDays((prevState) => {
       if (prevState.includes(day)) {
-        prevState = ArrayUtils.deleteItem(prevState, day);
+        prevState = ArrayUtils.deleteValue(prevState, day);
       } else {
         prevState.push(day);
         prevState.sort();

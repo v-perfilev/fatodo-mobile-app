@@ -27,13 +27,13 @@ const FormikChips = (props: FormikChipsProps<any>) => {
 
   const addValue = (value: any): void => {
     if (value && !arrayValue.includes(value)) {
-      const array = ArrayUtils.addItem(arrayValue, value);
+      const array = ArrayUtils.addValue(arrayValue, value);
       setFieldValue(name, array);
     }
   };
 
   const deleteValue = (index: number) => (): void => {
-    const array = ArrayUtils.deleteItemByIndex(arrayValue, index);
+    const array = ArrayUtils.deleteValueByIndex(arrayValue, index);
     setFieldValue(name, array);
   };
 

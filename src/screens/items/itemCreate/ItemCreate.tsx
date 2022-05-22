@@ -20,7 +20,6 @@ const ItemCreate = () => {
   const route = useRoute<RouteProp<GroupParamList, 'ItemCreate'>>();
   const groupId = route.params.groupId;
 
-  const goToGroupList = (): void => navigation.navigate('GroupList');
   const goToGroupView = (): void => navigation.navigate('GroupView', {groupId});
   const goToItemView = (itemId: string): void => navigation.navigate('ItemView', {itemId});
 

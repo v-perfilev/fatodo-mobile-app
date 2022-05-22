@@ -1,21 +1,26 @@
 export class ArrayUtils {
-  public static addItem = (array: any[], item: any): any[] => {
+  public static addValue = (array: any[], value: any): any[] => {
     const arrayCopy = [...array];
-    arrayCopy.push(item);
+    arrayCopy.push(value);
     return arrayCopy;
   };
 
-  public static updateItem = (array: any[], item: any): any[] => {
+  public static updateValue = (array: any[], value: any): any[] => {
     const arrayCopy = [...array];
-    const itemInList = arrayCopy.find((i) => i.id === item.id);
+    const itemInList = arrayCopy.find((i) => i.id === value.id);
     if (itemInList) {
       const index = arrayCopy.indexOf(itemInList);
-      arrayCopy[index] = item;
+      arrayCopy[index] = value;
     }
     return [...arrayCopy];
   };
 
-  public static deleteItemByIndex = (array: any[], index: number): any[] => {
+  public static deleteValueById = (array: any[], id: string): any[] => {
+    const arrayCopy = [...array];
+    return arrayCopy.filter((a) => a.id !== id);
+  };
+
+  public static deleteValueByIndex = (array: any[], index: number): any[] => {
     const arrayCopy = [...array];
     if (index >= 0) {
       arrayCopy.splice(index, 1);
@@ -23,9 +28,9 @@ export class ArrayUtils {
     return arrayCopy;
   };
 
-  public static deleteItem = (array: any[], item: any): any[] => {
+  public static deleteValue = (array: any[], value: any): any[] => {
     const arrayCopy = [...array];
-    const index = arrayCopy.indexOf(item);
+    const index = arrayCopy.indexOf(value);
     if (index >= 0) {
       arrayCopy.splice(index, 1);
     }
@@ -40,19 +45,19 @@ export class ArrayUtils {
     return a.createdAt < b.createdAt ? 1 : -1;
   };
 
-  public static uniqueFilter = (item: any, i: number, arr: any[]): boolean => {
-    return arr.findIndex((t) => t === item) === i;
+  public static uniqueFilter = (value: any, i: number, arr: any[]): boolean => {
+    return arr.findIndex((t) => t === value) === i;
   };
 
-  public static uniqueByIdFilter = (item: any, i: number, arr: any[]): boolean => {
-    return arr.findIndex((t) => t.id === item.id) === i;
+  public static uniqueByIdFilter = (value: any, i: number, arr: any[]): boolean => {
+    return arr.findIndex((t) => t.id === value.id) === i;
   };
 
-  public static notUndefinedFilter = (item: any): boolean => {
-    return item !== undefined;
+  public static notUndefinedFilter = (value: any): boolean => {
+    return value !== undefined;
   };
 
-  public static withIdFilter = (item: any): boolean => {
-    return item.id !== undefined && item.id !== null;
+  public static withIdFilter = (value: any): boolean => {
+    return value.id !== undefined && value.id !== null;
   };
 }

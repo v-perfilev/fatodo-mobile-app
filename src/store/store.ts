@@ -4,8 +4,9 @@ import authSlice from './auth/authSlice';
 import snackSlice from './snack/snackSlice';
 import contactsSlice from './contacts/contactsSlice';
 import usersSlice from './users/usersSlice';
-import itemSlice from './item/itemSlice';
+import groupsSlice from './groups/groupsSlice';
 import groupSlice from './group/groupSlice';
+import itemSlice from './item/itemSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     snack: snackSlice.reducer,
     contacts: contactsSlice.reducer,
     users: usersSlice.reducer,
+    groups: groupsSlice.reducer,
     group: groupSlice.reducer,
     item: itemSlice.reducer,
   },
