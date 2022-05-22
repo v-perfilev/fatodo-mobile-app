@@ -20,7 +20,7 @@ const itemSlice = createSlice({
       ...initialState,
       loading: true,
     }));
-    builder.addCase(ItemThunks.fetchItem.fulfilled, (state, action) => ({
+    builder.addCase(ItemThunks.fetchItem.fulfilled, (state: ItemState, action) => ({
       ...state,
       item: action.payload,
       loading: false,
@@ -32,7 +32,7 @@ const itemSlice = createSlice({
     /*
     fetchReminders
     */
-    builder.addCase(ItemThunks.fetchReminders.fulfilled, (state, action) => ({
+    builder.addCase(ItemThunks.fetchReminders.fulfilled, (state: ItemState, action) => ({
       ...state,
       reminders: action.payload,
     }));
@@ -40,11 +40,11 @@ const itemSlice = createSlice({
     /*
     createItem
     */
-    builder.addCase(ItemThunks.createItem.pending, (state) => ({
+    builder.addCase(ItemThunks.createItem.pending, (state: ItemState) => ({
       ...state,
       loading: true,
     }));
-    builder.addCase(ItemThunks.createItem.fulfilled, (state, action) => ({
+    builder.addCase(ItemThunks.createItem.fulfilled, (state: ItemState, action) => ({
       ...state,
       item: action.payload,
       reminders: action.meta.arg.reminders,
@@ -58,11 +58,11 @@ const itemSlice = createSlice({
     /*
     updateItem
     */
-    builder.addCase(ItemThunks.updateItem.pending, (state) => ({
+    builder.addCase(ItemThunks.updateItem.pending, (state: ItemState) => ({
       ...state,
       loading: true,
     }));
-    builder.addCase(ItemThunks.updateItem.fulfilled, (state, action) => ({
+    builder.addCase(ItemThunks.updateItem.fulfilled, (state: ItemState, action) => ({
       ...state,
       item: action.payload,
       reminders: action.meta.arg.reminders,

@@ -25,7 +25,7 @@ const usersSlice = createSlice({
     /*
     handleUserIds
     */
-    builder.addCase(UsersThunks.handleUserIds.pending, (state) => ({
+    builder.addCase(UsersThunks.handleUserIds.pending, (state: UsersState) => ({
       ...state,
       loading: true,
     }));
@@ -33,16 +33,16 @@ const usersSlice = createSlice({
     /*
     fetchUserIds
     */
-    builder.addCase(UsersThunks.fetchUserIds.pending, (state, action) => {
+    builder.addCase(UsersThunks.fetchUserIds.pending, (state: UsersState, action) => {
       const loadingIds = [...state.loadingIds, ...action.meta.arg];
       return {...state, loadingIds, loading: true};
     });
-    builder.addCase(UsersThunks.fetchUserIds.fulfilled, (state, action) => {
+    builder.addCase(UsersThunks.fetchUserIds.fulfilled, (state: UsersState, action) => {
       const users = [...action.payload, ...state.users].filter(ArrayUtils.uniqueByIdFilter);
       const loadingIds = state.loadingIds.filter((id) => !action.meta.arg.includes(id));
       return {...state, users, loadingIds, loading: false};
     });
-    builder.addCase(UsersThunks.fetchUserIds.rejected, (state, action) => {
+    builder.addCase(UsersThunks.fetchUserIds.rejected, (state: UsersState, action) => {
       const loadingIds = state.loadingIds.filter((id) => !action.meta.arg.includes(id));
       return {...state, loadingIds, loading: false};
     });
