@@ -5,6 +5,7 @@ import {DialogContext} from '../../contexts/dialogContexts/DialogContext';
 import withGroupDialogs from './withGroupDialogs';
 import {Box} from 'native-base';
 import withItemDialogs from './withItemDialogs';
+import withContactDialogs from './withContactDialogs';
 
 type ComponentWithProps = {
   component: ComponentType;
@@ -80,4 +81,4 @@ const withDialogs = (Component: ComponentType) => (props: any) => {
   );
 };
 
-export default flowRight([withDialogs, withGroupDialogs, withItemDialogs]);
+export default flowRight([withDialogs, withGroupDialogs, withItemDialogs, withContactDialogs]);

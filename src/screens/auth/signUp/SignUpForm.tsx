@@ -6,7 +6,6 @@ import withCaptcha, {CaptchaProps} from '../../../shared/hocs/withCaptcha';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {useTranslation} from 'react-i18next';
-import {emailValidator, passwordValidator, usernameValidator} from '../forgotPassword/ForgotPasswordValidators';
 import {RegistrationDTO} from '../../../models/dto/RegistrationDTO';
 import i18n from '../../../shared/i18n';
 import {DateUtils} from '../../../shared/utils/DateUtils';
@@ -18,6 +17,7 @@ import SnackActions from '../../../store/snack/snackActions';
 import AuthThunks from '../../../store/auth/authThunks';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import AuthActions from '../../../store/auth/authActions';
+import {emailValidator, passwordValidator, usernameValidator} from '../../../shared/validators';
 
 export interface SignUpFormValues {
   email: string;

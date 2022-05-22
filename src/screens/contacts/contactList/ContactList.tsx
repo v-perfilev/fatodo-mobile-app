@@ -12,15 +12,25 @@ import ContactsThunks from '../../../store/contacts/contactsThunks';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import UsersSelectors from '../../../store/users/usersSelectors';
 import UsersThunks from '../../../store/users/usersThunks';
+import FHStack from '../../../components/surfaces/FHStack';
+import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
+import IconButton from '../../../components/controls/IconButton';
+import UserPlusIcon from '../../../components/icons/UserPlusIcon';
+import {Box} from 'native-base';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
+  const {showContactRequestDialog} = useContactDialogContext();
   const relations = useAppSelector(ContactsSelectors.relations);
   const users = useAppSelector(UsersSelectors.users);
-  const {t} = useTranslation();
   const [userRelations, setUserRelations] = useState<ContactRelationWithUser[]>([]);
   const [loading, setLoading] = useLoadingState();
   const [filter, setFilter] = useState<string>('');
+
+  const openContactRequestDialog = (): void => {
+    showContactRequestDialog();
+  };
 
   const resetUserRelations = (): void => {
     setUserRelations([]);
@@ -58,8 +68,13 @@ const ContactList = () => {
   return (
     <ConditionalSpinner loading={loading}>
       <FScrollView>
-        <FVStack grow>
-          <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={setFilter} />
+        <FVStack grow defaultSpace>
+          <FHStack defaultSpace alignItems="center">
+            <IconButton icon={<UserPlusIcon />} onPress={openContactRequestDialog} />
+            <Box flex={1}>
+              <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={setFilter} />
+            </Box>
+          </FHStack>
           <ContactListContainer relations={userRelations} filter={filter} />
         </FVStack>
       </FScrollView>

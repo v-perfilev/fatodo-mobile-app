@@ -8,7 +8,7 @@ type ModalDialogProps = {
   close: () => void;
   title: string;
   content: ReactElement | string;
-  actions: ReactElement;
+  actions?: ReactElement;
 };
 
 const theme = ThemeFactory.getDefaultTheme();
@@ -22,9 +22,11 @@ const ModalDialog = ({open, close, title, content, actions}: ModalDialogProps) =
           {title}
         </Modal.Header>
         <Modal.Body>{content}</Modal.Body>
-        <Modal.Footer pt="0" borderTopWidth="0">
-          <Button.Group space="2">{actions}</Button.Group>
-        </Modal.Footer>
+        {actions && (
+          <Modal.Footer pt="0" borderTopWidth="0">
+            <Button.Group space="2">{actions}</Button.Group>
+          </Modal.Footer>
+        )}
       </Modal.Content>
     </Modal>
   </ThemeProvider>

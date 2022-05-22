@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
-import UserService from '../../../services/UserService';
-import i18n from '../../../shared/i18n';
-import {AsyncValidator} from '../../../shared/utils/YupUtils';
+import UserService from '../services/UserService';
+import i18n from './i18n';
+import {AsyncValidator} from './utils/YupUtils';
 
 export const usernameRegex = /^[A-Za-z\d]+$/;
 export const passwordRegex = /^[A-Za-z\d]+$/;
@@ -42,3 +42,20 @@ export const usernameValidator = new AsyncValidator(
     test: async (value: string): Promise<boolean> => !(await UserService.doesUsernameExist(value)).data,
   },
 );
+
+export const userValidator = (currentLogin: string, currentEmail: string): AsyncValidator =>
+  new AsyncValidator(
+    Yup.string()
+      .required(() => i18n.t('contact:addContact.fields.user.required'))
+      .matches(new RegExp('^(?!' + currentLogin + '$).*$'), {
+        message: () => i18n.t('contact:addContact.fields.user.current'),
+      })
+      .matches(new RegExp('^(?!' + currentEmail + '$).*$'), {
+        message: () => i18n.t('contact:addContact.fields.user.current'),
+      }),
+    {
+      name: 'exists',
+      message: (): string => i18n.t('contact:addContact.fields.user.notRegistered'),
+      test: async (value): Promise<boolean> => (await UserService.doesUsernameOrEmailExist(value)).data === true,
+    },
+  );

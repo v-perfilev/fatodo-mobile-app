@@ -108,7 +108,7 @@ const GroupForm = ({group, request, cancel}: GroupFormProps) => {
               isDisabled={!formikProps.isValid || formikProps.isSubmitting}
               onPress={formikProps.submitForm}
             >
-              {t('group:actions.save')}
+              t('contact:addContact.send')
             </SolidButton>
             <SolidButton
               colorScheme="secondary"

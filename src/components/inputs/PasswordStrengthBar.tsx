@@ -1,11 +1,7 @@
 import * as React from 'react';
-import {
-  passwordStrengthMap,
-  passwordStrengthPostfix,
-  passwordStrengthPrefix,
-} from '../../screens/auth/forgotPassword/ForgotPasswordValidators';
 import {Box} from 'native-base';
 import FHStack from '../surfaces/FHStack';
+import {passwordStrengthMap, passwordStrengthPostfix, passwordStrengthPrefix} from '../../shared/validators';
 
 type PasswordStrengthBardProps = {
   password: string;
