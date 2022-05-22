@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Group} from '../../../models/Group';
-import ItemService from '../../../services/ItemService';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
+import GroupsThunks from '../../../store/groups/groupsThunks';
 
 export type GroupLeaveDialogProps = {
   group: Group;
   show: boolean;
   close: () => void;
-  onSuccess: () => void;
+  onSuccess?: () => void;
 };
 
 export const defaultGroupLeaveDialogProps: Readonly<GroupLeaveDialogProps> = {
@@ -27,11 +27,14 @@ const GroupLeaveDialog = ({group, show, close, onSuccess}: GroupLeaveDialogProps
 
   const onAgree = (): void => {
     setLoading(true);
-    ItemService.leaveGroup(group?.id)
+    dispatch(GroupsThunks.leaveGroup(group.id))
+      .unwrap()
       .then(() => {
         dispatch(SnackActions.handleCode('group.left', 'info'));
         close();
-        onSuccess();
+        if (onSuccess) {
+          onSuccess();
+        }
       })
       .finally(() => {
         setLoading(false);

@@ -3,7 +3,6 @@ import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import ItemService from '../../../services/ItemService';
 import GroupForm from '../groupForm/GroupForm';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import FScrollView from '../../../components/surfaces/FScrollView';
@@ -22,7 +21,8 @@ const GroupEdit = () => {
   const goToGroupView = (): void => navigation.navigate('GroupView', {groupId});
 
   const request = (formData: FormData, stopSubmitting: () => void): void => {
-    ItemService.updateGroup(formData)
+    dispatch(GroupThunks.updateGroup(formData))
+      .unwrap()
       .then(() => {
         dispatch(SnackActions.handleCode('group.updated', 'info'));
         goToGroupView();

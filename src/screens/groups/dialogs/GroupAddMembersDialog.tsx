@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import ItemService from '../../../services/ItemService';
 import ModalDialog from '../../../components/modals/ModalDialog';
 import {Group} from '../../../models/Group';
 import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
@@ -8,22 +7,21 @@ import GhostButton from '../../../components/controls/GhostButton';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import ContactsThunks from '../../../store/contacts/contactsThunks';
+import GroupThunks from '../../../store/group/groupThunks';
 
 export type GroupAddMembersDialogProps = {
   group: Group;
   show: boolean;
   close: () => void;
-  onSuccess: () => void;
 };
 
 export const defaultGroupAddMembersDialogProps: Readonly<GroupAddMembersDialogProps> = {
   group: null,
   show: false,
   close: (): void => undefined,
-  onSuccess: (): void => undefined,
 };
 
-const GroupAddMembersDialog = ({group, show, close, onSuccess}: GroupAddMembersDialogProps) => {
+const GroupAddMembersDialog = ({group, show, close}: GroupAddMembersDialogProps) => {
   const dispatch = useAppDispatch();
   const relations = useAppSelector(ContactsSelectors.relations);
   const {t} = useTranslation();
@@ -33,10 +31,10 @@ const GroupAddMembersDialog = ({group, show, close, onSuccess}: GroupAddMembersD
 
   const addUsers = (): void => {
     setIsSubmitting(true);
-    ItemService.addMembersToGroup(group.id, userIds)
+    dispatch(GroupThunks.addGroupMembers({group, userIds}))
+      .unwrap()
       .then(() => {
         close();
-        onSuccess();
       })
       .finally(() => {
         setIsSubmitting(false);

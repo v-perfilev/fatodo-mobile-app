@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import ItemService from '../../../services/ItemService';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {Item} from '../../../models/Item';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
+import GroupThunks from '../../../store/group/groupThunks';
 
 export type ItemDeleteDialogProps = {
   item: Item;
@@ -26,7 +26,8 @@ const ItemDeleteDialog = ({item, close, onSuccess}: ItemDeleteDialogProps) => {
 
   const onAgree = (): void => {
     setLoading(true);
-    ItemService.deleteItem(item?.id)
+    dispatch(GroupThunks.deleteItem(item))
+      .unwrap()
       .then(() => {
         dispatch(SnackActions.handleCode('item.deleted', 'info'));
         close();

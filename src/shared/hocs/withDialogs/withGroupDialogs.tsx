@@ -37,43 +37,42 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
   const {handleDialog, setDialogProps, clearDialogProps, updateDialogProps} = useDialogContext();
 
   const showGroupAddMembersDialog = useCallback(
-    (group: Group, onSuccess: () => void): void => {
+    (group: Group): void => {
       const show = true;
       const close = (): void => updateDialogProps(GroupDialogs.ADD_MEMBERS, {show: false});
-      const props = {group, show, close, onSuccess} as GroupAddMembersDialogProps;
+      const props = {group, show, close} as GroupAddMembersDialogProps;
       setDialogProps(GroupDialogs.ADD_MEMBERS, props);
     },
     [setDialogProps, updateDialogProps],
   );
 
   const showGroupEditMemberDialog = useCallback(
-    (group: Group, user: GroupUser, onSuccess: () => void): void => {
+    (group: Group, user: GroupUser): void => {
       const show = true;
       const close = (): void => updateDialogProps(GroupDialogs.EDIT_MEMBER, {show: false});
-      const props = {group, user, show, close, onSuccess} as GroupEditMemberDialogProps;
+      const props = {group, user, show, close} as GroupEditMemberDialogProps;
       setDialogProps(GroupDialogs.EDIT_MEMBER, props);
     },
     [setDialogProps, updateDialogProps],
   );
 
   const showGroupMembersDialog = useCallback(
-    (group: Group, users: User[], onSuccess: () => void): void => {
+    (group: Group, users: User[]): void => {
       const show = true;
       const close = (): void => updateDialogProps(GroupDialogs.MEMBERS, {show: false});
       const switchToAddMembers = (): void => {
         updateDialogProps(GroupDialogs.MEMBERS, {show: false});
-        showGroupAddMembersDialog(group, onSuccess);
+        showGroupAddMembersDialog(group);
       };
       const switchToEditMember = (user: GroupUser): void => {
         updateDialogProps(GroupDialogs.MEMBERS, {show: false});
-        showGroupEditMemberDialog(group, user, onSuccess);
+        showGroupEditMemberDialog(group, user);
       };
       const props = {
         group,
         users,
         show,
         close,
-        onSuccess,
         switchToAddMembers,
         switchToEditMember,
       } as GroupMembersDialogProps;

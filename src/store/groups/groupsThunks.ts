@@ -6,6 +6,8 @@ enum TYPES {
   FETCH_ITEMS = 'groups/fetchItems',
   FETCH_MORE_ITEMS = 'groups/fetchMoreItems',
   DELETE_GROUP = 'groups/deleteGroup',
+  LEAVE_GROUP = 'groups/leaveGroup',
+  UPDATE_ORDER = 'groups/updateOrder',
 }
 
 export class GroupsThunks {
@@ -28,8 +30,15 @@ export class GroupsThunks {
   );
 
   static deleteGroup = createAsyncThunk(TYPES.DELETE_GROUP, async (groupId: string) => {
-    const response = await ItemService.deleteGroup(groupId);
-    return response.data;
+    await ItemService.deleteGroup(groupId);
+  });
+
+  static leaveGroup = createAsyncThunk(TYPES.LEAVE_GROUP, async (groupId: string) => {
+    await ItemService.leaveGroup(groupId);
+  });
+
+  static updateOrder = createAsyncThunk(TYPES.UPDATE_ORDER, async (order: string[]) => {
+    await ItemService.setGroupOrder(order);
   });
 }
 

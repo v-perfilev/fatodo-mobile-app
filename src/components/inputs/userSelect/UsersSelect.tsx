@@ -1,7 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {User} from '../../../models/User';
-import UserService from '../../../services/UserService';
 import {Text} from 'native-base';
 import {ArrayUtils} from '../../../shared/utils/ArrayUtils';
 import ClearableTextInput from '../ClearableTextInput';
@@ -69,10 +68,9 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
 
   const loadUserFromFilter = (): void => {
     if (filter.length > 0) {
-      UserService.getAllByUsernamePart(filter).then((response) => {
-        const users = response.data;
-        dispatch(UsersActions.handleUsers(users));
-      });
+      dispatch(UsersThunks.fetchUsersByUsernamePart(filter))
+        .unwrap()
+        .then((users) => dispatch(UsersActions.handleUsers(users)));
     }
   };
 

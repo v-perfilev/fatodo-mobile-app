@@ -2,12 +2,12 @@ import React from 'react';
 import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import GroupForm from '../groupForm/GroupForm';
-import ItemService from '../../../services/ItemService';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
+import GroupThunks from '../../../store/group/groupThunks';
 
 const GroupCreate = () => {
   const dispatch = useAppDispatch();
@@ -19,11 +19,11 @@ const GroupCreate = () => {
   const goToGroupList = (): void => navigation.navigate('GroupList');
 
   const request = (formData: FormData, stopSubmitting: () => void): void => {
-    ItemService.createGroup(formData)
-      .then((response) => {
+    dispatch(GroupThunks.createGroup(formData))
+      .unwrap()
+      .then((group) => {
         dispatch(SnackActions.handleCode('group.created', 'info'));
-        const id = response.data.id;
-        goToGroupView(id);
+        goToGroupView(group.id);
       })
       .catch(() => {
         stopSubmitting();

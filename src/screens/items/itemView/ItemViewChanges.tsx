@@ -1,17 +1,17 @@
 import React, {ReactElement, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
-import UserService from '../../../services/UserService';
-import {User} from '../../../models/User';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
 import FVStack from '../../../components/surfaces/FVStack';
 import FHStack from '../../../components/surfaces/FHStack';
 import {useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
+import UsersSelectors from '../../../store/users/usersSelectors';
 
 const ItemViewChanges = () => {
   const {t} = useTranslation();
   const item = useAppSelector(ItemSelectors.item);
+  const users = useAppSelector(UsersSelectors.users);
   const [creator, setCreator] = useState<string>();
   const [updater, setUpdater] = useState<string>();
 
@@ -20,32 +20,18 @@ const ItemViewChanges = () => {
     return DateFormatters.formatTimeWithDate(new Date(timestampNumber));
   };
 
-  const loadUsernames = (): void => {
-    UserService.getAllByIds([item.createdBy, item.lastModifiedBy].filter((id) => id != null))
-      .then((response) => {
-        const users: User[] = response.data;
-        if (item.createdBy) {
-          const username = users.length > 0 ? users[0].username : item.createdBy;
-          setCreator(username);
-        }
-        if (item.lastModifiedBy) {
-          const username = users.length > 1 ? users[1].username : users.length > 0 ? users[0].username : item.createdBy;
-          setUpdater(username);
-        }
-      })
-      .catch(() => {
-        if (item.createdBy) {
-          setCreator(item.createdBy);
-        }
-        if (item.lastModifiedBy) {
-          setUpdater(item.lastModifiedBy);
-        }
-      });
-  };
-
   useEffect(() => {
-    loadUsernames();
-  }, []);
+    if (item?.createdBy) {
+      const user = users.find((u) => u.id === item.createdBy);
+      const username = user.username || item.createdBy;
+      setCreator(username);
+    }
+    if (item?.lastModifiedBy) {
+      const user = users.find((u) => u.id === item.lastModifiedBy);
+      const username = user.username || item.lastModifiedBy;
+      setUpdater(username);
+    }
+  }, [item, users]);
 
   const labeledBox = (label: string, text: string): ReactElement => (
     <LabeledBox label={label} isText fontSize="12" color="gray.500">

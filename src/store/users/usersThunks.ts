@@ -7,6 +7,7 @@ import {User} from '../../models/User';
 enum TYPES {
   HANDLE_USER_IDS = 'users/handleUserIds',
   FETCH_USER_IDS = 'users/fetchUserIds',
+  FETCH_USERS_BY_USERNAME_PART = 'users/fetchUsersByUsernamePart',
 }
 
 export class UsersThunks {
@@ -30,6 +31,11 @@ export class UsersThunks {
       result = response.data;
     }
     return result;
+  });
+
+  static fetchUsersByUsernamePart = createAsyncThunk(TYPES.FETCH_USERS_BY_USERNAME_PART, async (part: string) => {
+    const result = await UserService.getAllByUsernamePart(part);
+    return result.data;
   });
 }
 

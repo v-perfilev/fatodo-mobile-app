@@ -25,7 +25,25 @@ const initialState: GroupState = {
 const groupSlice = createSlice({
   name: 'group',
   initialState,
-  reducers: {},
+  reducers: {
+    createItem: (state: GroupState, action) => {
+      const item = action.payload as Item;
+
+      const activeItems = filterItems([...ArrayUtils.addValue(state.activeItems, item)]);
+      const activeItemsCount = state.activeItemsCount + 1;
+
+      return {...state, activeItems, activeItemsCount};
+    },
+    updateItem: (state: GroupState, action) => {
+      const item = action.payload as Item;
+      const isArchived = item.archived;
+
+      const activeItems = !isArchived ? ArrayUtils.updateValue(state.activeItems, item) : state.activeItems;
+      const archivedItems = isArchived ? ArrayUtils.updateValue(state.archivedItems, item) : state.activeItems;
+
+      return {...state, activeItems, archivedItems};
+    },
+  },
   extraReducers: (builder) => {
     /*
     fetchGroup
@@ -112,7 +130,7 @@ const groupSlice = createSlice({
     /*
     updateItemArchivedStatus
     */
-    builder.addCase(GroupThunks.updateItemStatus.fulfilled, (state, action) => {
+    builder.addCase(GroupThunks.updateItemStatus.fulfilled, (state: GroupState, action) => {
       const item = {...action.meta.arg.item, status: action.meta.arg.status} as Item;
       const isArchived = item.archived;
 
@@ -129,7 +147,7 @@ const groupSlice = createSlice({
     /*
     removeItem
     */
-    builder.addCase(GroupThunks.deleteItem.fulfilled, (state, action) => {
+    builder.addCase(GroupThunks.deleteItem.fulfilled, (state: GroupState, action) => {
       const item = action.meta.arg;
       const isArchived = item.archived;
 
@@ -151,11 +169,11 @@ const groupSlice = createSlice({
     /*
     createGroup
     */
-    builder.addCase(GroupThunks.createGroup.pending, (state) => ({
+    builder.addCase(GroupThunks.createGroup.pending, (state: GroupState) => ({
       ...state,
       loading: true,
     }));
-    builder.addCase(GroupThunks.createGroup.fulfilled, (state, action) => ({
+    builder.addCase(GroupThunks.createGroup.fulfilled, (state: GroupState, action) => ({
       ...state,
       group: action.payload,
       loading: false,
@@ -168,11 +186,11 @@ const groupSlice = createSlice({
     /*
     updateGroup
     */
-    builder.addCase(GroupThunks.updateGroup.pending, (state) => ({
+    builder.addCase(GroupThunks.updateGroup.pending, (state: GroupState) => ({
       ...state,
       loading: true,
     }));
-    builder.addCase(GroupThunks.updateGroup.fulfilled, (state, action) => ({
+    builder.addCase(GroupThunks.updateGroup.fulfilled, (state: GroupState, action) => ({
       ...state,
       group: action.payload,
       loading: false,
@@ -181,6 +199,30 @@ const groupSlice = createSlice({
       ...initialState,
       loading: false,
     }));
+
+    /*
+    editGroupMembers
+    */
+    builder.addCase(GroupThunks.addGroupMembers.fulfilled, (state: GroupState, action) => {
+      const group = action.payload;
+      return {...state, group};
+    });
+
+    /*
+    editGroupMember
+    */
+    builder.addCase(GroupThunks.editGroupMember.fulfilled, (state: GroupState, action) => {
+      const group = action.payload;
+      return {...state, group};
+    });
+
+    /*
+    removeGroupMembers
+    */
+    builder.addCase(GroupThunks.removeGroupMembers.fulfilled, (state: GroupState, action) => {
+      const group = action.payload;
+      return {...state, group};
+    });
   },
 });
 

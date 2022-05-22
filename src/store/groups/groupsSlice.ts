@@ -4,6 +4,7 @@ import GroupsThunks from './groupsThunks';
 import {MapUtils} from '../../shared/utils/MapUtils';
 import {Item} from '../../models/Item';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
+import {Group} from '../../models/Group';
 
 const filterItems = (items: Item[]): Item[] =>
   items.filter(ArrayUtils.withIdFilter).filter(ArrayUtils.uniqueByIdFilter).sort(ArrayUtils.createdAtDescComparator);
@@ -38,6 +39,81 @@ const groupsSlice = createSlice({
       const itemCollapsedMap = MapUtils.setAllValues(new Map(state.itemsCollapsed), action.payload);
       const itemsCollapsed = [...itemCollapsedMap];
       return {...state, itemsCollapsed};
+    },
+
+    createGroup: (state: GroupsState, action) => {
+      const group = action.payload as Group;
+      const groups = [group, ...state.groups];
+      return {...state, groups};
+    },
+
+    updateGroup: (state: GroupsState, action) => {
+      const group = action.payload as Group;
+      const groups = ArrayUtils.updateValue(state.groups, group);
+      return {...state, groups};
+    },
+
+    deleteGroup: (state: GroupsState, action) => {
+      const group = action.payload as Group;
+      const groups = ArrayUtils.deleteValueById(state.groups, group.id);
+      return {...state, groups};
+    },
+
+    createItem: (state: GroupsState, action) => {
+      const item = action.payload as Item;
+      const groupId = item.groupId;
+
+      const oldItemsMap = new Map(state.items);
+      const newItemsValue = filterItems([item, ...oldItemsMap.get(groupId)]);
+      const itemsMap = MapUtils.setValue(oldItemsMap, groupId, newItemsValue);
+      const items = [...itemsMap];
+
+      const oldItemsCountMap = new Map(state.itemsCount);
+      const newItemsCountValue = oldItemsCountMap.get(groupId) + 1;
+      const itemsCountMap = MapUtils.setValue(oldItemsCountMap, groupId, newItemsCountValue);
+      const itemsCount = [...itemsCountMap];
+
+      return {...state, items, itemsCount};
+    },
+
+    updateItem: (state: GroupsState, action) => {
+      const item = action.payload as Item;
+      const groupId = item.groupId;
+      const isArchived = item.archived;
+
+      let items = state.items;
+      if (!isArchived) {
+        const oldItemsMap = new Map(state.items);
+        const newItemsValue = ArrayUtils.updateValue(oldItemsMap.get(groupId), item);
+        const itemsMap = MapUtils.setValue(oldItemsMap, groupId, newItemsValue);
+        items = [...itemsMap];
+      }
+
+      return {...state, items};
+    },
+
+    deleteItem: (state: GroupsState, action) => {
+      const item = action.payload as Item;
+      const groupId = item.groupId;
+      const isArchived = item.archived;
+
+      let items = state.items;
+      if (!isArchived) {
+        const oldItemsMap = new Map(state.items);
+        const newItemsValue = ArrayUtils.deleteValue(oldItemsMap.get(groupId), item);
+        const itemsMap = MapUtils.setValue(oldItemsMap, groupId, newItemsValue);
+        items = [...itemsMap];
+      }
+
+      let itemsCount = state.itemsCount;
+      if (!isArchived) {
+        const oldItemsCountMap = new Map(state.itemsCount);
+        const newItemsCountValue = oldItemsCountMap.get(groupId) - 1;
+        const itemsCountMap = MapUtils.setValue(oldItemsCountMap, groupId, newItemsCountValue);
+        itemsCount = [...itemsCountMap];
+      }
+
+      return {...state, items, itemsCount};
     },
   },
   extraReducers: (builder) => {

@@ -1,19 +1,19 @@
 import React, {FC, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Group, GroupMember, GroupPermission, GroupUser} from '../../../models/Group';
-import ItemService from '../../../services/ItemService';
 import UserView from '../../../components/views/UserView';
 import ModalDialog from '../../../components/modals/ModalDialog';
 import GhostButton from '../../../components/controls/GhostButton';
 import FVStack from '../../../components/surfaces/FVStack';
 import PermissionSelect from '../../../components/inputs/permissionSelect/PermissionSelect';
+import {useAppDispatch} from '../../../store/store';
+import GroupThunks from '../../../store/group/groupThunks';
 
 export type GroupEditMemberDialogProps = {
   group: Group;
   user: GroupUser;
   show: boolean;
   close: () => void;
-  onSuccess: () => void;
 };
 
 export const defaultGroupEditMemberDialogProps: Readonly<GroupEditMemberDialogProps> = {
@@ -21,12 +21,12 @@ export const defaultGroupEditMemberDialogProps: Readonly<GroupEditMemberDialogPr
   user: null,
   show: false,
   close: (): void => undefined,
-  onSuccess: (): void => undefined,
 };
 
 type Props = GroupEditMemberDialogProps;
 
-const GroupEditMemberDialog: FC<Props> = ({group, user, show, close, onSuccess}: Props) => {
+const GroupEditMemberDialog: FC<Props> = ({group, user, show, close}: Props) => {
+  const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [permission, setPermission] = useState<GroupPermission>();
@@ -34,10 +34,10 @@ const GroupEditMemberDialog: FC<Props> = ({group, user, show, close, onSuccess}:
   const editMember = (): void => {
     setIsSubmitting(true);
     const editedMember = {id: user.id, permission} as GroupMember;
-    ItemService.editGroupMember(group.id, editedMember)
+    dispatch(GroupThunks.editGroupMember({group, member: editedMember}))
+      .unwrap()
       .then(() => {
         close();
-        onSuccess();
       })
       .finally(() => {
         setIsSubmitting(false);

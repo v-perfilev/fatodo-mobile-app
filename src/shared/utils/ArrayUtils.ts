@@ -5,6 +5,12 @@ export class ArrayUtils {
     return arrayCopy;
   };
 
+  public static addValues = (array: any[], values: any[]): any[] => {
+    const arrayCopy = [...array];
+    arrayCopy.push(values);
+    return arrayCopy;
+  };
+
   public static updateValue = (array: any[], value: any): any[] => {
     const arrayCopy = [...array];
     const itemInList = arrayCopy.find((i) => i.id === value.id);

@@ -19,7 +19,6 @@ export type GroupMembersDialogProps = {
   users: User[];
   show: boolean;
   close: () => void;
-  onSuccess: () => void;
   switchToAddMembers: () => void;
   switchToEditMember: (user: GroupUser) => void;
 };
@@ -28,7 +27,6 @@ export const defaultGroupMembersDialogProps: Readonly<GroupMembersDialogProps> =
   group: null,
   users: [],
   show: false,
-  onSuccess: (): void => undefined,
   close: (): void => undefined,
   switchToAddMembers: (): void => undefined,
   switchToEditMember: (): void => undefined,
@@ -36,7 +34,7 @@ export const defaultGroupMembersDialogProps: Readonly<GroupMembersDialogProps> =
 
 type Props = GroupMembersDialogProps;
 
-const GroupMembersDialog = ({group, users, show, close, onSuccess, switchToAddMembers, switchToEditMember}: Props) => {
+const GroupMembersDialog = ({group, users, show, close, switchToAddMembers, switchToEditMember}: Props) => {
   const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const [usersToShow, setUsersToShow] = useState<GroupUser[]>([]);
@@ -47,7 +45,6 @@ const GroupMembersDialog = ({group, users, show, close, onSuccess, switchToAddMe
   const conditionalClose = (): void => {
     if (deletedMemberIds.length >= 0) {
       setDeletedMemberIds([]);
-      onSuccess();
     }
     close();
   };

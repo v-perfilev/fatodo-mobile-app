@@ -19,7 +19,7 @@ export default class ItemService {
     return axios.get(url);
   };
 
-  public static createGroup = (formData: FormData): AxiosPromise => {
+  public static createGroup = (formData: FormData): AxiosPromise<Group> => {
     const url = ItemService.baseUrl + '/groups';
     const config = {
       headers: {'content-type': 'multipart/form-data'},
@@ -28,7 +28,7 @@ export default class ItemService {
     return axios.post(url, formData, config);
   };
 
-  public static updateGroup = (formData: FormData): AxiosPromise => {
+  public static updateGroup = (formData: FormData): AxiosPromise<Group> => {
     const url = ItemService.baseUrl + '/groups';
     const config = {
       headers: {'content-type': 'multipart/form-data'},
@@ -37,7 +37,7 @@ export default class ItemService {
     return axios.put(url, formData, config);
   };
 
-  public static deleteGroup = (id: string): AxiosPromise => {
+  public static deleteGroup = (id: string): AxiosPromise<void> => {
     const url = ItemService.baseUrl + '/groups/' + id;
     return axios.delete(url);
   };
@@ -84,26 +84,26 @@ export default class ItemService {
     return axios.put(url, dto);
   };
 
-  public static updateItemStatus = (id: string, status: string): AxiosPromise => {
+  public static updateItemStatus = (id: string, status: string): AxiosPromise<Item> => {
     const dto = {id, status};
     const url = ItemService.baseUrl + '/items/status';
     return axios.put(url, dto);
   };
 
-  public static updateItemArchived = (id: string, archived: boolean): AxiosPromise => {
+  public static updateItemArchived = (id: string, archived: boolean): AxiosPromise<Item> => {
     const dto = {id, archived};
     const url = ItemService.baseUrl + '/items/archived';
     return axios.put(url, dto);
   };
 
-  public static deleteItem = (id: string): AxiosPromise => {
+  public static deleteItem = (id: string): AxiosPromise<void> => {
     const url = ItemService.baseUrl + '/items/' + id;
     return axios.delete(url);
   };
 
   // ConfigurationController
 
-  public static setGroupOrder = (order: string[]): AxiosPromise => {
+  public static setGroupOrder = (order: string[]): AxiosPromise<void> => {
     const url = ItemService.baseUrl + '/configuration/order';
     return axios.post(url, order);
   };

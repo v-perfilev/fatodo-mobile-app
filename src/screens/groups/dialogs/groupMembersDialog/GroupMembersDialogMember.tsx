@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Group, GroupUser} from '../../../../models/Group';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
-import ItemService from '../../../../services/ItemService';
 import ConfirmationDialog from '../../../../components/modals/ConfirmationDialog';
 import EditIcon from '../../../../components/icons/EditIcon';
 import UserView from '../../../../components/views/UserView';
@@ -11,8 +10,9 @@ import {PermissionView} from '../../../../components/views/PermissionView';
 import {MenuElement} from '../../../../models/MenuElement';
 import ControlMenu from '../../../../components/layouts/ControlMenu';
 import FHStack from '../../../../components/surfaces/FHStack';
-import {useAppSelector} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
+import GroupThunks from '../../../../store/group/groupThunks';
 
 type Props = {
   group: Group;
@@ -22,8 +22,9 @@ type Props = {
 };
 
 const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: Props) => {
-  const account = useAppSelector(AuthSelectors.account);
+  const dispatch = useAppDispatch();
   const {t} = useTranslation();
+  const account = useAppSelector(AuthSelectors.account);
   const [showRemovingConfirmation, setShowRemovingConfirmation] = useState(false);
   const [removingLoading, setRemovingLoading] = useState(false);
 
@@ -40,7 +41,8 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: P
 
   const removeUserFromChat = (): void => {
     setRemovingLoading(true);
-    ItemService.removeMembersFromGroup(group.id, [user.id])
+    dispatch(GroupThunks.removeGroupMembers({group, userIds: [user.id]}))
+      .unwrap()
       .then(() => {
         onDelete(user.id);
       })

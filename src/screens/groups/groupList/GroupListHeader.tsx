@@ -8,12 +8,12 @@ import ReorderIcon from '../../../components/icons/ReorderIcon';
 import CollapsedIcon from '../../../components/icons/CollapsedIcon';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
-import ItemService from '../../../services/ItemService';
 import {flowRight} from 'lodash';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import GroupsActions from '../../../store/groups/groupsActions';
+import GroupsThunks from '../../../store/groups/groupsThunks';
 
 type GroupListHeaderProps = {
   sorting: boolean;
@@ -32,9 +32,11 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
 
   const saveOrder = (): void => {
     const orderedGroupIds = groups.map((g) => g.id);
-    ItemService.setGroupOrder(orderedGroupIds).then(() => {
-      dispatch(SnackActions.handleCode('group.sorted', 'info'));
-    });
+    dispatch(GroupsThunks.updateOrder(orderedGroupIds))
+      .unwrap()
+      .then(() => {
+        dispatch(SnackActions.handleCode('group.sorted', 'info'));
+      });
   };
 
   const switchCollapsed = (): void => setAllCollapsed(!allCollapsed);

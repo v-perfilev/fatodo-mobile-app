@@ -54,6 +54,8 @@ const ItemView = () => {
 
   useEffect(() => {
     if (item) {
+      const userIds = [item.createdBy, item.lastModifiedBy].filter((item) => item !== undefined);
+      dispatch(UsersThunks.handleUserIds(userIds));
       dispatch(GroupThunks.fetchGroup(item.groupId))
         .unwrap()
         .catch(() => goToGroupView());
