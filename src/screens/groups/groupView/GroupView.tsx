@@ -40,7 +40,8 @@ const GroupView = () => {
     setLoading(true);
     dispatch(GroupThunks.fetchGroup(groupId))
       .unwrap()
-      .catch(() => goToGroupList());
+      .catch(() => goToGroupList())
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -48,18 +49,12 @@ const GroupView = () => {
     group && navigation.setParams({...route.params, color: group?.color});
   }, [group]);
 
-  useEffect(() => {
-    if (!groupLoading) {
-      setLoading(false);
-    }
-  }, [groupLoading]);
-
   const theme = group ? ThemeFactory.getTheme(group.color) : ThemeFactory.getDefaultTheme();
 
   return (
     <ThemeProvider theme={theme}>
       <Header title={group?.title} imageFilename={group?.imageFilename} showMenu={false} />
-      <ConditionalSpinner loading={loading}>
+      <ConditionalSpinner loading={loading || groupLoading}>
         <FScrollView>
           <FVStack defaultSpace>
             <GroupViewMenu account={account} />

@@ -12,7 +12,6 @@ import SnackActions from '../../../store/snack/snackActions';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import ItemThunks from '../../../store/item/itemThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
-import GroupThunks from '../../../store/group/groupThunks';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 
 const ItemEdit = () => {
@@ -45,25 +44,12 @@ const ItemEdit = () => {
     setLoading(true);
     dispatch(ItemThunks.fetchItem(itemId))
       .unwrap()
-      .catch(() => goToItemView());
-    dispatch(ItemThunks.fetchReminders(itemId));
+      .catch(() => goToItemView())
+      .finally(() => setLoading(false));
   }, [itemId]);
 
-  useEffect(() => {
-    if (item) {
-      dispatch(GroupThunks.fetchGroup(item.groupId))
-        .unwrap()
-        .catch(() => goToItemView());
-    }
-  }, [item]);
-
-  useEffect(() => {
-    if (!groupLoading && !itemLoading && reminders) {
-      setLoading(false);
-    }
-  }, [groupLoading, itemLoading, reminders]);
   return (
-    <ConditionalSpinner loading={loading}>
+    <ConditionalSpinner loading={loading || itemLoading || groupLoading}>
       <FScrollView>
         <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goToItemView} />
       </FScrollView>

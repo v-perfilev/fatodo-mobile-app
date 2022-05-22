@@ -42,17 +42,12 @@ const ItemCreate = () => {
     setLoading(true);
     dispatch(GroupThunks.fetchGroup(groupId))
       .unwrap()
-      .catch(() => goToGroupView());
+      .catch(() => goToGroupView())
+      .finally(() => setLoading(false));
   }, [groupId]);
 
-  useEffect(() => {
-    if (!groupLoading) {
-      setLoading(false);
-    }
-  }, [groupLoading]);
-
   return (
-    <ConditionalSpinner loading={loading}>
+    <ConditionalSpinner loading={loading || groupLoading}>
       <FScrollView>
         <ItemForm group={group} request={request} cancel={goToGroupView} />
       </FScrollView>

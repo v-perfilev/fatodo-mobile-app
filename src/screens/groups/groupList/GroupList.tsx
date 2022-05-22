@@ -16,23 +16,17 @@ const GroupList = () => {
   const [loading, setLoading] = useLoadingState();
   const [sorting, setSorting] = useState<boolean>(false);
 
-  const loadGroups = (): void => {
-    dispatch(GroupsThunks.fetchGroups());
-  };
-
-  const loadInitialState = (groupIds: string[]): void => {
-    dispatch(GroupsThunks.fetchItems(groupIds));
-  };
-
   useEffect(() => {
     setLoading(true);
-    loadGroups();
+    dispatch(GroupsThunks.fetchGroups())
+      .unwrap()
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
     if (groups.length > 0) {
       const groupIds = groups.map((g) => g.id);
-      loadInitialState(groupIds);
+      dispatch(GroupsThunks.fetchItems(groupIds));
     }
   }, [groups.length]);
 
@@ -48,16 +42,10 @@ const GroupList = () => {
     dispatch(UsersThunks.handleUserIds(userIds));
   }, [items]);
 
-  useEffect(() => {
-    if (!groupsLoading) {
-      setLoading(false);
-    }
-  }, [groupsLoading]);
-
   return (
     <>
       <GroupListHeader sorting={sorting} setSorting={setSorting} />
-      <ConditionalSpinner loading={loading}>
+      <ConditionalSpinner loading={loading || groupsLoading}>
         <GroupListContainer sorting={sorting} />
       </ConditionalSpinner>
     </>

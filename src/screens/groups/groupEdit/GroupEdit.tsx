@@ -18,7 +18,6 @@ const GroupEdit = () => {
   const route = useRoute<RouteProp<GroupParamList, 'GroupEdit'>>();
   const groupId = route.params.groupId;
   const group = useAppSelector(GroupSelectors.group);
-  const groupLoading = useAppSelector(GroupSelectors.loading);
   const [loading, setLoading] = useLoadingState();
 
   const goToGroupView = (): void => navigation.navigate('GroupView', {groupId});
@@ -39,14 +38,9 @@ const GroupEdit = () => {
     setLoading(true);
     dispatch(GroupThunks.fetchGroup(groupId))
       .unwrap()
-      .catch(() => goToGroupView());
+      .catch(() => goToGroupView())
+      .finally(() => setLoading(false));
   }, [groupId]);
-
-  useEffect(() => {
-    if (!groupLoading) {
-      setLoading(false);
-    }
-  }, [groupLoading]);
 
   return (
     <ConditionalSpinner loading={loading}>

@@ -4,6 +4,7 @@ import NotificationService from '../../services/NotificationService';
 import {ItemDTO} from '../../models/dto/ItemDTO';
 import GroupActions from '../group/groupActions';
 import GroupsActions from '../groups/groupsActions';
+import GroupThunks from '../group/groupThunks';
 
 enum TYPES {
   FETCH_ITEM = 'item/fetchItem',
@@ -13,8 +14,10 @@ enum TYPES {
 }
 
 export class ItemThunks {
-  static fetchItem = createAsyncThunk(TYPES.FETCH_ITEM, async (itemId: string) => {
+  static fetchItem = createAsyncThunk(TYPES.FETCH_ITEM, async (itemId: string, thunkAPI) => {
     const response = await ItemService.getItem(itemId);
+    thunkAPI.dispatch(ItemThunks.fetchReminders(itemId));
+    thunkAPI.dispatch(GroupThunks.fetchGroup(response.data.groupId));
     return response.data;
   });
 

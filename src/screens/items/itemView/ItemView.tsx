@@ -24,9 +24,8 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import UsersThunks from '../../../store/users/usersThunks';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import ItemThunks from '../../../store/item/itemThunks';
-import GroupSelectors from '../../../store/group/groupSelectors';
-import GroupThunks from '../../../store/group/groupThunks';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import GroupSelectors from '../../../store/group/groupSelectors';
 
 const ItemView = () => {
   const dispatch = useAppDispatch();
@@ -53,17 +52,14 @@ const ItemView = () => {
     setLoading(true);
     dispatch(ItemThunks.fetchItem(itemId))
       .unwrap()
-      .catch(() => goToGroupView());
-    dispatch(ItemThunks.fetchReminders(itemId));
+      .catch(() => goToGroupView())
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
     if (item) {
       const userIds = [item.createdBy, item.lastModifiedBy].filter((item) => item !== undefined);
       dispatch(UsersThunks.handleUserIds(userIds));
-      dispatch(GroupThunks.fetchGroup(item.groupId))
-        .unwrap()
-        .catch(() => goToGroupView());
     }
   }, [item]);
 
@@ -74,16 +70,10 @@ const ItemView = () => {
     }
   }, [group]);
 
-  useEffect(() => {
-    if (!groupLoading && !itemLoading && reminders) {
-      setLoading(false);
-    }
-  }, [groupLoading, itemLoading, reminders]);
-
   return (
     <ThemeProvider theme={theme}>
       <Header title={item?.title} showMenu={false} />
-      <ConditionalSpinner loading={loading}>
+      <ConditionalSpinner loading={loading || itemLoading || groupLoading}>
         <FScrollView>
           <FVStack defaultSpace>
             <ItemViewMenu account={account} />

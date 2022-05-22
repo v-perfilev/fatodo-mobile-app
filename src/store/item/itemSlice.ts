@@ -16,9 +16,8 @@ const itemSlice = createSlice({
     /*
     fetchItem
     */
-    builder.addCase(ItemThunks.fetchItem.pending, (state) => ({
-      ...state,
-      item: undefined,
+    builder.addCase(ItemThunks.fetchItem.pending, () => ({
+      ...initialState,
       loading: true,
     }));
     builder.addCase(ItemThunks.fetchItem.fulfilled, (state, action) => ({
@@ -33,20 +32,9 @@ const itemSlice = createSlice({
     /*
     fetchReminders
     */
-    builder.addCase(ItemThunks.fetchReminders.pending, (state) => ({
-      ...state,
-      reminders: [],
-      loading: true,
-    }));
     builder.addCase(ItemThunks.fetchReminders.fulfilled, (state, action) => ({
       ...state,
       reminders: action.payload,
-      loading: false,
-    }));
-    builder.addCase(ItemThunks.fetchReminders.rejected, (state) => ({
-      ...state,
-      reminders: [],
-      loading: false,
     }));
 
     /*
