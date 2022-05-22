@@ -3,7 +3,6 @@ import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
 import ItemForm from '../itemForm/ItemForm';
@@ -12,17 +11,18 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import ItemThunks from '../../../store/item/itemThunks';
+import GroupSelectors from '../../../store/group/groupSelectors';
+import GroupThunks from '../../../store/group/groupThunks';
 
 const ItemEdit = () => {
   const dispatch = useAppDispatch();
+  const group = useAppSelector(GroupSelectors.groupSelector);
   const item = useAppSelector(ItemSelectors.itemSelector);
   const reminders = useAppSelector(ItemSelectors.remindersSelector);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemEdit'>>();
   const itemId = route.params.itemId;
-  const {group, load: loadGroup} = useGroupViewContext();
 
-  const goToGroupList = (): void => navigation.navigate('GroupList');
   const goToItemView = (): void => navigation.navigate('ItemView', {itemId});
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
@@ -46,7 +46,9 @@ const ItemEdit = () => {
 
   useEffect(() => {
     if (item) {
-      loadGroup(item.groupId, goToItemView, goToGroupList);
+      dispatch(GroupThunks.fetchGroup(item.groupId))
+        .unwrap()
+        .catch(() => goToItemView());
     }
   }, [item]);
 

@@ -8,13 +8,12 @@ import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
 import EditIcon from '../../../../components/icons/EditIcon';
 import DeleteIcon from '../../../../components/icons/DeleteIcon';
 import {useTranslation} from 'react-i18next';
-import {useArchivedItemListContext} from '../../../../shared/contexts/listContexts/archivedItemListContext';
-import {useItemListContext} from '../../../../shared/contexts/listContexts/itemListContext';
-import ItemService from '../../../../services/ItemService';
 import PackageUpIcon from '../../../../components/icons/PackageUpIcon';
 import PackageDownIcon from '../../../../components/icons/PackageDownIcon';
 import PressableButton from '../../../../components/controls/PressableButton';
 import {useItemDialogContext} from '../../../../shared/contexts/dialogContexts/ItemDialogContext';
+import {useAppDispatch} from '../../../../store/store';
+import GroupThunks from '../../../../store/group/groupThunks';
 
 type GroupViewItemMenuProps = {
   item: Item;
@@ -22,12 +21,15 @@ type GroupViewItemMenuProps = {
 };
 
 const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
   const {showItemDeleteDialog} = useItemDialogContext();
-  const {addItem: addActive, removeItem: removedActive} = useItemListContext();
-  const {addItem: addArchived, removeItem: removeArchived} = useArchivedItemListContext();
   const [archivedLoading, setArchivedLoading] = useState<boolean>(false);
+
+  const deleteItem = (item: Item): void => {
+    dispatch(GroupThunks.deleteItem(item));
+  };
 
   const goToItemView = (): void => {
     navigation.navigate('ItemView', {itemId: item.id});
@@ -39,22 +41,13 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
 
   const toggleArchived = useCallback((): void => {
     setArchivedLoading(true);
-    ItemService.updateItemArchived(item.id, !item.archived)
-      .then(() => {
-        const updatedItem = {...item, archived: !item.archived};
-        const removeFromPreviousList = item.archived ? removeArchived : removedActive;
-        const addToNextList = item.archived ? addActive : addArchived;
-        removeFromPreviousList(item.id);
-        addToNextList(updatedItem);
-      })
-      .catch(() => {
-        setArchivedLoading(false);
-      });
-  }, [item, setArchivedLoading, removeArchived, removedActive, addArchived, addActive]);
+    dispatch(GroupThunks.updateItemArchived(item))
+      .unwrap()
+      .catch(() => setArchivedLoading(false));
+  }, [item, setArchivedLoading]);
 
   const openItemDeleteDialog = (): void => {
-    const remove = item.archived ? removeArchived : removedActive;
-    const onSuccess = (): void => remove(item.id);
+    const onSuccess = (): void => deleteItem(item);
     showItemDeleteDialog(item, onSuccess);
   };
 

@@ -1,9 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {useGroupViewContext} from '../../../../shared/contexts/viewContexts/groupViewContext';
 import {UserAccount} from '../../../../models/User';
 import {useLoadingState} from '../../../../shared/hooks/useLoadingState';
-import {useArchivedItemListContext} from '../../../../shared/contexts/listContexts/archivedItemListContext';
-import {useItemListContext} from '../../../../shared/contexts/listContexts/itemListContext';
 import {Item} from '../../../../models/Item';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {GROUP_ITEMS_COUNT} from '../../../../constants';
@@ -14,8 +11,10 @@ import GroupViewItemsPagination from './GroupViewItemsPagination';
 import GroupViewItemsArchivedSwitch from './GroupViewItemsArchivedSwitch';
 import FVStack from '../../../../components/surfaces/FVStack';
 import FHStack from '../../../../components/surfaces/FHStack';
-import {useAppDispatch} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import UsersThunks from '../../../../store/users/usersThunks';
+import GroupSelectors from '../../../../store/group/groupSelectors';
+import GroupThunks from '../../../../store/group/groupThunks';
 
 type GroupViewItemsProps = {
   showArchived: boolean;
@@ -25,24 +24,24 @@ type GroupViewItemsProps = {
 
 const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItemsProps) => {
   const dispatch = useAppDispatch();
-  const {group} = useGroupViewContext();
-  const {items: active, count: activeCount, load: loadActive, loading: activeLoading} = useItemListContext();
-  const {
-    items: archived,
-    count: archivedCount,
-    load: loadArchived,
-    loading: archivedLoading,
-  } = useArchivedItemListContext();
+  const group = useAppSelector(GroupSelectors.groupSelector);
+  const activeItemsCount = useAppSelector(GroupSelectors.activeItemsCountSelector);
+  const archivedItemsCount = useAppSelector(GroupSelectors.archivedItemsCountSelector);
+  const activeItems = useAppSelector(GroupSelectors.activeItemsSelector);
+  const archivedItems = useAppSelector(GroupSelectors.archivedItemsSelector);
+  const activeItemsLoading = useAppSelector(GroupSelectors.activeItemsLoading);
+  const archivedItemsLoading = useAppSelector(GroupSelectors.archivedItemsLoading);
+
   const [loading, setLoading] = useLoadingState();
   const [page, setPage] = useState<number>(0);
 
   const items = useMemo<Item[]>(() => {
-    return showArchived ? archived : active;
-  }, [active, archived, showArchived]);
+    return showArchived ? activeItems : archivedItems;
+  }, [activeItems, archivedItems, showArchived]);
 
   const count = useMemo<number>(() => {
-    return showArchived ? archivedCount : activeCount;
-  }, [activeCount, archivedCount, showArchived]);
+    return showArchived ? activeItemsCount : archivedItemsCount;
+  }, [activeItemsCount, archivedItemsCount, showArchived]);
 
   const totalPages = useMemo<number>(() => {
     return Math.floor(count / GROUP_ITEMS_COUNT) + (count % GROUP_ITEMS_COUNT > 0 ? 1 : 0);
@@ -60,6 +59,14 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
 
   const resetPage = (): void => {
     setPage(0);
+  };
+
+  const loadActive = (groupId: string, offset?: number, size?: number): void => {
+    dispatch(GroupThunks.fetchActiveItems({groupId, offset, size}));
+  };
+
+  const loadArchived = (groupId: string, offset?: number, size?: number): void => {
+    dispatch(GroupThunks.fetchArchivedItems({groupId, offset, size}));
   };
 
   const loadInitial = (load: (groupId: string, offset?: number, size?: number) => void): void => {
@@ -85,9 +92,9 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
 
   useEffect(() => {
     resetPage();
-    if (showArchived && !archivedCount) {
+    if (showArchived && !archivedItemsCount) {
       loadInitial(loadArchived);
-    } else if (!showArchived && !activeCount) {
+    } else if (!showArchived && !activeItemsCount) {
       loadInitial(loadActive);
     }
   }, [group.id, showArchived]);
@@ -101,9 +108,9 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
   }, [page]);
 
   useEffect(() => {
-    const newLoading = activeLoading || archivedLoading;
+    const newLoading = (!showArchived && activeItemsLoading) || (showArchived && archivedItemsLoading);
     setLoading(newLoading);
-  }, [activeLoading, archivedLoading]);
+  }, [showArchived, activeItemsLoading, archivedItemsLoading]);
 
   const canEdit = useMemo<boolean>(() => group && GroupUtils.canEdit(account, group), [group, account]);
 

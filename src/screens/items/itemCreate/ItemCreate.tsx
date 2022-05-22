@@ -3,21 +3,22 @@ import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import ItemForm from '../itemForm/ItemForm';
 import FScrollView from '../../../components/surfaces/FScrollView';
-import {useAppDispatch} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import ItemThunks from '../../../store/item/itemThunks';
+import GroupSelectors from '../../../store/group/groupSelectors';
+import GroupThunks from '../../../store/group/groupThunks';
 
 const ItemCreate = () => {
   const dispatch = useAppDispatch();
+  const group = useAppSelector(GroupSelectors.groupSelector);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemCreate'>>();
   const groupId = route.params.groupId;
-  const {group, load: loadGroup} = useGroupViewContext();
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
   const goToGroupView = (): void => navigation.navigate('GroupView', {groupId});
@@ -36,7 +37,9 @@ const ItemCreate = () => {
   };
 
   useEffect(() => {
-    loadGroup(groupId, goToGroupView, goToGroupList);
+    dispatch(GroupThunks.fetchGroup(groupId))
+      .unwrap()
+      .catch(() => goToGroupView());
   }, [groupId]);
 
   return (

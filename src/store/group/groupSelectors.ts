@@ -15,6 +15,10 @@ class GroupSelectors {
   static archivedItemsSelector = createSelector(getGroupState, (state) => state.archivedItems);
 
   static loadingSelector = createSelector(getGroupState, (state) => state.loading);
+
+  static activeItemsLoading = createSelector(getGroupState, (state) => state.activeItemsLoading);
+
+  static archivedItemsLoading = createSelector(getGroupState, (state) => state.archivedItemsLoading);
 }
 
 export default GroupSelectors;

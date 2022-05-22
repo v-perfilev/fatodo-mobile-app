@@ -1,11 +1,12 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
+import {useAppSelector} from '../../../store/store';
+import GroupSelectors from '../../../store/group/groupSelectors';
 
 const ItemViewGroup = () => {
   const {t} = useTranslation();
-  const {group} = useGroupViewContext();
+  const group = useAppSelector(GroupSelectors.groupSelector);
 
   return (
     <LabeledBox label={t('item:labels.group')} isText>

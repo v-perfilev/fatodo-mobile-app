@@ -6,13 +6,13 @@ import {useTranslation} from 'react-i18next';
 import ControlMenu from '../../../components/layouts/ControlMenu';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
-import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {UserAccount} from '../../../models/User';
 import ItemsIcon from '../../../components/icons/ItemsIcon';
 import {useItemDialogContext} from '../../../shared/contexts/dialogContexts/ItemDialogContext';
 import {useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
+import GroupSelectors from '../../../store/group/groupSelectors';
 
 type ItemViewMenuProps = {
   account: UserAccount;
@@ -21,7 +21,7 @@ type ItemViewMenuProps = {
 const ItemViewMenu = ({account}: ItemViewMenuProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
-  const {group} = useGroupViewContext();
+  const group = useAppSelector(GroupSelectors.groupSelector);
   const {showItemDeleteDialog} = useItemDialogContext();
   const item = useAppSelector(ItemSelectors.itemSelector);
 

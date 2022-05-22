@@ -10,24 +10,32 @@ import MembersIcon from '../../../components/icons/MembersIcon';
 import ControlMenu from '../../../components/layouts/ControlMenu';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
-import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {UserAccount} from '../../../models/User';
 import {useGroupDialogContext} from '../../../shared/contexts/dialogContexts/GroupDialogContext';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import UsersSelectors from '../../../store/users/usersSelectors';
+import GroupSelectors from '../../../store/group/groupSelectors';
+import GroupThunks from '../../../store/group/groupThunks';
 
 type GroupViewMenuProps = {
   account: UserAccount;
 };
 
 const GroupViewMenu = ({account}: GroupViewMenuProps) => {
+  const dispatch = useAppDispatch();
+  const group = useAppSelector(GroupSelectors.groupSelector);
   const users = useAppSelector(UsersSelectors.usersSelector);
   const navigation = useNavigation<GroupNavigationProp>();
-  const {group, load: loadGroup} = useGroupViewContext();
   const {showGroupMembersDialog, showGroupAddMembersDialog, showGroupLeaveDialog, showGroupDeleteDialog} =
     useGroupDialogContext();
   const {t} = useTranslation();
+
+  const loadGroup = (groupId: string): void => {
+    dispatch(GroupThunks.fetchGroup(groupId))
+      .unwrap()
+      .catch(() => goToGroupList());
+  };
 
   const goToGroupList = (): void => {
     navigation.navigate('GroupList');
@@ -42,12 +50,12 @@ const GroupViewMenu = ({account}: GroupViewMenuProps) => {
   };
 
   const openGroupMembersDialog = (): void => {
-    const onSuccess = (): void => loadGroup(group.id, goToGroupList);
+    const onSuccess = (): void => loadGroup(group.id);
     showGroupMembersDialog(group, users, onSuccess);
   };
 
   const openGroupAddMembersDialog = (): void => {
-    const onSuccess = (): void => loadGroup(group.id, goToGroupList);
+    const onSuccess = (): void => loadGroup(group.id);
     showGroupAddMembersDialog(group, onSuccess);
   };
 

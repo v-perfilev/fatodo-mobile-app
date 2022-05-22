@@ -92,10 +92,10 @@ const groupSlice = createSlice({
     builder.addCase(GroupThunks.updateItemArchived.fulfilled, (state, action) => {
       const item = {...action.payload, archived: !action.meta.arg.archived} as Item;
       const isArchived = item.archived;
-      const activeItemsCount = state.activeItemsCount + (isArchived ? -1 : 1);
+      const activeItemsCount = state.activeItemsCount + (!isArchived ? 1 : -1);
       const archivedItemsCount = state.archivedItemsCount + (isArchived ? 1 : -1);
 
-      const activeFunction = isArchived ? ArrayUtils.deleteItem : ArrayUtils.addItem;
+      const activeFunction = !isArchived ? ArrayUtils.addItem : ArrayUtils.deleteItem;
       const archivedFunction = isArchived ? ArrayUtils.addItem : ArrayUtils.deleteItem;
       const activeItems = filterItems(activeFunction(state.activeItems, item));
       const archivedItems = filterItems(archivedFunction(state.activeItems, item));
@@ -116,11 +116,33 @@ const groupSlice = createSlice({
       const item = {...action.meta.arg.item, status: action.meta.arg.status} as Item;
       const isArchived = item.archived;
 
-      const activeItems = isArchived ? state.activeItems : ArrayUtils.updateItem(state.activeItems, item);
+      const activeItems = !isArchived ? ArrayUtils.updateItem(state.activeItems, item) : state.activeItems;
       const archivedItems = isArchived ? ArrayUtils.updateItem(state.archivedItems, item) : state.archivedItems;
 
       return {
         ...state,
+        activeItems,
+        archivedItems,
+      };
+    });
+
+    /*
+    removeItem
+    */
+    builder.addCase(GroupThunks.deleteItem.fulfilled, (state, action) => {
+      const item = action.meta.arg;
+      const isArchived = item.archived;
+
+      const activeItemsCount = state.activeItemsCount + (!isArchived ? -1 : 0);
+      const archivedItemsCount = state.archivedItemsCount + (isArchived ? -1 : 0);
+
+      const activeItems = !isArchived ? ArrayUtils.deleteItem(state.activeItems, item) : state.activeItems;
+      const archivedItems = isArchived ? ArrayUtils.deleteItem(state.archivedItems, item) : state.archivedItems;
+
+      return {
+        ...state,
+        activeItemsCount,
+        archivedItemsCount,
         activeItems,
         archivedItems,
       };

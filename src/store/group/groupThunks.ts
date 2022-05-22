@@ -8,6 +8,7 @@ enum TYPES {
   FETCH_ARCHIVED_ITEMS = 'group/fetchArchivedItems',
   UPDATE_ITEM_ARCHIVED = 'group/updateItemArchived',
   UPDATE_ITEM_STATUS = 'group/updateItemStatus',
+  DELETE_ITEM = 'group/removeItem',
   CREATE_GROUP = 'group/createGroup',
   UPDATE_GROUP = 'group/updateGroup',
 }
@@ -46,6 +47,11 @@ export class GroupThunks {
       return response.data;
     },
   );
+
+  static deleteItem = createAsyncThunk(TYPES.DELETE_ITEM, async (item: Item) => {
+    const response = await ItemService.deleteItem(item.id);
+    return response.data;
+  });
 
   static createGroup = createAsyncThunk(TYPES.CREATE_GROUP, async (formData: FormData) => {
     const response = await ItemService.createGroup(formData);

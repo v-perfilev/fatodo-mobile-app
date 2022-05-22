@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Divider} from 'native-base';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import Header from '../../../components/layouts/Header';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
@@ -15,14 +14,16 @@ import FVStack from '../../../components/surfaces/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import UsersThunks from '../../../store/users/usersThunks';
+import GroupSelectors from '../../../store/group/groupSelectors';
+import GroupThunks from '../../../store/group/groupThunks';
 
 const GroupView = () => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.accountSelector);
+  const group = useAppSelector(GroupSelectors.groupSelector);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'GroupView'>>();
   const groupId = route.params.groupId;
-  const {group, load: loadGroup} = useGroupViewContext();
   const [showArchived, setShowArchived] = useState<boolean>(false);
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
@@ -33,7 +34,9 @@ const GroupView = () => {
   };
 
   useEffect(() => {
-    loadGroup(groupId, goToGroupList);
+    dispatch(GroupThunks.fetchGroup(groupId))
+      .unwrap()
+      .catch(() => goToGroupList());
   }, []);
 
   useEffect(() => {

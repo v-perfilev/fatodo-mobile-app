@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useGroupViewContext} from '../../../shared/contexts/viewContexts/groupViewContext';
 import {User} from '../../../models/User';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 import UserView from '../../../components/views/UserView';
@@ -7,9 +6,10 @@ import FContainer from '../../../components/surfaces/FContainer';
 import GroupViewUserSkeleton from './groupViewSkeletons/GroupViewUserSkeleton';
 import {useAppSelector} from '../../../store/store';
 import UsersSelectors from '../../../store/users/usersSelectors';
+import GroupSelectors from '../../../store/group/groupSelectors';
 
 const GroupViewMenu = () => {
-  const {group} = useGroupViewContext();
+  const group = useAppSelector(GroupSelectors.groupSelector);
   const users = useAppSelector(UsersSelectors.usersSelector);
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
   const [loading, setLoading] = useLoadingState();
