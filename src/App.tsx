@@ -4,7 +4,7 @@ import './shared/axios';
 import React, {useEffect, useState} from 'react';
 import {flowRight} from 'lodash';
 import {bindActionCreators} from 'redux';
-import setupAxiosInterceptors from './shared/axios';
+import {setupAxiosInterceptors} from './shared/axios';
 import withStore from './shared/hocs/withStore';
 import AuthNavigator from './navigators/AuthNavigator';
 import withNativeBase from './shared/hocs/withNativeBase';

@@ -1,11 +1,12 @@
-import axios, {AxiosPromise} from 'axios';
+import {AxiosPromise} from 'axios';
 import {Reminder} from '../models/Reminder';
+import {axiosIgnore404} from '../shared/axios';
 
 export default class NotificationService {
   private static baseUrl = '/api/notification';
 
   public static getAllByTargetId = (targetId: string): AxiosPromise<Reminder[]> => {
     const url = NotificationService.baseUrl + '/reminders/' + targetId;
-    return axios.get(url);
+    return axiosIgnore404.get(url);
   };
 }

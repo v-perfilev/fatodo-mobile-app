@@ -1,7 +1,8 @@
-import axios, {AxiosPromise} from 'axios';
+import {AxiosPromise} from 'axios';
 import {LoginDTO} from '../models/dto/LoginDTO';
 import {RegistrationDTO} from '../models/dto/RegistrationDTO';
 import {ForgotPasswordDTO} from '../models/dto/ForgotPasswordDTO';
+import axios from '../shared/axios';
 
 export default class AuthService {
   private static baseUrl = '/api/auth/';

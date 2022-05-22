@@ -1,8 +1,9 @@
-import axios, {AxiosPromise, AxiosRequestConfig} from 'axios';
+import {AxiosPromise, AxiosRequestConfig} from 'axios';
 import {Group, GroupMember} from '../models/Group';
 import {PageableList} from '../models/PageableList';
 import {Item} from '../models/Item';
 import {ItemDTO} from '../models/dto/ItemDTO';
+import axios from '../shared/axios';
 
 export default class ItemService {
   private static baseUrl = '/api/item';
