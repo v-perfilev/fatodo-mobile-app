@@ -24,13 +24,13 @@ const Header = ({
   imageFilename,
   showGoBack = true,
   showMenu = true,
-  showTitle = false,
+  showTitle = true,
 }: HeaderProps) => {
   const navigation = useNavigation();
   const route = useRoute();
   const {t} = useTranslation();
-
   const {toggleDrawer} = useDrawerContext();
+
   const label = title || t('routes.' + route.name);
 
   const canGoBack = navigation.canGoBack() && navigation.getState().routes.length > 1;
@@ -50,13 +50,11 @@ const Header = ({
             <MenuIcon color="white" size="7" />
           </PressableButton>
         )}
+        {showTitle && imageFilename && <UrlPic file={imageFilename} size="9" border="1" invertedBorder />}
         {showTitle && (
-          <>
-            {!!imageFilename && <UrlPic file={imageFilename} size="9" border="1" invertedBorder />}
-            <Text fontWeight="800" fontSize="20" lineHeight="24" color="white" isTruncated>
-              {label}
-            </Text>
-          </>
+          <Text fontWeight="800" fontSize="20" lineHeight="24" color="white" isTruncated>
+            {label}
+          </Text>
         )}
         <FHStack grow h="100%" space="2" alignItems="center" justifyContent="flex-end">
           {children}

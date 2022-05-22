@@ -13,14 +13,18 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 import ItemThunks from '../../../store/item/itemThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import GroupThunks from '../../../store/group/groupThunks';
+import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 
 const ItemEdit = () => {
   const dispatch = useAppDispatch();
   const group = useAppSelector(GroupSelectors.group);
+  const groupLoading = useAppSelector(GroupSelectors.loading);
   const item = useAppSelector(ItemSelectors.item);
+  const itemLoading = useAppSelector(ItemSelectors.loading);
   const reminders = useAppSelector(ItemSelectors.reminders);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemEdit'>>();
+  const [loading, setLoading] = useLoadingState();
   const itemId = route.params.itemId;
 
   const goToItemView = (): void => navigation.navigate('ItemView', {itemId});
@@ -38,6 +42,7 @@ const ItemEdit = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     dispatch(ItemThunks.fetchItem(itemId))
       .unwrap()
       .catch(() => goToItemView());
@@ -52,8 +57,13 @@ const ItemEdit = () => {
     }
   }, [item]);
 
+  useEffect(() => {
+    if (!groupLoading && !itemLoading && reminders) {
+      setLoading(false);
+    }
+  }, [groupLoading, itemLoading, reminders]);
   return (
-    <ConditionalSpinner loading={!group || !item || !reminders}>
+    <ConditionalSpinner loading={loading}>
       <FScrollView>
         <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goToItemView} />
       </FScrollView>

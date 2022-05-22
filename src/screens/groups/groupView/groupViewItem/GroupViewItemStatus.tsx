@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Item, ItemStatusType} from '../../../../models/Item';
 import StatusView from '../../../../components/views/StatusView';
 import {StatusSelect} from '../../../../components/inputs/StatusSelect';
 import {useAppDispatch} from '../../../../store/store';
 import GroupThunks from '../../../../store/group/groupThunks';
+import {useLoadingState} from '../../../../shared/hooks/useLoadingState';
 
 type GroupViewItemStatusProps = {
   item: Item;
@@ -12,7 +13,7 @@ type GroupViewItemStatusProps = {
 
 const GroupViewItemStatus = ({item, canEdit}: GroupViewItemStatusProps) => {
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useLoadingState(false);
 
   const updateStatus = (status: ItemStatusType): void => {
     setLoading(true);

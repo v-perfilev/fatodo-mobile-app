@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-export const useLoadingState = (value = true, timeout = 500): [boolean, (loading: boolean) => void] => {
+export const useLoadingState = (value = true, timeout = 200): [boolean, (loading: boolean) => void] => {
   const [loading, setLoading] = useState<boolean>(value);
   let timer: number;
   let timerId: NodeJS.Timeout;

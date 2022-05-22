@@ -16,15 +16,18 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import UsersThunks from '../../../store/users/usersThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import GroupThunks from '../../../store/group/groupThunks';
+import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 
 const GroupView = () => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.account);
   const group = useAppSelector(GroupSelectors.group);
+  const groupLoading = useAppSelector(GroupSelectors.loading);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'GroupView'>>();
-  const groupId = route.params.groupId;
+  const [loading, setLoading] = useLoadingState();
   const [showArchived, setShowArchived] = useState<boolean>(false);
+  const groupId = route.params.groupId;
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
 
@@ -34,6 +37,7 @@ const GroupView = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     dispatch(GroupThunks.fetchGroup(groupId))
       .unwrap()
       .catch(() => goToGroupList());
@@ -44,12 +48,18 @@ const GroupView = () => {
     group && navigation.setParams({...route.params, color: group?.color});
   }, [group]);
 
+  useEffect(() => {
+    if (!groupLoading) {
+      setLoading(false);
+    }
+  }, [groupLoading]);
+
   const theme = group ? ThemeFactory.getTheme(group.color) : ThemeFactory.getDefaultTheme();
 
   return (
     <ThemeProvider theme={theme}>
       <Header title={group?.title} imageFilename={group?.imageFilename} showMenu={false} />
-      <ConditionalSpinner loading={!group}>
+      <ConditionalSpinner loading={loading}>
         <FScrollView>
           <FVStack defaultSpace>
             <GroupViewMenu account={account} />

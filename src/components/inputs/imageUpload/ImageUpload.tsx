@@ -6,6 +6,7 @@ import ImageUploadPreview from './ImageUploadPreview';
 import ImageUploadButtons from './ImageUploadButtons';
 import {flowRight} from 'lodash';
 import FVStack from '../../surfaces/FVStack';
+import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 
 type ImageUploadProps = IFormControlProps &
   FormikProps<any> & {
@@ -20,7 +21,7 @@ const ImageUpload = (props: ImageUploadProps) => {
   const {filenameName, contentName, setFieldError, label, crop, preview = false} = props;
   const {values, setFieldValue} = props;
   const [image, setImage] = useState<Image>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useLoadingState(false);
 
   const filenameValue = values[filenameName];
 

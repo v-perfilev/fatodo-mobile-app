@@ -26,15 +26,19 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 import ItemThunks from '../../../store/item/itemThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import GroupThunks from '../../../store/group/groupThunks';
+import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 
 const ItemView = () => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.account);
   const group = useAppSelector(GroupSelectors.group);
+  const groupLoading = useAppSelector(GroupSelectors.loading);
   const item = useAppSelector(ItemSelectors.item);
+  const itemLoading = useAppSelector(ItemSelectors.loading);
   const reminders = useAppSelector(ItemSelectors.reminders);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemView'>>();
+  const [loading, setLoading] = useLoadingState();
   const itemId = route.params.itemId;
 
   const theme = ThemeFactory.getTheme(group?.color);
@@ -46,6 +50,7 @@ const ItemView = () => {
   const showDividerAfterDescription = showTags || showReminders;
 
   useEffect(() => {
+    setLoading(true);
     dispatch(ItemThunks.fetchItem(itemId))
       .unwrap()
       .catch(() => goToGroupView());
@@ -69,10 +74,16 @@ const ItemView = () => {
     }
   }, [group]);
 
+  useEffect(() => {
+    if (!groupLoading && !itemLoading && reminders) {
+      setLoading(false);
+    }
+  }, [groupLoading, itemLoading, reminders]);
+
   return (
     <ThemeProvider theme={theme}>
       <Header title={item?.title} showMenu={false} />
-      <ConditionalSpinner loading={!group || !item}>
+      <ConditionalSpinner loading={loading}>
         <FScrollView>
           <FVStack defaultSpace>
             <ItemViewMenu account={account} />

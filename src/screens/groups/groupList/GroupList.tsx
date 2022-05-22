@@ -6,12 +6,14 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import UsersThunks from '../../../store/users/usersThunks';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import GroupsThunks from '../../../store/groups/groupsThunks';
+import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 
 const GroupList = () => {
   const dispatch = useAppDispatch();
   const groups = useAppSelector(GroupsSelectors.groups);
   const groupsLoading = useAppSelector(GroupsSelectors.loading);
   const items = useAppSelector(GroupsSelectors.items);
+  const [loading, setLoading] = useLoadingState();
   const [sorting, setSorting] = useState<boolean>(false);
 
   const loadGroups = (): void => {
@@ -23,6 +25,7 @@ const GroupList = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     loadGroups();
   }, []);
 
@@ -45,10 +48,16 @@ const GroupList = () => {
     dispatch(UsersThunks.handleUserIds(userIds));
   }, [items]);
 
+  useEffect(() => {
+    if (!groupsLoading) {
+      setLoading(false);
+    }
+  }, [groupsLoading]);
+
   return (
     <>
       <GroupListHeader sorting={sorting} setSorting={setSorting} />
-      <ConditionalSpinner loading={groupsLoading}>
+      <ConditionalSpinner loading={loading}>
         <GroupListContainer sorting={sorting} />
       </ConditionalSpinner>
     </>

@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useTranslation} from 'react-i18next';
 import {Group} from '../../../models/Group';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import GroupsThunks from '../../../store/groups/groupsThunks';
+import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 
 export type GroupDeleteDialogProps = {
   group: Group;
@@ -23,7 +24,7 @@ export const defaultGroupDeleteDialogProps: Readonly<GroupDeleteDialogProps> = {
 const GroupDeleteDialog = ({group, show, close, onSuccess}: GroupDeleteDialogProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useLoadingState(false);
 
   const onAgree = (): void => {
     setLoading(true);

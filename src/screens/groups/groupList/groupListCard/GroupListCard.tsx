@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useEffect} from 'react';
 import {Box} from 'native-base';
 import GroupListCardHeader from './GroupListCardHeader';
 import Collapsible from 'react-native-collapsible';
@@ -8,6 +8,7 @@ import GroupListCardContent from './GroupListCardContent';
 import {Theme} from 'native-base/src/theme';
 import {flowRight} from 'lodash';
 import {Group} from '../../../../models/Group';
+import {useLoadingState} from '../../../../shared/hooks/useLoadingState';
 
 type GroupListCardProps = {
   group: Group;
@@ -21,7 +22,16 @@ type GroupListCardProps = {
 };
 
 const GroupListCard = (props: GroupListCardProps) => {
-  const {group, items, count, loading, collapsed, sorting, drag, theme} = props;
+  const {group, items, count, loading: itemsLoading, collapsed, sorting, drag, theme} = props;
+  const [loading, setLoading] = useLoadingState();
+
+  useEffect(() => {
+    setLoading(true);
+  }, []);
+
+  useEffect(() => {
+    setLoading(itemsLoading);
+  }, [itemsLoading]);
 
   return (
     <ThemeProvider theme={theme}>

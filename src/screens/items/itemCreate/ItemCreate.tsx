@@ -12,12 +12,15 @@ import SnackActions from '../../../store/snack/snackActions';
 import ItemThunks from '../../../store/item/itemThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import GroupThunks from '../../../store/group/groupThunks';
+import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 
 const ItemCreate = () => {
   const dispatch = useAppDispatch();
   const group = useAppSelector(GroupSelectors.group);
+  const groupLoading = useAppSelector(GroupSelectors.loading);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemCreate'>>();
+  const [loading, setLoading] = useLoadingState();
   const groupId = route.params.groupId;
 
   const goToGroupView = (): void => navigation.navigate('GroupView', {groupId});
@@ -36,13 +39,20 @@ const ItemCreate = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     dispatch(GroupThunks.fetchGroup(groupId))
       .unwrap()
       .catch(() => goToGroupView());
   }, [groupId]);
 
+  useEffect(() => {
+    if (!groupLoading) {
+      setLoading(false);
+    }
+  }, [groupLoading]);
+
   return (
-    <ConditionalSpinner loading={!group}>
+    <ConditionalSpinner loading={loading}>
       <FScrollView>
         <ItemForm group={group} request={request} cancel={goToGroupView} />
       </FScrollView>

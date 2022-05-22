@@ -31,16 +31,15 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
   const archivedItems = useAppSelector(GroupSelectors.archivedItems);
   const activeItemsLoading = useAppSelector(GroupSelectors.activeItemsLoading);
   const archivedItemsLoading = useAppSelector(GroupSelectors.archivedItemsLoading);
-
   const [loading, setLoading] = useLoadingState();
   const [page, setPage] = useState<number>(0);
 
   const items = useMemo<Item[]>(() => {
-    return showArchived ? activeItems : archivedItems;
+    return showArchived ? archivedItems : activeItems;
   }, [activeItems, archivedItems, showArchived]);
 
   const count = useMemo<number>(() => {
-    return showArchived ? activeItemsCount : archivedItemsCount;
+    return showArchived ? archivedItemsCount : activeItemsCount;
   }, [activeItemsCount, archivedItemsCount, showArchived]);
 
   const totalPages = useMemo<number>(() => {
@@ -70,7 +69,9 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
   };
 
   const loadInitial = (load: (groupId: string, offset?: number, size?: number) => void): void => {
-    load(group.id);
+    if (group?.id) {
+      load(group.id);
+    }
   };
 
   const loadMoreIfNeeded = (load: (groupId: string, offset: number, size: number) => void): void => {
@@ -85,7 +86,7 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
   }, []);
 
   useEffect(() => {
-    if (items.length > 0) {
+    if (items?.length > 0) {
       loadItemsUsers();
     }
   }, [items]);
@@ -97,7 +98,7 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
     } else if (!showArchived && !activeItemsCount) {
       loadInitial(loadActive);
     }
-  }, [group.id, showArchived]);
+  }, [group?.id, showArchived]);
 
   useEffect(() => {
     if (page > 0 && showArchived) {
