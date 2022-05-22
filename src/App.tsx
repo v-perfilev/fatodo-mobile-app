@@ -41,10 +41,10 @@ const App = () => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    SecurityUtils.getAuthToken().then((token) => {
+    SecurityUtils.getAuthToken().then(async (token) => {
       if (token) {
-        dispatch(AuthActions.login());
-        dispatch(AuthThunks.fetchAccount());
+        await dispatch(AuthActions.login());
+        await dispatch(AuthThunks.fetchAccount());
       }
       setReady(true);
     });

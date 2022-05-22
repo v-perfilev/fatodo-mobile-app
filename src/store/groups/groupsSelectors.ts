@@ -8,17 +8,17 @@ class GroupsSelectors {
 
   static loadingSelector = createSelector(getGroupsState, (state) => state.loading);
 
-  static itemsSelector = createSelector(getGroupsState, (state) => state.items);
+  static itemsSelector = createSelector(getGroupsState, (state) => new Map(state.items));
 
-  static itemsCountSelector = createSelector(getGroupsState, (state) => state.itemsCounts);
+  static itemsCountSelector = createSelector(getGroupsState, (state) => new Map(state.itemsCount));
 
-  static itemsCollapsedSelector = createSelector(getGroupsState, (state) => state.itemsCollapsed);
+  static itemsCollapsedSelector = createSelector(getGroupsState, (state) => new Map(state.itemsCollapsed));
 
   static itemsAllCollapsedSelector = createSelector(getGroupsState, (state) =>
-    Array.from(state.itemsCollapsed.values()).reduce((acc, val) => acc && val, true),
+    Array.from(new Map(state.itemsCollapsed).values()).reduce((acc, val) => acc && val, true),
   );
 
-  static itemsLoadingSelector = createSelector(getGroupsState, (state) => state.itemsLoading);
+  static itemsLoadingSelector = createSelector(getGroupsState, (state) => new Map(state.itemsLoading));
 }
 
 export default GroupsSelectors;

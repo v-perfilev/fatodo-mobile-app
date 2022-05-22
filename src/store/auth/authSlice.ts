@@ -1,6 +1,5 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {AuthState} from './authType';
-import {UserAccount} from '../../models/User';
 import AuthThunks from './authThunks';
 
 const initialState: AuthState = {
@@ -17,11 +16,11 @@ const authSlice = createSlice({
       ...state,
       isAuthenticated: true,
     }),
-    account: (state: AuthState, action: PayloadAction<UserAccount>) => ({
+    account: (state: AuthState, action) => ({
       ...state,
       account: action.payload,
     }),
-    loading: (state: AuthState, action: PayloadAction<boolean>) => ({
+    loading: (state: AuthState, action) => ({
       ...state,
       loading: action.payload,
     }),
@@ -51,7 +50,7 @@ const authSlice = createSlice({
       ...initialState,
       loading: true,
     }));
-    builder.addCase(AuthThunks.authenticate.fulfilled, (state) => ({
+    builder.addCase(AuthThunks.authenticate.fulfilled, (state: AuthState) => ({
       ...state,
       isAuthenticated: true,
     }));
@@ -62,12 +61,12 @@ const authSlice = createSlice({
     /*
     fetchAccount
      */
-    builder.addCase(AuthThunks.fetchAccount.pending, (state) => ({
+    builder.addCase(AuthThunks.fetchAccount.pending, (state: AuthState) => ({
       ...state,
       account: undefined,
       loading: true,
     }));
-    builder.addCase(AuthThunks.fetchAccount.fulfilled, (state, action) => ({
+    builder.addCase(AuthThunks.fetchAccount.fulfilled, (state: AuthState, action) => ({
       ...state,
       account: action.payload,
       loading: false,

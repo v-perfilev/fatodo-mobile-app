@@ -34,7 +34,7 @@ const groupSlice = createSlice({
       ...initialState,
       loading: true,
     }));
-    builder.addCase(GroupThunks.fetchGroup.fulfilled, (state, action) => ({
+    builder.addCase(GroupThunks.fetchGroup.fulfilled, (state: GroupState, action) => ({
       ...state,
       group: action.payload,
       loading: false,
@@ -47,11 +47,11 @@ const groupSlice = createSlice({
     /*
     fetchActiveItems
     */
-    builder.addCase(GroupThunks.fetchActiveItems.pending, (state) => ({
+    builder.addCase(GroupThunks.fetchActiveItems.pending, (state: GroupState) => ({
       ...state,
       activeItemsLoading: true,
     }));
-    builder.addCase(GroupThunks.fetchActiveItems.fulfilled, (state, action) => {
+    builder.addCase(GroupThunks.fetchActiveItems.fulfilled, (state: GroupState, action) => {
       const activeItems = filterItems([...state.activeItems, ...action.payload.data]);
       return {
         ...state,
@@ -60,7 +60,7 @@ const groupSlice = createSlice({
         activeItemsLoading: false,
       };
     });
-    builder.addCase(GroupThunks.fetchActiveItems.rejected, (state) => ({
+    builder.addCase(GroupThunks.fetchActiveItems.rejected, (state: GroupState) => ({
       ...state,
       activeItemsLoading: false,
     }));
@@ -68,11 +68,11 @@ const groupSlice = createSlice({
     /*
     fetchArchivedItems
     */
-    builder.addCase(GroupThunks.fetchArchivedItems.pending, (state) => ({
+    builder.addCase(GroupThunks.fetchArchivedItems.pending, (state: GroupState) => ({
       ...state,
       archivedItemsLoading: true,
     }));
-    builder.addCase(GroupThunks.fetchArchivedItems.fulfilled, (state, action) => {
+    builder.addCase(GroupThunks.fetchArchivedItems.fulfilled, (state: GroupState, action) => {
       const archivedItems = filterItems([...state.archivedItems, ...action.payload.data]);
       return {
         ...state,
@@ -81,7 +81,7 @@ const groupSlice = createSlice({
         archivedItemsLoading: false,
       };
     });
-    builder.addCase(GroupThunks.fetchArchivedItems.rejected, (state) => ({
+    builder.addCase(GroupThunks.fetchArchivedItems.rejected, (state: GroupState) => ({
       ...state,
       archivedItemsLoading: false,
     }));
@@ -89,7 +89,7 @@ const groupSlice = createSlice({
     /*
     updateItemArchived
     */
-    builder.addCase(GroupThunks.updateItemArchived.fulfilled, (state, action) => {
+    builder.addCase(GroupThunks.updateItemArchived.fulfilled, (state: GroupState, action) => {
       const item = {...action.payload, archived: !action.meta.arg.archived} as Item;
       const isArchived = item.archived;
       const activeItemsCount = state.activeItemsCount + (!isArchived ? 1 : -1);

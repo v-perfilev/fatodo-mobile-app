@@ -1,6 +1,5 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {UsersState} from './usersType';
-import {User} from '../../models/User';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import UsersThunks from './usersThunks';
 
@@ -14,7 +13,7 @@ const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    handleUsers: (state: UsersState, action: PayloadAction<User[]>) => {
+    handleUsers: (state: UsersState, action) => {
       const users = [...action.payload, ...state.users].filter(ArrayUtils.uniqueByIdFilter);
       return {
         ...state,
