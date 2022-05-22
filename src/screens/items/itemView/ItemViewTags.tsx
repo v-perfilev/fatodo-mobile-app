@@ -8,7 +8,7 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 
 const ItemViewTags: FC = () => {
   const {t} = useTranslation();
-  const item = useAppSelector(ItemSelectors.itemSelector);
+  const item = useAppSelector(ItemSelectors.item);
 
   return (
     <LabeledBox label={t('item:labels.tags')}>

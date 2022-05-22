@@ -22,7 +22,7 @@ type GroupListCardMenuButtonProps = {
 
 const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
   const dispatch = useAppDispatch();
-  const account = useAppSelector(AuthSelectors.accountSelector);
+  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const navigation = useNavigation<GroupNavigationProp>();
   const {showGroupDeleteDialog} = useGroupDialogContext();

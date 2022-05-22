@@ -23,8 +23,8 @@ type GroupListHeaderProps = {
 const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
-  const groups = useAppSelector(GroupsSelectors.groupsSelector);
-  const allCollapsed = useAppSelector(GroupsSelectors.itemsAllCollapsedSelector);
+  const groups = useAppSelector(GroupsSelectors.groups);
+  const allCollapsed = useAppSelector(GroupsSelectors.itemsAllCollapsed);
 
   const setAllCollapsed = (value: boolean): void => {
     dispatch(GroupsActions.setAllCollapsed(value));

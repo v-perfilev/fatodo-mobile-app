@@ -21,9 +21,9 @@ type ItemViewMenuProps = {
 const ItemViewMenu = ({account}: ItemViewMenuProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
-  const group = useAppSelector(GroupSelectors.groupSelector);
+  const group = useAppSelector(GroupSelectors.group);
   const {showItemDeleteDialog} = useItemDialogContext();
-  const item = useAppSelector(ItemSelectors.itemSelector);
+  const item = useAppSelector(ItemSelectors.item);
 
   const goToGroupView = (): void => {
     navigation.navigate('GroupView', {groupId: group.id});

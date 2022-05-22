@@ -4,11 +4,11 @@ import {createSelector} from '@reduxjs/toolkit';
 const getItemState = (state: RootState) => state.item;
 
 class ItemSelectors {
-  static itemSelector = createSelector(getItemState, (state) => state.item);
+  static item = createSelector(getItemState, (state) => state.item);
 
-  static remindersSelector = createSelector(getItemState, (state) => state.reminders);
+  static reminders = createSelector(getItemState, (state) => state.reminders);
 
-  static loadingSelector = createSelector(getItemState, (state) => state.loading);
+  static loading = createSelector(getItemState, (state) => state.loading);
 }
 
 export default ItemSelectors;

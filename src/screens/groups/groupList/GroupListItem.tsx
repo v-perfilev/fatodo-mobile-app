@@ -13,10 +13,10 @@ type GroupListItemProps = RenderItemParams<Group> & {
 };
 
 const GroupListItem = ({item: group, sorting, drag}: GroupListItemProps) => {
-  const listItems = useAppSelector(GroupsSelectors.itemsSelector);
-  const listCounts = useAppSelector(GroupsSelectors.itemsCountSelector);
-  const listCollapsed = useAppSelector(GroupsSelectors.itemsCollapsedSelector);
-  const listLoading = useAppSelector(GroupsSelectors.itemsLoadingSelector);
+  const listItems = useAppSelector(GroupsSelectors.items);
+  const listCounts = useAppSelector(GroupsSelectors.itemsCount);
+  const listCollapsed = useAppSelector(GroupsSelectors.itemsCollapsed);
+  const listLoading = useAppSelector(GroupsSelectors.itemsLoading);
 
   const theme = useMemo<Theme>(() => ThemeFactory.getTheme(group.color), [group]);
   const items = useMemo<Item[]>(() => listItems.get(group.id) || [], [listItems.get(group.id)]);

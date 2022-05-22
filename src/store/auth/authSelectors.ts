@@ -4,9 +4,11 @@ import {RootState} from '../store';
 const getAuthState = (state: RootState) => state.auth;
 
 class AuthSelectors {
-  static isAuthenticatedSelector = createSelector(getAuthState, (state) => state.isAuthenticated);
-  static accountSelector = createSelector(getAuthState, (state) => state.account);
-  static loadingSelector = createSelector(getAuthState, (state) => state.loading);
+  static isAuthenticated = createSelector(getAuthState, (state) => state.isAuthenticated);
+
+  static account = createSelector(getAuthState, (state) => state.account);
+
+  static loading = createSelector(getAuthState, (state) => state.loading);
 }
 
 export default AuthSelectors;

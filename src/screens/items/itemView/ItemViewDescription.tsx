@@ -7,7 +7,7 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 
 const ItemViewDescription: FC = () => {
   const {t} = useTranslation();
-  const item = useAppSelector(ItemSelectors.itemSelector);
+  const item = useAppSelector(ItemSelectors.item);
 
   return item.description ? (
     <LabeledBox label={t('item:labels.description')} isText isVertical>

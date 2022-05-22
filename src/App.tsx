@@ -37,7 +37,7 @@ setupAxiosInterceptors({
 
 const App = () => {
   const dispatch = useAppDispatch();
-  const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticatedSelector);
+  const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {

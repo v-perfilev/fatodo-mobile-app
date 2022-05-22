@@ -16,9 +16,9 @@ import GroupThunks from '../../../store/group/groupThunks';
 
 const ItemEdit = () => {
   const dispatch = useAppDispatch();
-  const group = useAppSelector(GroupSelectors.groupSelector);
-  const item = useAppSelector(ItemSelectors.itemSelector);
-  const reminders = useAppSelector(ItemSelectors.remindersSelector);
+  const group = useAppSelector(GroupSelectors.group);
+  const item = useAppSelector(ItemSelectors.item);
+  const reminders = useAppSelector(ItemSelectors.reminders);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemEdit'>>();
   const itemId = route.params.itemId;

@@ -24,11 +24,11 @@ type GroupViewItemsProps = {
 
 const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItemsProps) => {
   const dispatch = useAppDispatch();
-  const group = useAppSelector(GroupSelectors.groupSelector);
-  const activeItemsCount = useAppSelector(GroupSelectors.activeItemsCountSelector);
-  const archivedItemsCount = useAppSelector(GroupSelectors.archivedItemsCountSelector);
-  const activeItems = useAppSelector(GroupSelectors.activeItemsSelector);
-  const archivedItems = useAppSelector(GroupSelectors.archivedItemsSelector);
+  const group = useAppSelector(GroupSelectors.group);
+  const activeItemsCount = useAppSelector(GroupSelectors.activeItemsCount);
+  const archivedItemsCount = useAppSelector(GroupSelectors.archivedItemsCount);
+  const activeItems = useAppSelector(GroupSelectors.activeItems);
+  const archivedItems = useAppSelector(GroupSelectors.archivedItems);
   const activeItemsLoading = useAppSelector(GroupSelectors.activeItemsLoading);
   const archivedItemsLoading = useAppSelector(GroupSelectors.archivedItemsLoading);
 

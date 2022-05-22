@@ -22,7 +22,7 @@ const renderer = (sorting: boolean) => (props: RenderItemParams<Group>) =>
 
 const GroupListContainer = ({sorting}: GroupListContainerProps) => {
   const dispatch = useAppDispatch();
-  const groups = useAppSelector(GroupsSelectors.groupsSelector);
+  const groups = useAppSelector(GroupsSelectors.groups);
   const theme = useTheme();
 
   const setGroups = (groups: Group[]): void => {

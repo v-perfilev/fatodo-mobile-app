@@ -10,7 +10,7 @@ type GroupListCardAvatarsProps = {
 };
 
 const GroupListCardAvatars = ({group}: GroupListCardAvatarsProps) => {
-  const users = useAppSelector(UsersSelectors.usersSelector);
+  const users = useAppSelector(UsersSelectors.users);
 
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
 

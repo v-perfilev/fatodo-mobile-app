@@ -43,7 +43,7 @@ type SignUpFormProps = CaptchaProps & {
 
 const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormProps) => {
   const dispatch = useAppDispatch();
-  const loading = useAppSelector(AuthSelectors.loadingSelector);
+  const loading = useAppSelector(AuthSelectors.loading);
   const {t} = useTranslation();
   const [formValues, setFormValues] = useState<SignUpFormValues>();
 

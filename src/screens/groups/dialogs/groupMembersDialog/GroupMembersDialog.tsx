@@ -37,7 +37,7 @@ export const defaultGroupMembersDialogProps: Readonly<GroupMembersDialogProps> =
 type Props = GroupMembersDialogProps;
 
 const GroupMembersDialog = ({group, users, show, close, onSuccess, switchToAddMembers, switchToEditMember}: Props) => {
-  const account = useAppSelector(AuthSelectors.accountSelector);
+  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const [usersToShow, setUsersToShow] = useState<GroupUser[]>([]);
   const [deletedMemberIds, setDeletedMemberIds] = useState<string[]>([]);

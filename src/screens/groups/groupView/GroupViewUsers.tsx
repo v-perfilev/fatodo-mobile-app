@@ -9,8 +9,8 @@ import UsersSelectors from '../../../store/users/usersSelectors';
 import GroupSelectors from '../../../store/group/groupSelectors';
 
 const GroupViewMenu = () => {
-  const group = useAppSelector(GroupSelectors.groupSelector);
-  const users = useAppSelector(UsersSelectors.usersSelector);
+  const group = useAppSelector(GroupSelectors.group);
+  const users = useAppSelector(UsersSelectors.users);
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
   const [loading, setLoading] = useLoadingState();
 

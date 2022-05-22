@@ -19,7 +19,7 @@ type FormikRemindersInputPopoverProps = {
 };
 
 const FormikRemindersInputPopover = ({show, handleClose}: FormikRemindersInputPopoverProps) => {
-  const account = useAppSelector(AuthSelectors.accountSelector);
+  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const [reminder, setReminder] = useState<Reminder>(null);
   const [periodicity, setPeriodicity] = useState<ReminderPeriodicity>('ONCE');

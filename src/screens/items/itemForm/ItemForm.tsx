@@ -73,7 +73,7 @@ type ItemFormProps = {
 };
 
 const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
-  const account = useAppSelector(AuthSelectors.accountSelector);
+  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
 
   const handleSubmit = (values: ItemFormValues, helpers: FormikHelpers<ItemFormValues>): void => {

@@ -9,7 +9,7 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 
 const ItemReminders: FC = () => {
   const {t} = useTranslation();
-  const reminders = useAppSelector(ItemSelectors.remindersSelector);
+  const reminders = useAppSelector(ItemSelectors.reminders);
 
   return (
     <LabeledBox label={t('item:labels.reminders')}>

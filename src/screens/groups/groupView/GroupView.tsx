@@ -19,8 +19,8 @@ import GroupThunks from '../../../store/group/groupThunks';
 
 const GroupView = () => {
   const dispatch = useAppDispatch();
-  const account = useAppSelector(AuthSelectors.accountSelector);
-  const group = useAppSelector(GroupSelectors.groupSelector);
+  const account = useAppSelector(AuthSelectors.account);
+  const group = useAppSelector(GroupSelectors.group);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'GroupView'>>();
   const groupId = route.params.groupId;

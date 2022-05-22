@@ -22,7 +22,7 @@ type Props = {
 };
 
 const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: Props) => {
-  const account = useAppSelector(AuthSelectors.accountSelector);
+  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const [showRemovingConfirmation, setShowRemovingConfirmation] = useState(false);
   const [removingLoading, setRemovingLoading] = useState(false);

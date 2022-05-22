@@ -11,7 +11,7 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 
 const ItemViewChanges = () => {
   const {t} = useTranslation();
-  const item = useAppSelector(ItemSelectors.itemSelector);
+  const item = useAppSelector(ItemSelectors.item);
   const [creator, setCreator] = useState<string>();
   const [updater, setUpdater] = useState<string>();
 

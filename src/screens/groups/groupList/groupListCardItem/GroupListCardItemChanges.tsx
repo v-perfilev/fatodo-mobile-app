@@ -11,7 +11,7 @@ type GroupListCardItemChangesProps = {
 };
 
 const GroupListCardItemChanges = ({item}: GroupListCardItemChangesProps) => {
-  const users = useAppSelector(UsersSelectors.usersSelector);
+  const users = useAppSelector(UsersSelectors.users);
 
   const name = useMemo<string>(() => {
     const user = users.find((user) => user.id === item.createdBy);

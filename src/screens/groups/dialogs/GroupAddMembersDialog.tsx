@@ -25,7 +25,7 @@ export const defaultGroupAddMembersDialogProps: Readonly<GroupAddMembersDialogPr
 
 const GroupAddMembersDialog = ({group, show, close, onSuccess}: GroupAddMembersDialogProps) => {
   const dispatch = useAppDispatch();
-  const relations = useAppSelector(ContactsSelectors.relationsSelector);
+  const relations = useAppSelector(ContactsSelectors.relations);
   const {t} = useTranslation();
   const [contactIds, setContactIds] = useState<string[]>([]);
   const [userIds, setUserIds] = useState<string[]>([]);

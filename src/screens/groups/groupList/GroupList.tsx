@@ -9,9 +9,9 @@ import GroupsThunks from '../../../store/groups/groupsThunks';
 
 const GroupList = () => {
   const dispatch = useAppDispatch();
-  const groups = useAppSelector(GroupsSelectors.groupsSelector);
-  const groupsLoading = useAppSelector(GroupsSelectors.loadingSelector);
-  const items = useAppSelector(GroupsSelectors.itemsSelector);
+  const groups = useAppSelector(GroupsSelectors.groups);
+  const groupsLoading = useAppSelector(GroupsSelectors.loading);
+  const items = useAppSelector(GroupsSelectors.items);
   const [sorting, setSorting] = useState<boolean>(false);
 
   const loadGroups = (): void => {

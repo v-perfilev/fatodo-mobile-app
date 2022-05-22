@@ -17,7 +17,7 @@ const GroupEdit = () => {
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'GroupEdit'>>();
   const groupId = route.params.groupId;
-  const group = useAppSelector(GroupSelectors.groupSelector);
+  const group = useAppSelector(GroupSelectors.group);
 
   const goToGroupView = (): void => navigation.navigate('GroupView', {groupId});
 

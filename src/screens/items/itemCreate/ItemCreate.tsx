@@ -15,7 +15,7 @@ import GroupThunks from '../../../store/group/groupThunks';
 
 const ItemCreate = () => {
   const dispatch = useAppDispatch();
-  const group = useAppSelector(GroupSelectors.groupSelector);
+  const group = useAppSelector(GroupSelectors.group);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemCreate'>>();
   const groupId = route.params.groupId;

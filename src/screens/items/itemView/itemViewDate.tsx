@@ -7,7 +7,7 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 
 const ItemViewDate = () => {
   const {t} = useTranslation();
-  const item = useAppSelector(ItemSelectors.itemSelector);
+  const item = useAppSelector(ItemSelectors.item);
 
   return (
     item?.date && (

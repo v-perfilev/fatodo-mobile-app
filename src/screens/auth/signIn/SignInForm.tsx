@@ -36,7 +36,7 @@ type SignInFormProps = CaptchaProps;
 
 const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
   const dispatch = useAppDispatch();
-  const loading = useAppSelector(AuthSelectors.loadingSelector);
+  const loading = useAppSelector(AuthSelectors.loading);
   const {t} = useTranslation();
   const [formValues, setFormValues] = useState<SignInFormValues>();
 

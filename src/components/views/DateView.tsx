@@ -10,7 +10,7 @@ type DateViewProps = {
 };
 
 const DateView = ({date: paramDate}: DateViewProps) => {
-  const account = useAppSelector(AuthSelectors.accountSelector);
+  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const timezone = account.info.timezone;
 

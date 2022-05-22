@@ -13,8 +13,8 @@ import UsersThunks from '../../../store/users/usersThunks';
 
 const OutcomingRequestList = () => {
   const dispatch = useAppDispatch();
-  const outcomingRequests = useAppSelector(ContactsSelectors.outcomingRequestsSelector);
-  const users = useAppSelector(UsersSelectors.usersSelector);
+  const outcomingRequests = useAppSelector(ContactsSelectors.outcomingRequests);
+  const users = useAppSelector(UsersSelectors.users);
   const [userRequests, setUserRequests] = useState<ContactRequestWithUser[]>([]);
   const [loading, setLoading] = useLoadingState();
 

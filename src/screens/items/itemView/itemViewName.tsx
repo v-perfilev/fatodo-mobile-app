@@ -6,7 +6,7 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 
 const ItemViewGroup = () => {
   const {t} = useTranslation();
-  const item = useAppSelector(ItemSelectors.itemSelector);
+  const item = useAppSelector(ItemSelectors.item);
 
   return (
     <LabeledBox label={t('item:labels.item')} isText>

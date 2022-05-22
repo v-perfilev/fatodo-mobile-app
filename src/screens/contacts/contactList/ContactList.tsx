@@ -15,8 +15,8 @@ import UsersThunks from '../../../store/users/usersThunks';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();
-  const relations = useAppSelector(ContactsSelectors.relationsSelector);
-  const users = useAppSelector(UsersSelectors.usersSelector);
+  const relations = useAppSelector(ContactsSelectors.relations);
+  const users = useAppSelector(UsersSelectors.users);
   const {t} = useTranslation();
   const [userRelations, setUserRelations] = useState<ContactRelationWithUser[]>([]);
   const [loading, setLoading] = useLoadingState();

@@ -4,19 +4,19 @@ import {createSelector} from '@reduxjs/toolkit';
 const getContactsState = (state: RootState) => state.contacts;
 
 class ContactsSelectors {
-  static infoSelector = createSelector(getContactsState, (state) => ({
+  static info = createSelector(getContactsState, (state) => ({
     relationCount: state.relationCount,
     outcomingRequestCount: state.outcomingRequestCount,
     incomingRequestCount: state.incomingRequestCount,
   }));
 
-  static relationsSelector = createSelector(getContactsState, (state) => state.relations);
+  static relations = createSelector(getContactsState, (state) => state.relations);
 
-  static outcomingRequestsSelector = createSelector(getContactsState, (state) => state.outcomingRequests);
+  static outcomingRequests = createSelector(getContactsState, (state) => state.outcomingRequests);
 
-  static incomingRequestsSelector = createSelector(getContactsState, (state) => state.incomingRequests);
+  static incomingRequests = createSelector(getContactsState, (state) => state.incomingRequests);
 
-  static loadingSelector = createSelector(getContactsState, (state) => state.loading);
+  static loading = createSelector(getContactsState, (state) => state.loading);
 }
 
 export default ContactsSelectors;

@@ -24,8 +24,8 @@ type GroupViewMenuProps = {
 
 const GroupViewMenu = ({account}: GroupViewMenuProps) => {
   const dispatch = useAppDispatch();
-  const group = useAppSelector(GroupSelectors.groupSelector);
-  const users = useAppSelector(UsersSelectors.usersSelector);
+  const group = useAppSelector(GroupSelectors.group);
+  const users = useAppSelector(UsersSelectors.users);
   const navigation = useNavigation<GroupNavigationProp>();
   const {showGroupMembersDialog, showGroupAddMembersDialog, showGroupLeaveDialog, showGroupDeleteDialog} =
     useGroupDialogContext();

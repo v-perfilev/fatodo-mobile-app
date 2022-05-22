@@ -6,7 +6,7 @@ import GroupSelectors from '../../../store/group/groupSelectors';
 
 const ItemViewGroup = () => {
   const {t} = useTranslation();
-  const group = useAppSelector(GroupSelectors.groupSelector);
+  const group = useAppSelector(GroupSelectors.group);
 
   return (
     <LabeledBox label={t('item:labels.group')} isText>

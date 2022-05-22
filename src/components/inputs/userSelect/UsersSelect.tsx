@@ -21,7 +21,7 @@ type Props = {
 
 const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(UsersSelectors.usersSelector);
+  const users = useAppSelector(UsersSelectors.users);
   const {t} = useTranslation();
   const [filter, setFilter] = useState<string>('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);

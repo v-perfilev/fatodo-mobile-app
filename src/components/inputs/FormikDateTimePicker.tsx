@@ -19,7 +19,7 @@ type FormikDateTimePickerProps = IFormControlProps &
 const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
   const {name, label, mode} = props;
   const {values, errors, touched, handleBlur, setFieldValue} = props;
-  const account = useAppSelector(AuthSelectors.accountSelector);
+  const account = useAppSelector(AuthSelectors.account);
   const theme = useTheme();
   const [show, setShow] = useState<boolean>(false);
   const [pickerValue, setPickerValue] = useState<Date>();

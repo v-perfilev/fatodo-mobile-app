@@ -33,7 +33,7 @@ type ForgotPasswordFormProps = CaptchaProps & {
 
 const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: ForgotPasswordFormProps) => {
   const dispatch = useAppDispatch();
-  const loading = useAppSelector(AuthSelectors.loadingSelector);
+  const loading = useAppSelector(AuthSelectors.loading);
   const {t} = useTranslation();
   const [formValues, setFormValues] = useState<ForgotPasswordFormValues>();
 

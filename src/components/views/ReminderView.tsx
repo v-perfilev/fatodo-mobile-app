@@ -11,7 +11,7 @@ type Props = {
 };
 
 const ReminderView: FC<Props> = ({reminder}: Props) => {
-  const account = useAppSelector(AuthSelectors.accountSelector);
+  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const timezone = account.info.timezone;
 
