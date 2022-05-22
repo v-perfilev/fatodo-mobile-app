@@ -1,6 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {ContactsState} from './contactsType';
 import ContactsThunks from './contactsThunks';
+import {ArrayUtils} from '../../shared/utils/ArrayUtils';
+import {ContactRelation} from '../../models/ContactRelation';
+import {ContactRequest} from '../../models/ContactRequest';
 
 const initialState: ContactsState = {
   relationCount: 0,
@@ -15,7 +18,14 @@ const initialState: ContactsState = {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  reducers: {},
+  reducers: {
+    addRelation: (state: ContactsState, action) => {
+      const relation = {id: undefined, firstUserId: undefined, secondUserId: action.payload} as ContactRelation;
+      const relationCount = state.relationCount + 1;
+      const relations = ArrayUtils.addValue(state.relations, relation);
+      return {...state, relationCount, relations};
+    },
+  },
   extraReducers: (builder) => {
     /*
     fetchInfo
@@ -97,15 +107,22 @@ const contactsSlice = createSlice({
     });
 
     /*
+    sendRequest
+    */
+    builder.addCase(ContactsThunks.sendRequest.fulfilled, (state: ContactsState, action) => {
+      const request = {id: undefined, requesterId: undefined, recipientId: action.payload} as ContactRequest;
+      const outcomingRequestCount = state.outcomingRequestCount + 1;
+      const outcomingRequests = ArrayUtils.addValue(state.outcomingRequests, request);
+      return {...state, outcomingRequestCount, outcomingRequests};
+    });
+
+    /*
     acceptIncomingRequest
     */
     builder.addCase(ContactsThunks.acceptIncomingRequest.fulfilled, (state: ContactsState, action) => {
-      const relationCount = state.relationCount + 1;
       const incomingRequestCount = state.incomingRequestCount - 1;
-      const relations = state.relations;
-      relations.push({id: undefined, firstUserId: undefined, secondUserId: action.payload});
       const incomingRequests = state.incomingRequests.filter((request) => request.requesterId !== action.payload);
-      return {...state, relationCount, incomingRequestCount, relations, incomingRequests};
+      return {...state, incomingRequestCount, incomingRequests};
     });
 
     /*

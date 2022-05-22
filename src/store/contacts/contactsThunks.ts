@@ -1,6 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ContactService from '../../services/ContactService';
 import {ContactRequestDTO} from '../../models/dto/ContactRequestDTO';
+import ContactActions from './contactsActions';
 
 enum TYPES {
   FETCH_INFO = 'contacts/fetchInfo',
@@ -45,8 +46,9 @@ export class ContactsThunks {
     return dto.recipientId;
   });
 
-  static acceptIncomingRequest = createAsyncThunk(TYPES.ACCEPT_INCOMING_REQUEST, async (userId: string) => {
+  static acceptIncomingRequest = createAsyncThunk(TYPES.ACCEPT_INCOMING_REQUEST, async (userId: string, thunkAPI) => {
     await ContactService.acceptRequest(userId);
+    thunkAPI.dispatch(ContactActions.addRelation(userId));
     return userId;
   });
 
