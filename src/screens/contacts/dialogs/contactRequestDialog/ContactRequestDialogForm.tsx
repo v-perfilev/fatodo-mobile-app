@@ -2,7 +2,6 @@ import {Formik, FormikHelpers} from 'formik';
 import FVStack from '../../../../components/surfaces/FVStack';
 import FormikTextInput from '../../../../components/inputs/FormikTextInput';
 import FHStack from '../../../../components/surfaces/FHStack';
-import SolidButton from '../../../../components/controls/SolidButton';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import FormikMultilineInput from '../../../../components/inputs/FormikMultilineInput';
@@ -12,6 +11,7 @@ import {userValidator} from '../../../../shared/validators';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import {ContactRequestDTO} from '../../../../models/dto/ContactRequestDTO';
+import GhostButton from '../../../../components/controls/GhostButton';
 
 export interface ContactRequestFormValues {
   usernameOrEmail: string;
@@ -67,23 +67,21 @@ const ContactRequestDialogForm = ({request, cancel}: ContactRequestDialogFormPro
             {...formikProps}
           />
           <FHStack defaultSpace justifyContent="flex-end">
-            <SolidButton
+            <GhostButton
               colorScheme="primary"
-              size="md"
               isLoading={formikProps.isSubmitting}
               isDisabled={!formikProps.isValid || formikProps.isSubmitting}
               onPress={formikProps.submitForm}
             >
               {t('group:actions.save')}
-            </SolidButton>
-            <SolidButton
+            </GhostButton>
+            <GhostButton
               colorScheme="secondary"
-              size="md"
               isDisabled={!formikProps.isValid || formikProps.isSubmitting}
               onPress={cancel}
             >
               {t('contact:addContact.cancel')}
-            </SolidButton>
+            </GhostButton>
           </FHStack>
         </FVStack>
       )}
