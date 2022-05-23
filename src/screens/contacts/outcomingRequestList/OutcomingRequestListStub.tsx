@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text} from 'react-native';
 import FCenter from '../../../components/surfaces/FCenter';
 import {useTranslation} from 'react-i18next';
+import {Text} from 'native-base';
 
 const OutcomingRequestListStub = () => {
   const {t} = useTranslation();

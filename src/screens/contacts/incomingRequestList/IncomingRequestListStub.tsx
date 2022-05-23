@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text} from 'native-base';
 import FCenter from '../../../components/surfaces/FCenter';
 
-const ContactListStub: FC = () => {
+const IncomingRequestListStub = () => {
   const {t} = useTranslation();
 
   return (
@@ -13,4 +13,4 @@ const ContactListStub: FC = () => {
   );
 };
 
-export default ContactListStub;
+export default IncomingRequestListStub;
