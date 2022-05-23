@@ -7,6 +7,7 @@ import usersSlice from './users/usersSlice';
 import groupsSlice from './groups/groupsSlice';
 import groupSlice from './group/groupSlice';
 import itemSlice from './item/itemSlice';
+import chatsSlice from './chats/chatsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,8 @@ export const store = configureStore({
     groups: groupsSlice.reducer,
     group: groupSlice.reducer,
     item: itemSlice.reducer,
+    chats: chatsSlice.reducer,
+    chat: chatsSlice.reducer,
   },
 });
 
