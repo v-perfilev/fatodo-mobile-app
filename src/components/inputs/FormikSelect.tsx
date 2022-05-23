@@ -1,5 +1,5 @@
 import React, {ReactElement, useEffect, useState} from 'react';
-import {Box, FormControl, IFormControlProps, Input} from 'native-base';
+import {Box, FormControl, IFormControlProps} from 'native-base';
 import {FormikProps} from 'formik';
 import Menu, {MenuItem} from '../controls/Menu';
 import PressableButton from '../controls/PressableButton';
@@ -15,22 +15,19 @@ type FormikSelectProps<T> = IFormControlProps &
 
 const FormikSelect = (props: FormikSelectProps<any>) => {
   const {name, label, options, view} = props;
-  const {values, errors, touched, handleChange, handleBlur} = props;
-  const [current, setCurrent] = useState<any>();
+  const {values, errors, touched, setFieldValue} = props;
+  const [current, setCurrent] = useState<any>(values[name]);
 
-  const value = values[name];
   const isTouched = name in touched;
   const isError = name in errors;
 
   useEffect(() => {
-    setCurrent(value);
-  }, [value]);
+    setFieldValue(name, current);
+  }, [current]);
 
   return (
     <FormControl isInvalid={isTouched && isError} {...props}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
-      <Input type="text" onChangeText={handleChange(name)} onBlur={handleBlur(name)} value={current} display="none" />
-
       <Menu
         trigger={(triggerProps) => (
           <PressableButton {...triggerProps}>
