@@ -4,6 +4,7 @@ import {Item, ItemStatusType} from '../../models/Item';
 import {Group, GroupMember} from '../../models/Group';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import GroupsActions from '../groups/groupsActions';
+import GroupsThunks from '../groups/groupsThunks';
 
 enum TYPES {
   FETCH_GROUP = 'group/fetchGroup',
@@ -65,6 +66,7 @@ export class GroupThunks {
   static createGroup = createAsyncThunk(TYPES.CREATE_GROUP, async (formData: FormData, thunkAPI) => {
     const response = await ItemService.createGroup(formData);
     thunkAPI.dispatch(GroupsActions.createGroup(response.data));
+    thunkAPI.dispatch(GroupsThunks.fetchItems([response.data.id]));
     return response.data;
   });
 

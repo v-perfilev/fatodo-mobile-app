@@ -11,8 +11,10 @@ enum TYPES {
 }
 
 export class GroupsThunks {
-  static fetchGroups = createAsyncThunk(TYPES.FETCH_GROUPS, async () => {
+  static fetchGroups = createAsyncThunk(TYPES.FETCH_GROUPS, async (_, thunkAPI) => {
     const response = await ItemService.getAllGroups();
+    const groupIds = response.data.map((g) => g.id);
+    thunkAPI.dispatch(GroupsThunks.fetchItems(groupIds));
     return response.data;
   });
 

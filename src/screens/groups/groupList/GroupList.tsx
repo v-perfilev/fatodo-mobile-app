@@ -24,13 +24,6 @@ const GroupList = () => {
   }, []);
 
   useEffect(() => {
-    if (groups.length > 0) {
-      const groupIds = groups.map((g) => g.id);
-      dispatch(GroupsThunks.fetchItems(groupIds));
-    }
-  }, [groups.length]);
-
-  useEffect(() => {
     const userIds = groups.reduce((acc, group) => [...acc, group.members], []).map((user) => user.id);
     dispatch(UsersThunks.handleUserIds(userIds));
   }, [groups]);

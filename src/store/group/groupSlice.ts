@@ -28,19 +28,16 @@ const groupSlice = createSlice({
   reducers: {
     createItem: (state: GroupState, action) => {
       const item = action.payload as Item;
-
       const activeItems = filterItems([...ArrayUtils.addValue(state.activeItems, item)]);
       const activeItemsCount = state.activeItemsCount + 1;
-
       return {...state, activeItems, activeItemsCount};
     },
+
     updateItem: (state: GroupState, action) => {
       const item = action.payload as Item;
       const isArchived = item.archived;
-
       const activeItems = !isArchived ? ArrayUtils.updateValue(state.activeItems, item) : state.activeItems;
       const archivedItems = isArchived ? ArrayUtils.updateValue(state.archivedItems, item) : state.activeItems;
-
       return {...state, activeItems, archivedItems};
     },
   },
@@ -70,13 +67,9 @@ const groupSlice = createSlice({
       activeItemsLoading: true,
     }));
     builder.addCase(GroupThunks.fetchActiveItems.fulfilled, (state: GroupState, action) => {
+      const activeItemsCount = action.payload.count;
       const activeItems = filterItems([...state.activeItems, ...action.payload.data]);
-      return {
-        ...state,
-        activeItemsCount: action.payload.count,
-        activeItems,
-        activeItemsLoading: false,
-      };
+      return {...state, activeItemsCount, activeItems, activeItemsLoading: false};
     });
     builder.addCase(GroupThunks.fetchActiveItems.rejected, (state: GroupState) => ({
       ...state,
@@ -91,13 +84,9 @@ const groupSlice = createSlice({
       archivedItemsLoading: true,
     }));
     builder.addCase(GroupThunks.fetchArchivedItems.fulfilled, (state: GroupState, action) => {
+      const archivedItemsCount = action.payload.count;
       const archivedItems = filterItems([...state.archivedItems, ...action.payload.data]);
-      return {
-        ...state,
-        archivedItemsCount: action.payload.count,
-        archivedItems,
-        archivedItemsLoading: false,
-      };
+      return {...state, archivedItemsCount, archivedItems, archivedItemsLoading: false};
     });
     builder.addCase(GroupThunks.fetchArchivedItems.rejected, (state: GroupState) => ({
       ...state,
@@ -112,19 +101,11 @@ const groupSlice = createSlice({
       const isArchived = item.archived;
       const activeItemsCount = state.activeItemsCount + (!isArchived ? 1 : -1);
       const archivedItemsCount = state.archivedItemsCount + (isArchived ? 1 : -1);
-
       const activeFunction = !isArchived ? ArrayUtils.addValue : ArrayUtils.deleteValue;
       const archivedFunction = isArchived ? ArrayUtils.addValue : ArrayUtils.deleteValue;
       const activeItems = filterItems(activeFunction(state.activeItems, item));
       const archivedItems = filterItems(archivedFunction(state.activeItems, item));
-
-      return {
-        ...state,
-        activeItemsCount,
-        archivedItemsCount,
-        activeItems,
-        archivedItems,
-      };
+      return {...state, activeItemsCount, archivedItemsCount, activeItems, archivedItems};
     });
 
     /*
@@ -133,15 +114,9 @@ const groupSlice = createSlice({
     builder.addCase(GroupThunks.updateItemStatus.fulfilled, (state: GroupState, action) => {
       const item = {...action.meta.arg.item, status: action.meta.arg.status} as Item;
       const isArchived = item.archived;
-
       const activeItems = !isArchived ? ArrayUtils.updateValue(state.activeItems, item) : state.activeItems;
       const archivedItems = isArchived ? ArrayUtils.updateValue(state.archivedItems, item) : state.archivedItems;
-
-      return {
-        ...state,
-        activeItems,
-        archivedItems,
-      };
+      return {...state, activeItems, archivedItems};
     });
 
     /*
@@ -150,20 +125,11 @@ const groupSlice = createSlice({
     builder.addCase(GroupThunks.deleteItem.fulfilled, (state: GroupState, action) => {
       const item = action.meta.arg;
       const isArchived = item.archived;
-
       const activeItemsCount = state.activeItemsCount + (!isArchived ? -1 : 0);
       const archivedItemsCount = state.archivedItemsCount + (isArchived ? -1 : 0);
-
       const activeItems = !isArchived ? ArrayUtils.deleteValue(state.activeItems, item) : state.activeItems;
       const archivedItems = isArchived ? ArrayUtils.deleteValue(state.archivedItems, item) : state.archivedItems;
-
-      return {
-        ...state,
-        activeItemsCount,
-        archivedItemsCount,
-        activeItems,
-        archivedItems,
-      };
+      return {...state, activeItemsCount, archivedItemsCount, activeItems, archivedItems};
     });
 
     /*

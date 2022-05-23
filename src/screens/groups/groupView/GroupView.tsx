@@ -31,11 +31,6 @@ const GroupView = () => {
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
 
-  const loadGroupUsers = (): void => {
-    const userIds = group.members.map((user) => user.id);
-    dispatch(UsersThunks.handleUserIds(userIds));
-  };
-
   useEffect(() => {
     setLoading(true);
     dispatch(GroupThunks.fetchGroup(groupId))
@@ -45,8 +40,11 @@ const GroupView = () => {
   }, []);
 
   useEffect(() => {
-    group && loadGroupUsers();
-    group && navigation.setParams({...route.params, color: group?.color});
+    if (group) {
+      const userIds = group.members.map((user) => user.id);
+      dispatch(UsersThunks.handleUserIds(userIds));
+      navigation.setParams({...route.params, color: group?.color});
+    }
   }, [group]);
 
   const theme = group ? ThemeFactory.getTheme(group.color) : ThemeFactory.getDefaultTheme();

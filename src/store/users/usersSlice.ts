@@ -15,10 +15,7 @@ const usersSlice = createSlice({
   reducers: {
     handleUsers: (state: UsersState, action) => {
       const users = [...action.payload, ...state.users].filter(ArrayUtils.uniqueByIdFilter);
-      return {
-        ...state,
-        users,
-      };
+      return {...state, users};
     },
   },
   extraReducers: (builder) => {

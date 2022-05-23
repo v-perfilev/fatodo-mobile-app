@@ -15,15 +15,13 @@ const snackSlice = createSlice({
     closeSnack: (state: SnackState, action) => {
       const isDismissAll = (n: ReduxSnack): boolean => action.payload === 'all' || n.key === action.payload;
       const handle = (n: ReduxSnack): ReduxSnack => (isDismissAll(n) ? {...n, dismissed: true} : {...n});
-      return {
-        list: state.list.map((notification) => handle(notification)),
-      };
+      const list = state.list.map((notification) => handle(notification));
+      return {list};
     },
     removeSnack: (state: SnackState, action) => {
       const filter = (n: ReduxSnack): boolean => n.key !== action.payload;
-      return {
-        list: state.list.filter((notification) => filter(notification)),
-      };
+      const list = state.list.filter((notification) => filter(notification));
+      return {list};
     },
   },
 });
