@@ -110,6 +110,7 @@ const GroupMembersDialog = ({group, users, show, close, switchToAddMembers, swit
       title={t('group:members.title')}
       content={content}
       actions={actions}
+      size="xl"
     />
   );
 };

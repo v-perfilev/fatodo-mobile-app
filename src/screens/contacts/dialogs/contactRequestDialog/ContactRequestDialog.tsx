@@ -35,7 +35,7 @@ const ContactRequestDialog = ({show, close}: ContactRequestDialogProps) => {
 
   const content = <ContactRequestDialogForm request={request} cancel={close} />;
 
-  return <ModalDialog open={show} close={close} title={t('contact:addContact.title')} content={content} />;
+  return <ModalDialog open={show} close={close} title={t('contact:addContact.title')} content={content} size="xl" />;
 };
 
 export default ContactRequestDialog;

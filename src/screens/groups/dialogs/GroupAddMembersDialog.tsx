@@ -74,7 +74,14 @@ const GroupAddMembersDialog = ({group, show, close}: GroupAddMembersDialogProps)
   );
 
   return (
-    <ModalDialog open={show} close={close} title={t('group:addMembers.title')} content={content} actions={actions} />
+    <ModalDialog
+      open={show}
+      close={close}
+      title={t('group:addMembers.title')}
+      content={content}
+      actions={actions}
+      size="xl"
+    />
   );
 };
 

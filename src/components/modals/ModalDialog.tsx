@@ -2,6 +2,7 @@ import {Button, Modal} from 'native-base';
 import React, {ReactElement} from 'react';
 import {LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
 import ThemeProvider from '../layouts/ThemeProvider';
+import {SizeType} from 'native-base/lib/typescript/components/types';
 
 type ModalDialogProps = {
   open: boolean;
@@ -9,13 +10,14 @@ type ModalDialogProps = {
   title: string;
   content: ReactElement | string;
   actions?: ReactElement;
+  size?: SizeType;
 };
 
 const theme = ThemeFactory.getDefaultTheme();
 
-const ModalDialog = ({open, close, title, content, actions}: ModalDialogProps) => (
+const ModalDialog = ({open, close, title, content, actions, size}: ModalDialogProps) => (
   <ThemeProvider theme={theme}>
-    <Modal isOpen={open} onClose={close} _backdrop={{bg: 'gray.300'}}>
+    <Modal isOpen={open} onClose={close} _backdrop={{bg: 'gray.300'}} size={size}>
       <Modal.Content>
         <Modal.CloseButton bgColor={null} _pressed={{bgColor: 'none'}} _icon={{color: 'white'}} />
         <Modal.Header bg={LINEAR_GRADIENT} borderBottomWidth="0" _text={{color: 'white'}}>
