@@ -39,7 +39,7 @@ const groupsSlice = createSlice({
 
     createGroup: (state: GroupsState, action) => {
       const group = action.payload;
-      const groups = [group, ...state.groups];
+      const groups = [...state.groups, group];
       return {...state, groups};
     },
 

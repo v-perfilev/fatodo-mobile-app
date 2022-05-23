@@ -21,17 +21,12 @@ type ItemViewMenuProps = {
 const ItemViewMenu = ({account}: ItemViewMenuProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
-  const group = useAppSelector(GroupSelectors.group);
   const {showItemDeleteDialog} = useItemDialogContext();
+  const group = useAppSelector(GroupSelectors.group);
   const item = useAppSelector(ItemSelectors.item);
 
-  const goToGroupView = (): void => {
-    navigation.navigate('GroupView', {groupId: group.id});
-  };
-
-  const goToItemEdit = (): void => {
-    navigation.navigate('ItemEdit', {itemId: item.id});
-  };
+  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group.id, colorScheme: group.color});
+  const goToItemEdit = (): void => navigation.navigate('ItemEdit', {itemId: item.id, colorScheme: group.color});
 
   const openItemDeleteDialog = (): void => {
     const onSuccess = (): void => goToGroupView();

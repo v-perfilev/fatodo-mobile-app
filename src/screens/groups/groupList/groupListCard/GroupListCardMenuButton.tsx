@@ -28,17 +28,9 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
   const canEdit = group && GroupUtils.canEdit(account, group);
   const canAdmin = group && GroupUtils.canAdmin(account, group);
 
-  const goToGroupView = (): void => {
-    navigation.navigate('GroupView', {groupId: group.id});
-  };
-
-  const goToItemCreate = (): void => {
-    navigation.navigate('ItemCreate', {groupId: group.id});
-  };
-
-  const goToGroupEdit = (): void => {
-    navigation.navigate('GroupEdit', {groupId: group.id});
-  };
+  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group.id, colorScheme: group.color});
+  const goToItemCreate = (): void => navigation.navigate('ItemCreate', {groupId: group.id, colorScheme: group.color});
+  const goToGroupEdit = (): void => navigation.navigate('GroupEdit', {groupId: group.id, colorScheme: group.color});
 
   const openGroupDeleteDialog = (): void => {
     showGroupDeleteDialog(group);

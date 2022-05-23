@@ -29,17 +29,9 @@ const GroupViewMenu = ({account}: GroupViewMenuProps) => {
   const group = useAppSelector(GroupSelectors.group);
   const users = useAppSelector(UsersSelectors.users);
 
-  const goToGroupList = (): void => {
-    navigation.navigate('GroupList');
-  };
-
-  const goToItemCreate = (): void => {
-    navigation.navigate('ItemCreate', {groupId: group.id});
-  };
-
-  const goToGroupEdit = (): void => {
-    navigation.navigate('GroupEdit', {groupId: group.id});
-  };
+  const goToGroupList = (): void => navigation.navigate('GroupList');
+  const goToItemCreate = (): void => navigation.navigate('ItemCreate', {groupId: group.id, colorScheme: group.color});
+  const goToGroupEdit = (): void => navigation.navigate('GroupEdit', {groupId: group.id, colorScheme: group.color});
 
   const openGroupMembersDialog = (): void => {
     showGroupMembersDialog(group, users);

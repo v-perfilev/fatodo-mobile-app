@@ -1,6 +1,4 @@
-import React, {useEffect} from 'react';
-import {flowRight} from 'lodash';
-import withHeader from '../../../shared/hocs/withHeader';
+import React, {useEffect, useMemo} from 'react';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import GroupForm from '../groupForm/GroupForm';
@@ -11,16 +9,25 @@ import SnackActions from '../../../store/snack/snackActions';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import GroupThunks from '../../../store/group/groupThunks';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {Theme} from 'native-base';
+import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
+import ThemeProvider from '../../../components/layouts/ThemeProvider';
+import Header from '../../../components/layouts/Header';
 
 const GroupEdit = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'GroupEdit'>>();
-  const groupId = route.params.groupId;
   const group = useAppSelector(GroupSelectors.group);
   const [loading, setLoading] = useLoadingState();
+  const groupId = route.params.groupId;
+  const colorScheme = route.params.colorScheme;
 
-  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId});
+  const goToGroupView = (): void =>
+    navigation.getParent().getId() === 'GroupView'
+      ? navigation.replace('GroupView', {groupId: group.id, colorScheme: group.color})
+      : navigation.goBack();
+  const goBack = (): void => navigation.goBack();
 
   const request = (formData: FormData, stopSubmitting: () => void): void => {
     dispatch(GroupThunks.updateGroup(formData))
@@ -42,13 +49,20 @@ const GroupEdit = () => {
       .finally(() => setLoading(false));
   }, [groupId]);
 
+  const theme = useMemo<Theme>(() => {
+    return group || colorScheme ? ThemeFactory.getTheme(group?.color || colorScheme) : ThemeFactory.getDefaultTheme();
+  }, [group, colorScheme]);
+
   return (
-    <ConditionalSpinner loading={loading}>
-      <FScrollView>
-        <GroupForm group={group} request={request} cancel={goToGroupView} />
-      </FScrollView>
-    </ConditionalSpinner>
+    <ThemeProvider theme={theme}>
+      <Header />
+      <ConditionalSpinner loading={loading}>
+        <FScrollView>
+          <GroupForm group={group} request={request} cancel={goBack} />
+        </FScrollView>
+      </ConditionalSpinner>
+    </ThemeProvider>
   );
 };
 
-export default flowRight([withHeader])(GroupEdit);
+export default GroupEdit;

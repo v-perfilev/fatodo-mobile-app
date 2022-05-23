@@ -12,8 +12,9 @@ import PackageUpIcon from '../../../../components/icons/PackageUpIcon';
 import PackageDownIcon from '../../../../components/icons/PackageDownIcon';
 import PressableButton from '../../../../components/controls/PressableButton';
 import {useItemDialogContext} from '../../../../shared/contexts/dialogContexts/ItemDialogContext';
-import {useAppDispatch} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import GroupThunks from '../../../../store/group/groupThunks';
+import GroupSelectors from '../../../../store/group/groupSelectors';
 
 type GroupViewItemMenuProps = {
   item: Item;
@@ -25,18 +26,14 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
   const {showItemDeleteDialog} = useItemDialogContext();
+  const group = useAppSelector(GroupSelectors.group);
   const [archivedLoading, setArchivedLoading] = useState<boolean>(false);
+
+  const goToItemView = (): void => navigation.navigate('ItemView', {itemId: item.id, colorScheme: group.color});
+  const goToItemEdit = (): void => navigation.navigate('ItemEdit', {itemId: item.id, colorScheme: group.color});
 
   const deleteItem = (item: Item): void => {
     dispatch(GroupThunks.deleteItem(item));
-  };
-
-  const goToItemView = (): void => {
-    navigation.navigate('ItemView', {itemId: item.id});
-  };
-
-  const goToItemEdit = (): void => {
-    navigation.navigate('ItemEdit', {itemId: item.id});
   };
 
   const toggleArchived = useCallback((): void => {

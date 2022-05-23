@@ -121,7 +121,7 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
         <GroupViewItemsPagination page={page} setPage={setPage} totalPages={totalPages} />
         <GroupViewItemsArchivedSwitch showArchived={showArchived} setShowArchived={setShowArchived} />
       </FHStack>
-      {!showArchived && <GroupViewItemsCreateButton group={group} />}
+      {!showArchived && <GroupViewItemsCreateButton />}
       {loading && <GroupViewItemsSkeleton />}
       {!loading && itemsToShow.map((item) => <GroupViewItem item={item} canEdit={canEdit} key={item.id} />)}
     </FVStack>

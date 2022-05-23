@@ -19,7 +19,7 @@ const GroupListCardContent = ({group, items, count, loading}: GroupListCardConte
   const itemsView = (
     <FVStack mt="2" space="2">
       {items.map((item) => (
-        <GroupListCardItem item={item} key={item.id} />
+        <GroupListCardItem group={group} item={item} key={item.id} />
       ))}
     </FVStack>
   );

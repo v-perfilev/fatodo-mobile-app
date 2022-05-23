@@ -9,6 +9,7 @@ import ColoredStatusBar from './ColoredStatusBar';
 import UrlPic from '../surfaces/UrlPic';
 import ArrowBackIcon from '../icons/ArrowBackIcon';
 import FHStack from '../surfaces/FHStack';
+import {GroupNavigationProp} from '../../navigators/GroupNavigator';
 
 type HeaderProps = PropsWithChildren<{
   title?: string;
@@ -26,14 +27,14 @@ const Header = ({
   showMenu = true,
   showTitle = true,
 }: HeaderProps) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute();
   const {t} = useTranslation();
   const {toggleDrawer} = useDrawerContext();
 
   const label = title || t('routes.' + route.name);
 
-  const canGoBack = navigation.canGoBack() && navigation.getState().routes.length > 1;
+  const canGoBack = navigation.canGoBack();
   const goBack = (): void => navigation.goBack();
 
   return (

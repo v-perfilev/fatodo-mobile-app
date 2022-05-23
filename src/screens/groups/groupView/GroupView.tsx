@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Divider} from 'native-base';
+import React, {useEffect, useMemo, useState} from 'react';
+import {Divider, Theme} from 'native-base';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import Header from '../../../components/layouts/Header';
@@ -19,15 +19,16 @@ import GroupThunks from '../../../store/group/groupThunks';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 
 const GroupView = () => {
+  const navigation = useNavigation<GroupNavigationProp>();
+  const route = useRoute<RouteProp<GroupParamList, 'GroupView'>>();
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.account);
   const group = useAppSelector(GroupSelectors.group);
   const groupLoading = useAppSelector(GroupSelectors.loading);
-  const navigation = useNavigation<GroupNavigationProp>();
-  const route = useRoute<RouteProp<GroupParamList, 'GroupView'>>();
   const [loading, setLoading] = useLoadingState();
   const [showArchived, setShowArchived] = useState<boolean>(false);
   const groupId = route.params.groupId;
+  const colorScheme = route.params.colorScheme;
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
 
@@ -47,7 +48,9 @@ const GroupView = () => {
     }
   }, [group]);
 
-  const theme = group ? ThemeFactory.getTheme(group.color) : ThemeFactory.getDefaultTheme();
+  const theme = useMemo<Theme>(() => {
+    return group || colorScheme ? ThemeFactory.getTheme(group?.color || colorScheme) : ThemeFactory.getDefaultTheme();
+  }, [group, colorScheme]);
 
   return (
     <ThemeProvider theme={theme}>

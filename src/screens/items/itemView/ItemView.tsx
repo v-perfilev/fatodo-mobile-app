@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Divider} from 'native-base';
+import React, {useEffect, useMemo} from 'react';
+import {Divider, Theme} from 'native-base';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
@@ -39,10 +39,9 @@ const ItemView = () => {
   const route = useRoute<RouteProp<GroupParamList, 'ItemView'>>();
   const [loading, setLoading] = useLoadingState();
   const itemId = route.params.itemId;
+  const colorScheme = route.params.colorScheme;
 
-  const theme = ThemeFactory.getTheme(group?.color);
-
-  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group.id});
+  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group.id, colorScheme: group.color});
 
   const showTags = item?.tags.length > 0;
   const showReminders = reminders?.length > 0;
@@ -69,6 +68,10 @@ const ItemView = () => {
       dispatch(UsersThunks.handleUserIds(userIds));
     }
   }, [group]);
+
+  const theme = useMemo<Theme>(() => {
+    return group || colorScheme ? ThemeFactory.getTheme(group?.color || colorScheme) : ThemeFactory.getDefaultTheme();
+  }, [group, colorScheme]);
 
   return (
     <ThemeProvider theme={theme}>

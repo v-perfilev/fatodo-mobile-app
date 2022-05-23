@@ -1,6 +1,4 @@
-import React, {useEffect} from 'react';
-import {flowRight} from 'lodash';
-import withHeader from '../../../shared/hocs/withHeader';
+import React, {useEffect, useMemo} from 'react';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
@@ -13,6 +11,10 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 import ItemThunks from '../../../store/item/itemThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {Theme} from 'native-base';
+import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
+import ThemeProvider from '../../../components/layouts/ThemeProvider';
+import Header from '../../../components/layouts/Header';
 
 const ItemEdit = () => {
   const dispatch = useAppDispatch();
@@ -25,8 +27,13 @@ const ItemEdit = () => {
   const route = useRoute<RouteProp<GroupParamList, 'ItemEdit'>>();
   const [loading, setLoading] = useLoadingState();
   const itemId = route.params.itemId;
+  const colorScheme = route.params.colorScheme;
 
-  const goToItemView = (): void => navigation.navigate('ItemView', {itemId});
+  const goToItemView = (): void =>
+    navigation.getParent().getId() === 'ItemView'
+      ? navigation.goBack()
+      : navigation.navigate('ItemView', {itemId, colorScheme: group.color});
+  const goBack = (): void => navigation.goBack();
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
     dispatch(ItemThunks.updateItem(dto))
@@ -48,13 +55,20 @@ const ItemEdit = () => {
       .finally(() => setLoading(false));
   }, [itemId]);
 
+  const theme = useMemo<Theme>(() => {
+    return group || colorScheme ? ThemeFactory.getTheme(group?.color || colorScheme) : ThemeFactory.getDefaultTheme();
+  }, [group, colorScheme]);
+
   return (
-    <ConditionalSpinner loading={loading || itemLoading || groupLoading}>
-      <FScrollView>
-        <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goToItemView} />
-      </FScrollView>
-    </ConditionalSpinner>
+    <ThemeProvider theme={theme}>
+      <Header />
+      <ConditionalSpinner loading={loading || itemLoading || groupLoading}>
+        <FScrollView>
+          <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goBack} />
+        </FScrollView>
+      </ConditionalSpinner>
+    </ThemeProvider>
   );
 };
 
-export default flowRight([withHeader])(ItemEdit);
+export default ItemEdit;

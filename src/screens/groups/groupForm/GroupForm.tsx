@@ -110,12 +110,7 @@ const GroupForm = ({group, request, cancel}: GroupFormProps) => {
             >
               {t('group:actions.save')}
             </SolidButton>
-            <SolidButton
-              colorScheme="secondary"
-              size="md"
-              isDisabled={!formikProps.isValid || formikProps.isSubmitting}
-              onPress={cancel}
-            >
+            <SolidButton colorScheme="secondary" size="md" isDisabled={formikProps.isSubmitting} onPress={cancel}>
               {t('group:actions.cancel')}
             </SolidButton>
           </FHStack>

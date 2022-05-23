@@ -8,22 +8,25 @@ import FScrollView from '../../../components/surfaces/FScrollView';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import GroupThunks from '../../../store/group/groupThunks';
+import {Group} from '../../../models/Group';
 
 const GroupCreate = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
 
-  const goToGroupView = (id: string): void => {
-    navigation.navigate('GroupView', {groupId: id});
-  };
-  const goToGroupList = (): void => navigation.navigate('GroupList');
+  const goToGroupView = (group: Group): void =>
+    navigation.replace('GroupView', {
+      groupId: group.id,
+      colorScheme: group.color,
+    });
+  const goBack = (): void => navigation.goBack();
 
   const request = (formData: FormData, stopSubmitting: () => void): void => {
     dispatch(GroupThunks.createGroup(formData))
       .unwrap()
       .then((group) => {
         dispatch(SnackActions.handleCode('group.created', 'info'));
-        goToGroupView(group.id);
+        goToGroupView(group);
       })
       .catch(() => {
         stopSubmitting();
@@ -31,7 +34,7 @@ const GroupCreate = () => {
   };
   return (
     <FScrollView>
-      <GroupForm request={request} cancel={goToGroupList} />
+      <GroupForm request={request} cancel={goBack} />
     </FScrollView>
   );
 };

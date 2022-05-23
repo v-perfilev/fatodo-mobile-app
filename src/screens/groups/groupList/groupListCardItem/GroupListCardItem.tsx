@@ -7,12 +7,14 @@ import GroupListCardItemMenu from './GroupListCardItemMenu';
 import {flowRight} from 'lodash';
 import FVStack from '../../../../components/surfaces/FVStack';
 import FHStack from '../../../../components/surfaces/FHStack';
+import {Group} from '../../../../models/Group';
 
 type GroupListCardItemProps = {
+  group: Group;
   item: Item;
 };
 
-const GroupListCardItem = ({item}: GroupListCardItemProps) => {
+const GroupListCardItem = ({group, item}: GroupListCardItemProps) => {
   return (
     <FHStack space="2" p="1" borderWidth="1" borderColor="gray.200" borderRadius="2" alignItems="center">
       <GroupListCardItemIcons item={item} />
@@ -22,7 +24,7 @@ const GroupListCardItem = ({item}: GroupListCardItemProps) => {
         </Text>
         <GroupListCardItemChanges item={item} />
       </FVStack>
-      <GroupListCardItemMenu item={item} />
+      <GroupListCardItemMenu group={group} item={item} />
     </FHStack>
   );
 };

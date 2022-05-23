@@ -20,16 +20,11 @@ const GroupListCardInfo = ({group, items, count}: GroupListCardHeaderProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
 
+  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group.id, colorScheme: group.color});
+  const goToItemCreate = (): void => navigation.navigate('ItemCreate', {groupId: group.id, colorScheme: group.color});
+
   const showButtonToGroupView = useMemo<boolean>(() => count !== items.length, [items, count]);
   const showButtonToCreateItem = useMemo<boolean>(() => count === 0, [count]);
-
-  const goToGroupView = (): void => {
-    navigation.navigate('GroupView', {groupId: group.id});
-  };
-
-  const goToItemCreate = (): void => {
-    navigation.navigate('ItemCreate', {groupId: group.id});
-  };
 
   return (
     <FHStack space="1" h="45px" mx="0.5" alignItems="center">

@@ -26,6 +26,8 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
   const groups = useAppSelector(GroupsSelectors.groups);
   const allCollapsed = useAppSelector(GroupsSelectors.itemsAllCollapsed);
 
+  const goToGroupCreate = (): void => navigation.navigate('GroupCreate');
+
   const setAllCollapsed = (value: boolean): void => {
     dispatch(GroupsActions.setAllCollapsed(value));
   };
@@ -60,10 +62,6 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
   const cancelSorting = (): void => {
     setAllCollapsed(false);
     setSorting(false);
-  };
-
-  const goToGroupCreate = (): void => {
-    navigation.navigate('GroupCreate');
   };
 
   return (

@@ -1,22 +1,18 @@
 import React, {useMemo} from 'react';
-import {Group} from '../../../../models/Group';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import OutlinedButton from '../../../../components/controls/OutlinedButton';
 import PlusIcon from '../../../../components/icons/PlusIcon';
+import {useAppSelector} from '../../../../store/store';
+import GroupSelectors from '../../../../store/group/groupSelectors';
 
-type GroupViewItemsCreateButtonProps = {
-  group: Group;
-};
-
-const GroupViewItemsCreateButton = ({group}: GroupViewItemsCreateButtonProps) => {
+const GroupViewItemsCreateButton = () => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t, i18n} = useTranslation();
+  const group = useAppSelector(GroupSelectors.group);
 
-  const goToItemCreate = (): void => {
-    navigation.navigate('ItemCreate', {groupId: group.id});
-  };
+  const goToItemCreate = (): void => navigation.navigate('ItemCreate', {groupId: group.id, colorScheme: group.color});
 
   const text = useMemo<string>(() => t('group:menu.createItem'), [i18n.language]);
 

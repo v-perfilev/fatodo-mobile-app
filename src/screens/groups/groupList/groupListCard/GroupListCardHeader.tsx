@@ -21,9 +21,7 @@ type GroupListCardHeaderProps = {
 const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHeaderProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
 
-  const goToGroupView = (): void => {
-    navigation.navigate('GroupView', {groupId: group?.id});
-  };
+  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group.id, colorScheme: group.color});
 
   return (
     <Pressable onPress={goToGroupView}>
@@ -31,7 +29,7 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
         <FHStack defaultSpace alignItems="center">
           {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} invertedBorder />}
           <Text fontWeight="600" fontSize="14" color="white" isTruncated>
-            {group?.title}
+            {group.title}
           </Text>
           <FHStack grow space="2" alignItems="center" justifyContent="flex-end">
             {sorting ? (

@@ -1,6 +1,4 @@
-import React, {useEffect} from 'react';
-import {flowRight} from 'lodash';
-import withHeader from '../../../shared/hocs/withHeader';
+import React, {useEffect, useMemo} from 'react';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
@@ -13,6 +11,10 @@ import ItemThunks from '../../../store/item/itemThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import GroupThunks from '../../../store/group/groupThunks';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {Theme} from 'native-base';
+import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
+import ThemeProvider from '../../../components/layouts/ThemeProvider';
+import Header from '../../../components/layouts/Header';
 
 const ItemCreate = () => {
   const dispatch = useAppDispatch();
@@ -22,9 +24,10 @@ const ItemCreate = () => {
   const route = useRoute<RouteProp<GroupParamList, 'ItemCreate'>>();
   const [loading, setLoading] = useLoadingState();
   const groupId = route.params.groupId;
+  const colorScheme = route.params.colorScheme;
 
-  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId});
-  const goToItemView = (itemId: string): void => navigation.navigate('ItemView', {itemId});
+  const goToItemView = (itemId: string): void => navigation.replace('ItemView', {itemId, colorScheme: group.color});
+  const goBack = (): void => navigation.goBack();
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
     dispatch(ItemThunks.createItem(dto))
@@ -42,17 +45,24 @@ const ItemCreate = () => {
     setLoading(true);
     dispatch(GroupThunks.fetchGroup(groupId))
       .unwrap()
-      .catch(() => goToGroupView())
+      .catch(() => goBack())
       .finally(() => setLoading(false));
   }, [groupId]);
 
+  const theme = useMemo<Theme>(() => {
+    return group || colorScheme ? ThemeFactory.getTheme(group?.color || colorScheme) : ThemeFactory.getDefaultTheme();
+  }, [group, colorScheme]);
+
   return (
-    <ConditionalSpinner loading={loading || groupLoading}>
-      <FScrollView>
-        <ItemForm group={group} request={request} cancel={goToGroupView} />
-      </FScrollView>
-    </ConditionalSpinner>
+    <ThemeProvider theme={theme}>
+      <Header />
+      <ConditionalSpinner loading={loading || groupLoading}>
+        <FScrollView>
+          <ItemForm group={group} request={request} cancel={goBack} />
+        </FScrollView>
+      </ConditionalSpinner>
+    </ThemeProvider>
   );
 };
 
-export default flowRight([withHeader])(ItemCreate);
+export default ItemCreate;

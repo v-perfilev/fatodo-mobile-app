@@ -1,6 +1,5 @@
 import React from 'react';
 import {Pressable, Text} from 'native-base';
-import {Item} from '../../../../models/Item';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import GroupViewItemIcons from './GroupViewItemIcons';
@@ -8,6 +7,9 @@ import GroupViewItemChanges from './GroupViewItemChanges';
 import GroupViewItemMenu from './GroupViewItemMenu';
 import FVStack from '../../../../components/surfaces/FVStack';
 import FHStack from '../../../../components/surfaces/FHStack';
+import {useAppSelector} from '../../../../store/store';
+import GroupSelectors from '../../../../store/group/groupSelectors';
+import {Item} from '../../../../models/Item';
 
 type GroupViewItemProps = {
   item: Item;
@@ -16,10 +18,9 @@ type GroupViewItemProps = {
 
 const GroupViewItem = ({item, canEdit}: GroupViewItemProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
+  const group = useAppSelector(GroupSelectors.group);
 
-  const goToItemView = (): void => {
-    navigation.navigate('ItemView', {itemId: item.id});
-  };
+  const goToItemView = (): void => navigation.navigate('ItemView', {itemId: item.id, colorScheme: group.color});
 
   return (
     <Pressable onPress={goToItemView}>
