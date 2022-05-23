@@ -18,14 +18,7 @@ const initialState: ContactsState = {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  reducers: {
-    addRelation: (state: ContactsState, action) => {
-      const relation = {id: undefined, firstUserId: undefined, secondUserId: action.payload} as ContactRelation;
-      const relationCount = state.relationCount + 1;
-      const relations = ArrayUtils.addValue(state.relations, relation);
-      return {...state, relationCount, relations};
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     /*
     fetchInfo
@@ -120,9 +113,12 @@ const contactsSlice = createSlice({
     acceptIncomingRequest
     */
     builder.addCase(ContactsThunks.acceptIncomingRequest.fulfilled, (state: ContactsState, action) => {
+      const relation = {id: undefined, firstUserId: undefined, secondUserId: action.payload} as ContactRelation;
+      const relationCount = state.relationCount + 1;
+      const relations = ArrayUtils.addValue(state.relations, relation);
       const incomingRequestCount = state.incomingRequestCount - 1;
       const incomingRequests = state.incomingRequests.filter((request) => request.requesterId !== action.payload);
-      return {...state, incomingRequestCount, incomingRequests};
+      return {...state, relationCount, relations, incomingRequestCount, incomingRequests};
     });
 
     /*

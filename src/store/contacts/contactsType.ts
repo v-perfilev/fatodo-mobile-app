@@ -10,3 +10,9 @@ export type ContactsState = {
   incomingRequests: ContactRequest[];
   loading: boolean;
 };
+
+export type ContactInfo = {
+  relationCount: number;
+  outcomingRequestCount: number;
+  incomingRequestCount: number;
+};
