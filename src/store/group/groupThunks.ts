@@ -80,7 +80,7 @@ export class GroupThunks {
     TYPES.ADD_GROUP_MEMBERS,
     async ({group, userIds}: {group: Group; userIds: string[]}, thunkAPI) => {
       const newMembers = userIds.map((userId) => ({id: userId, permission: 'READ'} as GroupMember));
-      group.members = ArrayUtils.addValues(group.members, newMembers);
+      group.members = ArrayUtils.addValuesToEnd(group.members, newMembers);
       await ItemService.addMembersToGroup(group.id, userIds);
       thunkAPI.dispatch(GroupsActions.updateGroup(group));
       return group;

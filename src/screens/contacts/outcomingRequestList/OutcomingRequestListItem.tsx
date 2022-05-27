@@ -26,9 +26,11 @@ const OutcomingRequestListItem = ({request}: OutcomingRequestListItemProps) => {
   };
 
   return (
-    <FHStack>
-      <UserView user={request.user} withUsername picSize="sm" />
-      <SolidButton colorScheme="secondary" isDisabled={disabled} onPress={removeRequest}>
+    <FHStack defaultSpace>
+      <FHStack grow>
+        <UserView user={request.user} withUsername picSize="sm" />
+      </FHStack>
+      <SolidButton colorScheme="secondary" size="sm" isDisabled={disabled} onPress={removeRequest}>
         {t('contact:outcoming.remove')}
       </SolidButton>
     </FHStack>

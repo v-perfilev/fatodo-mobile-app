@@ -34,12 +34,14 @@ const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
   };
 
   return (
-    <FHStack>
-      <UserView user={request.user} withUsername picSize="sm" />
-      <SolidButton colorScheme="primary" isDisabled={disabled} onPress={acceptRequest}>
+    <FHStack defaultSpace>
+      <FHStack grow>
+        <UserView user={request.user} withUsername picSize="sm" />
+      </FHStack>
+      <SolidButton colorScheme="primary" size="sm" isDisabled={disabled} onPress={acceptRequest}>
         {t('contact:incoming.accept')}
       </SolidButton>
-      <SolidButton colorScheme="secondary" isDisabled={disabled} onPress={declineRequest}>
+      <SolidButton colorScheme="secondary" size="sm" isDisabled={disabled} onPress={declineRequest}>
         {t('contact:incoming.decline')}
       </SolidButton>
     </FHStack>

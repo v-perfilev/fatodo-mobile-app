@@ -7,7 +7,8 @@ enum TYPES {
 
 export class ChatsThunks {
   static fetchChats = createAsyncThunk(TYPES.FETCH_CHATS, async (offset: number) => {
-    await ChatService.getAllChatsPageable(offset);
+    const result = await ChatService.getAllChatsPageable(offset);
+    return result.data;
   });
 }
 

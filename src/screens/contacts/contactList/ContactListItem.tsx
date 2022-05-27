@@ -26,9 +26,11 @@ const ContactListItem = ({relation}: ContactListItemProps) => {
   };
 
   return (
-    <FHStack>
-      <UserView user={relation.user} withUsername picSize="sm" />
-      <SolidButton colorScheme="secondary" isDisabled={disabled} onPress={removeRelation}>
+    <FHStack defaultSpace>
+      <FHStack grow>
+        <UserView user={relation.user} withUsername picSize="sm" />
+      </FHStack>
+      <SolidButton colorScheme="secondary" size="sm" isDisabled={disabled} onPress={removeRelation}>
         {t('contact:relations.remove')}
       </SolidButton>
     </FHStack>

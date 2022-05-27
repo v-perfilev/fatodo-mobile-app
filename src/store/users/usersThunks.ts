@@ -8,6 +8,7 @@ enum TYPES {
   HANDLE_USER_IDS = 'users/handleUserIds',
   FETCH_USER_IDS = 'users/fetchUserIds',
   FETCH_USERS_BY_USERNAME_PART = 'users/fetchUsersByUsernamePart',
+  FETCH_USERS_BY_USERNAME_OR_EMAIL = 'users/fetchUsersByUsernameOrEmail',
 }
 
 export class UsersThunks {
@@ -37,6 +38,14 @@ export class UsersThunks {
     const result = await UserService.getAllByUsernamePart(part);
     return result.data;
   });
+
+  static fetchUsersByUsernameOrEmail = createAsyncThunk(
+    TYPES.FETCH_USERS_BY_USERNAME_PART,
+    async (usernameOrEmail: string) => {
+      const result = await UserService.getByUsernameOrEmail(usernameOrEmail);
+      return result.data;
+    },
+  );
 }
 
 export default UsersThunks;

@@ -1,6 +1,5 @@
 import {Formik, FormikHelpers} from 'formik';
 import FVStack from '../../../../components/surfaces/FVStack';
-import FormikTextInput from '../../../../components/inputs/FormikTextInput';
 import FHStack from '../../../../components/surfaces/FHStack';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
@@ -12,6 +11,7 @@ import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import {ContactRequestDTO} from '../../../../models/dto/ContactRequestDTO';
 import GhostButton from '../../../../components/controls/GhostButton';
+import FormikUserInput from '../../../../components/inputs/FormikUserInput';
 
 export interface ContactRequestFormValues {
   usernameOrEmail: string;
@@ -54,8 +54,9 @@ const ContactRequestDialogForm = ({request, cancel}: ContactRequestDialogFormPro
     >
       {(formikProps) => (
         <FVStack grow defaultSpace>
-          <FormikTextInput
+          <FormikUserInput
             name="usernameOrEmail"
+            userName="user"
             label={t('contact:addContact.fields.user.label')}
             isDisabled={formikProps.isSubmitting}
             {...formikProps}
@@ -75,11 +76,7 @@ const ContactRequestDialogForm = ({request, cancel}: ContactRequestDialogFormPro
             >
               {t('group:actions.save')}
             </GhostButton>
-            <GhostButton
-              colorScheme="secondary"
-              isDisabled={!formikProps.isValid || formikProps.isSubmitting}
-              onPress={cancel}
-            >
+            <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
               {t('contact:addContact.cancel')}
             </GhostButton>
           </FHStack>

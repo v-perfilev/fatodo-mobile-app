@@ -15,7 +15,7 @@ const OutcomingRequestListContainer = ({requests}: OutcomingRequestListContainer
       {requests.length > 0 && (
         <FVStack>
           {requests.map((request) => (
-            <OutcomingRequestListItem request={request} key={request.id} />
+            <OutcomingRequestListItem request={request} key={request.user.id} />
           ))}
         </FVStack>
       )}

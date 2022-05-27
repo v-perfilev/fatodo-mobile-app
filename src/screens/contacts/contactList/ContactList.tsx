@@ -3,8 +3,6 @@ import {ContactRelationWithUser} from '../../../models/ContactRelation';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import ContactListContainer from './ContactListContainer';
-import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
-import {useTranslation} from 'react-i18next';
 import FScrollView from '../../../components/surfaces/FScrollView';
 import FVStack from '../../../components/surfaces/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -12,25 +10,15 @@ import ContactsThunks from '../../../store/contacts/contactsThunks';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import UsersSelectors from '../../../store/users/usersSelectors';
 import UsersThunks from '../../../store/users/usersThunks';
-import FHStack from '../../../components/surfaces/FHStack';
-import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
-import IconButton from '../../../components/controls/IconButton';
-import UserPlusIcon from '../../../components/icons/UserPlusIcon';
-import {Box} from 'native-base';
+import ContactListHeader from './ContactListHeader';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();
-  const {t} = useTranslation();
-  const {showContactRequestDialog} = useContactDialogContext();
   const relations = useAppSelector(ContactsSelectors.relations);
   const users = useAppSelector(UsersSelectors.users);
   const [userRelations, setUserRelations] = useState<ContactRelationWithUser[]>([]);
   const [loading, setLoading] = useLoadingState();
   const [filter, setFilter] = useState<string>('');
-
-  const openContactRequestDialog = (): void => {
-    showContactRequestDialog();
-  };
 
   const resetUserRelations = (): void => {
     setUserRelations([]);
@@ -69,12 +57,7 @@ const ContactList = () => {
     <ConditionalSpinner loading={loading}>
       <FScrollView>
         <FVStack grow defaultSpace>
-          <FHStack defaultSpace alignItems="center">
-            <IconButton icon={<UserPlusIcon />} onPress={openContactRequestDialog} />
-            <Box flex={1}>
-              <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={setFilter} />
-            </Box>
-          </FHStack>
+          <ContactListHeader setFilter={setFilter} />
           <ContactListContainer relations={userRelations} filter={filter} />
         </FVStack>
       </FScrollView>

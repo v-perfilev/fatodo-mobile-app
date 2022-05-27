@@ -28,7 +28,7 @@ const groupSlice = createSlice({
   reducers: {
     createItem: (state: GroupState, action) => {
       const item = action.payload as Item;
-      const activeItems = filterItems([...ArrayUtils.addValue(state.activeItems, item)]);
+      const activeItems = filterItems([...ArrayUtils.addValueToEnd(state.activeItems, item)]);
       const activeItemsCount = state.activeItemsCount + 1;
       return {...state, activeItems, activeItemsCount};
     },
@@ -101,8 +101,8 @@ const groupSlice = createSlice({
       const isArchived = item.archived;
       const activeItemsCount = state.activeItemsCount + (!isArchived ? 1 : -1);
       const archivedItemsCount = state.archivedItemsCount + (isArchived ? 1 : -1);
-      const activeFunction = !isArchived ? ArrayUtils.addValue : ArrayUtils.deleteValue;
-      const archivedFunction = isArchived ? ArrayUtils.addValue : ArrayUtils.deleteValue;
+      const activeFunction = !isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValue;
+      const archivedFunction = isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValue;
       const activeItems = filterItems(activeFunction(state.activeItems, item));
       const archivedItems = filterItems(archivedFunction(state.activeItems, item));
       return {...state, activeItemsCount, archivedItemsCount, activeItems, archivedItems};

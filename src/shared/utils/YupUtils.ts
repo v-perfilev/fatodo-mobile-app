@@ -11,7 +11,7 @@ export class AsyncValidator {
   private readonly asyncTest: AsyncValidationRule;
 
   private previousValue?: string;
-  private previousResult = true;
+  private previousResult = false;
 
   constructor(preSchema: Yup.Schema<any>, asyncTest: AsyncValidationRule) {
     this.preSchema = preSchema;
@@ -21,7 +21,7 @@ export class AsyncValidator {
   private validate = async (value: string): Promise<boolean> => {
     let result;
     if (!(await this.preSchema.isValid(value))) {
-      result = true;
+      result = false;
     } else if (value === this.previousValue) {
       result = this.previousResult;
     } else {

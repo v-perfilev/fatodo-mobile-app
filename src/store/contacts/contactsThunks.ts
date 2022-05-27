@@ -56,7 +56,7 @@ export class ContactsThunks {
   });
 
   static removeOutcomingRequest = createAsyncThunk(TYPES.REMOVE_OUTCOMING_REQUEST, async (userId: string) => {
-    await ContactService.declineRequest(userId);
+    await ContactService.removeRequest(userId);
     return userId;
   });
 }

@@ -26,7 +26,7 @@ const ContactListContainer = ({relations, filter}: ContactListContainerProps) =>
       {relations.length > 0 && (
         <FVStack>
           {relationsToShow.map((relation) => (
-            <ContactListItem relation={relation} key={relation.id} />
+            <ContactListItem relation={relation} key={relation.user.id} />
           ))}
         </FVStack>
       )}
