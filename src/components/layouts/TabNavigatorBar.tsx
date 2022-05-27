@@ -34,7 +34,7 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
     <Pressable flex="1" p="2" opacity={opacity} onPress={onPress}>
       <FCenter>
         {icon && icon({focused: isFocused, color: 'white', size: 6})}
-        <Text color="white" fontSize="10">
+        <Text color="white" fontSize="2xs">
           {label}
         </Text>
       </FCenter>

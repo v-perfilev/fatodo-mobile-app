@@ -12,7 +12,7 @@ type GroupListCardItemIconsProps = {
 
 const GroupListCardItemIcons = ({item}: GroupListCardItemIconsProps) => {
   return (
-    <FHStack space="1" alignItems="center">
+    <FHStack smallSpace alignItems="center">
       <StatusView statusType={item.status} size="lg" />
       <FVStack space="1.5">
         <TypeView type={item.type} withoutText size="sm" />

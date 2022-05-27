@@ -16,7 +16,7 @@ const GroupViewItemsArchivedSwitch = ({showArchived, setShowArchived}: GroupView
   };
 
   return (
-    <FHStack space="1" alignItems="center">
+    <FHStack smallSpace alignItems="center">
       <Text color="gray.500">{t('group:actions.showArchived')}</Text>
       <Switch isChecked={showArchived} onChange={toggleArchived} color="primary.500" />
     </FHStack>

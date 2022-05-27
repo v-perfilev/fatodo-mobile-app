@@ -70,8 +70,8 @@ const ChatListItem = ({chat}: ChatListItemProps) => {
     <PressableButton onPress={goToChat} mx="3" mb="3">
       <FHStack grow defaultSpace>
         {pic}
-        <FVStack justifyContent="center" space="1">
-          <FHStack space="1">
+        <FVStack smallSpace justifyContent="center">
+          <FHStack smallSpace>
             {unreadCount > 0 && (
               <Badge rounded="full" variant="solid" colorScheme="secondary">
                 {unreadCount}

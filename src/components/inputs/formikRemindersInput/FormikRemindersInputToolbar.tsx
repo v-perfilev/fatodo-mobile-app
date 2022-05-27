@@ -56,7 +56,7 @@ const FormikRemindersInputToolbar = ({periodicity, setPeriodicity}: FormikRemind
         initial={{opacity: 0, scale: 0}}
         animate={{opacity: 1, scale: 1, transition: {duration: 100, delay: 150}}}
       >
-        <Text color="white" fontWeight="600" fontSize="18">
+        <Text color="white" fontWeight="600" fontSize="lg">
           {t('common:reminders.periodicity.' + periodicity)}
         </Text>
       </PresenceTransition>

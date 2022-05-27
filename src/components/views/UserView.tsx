@@ -20,11 +20,11 @@ export const UserView = (props: UserViewProps) => {
   const {withUserPic = true, withUsername = false, withPaperBox = false, withInvertedBorder = false} = props;
 
   const imageWithUsername = (
-    <FHStack space="1" alignItems="center">
+    <FHStack smallSpace alignItems="center">
       {withUserPic && (
         <UrlPic file={user.imageFilename} size={picSize} border={1} invertedBorder={withInvertedBorder} />
       )}
-      {withUsername && <Text fontSize="12">{user.username}</Text>}
+      {withUsername && <Text fontSize="xs">{user.username}</Text>}
     </FHStack>
   );
 

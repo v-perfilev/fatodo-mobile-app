@@ -25,3 +25,7 @@ export const IMAGE_SIZE = 500;
 
 // FORMS
 export const INPUT_FONT_SIZE = 13;
+
+// SPACES
+export const DEFAULT_SPACE = 3;
+export const SMALL_SPACE = 1;

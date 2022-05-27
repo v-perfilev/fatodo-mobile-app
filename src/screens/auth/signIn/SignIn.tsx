@@ -25,7 +25,7 @@ const SignIn = () => {
             <Logo withText centerText />
           </FCenter>
           <SignInForm />
-          <FVStack space="1">
+          <FVStack smallSpace>
             <LinkButton onPress={goToForgotPassword}>{t('account:forgotPassword.header')}</LinkButton>
             <LinkButton onPress={goToSignUp}>{t('account:register.header')}</LinkButton>
           </FVStack>

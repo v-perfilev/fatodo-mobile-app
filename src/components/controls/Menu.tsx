@@ -21,7 +21,7 @@ export const MenuItem = ({action, icon, text, children, loading, disabled, show 
   return (
     show && (
       <NbMenu.Item onPress={action} disabled={disabled}>
-        <FHStack space="1" alignItems="center">
+        <FHStack smallSpace alignItems="center">
           {loading && <CentredSpinner size="sm" />}
           {!loading && icon}
           {!loading && text && <Text>{text}</Text>}

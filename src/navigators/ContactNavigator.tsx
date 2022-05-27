@@ -62,7 +62,7 @@ const ContactNavigator = () => {
             return (
               <PressableButton flexBasis="1" flexGrow="1" onPress={handlePress} key={route.key}>
                 <FCenter grow borderColor={borderColor} borderBottomWidth={4}>
-                  <FHStack space="1" alignItems="center">
+                  <FHStack smallSpace alignItems="center">
                     <Text color="white" fontWeight="bold">
                       {t(`contact:${route.key}.title`)}
                     </Text>

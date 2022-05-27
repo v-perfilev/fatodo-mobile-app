@@ -10,7 +10,7 @@ type ChipBoxProps = IBoxProps & {
 const ChipBox = ({children, closeAction, ...props}: ChipBoxProps) => {
   return (
     <PaperBox {...props} bg="gray.100" flexDir="row" alignItems="center">
-      <Text fontSize="12" fontWeight="bold" color="gray.500">
+      <Text color="gray.500" fontWeight="bold" fontSize="xs">
         {children}
       </Text>
       {closeAction && <Icon as={<CloseIcon />} size="4" ml="1" onPress={closeAction} />}

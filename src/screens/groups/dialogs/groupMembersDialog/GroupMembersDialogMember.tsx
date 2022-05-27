@@ -79,7 +79,7 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: P
 
   return (
     <FHStack>
-      <FHStack alignItems="center" space="1">
+      <FHStack smallSpace alignItems="center">
         <UserView user={user} withUsername withUserPic picSize="sm" />
         <PermissionView permission={user.permission} />
       </FHStack>

@@ -1,14 +1,18 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Center, ICenterProps} from 'native-base';
 
 type FCenterProps = ICenterProps & {
   grow?: boolean;
 };
 
-const FCenter = ({grow, children, ...props}: FCenterProps) => (
-  <Center flexGrow={grow ? '1' : '0'} {...props}>
-    {children}
-  </Center>
-);
+const FCenter = ({grow, children, ...props}: FCenterProps) => {
+  const flexGrow = useMemo<string>(() => (grow ? '1' : '0'), []);
+
+  return (
+    <Center flexGrow={flexGrow} {...props}>
+      {children}
+    </Center>
+  );
+};
 
 export default FCenter;

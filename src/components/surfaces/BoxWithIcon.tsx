@@ -8,7 +8,7 @@ type BoxWithIconProps = IBoxProps & {
 
 const BoxWithIcon = ({icon, children}: BoxWithIconProps) => {
   return (
-    <FHStack space="1" alignItems="center">
+    <FHStack smallSpace alignItems="center">
       {icon}
       <Text>{children}</Text>
     </FHStack>

@@ -6,7 +6,7 @@ import FHStack from '../../../../components/surfaces/FHStack';
 const GroupListCardItemSkeleton = () => {
   return (
     <FHStack space="2" p="1" borderWidth="1" borderColor="gray.100" borderRadius="2" alignItems="center">
-      <FHStack space="1" alignItems="center">
+      <FHStack smallSpace alignItems="center">
         <Skeleton w="24px" h="24px" rounded="lg" />
         <FVStack space="2">
           <Skeleton w="12px" h="12px" rounded="md" />

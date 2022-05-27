@@ -26,7 +26,7 @@ const GroupViewItemChanges = ({item}: GroupViewItemChangesProps) => {
   const textProps = {color: 'gray.400', fontSize: '11'};
 
   return (
-    <FHStack space="1">
+    <FHStack smallSpace>
       <Text {...textProps}>{name}</Text>
       <Text {...textProps}>/</Text>
       <Text {...textProps}>{formattedDate}</Text>

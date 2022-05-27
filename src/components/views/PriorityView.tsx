@@ -35,7 +35,7 @@ export const PriorityView = ({priority, withoutText, ...props}: PriorityViewProp
   return withoutText ? (
     <FCenter>{icon}</FCenter>
   ) : (
-    <FHStack space="1" alignItems="center">
+    <FHStack smallSpace alignItems="center">
       {React.cloneElement(icon, {...props, mt: 1})}
       <Text>{text}</Text>
     </FHStack>

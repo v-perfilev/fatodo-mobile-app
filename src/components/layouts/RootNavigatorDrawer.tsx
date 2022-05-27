@@ -32,7 +32,7 @@ const RootNavigatorItem = ({routeName, routeKey, state, descriptors, navigation,
     <Pressable _pressed={{opacity: 0.7}} onPress={onPress}>
       <FHStack defaultSpace alignItems="center">
         {icon && icon({focused: isFocused, color: color, size: 7})}
-        <Text fontWeight="600" color={color} fontSize="16">
+        <Text color={color} fontWeight="600" fontSize="md">
           {label}
         </Text>
       </FHStack>

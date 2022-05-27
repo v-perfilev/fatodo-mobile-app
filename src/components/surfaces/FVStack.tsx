@@ -1,22 +1,35 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {IVStackProps} from 'native-base/lib/typescript/components/primitives/Stack/VStack';
 import {VStack} from 'native-base';
+import {DEFAULT_SPACE, SMALL_SPACE} from '../../constants';
 
 type FlexVStackProps = IVStackProps & {
   grow?: boolean;
   basis?: boolean;
   defaultSpace?: boolean;
+  smallSpace?: boolean;
 };
 
-const FVStack = ({grow, basis, defaultSpace, children, ...props}: FlexVStackProps) => (
-  <VStack
-    flexGrow={grow ? '1' : '0'}
-    flexBasis={basis ? 1 : undefined}
-    space={defaultSpace ? '3' : undefined}
-    {...props}
-  >
-    {children}
-  </VStack>
-);
+const FVStack = ({grow, basis, defaultSpace, smallSpace, children, ...props}: FlexVStackProps) => {
+  const flexGrow = useMemo<string>(() => (grow ? '1' : '0'), []);
+
+  const flexBasis = useMemo<number>(() => (basis ? 1 : undefined), []);
+
+  const space = useMemo<number>(() => {
+    let result;
+    if (defaultSpace) {
+      result = DEFAULT_SPACE;
+    } else if (smallSpace) {
+      result = SMALL_SPACE;
+    }
+    return result;
+  }, []);
+
+  return (
+    <VStack flexGrow={flexGrow} flexBasis={flexBasis} space={space} {...props}>
+      {children}
+    </VStack>
+  );
+};
 
 export default FVStack;

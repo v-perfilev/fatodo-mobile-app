@@ -13,7 +13,7 @@ type GroupViewItemIconsProps = {
 
 const GroupViewItemIcons = ({item, canEdit}: GroupViewItemIconsProps) => {
   return (
-    <FHStack space="1" alignItems="center">
+    <FHStack smallSpace alignItems="center">
       <GroupViewItemStatus item={item} canEdit={canEdit} />
       <FVStack space="1.5">
         <TypeView type={item.type} withoutText size="sm" />

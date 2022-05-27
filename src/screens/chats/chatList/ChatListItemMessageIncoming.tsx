@@ -19,12 +19,16 @@ const ChatListItemMessageIncoming = ({message}: ChatListItemMessageIncomingProps
 
   return (
     <FHStack>
-      <Text color="gray.500" fontWeight="bold">
+      <Text color="gray.$00" fontWeight="bold" fontSize="xs">
         {user?.username}:
       </Text>
-      {!message.isDeleted && <Text>{message.text}</Text>}
+      {!message.isDeleted && (
+        <Text isTruncated color="gray.500" fontSize="xs">
+          {message.text}
+        </Text>
+      )}
       {message.isDeleted && (
-        <Text color="gray.500" fontWeight="bold">
+        <Text color="gray.400" fontWeight="bold" fontSize="xs">
           {t('chat:message.deleted')}
         </Text>
       )}

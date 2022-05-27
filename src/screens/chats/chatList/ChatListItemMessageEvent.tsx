@@ -26,7 +26,7 @@ const ChatListItemMessageEvent = ({message}: ChatListItemMessageEventProps) => {
   }, []);
 
   return (
-    <Text color="gray.500" fontWeight="bold" fontSize="11">
+    <Text isTruncated color="gray.400" fontSize="xs">
       {text}
     </Text>
   );

@@ -28,7 +28,7 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
       <Box h="45px" pl="3" pr="2" bg={LINEAR_GRADIENT} justifyContent="center">
         <FHStack defaultSpace alignItems="center">
           {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} invertedBorder />}
-          <Text fontWeight="600" fontSize="14" color="white" isTruncated>
+          <Text fontWeight="600" color="white" isTruncated>
             {group.title}
           </Text>
           <FHStack grow space="2" alignItems="center" justifyContent="flex-end">

@@ -30,9 +30,9 @@ const GroupViewItemsPagination = ({page, setPage, totalPages}: GroupViewItemsPag
   };
 
   return (
-    <FHStack space="1" alignItems="center">
+    <FHStack smallSpace alignItems="center">
       <RoundButton leftIcon={<ArrowUpIcon size="md" />} isDisabled={upDisabled} onPress={onUpClick} />
-      <Text fontSize="14" fontWeight="bold">
+      <Text fontWeight="bold">
         {page + 1} / {totalPageToShow}
       </Text>
       <RoundButton leftIcon={<ArrowDownIcon size="md" />} isDisabled={downDisabled} onPress={onDownClick} />
