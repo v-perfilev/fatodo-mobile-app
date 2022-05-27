@@ -55,7 +55,7 @@ const GroupEdit = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header />
+      <Header showMenu={false} />
       <ConditionalSpinner loading={loading}>
         <FScrollView>
           <GroupForm group={group} request={request} cancel={goBack} />

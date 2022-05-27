@@ -1,6 +1,4 @@
 import React from 'react';
-import {flowRight} from 'lodash';
-import withHeader from '../../../shared/hocs/withHeader';
 import GroupForm from '../groupForm/GroupForm';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
@@ -9,6 +7,7 @@ import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import GroupThunks from '../../../store/group/groupThunks';
 import {Group} from '../../../models/Group';
+import Header from '../../../components/layouts/Header';
 
 const GroupCreate = () => {
   const dispatch = useAppDispatch();
@@ -33,10 +32,13 @@ const GroupCreate = () => {
       });
   };
   return (
-    <FScrollView>
-      <GroupForm request={request} cancel={goBack} />
-    </FScrollView>
+    <>
+      <Header showMenu={false} />
+      <FScrollView>
+        <GroupForm request={request} cancel={goBack} />
+      </FScrollView>
+    </>
   );
 };
 
-export default flowRight([withHeader])(GroupCreate);
+export default GroupCreate;

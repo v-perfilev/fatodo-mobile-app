@@ -5,7 +5,7 @@ import FHStack from '../surfaces/FHStack';
 const img = require('../../../assets/images/logo.png');
 
 type LogoProps = {
-  size?: number;
+  size?: number | string;
   withText?: boolean;
   centerText?: boolean;
 };

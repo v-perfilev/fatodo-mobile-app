@@ -54,7 +54,7 @@ const ContactNavigator = () => {
 
   const renderTabBar = ({navigationState}: TabBarProps): ReactNode => {
     return (
-      <Header showGoBack={false} showTitle={false}>
+      <Header showGoBack={false} showTitle={false} showMenu={false}>
         <FHStack grow h="100%" pt="0.5" mr="-2">
           {navigationState.routes.map((route, i) => {
             const handlePress = (): void => setIndex(i);

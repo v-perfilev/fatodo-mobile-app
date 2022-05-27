@@ -55,7 +55,7 @@ const ItemCreate = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header />
+      <Header showMenu={false} />
       <ConditionalSpinner loading={loading || groupLoading}>
         <FScrollView>
           <ItemForm group={group} request={request} cancel={goBack} />

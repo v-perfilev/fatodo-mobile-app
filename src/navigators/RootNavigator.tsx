@@ -36,7 +36,7 @@ const RootNavigator = () => {
 
   return (
     <Drawer.Navigator
-      screenOptions={{headerShown: false, drawerType: 'back', drawerStyle}}
+      screenOptions={{headerShown: false, drawerType: 'back', drawerPosition: 'right', drawerStyle}}
       drawerContent={RootNavigatorDrawer}
     >
       <Drawer.Screen name="Home" component={TabNavigator} options={{drawerIcon: groupsIcon}} />

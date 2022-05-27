@@ -61,7 +61,7 @@ const ItemEdit = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header />
+      <Header showMenu={false} />
       <ConditionalSpinner loading={loading || itemLoading || groupLoading}>
         <FScrollView>
           <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goBack} />
