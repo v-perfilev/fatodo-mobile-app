@@ -1,0 +1,117 @@
+{
+  "common": {
+    "direct": "Директ"
+  },
+  "control": {
+    "chatsNotFound": "Пока чатов нет"
+  },
+  "content": {
+    "placeholder": "Чат не выбран",
+    "messagesNotFound": "Пока сообщений нет",
+    "inputPlaceholder": "Введите сообщение..."
+  },
+  "menu": {
+    "toChatList": "К списку чатов",
+    "showMembers": "Пользователи",
+    "addMembers": "Пригласить",
+    "renameChat": "Переименовать чат",
+    "cleanChat": "Очистить чат",
+    "leaveChat": "Покинуть чат",
+    "deleteChat": "Удалить чат"
+  },
+  "message": {
+    "deleted": "Сообщение удалено",
+    "actions": {
+      "reactions": "Реакции",
+      "readStatuses": "Прочитали",
+      "edit": "Редактировать",
+      "delete": "Удалить"
+    }
+  },
+  "createChat": {
+    "title": "Создать чат",
+    "fields": {
+      "users": {
+        "label": "Пользователи",
+        "current": "Введите идентификатор другого пользователя",
+        "notRegistered": "Пользователь не зарегистрирован"
+      }
+    },
+    "send": "Создать",
+    "cancel": "Отменить"
+  },
+  "renameChat": {
+    "title": "Перименовать чат",
+    "fields": {
+      "title": {
+        "label": "Название",
+        "required": "Обязательное поле"
+      }
+    },
+    "send": "Переименовать",
+    "cancel": "Отменить"
+  },
+  "members": {
+    "title": "Пользователи в чате",
+    "usersNotFound": "Пользователи не найдены",
+    "buttons": {
+      "addUsers": "Добавить пользователей"
+    }
+  },
+  "addMembers": {
+    "title": "Добавление пользователей в чат",
+    "buttons": {
+      "send": "Добавить пользователей",
+      "cancel": "Отменить"
+    }
+  },
+  "removeMember": {
+    "title": "Удаление пользователя",
+    "text": "Вы уверены, что хотите удалить пользователя {{username}} из чата?"
+  },
+  "reactions": {
+    "title": "Реакции на сообщение",
+    "reactionsNotFound": "Пока реакций нет"
+  },
+  "readStatuses": {
+    "title": "Прочитали",
+    "readStatusesNotFound": "Пока никто не прочитал"
+  },
+  "editMessage": {
+    "title": "Редактировать сообщение",
+    "fields": {
+      "title": {
+        "label": "Текст",
+        "required": "Обязательное поле"
+      }
+    },
+    "send": "Редактировать",
+    "cancel": "Отменить"
+  },
+  "directMessage": {
+    "title": "Direct-сообщение",
+    "fields": {
+      "username": {
+        "label": "Пользователь"
+      },
+      "text": {
+        "label": "Текст",
+        "required": "Обязательное поле"
+      }
+    },
+    "send": "Отправить",
+    "cancel": "Отменить"
+  },
+  "event": {
+    "CREATE_DIRECT_CHAT": "{{username}} создал директ чат с {{usernames}}",
+    "CREATE_CHAT": "{{username}} создал чат с {{usernames}}",
+    "RENAME_CHAT": "{{user}}name переименовал чат в \"{{title}}\"",
+    "LEAVE_CHAT": "{{username}} покинул чат",
+    "ADD_MEMBERS": "{{username}} добавил в чат новых пользователей: {{usernames}}",
+    "DELETE_MEMBERS": "{{username}} удалил из чата пользователей: {{usernames}}"
+  },
+  "actions": {
+    "createChat": "Создать чат",
+    "back": "К предыдущей страницы"
+  }
+}

@@ -4,6 +4,8 @@ import ChatsThunks from './chatsThunks';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 
 const initialState: ChatsState = {
+  totalUnreadMessageCount: 0,
+  unreadMessageCountMap: [],
   chats: [],
   loading: false,
   moreLoading: false,

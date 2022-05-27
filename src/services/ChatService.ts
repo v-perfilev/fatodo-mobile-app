@@ -1,7 +1,8 @@
-import axios, {AxiosPromise} from 'axios';
+import {AxiosPromise} from 'axios';
 import {Chat} from '../models/Chat';
 import {Message} from '../models/Message';
 import {MessageDTO} from '../models/dto/MessageDTO';
+import axios from '../shared/axios';
 
 export default class ChatService {
   private static baseUrl = '/api/chat';

@@ -1,12 +1,13 @@
-import {Box, FlatList} from 'native-base';
+import {FlatList} from 'native-base';
 import React, {ReactElement, useEffect} from 'react';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
-import {Item} from '../../../models/Item';
 import {ListRenderItemInfo} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsThunks from '../../../store/chats/chatsThunks';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
+import {Chat} from '../../../models/Chat';
+import ChatListItem from './ChatListItem';
 
 type ChatListRegularProps = {};
 
@@ -25,15 +26,11 @@ const ChatListRegular = ({}: ChatListRegularProps) => {
     loadChats();
   }, []);
 
-  const renderItem = (info: ListRenderItemInfo<Item>): ReactElement => {
-    return <Box>{info.item}</Box>;
-  };
+  const renderItem = (info: ListRenderItemInfo<Chat>): ReactElement => <ChatListItem chat={info.item} />;
 
   return (
     <ConditionalSpinner loading={initialLoading}>
-      <Box>Test</Box>
-
-      <FlatList data={[]} onEndReached={loadChats} onEndReachedThreshold={5} renderItem={renderItem} />
+      <FlatList data={chats} onEndReached={loadChats} onEndReachedThreshold={5} renderItem={renderItem} />
     </ConditionalSpinner>
   );
 };

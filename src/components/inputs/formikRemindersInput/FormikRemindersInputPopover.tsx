@@ -60,7 +60,7 @@ const FormikRemindersInputPopover = ({show, handleClose}: FormikRemindersInputPo
           </FVStack>
         </Modal.Body>
         <Modal.Footer pt="0" borderTopWidth="0">
-          <Button.Group space="2">
+          <Button.Group space="3">
             <GhostButton colorScheme="primary" onPress={add} isDisabled={!reminder}>
               {t('item:actions.add')}
             </GhostButton>

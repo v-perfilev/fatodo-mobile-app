@@ -5,7 +5,7 @@ import ChatView from '../screens/chats/chatView/ChatView';
 
 type ChatParamList = {
   ChatList: undefined;
-  ChatView: undefined;
+  ChatView: {chatId: string};
 };
 
 const Stack = createNativeStackNavigator<ChatParamList>();

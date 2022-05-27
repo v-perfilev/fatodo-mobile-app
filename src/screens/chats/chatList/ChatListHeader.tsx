@@ -18,7 +18,7 @@ const ChatListHeader = ({setFilter}: ChatListHeaderProps) => {
   };
 
   return (
-    <FHStack defaultSpace alignItems="center">
+    <FHStack defaultSpace alignItems="center" pt="3" px="3">
       <IconButton icon={<PlusIcon />} onPress={openCreateChatDialog} />
       <Box flex={1}>
         <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={setFilter} />
