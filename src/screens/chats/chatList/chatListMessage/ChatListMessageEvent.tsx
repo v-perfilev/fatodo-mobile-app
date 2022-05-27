@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
-import {Message} from '../../../models/Message';
+import {Message} from '../../../../models/Message';
 import {useTranslation} from 'react-i18next';
 import {Text} from 'native-base';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import UsersSelectors from '../../../store/users/usersSelectors';
-import {MessageUtils} from '../../../shared/utils/MessageUtils';
-import UsersThunks from '../../../store/users/usersThunks';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import UsersSelectors from '../../../../store/users/usersSelectors';
+import {MessageUtils} from '../../../../shared/utils/MessageUtils';
+import UsersThunks from '../../../../store/users/usersThunks';
 
-type ChatListItemMessageEventProps = {
+type ChatListMessageEventProps = {
   message: Message;
 };
 
-const ChatListItemMessageEvent = ({message}: ChatListItemMessageEventProps) => {
+const ChatListMessageEvent = ({message}: ChatListMessageEventProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const users = useAppSelector(UsersSelectors.users);
@@ -32,4 +32,4 @@ const ChatListItemMessageEvent = ({message}: ChatListItemMessageEventProps) => {
   );
 };
 
-export default ChatListItemMessageEvent;
+export default ChatListMessageEvent;

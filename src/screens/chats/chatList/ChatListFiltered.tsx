@@ -3,11 +3,19 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import {FlatList, ListRenderItemInfo} from 'react-native';
+import {ListRenderItemInfo, StyleProp, ViewStyle, VirtualizedList} from 'react-native';
 import ChatListStub from './ChatListStub';
 import ChatsThunks from '../../../store/chats/chatsThunks';
 import {Chat} from '../../../models/Chat';
 import ChatListItem from './ChatListItem';
+import {Theme, useTheme} from 'native-base';
+import {DEFAULT_SPACE, HALF_DEFAULT_SPACE} from '../../../constants';
+
+const containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
+  padding: theme.sizes[DEFAULT_SPACE],
+  paddingTop: theme.sizes[HALF_DEFAULT_SPACE],
+  paddingBottom: theme.sizes[HALF_DEFAULT_SPACE],
+});
 
 type ChatListFilteredProps = {
   filter: string;
@@ -15,8 +23,9 @@ type ChatListFilteredProps = {
 
 const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
   const dispatch = useAppDispatch();
-  const filteredChats = useAppSelector(ChatsSelectors.filteredChats);
+  const theme = useTheme();
   const [loading, setLoading] = useLoadingState();
+  const filteredChats = useAppSelector(ChatsSelectors.filteredChats);
 
   const loadFilteredChats = (): void => {
     dispatch(ChatsThunks.fetchFilteredChats(filter))
@@ -32,10 +41,24 @@ const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
   }, [filter]);
 
   const renderItem = (info: ListRenderItemInfo<Chat>): ReactElement => <ChatListItem chat={info.item} />;
+  const getItem = (chats: Chat[], index: number): Chat => chats[index];
+  const getItemCount = (chats: Chat[]): number => chats.length;
+  const keyExtractor = (chat: Chat): string => chat.id;
 
   return (
     <ConditionalSpinner loading={loading}>
-      {showStub ? <ChatListStub /> : <FlatList data={filteredChats} renderItem={renderItem} />}
+      {showStub ? (
+        <ChatListStub />
+      ) : (
+        <VirtualizedList
+          data={filteredChats}
+          renderItem={renderItem}
+          getItem={getItem}
+          getItemCount={getItemCount}
+          keyExtractor={keyExtractor}
+          contentContainerStyle={containerStyle(theme)}
+        />
+      )}
     </ConditionalSpinner>
   );
 };

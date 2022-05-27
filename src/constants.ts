@@ -28,4 +28,8 @@ export const INPUT_FONT_SIZE = 13;
 
 // SPACES
 export const DEFAULT_SPACE = 3;
+export const HALF_DEFAULT_SPACE = 1.5;
 export const SMALL_SPACE = 1;
+
+// CHATS
+export const TIMEOUT_BEFORE_MARK_AS_READ = 1000;

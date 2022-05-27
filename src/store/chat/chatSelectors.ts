@@ -1,14 +1,16 @@
 import {createSelector} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 
-const getChatsState = (state: RootState) => state.chats;
+const getChatState = (state: RootState) => state.chat;
 
 class ChatSelectors {
-  static chats = createSelector(getChatsState, (state) => state.chats);
+  static chat = createSelector(getChatState, (state) => state.chat);
 
-  static loading = createSelector(getChatsState, (state) => state.loading);
+  static chatItems = createSelector(getChatState, (state) => state.chatItems);
 
-  static allLoaded = createSelector(getChatsState, (state) => state.allLoaded);
+  static loading = createSelector(getChatState, (state) => state.loading);
+
+  static allLoaded = createSelector(getChatState, (state) => state.allLoaded);
 }
 
 export default ChatSelectors;

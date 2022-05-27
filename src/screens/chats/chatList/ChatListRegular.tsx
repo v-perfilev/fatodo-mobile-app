@@ -1,21 +1,27 @@
-import {FlatList} from 'native-base';
+import {Theme, useTheme} from 'native-base';
 import React, {ReactElement, useEffect, useMemo} from 'react';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
-import {ListRenderItemInfo} from 'react-native';
+import {ListRenderItemInfo, StyleProp, ViewStyle, VirtualizedList} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsThunks from '../../../store/chats/chatsThunks';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
 import {Chat} from '../../../models/Chat';
-import ChatListItem from './ChatListItem';
 import ChatListStub from './ChatListStub';
+import {DEFAULT_SPACE, HALF_DEFAULT_SPACE} from '../../../constants';
+import ChatListItem from './ChatListItem';
 
-type ChatListRegularProps = {};
+const containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
+  padding: theme.sizes[DEFAULT_SPACE],
+  paddingTop: theme.sizes[HALF_DEFAULT_SPACE],
+  paddingBottom: theme.sizes[HALF_DEFAULT_SPACE],
+});
 
-const ChatListRegular = ({}: ChatListRegularProps) => {
+const ChatListRegular = () => {
   const dispatch = useAppDispatch();
-  const chats = useAppSelector(ChatsSelectors.chats);
+  const theme = useTheme();
   const [initialLoading, setInitialLoading] = useLoadingState();
+  const chats = useAppSelector(ChatsSelectors.chats);
 
   const loadChats = (): void => {
     dispatch(ChatsThunks.fetchChats(chats.length))
@@ -31,13 +37,25 @@ const ChatListRegular = ({}: ChatListRegularProps) => {
   }, []);
 
   const renderItem = (info: ListRenderItemInfo<Chat>): ReactElement => <ChatListItem chat={info.item} />;
+  const getItem = (chats: Chat[], index: number): Chat => chats[index];
+  const getItemCount = (chats: Chat[]): number => chats.length;
+  const keyExtractor = (chat: Chat): string => chat.id;
 
   return (
     <ConditionalSpinner loading={initialLoading}>
       {showStub ? (
         <ChatListStub />
       ) : (
-        <FlatList data={chats} onEndReached={loadChats} onEndReachedThreshold={5} renderItem={renderItem} />
+        <VirtualizedList
+          data={chats}
+          renderItem={renderItem}
+          getItem={getItem}
+          getItemCount={getItemCount}
+          keyExtractor={keyExtractor}
+          onEndReached={loadChats}
+          onEndReachedThreshold={5}
+          contentContainerStyle={containerStyle(theme)}
+        />
       )}
     </ConditionalSpinner>
   );

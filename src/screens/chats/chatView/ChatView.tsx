@@ -1,18 +1,38 @@
-import React from 'react';
-import {Text} from 'react-native';
-import {flowRight} from 'lodash';
-import withHeader from '../../../shared/hocs/withHeader';
-import FScrollView from '../../../components/surfaces/FScrollView';
-import FCenter from '../../../components/surfaces/FCenter';
+import React, {useEffect, useMemo} from 'react';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {ChatParamList} from '../../../navigators/ChatNavigator';
+import Header from '../../../components/layouts/Header';
+import {ChatUtils} from '../../../shared/utils/ChatUtils';
+import AuthSelectors from '../../../store/auth/authSelectors';
+import UsersSelectors from '../../../store/users/usersSelectors';
+import UsersThunks from '../../../store/users/usersThunks';
+import ChatActions from '../../../store/chat/chatActions';
+import ChatViewContainer from './ChatViewContainer';
 
 const ChatView = () => {
+  const dispatch = useAppDispatch();
+  const users = useAppSelector(UsersSelectors.users);
+  const account = useAppSelector(AuthSelectors.account);
+  const route = useRoute<RouteProp<ChatParamList, 'ChatView'>>();
+  const chat = route.params.chat;
+
+  const title = useMemo<string>(() => {
+    return ChatUtils.getTitle(chat, users, account);
+  }, [chat, users, account]);
+
+  useEffect(() => {
+    const userIds = chat.members;
+    dispatch(UsersThunks.handleUserIds(userIds));
+    dispatch(ChatActions.selectChat(chat));
+  }, [chat]);
+
   return (
-    <FScrollView>
-      <FCenter grow>
-        <Text>Chat List</Text>
-      </FCenter>
-    </FScrollView>
+    <>
+      <Header title={title} showMenu={false} />
+      <ChatViewContainer />
+    </>
   );
 };
 
-export default flowRight([withHeader])(ChatView);
+export default ChatView;

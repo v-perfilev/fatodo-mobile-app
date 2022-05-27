@@ -1,0 +1,62 @@
+import React from 'react';
+import {Message} from '../../../../models/Message';
+import {useTranslation} from 'react-i18next';
+import FHStack from '../../../../components/surfaces/FHStack';
+import {Box, Text} from 'native-base';
+import {useAppSelector} from '../../../../store/store';
+import UsersSelectors from '../../../../store/users/usersSelectors';
+import {MessageUtils} from '../../../../shared/utils/MessageUtils';
+import {DateFormatters} from '../../../../shared/utils/DateUtils';
+import AuthSelectors from '../../../../store/auth/authSelectors';
+import FVStack from '../../../../components/surfaces/FVStack';
+import UserView from '../../../../components/views/UserView';
+
+type ChatViewMessageIncomingProps = {
+  message: Message;
+};
+
+const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
+  const {t} = useTranslation();
+  const account = useAppSelector(AuthSelectors.account);
+  const users = useAppSelector(UsersSelectors.users);
+
+  const user = MessageUtils.extractUserFromMessage(users, message);
+  const date = DateFormatters.formatTime(new Date(message.createdAt));
+  const isRead = MessageUtils.isReadMessage(message, account);
+
+  return (
+    <FHStack space="2" width="95%" mr="5%">
+      <Box>{user && <UserView user={user} picSize="sm" />}</Box>
+      <FVStack
+        shrink
+        smallSpace
+        minW="50%"
+        borderWidth="1"
+        borderColor={isRead ? 'gray.300' : 'primary.500'}
+        borderRadius="5"
+        backgroundColor="gray.50"
+        px="2"
+        py="1.5"
+      >
+        <FHStack defaultSpace alignItems="center">
+          <FHStack grow>
+            <Text color="primary.500" fontWeight="bold">
+              {user?.username}
+            </Text>
+          </FHStack>
+          <Text color="gray.400" fontWeight="bold" fontSize="xs">
+            {date}
+          </Text>
+        </FHStack>
+        {!message.isDeleted && <Text color="gray.700">{message.text}</Text>}
+        {message.isDeleted && (
+          <Text color="gray.400" fontWeight="bold">
+            {t('chat:message.deleted')}
+          </Text>
+        )}
+      </FVStack>
+    </FHStack>
+  );
+};
+
+export default ChatViewMessageIncoming;

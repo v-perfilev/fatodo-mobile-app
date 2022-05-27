@@ -6,14 +6,17 @@ import {DEFAULT_SPACE, SMALL_SPACE} from '../../constants';
 type FlexVStackProps = IVStackProps & {
   grow?: boolean;
   basis?: boolean;
+  shrink?: boolean;
   defaultSpace?: boolean;
   smallSpace?: boolean;
 };
 
-const FVStack = ({grow, basis, defaultSpace, smallSpace, children, ...props}: FlexVStackProps) => {
+const FVStack = ({grow, basis, shrink, defaultSpace, smallSpace, children, ...props}: FlexVStackProps) => {
   const flexGrow = useMemo<string>(() => (grow ? '1' : '0'), []);
 
   const flexBasis = useMemo<number>(() => (basis ? 1 : undefined), []);
+
+  const flexShrink = useMemo<number>(() => (shrink ? 1 : undefined), []);
 
   const space = useMemo<number>(() => {
     let result;
@@ -26,7 +29,7 @@ const FVStack = ({grow, basis, defaultSpace, smallSpace, children, ...props}: Fl
   }, []);
 
   return (
-    <VStack flexGrow={flexGrow} flexBasis={flexBasis} space={space} {...props}>
+    <VStack flexGrow={flexGrow} flexBasis={flexBasis} flexShrink={flexShrink} space={space} {...props}>
       {children}
     </VStack>
   );

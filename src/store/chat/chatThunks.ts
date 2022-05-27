@@ -2,13 +2,17 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import ChatService from '../../services/ChatService';
 
 enum TYPES {
-  FETCH_CHATS = 'chats/fetchChats',
+  FETCH_MESSAGES = 'chat/fetchMessages',
 }
 
 export class ChatThunks {
-  static fetchChats = createAsyncThunk(TYPES.FETCH_CHATS, async (offset: number) => {
-    await ChatService.getAllChatsPageable(offset);
-  });
+  static fetchMessages = createAsyncThunk(
+    TYPES.FETCH_MESSAGES,
+    async ({chatId, offset}: {chatId: string; offset: number}) => {
+      const result = await ChatService.getAllMessagesByChatIdPageable(chatId, offset);
+      return result.data;
+    },
+  );
 }
 
 export default ChatThunks;

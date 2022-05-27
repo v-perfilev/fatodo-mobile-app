@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {flowRight} from 'lodash';
 import withHeader from '../../../shared/hocs/withHeader';
-import FVStack from '../../../components/surfaces/FVStack';
 import ChatListHeader from './ChatListHeader';
 import ChatListRegular from './ChatListRegular';
 import ChatListFiltered from './ChatListFiltered';
@@ -18,11 +17,11 @@ const ChatList = () => {
   }, [filter]);
 
   return (
-    <FVStack grow defaultSpace>
+    <>
       <ChatListHeader setFilter={setFilter} />
       {type === 'regular' && <ChatListRegular />}
       {type === 'filtered' && <ChatListFiltered filter={filter} />}
-    </FVStack>
+    </>
   );
 };
 

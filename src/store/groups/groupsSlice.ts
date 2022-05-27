@@ -6,8 +6,12 @@ import {Item} from '../../models/Item';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Group} from '../../models/Group';
 
-const filterItems = (items: Item[]): Item[] =>
-  items.filter(ArrayUtils.withIdFilter).filter(ArrayUtils.uniqueByIdFilter).sort(ArrayUtils.createdAtDescComparator);
+const filterItems = (items: Item[]): Item[] => {
+  return items
+    .filter(ArrayUtils.withIdFilter)
+    .filter(ArrayUtils.uniqueByIdFilter)
+    .sort(ArrayUtils.createdAtDescComparator);
+};
 
 const initialState: GroupsState = {
   groups: [],

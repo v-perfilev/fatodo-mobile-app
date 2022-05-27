@@ -2,10 +2,11 @@ import React from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ChatList from '../screens/chats/chatList/ChatList';
 import ChatView from '../screens/chats/chatView/ChatView';
+import {Chat} from '../models/Chat';
 
-type ChatParamList = {
+export type ChatParamList = {
   ChatList: undefined;
-  ChatView: {chatId: string};
+  ChatView: {chat: Chat};
 };
 
 const Stack = createNativeStackNavigator<ChatParamList>();
