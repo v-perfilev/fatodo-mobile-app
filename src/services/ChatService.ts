@@ -2,7 +2,7 @@ import {AxiosPromise} from 'axios';
 import {Chat} from '../models/Chat';
 import {Message} from '../models/Message';
 import {MessageDTO} from '../models/dto/MessageDTO';
-import axios from '../shared/axios';
+import axios, {axiosIgnore404} from '../shared/axios';
 
 export default class ChatService {
   private static baseUrl = '/api/chat';
@@ -18,7 +18,7 @@ export default class ChatService {
 
   public static getFilteredChats = (filter: string): AxiosPromise<Chat[]> => {
     const url = ChatService.baseUrl + '/chats/filtered/' + filter;
-    return axios.get(url);
+    return axiosIgnore404.get(url);
   };
 
   public static getChatById = (id: string): AxiosPromise<Chat> => {

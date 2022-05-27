@@ -10,6 +10,8 @@ class ChatsSelectors {
 
   static chats = createSelector(getChatsState, (state) => state.chats);
 
+  static filteredChats = createSelector(getChatsState, (state) => state.filteredChats);
+
   static loading = createSelector(getChatsState, (state) => state.loading);
 
   static allLoaded = createSelector(getChatsState, (state) => state.allLoaded);

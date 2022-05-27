@@ -13,7 +13,7 @@ const ChatList = () => {
   const [filter, setFilter] = useState<string>('');
 
   useEffect(() => {
-    const showFiltered = filter.trim().length > 0;
+    const showFiltered = filter?.trim().length > 0;
     setType(showFiltered ? 'filtered' : 'regular');
   }, [filter]);
 
