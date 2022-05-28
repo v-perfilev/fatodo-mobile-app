@@ -31,7 +31,7 @@ const ChatListItem = ({chat}: ChatListItemProps) => {
   const users = useAppSelector(UsersSelectors.users);
   const account = useAppSelector(AuthSelectors.account);
 
-  const goToChat = (): void => navigation.navigate('ChatView', {chat: chat});
+  const goToChat = (): void => navigation.navigate('ChatView', {chat});
 
   const unreadCount = useMemo<number>(() => {
     return unreadMessageCountMap.get(chat.id);

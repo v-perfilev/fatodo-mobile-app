@@ -9,11 +9,13 @@ import UsersThunks from '../../../store/users/usersThunks';
 import ChatActions from '../../../store/chat/chatActions';
 import ChatViewContainer from './ChatViewContainer';
 import {RootParamList} from '../../../navigators/RootNavigator';
+import ChatSelectors from '../../../store/chat/chatSelectors';
 
 const ChatView = () => {
   const dispatch = useAppDispatch();
   const users = useAppSelector(UsersSelectors.users);
   const account = useAppSelector(AuthSelectors.account);
+  const chatFromState = useAppSelector(ChatSelectors.chat);
   const route = useRoute<RouteProp<RootParamList, 'ChatView'>>();
   const chat = route.params.chat;
 
@@ -22,10 +24,12 @@ const ChatView = () => {
   }, [chat, users, account]);
 
   useEffect(() => {
-    const userIds = chat.members;
-    dispatch(UsersThunks.handleUserIds(userIds));
-    dispatch(ChatActions.selectChat(chat));
-  }, [chat]);
+    if (chat.id !== chatFromState?.id) {
+      const userIds = chat.members;
+      dispatch(ChatActions.selectChat(chat));
+      dispatch(UsersThunks.handleUserIds(userIds));
+    }
+  }, []);
 
   return (
     <>

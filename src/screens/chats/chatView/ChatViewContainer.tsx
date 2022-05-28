@@ -33,8 +33,8 @@ const ChatViewContainer = () => {
   const showStub = useMemo<boolean>(() => chatItems.length === 0, [chatItems]);
 
   useEffect(() => {
-    setInitialLoading(true);
     if (chat) {
+      setInitialLoading(true);
       loadMessages();
     }
   }, [chat]);
