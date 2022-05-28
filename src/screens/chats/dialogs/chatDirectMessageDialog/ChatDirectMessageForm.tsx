@@ -11,32 +11,35 @@ import i18n from '../../../../shared/i18n';
 import FormikTextInput from '../../../../components/inputs/FormikTextInput';
 import {User} from '../../../../models/User';
 
-export interface ChatDirectFormValues {
+export interface ChatDirectMessageFormValues {
   username: string;
   text: string;
 }
 
-export const defaultChatDirectFormValues: Readonly<ChatDirectFormValues> = {
+export const defaultChatDirectMessageFormValues: Readonly<ChatDirectMessageFormValues> = {
   username: '',
   text: '',
 };
 
-const initialValues = (user: User): ChatDirectFormValues => ({...defaultChatDirectFormValues, username: user.username});
+const initialValues = (user: User): ChatDirectMessageFormValues => ({
+  ...defaultChatDirectMessageFormValues,
+  username: user.username,
+});
 
 const validationSchema = Yup.object().shape({
   text: Yup.string().required(() => i18n.t('chat:directMessage.fields.text.required')),
 });
 
-type ChatDirectMessageDialogFormProps = {
+type ChatDirectMessageFormProps = {
   user: User;
   request: (dto: MessageDTO, stopSubmitting: () => void) => void;
   cancel: () => void;
 };
 
-const ChatDirectMessageDialogForm = ({user, request, cancel}: ChatDirectMessageDialogFormProps) => {
+const ChatDirectMessageForm = ({user, request, cancel}: ChatDirectMessageFormProps) => {
   const {t} = useTranslation();
 
-  const handleSubmit = (values: ChatDirectFormValues, helpers: FormikHelpers<ChatDirectFormValues>) => {
+  const handleSubmit = (values: ChatDirectMessageFormValues, helpers: FormikHelpers<ChatDirectMessageFormValues>) => {
     const dto = {text: values.text} as MessageDTO;
     request(dto, () => helpers.setSubmitting(false));
   };
@@ -81,4 +84,4 @@ const ChatDirectMessageDialogForm = ({user, request, cancel}: ChatDirectMessageD
   );
 };
 
-export default ChatDirectMessageDialogForm;
+export default ChatDirectMessageForm;

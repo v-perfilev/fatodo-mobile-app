@@ -4,9 +4,9 @@ import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../../store/store';
 import SnackActions from '../../../../store/snack/snackActions';
 import {User} from '../../../../models/User';
-import ChatDirectMessageDialogForm from './ChatDirectMessageDialogForm';
 import {MessageDTO} from '../../../../models/dto/MessageDTO';
 import ChatsThunks from '../../../../store/chats/chatsThunks';
+import ChatDirectMessageForm from './ChatDirectMessageForm';
 
 export type ChatDirectMessageDialogProps = {
   user: User;
@@ -36,9 +36,9 @@ const ChatDirectMessageDialog = ({user, show, close}: ChatDirectMessageDialogPro
       });
   };
 
-  const content = <ChatDirectMessageDialogForm user={user} request={request} cancel={close} />;
+  const content = <ChatDirectMessageForm user={user} request={request} cancel={close} />;
 
-  return <ModalDialog open={show} close={close} title={t('contact:addContact.title')} content={content} size="xl" />;
+  return <ModalDialog open={show} close={close} title={t('chat:directMessage.title')} content={content} size="xl" />;
 };
 
 export default ChatDirectMessageDialog;

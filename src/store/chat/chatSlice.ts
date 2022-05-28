@@ -72,6 +72,15 @@ const chatSlice = createSlice({
       const moreLoading = false;
       return {...state, loading, moreLoading};
     });
+
+    /*
+    editMessage
+    */
+    builder.addCase(ChatThunks.editMessage.fulfilled, (state: ChatState, action) => {
+      // TODO
+      console.log(action.payload);
+      return {...state};
+    });
   },
 });
 
