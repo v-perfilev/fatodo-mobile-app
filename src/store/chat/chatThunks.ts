@@ -12,6 +12,7 @@ enum TYPES {
   LIKE_REACTION = 'chat/likeReaction',
   DISLIKE_REACTION = 'chat/dislikeReaction',
   ADD_CHAT_MEMBERS = 'chat/addChatMembers',
+  REMOVE_CHAT_MEMBER = 'chat/removeChatMember',
   EDIT_MESSAGE = 'chat/editMessage',
 }
 
@@ -49,6 +50,16 @@ export class ChatThunks {
     async ({chat, userIds}: {chat: Chat; userIds: string[]}, thunkAPI) => {
       chat.members = ArrayUtils.addValuesToEnd(chat.members, userIds);
       await ChatService.addUsersToChat(chat.id, userIds);
+      thunkAPI.dispatch(ChatsActions.updateChat(chat));
+      return chat;
+    },
+  );
+
+  static removeChatMember = createAsyncThunk(
+    TYPES.REMOVE_CHAT_MEMBER,
+    async ({chat, userId}: {chat: Chat; userId: string}, thunkAPI) => {
+      chat.members = ArrayUtils.deleteValueById(chat.members, userId);
+      await ChatService.removeUsersFromChat(chat.id, [userId]);
       thunkAPI.dispatch(ChatsActions.updateChat(chat));
       return chat;
     },
