@@ -33,13 +33,9 @@ const ChatMessageStatusesDialog = ({message, users, show, close}: ChatMessageSta
   const [statuses, setStatuses] = useState<ReadStatusWithUser[]>([]);
   const [statusesToShow, setStatusesToShow] = useState<ReadStatusWithUser[]>([]);
 
-  const updateStatusesToShow = (filter?: string): void => {
-    const updatedList = statuses.filter((reaction) => reaction.user?.username?.includes(filter));
-    setStatusesToShow(updatedList);
-  };
-
   const filterStatusesToShow = (text: string): void => {
-    updateStatusesToShow(text);
+    const updatedList = statuses.filter((reaction) => reaction.user?.username?.includes(text));
+    setStatusesToShow(updatedList);
   };
 
   const combineUsersWithStatuses = (): void => {

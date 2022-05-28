@@ -31,13 +31,9 @@ const ChatMembersDialog = ({chat, users, show, close, switchToAddMembers}: ChatM
   const {t} = useTranslation();
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
 
-  const updateUsersToShow = (filter?: string): void => {
-    const updatedUsersToShow = users.filter((user) => chat.members.includes(user.id) && user.username.includes(filter));
-    setUsersToShow(updatedUsersToShow);
-  };
-
   const filterUsersToShow = (text: string): void => {
-    updateUsersToShow(text);
+    const updatedUsersToShow = users.filter((user) => chat.members.includes(user.id) && user.username.includes(text));
+    setUsersToShow(updatedUsersToShow);
   };
 
   useEffect(() => {

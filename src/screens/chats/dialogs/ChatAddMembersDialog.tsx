@@ -1,27 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import ModalDialog from '../../../components/modals/ModalDialog';
-import {Group} from '../../../models/Group';
 import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
 import GhostButton from '../../../components/controls/GhostButton';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import ContactsThunks from '../../../store/contacts/contactsThunks';
-import GroupThunks from '../../../store/group/groupThunks';
+import ChatThunks from '../../../store/chat/chatThunks';
+import {Chat} from '../../../models/Chat';
 
 export type ChatAddMembersDialogProps = {
-  group: Group;
+  chat: Chat;
   show: boolean;
   close: () => void;
 };
 
 export const defaultChatAddMembersDialogProps: Readonly<ChatAddMembersDialogProps> = {
-  group: null,
+  chat: null,
   show: false,
   close: (): void => undefined,
 };
 
-const ChatAddMembersDialog = ({group, show, close}: ChatAddMembersDialogProps) => {
+const ChatAddMembersDialog = ({chat, show, close}: ChatAddMembersDialogProps) => {
   const dispatch = useAppDispatch();
   const relations = useAppSelector(ContactsSelectors.relations);
   const {t} = useTranslation();
@@ -31,7 +31,7 @@ const ChatAddMembersDialog = ({group, show, close}: ChatAddMembersDialogProps) =
 
   const addUsers = (): void => {
     setIsSubmitting(true);
-    dispatch(GroupThunks.addGroupMembers({group, userIds}))
+    dispatch(ChatThunks.addChatMembers({chat, userIds}))
       .unwrap()
       .then(() => {
         close();
@@ -53,9 +53,9 @@ const ChatAddMembersDialog = ({group, show, close}: ChatAddMembersDialogProps) =
   }, [show, relations]);
 
   const isUserIdListEmpty = userIds.length === 0;
-  const ignoredIds = group?.members.map((m) => m.id);
+  const ignoredIds = chat?.members;
 
-  const content = group && <UsersSelect allowedIds={contactIds} ignoredIds={ignoredIds} setUserIds={setUserIds} />;
+  const content = chat && <UsersSelect allowedIds={contactIds} ignoredIds={ignoredIds} setUserIds={setUserIds} />;
 
   const actions = (
     <>

@@ -5,6 +5,7 @@ import React, {Dispatch, SetStateAction} from 'react';
 import {useTranslation} from 'react-i18next';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import FBox from '../../../components/boxes/FBox';
+import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
 
 type ChatListHeaderProps = {
   setFilter: Dispatch<SetStateAction<string>>;
@@ -12,9 +13,10 @@ type ChatListHeaderProps = {
 
 const ChatListHeader = ({setFilter}: ChatListHeaderProps) => {
   const {t} = useTranslation();
+  const {showChatCreateDialog} = useChatDialogContext();
 
   const openCreateChatDialog = (): void => {
-    // TODO open create chat dialog
+    showChatCreateDialog();
   };
 
   return (

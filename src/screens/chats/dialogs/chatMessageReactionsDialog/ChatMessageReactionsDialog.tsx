@@ -33,13 +33,9 @@ const ChatMessageReactionsDialog = ({message, users, show, close}: ChatMessageRe
   const [reactions, setReactions] = useState<MessageReactionWithUser[]>([]);
   const [reactionsToShow, setReactionsToShow] = useState<MessageReactionWithUser[]>([]);
 
-  const updateReactionsToShow = (filter?: string): void => {
-    const updatedList = reactions.filter((reaction) => reaction.user?.username?.includes(filter));
-    setReactionsToShow(updatedList);
-  };
-
   const filterReactionsToShow = (text: string): void => {
-    updateReactionsToShow(text);
+    const updatedList = reactions.filter((reaction) => reaction.user?.username?.includes(text));
+    setReactionsToShow(updatedList);
   };
 
   const combineUsersWithReactions = (): void => {
