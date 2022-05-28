@@ -3,13 +3,14 @@ import React, {MutableRefObject} from 'react';
 
 type IconButtonProps = IIconButtonProps & {
   whiteIcon?: boolean;
+  opaque?: boolean;
 };
 
 const IconButton = React.forwardRef((props: IconButtonProps, ref: HTMLElement) => {
-  const {icon, colorScheme = 'primary', size = 'sm', isDisabled, whiteIcon, ...other} = props;
+  const {icon, colorScheme = 'primary', size = 'sm', isDisabled, whiteIcon, opaque, ...other} = props;
 
-  const color = colorScheme + '.500';
-  const bg = colorScheme + '.500:alpha.10';
+  const color = opaque ? 'white' : colorScheme + '.500';
+  const bg = colorScheme + (opaque ? '.500:alpha.90' : '.500:alpha.10');
 
   const iconElement = whiteIcon ? React.cloneElement(icon, {color: 'white'}) : icon;
 
