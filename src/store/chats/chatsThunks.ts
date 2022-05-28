@@ -1,11 +1,13 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ChatService from '../../services/ChatService';
+import {MessageDTO} from '../../models/dto/MessageDTO';
 
 enum TYPES {
   FETCH_CHATS = 'chats/fetchChats',
   FETCH_FILTERED_CHATS = 'chats/fetchFilteredChats',
   CREATE_DIRECT_CHAT = 'chats/createDirectChat',
   CREATE_INDIRECT_CHAT = 'chats/createIndirectChat',
+  SEND_DIRECT_MESSAGE = 'chats/sendDirectMessage',
 }
 
 export class ChatsThunks {
@@ -28,6 +30,14 @@ export class ChatsThunks {
     const result = await ChatService.createIndirectChat(userIds);
     return result.data;
   });
+
+  static sendDirectMessage = createAsyncThunk(
+    TYPES.SEND_DIRECT_MESSAGE,
+    async ({userId, dto}: {userId: string; dto: MessageDTO}) => {
+      const result = await ChatService.sendDirectMessage(userId, dto);
+      return result.data;
+    },
+  );
 }
 
 export default ChatsThunks;

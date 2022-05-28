@@ -92,6 +92,15 @@ const chatsSlice = createSlice({
       const chats = ArrayUtils.addValuesToEnd(state.chats, [newChat]).filter(ArrayUtils.uniqueByIdFilter);
       return {...state, chats};
     });
+
+    /*
+    sendDirectMessage
+    */
+    builder.addCase(ChatsThunks.sendDirectMessage.fulfilled, (state: ChatsState, action) => {
+      // TODO
+      console.log(action.payload);
+      return {...state};
+    });
   },
 });
 
