@@ -14,7 +14,7 @@ export type ChatEditMessageDialogProps = {
   close: () => void;
 };
 
-export const defaultChatEditEditMessageDialogProps: Readonly<ChatEditMessageDialogProps> = {
+export const defaultChatEditMessageDialogProps: Readonly<ChatEditMessageDialogProps> = {
   message: null,
   show: false,
   close: (): void => undefined,

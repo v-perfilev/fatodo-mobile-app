@@ -11,6 +11,7 @@ enum TYPES {
   NO_REACTION = 'chat/noReaction',
   LIKE_REACTION = 'chat/likeReaction',
   DISLIKE_REACTION = 'chat/dislikeReaction',
+  RENAME_CHAT = 'chat/renameChat',
   ADD_CHAT_MEMBERS = 'chat/addChatMembers',
   REMOVE_CHAT_MEMBER = 'chat/removeChatMember',
   EDIT_MESSAGE = 'chat/editMessage',
@@ -44,6 +45,15 @@ export class ChatThunks {
     const result = await ChatService.dislikeMessageReaction(messageId);
     return result.data;
   });
+
+  static renameChat = createAsyncThunk(
+    TYPES.RENAME_CHAT,
+    async ({chatId, title}: {chatId: string; title: string}, thunkAPI) => {
+      const result = await ChatService.renameChat(chatId, title);
+      thunkAPI.dispatch(ChatsActions.updateChat(result.data));
+      return result.data;
+    },
+  );
 
   static addChatMembers = createAsyncThunk(
     TYPES.ADD_CHAT_MEMBERS,
