@@ -24,7 +24,7 @@ const convertMessagesToChatItems = (messagesToConvert: Message[]): ChatItem[] =>
     }
     handledItems.push({message});
   });
-  return handledItems;
+  return handledItems.reverse();
 };
 
 const initialState: ChatState = {
