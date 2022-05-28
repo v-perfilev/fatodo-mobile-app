@@ -4,7 +4,7 @@ import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavi
 import {ItemDTO} from '../../../models/dto/ItemDTO';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import ItemForm from '../itemForm/ItemForm';
-import FScrollView from '../../../components/surfaces/FScrollView';
+import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import ItemThunks from '../../../store/item/itemThunks';
@@ -55,7 +55,7 @@ const ItemCreate = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header showMenu={false} />
+      <Header />
       <ConditionalSpinner loading={loading || groupLoading}>
         <FScrollView>
           <ItemForm group={group} request={request} cancel={goBack} />

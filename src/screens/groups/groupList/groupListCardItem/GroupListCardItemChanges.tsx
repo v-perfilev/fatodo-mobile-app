@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {Item} from '../../../../models/Item';
 import {Text} from 'native-base';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FHStack from '../../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../../store/store';
 import UsersSelectors from '../../../../store/users/usersSelectors';
 

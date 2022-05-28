@@ -11,7 +11,7 @@ import i18n from '../../../shared/i18n';
 import {DateUtils} from '../../../shared/utils/DateUtils';
 import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBar';
 import SolidButton from '../../../components/controls/SolidButton';
-import FVStack from '../../../components/surfaces/FVStack';
+import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import AuthThunks from '../../../store/auth/authThunks';

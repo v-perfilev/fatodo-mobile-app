@@ -1,13 +1,13 @@
 import React from 'react';
 import {Message} from '../../../../models/Message';
 import {useTranslation} from 'react-i18next';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 import {useAppSelector} from '../../../../store/store';
 import UsersSelectors from '../../../../store/users/usersSelectors';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
-import FVStack from '../../../../components/surfaces/FVStack';
+import FVStack from '../../../../components/boxes/FVStack';
 
 type ChatViewMessageOutcomingProps = {
   message: Message;

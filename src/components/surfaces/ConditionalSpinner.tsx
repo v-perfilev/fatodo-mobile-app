@@ -1,13 +1,13 @@
 import React, {PropsWithChildren} from 'react';
-import {Box} from 'native-base';
 import CentredSpinner from './CentredSpinner';
+import FBox from '../boxes/FBox';
 
 type ConditionalSpinnerProps = PropsWithChildren<{
   loading: boolean;
 }>;
 
 const ConditionalSpinner = ({loading, children}: ConditionalSpinnerProps) => {
-  return <Box flex="1">{loading ? <CentredSpinner /> : children}</Box>;
+  return <FBox>{loading ? <CentredSpinner /> : children}</FBox>;
 };
 
 export default ConditionalSpinner;

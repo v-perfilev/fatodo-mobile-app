@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {GROUP_ITEMS_COUNT} from '../../../../constants';
 import GroupViewItemSkeleton from './GroupViewItemSkeleton';
-import FVStack from '../../../../components/surfaces/FVStack';
+import FVStack from '../../../../components/boxes/FVStack';
 
 const GroupViewItemsSkeleton = () => {
   const indexArray = useMemo(() => Array.from(Array(GROUP_ITEMS_COUNT).keys()), []);

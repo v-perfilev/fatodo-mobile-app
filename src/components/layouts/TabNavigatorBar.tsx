@@ -6,8 +6,8 @@ import {NavigationHelpers, ParamListBase, TabNavigationState} from '@react-navig
 import {BottomTabNavigationEventMap} from '@react-navigation/bottom-tabs/src/types';
 import {useTranslation} from 'react-i18next';
 import {ColorType} from 'native-base/lib/typescript/components/types';
-import FHStack from '../surfaces/FHStack';
-import FCenter from '../surfaces/FCenter';
+import FHStack from '../boxes/FHStack';
+import FCenter from '../boxes/FCenter';
 
 type TabNavigatorBarProps = BottomTabBarProps;
 

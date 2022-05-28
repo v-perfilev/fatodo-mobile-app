@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import PressableButton from './PressableButton';
 import {IPressableProps} from 'native-base/lib/typescript/components/primitives/Pressable/types';
 import CheckIcon from '../icons/CheckIcon';
-import FCenter from '../surfaces/FCenter';
+import FCenter from '../boxes/FCenter';
 
 type Props = IPressableProps & {
   isSelected: boolean;

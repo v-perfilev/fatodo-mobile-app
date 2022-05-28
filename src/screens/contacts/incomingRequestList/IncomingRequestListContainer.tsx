@@ -1,5 +1,5 @@
 import React from 'react';
-import FVStack from '../../../components/surfaces/FVStack';
+import FVStack from '../../../components/boxes/FVStack';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import IncomingRequestListStub from './IncomingRequestListStub';
 import IncomingRequestListItem from './IncomingRequestListItem';

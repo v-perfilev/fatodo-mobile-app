@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Box} from 'native-base';
-import FHStack from '../surfaces/FHStack';
+import FHStack from '../boxes/FHStack';
 import {passwordStrengthMap, passwordStrengthPostfix, passwordStrengthPrefix} from '../../shared/validators';
+import FBox from '../boxes/FBox';
 
 type PasswordStrengthBardProps = {
   password: string;
@@ -23,10 +23,10 @@ export const PasswordStrengthBar = ({password}: PasswordStrengthBardProps) => {
 
   const subItems = [];
   for (let i = 0; i < counter; i++) {
-    subItems.push(<Box flexGrow="1" bgColor="primary.500" key={i} />);
+    subItems.push(<FBox bgColor="primary.500" key={i} />);
   }
   for (let i = counter; i < rulesCount; i++) {
-    subItems.push(<Box flexGrow="1" bgColor="warning.500" key={i} />);
+    subItems.push(<FBox bgColor="warning.500" key={i} />);
   }
 
   return (

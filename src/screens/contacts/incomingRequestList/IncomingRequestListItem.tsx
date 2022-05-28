@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import UserView from '../../../components/views/UserView';
 import SolidButton from '../../../components/controls/SolidButton';
-import FHStack from '../../../components/surfaces/FHStack';
+import FHStack from '../../../components/boxes/FHStack';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';

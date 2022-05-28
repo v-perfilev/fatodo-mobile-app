@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import FScrollView from '../../../components/surfaces/FScrollView';
+import FScrollView from '../../../components/boxes/FScrollView';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import FVStack from '../../../components/surfaces/FVStack';
+import FVStack from '../../../components/boxes/FVStack';
 import OutcomingRequestListContainer from './OutcomingRequestListContainer';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';

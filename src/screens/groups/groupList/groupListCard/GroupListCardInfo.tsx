@@ -8,7 +8,7 @@ import ItemsIcon from '../../../../components/icons/ItemsIcon';
 import GroupListCardAvatars from './GroupListCardAvatars';
 import LinkButton from '../../../../components/controls/LinkButton';
 import {Group} from '../../../../models/Group';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FHStack from '../../../../components/boxes/FHStack';
 
 type GroupListCardHeaderProps = {
   group: Group;

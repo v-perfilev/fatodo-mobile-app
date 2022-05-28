@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
 import ContactListStub from './ContactListStub';
 import ContactListItem from './ContactListItem';
-import FVStack from '../../../components/surfaces/FVStack';
+import FVStack from '../../../components/boxes/FVStack';
 
 type ContactListContainerProps = {
   relations: ContactRelationWithUser[];

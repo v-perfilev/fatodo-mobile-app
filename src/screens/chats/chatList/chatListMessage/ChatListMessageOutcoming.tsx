@@ -1,9 +1,9 @@
 import React from 'react';
 import {Message} from '../../../../models/Message';
 import {useTranslation} from 'react-i18next';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
-import FlexBox from '../../../../components/surfaces/FlexBox';
+import FBox from '../../../../components/boxes/FBox';
 
 type ChatListMessageOutcomingProps = {
   message: Message;
@@ -18,11 +18,11 @@ const ChatListMessageOutcoming = ({message}: ChatListMessageOutcomingProps) => {
         {t('salutations.you')}:
       </Text>
       {!message.isDeleted && (
-        <FlexBox>
+        <FBox>
           <Text isTruncated color="gray.500" fontSize="xs">
             {message.text}
           </Text>
-        </FlexBox>
+        </FBox>
       )}
       {message.isDeleted && (
         <Text color="gray.400" fontWeight="bold" fontSize="xs">

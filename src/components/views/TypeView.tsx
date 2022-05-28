@@ -6,8 +6,8 @@ import TaskIcon from '../icons/TaskIcon';
 import EventIcon from '../icons/EventIcon';
 import RepetitionIcon from '../icons/RepetitionIcon';
 import NoteIcon from '../icons/NoteIcon';
-import FCenter from '../surfaces/FCenter';
-import FHStack from '../surfaces/FHStack';
+import FCenter from '../boxes/FCenter';
+import FHStack from '../boxes/FHStack';
 
 type TypeViewProps = IIconProps & {
   type: ItemType;

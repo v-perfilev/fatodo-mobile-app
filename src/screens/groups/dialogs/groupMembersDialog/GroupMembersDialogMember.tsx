@@ -9,7 +9,7 @@ import UserMinusIcon from '../../../../components/icons/UserMinusIcon';
 import {PermissionView} from '../../../../components/views/PermissionView';
 import {MenuElement} from '../../../../models/MenuElement';
 import ControlMenu from '../../../../components/layouts/ControlMenu';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FHStack from '../../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import GroupThunks from '../../../../store/group/groupThunks';

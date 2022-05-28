@@ -9,7 +9,7 @@ import PressableButton from '../../../../components/controls/PressableButton';
 import ReorderIcon from '../../../../components/icons/ReorderIcon';
 import {LINEAR_GRADIENT} from '../../../../shared/themes/ThemeFactory';
 import {Group} from '../../../../models/Group';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FHStack from '../../../../components/boxes/FHStack';
 
 type GroupListCardHeaderProps = {
   group: Group;

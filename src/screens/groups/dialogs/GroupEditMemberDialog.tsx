@@ -4,7 +4,7 @@ import {Group, GroupMember, GroupPermission, GroupUser} from '../../../models/Gr
 import UserView from '../../../components/views/UserView';
 import ModalDialog from '../../../components/modals/ModalDialog';
 import GhostButton from '../../../components/controls/GhostButton';
-import FVStack from '../../../components/surfaces/FVStack';
+import FVStack from '../../../components/boxes/FVStack';
 import PermissionSelect from '../../../components/inputs/permissionSelect/PermissionSelect';
 import {useAppDispatch} from '../../../store/store';
 import GroupThunks from '../../../store/group/groupThunks';

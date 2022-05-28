@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Switch, Text} from 'native-base';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FHStack from '../../../../components/boxes/FHStack';
 
 type GroupViewItemsArchivedSwitchProps = {
   showArchived: boolean;

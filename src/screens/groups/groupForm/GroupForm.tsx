@@ -9,8 +9,8 @@ import SolidButton from '../../../components/controls/SolidButton';
 import {useTranslation} from 'react-i18next';
 import FormikThemeInput from '../../../components/inputs/FormikThemeInput';
 import ImageUpload from '../../../components/inputs/imageUpload/ImageUpload';
-import FVStack from '../../../components/surfaces/FVStack';
-import FHStack from '../../../components/surfaces/FHStack';
+import FVStack from '../../../components/boxes/FVStack';
+import FHStack from '../../../components/boxes/FHStack';
 
 export interface GroupFormValues {
   title: string;

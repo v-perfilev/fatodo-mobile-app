@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {flowRight} from 'lodash';
-import withHeader from '../../../shared/hocs/withHeader';
 import ChatListHeader from './ChatListHeader';
 import ChatListRegular from './ChatListRegular';
 import ChatListFiltered from './ChatListFiltered';
+import Header from '../../../components/layouts/Header';
 
 type ControlType = 'regular' | 'filtered';
 
@@ -18,6 +17,7 @@ const ChatList = () => {
 
   return (
     <>
+      <Header hideGoBack />
       <ChatListHeader setFilter={setFilter} />
       {type === 'regular' && <ChatListRegular />}
       {type === 'filtered' && <ChatListFiltered filter={filter} />}
@@ -25,4 +25,4 @@ const ChatList = () => {
   );
 };
 
-export default flowRight([withHeader])(ChatList);
+export default ChatList;

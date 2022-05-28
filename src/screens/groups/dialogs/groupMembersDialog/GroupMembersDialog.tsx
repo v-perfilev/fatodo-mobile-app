@@ -9,8 +9,8 @@ import ModalDialog from '../../../../components/modals/ModalDialog';
 import {Text} from 'native-base';
 import GroupMembersDialogMember from './GroupMembersDialogMember';
 import GhostButton from '../../../../components/controls/GhostButton';
-import FVStack from '../../../../components/surfaces/FVStack';
-import FCenter from '../../../../components/surfaces/FCenter';
+import FVStack from '../../../../components/boxes/FVStack';
+import FCenter from '../../../../components/boxes/FCenter';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 

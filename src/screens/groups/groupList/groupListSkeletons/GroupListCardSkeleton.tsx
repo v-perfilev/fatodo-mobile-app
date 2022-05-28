@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {CARD_ITEMS_COUNT} from '../../../../constants';
 import GroupListCardInfoSkeleton from './GroupListCardInfoSkeleton';
 import GroupListCardItemSkeleton from './GroupListCardItemSkeleton';
-import FVStack from '../../../../components/surfaces/FVStack';
+import FVStack from '../../../../components/boxes/FVStack';
 
 const GroupListCardSkeleton = () => {
   const indexArray = useMemo(() => Array.from(Array(CARD_ITEMS_COUNT).keys()), []);

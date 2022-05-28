@@ -2,7 +2,7 @@ import React from 'react';
 import ArrowDownIcon from '../../../../components/icons/ArrowDownIcon';
 import RoundButton from '../../../../components/controls/RoundButton';
 import ArrowUpIcon from '../../../../components/icons/ArrowUpIcon';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 
 type GroupViewItemsPaginationProps = {

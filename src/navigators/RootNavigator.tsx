@@ -1,48 +1,25 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
+import {Chat} from '../models/Chat';
+import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
+import ChatView from '../screens/chats/chatView/ChatView';
 import TabNavigator from './TabNavigator';
-import {createDrawerNavigator, DrawerNavigationProp} from '@react-navigation/drawer';
-import RootNavigatorDrawer from '../components/layouts/RootNavigatorDrawer';
-import Account from '../screens/account/Account';
-import GroupsIcon from '../components/icons/GroupsIcon';
-import AccountIcon from '../components/icons/AccountIcon';
-import {flowRight} from 'lodash';
-import withDrawer from '../shared/hocs/withDrawer';
-import {useTheme} from 'native-base';
 
-type RootParamList = {
-  Home: undefined;
-  Account: undefined;
+export type RootParamList = {
+  HomeTabs: undefined;
+  ChatView: {chat: Chat};
 };
 
-type RootIconProps = {
-  focused: boolean;
-  color: string;
-  size: number;
-};
+const Stack = createNativeStackNavigator<RootParamList>();
 
-const Drawer = createDrawerNavigator<RootParamList>();
-
-export type RootNavigationProp = DrawerNavigationProp<RootParamList>;
-
-const groupsIcon = ({color, size}: RootIconProps): ReactNode => <GroupsIcon color={color} size={size} />;
-const accountIcon = ({color, size}: RootIconProps): ReactNode => <AccountIcon color={color} size={size} />;
+export type RootNavigationProp = NativeStackNavigationProp<RootParamList>;
 
 const RootNavigator = () => {
-  const theme = useTheme();
-
-  const drawerStyle = {
-    backgroundColor: theme.colors.gray['100'],
-  };
-
   return (
-    <Drawer.Navigator
-      screenOptions={{headerShown: false, drawerType: 'back', drawerPosition: 'right', drawerStyle}}
-      drawerContent={RootNavigatorDrawer}
-    >
-      <Drawer.Screen name="Home" component={TabNavigator} options={{drawerIcon: groupsIcon}} />
-      <Drawer.Screen name="Account" component={Account} options={{drawerIcon: accountIcon}} />
-    </Drawer.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_bottom'}} initialRouteName="HomeTabs">
+      <Stack.Screen name="HomeTabs" component={TabNavigator} />
+      <Stack.Screen name="ChatView" component={ChatView} />
+    </Stack.Navigator>
   );
 };
 
-export default flowRight([withDrawer])(RootNavigator);
+export default RootNavigator;

@@ -4,7 +4,7 @@ import {User} from '../../models/User';
 import UrlPic from '../surfaces/UrlPic';
 import {ISizes} from 'native-base/lib/typescript/theme/base/sizes';
 import PaperBox from '../surfaces/PaperBox';
-import FHStack from '../surfaces/FHStack';
+import FHStack from '../boxes/FHStack';
 
 type UserViewProps = {
   user: User;

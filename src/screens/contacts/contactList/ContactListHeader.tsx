@@ -1,11 +1,11 @@
 import IconButton from '../../../components/controls/IconButton';
 import UserPlusIcon from '../../../components/icons/UserPlusIcon';
-import {Box} from 'native-base';
 import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
-import FHStack from '../../../components/surfaces/FHStack';
+import FHStack from '../../../components/boxes/FHStack';
 import React, {Dispatch, SetStateAction} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
+import FBox from '../../../components/boxes/FBox';
 
 type ContactListHeaderProps = {
   setFilter: Dispatch<SetStateAction<string>>;
@@ -22,9 +22,9 @@ const ContactListHeader = ({setFilter}: ContactListHeaderProps) => {
   return (
     <FHStack defaultSpace alignItems="center">
       <IconButton icon={<UserPlusIcon />} onPress={openContactRequestDialog} />
-      <Box flex={1}>
+      <FBox>
         <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={setFilter} />
-      </Box>
+      </FBox>
     </FHStack>
   );
 };

@@ -1,13 +1,13 @@
 import React, {useCallback} from 'react';
-import {flowRight} from 'lodash';
-import withHeader from '../../shared/hocs/withHeader';
-import FScrollView from '../../components/surfaces/FScrollView';
-import FCenter from '../../components/surfaces/FCenter';
+import FScrollView from '../../components/boxes/FScrollView';
+import FCenter from '../../components/boxes/FCenter';
 import SolidButton from '../../components/controls/SolidButton';
-import FVStack from '../../components/surfaces/FVStack';
+import FVStack from '../../components/boxes/FVStack';
 import {Text} from 'native-base';
 import {useAppDispatch} from '../../store/store';
 import AuthActions from '../../store/auth/authActions';
+import LanguageMenu from '../../components/controls/LanguageMenu';
+import Header from '../../components/layouts/Header';
 
 const Account = () => {
   const dispatch = useAppDispatch();
@@ -17,15 +17,19 @@ const Account = () => {
   }, [dispatch]);
 
   return (
-    <FScrollView>
-      <FCenter grow>
-        <FVStack defaultSpace alignItems="center">
-          <Text>Account</Text>
-          <SolidButton onPress={logout}>Log Out</SolidButton>
-        </FVStack>
-      </FCenter>
-    </FScrollView>
+    <>
+      <Header hideGoBack />
+      <FScrollView>
+        <FCenter grow>
+          <FVStack defaultSpace alignItems="center">
+            <Text>Account</Text>
+            <SolidButton onPress={logout}>Log Out</SolidButton>
+            <LanguageMenu />
+          </FVStack>
+        </FCenter>
+      </FScrollView>
+    </>
   );
 };
 
-export default flowRight([withHeader])(Account);
+export default Account;

@@ -8,7 +8,7 @@ import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import {useTranslation} from 'react-i18next';
 import {ForgotPasswordDTO} from '../../../models/dto/ForgotPasswordDTO';
 import SolidButton from '../../../components/controls/SolidButton';
-import FVStack from '../../../components/surfaces/FVStack';
+import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import AuthSelectors from '../../../store/auth/authSelectors';

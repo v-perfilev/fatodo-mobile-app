@@ -5,7 +5,7 @@ import PaperBox from '../surfaces/PaperBox';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import ChipBox from '../surfaces/ChipBox';
 import PressableButton from '../controls/PressableButton';
-import FContainer from '../surfaces/FContainer';
+import FContainer from '../boxes/FContainer';
 
 type FormikChipsProps<T> = IFormControlProps &
   FormikProps<any> & {

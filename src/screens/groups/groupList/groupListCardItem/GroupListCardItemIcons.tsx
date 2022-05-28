@@ -3,8 +3,8 @@ import {Item} from '../../../../models/Item';
 import StatusView from '../../../../components/views/StatusView';
 import PriorityView from '../../../../components/views/PriorityView';
 import TypeView from '../../../../components/views/TypeView';
-import FVStack from '../../../../components/surfaces/FVStack';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FVStack from '../../../../components/boxes/FVStack';
+import FHStack from '../../../../components/boxes/FHStack';
 
 type GroupListCardItemIconsProps = {
   item: Item;

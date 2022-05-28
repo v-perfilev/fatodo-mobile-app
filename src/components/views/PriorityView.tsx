@@ -5,8 +5,8 @@ import {IIconProps, Text} from 'native-base';
 import LowPriorityIcon from '../icons/LowPriorityIcon';
 import NormalPriorityIcon from '../icons/NormalPriorityIcon';
 import HighPriorityIcon from '../icons/HighPriorityIcon';
-import FCenter from '../surfaces/FCenter';
-import FHStack from '../surfaces/FHStack';
+import FCenter from '../boxes/FCenter';
+import FHStack from '../boxes/FHStack';
 
 type PriorityViewProps = IIconProps & {
   priority: ItemPriorityType;

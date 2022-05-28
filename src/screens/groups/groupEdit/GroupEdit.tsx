@@ -3,7 +3,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import GroupForm from '../groupForm/GroupForm';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import FScrollView from '../../../components/surfaces/FScrollView';
+import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import GroupSelectors from '../../../store/group/groupSelectors';
@@ -55,7 +55,7 @@ const GroupEdit = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header showMenu={false} />
+      <Header />
       <ConditionalSpinner loading={loading}>
         <FScrollView>
           <GroupForm group={group} request={request} cancel={goBack} />

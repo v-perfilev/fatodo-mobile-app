@@ -1,6 +1,6 @@
 import {Formik, FormikHelpers} from 'formik';
-import FVStack from '../../../../components/surfaces/FVStack';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FVStack from '../../../../components/boxes/FVStack';
+import FHStack from '../../../../components/boxes/FHStack';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import FormikMultilineInput from '../../../../components/inputs/FormikMultilineInput';

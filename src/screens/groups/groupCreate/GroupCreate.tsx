@@ -2,7 +2,7 @@ import React from 'react';
 import GroupForm from '../groupForm/GroupForm';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
-import FScrollView from '../../../components/surfaces/FScrollView';
+import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import GroupThunks from '../../../store/group/groupThunks';
@@ -33,7 +33,7 @@ const GroupCreate = () => {
   };
   return (
     <>
-      <Header showMenu={false} />
+      <Header />
       <FScrollView>
         <GroupForm request={request} cancel={goBack} />
       </FScrollView>

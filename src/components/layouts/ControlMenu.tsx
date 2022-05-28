@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useMemo} from 'react';
 import {MenuElement} from '../../models/MenuElement';
 import IconButton from '../controls/IconButton';
-import FContainer from '../surfaces/FContainer';
+import FContainer from '../boxes/FContainer';
 
 type ControlMenuProps = {
   menu: MenuElement[];

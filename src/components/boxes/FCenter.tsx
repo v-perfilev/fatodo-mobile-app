@@ -6,7 +6,7 @@ type FCenterProps = ICenterProps & {
 };
 
 const FCenter = ({grow, children, ...props}: FCenterProps) => {
-  const flexGrow = useMemo<string>(() => (grow ? '1' : '0'), []);
+  const flexGrow = useMemo<number>(() => (grow ? 1 : 0), []);
 
   return (
     <Center flexGrow={flexGrow} {...props}>

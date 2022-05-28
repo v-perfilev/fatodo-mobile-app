@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from 'native-base';
 import {IPressableProps} from 'native-base/lib/typescript/components/primitives/Pressable/types';
 import PressableButton from '../../controls/PressableButton';
-import FCenter from '../../surfaces/FCenter';
+import FCenter from '../../boxes/FCenter';
 
 type PermissionSelectItemProps = IPressableProps & {
   title: string;

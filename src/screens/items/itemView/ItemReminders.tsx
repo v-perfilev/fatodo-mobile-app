@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
 import ReminderView from '../../../components/views/ReminderView';
 import ChipBox from '../../../components/surfaces/ChipBox';
-import FHStack from '../../../components/surfaces/FHStack';
+import FHStack from '../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
 

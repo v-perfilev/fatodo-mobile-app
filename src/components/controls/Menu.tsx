@@ -2,7 +2,7 @@ import React, {PropsWithChildren, ReactElement} from 'react';
 import {GestureResponderEvent} from 'react-native';
 import {Menu as NbMenu, Text} from 'native-base';
 import CentredSpinner from '../surfaces/CentredSpinner';
-import FHStack from '../surfaces/FHStack';
+import FHStack from '../boxes/FHStack';
 
 export type MenuProps = PropsWithChildren<{
   trigger: (_props: any, state: {open: boolean}) => JSX.Element;

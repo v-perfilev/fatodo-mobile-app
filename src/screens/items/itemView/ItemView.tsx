@@ -16,9 +16,9 @@ import ItemViewType from './itemViewType';
 import ItemViewGroup from './itemViewGroup';
 import ItemReminders from './ItemReminders';
 import ItemViewName from './itemViewName';
-import FScrollView from '../../../components/surfaces/FScrollView';
-import FVStack from '../../../components/surfaces/FVStack';
-import FHStack from '../../../components/surfaces/FHStack';
+import FScrollView from '../../../components/boxes/FScrollView';
+import FVStack from '../../../components/boxes/FVStack';
+import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import UsersThunks from '../../../store/users/usersThunks';
@@ -75,7 +75,7 @@ const ItemView = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header title={item?.title} showMenu={false} />
+      <Header title={item?.title} />
       <ConditionalSpinner loading={loading || itemLoading || groupLoading}>
         <FScrollView>
           <FVStack defaultSpace>

@@ -3,7 +3,7 @@ import {Box, Text} from 'native-base';
 import {User} from '../../models/User';
 import {AVATARS_IN_CARD} from '../../constants';
 import UserView from '../views/UserView';
-import FHStack from './FHStack';
+import FHStack from '../boxes/FHStack';
 
 type AvatarGroupProps = {
   users: User[];

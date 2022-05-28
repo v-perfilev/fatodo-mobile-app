@@ -1,12 +1,12 @@
 import React from 'react';
 import {Message} from '../../../../models/Message';
 import {useTranslation} from 'react-i18next';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 import {useAppSelector} from '../../../../store/store';
 import UsersSelectors from '../../../../store/users/usersSelectors';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
-import FlexBox from '../../../../components/surfaces/FlexBox';
+import FBox from '../../../../components/boxes/FBox';
 
 type ChatListMessageIncomingProps = {
   message: Message;
@@ -24,11 +24,11 @@ const ChatListMessageIncoming = ({message}: ChatListMessageIncomingProps) => {
         {user?.username}:
       </Text>
       {!message.isDeleted && (
-        <FlexBox>
+        <FBox>
           <Text isTruncated color="gray.500" fontSize="xs">
             {message.text}
           </Text>
-        </FlexBox>
+        </FBox>
       )}
       {message.isDeleted && (
         <Text color="gray.400" fontWeight="bold" fontSize="xs">

@@ -6,7 +6,7 @@ import StatusCreatedIcon from '../icons/StatusCreatedIcon';
 import StatusWipIcon from '../icons/StatusWipIcon';
 import StatusClosedIcon from '../icons/StatusClosedIcon';
 import StatusCompletedIcon from '../icons/StatusCompletedIcon';
-import FCenter from '../surfaces/FCenter';
+import FCenter from '../boxes/FCenter';
 
 type StatusViewProps = IIconProps & {
   statusType: ItemStatusType;

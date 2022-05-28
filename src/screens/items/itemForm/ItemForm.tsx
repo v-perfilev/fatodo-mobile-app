@@ -16,8 +16,8 @@ import FormikMultilineInput from '../../../components/inputs/FormikMultilineInpu
 import FormikTagsInput from '../../../components/inputs/FormikTagsInput';
 import FormikRemindersInput from '../../../components/inputs/formikRemindersInput/FormikRemindersInput';
 import FormikDateTimePicker from '../../../components/inputs/FormikDateTimePicker';
-import FVStack from '../../../components/surfaces/FVStack';
-import FHStack from '../../../components/surfaces/FHStack';
+import FVStack from '../../../components/boxes/FVStack';
+import FHStack from '../../../components/boxes/FHStack';
 import {UserAccount} from '../../../models/User';
 import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';

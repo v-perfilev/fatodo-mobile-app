@@ -6,9 +6,9 @@ import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {AuthNavigationProp} from '../../../navigators/AuthNavigator';
 import LanguageMenu from '../../../components/controls/LanguageMenu';
-import FScrollView from '../../../components/surfaces/FScrollView';
-import FCenter from '../../../components/surfaces/FCenter';
-import FVStack from '../../../components/surfaces/FVStack';
+import FScrollView from '../../../components/boxes/FScrollView';
+import FCenter from '../../../components/boxes/FCenter';
+import FVStack from '../../../components/boxes/FVStack';
 
 const SignIn = () => {
   const navigation = useNavigation<AuthNavigationProp>();

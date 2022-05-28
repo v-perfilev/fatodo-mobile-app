@@ -1,6 +1,6 @@
 import React from 'react';
 import {Heading, Image} from 'native-base';
-import FHStack from '../surfaces/FHStack';
+import FHStack from '../boxes/FHStack';
 
 const img = require('../../../assets/images/logo.png');
 

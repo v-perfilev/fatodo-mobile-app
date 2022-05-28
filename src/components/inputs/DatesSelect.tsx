@@ -2,7 +2,7 @@ import React, {Dispatch, SetStateAction} from 'react';
 import {FormControl} from 'native-base';
 import RoundButton from '../controls/RoundButton';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
-import FContainer from '../surfaces/FContainer';
+import FContainer from '../boxes/FContainer';
 
 type DatesSelectProps = {
   label: string;

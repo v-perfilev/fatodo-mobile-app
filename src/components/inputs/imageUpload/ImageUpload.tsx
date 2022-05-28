@@ -5,7 +5,7 @@ import {FormControl, IFormControlProps} from 'native-base';
 import ImageUploadPreview from './ImageUploadPreview';
 import ImageUploadButtons from './ImageUploadButtons';
 import {flowRight} from 'lodash';
-import FVStack from '../../surfaces/FVStack';
+import FVStack from '../../boxes/FVStack';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 
 type ImageUploadProps = IFormControlProps &

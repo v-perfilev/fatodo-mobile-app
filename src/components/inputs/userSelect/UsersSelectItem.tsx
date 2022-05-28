@@ -3,7 +3,7 @@ import {User} from '../../../models/User';
 import {Text} from 'native-base';
 import UrlPic from '../../surfaces/UrlPic';
 import CheckboxInput from '../../controls/CheckboxInput';
-import FHStack from '../../surfaces/FHStack';
+import FHStack from '../../boxes/FHStack';
 
 type UsersSelectInputProps = {
   user: User;

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {User} from '../../../models/User';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
 import UserView from '../../../components/views/UserView';
-import FContainer from '../../../components/surfaces/FContainer';
+import FContainer from '../../../components/boxes/FContainer';
 import GroupViewUserSkeleton from './groupViewSkeletons/GroupViewUserSkeleton';
 import {useAppSelector} from '../../../store/store';
 import UsersSelectors from '../../../store/users/usersSelectors';

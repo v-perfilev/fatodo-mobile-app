@@ -6,9 +6,9 @@ import {Dimensions} from 'react-native';
 import {Route, SceneMap, TabView} from 'react-native-tab-view';
 import {NavigationState, SceneRendererProps} from 'react-native-tab-view/lib/typescript/types';
 import PressableButton from '../components/controls/PressableButton';
-import FCenter from '../components/surfaces/FCenter';
+import FCenter from '../components/boxes/FCenter';
 import {useTranslation} from 'react-i18next';
-import FHStack from '../components/surfaces/FHStack';
+import FHStack from '../components/boxes/FHStack';
 import {Badge, Text} from 'native-base';
 import Header from '../components/layouts/Header';
 import ContactsSelectors from '../store/contacts/contactsSelectors';
@@ -54,7 +54,7 @@ const ContactNavigator = () => {
 
   const renderTabBar = ({navigationState}: TabBarProps): ReactNode => {
     return (
-      <Header showGoBack={false} showTitle={false} showMenu={false}>
+      <Header hideGoBack hideTitle>
         <FHStack grow h="100%" pt="0.5" mr="-2">
           {navigationState.routes.map((route, i) => {
             const handlePress = (): void => setIndex(i);

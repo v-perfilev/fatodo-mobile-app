@@ -2,7 +2,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {GroupPermission} from '../../../models/Group';
 import PermissionSelectItem from './PermissionSelectItem';
-import FVStack from '../../surfaces/FVStack';
+import FVStack from '../../boxes/FVStack';
 
 type PermissionSelectProps = {
   permission: GroupPermission;

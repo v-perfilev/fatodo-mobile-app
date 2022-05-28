@@ -4,7 +4,7 @@ import GroupListCardSkeleton from '../groupListSkeletons/GroupListCardSkeleton';
 import GroupListCardInfo from './GroupListCardInfo';
 import GroupListCardItem from '../groupListCardItem/GroupListCardItem';
 import {Group} from '../../../../models/Group';
-import FVStack from '../../../../components/surfaces/FVStack';
+import FVStack from '../../../../components/boxes/FVStack';
 
 type GroupListCardContentProps = {
   group: Group;

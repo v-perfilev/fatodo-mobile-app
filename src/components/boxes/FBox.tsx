@@ -1,9 +1,9 @@
 import React from 'react';
 import {Box, IBoxProps} from 'native-base';
 
-type FlexBoxProps = IBoxProps;
+type FBoxProps = IBoxProps;
 
-const FlexBox = ({children, ...props}: FlexBoxProps) => {
+const FBox = ({children, ...props}: FBoxProps) => {
   return (
     <Box flex={1} {...props}>
       {children}
@@ -11,4 +11,4 @@ const FlexBox = ({children, ...props}: FlexBoxProps) => {
   );
 };
 
-export default FlexBox;
+export default FBox;

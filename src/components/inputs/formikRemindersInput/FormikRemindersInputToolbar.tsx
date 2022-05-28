@@ -8,7 +8,7 @@ import WeekIcon from '../../icons/WeekIcon';
 import MonthIcon from '../../icons/MonthIcon';
 import YearIcon from '../../icons/YearIcon';
 import IconButton from '../../controls/IconButton';
-import FVStack from '../../surfaces/FVStack';
+import FVStack from '../../boxes/FVStack';
 
 type FormikRemindersInputToolbarProps = {
   periodicity: ReminderPeriodicity;

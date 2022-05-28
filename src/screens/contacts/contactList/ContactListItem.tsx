@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
 import UserView from '../../../components/views/UserView';
 import SolidButton from '../../../components/controls/SolidButton';
-import FHStack from '../../../components/surfaces/FHStack';
+import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import ContactsThunks from '../../../store/contacts/contactsThunks';

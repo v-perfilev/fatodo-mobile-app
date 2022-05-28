@@ -5,8 +5,8 @@ import GroupListCardItemIcons from './GroupListCardItemIcons';
 import GroupListCardItemChanges from './GroupListCardItemChanges';
 import GroupListCardItemMenu from './GroupListCardItemMenu';
 import {flowRight} from 'lodash';
-import FVStack from '../../../../components/surfaces/FVStack';
-import FHStack from '../../../../components/surfaces/FHStack';
+import FVStack from '../../../../components/boxes/FVStack';
+import FHStack from '../../../../components/boxes/FHStack';
 import {Group} from '../../../../models/Group';
 
 type GroupListCardItemProps = {

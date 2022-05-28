@@ -1,6 +1,6 @@
 import {Chat} from '../../../models/Chat';
 import {User} from '../../../models/User';
-import FHStack from '../../../components/surfaces/FHStack';
+import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import UsersSelectors from '../../../store/users/usersSelectors';
 import React, {ReactElement, useEffect, useMemo} from 'react';
@@ -15,9 +15,9 @@ import ChatListMessage from './chatListMessage/ChatListMessage';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import PressableButton from '../../../components/controls/PressableButton';
 import {useNavigation} from '@react-navigation/native';
-import {ChatNavigationProp} from '../../../navigators/ChatNavigator';
 import {Badge, Text} from 'native-base';
-import FVStack from '../../../components/surfaces/FVStack';
+import FVStack from '../../../components/boxes/FVStack';
+import {RootNavigationProp} from '../../../navigators/RootNavigator';
 
 type ChatListItemProps = {
   chat: Chat;
@@ -25,7 +25,7 @@ type ChatListItemProps = {
 
 const ChatListItem = ({chat}: ChatListItemProps) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<ChatNavigationProp>();
+  const navigation = useNavigation<RootNavigationProp>();
   const {t} = useTranslation();
   const unreadMessageCountMap = useAppSelector(ChatsSelectors.unreadMessageCountMap);
   const users = useAppSelector(UsersSelectors.users);

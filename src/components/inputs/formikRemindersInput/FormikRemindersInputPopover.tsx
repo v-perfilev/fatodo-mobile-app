@@ -9,7 +9,7 @@ import FormikRemindersInputDaily from './FormikRemindersInputDaily';
 import FormikRemindersInputWeekly from './FormikRemindersInputWeekly';
 import FormikRemindersInputMonthly from './FormikRemindersInputMonthly';
 import FormikRemindersInputYearly from './FormikRemindersInputYearly';
-import FVStack from '../../surfaces/FVStack';
+import FVStack from '../../boxes/FVStack';
 import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 

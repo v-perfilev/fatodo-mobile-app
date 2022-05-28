@@ -1,7 +1,7 @@
 import React from 'react';
 import {Skeleton} from 'native-base';
-import FHStack from '../../../../components/surfaces/FHStack';
-import FVStack from '../../../../components/surfaces/FVStack';
+import FHStack from '../../../../components/boxes/FHStack';
+import FVStack from '../../../../components/boxes/FVStack';
 
 const GroupViewItemSkeleton = () => {
   return (

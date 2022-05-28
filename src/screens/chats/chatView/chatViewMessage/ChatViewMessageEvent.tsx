@@ -6,7 +6,7 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import UsersSelectors from '../../../../store/users/usersSelectors';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
 import UsersThunks from '../../../../store/users/usersThunks';
-import FCenter from '../../../../components/surfaces/FCenter';
+import FCenter from '../../../../components/boxes/FCenter';
 
 type ChatViewMessageEventProps = {
   message: Message;

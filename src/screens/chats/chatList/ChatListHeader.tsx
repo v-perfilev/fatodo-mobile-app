@@ -1,10 +1,10 @@
 import IconButton from '../../../components/controls/IconButton';
-import {Box} from 'native-base';
 import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
-import FHStack from '../../../components/surfaces/FHStack';
+import FHStack from '../../../components/boxes/FHStack';
 import React, {Dispatch, SetStateAction} from 'react';
 import {useTranslation} from 'react-i18next';
 import PlusIcon from '../../../components/icons/PlusIcon';
+import FBox from '../../../components/boxes/FBox';
 
 type ChatListHeaderProps = {
   setFilter: Dispatch<SetStateAction<string>>;
@@ -20,9 +20,9 @@ const ChatListHeader = ({setFilter}: ChatListHeaderProps) => {
   return (
     <FHStack defaultSpace alignItems="center" pt="3" px="3">
       <IconButton icon={<PlusIcon />} onPress={openCreateChatDialog} />
-      <Box flex={1}>
+      <FBox>
         <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={setFilter} />
-      </Box>
+      </FBox>
     </FHStack>
   );
 };
