@@ -1,27 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import ModalDialog from '../../../components/modals/ModalDialog';
+import {Group} from '../../../models/Group';
 import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
 import GhostButton from '../../../components/controls/GhostButton';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import ContactsThunks from '../../../store/contacts/contactsThunks';
-import {Chat} from '../../../models/Chat';
-import ChatThunks from '../../../store/chat/chatThunks';
+import ChatsThunks from '../../../store/chats/chatsThunks';
+import SnackActions from '../../../store/snack/snackActions';
 
-export type GroupAddMembersDialogProps = {
-  chat: Chat;
+export type ChatCreateDialogProps = {
+  group: Group;
   show: boolean;
   close: () => void;
 };
 
-export const defaultGroupAddMembersDialogProps: Readonly<GroupAddMembersDialogProps> = {
-  chat: null,
+export const defaultChatCreateDialogProps: Readonly<ChatCreateDialogProps> = {
+  group: null,
   show: false,
   close: (): void => undefined,
 };
 
-const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) => {
+const ChatCreateDialog = ({group, show, close}: ChatCreateDialogProps) => {
   const dispatch = useAppDispatch();
   const relations = useAppSelector(ContactsSelectors.relations);
   const {t} = useTranslation();
@@ -29,16 +30,36 @@ const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) 
   const [userIds, setUserIds] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const addUsers = (): void => {
-    setIsSubmitting(true);
-    dispatch(ChatThunks.addChatMembers({chat, userIds}))
+  const createDirect = (): void => {
+    dispatch(ChatsThunks.createDirectChat(userIds[0]))
       .unwrap()
       .then(() => {
+        dispatch(SnackActions.handleCode('chat.chatCreated', 'info'));
         close();
       })
       .finally(() => {
         setIsSubmitting(false);
       });
+  };
+
+  const createIndirect = (): void => {
+    dispatch(ChatsThunks.createIndirectChat(userIds))
+      .unwrap()
+      .then(() => {
+        dispatch(SnackActions.handleCode('chat.chatCreated', 'info'));
+        close();
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
+  };
+
+  const create = (): void => {
+    if (userIds.length === 0) {
+      createDirect();
+    } else {
+      createIndirect();
+    }
   };
 
   useEffect(() => {
@@ -53,9 +74,9 @@ const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) 
   }, [show, relations]);
 
   const isUserIdListEmpty = userIds.length === 0;
-  const ignoredIds = chat?.members;
+  const ignoredIds = group?.members.map((m) => m.id);
 
-  const content = chat && <UsersSelect allowedIds={contactIds} ignoredIds={ignoredIds} setUserIds={setUserIds} />;
+  const content = group && <UsersSelect allowedIds={contactIds} ignoredIds={ignoredIds} setUserIds={setUserIds} />;
 
   const actions = (
     <>
@@ -63,12 +84,12 @@ const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) 
         colorScheme="primary"
         isDisabled={isSubmitting || isUserIdListEmpty}
         isLoading={isSubmitting}
-        onPress={addUsers}
+        onPress={create}
       >
-        {t('chat:addMembers.buttons.send')}
+        {t('group:addMembers.buttons.send')}
       </GhostButton>
       <GhostButton onPress={close} colorScheme="secondary" isDisabled={isSubmitting}>
-        {t('chat:addMembers.buttons.cancel')}
+        {t('group:addMembers.buttons.cancel')}
       </GhostButton>
     </>
   );
@@ -77,7 +98,7 @@ const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) 
     <ModalDialog
       open={show}
       close={close}
-      title={t('chat:addMembers.title')}
+      title={t('group:addMembers.title')}
       content={content}
       actions={actions}
       size="xl"
@@ -85,4 +106,4 @@ const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) 
   );
 };
 
-export default GroupAddMembersDialog;
+export default ChatCreateDialog;

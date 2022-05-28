@@ -1,27 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import ModalDialog from '../../../components/modals/ModalDialog';
+import {Group} from '../../../models/Group';
 import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
 import GhostButton from '../../../components/controls/GhostButton';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import ContactsThunks from '../../../store/contacts/contactsThunks';
-import {Chat} from '../../../models/Chat';
-import ChatThunks from '../../../store/chat/chatThunks';
+import GroupThunks from '../../../store/group/groupThunks';
 
-export type GroupAddMembersDialogProps = {
-  chat: Chat;
+export type ChatAddMembersDialogProps = {
+  group: Group;
   show: boolean;
   close: () => void;
 };
 
-export const defaultGroupAddMembersDialogProps: Readonly<GroupAddMembersDialogProps> = {
-  chat: null,
+export const defaultChatAddMembersDialogProps: Readonly<ChatAddMembersDialogProps> = {
+  group: null,
   show: false,
   close: (): void => undefined,
 };
 
-const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) => {
+const ChatAddMembersDialog = ({group, show, close}: ChatAddMembersDialogProps) => {
   const dispatch = useAppDispatch();
   const relations = useAppSelector(ContactsSelectors.relations);
   const {t} = useTranslation();
@@ -31,7 +31,7 @@ const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) 
 
   const addUsers = (): void => {
     setIsSubmitting(true);
-    dispatch(ChatThunks.addChatMembers({chat, userIds}))
+    dispatch(GroupThunks.addGroupMembers({group, userIds}))
       .unwrap()
       .then(() => {
         close();
@@ -53,9 +53,9 @@ const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) 
   }, [show, relations]);
 
   const isUserIdListEmpty = userIds.length === 0;
-  const ignoredIds = chat?.members;
+  const ignoredIds = group?.members.map((m) => m.id);
 
-  const content = chat && <UsersSelect allowedIds={contactIds} ignoredIds={ignoredIds} setUserIds={setUserIds} />;
+  const content = group && <UsersSelect allowedIds={contactIds} ignoredIds={ignoredIds} setUserIds={setUserIds} />;
 
   const actions = (
     <>
@@ -65,10 +65,10 @@ const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) 
         isLoading={isSubmitting}
         onPress={addUsers}
       >
-        {t('chat:addMembers.buttons.send')}
+        {t('group:addMembers.buttons.send')}
       </GhostButton>
       <GhostButton onPress={close} colorScheme="secondary" isDisabled={isSubmitting}>
-        {t('chat:addMembers.buttons.cancel')}
+        {t('group:addMembers.buttons.cancel')}
       </GhostButton>
     </>
   );
@@ -77,7 +77,7 @@ const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) 
     <ModalDialog
       open={show}
       close={close}
-      title={t('chat:addMembers.title')}
+      title={t('group:addMembers.title')}
       content={content}
       actions={actions}
       size="xl"
@@ -85,4 +85,4 @@ const GroupAddMembersDialog = ({chat, show, close}: GroupAddMembersDialogProps) 
   );
 };
 
-export default GroupAddMembersDialog;
+export default ChatAddMembersDialog;

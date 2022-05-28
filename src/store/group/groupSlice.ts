@@ -167,7 +167,7 @@ const groupSlice = createSlice({
     }));
 
     /*
-    editGroupMembers
+    addGroupMembers
     */
     builder.addCase(GroupThunks.addGroupMembers.fulfilled, (state: GroupState, action) => {
       const group = action.payload;

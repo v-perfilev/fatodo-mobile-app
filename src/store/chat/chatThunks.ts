@@ -1,5 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ChatService from '../../services/ChatService';
+import {ArrayUtils} from '../../shared/utils/ArrayUtils';
+import {Chat} from '../../models/Chat';
+import ChatsActions from '../chats/chatsActions';
 
 enum TYPES {
   FETCH_MESSAGES = 'chat/fetchMessages',
@@ -7,6 +10,7 @@ enum TYPES {
   NO_REACTION = 'chat/noReaction',
   LIKE_REACTION = 'chat/likeReaction',
   DISLIKE_REACTION = 'chat/dislikeReaction',
+  ADD_CHAT_MEMBERS = 'chat/addChatMembers',
 }
 
 export class ChatThunks {
@@ -37,6 +41,16 @@ export class ChatThunks {
     const result = await ChatService.dislikeMessageReaction(messageId);
     return result.data;
   });
+
+  static addChatMembers = createAsyncThunk(
+    TYPES.ADD_CHAT_MEMBERS,
+    async ({chat, userIds}: {chat: Chat; userIds: string[]}, thunkAPI) => {
+      chat.members = ArrayUtils.addValuesToEnd(chat.members, userIds);
+      await ChatService.addUsersToChat(chat.id, userIds);
+      thunkAPI.dispatch(ChatsActions.updateChat(chat));
+      return chat;
+    },
+  );
 }
 
 export default ChatThunks;
