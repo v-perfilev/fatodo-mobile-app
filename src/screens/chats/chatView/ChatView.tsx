@@ -10,6 +10,7 @@ import ChatActions from '../../../store/chat/chatActions';
 import ChatViewContainer from './ChatViewContainer';
 import {RootParamList} from '../../../navigators/RootNavigator';
 import ChatSelectors from '../../../store/chat/chatSelectors';
+import ChatViewFooter from './ChatViewFooter';
 
 const ChatView = () => {
   const dispatch = useAppDispatch();
@@ -35,6 +36,7 @@ const ChatView = () => {
     <>
       <Header title={title} />
       <ChatViewContainer />
+      <ChatViewFooter chat={chat} />
     </>
   );
 };

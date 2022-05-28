@@ -9,11 +9,13 @@ import PressableButton from '../../../../components/controls/PressableButton';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 
-const buildReactionMap = (message: Message): Map<MessageReactionType, number> => {
+const buildReactionMap = (message: Message, isOutcoming: boolean): Map<MessageReactionType, number> => {
   const map = new Map();
   messageReactionTypes.forEach((reaction) => {
     const count = message?.reactions.filter((r) => r.type === reaction).length;
-    map.set(reaction, count);
+    if (!isOutcoming || count > 0) {
+      map.set(reaction, count);
+    }
   });
   return map;
 };
@@ -26,11 +28,13 @@ type ChatViewMessageReactions = {
 const ChatContentMessageReactions = ({message, isOutcoming}: ChatViewMessageReactions) => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.account);
-  const [reactionMap, setReactionMap] = useState<Map<MessageReactionType, number>>(buildReactionMap(message));
   const [activeReaction, setActiveReaction] = useState<MessageReactionType>();
+  const [reactionMap, setReactionMap] = useState<Map<MessageReactionType, number>>(
+    buildReactionMap(message, isOutcoming),
+  );
 
   const updateReactionsMap = (): void => {
-    const newReactionMap = buildReactionMap(message);
+    const newReactionMap = buildReactionMap(message, isOutcoming);
     setReactionMap(newReactionMap);
   };
 
@@ -75,7 +79,11 @@ const ChatContentMessageReactions = ({message, isOutcoming}: ChatViewMessageReac
     );
   };
 
-  return <FVStack smallSpace>{Array.from(reactionMap.keys()).map(reaction)}</FVStack>;
+  return (
+    <FVStack mt="1.5" smallSpace>
+      {Array.from(reactionMap.keys()).map(reaction)}
+    </FVStack>
+  );
 };
 
 export default memo(ChatContentMessageReactions);

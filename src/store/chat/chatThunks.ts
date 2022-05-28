@@ -14,6 +14,7 @@ enum TYPES {
   RENAME_CHAT = 'chat/renameChat',
   ADD_CHAT_MEMBERS = 'chat/addChatMembers',
   REMOVE_CHAT_MEMBER = 'chat/removeChatMember',
+  SEND_MESSAGE = 'chat/sendMessage',
   EDIT_MESSAGE = 'chat/editMessage',
 }
 
@@ -75,9 +76,19 @@ export class ChatThunks {
     },
   );
 
+  static sendMessage = createAsyncThunk(
+    TYPES.SEND_MESSAGE,
+    async ({chatId, dto}: {chatId: string; dto: MessageDTO}) => {
+      // TODO handler
+      const result = await ChatService.sendIndirectMessage(chatId, dto);
+      return result.data;
+    },
+  );
+
   static editMessage = createAsyncThunk(
     TYPES.EDIT_MESSAGE,
     async ({messageId, dto}: {messageId: string; dto: MessageDTO}) => {
+      // TODO handler
       const result = await ChatService.editMessage(messageId, dto);
       return result.data;
     },

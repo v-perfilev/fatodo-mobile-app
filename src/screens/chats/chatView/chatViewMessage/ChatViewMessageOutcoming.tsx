@@ -23,7 +23,7 @@ const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
   const date = DateFormatters.formatTime(new Date(message.createdAt));
 
   return (
-    <FHStack space="2" width="90%" ml="10%">
+    <FHStack space="2" width="90%" ml="10%" justifyContent="flex-end">
       <ChatViewMessageReactions message={message} isOutcoming />
       <FVStack
         shrink

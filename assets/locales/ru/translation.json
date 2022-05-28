@@ -25,5 +25,8 @@
   "inputs": {
     "search": "Поиск",
     "filter": "Фильтр"
+  },
+  "salutations": {
+    "you": "Вы"
   }
 }

@@ -25,5 +25,8 @@
   "inputs": {
     "search": "Search",
     "filter": "Filter"
+  },
+  "salutations": {
+    "you": "You"
   }
 }
