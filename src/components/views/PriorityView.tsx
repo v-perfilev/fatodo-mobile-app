@@ -16,7 +16,7 @@ type PriorityViewProps = IIconProps & {
 export const PriorityView = ({priority, withoutText, ...props}: PriorityViewProps) => {
   const {t, i18n} = useTranslation();
 
-  const icon = useMemo<ReactElement>(() => {
+  const iconElement = useMemo<ReactElement>(() => {
     let result;
     if (priority === 'LOW') {
       result = <LowPriorityIcon color="gray.500" />;
@@ -28,6 +28,11 @@ export const PriorityView = ({priority, withoutText, ...props}: PriorityViewProp
     return result;
   }, [priority]);
 
+  const icon = useMemo<ReactElement>(
+    () => React.cloneElement(iconElement, {...props, mt: !withoutText ? 1 : undefined}),
+    [iconElement],
+  );
+
   const text = useMemo<string>(() => {
     return t('common:priorities.' + priority);
   }, [priority, i18n.language]);
@@ -36,7 +41,7 @@ export const PriorityView = ({priority, withoutText, ...props}: PriorityViewProp
     <FCenter>{icon}</FCenter>
   ) : (
     <FHStack smallSpace alignItems="center">
-      {React.cloneElement(icon, {...props, mt: 1})}
+      {icon}
       <Text>{text}</Text>
     </FHStack>
   );

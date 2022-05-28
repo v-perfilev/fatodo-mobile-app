@@ -8,6 +8,7 @@ import UsersSelectors from '../../../../store/users/usersSelectors';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import FVStack from '../../../../components/boxes/FVStack';
+import ChatViewMessageReactions from './ChatViewMessageReactions';
 
 type ChatViewMessageOutcomingProps = {
   message: Message;
@@ -22,6 +23,7 @@ const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
 
   return (
     <FHStack space="2" width="90%" ml="10%">
+      <ChatViewMessageReactions message={message} />
       <FVStack
         shrink
         smallSpace

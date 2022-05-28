@@ -10,6 +10,7 @@ import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import FVStack from '../../../../components/boxes/FVStack';
 import UserView from '../../../../components/views/UserView';
+import ChatViewMessageReactions from './ChatViewMessageReactions';
 
 type ChatViewMessageIncomingProps = {
   message: Message;
@@ -55,6 +56,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
           </Text>
         )}
       </FVStack>
+      <ChatViewMessageReactions message={message} />
     </FHStack>
   );
 };

@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useMemo} from 'react';
+import React, {memo, ReactElement, useEffect, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import {ListRenderItemInfo, StyleProp, ViewStyle, VirtualizedList} from 'react-native';
@@ -66,4 +66,4 @@ const ChatViewContainer = () => {
   );
 };
 
-export default ChatViewContainer;
+export default memo(ChatViewContainer);

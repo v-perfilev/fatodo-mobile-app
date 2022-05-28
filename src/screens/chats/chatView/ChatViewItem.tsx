@@ -8,6 +8,7 @@ import {TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import ChatViewMessage from './chatViewMessage/ChatViewMessage';
 import ChatViewDate from './ChatViewDate';
 import {Box} from 'native-base';
+import ChatThunks from '../../../store/chat/chatThunks';
 
 type ChatViewItemProps = {
   item: ChatItem;
@@ -32,7 +33,7 @@ const ChatViewItem = ({item, isVisible}: ChatViewItemProps) => {
   }, [message]);
 
   const markAsRead = useCallback((): void => {
-    // TODO mark as read
+    dispatch(ChatThunks.markAsRead(message.id));
   }, [message]);
 
   const markAsReadIfNeeded = (): void => {

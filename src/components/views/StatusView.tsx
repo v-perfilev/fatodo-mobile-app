@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactNode, useMemo} from 'react';
+import {ReactElement, useMemo} from 'react';
 import {IIconProps} from 'native-base';
 import {ItemStatusType} from '../../models/Item';
 import StatusCreatedIcon from '../icons/StatusCreatedIcon';
@@ -13,20 +13,25 @@ type StatusViewProps = IIconProps & {
 };
 
 const StatusView = ({statusType, ...props}: StatusViewProps) => {
-  const icon = useMemo<ReactNode>(() => {
+  const iconElement = useMemo<ReactElement>(() => {
     switch (statusType) {
       case 'CREATED':
-        return <StatusCreatedIcon color="primary.500" {...props} />;
+        return <StatusCreatedIcon />;
       case 'WORK_IN_PROGRESS':
-        return <StatusWipIcon color="primary.500" {...props} />;
+        return <StatusWipIcon />;
       case 'COMPLETED':
-        return <StatusCompletedIcon color="primary.500" {...props} />;
+        return <StatusCompletedIcon />;
       case 'CLOSED':
-        return <StatusClosedIcon color="primary.500" {...props} />;
+        return <StatusClosedIcon />;
       default:
-        return <StatusCreatedIcon color="primary.500" {...props} />;
+        return <StatusCreatedIcon />;
     }
   }, [statusType]);
+
+  const icon = useMemo<ReactElement>(
+    () => React.cloneElement(iconElement, {color: 'primary.500', ...props}),
+    [iconElement],
+  );
 
   return <FCenter>{icon}</FCenter>;
 };
