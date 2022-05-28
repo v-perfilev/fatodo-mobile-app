@@ -1,8 +1,8 @@
-import {Theme, useTheme} from 'native-base';
-import React, {ReactElement, useEffect, useMemo} from 'react';
+import {FlatList, Theme, useTheme} from 'native-base';
+import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {useLoadingState} from '../../../shared/hooks/useLoadingState';
-import {ListRenderItemInfo, StyleProp, ViewStyle, VirtualizedList} from 'react-native';
+import {ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsThunks from '../../../store/chats/chatsThunks';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
@@ -23,37 +23,36 @@ const ChatListRegular = () => {
   const [initialLoading, setInitialLoading] = useLoadingState();
   const chats = useAppSelector(ChatsSelectors.chats);
 
+  const showStub = useMemo<boolean>(() => chats.length === 0, [chats]);
+
   const loadChats = (): void => {
     dispatch(ChatsThunks.fetchChats(chats.length))
       .unwrap()
       .finally(() => setInitialLoading(false));
   };
 
-  const showStub = useMemo<boolean>(() => chats.length === 0, [chats]);
-
   useEffect(() => {
     setInitialLoading(true);
     loadChats();
   }, []);
 
-  const renderItem = (info: ListRenderItemInfo<Chat>): ReactElement => <ChatListItem chat={info.item} />;
-  const getItem = (chats: Chat[], index: number): Chat => chats[index];
-  const getItemCount = (chats: Chat[]): number => chats.length;
-  const keyExtractor = (chat: Chat): string => chat.id;
+  const keyExtractor = useCallback((chat: Chat): string => chat.id, []);
+  const renderItem = useCallback((info: ListRenderItemInfo<Chat>): ReactElement => {
+    return <ChatListItem chat={info.item} />;
+  }, []);
 
   return (
     <ConditionalSpinner loading={initialLoading}>
       {showStub ? (
         <ChatListStub />
       ) : (
-        <VirtualizedList
+        <FlatList
           data={chats}
-          renderItem={renderItem}
-          getItem={getItem}
-          getItemCount={getItemCount}
           keyExtractor={keyExtractor}
+          renderItem={renderItem}
           onEndReached={loadChats}
           onEndReachedThreshold={5}
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={containerStyle(theme)}
         />
       )}
