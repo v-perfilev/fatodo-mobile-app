@@ -59,19 +59,23 @@ export const StatusSelect = ({statusType, setStatusType, loading}: StatusSelectP
   const menuItems = [
     {
       action: setStatusToCreated,
-      icon: <StatusCreatedIcon color="primary.500" size="md" />,
+      icon: <StatusCreatedIcon color="primary.500" />,
+      iconSize: 'md',
     },
     {
       action: setStatusToWip,
-      icon: <StatusWipIcon color="primary.500" size="md" />,
+      icon: <StatusWipIcon color="primary.500" />,
+      iconSize: 'md',
     },
     {
       action: setStatusToCompleted,
-      icon: <StatusCompletedIcon color="primary.500" size="md" />,
+      icon: <StatusCompletedIcon color="primary.500" />,
+      iconSize: 'md',
     },
     {
       action: setStatusToClosed,
-      icon: <StatusClosedIcon color="primary.500" size="md" />,
+      icon: <StatusClosedIcon color="primary.500" />,
+      iconSize: 'md',
     },
   ] as MenuItemProps[];
 

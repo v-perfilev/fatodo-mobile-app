@@ -49,28 +49,24 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
   };
 
   const menuItems = [
-    {action: goToItemView, icon: <EyeIcon color="primary.500" size="sm" />, text: t('group:actions.view')},
+    {action: goToItemView, icon: <EyeIcon color="primary.500" />, text: t('group:actions.view')},
     {
       action: toggleArchived,
-      icon: item.archived ? (
-        <PackageUpIcon color="primary.500" size="sm" />
-      ) : (
-        <PackageDownIcon color="primary.500" size="sm" />
-      ),
+      icon: item.archived ? <PackageUpIcon color="primary.500" /> : <PackageDownIcon color="primary.500" />,
       text: item.archived ? t('group:actions.removeFromArchive') : t('group:actions.moveToArchive'),
       loading: archivedLoading,
       disabled: archivedLoading,
       show: canEdit,
     },
-    {action: goToItemEdit, icon: <EditIcon color="primary.500" size="sm" />, text: t('group:actions.edit')},
-    {action: openItemDeleteDialog, icon: <DeleteIcon color="error.500" size="sm" />, text: t('group:actions.delete')},
+    {action: goToItemEdit, icon: <EditIcon color="primary.500" />, text: t('group:actions.edit')},
+    {action: openItemDeleteDialog, icon: <DeleteIcon color="error.500" />, text: t('group:actions.delete')},
   ] as MenuItemProps[];
 
   return (
     <Menu
       trigger={(triggerProps) => (
         <PressableButton {...triggerProps}>
-          <DotsVerticalIcon color="primary.500" size="6" />
+          <DotsVerticalIcon color="primary.500" size="md" />
         </PressableButton>
       )}
     >

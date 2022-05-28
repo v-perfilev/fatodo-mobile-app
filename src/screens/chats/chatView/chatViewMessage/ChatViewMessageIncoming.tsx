@@ -11,6 +11,7 @@ import AuthSelectors from '../../../../store/auth/authSelectors';
 import FVStack from '../../../../components/boxes/FVStack';
 import UserView from '../../../../components/views/UserView';
 import ChatViewMessageReactions from './ChatViewMessageReactions';
+import ChatViewMessageMenu from './ChatViewMessageMenu';
 
 type ChatViewMessageIncomingProps = {
   message: Message;
@@ -48,6 +49,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
           <Text color="gray.400" fontWeight="bold" fontSize="xs">
             {date}
           </Text>
+          <ChatViewMessageMenu message={message} isOutcoming={false} />
         </FHStack>
         {!message.isDeleted && <Text color="gray.700">{message.text}</Text>}
         {message.isDeleted && (
@@ -56,7 +58,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
           </Text>
         )}
       </FVStack>
-      <ChatViewMessageReactions message={message} />
+      <ChatViewMessageReactions message={message} isOutcoming={false} />
     </FHStack>
   );
 };

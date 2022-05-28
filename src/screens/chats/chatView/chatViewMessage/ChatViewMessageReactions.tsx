@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import {Message, MessageReactionType, messageReactionTypes} from '../../../../models/Message';
@@ -20,17 +20,14 @@ const buildReactionMap = (message: Message): Map<MessageReactionType, number> =>
 
 type ChatViewMessageReactions = {
   message: Message;
+  isOutcoming: boolean;
 };
 
-const ChatContentMessageReactions = ({message}: ChatViewMessageReactions) => {
+const ChatContentMessageReactions = ({message, isOutcoming}: ChatViewMessageReactions) => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.account);
   const [reactionMap, setReactionMap] = useState<Map<MessageReactionType, number>>(buildReactionMap(message));
   const [activeReaction, setActiveReaction] = useState<MessageReactionType>();
-
-  const isOutcoming = useMemo<boolean>(() => {
-    return message.userId === account?.id;
-  }, [message]);
 
   const updateReactionsMap = (): void => {
     const newReactionMap = buildReactionMap(message);

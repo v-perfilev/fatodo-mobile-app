@@ -9,6 +9,7 @@ import {MessageUtils} from '../../../../shared/utils/MessageUtils';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import FVStack from '../../../../components/boxes/FVStack';
 import ChatViewMessageReactions from './ChatViewMessageReactions';
+import ChatViewMessageMenu from './ChatViewMessageMenu';
 
 type ChatViewMessageOutcomingProps = {
   message: Message;
@@ -23,7 +24,7 @@ const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
 
   return (
     <FHStack space="2" width="90%" ml="10%">
-      <ChatViewMessageReactions message={message} />
+      <ChatViewMessageReactions message={message} isOutcoming />
       <FVStack
         shrink
         smallSpace
@@ -44,6 +45,7 @@ const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
           <Text color="gray.400" fontWeight="bold" fontSize="2xs">
             {date}
           </Text>
+          <ChatViewMessageMenu message={message} isOutcoming />
         </FHStack>
         {!message.isDeleted && <Text>{message.text}</Text>}
         {message.isDeleted && (
