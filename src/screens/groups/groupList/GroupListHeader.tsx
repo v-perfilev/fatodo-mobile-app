@@ -1,6 +1,5 @@
 import React, {memo} from 'react';
 import Header from '../../../components/layouts/Header';
-import PressableButton from '../../../components/controls/PressableButton';
 import CheckIcon from '../../../components/icons/CheckIcon';
 import CloseIcon from '../../../components/icons/CloseIcon';
 import PlusIcon from '../../../components/icons/PlusIcon';
@@ -14,6 +13,7 @@ import SnackActions from '../../../store/snack/snackActions';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import GroupsActions from '../../../store/groups/groupsActions';
 import GroupsThunks from '../../../store/groups/groupsThunks';
+import IconButton from '../../../components/controls/IconButton';
 
 type GroupListHeaderProps = {
   sorting: boolean;
@@ -68,24 +68,20 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
     <Header>
       {sorting ? (
         <>
-          <PressableButton onPress={saveSorting}>
-            <CheckIcon color="white" size="8" />
-          </PressableButton>
-          <PressableButton onPress={cancelSorting}>
-            <CloseIcon color="white" size="8" />
-          </PressableButton>
+          <IconButton colorScheme="white" size="lg" p="1.5" icon={<CheckIcon />} onPress={saveSorting} />
+          <IconButton colorScheme="white" size="lg" p="1.5" icon={<CloseIcon />} onPress={cancelSorting} />
         </>
       ) : (
         <>
-          <PressableButton onPress={goToGroupCreate}>
-            <PlusIcon color="white" size="8" />
-          </PressableButton>
-          <PressableButton onPress={enableSorting}>
-            <ReorderIcon color="white" size="6" />
-          </PressableButton>
-          <PressableButton onPress={switchCollapsed}>
-            <CollapsedIcon visible={!allCollapsed} color="white" size="8" />
-          </PressableButton>
+          <IconButton colorScheme="white" size="xl" p="1" icon={<PlusIcon />} onPress={goToGroupCreate} />
+          <IconButton colorScheme="white" size="lg" p="1.5" icon={<ReorderIcon />} onPress={enableSorting} />
+          <IconButton
+            colorScheme="white"
+            size="xl"
+            p="1"
+            icon={<CollapsedIcon visible={!allCollapsed} />}
+            onPress={switchCollapsed}
+          />
         </>
       )}
     </Header>

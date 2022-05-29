@@ -10,11 +10,11 @@ import DeleteIcon from '../../../../components/icons/DeleteIcon';
 import {useTranslation} from 'react-i18next';
 import PackageUpIcon from '../../../../components/icons/PackageUpIcon';
 import PackageDownIcon from '../../../../components/icons/PackageDownIcon';
-import PressableButton from '../../../../components/controls/PressableButton';
 import {useItemDialogContext} from '../../../../shared/contexts/dialogContexts/ItemDialogContext';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import GroupThunks from '../../../../store/group/groupThunks';
 import GroupSelectors from '../../../../store/group/groupSelectors';
+import IconButton from '../../../../components/controls/IconButton';
 
 type GroupViewItemMenuProps = {
   item: Item;
@@ -65,9 +65,7 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
   return (
     <Menu
       trigger={(triggerProps) => (
-        <PressableButton {...triggerProps}>
-          <DotsVerticalIcon color="primary.500" size="md" />
-        </PressableButton>
+        <IconButton p="1.5" bgTransparency="5" icon={<DotsVerticalIcon />} {...triggerProps} />
       )}
     >
       {menuItems.map((itemProps, index) => (

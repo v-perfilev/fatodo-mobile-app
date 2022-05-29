@@ -9,11 +9,11 @@ import ChatThunks from '../../../store/chat/chatThunks';
 import {Chat} from '../../../models/Chat';
 import IconButton from '../../../components/controls/IconButton';
 
-type ChatViewFooterProps = {
+type ChatViewControlProps = {
   chat: Chat;
 };
 
-const ChatViewFooter = ({chat}: ChatViewFooterProps) => {
+const ChatViewControl = ({chat}: ChatViewControlProps) => {
   const dispatch = useAppDispatch();
   const [messageBody, setMessageBody] = useState<string>('');
   const [updater, setUpdater] = useState<string>(undefined);
@@ -50,4 +50,4 @@ const ChatViewFooter = ({chat}: ChatViewFooterProps) => {
   );
 };
 
-export default ChatViewFooter;
+export default ChatViewControl;

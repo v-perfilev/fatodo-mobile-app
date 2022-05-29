@@ -13,7 +13,7 @@ const ChatListHeader = () => {
 
   return (
     <Header hideGoBack>
-      <IconButton colorScheme="white" icon={<PlusIcon />} onPress={openCreateChatDialog} />
+      <IconButton colorScheme="white" size="xl" p="1" icon={<PlusIcon />} onPress={openCreateChatDialog} />
     </Header>
   );
 };

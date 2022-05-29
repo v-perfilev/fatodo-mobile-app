@@ -1,7 +1,6 @@
 import React, {useEffect, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import Header from '../../../components/layouts/Header';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import UsersSelectors from '../../../store/users/usersSelectors';
@@ -10,7 +9,8 @@ import ChatActions from '../../../store/chat/chatActions';
 import ChatViewContainer from './ChatViewContainer';
 import {RootParamList} from '../../../navigators/RootNavigator';
 import ChatSelectors from '../../../store/chat/chatSelectors';
-import ChatViewFooter from './ChatViewFooter';
+import ChatViewControl from './ChatViewControl';
+import ChatViewHeader from './ChatViewHeader';
 
 const ChatView = () => {
   const dispatch = useAppDispatch();
@@ -34,9 +34,9 @@ const ChatView = () => {
 
   return (
     <>
-      <Header title={title} />
+      <ChatViewHeader title={title} chat={chat} />
       <ChatViewContainer />
-      <ChatViewFooter chat={chat} />
+      <ChatViewControl chat={chat} />
     </>
   );
 };
