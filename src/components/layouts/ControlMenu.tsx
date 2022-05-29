@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useMemo} from 'react';
 import {MenuElement} from '../../models/MenuElement';
-import IconButton from '../controls/IconButton';
 import FContainer from '../boxes/FContainer';
+import IconButton from '../controls/IconButton';
 
 type ControlMenuProps = {
   menu: MenuElement[];
@@ -18,12 +18,11 @@ const ControlMenu = ({menu, disabled}: ControlMenuProps) => {
     <FContainer itemM="1" justifyContent="space-around">
       {filteredMenu?.map((action, index) => (
         <IconButton
-          key={index}
+          colorScheme={action.color}
           icon={action.icon}
           onPress={action.action}
           isDisabled={disabled || action.disabled}
-          colorScheme={action.color}
-          size="sm"
+          key={index}
         />
       ))}
     </FContainer>

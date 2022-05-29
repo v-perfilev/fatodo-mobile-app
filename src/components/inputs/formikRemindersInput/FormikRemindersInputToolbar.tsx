@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ReminderPeriodicity} from '../../../models/Reminder';
-import {Button, PresenceTransition, Text} from 'native-base';
+import {PresenceTransition, Text} from 'native-base';
 import OnceIcon from '../../icons/OnceIcon';
 import DayIcon from '../../icons/DayIcon';
 import WeekIcon from '../../icons/WeekIcon';
 import MonthIcon from '../../icons/MonthIcon';
 import YearIcon from '../../icons/YearIcon';
-import IconButton from '../../controls/IconButton';
 import FVStack from '../../boxes/FVStack';
+import IconButton from '../../controls/IconButton';
+import FHStack from '../../boxes/FHStack';
 
 type FormikRemindersInputToolbarProps = {
   periodicity: ReminderPeriodicity;
@@ -35,22 +36,45 @@ const FormikRemindersInputToolbar = ({periodicity, setPeriodicity}: FormikRemind
   const handleMonthClick = (): void => selectPeriodicity('MONTHLY');
   const handleYearClick = (): void => selectPeriodicity('YEARLY');
 
-  const activeColor = 'white:alpha.20';
-  const onceBg = periodicity === 'ONCE' ? activeColor : undefined;
-  const dayBg = periodicity === 'DAILY' ? activeColor : undefined;
-  const weekBg = periodicity === 'WEEKLY' ? activeColor : undefined;
-  const monthBg = periodicity === 'MONTHLY' ? activeColor : undefined;
-  const yearBg = periodicity === 'YEARLY' ? activeColor : undefined;
+  const onceBg = periodicity === 'ONCE' ? 'white' : null;
+  const dayBg = periodicity === 'DAILY' ? 'white' : null;
+  const weekBg = periodicity === 'WEEKLY' ? 'white' : null;
+  const monthBg = periodicity === 'MONTHLY' ? 'white' : null;
+  const yearBg = periodicity === 'YEARLY' ? 'white' : null;
 
   return (
     <FVStack bg="primary.500" alignItems="center" p="2">
-      <Button.Group space="1">
-        <IconButton whiteIcon size="lg" icon={<OnceIcon />} onPress={handleOnceClick} bg={onceBg} />
-        <IconButton whiteIcon size="lg" icon={<DayIcon />} onPress={handleDayClick} bg={dayBg} />
-        <IconButton whiteIcon size="lg" icon={<WeekIcon />} onPress={handleWeekClick} bg={weekBg} />
-        <IconButton whiteIcon size="lg" icon={<MonthIcon />} onPress={handleMonthClick} bg={monthBg} />
-        <IconButton whiteIcon size="lg" icon={<YearIcon />} onPress={handleYearClick} bg={yearBg} />
-      </Button.Group>
+      <FHStack space="1.5">
+        <IconButton
+          size="xl"
+          colorScheme="white"
+          bgColorScheme={onceBg}
+          icon={<OnceIcon />}
+          onPress={handleOnceClick}
+        />
+        <IconButton size="xl" colorScheme="white" bgColorScheme={dayBg} icon={<DayIcon />} onPress={handleDayClick} />
+        <IconButton
+          size="xl"
+          colorScheme="white"
+          bgColorScheme={weekBg}
+          icon={<WeekIcon />}
+          onPress={handleWeekClick}
+        />
+        <IconButton
+          size="xl"
+          colorScheme="white"
+          bgColorScheme={monthBg}
+          icon={<MonthIcon />}
+          onPress={handleMonthClick}
+        />
+        <IconButton
+          size="xl"
+          colorScheme="white"
+          bgColorScheme={yearBg}
+          icon={<YearIcon />}
+          onPress={handleYearClick}
+        />
+      </FHStack>
       <PresenceTransition
         visible={show}
         initial={{opacity: 0, scale: 0}}

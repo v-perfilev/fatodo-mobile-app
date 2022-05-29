@@ -1,33 +1,32 @@
-import {IconButton as NBIconButton, IIconButtonProps} from 'native-base';
-import React, {MutableRefObject} from 'react';
+import React, {MutableRefObject, ReactElement} from 'react';
+import {Box, IButtonProps} from 'native-base';
+import {ColorSchemeType, SizeType} from 'native-base/lib/typescript/components/types';
+import PressableButton from './PressableButton';
 
-type IconButtonProps = IIconButtonProps & {
-  whiteIcon?: boolean;
-  opaque?: boolean;
+type IconButtonProps = IButtonProps & {
+  icon: ReactElement;
+  size?: SizeType;
+  colorScheme?: ColorSchemeType;
+  bgColorScheme?: ColorSchemeType;
+  bgTransparency?: string;
 };
 
 const IconButton = React.forwardRef((props: IconButtonProps, ref: HTMLElement) => {
-  const {icon, colorScheme = 'primary', size = 'sm', isDisabled, whiteIcon, opaque, ...other} = props;
+  const {icon, colorScheme = 'primary', bgColorScheme, bgTransparency = '10', size = 'md', p = '2', ...other} = props;
 
-  const color = opaque ? 'white' : colorScheme + '.500';
-  const bg = colorScheme + (opaque ? '.500:alpha.90' : '.500:alpha.10');
+  const prepareColor = (scheme: ColorSchemeType): string => (scheme !== 'white' ? `${scheme}.500` : 'white');
+  const prepareBgColor = (scheme: ColorSchemeType): string => prepareColor(scheme) + ':alpha.' + bgTransparency;
+  const color = prepareColor(colorScheme);
+  const bgColor = bgColorScheme !== null ? prepareBgColor(bgColorScheme || colorScheme) : undefined;
 
-  const iconElement = whiteIcon ? React.cloneElement(icon, {color: 'white'}) : icon;
+  const iconElement = React.cloneElement(icon, {color, size});
 
   return (
-    <NBIconButton
-      variant="ghost"
-      borderRadius="full"
-      bg={bg}
-      icon={iconElement}
-      disabled={isDisabled}
-      isDisabled={isDisabled}
-      colorScheme={colorScheme}
-      _icon={{color, size}}
-      _pressed={{opacity: 0.7}}
-      ref={ref as MutableRefObject<any>}
-      {...other}
-    />
+    <PressableButton {...other} ref={ref as MutableRefObject<any>} rounded="full" overflow="hidden">
+      <Box bgColor={bgColor} p={p}>
+        {iconElement}
+      </Box>
+    </PressableButton>
   );
 });
 

@@ -9,11 +9,11 @@ import EyeIcon from '../../../../components/icons/EyeIcon';
 import EditIcon from '../../../../components/icons/EditIcon';
 import DeleteIcon from '../../../../components/icons/DeleteIcon';
 import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
-import RoundButton from '../../../../components/controls/RoundButton';
 import {Group} from '../../../../models/Group';
 import {useGroupDialogContext} from '../../../../shared/contexts/dialogContexts/GroupDialogContext';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
+import IconButton from '../../../../components/controls/IconButton';
 
 type GroupListCardMenuButtonProps = {
   group: Group;
@@ -65,11 +65,13 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
   return (
     <Menu
       trigger={(triggerProps) => (
-        <RoundButton
+        <IconButton
           {...triggerProps}
-          borderColor="white"
-          _pressed={{bg: 'white:alpha.20'}}
-          leftIcon={<DotsVerticalIcon color="white" size="sm" />}
+          colorScheme="white"
+          bgTransparency="10"
+          size="lg"
+          p="1"
+          icon={<DotsVerticalIcon />}
         />
       )}
     >

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import ChatListHeader from './ChatListHeader';
+import ChatListControl from './ChatListControl';
 import ChatListRegular from './ChatListRegular';
 import ChatListFiltered from './ChatListFiltered';
-import Header from '../../../components/layouts/Header';
+import ChatListHeader from './ChatListHeader';
 
 type ControlType = 'regular' | 'filtered';
 
@@ -17,8 +17,8 @@ const ChatList = () => {
 
   return (
     <>
-      <Header hideGoBack />
-      <ChatListHeader setFilter={setFilter} />
+      <ChatListHeader />
+      <ChatListControl setFilter={setFilter} />
       {type === 'regular' && <ChatListRegular />}
       {type === 'filtered' && <ChatListFiltered filter={filter} />}
     </>

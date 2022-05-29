@@ -1,10 +1,10 @@
 import React from 'react';
 import {GestureResponderEvent} from 'react-native';
-import RoundButton from '../../../../components/controls/RoundButton';
 import CollapsedIcon from '../../../../components/icons/CollapsedIcon';
 import {Group} from '../../../../models/Group';
 import {useAppDispatch} from '../../../../store/store';
 import GroupsActions from '../../../../store/groups/groupsActions';
+import IconButton from '../../../../components/controls/IconButton';
 
 type GroupListCardCollapseButtonProps = {
   group: Group;
@@ -25,10 +25,12 @@ const GroupListCardCollapseButton = ({group, collapsed}: GroupListCardCollapseBu
   };
 
   return (
-    <RoundButton
-      borderColor="white"
-      _pressed={{bg: 'white:alpha.20'}}
-      leftIcon={<CollapsedIcon visible={!collapsed} color="white" size="sm" />}
+    <IconButton
+      colorScheme="white"
+      bgTransparency="10"
+      size="xl"
+      p="0.5"
+      icon={<CollapsedIcon visible={!collapsed} />}
       onPress={handlePress}
     />
   );

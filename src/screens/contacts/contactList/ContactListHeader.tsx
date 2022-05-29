@@ -1,4 +1,3 @@
-import IconButton from '../../../components/controls/IconButton';
 import UserPlusIcon from '../../../components/icons/UserPlusIcon';
 import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
 import FHStack from '../../../components/boxes/FHStack';
@@ -6,6 +5,7 @@ import React, {Dispatch, SetStateAction} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
 import FBox from '../../../components/boxes/FBox';
+import IconButton from '../../../components/controls/IconButton';
 
 type ContactListHeaderProps = {
   setFilter: Dispatch<SetStateAction<string>>;

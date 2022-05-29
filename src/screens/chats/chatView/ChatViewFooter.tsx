@@ -3,11 +3,11 @@ import {useAppDispatch} from '../../../store/store';
 import FHStack from '../../../components/boxes/FHStack';
 import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
 import FBox from '../../../components/boxes/FBox';
-import IconButton from '../../../components/controls/IconButton';
 import SendMessageIcon from '../../../components/icons/SendMessageIcon';
 import {MessageDTO} from '../../../models/dto/MessageDTO';
 import ChatThunks from '../../../store/chat/chatThunks';
 import {Chat} from '../../../models/Chat';
+import IconButton from '../../../components/controls/IconButton';
 
 type ChatViewFooterProps = {
   chat: Chat;

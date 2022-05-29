@@ -5,11 +5,10 @@ import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import UrlPic from '../../../../components/surfaces/UrlPic';
 import GroupListCardMenuButton from './GroupListCardMenuButton';
-import PressableButton from '../../../../components/controls/PressableButton';
-import ReorderIcon from '../../../../components/icons/ReorderIcon';
 import {LINEAR_GRADIENT} from '../../../../shared/themes/ThemeFactory';
 import {Group} from '../../../../models/Group';
 import FHStack from '../../../../components/boxes/FHStack';
+import GroupListCardDragButton from './GroupListCardDragButton';
 
 type GroupListCardHeaderProps = {
   group: Group;
@@ -33,15 +32,11 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
           </Text>
           <FHStack grow space="2" alignItems="center" justifyContent="flex-end">
             {sorting ? (
-              <>
-                <PressableButton onPressIn={drag}>
-                  <ReorderIcon color="white" size="6" />
-                </PressableButton>
-              </>
+              <GroupListCardDragButton drag={drag} />
             ) : (
               <>
-                <GroupListCardMenuButton group={group} />
                 <GroupListCardCollapseButton group={group} collapsed={collapsed} />
+                <GroupListCardMenuButton group={group} />
               </>
             )}
           </FHStack>

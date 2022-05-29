@@ -98,7 +98,7 @@ const DateTimeSelect = ({label, setResult, mode, locale, minimumDate}: DateTimeS
           ) : (
             picker
           )}
-          <Flex position="absolute" bottom="0" rounded="full" bg="gray.50">
+          <Flex position="absolute" bottom="0">
             <IconButton icon={<CheckIcon />} onPress={closePicker} />
           </Flex>
         </Flex>

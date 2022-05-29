@@ -1,18 +1,10 @@
-import IconButton from '../../../components/controls/IconButton';
-import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
-import FHStack from '../../../components/boxes/FHStack';
-import React, {Dispatch, SetStateAction} from 'react';
-import {useTranslation} from 'react-i18next';
-import PlusIcon from '../../../components/icons/PlusIcon';
-import FBox from '../../../components/boxes/FBox';
+import React from 'react';
 import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
+import Header from '../../../components/layouts/Header';
+import PlusIcon from '../../../components/icons/PlusIcon';
+import IconButton from '../../../components/controls/IconButton';
 
-type ChatListHeaderProps = {
-  setFilter: Dispatch<SetStateAction<string>>;
-};
-
-const ChatListHeader = ({setFilter}: ChatListHeaderProps) => {
-  const {t} = useTranslation();
+const ChatListHeader = () => {
   const {showChatCreateDialog} = useChatDialogContext();
 
   const openCreateChatDialog = (): void => {
@@ -20,18 +12,9 @@ const ChatListHeader = ({setFilter}: ChatListHeaderProps) => {
   };
 
   return (
-    <FHStack space="2" p="2" alignItems="center" borderBottomWidth="1" borderBottomColor="gray.200">
-      <IconButton icon={<PlusIcon />} onPress={openCreateChatDialog} />
-      <FBox>
-        <ClearableTextInput
-          h="36px"
-          px="2"
-          variant="unstyled"
-          placeholder={t('inputs.filter')}
-          onChangeText={setFilter}
-        />
-      </FBox>
-    </FHStack>
+    <Header hideGoBack>
+      <IconButton colorScheme="white" icon={<PlusIcon />} onPress={openCreateChatDialog} />
+    </Header>
   );
 };
 
