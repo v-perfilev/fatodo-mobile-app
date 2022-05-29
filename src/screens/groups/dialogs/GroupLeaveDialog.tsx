@@ -5,7 +5,7 @@ import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import GroupsThunks from '../../../store/groups/groupsThunks';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
 export type GroupLeaveDialogProps = {
   group: Group;
@@ -24,7 +24,7 @@ export const defaultGroupLeaveDialogProps: Readonly<GroupLeaveDialogProps> = {
 const GroupLeaveDialog = ({group, show, close, onSuccess}: GroupLeaveDialogProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const [loading, setLoading] = useLoadingState(false);
+  const [loading, setLoading] = useDelayedState(false);
 
   const onAgree = (): void => {
     setLoading(true);

@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {UserAccount} from '../../../../models/User';
-import {useLoadingState} from '../../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../../shared/hooks/useDelayedState';
 import {Item} from '../../../../models/Item';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {GROUP_ITEMS_COUNT} from '../../../../constants';
@@ -31,7 +31,7 @@ const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItems
   const archivedItems = useAppSelector(GroupSelectors.archivedItems);
   const activeItemsLoading = useAppSelector(GroupSelectors.activeItemsLoading);
   const archivedItemsLoading = useAppSelector(GroupSelectors.archivedItemsLoading);
-  const [loading, setLoading] = useLoadingState();
+  const [loading, setLoading] = useDelayedState();
   const [page, setPage] = useState<number>(0);
 
   const items = useMemo<Item[]>(() => {

@@ -10,7 +10,7 @@ import SnackActions from '../../../store/snack/snackActions';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import ItemThunks from '../../../store/item/itemThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
@@ -25,7 +25,7 @@ const ItemEdit = () => {
   const reminders = useAppSelector(ItemSelectors.reminders);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemEdit'>>();
-  const [loading, setLoading] = useLoadingState();
+  const [loading, setLoading] = useDelayedState();
   const itemId = route.params.itemId;
   const colorScheme = route.params.colorScheme;
 

@@ -8,7 +8,7 @@ import GroupListCardContent from './GroupListCardContent';
 import {Theme} from 'native-base/src/theme';
 import {flowRight} from 'lodash';
 import {Group} from '../../../../models/Group';
-import {useLoadingState} from '../../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../../shared/hooks/useDelayedState';
 
 type GroupListCardProps = {
   group: Group;
@@ -23,7 +23,7 @@ type GroupListCardProps = {
 
 const GroupListCard = (props: GroupListCardProps) => {
   const {group, items, count, loading: itemsLoading, collapsed, sorting, drag, theme} = props;
-  const [loading, setLoading] = useLoadingState();
+  const [loading, setLoading] = useDelayedState();
 
   useEffect(() => {
     setLoading(true);

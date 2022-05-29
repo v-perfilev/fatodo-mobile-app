@@ -5,7 +5,7 @@ import {Item} from '../../../models/Item';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import GroupThunks from '../../../store/group/groupThunks';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
 export type ItemDeleteDialogProps = {
   item: Item;
@@ -23,7 +23,7 @@ export const defaultItemDeleteDialogProps: Readonly<ItemDeleteDialogProps> = {
 const ItemDeleteDialog = ({item, close, onSuccess}: ItemDeleteDialogProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const [loading, setLoading] = useLoadingState(false);
+  const [loading, setLoading] = useDelayedState(false);
 
   const onAgree = (): void => {
     setLoading(true);

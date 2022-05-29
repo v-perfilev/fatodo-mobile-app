@@ -1,7 +1,7 @@
 import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import ChatListStub from './ChatListStub';
@@ -24,7 +24,7 @@ type ChatListFilteredProps = {
 const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
-  const [loading, setLoading] = useLoadingState();
+  const [loading, setLoading] = useDelayedState();
   const filteredChats = useAppSelector(ChatsSelectors.filteredChats);
 
   const showStub = useMemo<boolean>(() => filteredChats.length === 0, [filteredChats]);

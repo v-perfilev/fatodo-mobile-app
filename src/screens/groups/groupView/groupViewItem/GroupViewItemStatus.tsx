@@ -4,7 +4,7 @@ import StatusView from '../../../../components/views/StatusView';
 import {StatusSelect} from '../../../../components/inputs/StatusSelect';
 import {useAppDispatch} from '../../../../store/store';
 import GroupThunks from '../../../../store/group/groupThunks';
-import {useLoadingState} from '../../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../../shared/hooks/useDelayedState';
 
 type GroupViewItemStatusProps = {
   item: Item;
@@ -13,7 +13,7 @@ type GroupViewItemStatusProps = {
 
 const GroupViewItemStatus = ({item, canEdit}: GroupViewItemStatusProps) => {
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useLoadingState(false);
+  const [loading, setLoading] = useDelayedState(false);
 
   const updateStatus = (status: ItemStatusType): void => {
     setLoading(true);

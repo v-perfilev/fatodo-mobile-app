@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import FScrollView from '../../../components/boxes/FScrollView';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import FVStack from '../../../components/boxes/FVStack';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
@@ -16,7 +16,7 @@ const IncomingRequestList = () => {
   const incomingRequests = useAppSelector(ContactsSelectors.incomingRequests);
   const users = useAppSelector(UsersSelectors.users);
   const [userRequests, setUserRequests] = useState<ContactRequestWithUser[]>([]);
-  const [loading, setLoading] = useLoadingState();
+  const [loading, setLoading] = useDelayedState();
 
   const resetUserRequests = (): void => {
     setUserRequests([]);

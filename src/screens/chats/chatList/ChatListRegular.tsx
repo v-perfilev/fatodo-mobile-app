@@ -1,7 +1,7 @@
 import {FlatList, Theme, useTheme} from 'native-base';
 import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsThunks from '../../../store/chats/chatsThunks';
@@ -20,7 +20,7 @@ const containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
 const ChatListRegular = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
-  const [initialLoading, setInitialLoading] = useLoadingState();
+  const [initialLoading, setInitialLoading] = useDelayedState();
   const chats = useAppSelector(ChatsSelectors.chats);
 
   const showStub = useMemo<boolean>(() => chats.length === 0, [chats]);

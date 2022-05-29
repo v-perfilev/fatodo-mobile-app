@@ -6,14 +6,14 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import UsersThunks from '../../../store/users/usersThunks';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import GroupsThunks from '../../../store/groups/groupsThunks';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
 const GroupList = () => {
   const dispatch = useAppDispatch();
   const groups = useAppSelector(GroupsSelectors.groups);
   const groupsLoading = useAppSelector(GroupsSelectors.loading);
   const items = useAppSelector(GroupsSelectors.items);
-  const [loading, setLoading] = useLoadingState();
+  const [loading, setLoading] = useDelayedState();
   const [sorting, setSorting] = useState<boolean>(false);
 
   useEffect(() => {

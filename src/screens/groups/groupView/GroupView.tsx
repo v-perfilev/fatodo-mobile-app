@@ -16,7 +16,7 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import UsersThunks from '../../../store/users/usersThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import GroupThunks from '../../../store/group/groupThunks';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
 const GroupView = () => {
   const navigation = useNavigation<GroupNavigationProp>();
@@ -25,7 +25,7 @@ const GroupView = () => {
   const account = useAppSelector(AuthSelectors.account);
   const group = useAppSelector(GroupSelectors.group);
   const groupLoading = useAppSelector(GroupSelectors.loading);
-  const [loading, setLoading] = useLoadingState();
+  const [loading, setLoading] = useDelayedState();
   const [showArchived, setShowArchived] = useState<boolean>(false);
   const groupId = route.params.groupId;
   const colorScheme = route.params.colorScheme;

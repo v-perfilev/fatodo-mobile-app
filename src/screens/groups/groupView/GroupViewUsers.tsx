@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {User} from '../../../models/User';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import UserView from '../../../components/views/UserView';
 import FContainer from '../../../components/boxes/FContainer';
 import GroupViewUserSkeleton from './groupViewSkeletons/GroupViewUserSkeleton';
@@ -12,7 +12,7 @@ const GroupViewMenu = () => {
   const group = useAppSelector(GroupSelectors.group);
   const users = useAppSelector(UsersSelectors.users);
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
-  const [loading, setLoading] = useLoadingState();
+  const [loading, setLoading] = useDelayedState();
 
   const updateUsersToShow = (): void => {
     const groupUserIds = group.members.map((user) => user.id);

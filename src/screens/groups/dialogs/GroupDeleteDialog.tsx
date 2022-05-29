@@ -5,7 +5,7 @@ import {Group} from '../../../models/Group';
 import {useAppDispatch} from '../../../store/store';
 import SnackActions from '../../../store/snack/snackActions';
 import GroupsThunks from '../../../store/groups/groupsThunks';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
 export type GroupDeleteDialogProps = {
   group: Group;
@@ -24,7 +24,7 @@ export const defaultGroupDeleteDialogProps: Readonly<GroupDeleteDialogProps> = {
 const GroupDeleteDialog = ({group, show, close, onSuccess}: GroupDeleteDialogProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const [loading, setLoading] = useLoadingState(false);
+  const [loading, setLoading] = useDelayedState(false);
 
   const onAgree = (): void => {
     setLoading(true);

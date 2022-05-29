@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import ContactListContainer from './ContactListContainer';
 import FScrollView from '../../../components/boxes/FScrollView';
@@ -17,7 +17,7 @@ const ContactList = () => {
   const relations = useAppSelector(ContactsSelectors.relations);
   const users = useAppSelector(UsersSelectors.users);
   const [userRelations, setUserRelations] = useState<ContactRelationWithUser[]>([]);
-  const [loading, setLoading] = useLoadingState();
+  const [loading, setLoading] = useDelayedState();
   const [filter, setFilter] = useState<string>('');
 
   const resetUserRelations = (): void => {

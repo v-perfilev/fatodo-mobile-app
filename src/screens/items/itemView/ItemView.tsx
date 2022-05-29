@@ -24,7 +24,7 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import UsersThunks from '../../../store/users/usersThunks';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import ItemThunks from '../../../store/item/itemThunks';
-import {useLoadingState} from '../../../shared/hooks/useLoadingState';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import GroupSelectors from '../../../store/group/groupSelectors';
 
 const ItemView = () => {
@@ -37,7 +37,7 @@ const ItemView = () => {
   const reminders = useAppSelector(ItemSelectors.reminders);
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemView'>>();
-  const [loading, setLoading] = useLoadingState();
+  const [loading, setLoading] = useDelayedState();
   const itemId = route.params.itemId;
   const colorScheme = route.params.colorScheme;
 

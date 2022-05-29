@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
-export const useLoadingState = (value = true, timeout = 200): [boolean, (loading: boolean) => void] => {
-  const [loading, setLoading] = useState<boolean>(value);
+export const useDelayedState = (initialValue = true, timeout = 200): [boolean, (value: boolean) => void] => {
+  const [value, setValue] = useState<boolean>(initialValue);
   let timer: number;
   let timerId: NodeJS.Timeout;
 
@@ -14,21 +14,21 @@ export const useLoadingState = (value = true, timeout = 200): [boolean, (loading
     return timer + timeout - now;
   };
 
-  const updateLoading = (newLoading: boolean): void => {
-    if (newLoading) {
+  const updateValue = (newValue: boolean): void => {
+    if (newValue) {
       resetTimer();
       clearTimeout(timerId);
-      setLoading(true);
+      setValue(true);
     } else {
       const timeDifference = getTimeDifference();
       if (timeDifference > 0) {
-        timerId = setTimeout(() => setLoading(false), timeDifference);
+        timerId = setTimeout(() => setValue(false), timeDifference);
       } else {
-        setLoading(false);
+        setValue(false);
       }
     }
   };
 
   resetTimer();
-  return [loading, updateLoading];
+  return [value, updateValue];
 };
