@@ -12,7 +12,7 @@ export type MenuProps = PropsWithChildren<{
 export type MenuItemProps = PropsWithChildren<{
   action: (e?: GestureResponderEvent) => void;
   icon?: ReactElement;
-  iconSize: SizeType;
+  iconSize?: SizeType;
   text?: string;
   loading?: boolean;
   disabled?: boolean;

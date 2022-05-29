@@ -6,9 +6,9 @@ import {flowRight} from 'lodash';
 import {bindActionCreators} from 'redux';
 import {setupAxiosInterceptors} from './shared/axios';
 import withStore from './shared/hocs/withStore';
-import AuthNavigator from './navigators/AuthNavigator';
 import withNativeBase from './shared/hocs/withNativeBase';
 import withNavigationContainer from './shared/hocs/withNavigationContainer';
+import withGestureHandler from './shared/hocs/withGestureHandler';
 import {SecurityUtils} from './shared/utils/SecurityUtils';
 import withDialogs from './shared/hocs/withDialogs/withDialogs';
 import withSnackDisplay from './shared/hocs/withSnackDisplay';
@@ -19,6 +19,7 @@ import SnackActions from './store/snack/snackActions';
 import RootNavigator from './navigators/RootNavigator';
 import AuthThunks from './store/auth/authThunks';
 import ContactsThunks from './store/contacts/contactsThunks';
+import AuthNavigator from './navigators/AuthNavigator';
 
 // setup axios
 const axiosActions = bindActionCreators(
@@ -64,4 +65,11 @@ const App = () => {
   );
 };
 
-export default flowRight([withStore, withSnackDisplay, withNativeBase, withNavigationContainer, withDialogs])(App);
+export default flowRight([
+  withStore,
+  withSnackDisplay,
+  withGestureHandler,
+  withNativeBase,
+  withNavigationContainer,
+  withDialogs,
+])(App);

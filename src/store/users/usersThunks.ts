@@ -40,7 +40,7 @@ export class UsersThunks {
   });
 
   static fetchUsersByUsernameOrEmail = createAsyncThunk(
-    TYPES.FETCH_USERS_BY_USERNAME_PART,
+    TYPES.FETCH_USERS_BY_USERNAME_OR_EMAIL,
     async (usernameOrEmail: string) => {
       const result = await UserService.getByUsernameOrEmail(usernameOrEmail);
       return result.data;
