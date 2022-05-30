@@ -15,7 +15,6 @@ import GroupAddMembersDialog, {
   defaultGroupAddMembersDialogProps,
   GroupAddMembersDialogProps,
 } from '../../../screens/groups/dialogs/GroupAddMembersDialog';
-import {User} from '../../../models/User';
 import GroupMembersDialog, {
   defaultGroupMembersDialogProps,
   GroupMembersDialogProps,
@@ -29,8 +28,8 @@ enum GroupDialogs {
   ADD_MEMBERS = 'GROUP_ADD_MEMBERS_DIALOG',
   EDIT_MEMBER = 'GROUP_EDIT_MEMBER_DIALOG',
   MEMBERS = 'GROUP_MEMBERS_DIALOG',
-  DELETE = 'GROUP_DELETE_DIALOG',
   LEAVE = 'GROUP_LEAVE_DIALOG',
+  DELETE = 'GROUP_DELETE_DIALOG',
 }
 
 const withGroupDialogs = (Component: ComponentType) => (props: any) => {
@@ -57,7 +56,7 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
   );
 
   const showGroupMembersDialog = useCallback(
-    (group: Group, users: User[]): void => {
+    (group: Group): void => {
       const show = true;
       const close = (): void => updateDialogProps(GroupDialogs.MEMBERS, {show: false});
       const switchToAddMembers = (): void => {
@@ -70,7 +69,6 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
       };
       const props = {
         group,
-        users,
         show,
         close,
         switchToAddMembers,

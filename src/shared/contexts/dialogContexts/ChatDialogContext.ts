@@ -7,10 +7,13 @@ import {Message} from '../../../models/Message';
 interface ChatDialogState {
   showChatAddMembersDialog: (chat: Chat) => void;
   showChatCreateDialog: () => void;
-  showChatMembersDialog: (chat: Chat, users: User[]) => void;
+  showChatMembersDialog: (chat: Chat) => void;
   showChatRenameDialog: (chat: Chat, title: string) => void;
-  showMessageReactionsDialog: (message: Message, users: User[]) => void;
-  showMessageReadStatusesDialog: (message: Message, users: User[]) => void;
+  showChatClearDialog: (chat: Chat, onSuccess?: () => void) => void;
+  showChatLeaveDialog: (chat: Chat, onSuccess?: () => void) => void;
+  showChatDeleteDialog: (chat: Chat, onSuccess?: () => void) => void;
+  showMessageReactionsDialog: (message: Message) => void;
+  showMessageReadStatusesDialog: (message: Message) => void;
   showMessageEditDialog: (message: Message) => void;
   showDirectMessageDialog: (user: User) => void;
 }

@@ -20,7 +20,7 @@ export const defaultGroupEditMemberDialogProps: Readonly<GroupEditMemberDialogPr
   group: null,
   user: null,
   show: false,
-  close: (): void => undefined,
+  close: (): void => null,
 };
 
 type Props = GroupEditMemberDialogProps;
@@ -36,12 +36,8 @@ const GroupEditMemberDialog: FC<Props> = ({group, user, show, close}: Props) => 
     const editedMember = {id: user.id, permission} as GroupMember;
     dispatch(GroupThunks.editGroupMember({group, member: editedMember}))
       .unwrap()
-      .then(() => {
-        close();
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+      .then(() => close())
+      .finally(() => setIsSubmitting(false));
   };
 
   useEffect(() => {

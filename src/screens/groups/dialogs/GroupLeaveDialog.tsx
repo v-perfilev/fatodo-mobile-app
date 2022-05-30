@@ -3,7 +3,6 @@ import {useTranslation} from 'react-i18next';
 import {Group} from '../../../models/Group';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useAppDispatch} from '../../../store/store';
-import SnackActions from '../../../store/snack/snackActions';
 import GroupsThunks from '../../../store/groups/groupsThunks';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
@@ -17,11 +16,11 @@ export type GroupLeaveDialogProps = {
 export const defaultGroupLeaveDialogProps: Readonly<GroupLeaveDialogProps> = {
   group: null,
   show: false,
-  close: (): void => undefined,
-  onSuccess: (): void => undefined,
+  close: (): void => null,
+  onSuccess: (): void => null,
 };
 
-const GroupLeaveDialog = ({group, show, close, onSuccess}: GroupLeaveDialogProps) => {
+const GroupLeaveDialog = ({group, show, close, onSuccess = () => null}: GroupLeaveDialogProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const [loading, setLoading] = useDelayedState(false);
@@ -31,15 +30,10 @@ const GroupLeaveDialog = ({group, show, close, onSuccess}: GroupLeaveDialogProps
     dispatch(GroupsThunks.leaveGroup(group.id))
       .unwrap()
       .then(() => {
-        dispatch(SnackActions.handleCode('group.left', 'info'));
+        onSuccess();
         close();
-        if (onSuccess) {
-          onSuccess();
-        }
       })
-      .finally(() => {
-        setLoading(false);
-      });
+      .finally(() => setLoading(false));
   };
 
   const onDisagree = (): void => {

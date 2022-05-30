@@ -8,7 +8,6 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import ContactsThunks from '../../../store/contacts/contactsThunks';
 import ChatsThunks from '../../../store/chats/chatsThunks';
-import SnackActions from '../../../store/snack/snackActions';
 
 export type ChatCreateDialogProps = {
   group: Group;
@@ -19,7 +18,7 @@ export type ChatCreateDialogProps = {
 export const defaultChatCreateDialogProps: Readonly<ChatCreateDialogProps> = {
   group: null,
   show: false,
-  close: (): void => undefined,
+  close: (): void => null,
 };
 
 const ChatCreateDialog = ({group, show, close}: ChatCreateDialogProps) => {
@@ -33,25 +32,15 @@ const ChatCreateDialog = ({group, show, close}: ChatCreateDialogProps) => {
   const createDirect = (): void => {
     dispatch(ChatsThunks.createDirectChat(userIds[0]))
       .unwrap()
-      .then(() => {
-        dispatch(SnackActions.handleCode('chat.chatCreated', 'info'));
-        close();
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+      .then(() => close())
+      .finally(() => setIsSubmitting(false));
   };
 
   const createIndirect = (): void => {
     dispatch(ChatsThunks.createIndirectChat(userIds))
       .unwrap()
-      .then(() => {
-        dispatch(SnackActions.handleCode('chat.chatCreated', 'info'));
-        close();
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+      .then(() => close())
+      .finally(() => setIsSubmitting(false));
   };
 
   const create = (): void => {

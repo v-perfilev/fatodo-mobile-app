@@ -5,7 +5,6 @@ import ContactRequestDialogForm from './ContactRequestDialogForm';
 import {ContactRequestDTO} from '../../../../models/dto/ContactRequestDTO';
 import {useAppDispatch} from '../../../../store/store';
 import ContactsThunks from '../../../../store/contacts/contactsThunks';
-import SnackActions from '../../../../store/snack/snackActions';
 
 export type ContactRequestDialogProps = {
   show: boolean;
@@ -14,7 +13,7 @@ export type ContactRequestDialogProps = {
 
 export const defaultContactRequestDialogProps: Readonly<ContactRequestDialogProps> = {
   show: false,
-  close: (): void => undefined,
+  close: (): void => null,
 };
 
 const ContactRequestDialog = ({show, close}: ContactRequestDialogProps) => {
@@ -24,13 +23,8 @@ const ContactRequestDialog = ({show, close}: ContactRequestDialogProps) => {
   const request = (dto: ContactRequestDTO, stopSubmitting: () => void): void => {
     dispatch(ContactsThunks.sendRequest(dto))
       .unwrap()
-      .then(() => {
-        dispatch(SnackActions.handleCode('contact.requestSent', 'info'));
-        close();
-      })
-      .catch(() => {
-        stopSubmitting();
-      });
+      .then(() => close())
+      .catch(() => stopSubmitting());
   };
 
   const content = <ContactRequestDialogForm request={request} cancel={close} />;

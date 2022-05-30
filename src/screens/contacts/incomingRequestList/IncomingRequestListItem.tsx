@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
 import UserView from '../../../components/views/UserView';
-import SolidButton from '../../../components/controls/SolidButton';
 import FHStack from '../../../components/boxes/FHStack';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import {useAppDispatch} from '../../../store/store';
-import SnackActions from '../../../store/snack/snackActions';
 import ContactsThunks from '../../../store/contacts/contactsThunks';
+import {MenuElement} from '../../../models/MenuElement';
+import CheckIcon from '../../../components/icons/CheckIcon';
+import CloseIcon from '../../../components/icons/CloseIcon';
+import ControlMenu from '../../../components/layouts/ControlMenu';
 
 type IncomingRequestListItemProps = {
   request: ContactRequestWithUser;
@@ -14,14 +15,12 @@ type IncomingRequestListItemProps = {
 
 const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
   const dispatch = useAppDispatch();
-  const {t} = useTranslation();
   const [disabled, setDisabled] = useState(false);
 
   const acceptRequest = (): void => {
     setDisabled(true);
     dispatch(ContactsThunks.acceptIncomingRequest(request.user.id))
       .unwrap()
-      .then(() => dispatch(SnackActions.handleCode('contact.requestAccepted', 'info')))
       .catch(() => setDisabled(false));
   };
 
@@ -29,21 +28,29 @@ const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
     setDisabled(true);
     dispatch(ContactsThunks.declineIncomingRequest(request.user.id))
       .unwrap()
-      .then(() => dispatch(SnackActions.handleCode('contact.requestDeclined', 'info')))
       .catch(() => setDisabled(false));
   };
+
+  const menuElements = [
+    {
+      action: acceptRequest,
+      icon: <CheckIcon />,
+      disabled: disabled,
+    },
+    {
+      action: declineRequest,
+      icon: <CloseIcon />,
+      color: 'error',
+      disabled: disabled,
+    },
+  ] as MenuElement[];
 
   return (
     <FHStack defaultSpace>
       <FHStack grow>
         <UserView user={request.user} withUsername picSize="sm" />
       </FHStack>
-      <SolidButton colorScheme="primary" size="sm" isDisabled={disabled} onPress={acceptRequest}>
-        {t('contact:incoming.accept')}
-      </SolidButton>
-      <SolidButton colorScheme="secondary" size="sm" isDisabled={disabled} onPress={declineRequest}>
-        {t('contact:incoming.decline')}
-      </SolidButton>
+      <ControlMenu menu={menuElements} />
     </FHStack>
   );
 };

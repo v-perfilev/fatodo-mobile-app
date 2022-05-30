@@ -9,7 +9,6 @@ import ChatCreateDialog, {
   ChatCreateDialogProps,
   defaultChatCreateDialogProps,
 } from '../../../screens/chats/dialogs/ChatCreateDialog';
-import {User} from '../../../models/User';
 import ChatMembersDialog, {
   ChatMembersDialogProps,
   defaultChatMembersDialogProps,
@@ -36,6 +35,19 @@ import ChatDirectMessageDialog, {
   defaultChatDirectMessageDialogProps,
 } from '../../../screens/chats/dialogs/chatDirectMessageDialog/ChatDirectMessageDialog';
 import {ChatDialogContext} from '../../contexts/dialogContexts/ChatDialogContext';
+import {User} from '../../../models/User';
+import ChatClearDialog, {
+  ChatClearDialogProps,
+  defaultChatClearDialogProps,
+} from '../../../screens/chats/dialogs/ChatClearDialog';
+import ChatLeaveDialog, {
+  ChatLeaveDialogProps,
+  defaultChatLeaveDialogProps,
+} from '../../../screens/chats/dialogs/ChatLeaveDialog';
+import ChatDeleteDialog, {
+  ChatDeleteDialogProps,
+  defaultChatDeleteDialogProps,
+} from '../../../screens/chats/dialogs/ChatDeleteDialog';
 
 enum ChatDialogs {
   ADD_MEMBERS = 'CHAT_ADD_MEMBERS_DIALOG',
@@ -46,6 +58,9 @@ enum ChatDialogs {
   MESSAGE_READ_STATUSES = 'CHAT_MESSAGE_READ_STATUSES_DIALOG',
   MESSAGE_EDIT = 'CHAT_MESSAGE_EDIT_DIALOG',
   DIRECT_MESSAGE = 'CHAT_DIRECT_MESSAGE_DIALOG',
+  CLEAR = 'CHAT_CLEAR_DIALOG',
+  LEAVE = 'CHAT_LEAVE_DIALOG',
+  DELETE = 'CHAT_DELETE_DIALOG',
 }
 
 const withChatDialogs =
@@ -71,14 +86,14 @@ const withChatDialogs =
     }, [setDialogProps, clearDialogProps]);
 
     const showChatMembersDialog = useCallback(
-      (chat: Chat, users: User[]): void => {
+      (chat: Chat): void => {
         const show = true;
         const close = (): void => updateDialogProps(ChatDialogs.MEMBERS, {show: false});
         const switchToAddMembers = (): void => {
           updateDialogProps(ChatDialogs.MEMBERS, {show: false});
           showChatAddMembersDialog(chat);
         };
-        const props = {chat, users, show, close, switchToAddMembers} as ChatMembersDialogProps;
+        const props = {chat, show, close, switchToAddMembers} as ChatMembersDialogProps;
         setDialogProps(ChatDialogs.MEMBERS, props);
       },
       [setDialogProps, updateDialogProps, showChatAddMembersDialog],
@@ -95,20 +110,20 @@ const withChatDialogs =
     );
 
     const showMessageReactionsDialog = useCallback(
-      (message: Message, users: User[]): void => {
+      (message: Message): void => {
         const show = true;
         const close = (): void => updateDialogProps(ChatDialogs.MESSAGE_REACTIONS, {show: false});
-        const props = {message, users, show, close} as ChatMessageReactionsDialogProps;
+        const props = {message, show, close} as ChatMessageReactionsDialogProps;
         setDialogProps(ChatDialogs.MESSAGE_REACTIONS, props);
       },
       [setDialogProps, updateDialogProps],
     );
 
     const showMessageReadStatusesDialog = useCallback(
-      (message: Message, users: User[]): void => {
+      (message: Message): void => {
         const show = true;
         const close = (): void => updateDialogProps(ChatDialogs.MESSAGE_READ_STATUSES, {show: false});
-        const props = {message, users, show, close} as ChatMessageStatusesDialogProps;
+        const props = {message, show, close} as ChatMessageStatusesDialogProps;
         setDialogProps(ChatDialogs.MESSAGE_READ_STATUSES, props);
       },
       [setDialogProps, updateDialogProps],
@@ -134,6 +149,36 @@ const withChatDialogs =
       [setDialogProps, updateDialogProps],
     );
 
+    const showChatClearDialog = useCallback(
+      (chat: Chat, onSuccess?: () => void): void => {
+        const show = true;
+        const close = (): void => clearDialogProps(ChatDialogs.CLEAR);
+        const props = {chat, show, close, onSuccess} as ChatClearDialogProps;
+        setDialogProps(ChatDialogs.CLEAR, props);
+      },
+      [setDialogProps, clearDialogProps],
+    );
+
+    const showChatLeaveDialog = useCallback(
+      (chat: Chat, onSuccess?: () => void): void => {
+        const show = true;
+        const close = (): void => clearDialogProps(ChatDialogs.LEAVE);
+        const props = {chat, show, close, onSuccess} as ChatLeaveDialogProps;
+        setDialogProps(ChatDialogs.LEAVE, props);
+      },
+      [setDialogProps, clearDialogProps],
+    );
+
+    const showChatDeleteDialog = useCallback(
+      (chat: Chat, onSuccess?: () => void): void => {
+        const show = true;
+        const close = (): void => clearDialogProps(ChatDialogs.DELETE);
+        const props = {chat, show, close, onSuccess} as ChatDeleteDialogProps;
+        setDialogProps(ChatDialogs.DELETE, props);
+      },
+      [setDialogProps, clearDialogProps],
+    );
+
     const initDialogs = (): void => {
       handleDialog(ChatDialogs.ADD_MEMBERS, ChatAddMembersDialog, defaultChatAddMembersDialogProps);
       handleDialog(ChatDialogs.CREATE, ChatCreateDialog, defaultChatCreateDialogProps);
@@ -143,6 +188,9 @@ const withChatDialogs =
       handleDialog(ChatDialogs.MESSAGE_READ_STATUSES, ChatMessageStatusesDialog, defaultChatMessageStatusesDialogProps);
       handleDialog(ChatDialogs.MESSAGE_EDIT, ChatEditMessageDialog, defaultChatEditMessageDialogProps);
       handleDialog(ChatDialogs.DIRECT_MESSAGE, ChatDirectMessageDialog, defaultChatDirectMessageDialogProps);
+      handleDialog(ChatDialogs.CLEAR, ChatClearDialog, defaultChatClearDialogProps);
+      handleDialog(ChatDialogs.LEAVE, ChatLeaveDialog, defaultChatLeaveDialogProps);
+      handleDialog(ChatDialogs.DELETE, ChatDeleteDialog, defaultChatDeleteDialogProps);
     };
 
     useEffect(() => {
@@ -158,6 +206,9 @@ const withChatDialogs =
       showMessageReadStatusesDialog,
       showMessageEditDialog,
       showDirectMessageDialog,
+      showChatClearDialog,
+      showChatLeaveDialog,
+      showChatDeleteDialog,
     };
 
     return (

@@ -6,7 +6,6 @@ import {ItemDTO} from '../../../models/dto/ItemDTO';
 import ItemForm from '../itemForm/ItemForm';
 import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import SnackActions from '../../../store/snack/snackActions';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import ItemThunks from '../../../store/item/itemThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
@@ -38,13 +37,8 @@ const ItemEdit = () => {
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
     dispatch(ItemThunks.updateItem(dto))
       .unwrap()
-      .then(() => {
-        dispatch(SnackActions.handleCode('item.updated', 'info'));
-        goToItemView();
-      })
-      .catch(() => {
-        stopSubmitting();
-      });
+      .then(() => goToItemView())
+      .catch(() => stopSubmitting());
   };
 
   useEffect(() => {

@@ -64,7 +64,7 @@ export default class ChatService {
     return axios.get(url);
   };
 
-  public static cleanChat = (chatId: string): AxiosPromise<void> => {
+  public static clearChat = (chatId: string): AxiosPromise<void> => {
     const url = ChatService.baseUrl + '/members/clear/' + chatId;
     return axios.get(url);
   };

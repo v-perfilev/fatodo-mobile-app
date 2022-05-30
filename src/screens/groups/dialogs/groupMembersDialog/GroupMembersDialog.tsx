@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Group, GroupUser} from '../../../../models/Group';
-import {User} from '../../../../models/User';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import ClearableTextInput from '../../../../components/inputs/ClearableTextInput';
 import UserPlusIcon from '../../../../components/icons/UserPlusIcon';
@@ -13,10 +12,10 @@ import FVStack from '../../../../components/boxes/FVStack';
 import FCenter from '../../../../components/boxes/FCenter';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
+import UsersSelectors from '../../../../store/users/usersSelectors';
 
 export type GroupMembersDialogProps = {
   group: Group;
-  users: User[];
   show: boolean;
   close: () => void;
   switchToAddMembers: () => void;
@@ -25,23 +24,16 @@ export type GroupMembersDialogProps = {
 
 export const defaultGroupMembersDialogProps: Readonly<GroupMembersDialogProps> = {
   group: null,
-  users: [],
   show: false,
-  close: (): void => undefined,
-  switchToAddMembers: (): void => undefined,
-  switchToEditMember: (): void => undefined,
+  close: (): void => null,
+  switchToAddMembers: (): void => null,
+  switchToEditMember: (): void => null,
 };
 
-const GroupMembersDialog = ({
-  group,
-  users,
-  show,
-  close,
-  switchToAddMembers,
-  switchToEditMember,
-}: GroupMembersDialogProps) => {
-  const account = useAppSelector(AuthSelectors.account);
+const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEditMember}: GroupMembersDialogProps) => {
   const {t} = useTranslation();
+  const account = useAppSelector(AuthSelectors.account);
+  const users = useAppSelector(UsersSelectors.users);
   const [usersToShow, setUsersToShow] = useState<GroupUser[]>([]);
   const [deletedMemberIds, setDeletedMemberIds] = useState<string[]>([]);
 

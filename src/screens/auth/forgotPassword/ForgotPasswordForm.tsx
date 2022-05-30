@@ -10,7 +10,6 @@ import {ForgotPasswordDTO} from '../../../models/dto/ForgotPasswordDTO';
 import SolidButton from '../../../components/controls/SolidButton';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import SnackActions from '../../../store/snack/snackActions';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import AuthActions from '../../../store/auth/authActions';
 import AuthThunks from '../../../store/auth/authThunks';
@@ -28,7 +27,7 @@ const validationSchema = Yup.object().shape({
 });
 
 type ForgotPasswordFormProps = CaptchaProps & {
-  onSuccess?: () => void;
+  onSuccess: () => void;
 };
 
 const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: ForgotPasswordFormProps) => {
@@ -51,12 +50,7 @@ const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: Forg
 
     dispatch(AuthThunks.forgotPassword(dto))
       .unwrap()
-      .then(() => {
-        dispatch(SnackActions.handleCode('auth.afterForgotPassword', 'info'));
-        if (onSuccess) {
-          onSuccess();
-        }
-      });
+      .then(() => onSuccess());
   };
 
   useEffect(() => {

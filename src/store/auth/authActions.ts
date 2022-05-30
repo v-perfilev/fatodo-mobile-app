@@ -2,7 +2,7 @@ import {SecurityUtils} from '../../shared/utils/SecurityUtils';
 import authSlice from './authSlice';
 import {AppDispatch} from '../store';
 
-export class AuthActions {
+class AuthActions {
   static login = () => async (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.authenticated());
   };

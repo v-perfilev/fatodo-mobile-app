@@ -5,6 +5,7 @@ import {ItemDTO} from '../../models/dto/ItemDTO';
 import GroupActions from '../group/groupActions';
 import GroupsActions from '../groups/groupsActions';
 import GroupThunks from '../group/groupThunks';
+import SnackActions from '../snack/snackActions';
 
 enum TYPES {
   FETCH_ITEM = 'item/fetchItem',
@@ -13,7 +14,7 @@ enum TYPES {
   UPDATE_ITEM = 'item/updateItem',
 }
 
-export class ItemThunks {
+class ItemThunks {
   static fetchItem = createAsyncThunk(TYPES.FETCH_ITEM, async (itemId: string, thunkAPI) => {
     const response = await ItemService.getItem(itemId);
     thunkAPI.dispatch(ItemThunks.fetchReminders(itemId));
@@ -28,15 +29,17 @@ export class ItemThunks {
 
   static createItem = createAsyncThunk(TYPES.CREATE_ITEM, async (dto: ItemDTO, thunkAPI) => {
     const response = await ItemService.createItem(dto);
-    thunkAPI.dispatch(GroupsActions.createItem(response.data));
-    thunkAPI.dispatch(GroupActions.createItem(response.data));
+    thunkAPI.dispatch(GroupsActions.addItem(response.data));
+    thunkAPI.dispatch(GroupActions.addItem(response.data));
+    thunkAPI.dispatch(SnackActions.handleCode('item.created', 'info'));
     return response.data;
   });
 
   static updateItem = createAsyncThunk(TYPES.UPDATE_ITEM, async (dto: ItemDTO, thunkAPI) => {
     const response = await ItemService.updateItem(dto);
     thunkAPI.dispatch(GroupsActions.updateItem(response.data));
-    thunkAPI.dispatch(GroupActions.updaterItem(response.data));
+    thunkAPI.dispatch(GroupActions.updateItem(response.data));
+    thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
     return response.data;
   });
 }

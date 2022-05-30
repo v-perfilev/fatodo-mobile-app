@@ -7,7 +7,7 @@ type FScrollViewProps = IScrollViewProps;
 const containerStyle = {flexGrow: 1};
 
 const FScrollView = ({children, p = DEFAULT_SPACE, px, py, pt, pr, pb, pl, ...props}: FScrollViewProps) => (
-  <ScrollView _contentContainerStyle={containerStyle} {...props}>
+  <ScrollView _contentContainerStyle={containerStyle} {...props} showsVerticalScrollIndicator={false}>
     <Flex flex="1" m={p} mx={px} my={py} mt={pt} mr={pr} mb={pb} ml={pl}>
       {children}
     </Flex>

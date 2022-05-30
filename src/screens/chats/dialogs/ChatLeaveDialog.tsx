@@ -1,33 +1,33 @@
 import React from 'react';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useTranslation} from 'react-i18next';
-import {Group} from '../../../models/Group';
 import {useAppDispatch} from '../../../store/store';
-import GroupsThunks from '../../../store/groups/groupsThunks';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
+import {Chat} from '../../../models/Chat';
+import ChatThunks from '../../../store/chat/chatThunks';
 
-export type GroupDeleteDialogProps = {
-  group: Group;
+export type ChatLeaveDialogProps = {
+  chat: Chat;
   show: boolean;
   close: () => void;
   onSuccess?: () => void;
 };
 
-export const defaultGroupDeleteDialogProps: Readonly<GroupDeleteDialogProps> = {
-  group: null,
+export const defaultChatLeaveDialogProps: Readonly<ChatLeaveDialogProps> = {
+  chat: null,
   show: false,
   close: (): void => null,
   onSuccess: (): void => null,
 };
 
-const GroupDeleteDialog = ({group, show, close, onSuccess = () => null}: GroupDeleteDialogProps) => {
+const ChatLeaveDialog = ({chat, show, close, onSuccess = () => null}: ChatLeaveDialogProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const [loading, setLoading] = useDelayedState(false);
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(GroupsThunks.removeGroup(group.id))
+    dispatch(ChatThunks.leaveChat(chat.id))
       .unwrap()
       .then(() => {
         onSuccess();
@@ -45,11 +45,11 @@ const GroupDeleteDialog = ({group, show, close, onSuccess = () => null}: GroupDe
       open={show}
       onAgree={onAgree}
       onDisagree={onDisagree}
-      title={t('group:deleteGroup.title')}
-      content={t('group:deleteGroup.text', {title: group?.title})}
+      title={t('chat:leaveChat.title')}
+      content={t('chat:leaveChat.text')}
       loading={loading}
     />
   );
 };
 
-export default GroupDeleteDialog;
+export default ChatLeaveDialog;

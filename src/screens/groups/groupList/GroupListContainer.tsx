@@ -47,6 +47,7 @@ const GroupListContainer = ({sorting}: GroupListContainerProps) => {
       onDragEnd={handleDragEnd}
       keyExtractor={extractKey}
       renderItem={renderer(sorting)}
+      showsVerticalScrollIndicator={false}
       contentContainerStyle={containerStyle(theme)}
     />
   );

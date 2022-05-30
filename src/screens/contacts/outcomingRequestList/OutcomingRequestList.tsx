@@ -3,7 +3,6 @@ import FScrollView from '../../../components/boxes/FScrollView';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import FVStack from '../../../components/boxes/FVStack';
 import OutcomingRequestListContainer from './OutcomingRequestListContainer';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
@@ -53,9 +52,7 @@ const OutcomingRequestList = () => {
   return (
     <ConditionalSpinner loading={loading}>
       <FScrollView>
-        <FVStack grow>
-          <OutcomingRequestListContainer requests={userRequests} />
-        </FVStack>
+        <OutcomingRequestListContainer requests={userRequests} />
       </FScrollView>
     </ConditionalSpinner>
   );

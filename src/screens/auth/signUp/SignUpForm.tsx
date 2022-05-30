@@ -13,7 +13,6 @@ import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBa
 import SolidButton from '../../../components/controls/SolidButton';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import SnackActions from '../../../store/snack/snackActions';
 import AuthThunks from '../../../store/auth/authThunks';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import AuthActions from '../../../store/auth/authActions';
@@ -38,7 +37,7 @@ const validationSchema = Yup.object().shape({
 });
 
 type SignUpFormProps = CaptchaProps & {
-  onSuccess?: () => void;
+  onSuccess: () => void;
 };
 
 const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormProps) => {
@@ -68,12 +67,7 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
 
     dispatch(AuthThunks.register(dto))
       .unwrap()
-      .then(() => {
-        dispatch(SnackActions.handleCode('auth.registered', 'info'));
-        if (onSuccess) {
-          onSuccess();
-        }
-      });
+      .then(() => onSuccess());
   };
 
   useEffect(() => {

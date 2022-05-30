@@ -46,7 +46,7 @@ const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle
         {!hideLogo && <Logo size="35px" />}
         {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="9" border="1" invertedBorder />}
         {!hideTitle && (
-          <Text fontWeight="800" fontSize="20" lineHeight="24" color="white" isTruncated>
+          <Text fontWeight="800" fontSize="md" lineHeight="md" color="white" isTruncated>
             {label}
           </Text>
         )}

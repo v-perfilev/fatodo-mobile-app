@@ -10,10 +10,11 @@ import FVStack from '../../../../components/boxes/FVStack';
 import FCenter from '../../../../components/boxes/FCenter';
 import {Chat} from '../../../../models/Chat';
 import ChatMembersDialogMember from './ChatMembersDialogMember';
+import {useAppSelector} from '../../../../store/store';
+import UsersSelectors from '../../../../store/users/usersSelectors';
 
 export type ChatMembersDialogProps = {
   chat: Chat;
-  users: User[];
   show: boolean;
   close: () => void;
   switchToAddMembers: () => void;
@@ -21,15 +22,15 @@ export type ChatMembersDialogProps = {
 
 export const defaultChatMembersDialogProps: Readonly<ChatMembersDialogProps> = {
   chat: null,
-  users: [],
   show: false,
-  close: (): void => undefined,
-  switchToAddMembers: (): void => undefined,
+  close: (): void => null,
+  switchToAddMembers: (): void => null,
 };
 
-const ChatMembersDialog = ({chat, users, show, close, switchToAddMembers}: ChatMembersDialogProps) => {
+const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersDialogProps) => {
   const {t} = useTranslation();
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
+  const users = useAppSelector(UsersSelectors.users);
 
   const filterUsersToShow = (text: string): void => {
     const updatedUsersToShow = users.filter((user) => chat.members.includes(user.id) && user.username.includes(text));

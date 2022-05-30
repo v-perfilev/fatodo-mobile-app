@@ -3,10 +3,9 @@ import {Divider, Theme} from 'native-base';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
-import Header from '../../../components/layouts/Header';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
-import ItemViewMenu from './ItemViewMenu';
+import ItemViewHeader from './ItemViewHeader';
 import ItemViewDescription from './ItemViewDescription';
 import ItemViewTags from './ItemViewTags';
 import ItemViewChanges from './ItemViewChanges';
@@ -75,12 +74,10 @@ const ItemView = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header title={item?.title} />
+      <ItemViewHeader account={account} />
       <ConditionalSpinner loading={loading || itemLoading || groupLoading}>
         <FScrollView>
           <FVStack defaultSpace>
-            <ItemViewMenu account={account} />
-            <Divider bg="secondary.500" />
             <ItemViewName />
             <ItemViewGroup />
             <FHStack defaultSpace>

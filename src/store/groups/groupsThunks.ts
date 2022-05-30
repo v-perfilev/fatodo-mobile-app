@@ -1,5 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ItemService from '../../services/ItemService';
+import SnackActions from '../snack/snackActions';
+import {Group} from '../../models/Group';
+import GroupsActions from './groupsActions';
 
 enum TYPES {
   FETCH_GROUPS = 'groups/fetchGroups',
@@ -10,7 +13,7 @@ enum TYPES {
   UPDATE_ORDER = 'groups/updateOrder',
 }
 
-export class GroupsThunks {
+class GroupsThunks {
   static fetchGroups = createAsyncThunk(TYPES.FETCH_GROUPS, async (_, thunkAPI) => {
     const response = await ItemService.getAllGroups();
     const groupIds = response.data.map((g) => g.id);
@@ -31,16 +34,21 @@ export class GroupsThunks {
     },
   );
 
-  static deleteGroup = createAsyncThunk(TYPES.DELETE_GROUP, async (groupId: string) => {
-    await ItemService.deleteGroup(groupId);
+  static deleteGroup = createAsyncThunk(TYPES.DELETE_GROUP, async (group: Group, thunkAPI) => {
+    await ItemService.deleteGroup(group.id);
+    thunkAPI.dispatch(GroupsActions.removeGroup(group));
+    thunkAPI.dispatch(SnackActions.handleCode('group.deleted', 'info'));
   });
 
-  static leaveGroup = createAsyncThunk(TYPES.LEAVE_GROUP, async (groupId: string) => {
-    await ItemService.leaveGroup(groupId);
+  static leaveGroup = createAsyncThunk(TYPES.LEAVE_GROUP, async (group: Group, thunkAPI) => {
+    await ItemService.leaveGroup(group.id);
+    thunkAPI.dispatch(GroupsActions.removeGroup(group));
+    thunkAPI.dispatch(SnackActions.handleCode('group.left', 'info'));
   });
 
-  static updateOrder = createAsyncThunk(TYPES.UPDATE_ORDER, async (order: string[]) => {
+  static updateOrder = createAsyncThunk(TYPES.UPDATE_ORDER, async (order: string[], thunkAPI) => {
     await ItemService.setGroupOrder(order);
+    thunkAPI.dispatch(SnackActions.handleCode('group.sorted', 'info'));
   });
 }
 

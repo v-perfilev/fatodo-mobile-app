@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
 import UserView from '../../../components/views/UserView';
-import SolidButton from '../../../components/controls/SolidButton';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch} from '../../../store/store';
-import SnackActions from '../../../store/snack/snackActions';
 import ContactsThunks from '../../../store/contacts/contactsThunks';
+import {MenuElement} from '../../../models/MenuElement';
+import ControlMenu from '../../../components/layouts/ControlMenu';
+import UserMinusIcon from '../../../components/icons/UserMinusIcon';
 
 type ContactListItemProps = {
   relation: ContactRelationWithUser;
@@ -14,25 +14,30 @@ type ContactListItemProps = {
 
 const ContactListItem = ({relation}: ContactListItemProps) => {
   const dispatch = useAppDispatch();
-  const {t} = useTranslation();
   const [disabled, setDisabled] = useState(false);
 
   const removeRelation = (): void => {
     setDisabled(true);
     dispatch(ContactsThunks.removeRelation(relation.user.id))
       .unwrap()
-      .then(() => dispatch(SnackActions.handleCode('contact.relationRemoved', 'info')))
       .catch(() => setDisabled(false));
   };
+
+  const menuElements = [
+    {
+      action: removeRelation,
+      icon: <UserMinusIcon />,
+      color: 'error',
+      disabled: disabled,
+    },
+  ] as MenuElement[];
 
   return (
     <FHStack defaultSpace>
       <FHStack grow>
         <UserView user={relation.user} withUsername picSize="sm" />
       </FHStack>
-      <SolidButton colorScheme="secondary" size="sm" isDisabled={disabled} onPress={removeRelation}>
-        {t('contact:relations.remove')}
-      </SolidButton>
+      <ControlMenu menu={menuElements} />
     </FHStack>
   );
 };

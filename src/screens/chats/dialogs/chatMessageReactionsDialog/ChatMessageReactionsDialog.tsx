@@ -8,6 +8,8 @@ import FVStack from '../../../../components/boxes/FVStack';
 import FCenter from '../../../../components/boxes/FCenter';
 import ChatMessageReactionsDialogItem from './ChatMessageReactionsDialogItem';
 import {Message, MessageReaction} from '../../../../models/Message';
+import {useAppSelector} from '../../../../store/store';
+import UsersSelectors from '../../../../store/users/usersSelectors';
 
 type MessageReactionWithUser = {
   reaction: MessageReaction;
@@ -16,20 +18,19 @@ type MessageReactionWithUser = {
 
 export type ChatMessageReactionsDialogProps = {
   message: Message;
-  users: User[];
   show: boolean;
   close: () => void;
 };
 
 export const defaultChatMessageReactionsDialogProps: Readonly<ChatMessageReactionsDialogProps> = {
   message: null,
-  users: [],
   show: false,
-  close: (): void => undefined,
+  close: (): void => null,
 };
 
-const ChatMessageReactionsDialog = ({message, users, show, close}: ChatMessageReactionsDialogProps) => {
+const ChatMessageReactionsDialog = ({message, show, close}: ChatMessageReactionsDialogProps) => {
   const {t} = useTranslation();
+  const users = useAppSelector(UsersSelectors.users);
   const [reactions, setReactions] = useState<MessageReactionWithUser[]>([]);
   const [reactionsToShow, setReactionsToShow] = useState<MessageReactionWithUser[]>([]);
 

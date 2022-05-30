@@ -3,9 +3,17 @@ import groupsSlice from './groupsSlice';
 import {Group} from '../../models/Group';
 import {Item} from '../../models/Item';
 
-export class GroupsActions {
+class GroupsActions {
   static setGroups = (groups: Group[]) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.setGroups(groups));
+  };
+
+  static cacheGroups = () => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.cacheGroups());
+  };
+
+  static resetGroupsFromCache = () => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.resetGroupsFromCache());
   };
 
   static setCollapsed = (id: string, value: boolean) => (dispatch: AppDispatch) => {
@@ -16,28 +24,28 @@ export class GroupsActions {
     dispatch(groupsSlice.actions.setAllCollapsed(value));
   };
 
-  static createGroup = (group: Group) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.createGroup(group));
+  static addGroup = (group: Group) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.addGroup(group));
   };
 
   static updateGroup = (group: Group) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.updateGroup(group));
   };
 
-  static deleteGroup = (group: Group) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.deleteGroup(group));
+  static removeGroup = (group: Group) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.removeGroup(group));
   };
 
-  static createItem = (item: Item) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.createItem(item));
+  static addItem = (item: Item) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.addItem(item));
   };
 
   static updateItem = (item: Item) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.updateItem(item));
   };
 
-  static deleteItem = (item: Item) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.deleteItem(item));
+  static removeItem = (item: Item) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.removeItem(item));
   };
 }
 

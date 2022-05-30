@@ -11,7 +11,7 @@ enum TYPES {
   FETCH_USERS_BY_USERNAME_OR_EMAIL = 'users/fetchUsersByUsernameOrEmail',
 }
 
-export class UsersThunks {
+class UsersThunks {
   static handleUserIds = createAsyncThunk(TYPES.HANDLE_USER_IDS, async (ids: string[], thunkAPI) => {
     const {
       users: {users, loadingIds},

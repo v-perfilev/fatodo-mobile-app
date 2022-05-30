@@ -2,7 +2,7 @@ import {AppDispatch} from '../store';
 import {Chat} from '../../models/Chat';
 import chatsSlice from './chatsSlice';
 
-export class ChatsActions {
+class ChatsActions {
   static addChat = (chat: Chat) => (dispatch: AppDispatch) => {
     dispatch(chatsSlice.actions.addChat(chat));
   };

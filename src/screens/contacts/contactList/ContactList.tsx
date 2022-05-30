@@ -4,13 +4,12 @@ import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import ContactListContainer from './ContactListContainer';
 import FScrollView from '../../../components/boxes/FScrollView';
-import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsThunks from '../../../store/contacts/contactsThunks';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import UsersSelectors from '../../../store/users/usersSelectors';
 import UsersThunks from '../../../store/users/usersThunks';
-import ContactListHeader from './ContactListHeader';
+import ContactListControl from './ContactListControl';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();
@@ -54,14 +53,14 @@ const ContactList = () => {
   }, [relations, users]);
 
   return (
-    <ConditionalSpinner loading={loading}>
-      <FScrollView>
-        <FVStack grow defaultSpace>
-          <ContactListHeader setFilter={setFilter} />
+    <>
+      <ContactListControl setFilter={setFilter} />
+      <ConditionalSpinner loading={loading}>
+        <FScrollView>
           <ContactListContainer relations={userRelations} filter={filter} />
-        </FVStack>
-      </FScrollView>
-    </ConditionalSpinner>
+        </FScrollView>
+      </ConditionalSpinner>
+    </>
   );
 };
 

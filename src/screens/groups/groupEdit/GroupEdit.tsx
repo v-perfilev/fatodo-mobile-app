@@ -5,7 +5,6 @@ import GroupForm from '../groupForm/GroupForm';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import SnackActions from '../../../store/snack/snackActions';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import GroupThunks from '../../../store/group/groupThunks';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
@@ -32,13 +31,8 @@ const GroupEdit = () => {
   const request = (formData: FormData, stopSubmitting: () => void): void => {
     dispatch(GroupThunks.updateGroup(formData))
       .unwrap()
-      .then(() => {
-        dispatch(SnackActions.handleCode('group.updated', 'info'));
-        goToGroupView();
-      })
-      .catch(() => {
-        stopSubmitting();
-      });
+      .then(() => goToGroupView())
+      .catch(() => stopSubmitting());
   };
 
   useEffect(() => {

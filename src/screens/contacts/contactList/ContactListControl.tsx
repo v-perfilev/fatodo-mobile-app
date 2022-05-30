@@ -11,7 +11,7 @@ type ContactListHeaderProps = {
   setFilter: Dispatch<SetStateAction<string>>;
 };
 
-const ContactListHeader = ({setFilter}: ContactListHeaderProps) => {
+const ContactListControl = ({setFilter}: ContactListHeaderProps) => {
   const {t} = useTranslation();
   const {showContactRequestDialog} = useContactDialogContext();
 
@@ -20,13 +20,19 @@ const ContactListHeader = ({setFilter}: ContactListHeaderProps) => {
   };
 
   return (
-    <FHStack defaultSpace alignItems="center">
+    <FHStack space="2" p="2" alignItems="center" borderBottomWidth="1" borderBottomColor="gray.200">
       <IconButton icon={<UserPlusIcon />} onPress={openContactRequestDialog} />
       <FBox>
-        <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={setFilter} />
+        <ClearableTextInput
+          h="36px"
+          px="2"
+          variant="unstyled"
+          placeholder={t('inputs.filter')}
+          onChangeText={setFilter}
+        />
       </FBox>
     </FHStack>
   );
 };
 
-export default ContactListHeader;
+export default ContactListControl;

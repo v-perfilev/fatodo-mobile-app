@@ -2,11 +2,10 @@
   "common": {
     "direct": "Direct"
   },
-  "control": {
+  "list": {
     "chatsNotFound": "No chats yet"
   },
-  "content": {
-    "placeholder": "Chat not selected",
+  "view": {
     "messagesNotFound": "No messages yet",
     "inputPlaceholder": "Type your message..."
   },
@@ -27,6 +26,18 @@
       "edit": "Edit",
       "delete": "Delete"
     }
+  },
+  "event": {
+    "CREATE_DIRECT_CHAT": "{{username}} created direct chat with {{usernames}}",
+    "CREATE_CHAT": "{{username}} created chat with {{usernames}}",
+    "RENAME_CHAT": "{{username}} renamed the chat to \"{{title}}\"",
+    "LEAVE_CHAT": "{{username}} left the chat",
+    "ADD_MEMBERS": "{{username}} added new members to the chat: {{usernames}}",
+    "DELETE_MEMBERS": "{{username}} deleted members from the chat: {{usernames}}"
+  },
+  "actions": {
+    "createChat": "Create chat",
+    "back": "Back"
   },
   "createChat": {
     "title": "Create chat",
@@ -102,16 +113,16 @@
     "send": "Send",
     "cancel": "Cancel"
   },
-  "event": {
-    "CREATE_DIRECT_CHAT": "{{username}} created direct chat with {{usernames}}",
-    "CREATE_CHAT": "{{username}} created chat with {{usernames}}",
-    "RENAME_CHAT": "{{username}} renamed the chat to \"{{title}}\"",
-    "LEAVE_CHAT": "{{username}} left the chat",
-    "ADD_MEMBERS": "{{username}} added new members to the chat: {{usernames}}",
-    "DELETE_MEMBERS": "{{username}} deleted members from the chat: {{usernames}}"
+  "clearChat": {
+    "title": "Clear chat",
+    "text": "Are you sure you want to clear the chat?"
   },
-  "actions": {
-    "createChat": "Create chat",
-    "back": "Back"
+  "leaveChat": {
+    "title": "Leave chat",
+    "text": "Are you sure you want to leave the chat?"
+  },
+  "deleteChat": {
+    "title": "Delete chat",
+    "text": "Are you sure you want to delete the chat?"
   }
 }

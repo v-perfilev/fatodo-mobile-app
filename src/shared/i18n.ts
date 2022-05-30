@@ -13,6 +13,9 @@ import accountRU from '../../assets/locales/ru/account.json';
 // feedback
 import feedbackEN from '../../assets/locales/en/feedback.json';
 import feedbackRU from '../../assets/locales/ru/feedback.json';
+// snack
+import snackEN from '../../assets/locales/en/snack.json';
+import snackRU from '../../assets/locales/ru/snack.json';
 // group
 import groupEN from '../../assets/locales/en/group.json';
 import groupRU from '../../assets/locales/ru/group.json';
@@ -43,6 +46,7 @@ const resources = {
     common: commonEN,
     account: accountEN,
     feedback: feedbackEN,
+    snack: snackEN,
     group: groupEN,
     item: itemEN,
     contact: contactEN,
@@ -53,6 +57,7 @@ const resources = {
     common: commonRU,
     account: accountRU,
     feedback: feedbackRU,
+    snack: snackRU,
     group: groupRU,
     item: itemRU,
     contact: contactRU,
@@ -65,7 +70,7 @@ i18next.use(initReactI18next).init({
   compatibilityJSON: 'v3',
   resources,
   lng: 'en',
-  ns: ['translation', 'common', 'account', 'feedback', 'group', 'item', 'contact', 'chat'],
+  ns: ['translation', 'common', 'account', 'feedback', 'snack', 'group', 'item', 'contact', 'chat'],
   defaultNS: 'translation',
   interpolation: {
     escapeValue: false, // react already safes from xss

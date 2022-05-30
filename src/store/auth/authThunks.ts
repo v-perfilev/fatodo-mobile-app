@@ -6,6 +6,7 @@ import UserService from '../../services/UserService';
 import {LanguageUtils} from '../../shared/utils/LanguageUtils';
 import {RegistrationDTO} from '../../models/dto/RegistrationDTO';
 import {ForgotPasswordDTO} from '../../models/dto/ForgotPasswordDTO';
+import SnackActions from '../snack/snackActions';
 
 enum TYPES {
   REGISTER = 'account/register',
@@ -14,9 +15,10 @@ enum TYPES {
   FORGOT_PASSWORD = 'account/forgotPassword',
 }
 
-export class AuthThunks {
-  static register = createAsyncThunk(TYPES.REGISTER, async (dto: RegistrationDTO) => {
+class AuthThunks {
+  static register = createAsyncThunk(TYPES.REGISTER, async (dto: RegistrationDTO, thunkAPI) => {
     await AuthService.register(dto);
+    thunkAPI.dispatch(SnackActions.handleCode('auth.registered', 'info'));
   });
 
   static authenticate = createAsyncThunk(TYPES.AUTHENTICATE, async (dto: LoginDTO, thunkAPI) => {
@@ -33,8 +35,9 @@ export class AuthThunks {
     return account;
   });
 
-  static forgotPassword = createAsyncThunk(TYPES.FORGOT_PASSWORD, async (dto: ForgotPasswordDTO) => {
+  static forgotPassword = createAsyncThunk(TYPES.FORGOT_PASSWORD, async (dto: ForgotPasswordDTO, thunkAPI) => {
     await AuthService.requestResetPasswordCode(dto);
+    thunkAPI.dispatch(SnackActions.handleCode('auth.afterForgotPassword', 'info'));
   });
 }
 

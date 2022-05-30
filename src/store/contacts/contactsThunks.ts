@@ -1,6 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ContactService from '../../services/ContactService';
 import {ContactRequestDTO} from '../../models/dto/ContactRequestDTO';
+import SnackActions from '../snack/snackActions';
+import {ContactRequest} from '../../models/ContactRequest';
+import {ContactRelation} from '../../models/ContactRelation';
+import ContactsActions from './contactsActions';
 
 enum TYPES {
   FETCH_INFO = 'contacts/fetchInfo',
@@ -14,7 +18,7 @@ enum TYPES {
   REMOVE_OUTCOMING_REQUEST = 'contacts/removeOutcomingRequest',
 }
 
-export class ContactsThunks {
+class ContactsThunks {
   static fetchInfo = createAsyncThunk(TYPES.FETCH_INFO, async () => {
     const response = await ContactService.getInfo();
     return response.data;
@@ -35,29 +39,37 @@ export class ContactsThunks {
     return response.data;
   });
 
-  static removeRelation = createAsyncThunk(TYPES.REMOVE_RELATION, async (userId: string) => {
+  static removeRelation = createAsyncThunk(TYPES.REMOVE_RELATION, async (userId: string, thunkAPI) => {
     await ContactService.removeRelation(userId);
-    return userId;
+    thunkAPI.dispatch(ContactsActions.removeRelation(userId));
+    thunkAPI.dispatch(SnackActions.handleCode('contact.relationRemoved', 'info'));
   });
 
-  static sendRequest = createAsyncThunk(TYPES.SEND_REQUEST, async (dto: ContactRequestDTO) => {
+  static sendRequest = createAsyncThunk(TYPES.SEND_REQUEST, async (dto: ContactRequestDTO, thunkAPI) => {
     await ContactService.sendRequest(dto);
-    return dto.recipientId;
+    const request = {id: undefined, requesterId: undefined, recipientId: dto.recipientId} as ContactRequest;
+    thunkAPI.dispatch(ContactsActions.addOutcomingRequest(request));
+    thunkAPI.dispatch(SnackActions.handleCode('contact.requestSent', 'info'));
   });
 
-  static acceptIncomingRequest = createAsyncThunk(TYPES.ACCEPT_INCOMING_REQUEST, async (userId: string) => {
+  static acceptIncomingRequest = createAsyncThunk(TYPES.ACCEPT_INCOMING_REQUEST, async (userId: string, thunkAPI) => {
     await ContactService.acceptRequest(userId);
-    return userId;
+    const relation = {id: undefined, firstUserId: undefined, secondUserId: userId} as ContactRelation;
+    thunkAPI.dispatch(ContactsActions.addRelation(relation));
+    thunkAPI.dispatch(ContactsActions.removeIncomingRequest(userId));
+    thunkAPI.dispatch(SnackActions.handleCode('contact.requestAccepted', 'info'));
   });
 
-  static declineIncomingRequest = createAsyncThunk(TYPES.DECLINE_INCOMING_REQUEST, async (userId: string) => {
+  static declineIncomingRequest = createAsyncThunk(TYPES.DECLINE_INCOMING_REQUEST, async (userId: string, thunkAPI) => {
     await ContactService.declineRequest(userId);
-    return userId;
+    thunkAPI.dispatch(ContactsActions.removeIncomingRequest(userId));
+    thunkAPI.dispatch(SnackActions.handleCode('contact.requestDeclined', 'info'));
   });
 
-  static removeOutcomingRequest = createAsyncThunk(TYPES.REMOVE_OUTCOMING_REQUEST, async (userId: string) => {
+  static removeOutcomingRequest = createAsyncThunk(TYPES.REMOVE_OUTCOMING_REQUEST, async (userId: string, thunkAPI) => {
     await ContactService.removeRequest(userId);
-    return userId;
+    thunkAPI.dispatch(ContactsActions.removeOutcomingRequest(userId));
+    thunkAPI.dispatch(SnackActions.handleCode('contact.requestRemoved', 'info'));
   });
 }
 

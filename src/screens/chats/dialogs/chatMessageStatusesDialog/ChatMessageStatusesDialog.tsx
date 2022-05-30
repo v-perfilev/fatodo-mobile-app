@@ -8,6 +8,8 @@ import FVStack from '../../../../components/boxes/FVStack';
 import FCenter from '../../../../components/boxes/FCenter';
 import ChatMessageStatusesDialogItem from './ChatMessageStatusesDialogItem';
 import {Message, MessageStatus} from '../../../../models/Message';
+import {useAppSelector} from '../../../../store/store';
+import UsersSelectors from '../../../../store/users/usersSelectors';
 
 type ReadStatusWithUser = {
   status: MessageStatus;
@@ -16,20 +18,19 @@ type ReadStatusWithUser = {
 
 export type ChatMessageStatusesDialogProps = {
   message: Message;
-  users: User[];
   show: boolean;
   close: () => void;
 };
 
 export const defaultChatMessageStatusesDialogProps: Readonly<ChatMessageStatusesDialogProps> = {
   message: null,
-  users: [],
   show: false,
-  close: (): void => undefined,
+  close: (): void => null,
 };
 
-const ChatMessageStatusesDialog = ({message, users, show, close}: ChatMessageStatusesDialogProps) => {
+const ChatMessageStatusesDialog = ({message, show, close}: ChatMessageStatusesDialogProps) => {
   const {t} = useTranslation();
+  const users = useAppSelector(UsersSelectors.users);
   const [statuses, setStatuses] = useState<ReadStatusWithUser[]>([]);
   const [statusesToShow, setStatusesToShow] = useState<ReadStatusWithUser[]>([]);
 

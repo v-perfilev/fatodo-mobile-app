@@ -5,6 +5,8 @@ import {Group, GroupMember} from '../../models/Group';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import GroupsActions from '../groups/groupsActions';
 import GroupsThunks from '../groups/groupsThunks';
+import SnackActions from '../snack/snackActions';
+import GroupActions from './groupActions';
 
 enum TYPES {
   FETCH_GROUP = 'group/fetchGroup',
@@ -20,7 +22,7 @@ enum TYPES {
   REMOVE_GROUP_MEMBERS = 'group/deleteGroupMember',
 }
 
-export class GroupThunks {
+class GroupThunks {
   static fetchGroup = createAsyncThunk(TYPES.FETCH_GROUP, async (groupId: string) => {
     const response = await ItemService.getGroup(groupId);
     return response.data;
@@ -45,6 +47,8 @@ export class GroupThunks {
   static updateItemArchived = createAsyncThunk(TYPES.UPDATE_ITEM_ARCHIVED, async (item: Item, thunkAPI) => {
     const response = await ItemService.updateItemArchived(item.id, !item.archived);
     thunkAPI.dispatch(GroupsActions.updateItem(response.data));
+    thunkAPI.dispatch(GroupActions.updaterItemArchived(response.data));
+    thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
     return response.data;
   });
 
@@ -53,26 +57,32 @@ export class GroupThunks {
     async ({item, status}: {item: Item; status: ItemStatusType}, thunkAPI) => {
       const response = await ItemService.updateItemStatus(item.id, status);
       thunkAPI.dispatch(GroupsActions.updateItem(response.data));
+      thunkAPI.dispatch(GroupActions.updaterItemStatus(response.data));
+      thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
       return response.data;
     },
   );
 
   static deleteItem = createAsyncThunk(TYPES.DELETE_ITEM, async (item: Item, thunkAPI) => {
     const response = await ItemService.deleteItem(item.id);
-    thunkAPI.dispatch(GroupsActions.deleteItem(item));
+    thunkAPI.dispatch(GroupsActions.removeItem(item));
+    thunkAPI.dispatch(GroupActions.removeItem(item));
+    thunkAPI.dispatch(SnackActions.handleCode('item.deleted', 'info'));
     return response.data;
   });
 
   static createGroup = createAsyncThunk(TYPES.CREATE_GROUP, async (formData: FormData, thunkAPI) => {
     const response = await ItemService.createGroup(formData);
-    thunkAPI.dispatch(GroupsActions.createGroup(response.data));
+    thunkAPI.dispatch(GroupsActions.addGroup(response.data));
     thunkAPI.dispatch(GroupsThunks.fetchItems([response.data.id]));
+    thunkAPI.dispatch(SnackActions.handleCode('group.created', 'info'));
     return response.data;
   });
 
   static updateGroup = createAsyncThunk(TYPES.UPDATE_GROUP, async (formData: FormData, thunkAPI) => {
     const response = await ItemService.updateGroup(formData);
     thunkAPI.dispatch(GroupsActions.updateGroup(response.data));
+    thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
     return response.data;
   });
 
@@ -83,7 +93,8 @@ export class GroupThunks {
       group.members = ArrayUtils.addValuesToEnd(group.members, newMembers);
       await ItemService.addMembersToGroup(group.id, userIds);
       thunkAPI.dispatch(GroupsActions.updateGroup(group));
-      return group;
+      thunkAPI.dispatch(GroupActions.updateGroup(group));
+      thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
     },
   );
 
@@ -93,7 +104,8 @@ export class GroupThunks {
       group.members = ArrayUtils.updateValue(group.members, member);
       await ItemService.editGroupMember(group.id, member);
       thunkAPI.dispatch(GroupsActions.updateGroup(group));
-      return group;
+      thunkAPI.dispatch(GroupActions.updateGroup(group));
+      thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
     },
   );
 
@@ -103,7 +115,8 @@ export class GroupThunks {
       group.members = group.members.filter((m) => !userIds.includes(m.id));
       await ItemService.removeMembersFromGroup(group.id, userIds);
       thunkAPI.dispatch(GroupsActions.updateGroup(group));
-      return group;
+      thunkAPI.dispatch(GroupActions.updateGroup(group));
+      thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
     },
   );
 }

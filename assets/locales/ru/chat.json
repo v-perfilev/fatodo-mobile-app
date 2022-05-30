@@ -28,6 +28,18 @@
       "delete": "Удалить"
     }
   },
+  "event": {
+    "CREATE_DIRECT_CHAT": "{{username}} создал директ чат с {{usernames}}",
+    "CREATE_CHAT": "{{username}} создал чат с {{usernames}}",
+    "RENAME_CHAT": "{{user}}name переименовал чат в \"{{title}}\"",
+    "LEAVE_CHAT": "{{username}} покинул чат",
+    "ADD_MEMBERS": "{{username}} добавил в чат новых пользователей: {{usernames}}",
+    "DELETE_MEMBERS": "{{username}} удалил из чата пользователей: {{usernames}}"
+  },
+  "actions": {
+    "createChat": "Создать чат",
+    "back": "К предыдущей страницы"
+  },
   "createChat": {
     "title": "Создать чат",
     "fields": {
@@ -102,16 +114,16 @@
     "send": "Отправить",
     "cancel": "Отменить"
   },
-  "event": {
-    "CREATE_DIRECT_CHAT": "{{username}} создал директ чат с {{usernames}}",
-    "CREATE_CHAT": "{{username}} создал чат с {{usernames}}",
-    "RENAME_CHAT": "{{user}}name переименовал чат в \"{{title}}\"",
-    "LEAVE_CHAT": "{{username}} покинул чат",
-    "ADD_MEMBERS": "{{username}} добавил в чат новых пользователей: {{usernames}}",
-    "DELETE_MEMBERS": "{{username}} удалил из чата пользователей: {{usernames}}"
+  "clearChat": {
+    "title": "Очистка чата",
+    "text": "Вы уверены, что хотите очистить чат?"
   },
-  "actions": {
-    "createChat": "Создать чат",
-    "back": "К предыдущей страницы"
+  "leaveChat": {
+    "title": "Выход из чата",
+    "text": "Вы уверены, что хотите покинуть чат?"
+  },
+  "deleteChat": {
+    "title": "Удаление чата",
+    "text": "Вы уверены, что хотите удалить чат?"
   }
 }

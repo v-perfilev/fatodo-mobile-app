@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import GroupViewItemIcons from './GroupViewItemIcons';
 import GroupViewItemChanges from './GroupViewItemChanges';
-import GroupViewItemMenu from './GroupViewItemMenu';
+import GroupViewItemMenuButton from './GroupViewItemMenuButton';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../../store/store';
@@ -32,7 +32,7 @@ const GroupViewItem = ({item, canEdit}: GroupViewItemProps) => {
           </Text>
           <GroupViewItemChanges item={item} />
         </FVStack>
-        <GroupViewItemMenu item={item} canEdit={canEdit} />
+        <GroupViewItemMenuButton item={item} canEdit={canEdit} />
       </FHStack>
     </Pressable>
   );

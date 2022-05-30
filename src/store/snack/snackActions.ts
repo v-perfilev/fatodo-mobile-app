@@ -5,7 +5,7 @@ import {ResponseUtils} from '../../shared/utils/ResponseUtils';
 import {TranslationUtils} from '../../shared/utils/TranslationUtils';
 import {AppDispatch} from '../store';
 
-export class SnackActions {
+class SnackActions {
   static enqueueSnack = (snack: Snack) => (dispatch: AppDispatch) => {
     dispatch(
       snackSlice.actions.enqueueSnack({

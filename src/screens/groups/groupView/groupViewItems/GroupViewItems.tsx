@@ -1,5 +1,4 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {UserAccount} from '../../../../models/User';
 import {useDelayedState} from '../../../../shared/hooks/useDelayedState';
 import {Item} from '../../../../models/Item';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
@@ -15,15 +14,16 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import UsersThunks from '../../../../store/users/usersThunks';
 import GroupSelectors from '../../../../store/group/groupSelectors';
 import GroupThunks from '../../../../store/group/groupThunks';
+import AuthSelectors from '../../../../store/auth/authSelectors';
 
 type GroupViewItemsProps = {
   showArchived: boolean;
   setShowArchived: (archived: boolean) => void;
-  account: UserAccount;
 };
 
-const GroupViewItems = ({showArchived, setShowArchived, account}: GroupViewItemsProps) => {
+const GroupViewItems = ({showArchived, setShowArchived}: GroupViewItemsProps) => {
   const dispatch = useAppDispatch();
+  const account = useAppSelector(AuthSelectors.account);
   const group = useAppSelector(GroupSelectors.group);
   const activeItemsCount = useAppSelector(GroupSelectors.activeItemsCount);
   const archivedItemsCount = useAppSelector(GroupSelectors.archivedItemsCount);

@@ -1,5 +1,4 @@
 import React from 'react';
-import {MenuElement} from '../../../models/MenuElement';
 import DeleteIcon from '../../../components/icons/DeleteIcon';
 import EditIcon from '../../../components/icons/EditIcon';
 import PlusIcon from '../../../components/icons/PlusIcon';
@@ -7,34 +6,32 @@ import {useTranslation} from 'react-i18next';
 import LeaveIcon from '../../../components/icons/LeaveIcon';
 import UserPlusIcon from '../../../components/icons/UserPlusIcon';
 import MembersIcon from '../../../components/icons/MembersIcon';
-import ControlMenu from '../../../components/layouts/ControlMenu';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
-import {UserAccount} from '../../../models/User';
 import {useGroupDialogContext} from '../../../shared/contexts/dialogContexts/GroupDialogContext';
 import {useAppSelector} from '../../../store/store';
-import UsersSelectors from '../../../store/users/usersSelectors';
 import GroupSelectors from '../../../store/group/groupSelectors';
+import Header from '../../../components/layouts/Header';
+import AuthSelectors from '../../../store/auth/authSelectors';
+import Menu, {MenuItem, MenuItemProps} from '../../../components/controls/Menu';
+import IconButton from '../../../components/controls/IconButton';
+import DotsVerticalIcon from '../../../components/icons/DotsVerticalIcon';
 
-type GroupViewMenuProps = {
-  account: UserAccount;
-};
-
-const GroupViewMenu = ({account}: GroupViewMenuProps) => {
+const GroupViewHeader = () => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {showGroupMembersDialog, showGroupAddMembersDialog, showGroupLeaveDialog, showGroupDeleteDialog} =
     useGroupDialogContext();
   const {t} = useTranslation();
   const group = useAppSelector(GroupSelectors.group);
-  const users = useAppSelector(UsersSelectors.users);
+  const account = useAppSelector(AuthSelectors.account);
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
   const goToItemCreate = (): void => navigation.navigate('ItemCreate', {groupId: group.id, colorScheme: group.color});
   const goToGroupEdit = (): void => navigation.navigate('GroupEdit', {groupId: group.id, colorScheme: group.color});
 
   const openGroupMembersDialog = (): void => {
-    showGroupMembersDialog(group, users);
+    showGroupMembersDialog(group);
   };
 
   const openGroupAddMembersDialog = (): void => {
@@ -56,32 +53,42 @@ const GroupViewMenu = ({account}: GroupViewMenuProps) => {
   const canLeave = group && GroupUtils.canLeave(account, group);
 
   const menuElements = [
-    {icon: <PlusIcon />, action: goToItemCreate, text: t('group:actions.create'), hidden: !canEdit},
-    {icon: <EditIcon />, action: goToGroupEdit, text: t('group:actions.edit'), hidden: !canAdmin},
-    {icon: <MembersIcon />, action: openGroupMembersDialog, text: t('group:actions.members')},
+    {icon: <EditIcon color="primary.500" />, action: goToGroupEdit, text: t('group:actions.edit'), hidden: !canAdmin},
+    {icon: <MembersIcon color="primary.500" />, action: openGroupMembersDialog, text: t('group:actions.members')},
     {
-      icon: <UserPlusIcon />,
+      icon: <UserPlusIcon color="primary.500" />,
       action: openGroupAddMembersDialog,
       text: t('group:actions.addMembers'),
       hidden: !canAdmin,
     },
     {
-      icon: <LeaveIcon />,
+      icon: <LeaveIcon color="secondary.500" />,
       action: openGroupLeaveDialog,
       text: t('group:actions.leave'),
-      color: 'secondary',
       disabled: !canLeave,
     },
     {
-      icon: <DeleteIcon />,
+      icon: <DeleteIcon color="error.500" />,
       action: openGroupDeleteDialog,
       text: t('group:actions.delete'),
-      color: 'secondary',
       hidden: !canAdmin,
     },
-  ] as MenuElement[];
+  ] as MenuItemProps[];
 
-  return <ControlMenu menu={menuElements} />;
+  return (
+    <Header title={group?.title} imageFilename={group?.imageFilename} hideLogo>
+      {canEdit && <IconButton colorScheme="white" size="lg" p="1.5" icon={<PlusIcon />} onPress={goToItemCreate} />}
+      <Menu
+        trigger={(triggerProps) => (
+          <IconButton {...triggerProps} colorScheme="white" size="lg" p="1.5" icon={<DotsVerticalIcon />} />
+        )}
+      >
+        {menuElements.map((itemProps, index) => (
+          <MenuItem {...itemProps} key={index} />
+        ))}
+      </Menu>
+    </Header>
+  );
 };
 
-export default GroupViewMenu;
+export default GroupViewHeader;

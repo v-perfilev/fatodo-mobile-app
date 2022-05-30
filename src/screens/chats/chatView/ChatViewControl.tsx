@@ -8,6 +8,7 @@ import {MessageDTO} from '../../../models/dto/MessageDTO';
 import ChatThunks from '../../../store/chat/chatThunks';
 import {Chat} from '../../../models/Chat';
 import IconButton from '../../../components/controls/IconButton';
+import {useTranslation} from 'react-i18next';
 
 type ChatViewControlProps = {
   chat: Chat;
@@ -15,6 +16,7 @@ type ChatViewControlProps = {
 
 const ChatViewControl = ({chat}: ChatViewControlProps) => {
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
   const [messageBody, setMessageBody] = useState<string>('');
   const [updater, setUpdater] = useState<string>(undefined);
 
@@ -43,7 +45,14 @@ const ChatViewControl = ({chat}: ChatViewControlProps) => {
   return (
     <FHStack space="2" p="2" alignItems="center" borderTopWidth="1" borderTopColor="gray.200">
       <FBox>
-        <ClearableTextInput h="36px" px="2" variant="unstyled" value={updater} onChangeText={handleTextChange} />
+        <ClearableTextInput
+          h="36px"
+          px="2"
+          variant="unstyled"
+          placeholder={t('chat:view.inputPlaceholder')}
+          value={updater}
+          onChangeText={handleTextChange}
+        />
       </FBox>
       <IconButton icon={<SendMessageIcon />} onPress={handleSend} isDisabled={!isValid} />
     </FHStack>

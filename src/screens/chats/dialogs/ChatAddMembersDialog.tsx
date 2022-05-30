@@ -18,7 +18,7 @@ export type ChatAddMembersDialogProps = {
 export const defaultChatAddMembersDialogProps: Readonly<ChatAddMembersDialogProps> = {
   chat: null,
   show: false,
-  close: (): void => undefined,
+  close: (): void => null,
 };
 
 const ChatAddMembersDialog = ({chat, show, close}: ChatAddMembersDialogProps) => {
@@ -33,12 +33,8 @@ const ChatAddMembersDialog = ({chat, show, close}: ChatAddMembersDialogProps) =>
     setIsSubmitting(true);
     dispatch(ChatThunks.addChatMembers({chat, userIds}))
       .unwrap()
-      .then(() => {
-        close();
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+      .then(() => close())
+      .finally(() => setIsSubmitting(false));
   };
 
   useEffect(() => {

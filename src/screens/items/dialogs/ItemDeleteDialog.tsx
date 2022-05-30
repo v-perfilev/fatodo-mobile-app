@@ -3,7 +3,6 @@ import {useTranslation} from 'react-i18next';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {Item} from '../../../models/Item';
 import {useAppDispatch} from '../../../store/store';
-import SnackActions from '../../../store/snack/snackActions';
 import GroupThunks from '../../../store/group/groupThunks';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
@@ -17,28 +16,24 @@ export type ItemDeleteDialogProps = {
 export const defaultItemDeleteDialogProps: Readonly<ItemDeleteDialogProps> = {
   item: null,
   show: false,
-  close: (): void => undefined,
+  close: (): void => null,
+  onSuccess: (): void => null,
 };
 
-const ItemDeleteDialog = ({item, close, onSuccess}: ItemDeleteDialogProps) => {
+const ItemDeleteDialog = ({item, close, onSuccess = () => null}: ItemDeleteDialogProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const [loading, setLoading] = useDelayedState(false);
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(GroupThunks.deleteItem(item))
+    dispatch(GroupThunks.removeItem(item))
       .unwrap()
       .then(() => {
-        dispatch(SnackActions.handleCode('item.deleted', 'info'));
+        onSuccess();
         close();
-        if (onSuccess) {
-          onSuccess();
-        }
       })
-      .finally(() => {
-        setLoading(false);
-      });
+      .finally(() => setLoading(false));
   };
 
   const onDisagree = (): void => {

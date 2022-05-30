@@ -21,7 +21,7 @@ type GroupViewItemMenuProps = {
   canEdit: boolean;
 };
 
-const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
+const GroupViewItemMenuButton = ({item, canEdit}: GroupViewItemMenuProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
@@ -33,7 +33,7 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
   const goToItemEdit = (): void => navigation.navigate('ItemEdit', {itemId: item.id, colorScheme: group.color});
 
   const deleteItem = (item: Item): void => {
-    dispatch(GroupThunks.deleteItem(item));
+    dispatch(GroupThunks.removeItem(item));
   };
 
   const toggleArchived = useCallback((): void => {
@@ -56,7 +56,7 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
       text: item.archived ? t('group:actions.removeFromArchive') : t('group:actions.moveToArchive'),
       loading: archivedLoading,
       disabled: archivedLoading,
-      show: canEdit,
+      hidden: !canEdit,
     },
     {action: goToItemEdit, icon: <EditIcon color="primary.500" />, text: t('group:actions.edit')},
     {action: openItemDeleteDialog, icon: <DeleteIcon color="error.500" />, text: t('group:actions.delete')},
@@ -75,4 +75,4 @@ const GroupViewItemMenu = ({item, canEdit}: GroupViewItemMenuProps) => {
   );
 };
 
-export default GroupViewItemMenu;
+export default GroupViewItemMenuButton;

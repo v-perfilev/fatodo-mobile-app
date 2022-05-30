@@ -8,7 +8,7 @@ const ChatViewStub = () => {
 
   return (
     <FCenter grow mb="60px">
-      <Text>{t('chat:content.chatsNotFound')}</Text>
+      <Text>{t('chat:view.messagesNotFound')}</Text>
     </FCenter>
   );
 };

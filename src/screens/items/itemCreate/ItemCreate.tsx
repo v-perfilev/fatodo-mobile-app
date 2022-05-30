@@ -6,7 +6,6 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import ItemForm from '../itemForm/ItemForm';
 import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import SnackActions from '../../../store/snack/snackActions';
 import ItemThunks from '../../../store/item/itemThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import GroupThunks from '../../../store/group/groupThunks';
@@ -30,15 +29,10 @@ const ItemCreate = () => {
   const goBack = (): void => navigation.goBack();
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
-    dispatch(ItemThunks.createItem(dto))
+    dispatch(ItemThunks.addItem(dto))
       .unwrap()
-      .then((item) => {
-        dispatch(SnackActions.handleCode('item.created', 'info'));
-        goToItemView(item.id);
-      })
-      .catch(() => {
-        stopSubmitting();
-      });
+      .then((item) => goToItemView(item.id))
+      .catch(() => stopSubmitting());
   };
 
   useEffect(() => {

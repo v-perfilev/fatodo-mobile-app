@@ -8,7 +8,7 @@ const ChatListStub: FC = () => {
 
   return (
     <FCenter grow mb="60px">
-      <Text>{t('chat:control.chatsNotFound')}</Text>
+      <Text>{t('chat:list.chatsNotFound')}</Text>
     </FCenter>
   );
 };

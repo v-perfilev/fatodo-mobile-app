@@ -15,6 +15,7 @@ const filterItems = (items: Item[]): Item[] => {
 
 const initialState: GroupsState = {
   groups: [],
+  cachedGroups: [],
   loading: false,
   items: [],
   itemsCollapsed: [],
@@ -26,10 +27,23 @@ const groupsSlice = createSlice({
   name: 'groups',
   initialState,
   reducers: {
-    setGroups: (state: GroupsState, action) => ({
-      ...state,
-      groups: action.payload,
-    }),
+    setGroups: (state: GroupsState, action) => {
+      const groups = action.payload;
+      return {...state, groups};
+    },
+
+    cacheGroups: (state: GroupsState) => {
+      const cachedGroups = state.groups;
+      return {...state, cachedGroups};
+    },
+
+    resetGroupsFromCache: (state: GroupsState) => {
+      const cachedGroupIds = state.cachedGroups.map((g) => g.id);
+      const newGroups = state.groups.filter((g) => !cachedGroupIds.includes(g.id));
+      const groups = [...newGroups, ...state.cachedGroups];
+      const cachedGroups = [] as Group[];
+      return {...state, groups, cachedGroups};
+    },
 
     setCollapsed: (state: GroupsState, action) => {
       const itemsCollapsed = MapUtils.setValue(state.itemsCollapsed, action.payload.id, action.payload.value);
@@ -41,7 +55,7 @@ const groupsSlice = createSlice({
       return {...state, itemsCollapsed};
     },
 
-    createGroup: (state: GroupsState, action) => {
+    addGroup: (state: GroupsState, action) => {
       const group = action.payload;
       const groups = [...state.groups, group];
       return {...state, groups};
@@ -53,7 +67,7 @@ const groupsSlice = createSlice({
       return {...state, groups};
     },
 
-    deleteGroup: (state: GroupsState, action) => {
+    removeGroup: (state: GroupsState, action) => {
       const group = action.payload as Group;
       const groups = ArrayUtils.deleteValueById(state.groups, group.id);
       const items = MapUtils.deleteValue(state.items, group.id);
@@ -63,7 +77,7 @@ const groupsSlice = createSlice({
       return {...state, groups, items, itemsCount, itemsCollapsed, itemsLoading};
     },
 
-    createItem: (state: GroupsState, action) => {
+    addItem: (state: GroupsState, action) => {
       const item = action.payload as Item;
       const newItemsValue = filterItems([item, ...MapUtils.getValue(state.items, item.groupId)]);
       const items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
@@ -82,7 +96,7 @@ const groupsSlice = createSlice({
       return {...state, items};
     },
 
-    deleteItem: (state: GroupsState, action) => {
+    removeItem: (state: GroupsState, action) => {
       const item = action.payload as Item;
       let items = state.items;
       let itemsCount = state.itemsCount;
@@ -161,19 +175,6 @@ const groupsSlice = createSlice({
       const groupId = action.meta.arg.groupId;
       const itemsLoading = MapUtils.setValue(state.itemsLoading, groupId, false);
       return {...state, itemsLoading};
-    });
-
-    /*
-    deleteGroup
-    */
-    builder.addCase(GroupsThunks.deleteGroup.fulfilled, (state: GroupsState, action) => {
-      const groupId = action.meta.arg;
-      const groups = ArrayUtils.deleteValueById(state.groups, groupId);
-      const items = MapUtils.deleteValue(state.items, groupId);
-      const itemsCount = MapUtils.deleteValue(state.itemsCount, groupId);
-      const itemsCollapsed = MapUtils.deleteValue(state.itemsCollapsed, groupId);
-      const itemsLoading = MapUtils.deleteValue(state.itemsLoading, groupId);
-      return {...state, groups, items, itemsCount, itemsCollapsed, itemsLoading};
     });
   },
 });
