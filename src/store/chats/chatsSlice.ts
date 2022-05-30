@@ -20,7 +20,7 @@ const chatsSlice = createSlice({
   reducers: {
     addChat: (state: ChatsState, action) => {
       const chat = action.payload;
-      const chats = ArrayUtils.addValueToStart(state.chats, chat);
+      const chats = ArrayUtils.addValueToStart(state.chats, chat).filter(ArrayUtils.uniqueByIdFilter);
       return {...state, chats};
     },
     updateChat: (state: ChatsState, action) => {
@@ -73,33 +73,6 @@ const chatsSlice = createSlice({
     builder.addCase(ChatsThunks.fetchFilteredChats.rejected, (state: ChatsState) => {
       const filteredChats = [] as Chat[];
       return {...state, filteredChats};
-    });
-
-    /*
-    createDirectChat
-    */
-    builder.addCase(ChatsThunks.createDirectChat.fulfilled, (state: ChatsState, action) => {
-      const newChat = action.payload;
-      const chats = ArrayUtils.addValuesToEnd(state.chats, [newChat]).filter(ArrayUtils.uniqueByIdFilter);
-      return {...state, chats};
-    });
-
-    /*
-    createIndirectChat
-    */
-    builder.addCase(ChatsThunks.createIndirectChat.fulfilled, (state: ChatsState, action) => {
-      const newChat = action.payload;
-      const chats = ArrayUtils.addValuesToEnd(state.chats, [newChat]).filter(ArrayUtils.uniqueByIdFilter);
-      return {...state, chats};
-    });
-
-    /*
-    sendDirectMessage
-    */
-    builder.addCase(ChatsThunks.sendDirectMessage.fulfilled, (state: ChatsState, action) => {
-      // TODO
-      console.log(action.payload);
-      return {...state};
     });
   },
 });

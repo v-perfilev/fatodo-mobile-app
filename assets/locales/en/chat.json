@@ -124,5 +124,9 @@
   "deleteChat": {
     "title": "Delete chat",
     "text": "Are you sure you want to delete the chat?"
+  },
+  "deleteMessage": {
+    "title": "Delete message",
+    "text": "Are you sure you want to delete the message?"
   }
 }

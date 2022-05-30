@@ -17,7 +17,8 @@ type ChatViewMessageMenuProps = {
 
 const ChatViewMessageMenu = ({message, isOutcoming}: ChatViewMessageMenuProps) => {
   const {t} = useTranslation();
-  const {showMessageReactionsDialog, showMessageReadStatusesDialog, showMessageEditDialog} = useChatDialogContext();
+  const {showMessageReactionsDialog, showMessageReadStatusesDialog, showMessageEditDialog, showMessageDeleteDialog} =
+    useChatDialogContext();
 
   const openReactionsDialog = (): void => {
     showMessageReactionsDialog(message);
@@ -32,7 +33,7 @@ const ChatViewMessageMenu = ({message, isOutcoming}: ChatViewMessageMenuProps) =
   };
 
   const deleteMessage = (): void => {
-    // DELETE MESSAGE
+    showMessageDeleteDialog(message);
   };
 
   const menuItems = [

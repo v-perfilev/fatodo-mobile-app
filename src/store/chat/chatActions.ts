@@ -28,6 +28,7 @@ enum TYPES {
   REMOVE_CHAT_MEMBER = 'chat/removeChatMember',
   SEND_MESSAGE = 'chat/sendMessage',
   EDIT_MESSAGE = 'chat/editMessage',
+  DELETE_MESSAGE = 'chat/deleteMessage',
 }
 
 export class ChatThunks {
@@ -40,23 +41,23 @@ export class ChatThunks {
   );
 
   static markAsRead = createAsyncThunk(TYPES.MARK_AS_READ, async (messageId: string) => {
-    const result = await ChatService.markMessageAsRead(messageId);
-    return result.data;
+    await ChatService.markMessageAsRead(messageId);
+    // TODO handler
   });
 
   static noReaction = createAsyncThunk(TYPES.NO_REACTION, async (messageId: string) => {
-    const result = await ChatService.noneMessageReaction(messageId);
-    return result.data;
+    await ChatService.noneMessageReaction(messageId);
+    // TODO handler
   });
 
   static likeReaction = createAsyncThunk(TYPES.LIKE_REACTION, async (messageId: string) => {
-    const result = await ChatService.likeMessageReaction(messageId);
-    return result.data;
+    await ChatService.likeMessageReaction(messageId);
+    // TODO handler
   });
 
   static dislikeReaction = createAsyncThunk(TYPES.DISLIKE_REACTION, async (messageId: string) => {
-    const result = await ChatService.dislikeMessageReaction(messageId);
-    return result.data;
+    await ChatService.dislikeMessageReaction(messageId);
+    // TODO handler
   });
 
   static renameChat = createAsyncThunk(
@@ -69,20 +70,20 @@ export class ChatThunks {
   );
 
   static clearChat = createAsyncThunk(TYPES.CLEAR_CHAT, async (chatId: string, thunkAPI) => {
-    // TODO handler
     await ChatService.clearChat(chatId);
+    // TODO handler
     thunkAPI.dispatch(SnackActions.handleCode('chat.cleared', 'info'));
   });
 
   static leaveChat = createAsyncThunk(TYPES.LEAVE_CHAT, async (chatId: string, thunkAPI) => {
-    // TODO handler
     await ChatService.leaveChat(chatId);
+    // TODO handler
     thunkAPI.dispatch(SnackActions.handleCode('chat.left', 'info'));
   });
 
   static deleteChat = createAsyncThunk(TYPES.DELETE_CHAT, async (chatId: string, thunkAPI) => {
+    await ChatService.deleteChat(chatId);
     // TODO handler
-    await ChatService.leaveChat(chatId);
     thunkAPI.dispatch(SnackActions.handleCode('chat.deleted', 'info'));
   });
 
@@ -91,8 +92,8 @@ export class ChatThunks {
     async ({chat, userIds}: {chat: Chat; userIds: string[]}, thunkAPI) => {
       chat.members = ArrayUtils.addValuesToEnd(chat.members, userIds);
       await ChatService.addUsersToChat(chat.id, userIds);
-      thunkAPI.dispatch(SnackActions.handleCode('chat.edited', 'info'));
       thunkAPI.dispatch(ChatsActions.updateChat(chat));
+      thunkAPI.dispatch(SnackActions.handleCode('chat.edited', 'info'));
     },
   );
 
@@ -101,27 +102,31 @@ export class ChatThunks {
     async ({chat, userId}: {chat: Chat; userId: string}, thunkAPI) => {
       chat.members = ArrayUtils.deleteValueById(chat.members, userId);
       await ChatService.removeUsersFromChat(chat.id, [userId]);
-      thunkAPI.dispatch(SnackActions.handleCode('chat.edited', 'info'));
       thunkAPI.dispatch(ChatsActions.updateChat(chat));
+      thunkAPI.dispatch(SnackActions.handleCode('chat.edited', 'info'));
     },
   );
 
   static sendMessage = createAsyncThunk(
     TYPES.SEND_MESSAGE,
     async ({chatId, dto}: {chatId: string; dto: MessageDTO}) => {
+      await ChatService.sendIndirectMessage(chatId, dto);
       // TODO handler
-      const result = await ChatService.sendIndirectMessage(chatId, dto);
-      return result.data;
     },
   );
 
   static editMessage = createAsyncThunk(
     TYPES.EDIT_MESSAGE,
     async ({messageId, dto}: {messageId: string; dto: MessageDTO}, thunkAPI) => {
+      await ChatService.editMessage(messageId, dto);
       // TODO handler
-      const result = await ChatService.editMessage(messageId, dto);
       thunkAPI.dispatch(SnackActions.handleCode('chat.messageEdited', 'info'));
-      return result.data;
     },
   );
+
+  static deleteMessage = createAsyncThunk(TYPES.DELETE_MESSAGE, async (messageId: string, thunkAPI) => {
+    await ChatService.deleteMessage(messageId);
+    // TODO handler
+    thunkAPI.dispatch(SnackActions.handleCode('chat.messageDeleted', 'info'));
+  });
 }

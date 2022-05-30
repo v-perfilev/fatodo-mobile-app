@@ -41,21 +41,21 @@ export class ChatsThunks {
 
   static createDirectChat = createAsyncThunk(TYPES.CREATE_DIRECT_CHAT, async (userId: string, thunkAPI) => {
     const result = await ChatService.createDirectChat(userId);
+    thunkAPI.dispatch(ChatsActions.addChat(result.data));
     thunkAPI.dispatch(SnackActions.handleCode('chat.created', 'info'));
-    return result.data;
   });
 
   static createIndirectChat = createAsyncThunk(TYPES.CREATE_INDIRECT_CHAT, async (userIds: string[], thunkAPI) => {
     const result = await ChatService.createIndirectChat(userIds);
+    thunkAPI.dispatch(ChatsActions.addChat(result.data));
     thunkAPI.dispatch(SnackActions.handleCode('chat.created', 'info'));
-    return result.data;
   });
 
   static sendDirectMessage = createAsyncThunk(
     TYPES.SEND_DIRECT_MESSAGE,
     async ({userId, dto}: {userId: string; dto: MessageDTO}) => {
-      const result = await ChatService.sendDirectMessage(userId, dto);
-      return result.data;
+      await ChatService.sendDirectMessage(userId, dto);
+      // TODO handle if presented
     },
   );
 }
