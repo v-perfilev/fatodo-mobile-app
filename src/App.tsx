@@ -14,13 +14,12 @@ import withDialogs from './shared/hocs/withDialogs/withDialogs';
 import withSnackDisplay from './shared/hocs/withSnackDisplay';
 import {store, useAppDispatch, useAppSelector} from './store/store';
 import AuthSelectors from './store/auth/authSelectors';
-import AuthActions from './store/auth/authActions';
-import SnackActions from './store/snack/snackActions';
 import RootNavigator from './navigators/RootNavigator';
-import AuthThunks from './store/auth/authThunks';
-import ContactsThunks from './store/contacts/contactsThunks';
 import AuthNavigator from './navigators/AuthNavigator';
 import {LogBox} from 'react-native';
+import {SnackActions} from './store/snack/snackActions';
+import {ContactsThunks} from './store/contacts/contactsActions';
+import {AuthActions, AuthThunks} from './store/auth/authActions';
 
 // disable logs
 LogBox.ignoreLogs([

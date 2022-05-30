@@ -12,9 +12,9 @@ import PackageUpIcon from '../../../../components/icons/PackageUpIcon';
 import PackageDownIcon from '../../../../components/icons/PackageDownIcon';
 import {useItemDialogContext} from '../../../../shared/contexts/dialogContexts/ItemDialogContext';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import GroupThunks from '../../../../store/group/groupThunks';
 import GroupSelectors from '../../../../store/group/groupSelectors';
 import IconButton from '../../../../components/controls/IconButton';
+import {GroupThunks} from '../../../../store/group/groupActions';
 
 type GroupViewItemMenuProps = {
   item: Item;
@@ -33,7 +33,7 @@ const GroupViewItemMenuButton = ({item, canEdit}: GroupViewItemMenuProps) => {
   const goToItemEdit = (): void => navigation.navigate('ItemEdit', {itemId: item.id, colorScheme: group.color});
 
   const deleteItem = (item: Item): void => {
-    dispatch(GroupThunks.removeItem(item));
+    dispatch(GroupThunks.deleteItem(item));
   };
 
   const toggleArchived = useCallback((): void => {

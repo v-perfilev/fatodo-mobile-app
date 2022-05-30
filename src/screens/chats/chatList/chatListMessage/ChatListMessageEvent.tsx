@@ -5,7 +5,7 @@ import {Text} from 'native-base';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import UsersSelectors from '../../../../store/users/usersSelectors';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
-import UsersThunks from '../../../../store/users/usersThunks';
+import {UsersThunks} from '../../../../store/users/usersActions';
 
 type ChatListMessageEventProps = {
   message: Message;

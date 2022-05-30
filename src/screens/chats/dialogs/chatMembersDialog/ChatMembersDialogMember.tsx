@@ -8,8 +8,8 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import {Chat} from '../../../../models/Chat';
 import {User} from '../../../../models/User';
-import ChatThunks from '../../../../store/chat/chatThunks';
 import IconButton from '../../../../components/controls/IconButton';
+import {ChatThunks} from '../../../../store/chat/chatActions';
 
 type ChatMembersDialogMemberProps = {
   chat: Chat;

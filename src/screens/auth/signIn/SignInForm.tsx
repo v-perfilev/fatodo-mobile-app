@@ -10,10 +10,9 @@ import {useTranslation} from 'react-i18next';
 import SolidButton from '../../../components/controls/SolidButton';
 import FVStack from '../../../components/boxes/FVStack';
 import {LoginDTO} from '../../../models/dto/LoginDTO';
-import AuthActions from '../../../store/auth/authActions';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import AuthThunks from '../../../store/auth/authThunks';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {AuthActions, AuthThunks} from '../../../store/auth/authActions';
 
 type SignInFormValues = {
   user: string;

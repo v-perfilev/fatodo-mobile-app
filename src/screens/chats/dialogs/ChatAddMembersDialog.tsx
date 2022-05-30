@@ -5,9 +5,9 @@ import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
 import GhostButton from '../../../components/controls/GhostButton';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
-import ContactsThunks from '../../../store/contacts/contactsThunks';
-import ChatThunks from '../../../store/chat/chatThunks';
 import {Chat} from '../../../models/Chat';
+import {ChatThunks} from '../../../store/chat/chatActions';
+import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 export type ChatAddMembersDialogProps = {
   chat: Chat;

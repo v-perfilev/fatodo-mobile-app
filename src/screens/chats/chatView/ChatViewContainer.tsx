@@ -5,7 +5,6 @@ import {NativeScrollEvent, NativeSyntheticEvent, ViewToken, VirtualizedList} fro
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import ChatViewStub from './ChatViewStub';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
-import ChatThunks from '../../../store/chat/chatThunks';
 import {ChatItem} from '../../../models/ChatItem';
 import {TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import AuthSelectors from '../../../store/auth/authSelectors';
@@ -13,6 +12,7 @@ import {MessageUtils} from '../../../shared/utils/MessageUtils';
 import {UserAccount} from '../../../models/User';
 import ChatViewScrollButton from './ChatViewScrollButton';
 import ChatViewList from './ChatViewList';
+import {ChatThunks} from '../../../store/chat/chatActions';
 
 const getUnreadIds = (info: {viewableItems: ViewToken[]; changed: ViewToken[]}, account: UserAccount): string[] => {
   return info.viewableItems

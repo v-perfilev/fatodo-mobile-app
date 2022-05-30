@@ -1,13 +1,13 @@
 import {Message} from '../../../../models/Message';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import React, {useEffect, useMemo} from 'react';
-import UsersThunks from '../../../../store/users/usersThunks';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import {ChatItemType} from '../../../../models/ChatItem';
 import ChatViewMessageOutcoming from './ChatViewMessageOutcoming';
 import ChatViewMessageIncoming from './ChatViewMessageIncoming';
 import ChatViewMessageEvent from './ChatViewMessageEvent';
+import {UsersThunks} from '../../../../store/users/usersActions';
 
 type ChatViewMessageProps = {
   message: Message;

@@ -3,10 +3,10 @@ import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import FHStack from '../../../components/boxes/FHStack';
 import UserView from '../../../components/views/UserView';
 import {useAppDispatch} from '../../../store/store';
-import ContactsThunks from '../../../store/contacts/contactsThunks';
 import {MenuElement} from '../../../models/MenuElement';
 import UserMinusIcon from '../../../components/icons/UserMinusIcon';
 import ControlMenu from '../../../components/layouts/ControlMenu';
+import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 type OutcomingRequestListItemProps = {
   request: ContactRequestWithUser;

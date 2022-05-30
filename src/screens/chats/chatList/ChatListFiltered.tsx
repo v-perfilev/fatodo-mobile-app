@@ -5,11 +5,11 @@ import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import ChatListStub from './ChatListStub';
-import ChatsThunks from '../../../store/chats/chatsThunks';
 import {Chat} from '../../../models/Chat';
 import ChatListItem from './ChatListItem';
 import {FlatList, Theme, useTheme} from 'native-base';
 import {DEFAULT_SPACE, HALF_DEFAULT_SPACE} from '../../../constants';
+import {ChatsThunks} from '../../../store/chats/chatsActions';
 
 const containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
   padding: theme.sizes[DEFAULT_SPACE],

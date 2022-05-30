@@ -3,10 +3,10 @@ import {ContactRelationWithUser} from '../../../models/ContactRelation';
 import UserView from '../../../components/views/UserView';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch} from '../../../store/store';
-import ContactsThunks from '../../../store/contacts/contactsThunks';
 import {MenuElement} from '../../../models/MenuElement';
 import ControlMenu from '../../../components/layouts/ControlMenu';
 import UserMinusIcon from '../../../components/icons/UserMinusIcon';
+import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 type ContactListItemProps = {
   relation: ContactRelationWithUser;

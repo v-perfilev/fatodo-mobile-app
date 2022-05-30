@@ -3,11 +3,11 @@ import UserView from '../../../components/views/UserView';
 import FHStack from '../../../components/boxes/FHStack';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import {useAppDispatch} from '../../../store/store';
-import ContactsThunks from '../../../store/contacts/contactsThunks';
 import {MenuElement} from '../../../models/MenuElement';
 import CheckIcon from '../../../components/icons/CheckIcon';
 import CloseIcon from '../../../components/icons/CloseIcon';
 import ControlMenu from '../../../components/layouts/ControlMenu';
+import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 type IncomingRequestListItemProps = {
   request: ContactRequestWithUser;

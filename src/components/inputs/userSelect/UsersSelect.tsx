@@ -9,8 +9,7 @@ import FVStack from '../../boxes/FVStack';
 import FCenter from '../../boxes/FCenter';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import UsersSelectors from '../../../store/users/usersSelectors';
-import UsersActions from '../../../store/users/usersActions';
-import UsersThunks from '../../../store/users/usersThunks';
+import {UsersActions, UsersThunks} from '../../../store/users/usersActions';
 
 type Props = {
   allowedIds: string[];

@@ -7,13 +7,13 @@ import ItemForm from '../itemForm/ItemForm';
 import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
-import ItemThunks from '../../../store/item/itemThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
+import {ItemThunks} from '../../../store/item/itemActions';
 
 const ItemEdit = () => {
   const dispatch = useAppDispatch();

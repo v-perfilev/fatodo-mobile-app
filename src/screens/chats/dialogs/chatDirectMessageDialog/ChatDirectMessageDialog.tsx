@@ -4,8 +4,8 @@ import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../../store/store';
 import {User} from '../../../../models/User';
 import {MessageDTO} from '../../../../models/dto/MessageDTO';
-import ChatsThunks from '../../../../store/chats/chatsThunks';
 import ChatDirectMessageForm from './ChatDirectMessageForm';
+import {ChatsThunks} from '../../../../store/chats/chatsActions';
 
 export type ChatDirectMessageDialogProps = {
   user: User;

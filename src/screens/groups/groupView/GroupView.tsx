@@ -10,11 +10,11 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import FScrollView from '../../../components/boxes/FScrollView';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import UsersThunks from '../../../store/users/usersThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
-import GroupThunks from '../../../store/group/groupThunks';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import GroupViewHeader from './GroupViewHeader';
+import {UsersThunks} from '../../../store/users/usersActions';
+import {GroupThunks} from '../../../store/group/groupActions';
 
 const GroupView = () => {
   const navigation = useNavigation<GroupNavigationProp>();

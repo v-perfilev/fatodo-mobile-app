@@ -6,14 +6,14 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import ItemForm from '../itemForm/ItemForm';
 import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import ItemThunks from '../../../store/item/itemThunks';
 import GroupSelectors from '../../../store/group/groupSelectors';
-import GroupThunks from '../../../store/group/groupThunks';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
+import {GroupThunks} from '../../../store/group/groupActions';
+import {ItemThunks} from '../../../store/item/itemActions';
 
 const ItemCreate = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ const ItemCreate = () => {
   const goBack = (): void => navigation.goBack();
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
-    dispatch(ItemThunks.addItem(dto))
+    dispatch(ItemThunks.createItem(dto))
       .unwrap()
       .then((item) => goToItemView(item.id))
       .catch(() => stopSubmitting());

@@ -5,9 +5,9 @@ import SolidButton from '../../components/controls/SolidButton';
 import FVStack from '../../components/boxes/FVStack';
 import {Text} from 'native-base';
 import {useAppDispatch} from '../../store/store';
-import AuthActions from '../../store/auth/authActions';
 import LanguageMenu from '../../components/controls/LanguageMenu';
 import Header from '../../components/layouts/Header';
+import {AuthActions} from '../../store/auth/authActions';
 
 const Account = () => {
   const dispatch = useAppDispatch();

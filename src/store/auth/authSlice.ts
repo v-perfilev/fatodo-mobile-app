@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {AuthState} from './authType';
-import AuthThunks from './authThunks';
+import {AuthThunks} from './authActions';
 
 const initialState: AuthState = {
   isAuthenticated: false,

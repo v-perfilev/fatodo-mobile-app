@@ -3,10 +3,10 @@ import GroupListContainer from './GroupListContainer';
 import GroupListHeader from './GroupListHeader';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import UsersThunks from '../../../store/users/usersThunks';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
-import GroupsThunks from '../../../store/groups/groupsThunks';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
+import {GroupsThunks} from '../../../store/groups/groupsActions';
+import {UsersThunks} from '../../../store/users/usersActions';
 
 const GroupList = () => {
   const dispatch = useAppDispatch();

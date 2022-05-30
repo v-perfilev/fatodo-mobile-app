@@ -6,7 +6,7 @@ import withNativeBase from './withNativeBase';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import SnackSelectors from '../../store/snack/snackSelectors';
 import {ReduxSnack} from '../../store/snack/snackType';
-import SnackActions from '../../store/snack/snackActions';
+import {SnackActions} from '../../store/snack/snackActions';
 
 const withSnackDisplay = (Component: ComponentType) => (props: any) => {
   const dispatch = useAppDispatch();

@@ -5,9 +5,9 @@ import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
 import GhostButton from '../../../components/controls/GhostButton';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
-import ContactsThunks from '../../../store/contacts/contactsThunks';
 import {Group} from '../../../models/Group';
-import GroupThunks from '../../../store/group/groupThunks';
+import {GroupThunks} from '../../../store/group/groupActions';
+import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 export type GroupAddMembersDialogProps = {
   group: Group;

@@ -3,8 +3,8 @@ import {Item, ItemStatusType} from '../../../../models/Item';
 import StatusView from '../../../../components/views/StatusView';
 import {StatusSelect} from '../../../../components/inputs/StatusSelect';
 import {useAppDispatch} from '../../../../store/store';
-import GroupThunks from '../../../../store/group/groupThunks';
 import {useDelayedState} from '../../../../shared/hooks/useDelayedState';
+import {GroupThunks} from '../../../../store/group/groupActions';
 
 type GroupViewItemStatusProps = {
   item: Item;

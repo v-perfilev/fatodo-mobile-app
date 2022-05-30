@@ -1,8 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {ChatsState} from './chatsType';
-import ChatsThunks from './chatsThunks';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Chat} from '../../models/Chat';
+import {ChatsThunks} from './chatsActions';
 
 const initialState: ChatsState = {
   totalUnreadMessageCount: 0,

@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import ContactRequestDialogForm from './ContactRequestDialogForm';
 import {ContactRequestDTO} from '../../../../models/dto/ContactRequestDTO';
 import {useAppDispatch} from '../../../../store/store';
-import ContactsThunks from '../../../../store/contacts/contactsThunks';
+import {ContactsThunks} from '../../../../store/contacts/contactsActions';
 
 export type ContactRequestDialogProps = {
   show: boolean;

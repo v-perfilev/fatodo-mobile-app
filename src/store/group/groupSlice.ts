@@ -1,9 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {GroupState} from './groupType';
-import GroupThunks from './groupThunks';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Item} from '../../models/Item';
 import {Group} from '../../models/Group';
+import {GroupThunks} from './groupActions';
 
 const filterItems = (items: Item[]): Item[] => {
   return items

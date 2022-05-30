@@ -13,10 +13,9 @@ import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBa
 import SolidButton from '../../../components/controls/SolidButton';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import AuthThunks from '../../../store/auth/authThunks';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import AuthActions from '../../../store/auth/authActions';
 import {emailValidator, passwordValidator, usernameValidator} from '../../../shared/validators';
+import {AuthActions, AuthThunks} from '../../../store/auth/authActions';
 
 export interface SignUpFormValues {
   email: string;

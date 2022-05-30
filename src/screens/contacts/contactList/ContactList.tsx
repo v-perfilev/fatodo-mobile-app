@@ -5,11 +5,11 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import ContactListContainer from './ContactListContainer';
 import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import ContactsThunks from '../../../store/contacts/contactsThunks';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import UsersSelectors from '../../../store/users/usersSelectors';
-import UsersThunks from '../../../store/users/usersThunks';
 import ContactListControl from './ContactListControl';
+import {UsersThunks} from '../../../store/users/usersActions';
+import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();

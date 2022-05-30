@@ -4,12 +4,12 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import ChatsThunks from '../../../store/chats/chatsThunks';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
 import {Chat} from '../../../models/Chat';
 import ChatListStub from './ChatListStub';
 import {DEFAULT_SPACE, HALF_DEFAULT_SPACE} from '../../../constants';
 import ChatListItem from './ChatListItem';
+import {ChatsThunks} from '../../../store/chats/chatsActions';
 
 const containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
   padding: theme.sizes[DEFAULT_SPACE],

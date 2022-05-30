@@ -20,11 +20,11 @@ import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import UsersThunks from '../../../store/users/usersThunks';
 import ItemSelectors from '../../../store/item/itemSelectors';
-import ItemThunks from '../../../store/item/itemThunks';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import GroupSelectors from '../../../store/group/groupSelectors';
+import {UsersThunks} from '../../../store/users/usersActions';
+import {ItemThunks} from '../../../store/item/itemActions';
 
 const ItemView = () => {
   const dispatch = useAppDispatch();

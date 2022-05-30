@@ -1,11 +1,11 @@
 import {User} from '../../../../models/User';
 import {useAppDispatch} from '../../../../store/store';
 import React, {useEffect} from 'react';
-import UsersThunks from '../../../../store/users/usersThunks';
 import {Message} from '../../../../models/Message';
 import ChatListMessageOutcoming from './ChatListMessageOutcoming';
 import ChatListMessageIncoming from './ChatListMessageIncoming';
 import ChatListMessageEvent from './ChatListMessageEvent';
+import {UsersThunks} from '../../../../store/users/usersActions';
 
 type ChatListMessageProps = {
   message: Message;

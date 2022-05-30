@@ -3,7 +3,7 @@ import {FormControl, IFormControlProps, Input} from 'native-base';
 import {FormikProps} from 'formik';
 import {INPUT_FONT_SIZE} from '../../constants';
 import {useAppDispatch} from '../../store/store';
-import UsersThunks from '../../store/users/usersThunks';
+import {UsersThunks} from '../../store/users/usersActions';
 
 type FormikUserInputProps = IFormControlProps &
   FormikProps<any> & {

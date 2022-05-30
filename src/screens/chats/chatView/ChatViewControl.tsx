@@ -5,10 +5,10 @@ import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
 import FBox from '../../../components/boxes/FBox';
 import SendMessageIcon from '../../../components/icons/SendMessageIcon';
 import {MessageDTO} from '../../../models/dto/MessageDTO';
-import ChatThunks from '../../../store/chat/chatThunks';
 import {Chat} from '../../../models/Chat';
 import IconButton from '../../../components/controls/IconButton';
 import {useTranslation} from 'react-i18next';
+import {ChatThunks} from '../../../store/chat/chatActions';
 
 type ChatViewControlProps = {
   chat: Chat;

@@ -4,7 +4,6 @@ import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import UsersSelectors from '../../../store/users/usersSelectors';
 import React, {ReactElement, useEffect, useMemo} from 'react';
-import UsersThunks from '../../../store/users/usersThunks';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import UrlPic from '../../../components/surfaces/UrlPic';
@@ -18,6 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Badge, Text} from 'native-base';
 import FVStack from '../../../components/boxes/FVStack';
 import {RootNavigationProp} from '../../../navigators/RootNavigator';
+import {UsersThunks} from '../../../store/users/usersActions';
 
 type ChatListItemProps = {
   chat: Chat;

@@ -1,10 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {ChatState} from './chatType';
-import ChatThunks from './chatThunks';
 import {Message} from '../../models/Message';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {ChatItem} from '../../models/ChatItem';
 import {DateFormatters} from '../../shared/utils/DateUtils';
+import {ChatThunks} from './chatActions';
 
 const filterMessages = (messages: Message[]): Message[] => {
   return messages

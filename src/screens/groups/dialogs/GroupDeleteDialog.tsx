@@ -3,8 +3,8 @@ import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useTranslation} from 'react-i18next';
 import {Group} from '../../../models/Group';
 import {useAppDispatch} from '../../../store/store';
-import GroupsThunks from '../../../store/groups/groupsThunks';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
+import {GroupsThunks} from '../../../store/groups/groupsActions';
 
 export type GroupDeleteDialogProps = {
   group: Group;
@@ -27,7 +27,7 @@ const GroupDeleteDialog = ({group, show, close, onSuccess = () => null}: GroupDe
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(GroupsThunks.removeGroup(group.id))
+    dispatch(GroupsThunks.deleteGroup(group))
       .unwrap()
       .then(() => {
         onSuccess();

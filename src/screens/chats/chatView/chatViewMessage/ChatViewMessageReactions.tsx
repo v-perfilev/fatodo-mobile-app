@@ -4,10 +4,10 @@ import AuthSelectors from '../../../../store/auth/authSelectors';
 import {Message, MessageReactionType, messageReactionTypes} from '../../../../models/Message';
 import FVStack from '../../../../components/boxes/FVStack';
 import ReactionView from '../../../../components/views/ReactionView';
-import ChatThunks from '../../../../store/chat/chatThunks';
 import PressableButton from '../../../../components/controls/PressableButton';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
+import {ChatThunks} from '../../../../store/chat/chatActions';
 
 const buildReactionMap = (message: Message, isOutcoming: boolean): Map<MessageReactionType, number> => {
   const map = new Map();

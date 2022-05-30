@@ -3,8 +3,8 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../../store/store';
 import ChatRenameForm from './ChatRenameForm';
-import ChatThunks from '../../../../store/chat/chatThunks';
 import {Chat} from '../../../../models/Chat';
+import {ChatThunks} from '../../../../store/chat/chatActions';
 
 export type ChatRenameDialogProps = {
   chat: Chat;

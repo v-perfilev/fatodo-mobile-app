@@ -5,9 +5,9 @@ import {Box, Theme, useTheme} from 'native-base';
 import GroupListItem from './GroupListItem';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
-import GroupsActions from '../../../store/groups/groupsActions';
 import {StyleProp, ViewStyle} from 'react-native';
 import {DEFAULT_SPACE, HALF_DEFAULT_SPACE} from '../../../constants';
+import {GroupsActions} from '../../../store/groups/groupsActions';
 
 const containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
   padding: theme.sizes[DEFAULT_SPACE],

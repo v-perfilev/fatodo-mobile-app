@@ -4,13 +4,13 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import UsersSelectors from '../../../store/users/usersSelectors';
-import UsersThunks from '../../../store/users/usersThunks';
-import ChatActions from '../../../store/chat/chatActions';
 import ChatViewContainer from './ChatViewContainer';
 import {RootParamList} from '../../../navigators/RootNavigator';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
+import {UsersThunks} from '../../../store/users/usersActions';
+import {ChatActions} from '../../../store/chat/chatActions';
 
 const ChatView = () => {
   const dispatch = useAppDispatch();

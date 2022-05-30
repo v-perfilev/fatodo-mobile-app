@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../store/store';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Chat} from '../../../models/Chat';
-import ChatThunks from '../../../store/chat/chatThunks';
+import {ChatThunks} from '../../../store/chat/chatActions';
 
 export type ChatClearDialogProps = {
   chat: Chat;

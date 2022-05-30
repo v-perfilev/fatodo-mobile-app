@@ -2,10 +2,9 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import ItemService from '../../services/ItemService';
 import NotificationService from '../../services/NotificationService';
 import {ItemDTO} from '../../models/dto/ItemDTO';
-import GroupActions from '../group/groupActions';
-import GroupsActions from '../groups/groupsActions';
-import GroupThunks from '../group/groupThunks';
-import SnackActions from '../snack/snackActions';
+import {GroupsActions} from '../groups/groupsActions';
+import {GroupActions, GroupThunks} from '../group/groupActions';
+import {SnackActions} from '../snack/snackActions';
 
 enum TYPES {
   FETCH_ITEM = 'item/fetchItem',
@@ -14,7 +13,7 @@ enum TYPES {
   UPDATE_ITEM = 'item/updateItem',
 }
 
-class ItemThunks {
+export class ItemThunks {
   static fetchItem = createAsyncThunk(TYPES.FETCH_ITEM, async (itemId: string, thunkAPI) => {
     const response = await ItemService.getItem(itemId);
     thunkAPI.dispatch(ItemThunks.fetchReminders(itemId));
@@ -43,5 +42,3 @@ class ItemThunks {
     return response.data;
   });
 }
-
-export default ItemThunks;

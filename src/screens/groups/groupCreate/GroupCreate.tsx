@@ -4,9 +4,9 @@ import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch} from '../../../store/store';
-import GroupThunks from '../../../store/group/groupThunks';
 import {Group} from '../../../models/Group';
 import Header from '../../../components/layouts/Header';
+import {GroupThunks} from '../../../store/group/groupActions';
 
 const GroupCreate = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ const GroupCreate = () => {
   const goBack = (): void => navigation.goBack();
 
   const request = (formData: FormData, stopSubmitting: () => void): void => {
-    dispatch(GroupThunks.addGroup(formData))
+    dispatch(GroupThunks.createGroup(formData))
       .unwrap()
       .then((group) => goToGroupView(group))
       .catch(() => stopSubmitting());

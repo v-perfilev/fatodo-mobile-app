@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {ItemState} from './itemType';
-import ItemThunks from './itemThunks';
+import {ItemThunks} from './itemActions';
 
 const initialState: ItemState = {
   item: undefined,

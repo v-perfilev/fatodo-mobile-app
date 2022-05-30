@@ -7,7 +7,7 @@ import GhostButton from '../../../components/controls/GhostButton';
 import FVStack from '../../../components/boxes/FVStack';
 import PermissionSelect from '../../../components/inputs/permissionSelect/PermissionSelect';
 import {useAppDispatch} from '../../../store/store';
-import GroupThunks from '../../../store/group/groupThunks';
+import {GroupThunks} from '../../../store/group/groupActions';
 
 export type GroupEditMemberDialogProps = {
   group: Group;

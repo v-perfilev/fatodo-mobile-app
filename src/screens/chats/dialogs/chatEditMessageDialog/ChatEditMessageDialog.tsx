@@ -5,7 +5,7 @@ import {useAppDispatch} from '../../../../store/store';
 import {MessageDTO} from '../../../../models/dto/MessageDTO';
 import {Message} from '../../../../models/Message';
 import ChatEditMessageForm from './ChatEditMessageForm';
-import ChatThunks from '../../../../store/chat/chatThunks';
+import {ChatThunks} from '../../../../store/chat/chatActions';
 
 export type ChatEditMessageDialogProps = {
   message: Message;

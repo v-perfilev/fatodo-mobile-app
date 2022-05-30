@@ -3,7 +3,7 @@ import {ContactsState} from './contactsType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {ContactRelation} from '../../models/ContactRelation';
 import {ContactRequest} from '../../models/ContactRequest';
-import ContactsThunks from './contactsThunks';
+import {ContactsThunks} from './contactsActions';
 
 const initialState: ContactsState = {
   relationCount: 0,

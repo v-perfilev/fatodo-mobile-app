@@ -3,8 +3,8 @@ import {useTranslation} from 'react-i18next';
 import {Group} from '../../../models/Group';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useAppDispatch} from '../../../store/store';
-import GroupsThunks from '../../../store/groups/groupsThunks';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
+import {GroupsThunks} from '../../../store/groups/groupsActions';
 
 export type GroupLeaveDialogProps = {
   group: Group;
@@ -27,7 +27,7 @@ const GroupLeaveDialog = ({group, show, close, onSuccess = () => null}: GroupLea
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(GroupsThunks.leaveGroup(group.id))
+    dispatch(GroupsThunks.leaveGroup(group))
       .unwrap()
       .then(() => {
         onSuccess();

@@ -6,9 +6,9 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import OutcomingRequestListContainer from './OutcomingRequestListContainer';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
-import ContactsThunks from '../../../store/contacts/contactsThunks';
 import UsersSelectors from '../../../store/users/usersSelectors';
-import UsersThunks from '../../../store/users/usersThunks';
+import {UsersThunks} from '../../../store/users/usersActions';
+import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 const OutcomingRequestList = () => {
   const dispatch = useAppDispatch();

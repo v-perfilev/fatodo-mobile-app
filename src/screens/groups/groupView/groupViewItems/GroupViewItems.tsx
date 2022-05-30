@@ -11,10 +11,10 @@ import GroupViewItemsArchivedSwitch from './GroupViewItemsArchivedSwitch';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import UsersThunks from '../../../../store/users/usersThunks';
 import GroupSelectors from '../../../../store/group/groupSelectors';
-import GroupThunks from '../../../../store/group/groupThunks';
 import AuthSelectors from '../../../../store/auth/authSelectors';
+import {UsersThunks} from '../../../../store/users/usersActions';
+import {GroupThunks} from '../../../../store/group/groupActions';
 
 type GroupViewItemsProps = {
   showArchived: boolean;

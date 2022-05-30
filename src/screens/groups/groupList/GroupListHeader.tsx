@@ -10,9 +10,8 @@ import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import {flowRight} from 'lodash';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
-import GroupsActions from '../../../store/groups/groupsActions';
-import GroupsThunks from '../../../store/groups/groupsThunks';
 import IconButton from '../../../components/controls/IconButton';
+import {GroupsActions, GroupsThunks} from '../../../store/groups/groupsActions';
 
 type GroupListHeaderProps = {
   sorting: boolean;

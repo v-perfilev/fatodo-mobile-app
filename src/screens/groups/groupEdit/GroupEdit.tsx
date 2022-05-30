@@ -6,12 +6,12 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupSelectors from '../../../store/group/groupSelectors';
-import GroupThunks from '../../../store/group/groupThunks';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
+import {GroupThunks} from '../../../store/group/groupActions';
 
 const GroupEdit = () => {
   const dispatch = useAppDispatch();

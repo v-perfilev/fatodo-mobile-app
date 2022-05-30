@@ -5,8 +5,8 @@ import {Text} from 'native-base';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import UsersSelectors from '../../../../store/users/usersSelectors';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
-import UsersThunks from '../../../../store/users/usersThunks';
 import FCenter from '../../../../components/boxes/FCenter';
+import {UsersThunks} from '../../../../store/users/usersActions';
 
 type ChatViewMessageEventProps = {
   message: Message;

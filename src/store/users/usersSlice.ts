@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {UsersState} from './usersType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
-import UsersThunks from './usersThunks';
+import {UsersThunks} from './usersActions';
 
 const initialState: UsersState = {
   users: [],
