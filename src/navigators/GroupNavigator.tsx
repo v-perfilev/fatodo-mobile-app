@@ -7,16 +7,17 @@ import GroupEdit from '../screens/groups/groupEdit/GroupEdit';
 import ItemEdit from '../screens/items/itemEdit/ItemEdit';
 import ItemCreate from '../screens/items/itemCreate/ItemCreate';
 import ItemView from '../screens/items/itemView/ItemView';
-import {ColorScheme} from '../shared/themes/ThemeFactory';
+import {Group} from '../models/Group';
+import {Item} from '../models/Item';
 
 export type GroupParamList = {
   GroupList: undefined;
-  GroupView: {groupId: string; colorScheme?: ColorScheme};
+  GroupView: {group?: Group; groupId?: string};
   GroupCreate: undefined;
-  GroupEdit: {groupId: string; colorScheme?: ColorScheme};
-  ItemView: {itemId: string; colorScheme?: ColorScheme};
-  ItemCreate: {groupId: string; colorScheme?: ColorScheme};
-  ItemEdit: {itemId: string; colorScheme?: ColorScheme};
+  GroupEdit: {group?: Group; groupId?: string};
+  ItemView: {group?: Group; item?: Item; itemId?: string};
+  ItemCreate: {group?: Group; groupId?: string};
+  ItemEdit: {group?: Group; item?: Item; itemId?: string};
 };
 
 const Stack = createNativeStackNavigator<GroupParamList>();

@@ -1,42 +1,64 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {RouteProp, useRoute} from '@react-navigation/native';
-import {ChatUtils} from '../../../shared/utils/ChatUtils';
-import AuthSelectors from '../../../store/auth/authSelectors';
-import UsersSelectors from '../../../store/users/usersSelectors';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import ChatViewContainer from './ChatViewContainer';
 import {RootParamList} from '../../../navigators/RootNavigator';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import {UsersThunks} from '../../../store/users/usersActions';
-import {ChatActions} from '../../../store/chat/chatActions';
+import {ChatActions, ChatThunks} from '../../../store/chat/chatActions';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
+import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 
 const ChatView = () => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(UsersSelectors.users);
-  const account = useAppSelector(AuthSelectors.account);
-  const chatFromState = useAppSelector(ChatSelectors.chat);
+  const navigation = useNavigation();
   const route = useRoute<RouteProp<RootParamList, 'ChatView'>>();
-  const chat = route.params.chat;
+  const [loading, setLoading] = useDelayedState();
+  const routeChat = route.params.chat;
+  const routeChatId = route.params.chatId;
+  const chat = useAppSelector(ChatSelectors.chat);
 
-  const title = useMemo<string>(() => {
-    return ChatUtils.getTitle(chat, users, account);
-  }, [chat, users, account]);
+  const goBack = (): void => navigation.goBack();
+
+  const selectChat = (): void => {
+    dispatch(ChatActions.selectChat(routeChat)).then(() => setLoading(false));
+  };
+
+  const loadChat = (): void => {
+    dispatch(ChatThunks.fetchChat(routeChatId))
+      .unwrap()
+      .catch(() => goBack())
+      .finally(() => setLoading(false));
+  };
 
   useEffect(() => {
-    if (chat.id !== chatFromState?.id) {
-      const userIds = chat.members;
-      dispatch(ChatActions.selectChat(chat));
-      dispatch(UsersThunks.handleUserIds(userIds));
+    if (routeChat && routeChat.id !== chat?.id) {
+      selectChat();
+    } else if (routeChatId && routeChatId !== chat?.id) {
+      loadChat();
+    } else if (!routeChat && !routeChatId) {
+      goBack();
+    } else {
+      setLoading(false);
     }
   }, []);
 
+  useEffect(() => {
+    if (chat) {
+      const userIds = chat.members;
+      dispatch(UsersThunks.handleUserIds(userIds));
+    }
+  }, [chat]);
+
   return (
     <>
-      <ChatViewHeader title={title} chat={chat} />
-      <ChatViewContainer />
-      <ChatViewControl chat={chat} />
+      <ChatViewHeader />
+      <ConditionalSpinner loading={loading}>
+        <ChatViewContainer />
+        <ChatViewControl />
+      </ConditionalSpinner>
     </>
   );
 };

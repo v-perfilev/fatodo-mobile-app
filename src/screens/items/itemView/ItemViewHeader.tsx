@@ -26,8 +26,8 @@ const ItemViewHeader = ({account}: ItemViewMenuProps) => {
   const group = useAppSelector(GroupSelectors.group);
   const item = useAppSelector(ItemSelectors.item);
 
-  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group.id, colorScheme: group.color});
-  const goToItemEdit = (): void => navigation.navigate('ItemEdit', {itemId: item.id, colorScheme: group.color});
+  const goToGroupView = (): void => navigation.navigate('GroupView', {group});
+  const goToItemEdit = (): void => navigation.navigate('ItemEdit', {group, item});
 
   const openItemDeleteDialog = (): void => {
     const onSuccess = (): void => goToGroupView();

@@ -27,8 +27,8 @@ const GroupViewHeader = () => {
   const account = useAppSelector(AuthSelectors.account);
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
-  const goToItemCreate = (): void => navigation.navigate('ItemCreate', {groupId: group.id, colorScheme: group.color});
-  const goToGroupEdit = (): void => navigation.navigate('GroupEdit', {groupId: group.id, colorScheme: group.color});
+  const goToItemCreate = (): void => navigation.navigate('ItemCreate', {group});
+  const goToGroupEdit = (): void => navigation.navigate('GroupEdit', {group});
 
   const openGroupMembersDialog = (): void => {
     showGroupMembersDialog(group);

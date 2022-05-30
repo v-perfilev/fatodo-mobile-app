@@ -5,6 +5,16 @@ import {ItemDTO} from '../../models/dto/ItemDTO';
 import {GroupsActions} from '../groups/groupsActions';
 import {GroupActions, GroupThunks} from '../group/groupActions';
 import {SnackActions} from '../snack/snackActions';
+import {AppDispatch} from '../store';
+import {Item} from '../../models/Item';
+import itemSlice from './itemSlice';
+
+export class ItemActions {
+  static setItem = (item: Item) => async (dispatch: AppDispatch) => {
+    dispatch(itemSlice.actions.setItem(item));
+    dispatch(ItemThunks.fetchReminders(item.id));
+  };
+}
 
 enum TYPES {
   FETCH_ITEM = 'item/fetchItem',
@@ -16,8 +26,8 @@ enum TYPES {
 export class ItemThunks {
   static fetchItem = createAsyncThunk(TYPES.FETCH_ITEM, async (itemId: string, thunkAPI) => {
     const response = await ItemService.getItem(itemId);
-    thunkAPI.dispatch(ItemThunks.fetchReminders(itemId));
     thunkAPI.dispatch(GroupThunks.fetchGroup(response.data.groupId));
+    thunkAPI.dispatch(ItemThunks.fetchReminders(itemId));
     return response.data;
   });
 

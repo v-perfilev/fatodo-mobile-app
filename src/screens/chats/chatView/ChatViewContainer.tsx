@@ -24,7 +24,7 @@ const getUnreadIds = (info: {viewableItems: ViewToken[]; changed: ViewToken[]}, 
 
 const ChatViewContainer = () => {
   const dispatch = useAppDispatch();
-  const [initialLoading, setInitialLoading] = useDelayedState(false);
+  const [loading, setLoading] = useDelayedState(false);
   const [showScroll, setShowScroll] = useDelayedState(false, 500);
   const unreadTimersRef = useRef<Map<string, any>>(new Map());
   const listRef = useRef<VirtualizedList<ChatItem>>();
@@ -38,11 +38,11 @@ const ChatViewContainer = () => {
   const loadMessages = (): void => {
     dispatch(ChatThunks.fetchMessages({chatId: chat.id, offset: chatItems.length}))
       .unwrap()
-      .finally(() => setInitialLoading(false));
+      .finally(() => setLoading(false));
   };
 
   const markAsRead = (messageId: string): void => {
-    dispatch(ChatThunks.markAsRead(messageId));
+    dispatch(ChatThunks.markAsRead({messageId, account}));
   };
 
   /*
@@ -86,13 +86,13 @@ const ChatViewContainer = () => {
 
   useEffect(() => {
     if (chat) {
-      setInitialLoading(true);
+      setLoading(true);
       loadMessages();
     }
   }, [chat]);
 
   return (
-    <ConditionalSpinner loading={initialLoading}>
+    <ConditionalSpinner loading={loading}>
       <ChatViewScrollButton show={showScroll} scrollDown={scrollDown} />
       {showStub ? (
         <ChatViewStub />

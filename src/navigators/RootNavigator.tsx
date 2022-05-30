@@ -6,7 +6,7 @@ import TabNavigator from './TabNavigator';
 
 export type RootParamList = {
   HomeTabs: undefined;
-  ChatView: {chat: Chat};
+  ChatView: {chat?: Chat; chatId?: string};
 };
 
 const Stack = createNativeStackNavigator<RootParamList>();

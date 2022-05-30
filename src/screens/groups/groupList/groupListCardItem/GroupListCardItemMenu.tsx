@@ -14,7 +14,7 @@ type GroupListCardItemMenuProps = {
 const GroupListCardItemMenu = ({group, item}: GroupListCardItemMenuProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
 
-  const goToItemView = (): void => navigation.navigate('ItemView', {itemId: item.id, colorScheme: group.color});
+  const goToItemView = (): void => navigation.navigate('ItemView', {group, item});
 
   return <IconButton p="1.5" bgTransparency="5" icon={<EyeIcon />} onPress={goToItemView} />;
 };

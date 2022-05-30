@@ -20,7 +20,7 @@ const GroupViewItem = ({item, canEdit}: GroupViewItemProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const group = useAppSelector(GroupSelectors.group);
 
-  const goToItemView = (): void => navigation.navigate('ItemView', {itemId: item.id, colorScheme: group.color});
+  const goToItemView = (): void => navigation.navigate('ItemView', {group, item});
 
   return (
     <Pressable onPress={goToItemView}>

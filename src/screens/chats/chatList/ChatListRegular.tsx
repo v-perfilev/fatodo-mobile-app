@@ -20,7 +20,7 @@ const containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
 const ChatListRegular = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
-  const [initialLoading, setInitialLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState();
   const chats = useAppSelector(ChatsSelectors.chats);
 
   const showStub = useMemo<boolean>(() => chats.length === 0, [chats]);
@@ -28,11 +28,11 @@ const ChatListRegular = () => {
   const loadChats = (): void => {
     dispatch(ChatsThunks.fetchChats(chats.length))
       .unwrap()
-      .finally(() => setInitialLoading(false));
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
-    setInitialLoading(true);
+    setLoading(true);
     loadChats();
   }, []);
 
@@ -42,7 +42,7 @@ const ChatListRegular = () => {
   }, []);
 
   return (
-    <ConditionalSpinner loading={initialLoading}>
+    <ConditionalSpinner loading={loading}>
       {showStub ? (
         <ChatListStub />
       ) : (

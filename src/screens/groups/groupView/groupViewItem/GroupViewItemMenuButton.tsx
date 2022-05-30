@@ -29,8 +29,8 @@ const GroupViewItemMenuButton = ({item, canEdit}: GroupViewItemMenuProps) => {
   const group = useAppSelector(GroupSelectors.group);
   const [archivedLoading, setArchivedLoading] = useState<boolean>(false);
 
-  const goToItemView = (): void => navigation.navigate('ItemView', {itemId: item.id, colorScheme: group.color});
-  const goToItemEdit = (): void => navigation.navigate('ItemEdit', {itemId: item.id, colorScheme: group.color});
+  const goToItemView = (): void => navigation.navigate('ItemView', {group, item});
+  const goToItemEdit = (): void => navigation.navigate('ItemEdit', {group, item});
 
   const deleteItem = (item: Item): void => {
     dispatch(GroupThunks.deleteItem(item));

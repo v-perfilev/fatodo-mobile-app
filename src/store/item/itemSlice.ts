@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {ItemState} from './itemType';
 import {ItemThunks} from './itemActions';
+import {Item} from '../../models/Item';
 
 const initialState: ItemState = {
   item: undefined,
@@ -11,7 +12,12 @@ const initialState: ItemState = {
 const itemSlice = createSlice({
   name: 'item',
   initialState,
-  reducers: {},
+  reducers: {
+    setItem: (state: ItemState, action) => {
+      const item = action.payload as Item;
+      return {...initialState, item};
+    },
+  },
   extraReducers: (builder) => {
     /*
     fetchItem

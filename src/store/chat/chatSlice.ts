@@ -39,16 +39,29 @@ const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    selectChat: (state: ChatState, action) => ({
-      ...state,
-      chat: action.payload,
-      messages: [],
-      chatItems: [],
-      loading: false,
-      allLoaded: false,
-    }),
+    selectChat: (state: ChatState, action) => {
+      return {...initialState, chat: action.payload};
+    },
+
+    markAsRead: (state: ChatState, action) => {
+      return {...state};
+    },
   },
   extraReducers: (builder) => {
+    /*
+    fetchChat
+    */
+    builder.addCase(ChatThunks.fetchChat.pending, () => {
+      return {...initialState, loading: true};
+    });
+    builder.addCase(ChatThunks.fetchChat.fulfilled, (state: ChatState, action) => {
+      const chat = action.payload;
+      return {...state, chat, loading: false};
+    });
+    builder.addCase(ChatThunks.fetchChat.rejected, (state: ChatState) => {
+      return {...state, loading: false};
+    });
+
     /*
     fetchMessages
     */

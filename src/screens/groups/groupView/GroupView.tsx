@@ -13,8 +13,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import GroupViewHeader from './GroupViewHeader';
-import {UsersThunks} from '../../../store/users/usersActions';
-import {GroupThunks} from '../../../store/group/groupActions';
+import {GroupActions, GroupThunks} from '../../../store/group/groupActions';
 
 const GroupView = () => {
   const navigation = useNavigation<GroupNavigationProp>();
@@ -24,30 +23,39 @@ const GroupView = () => {
   const groupLoading = useAppSelector(GroupSelectors.loading);
   const [loading, setLoading] = useDelayedState();
   const [showArchived, setShowArchived] = useState<boolean>(false);
-  const groupId = route.params.groupId;
-  const colorScheme = route.params.colorScheme;
+  const routeGroupId = route.params.groupId;
+  const routeGroup = route.params.group;
 
-  const goToGroupList = (): void => navigation.navigate('GroupList');
+  const goBack = (): void => navigation.goBack();
+
+  const setGroup = (): void => {
+    dispatch(GroupActions.setGroup(routeGroup)).then(() => setLoading(false));
+  };
+
+  const loadGroup = (): void => {
+    dispatch(GroupThunks.fetchGroup(routeGroupId))
+      .unwrap()
+      .catch(() => goBack())
+      .finally(() => setLoading(false));
+  };
 
   useEffect(() => {
-    setLoading(true);
-    dispatch(GroupThunks.fetchGroup(groupId))
-      .unwrap()
-      .catch(() => goToGroupList())
-      .finally(() => setLoading(false));
+    if (routeGroup && routeGroup.id !== group?.id) {
+      setGroup();
+    } else if (routeGroupId && routeGroupId !== group?.id) {
+      loadGroup();
+    } else if (!routeGroup && !routeGroupId) {
+      goBack();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
-  useEffect(() => {
-    if (group) {
-      const userIds = group.members.map((user) => user.id);
-      dispatch(UsersThunks.handleUserIds(userIds));
-      navigation.setParams({...route.params, color: group?.color});
-    }
-  }, [group]);
-
   const theme = useMemo<Theme>(() => {
-    return group || colorScheme ? ThemeFactory.getTheme(group?.color || colorScheme) : ThemeFactory.getDefaultTheme();
-  }, [group, colorScheme]);
+    return group || routeGroup
+      ? ThemeFactory.getTheme(group?.color || routeGroup.color)
+      : ThemeFactory.getDefaultTheme();
+  }, [group, routeGroup]);
 
   return (
     <ThemeProvider theme={theme}>

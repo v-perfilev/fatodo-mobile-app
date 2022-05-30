@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
 import Header from '../../../components/layouts/Header';
 import IconButton from '../../../components/controls/IconButton';
-import {Chat} from '../../../models/Chat';
 import Menu, {MenuItem, MenuItemProps} from '../../../components/controls/Menu';
 import DotsVerticalIcon from '../../../components/icons/DotsVerticalIcon';
 import {useTranslation} from 'react-i18next';
@@ -13,13 +12,13 @@ import BroomIcon from '../../../components/icons/BroomIcon';
 import LeaveIcon from '../../../components/icons/LeaveIcon';
 import DeleteIcon from '../../../components/icons/DeleteIcon';
 import {useNavigation} from '@react-navigation/native';
+import {ChatUtils} from '../../../shared/utils/ChatUtils';
+import {useAppSelector} from '../../../store/store';
+import UsersSelectors from '../../../store/users/usersSelectors';
+import AuthSelectors from '../../../store/auth/authSelectors';
+import ChatSelectors from '../../../store/chat/chatSelectors';
 
-type ChatViewHeaderProps = {
-  title: string;
-  chat: Chat;
-};
-
-const ChatViewHeader = ({title, chat}: ChatViewHeaderProps) => {
+const ChatViewHeader = () => {
   const navigation = useNavigation();
   const {t} = useTranslation();
   const {
@@ -30,6 +29,13 @@ const ChatViewHeader = ({title, chat}: ChatViewHeaderProps) => {
     showChatLeaveDialog,
     showChatDeleteDialog,
   } = useChatDialogContext();
+  const chat = useAppSelector(ChatSelectors.chat);
+  const users = useAppSelector(UsersSelectors.users);
+  const account = useAppSelector(AuthSelectors.account);
+
+  const title = useMemo<string>(() => {
+    return chat ? ChatUtils.getTitle(chat, users, account) : '';
+  }, [chat, users, account]);
 
   const showMembers = (): void => {
     showChatMembersDialog(chat);
@@ -63,21 +69,26 @@ const ChatViewHeader = ({title, chat}: ChatViewHeaderProps) => {
       action: addMembers,
       icon: <UserPlusIcon color="primary.500" />,
       text: t('chat:menu.addMembers'),
-      hidden: chat.isDirect,
+      hidden: chat?.isDirect,
     },
     {
       action: renameChat,
       icon: <EditIcon color="primary.500" />,
       text: t('chat:menu.renameChat'),
-      hidden: chat.isDirect,
+      hidden: chat?.isDirect,
     },
     {action: cleanChat, icon: <BroomIcon color="primary.500" />, text: t('chat:menu.cleanChat')},
-    {action: leaveChat, icon: <LeaveIcon color="primary.500" />, text: t('chat:menu.leaveChat'), hidden: chat.isDirect},
+    {
+      action: leaveChat,
+      icon: <LeaveIcon color="primary.500" />,
+      text: t('chat:menu.leaveChat'),
+      hidden: chat?.isDirect,
+    },
     {
       action: deleteChat,
       icon: <DeleteIcon color="error.500" />,
       text: t('chat:menu.deleteChat'),
-      hidden: chat.isDirect,
+      hidden: chat?.isDirect,
     },
   ] as MenuItemProps[];
 

@@ -12,7 +12,7 @@ const GroupViewItemsCreateButton = () => {
   const {t, i18n} = useTranslation();
   const group = useAppSelector(GroupSelectors.group);
 
-  const goToItemCreate = (): void => navigation.navigate('ItemCreate', {groupId: group.id, colorScheme: group.color});
+  const goToItemCreate = (): void => navigation.navigate('ItemCreate', {group});
 
   const text = useMemo<string>(() => t('group:menu.createItem'), [i18n.language]);
 

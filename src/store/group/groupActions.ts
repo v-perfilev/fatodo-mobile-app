@@ -9,6 +9,10 @@ import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {SnackActions} from '../snack/snackActions';
 
 export class GroupActions {
+  static setGroup = (group: Group) => async (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.setGroup(group));
+  };
+
   static updateGroup = (group: Group) => async (dispatch: AppDispatch) => {
     dispatch(groupSlice.actions.updateGroup(group));
   };

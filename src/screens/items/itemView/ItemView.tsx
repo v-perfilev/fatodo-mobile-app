@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo} from 'react';
 import {Divider, Theme} from 'native-base';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
+import {GroupParamList} from '../../../navigators/GroupNavigator';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
@@ -24,34 +24,52 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import {UsersThunks} from '../../../store/users/usersActions';
-import {ItemThunks} from '../../../store/item/itemActions';
+import {ItemActions, ItemThunks} from '../../../store/item/itemActions';
+import {GroupActions} from '../../../store/group/groupActions';
 
 const ItemView = () => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+  const [loading, setLoading] = useDelayedState();
+  const route = useRoute<RouteProp<GroupParamList, 'ItemView'>>();
+  const routeItemId = route.params.itemId;
+  const routeItem = route.params.item;
+  const routeGroup = route.params.group;
   const account = useAppSelector(AuthSelectors.account);
   const group = useAppSelector(GroupSelectors.group);
   const groupLoading = useAppSelector(GroupSelectors.loading);
   const item = useAppSelector(ItemSelectors.item);
   const itemLoading = useAppSelector(ItemSelectors.loading);
   const reminders = useAppSelector(ItemSelectors.reminders);
-  const navigation = useNavigation<GroupNavigationProp>();
-  const route = useRoute<RouteProp<GroupParamList, 'ItemView'>>();
-  const [loading, setLoading] = useDelayedState();
-  const itemId = route.params.itemId;
-  const colorScheme = route.params.colorScheme;
-
-  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group.id, colorScheme: group.color});
 
   const showTags = item?.tags.length > 0;
   const showReminders = reminders?.length > 0;
   const showDividerAfterDescription = showTags || showReminders;
 
-  useEffect(() => {
-    setLoading(true);
-    dispatch(ItemThunks.fetchItem(itemId))
+  const goBack = (): void => navigation.goBack();
+
+  const setGroupAndItem = (): void => {
+    dispatch(GroupActions.setGroup(routeGroup)).then(() => setLoading(false));
+    dispatch(ItemActions.setItem(routeItem)).then(() => setLoading(false));
+  };
+
+  const loadItem = (): void => {
+    dispatch(ItemThunks.fetchItem(routeItemId))
       .unwrap()
-      .catch(() => goToGroupView())
+      .catch(() => goBack())
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    if (routeGroup && routeItem && (routeGroup.id !== group?.id || routeItem.id !== item?.id)) {
+      setGroupAndItem();
+    } else if (routeItemId) {
+      loadItem();
+    } else if (!routeGroup && !routeItem && !routeItemId) {
+      goBack();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -69,8 +87,10 @@ const ItemView = () => {
   }, [group]);
 
   const theme = useMemo<Theme>(() => {
-    return group || colorScheme ? ThemeFactory.getTheme(group?.color || colorScheme) : ThemeFactory.getDefaultTheme();
-  }, [group, colorScheme]);
+    return group || routeGroup
+      ? ThemeFactory.getTheme(group?.color || routeGroup.color)
+      : ThemeFactory.getDefaultTheme();
+  }, [group, routeGroup]);
 
   return (
     <ThemeProvider theme={theme}>

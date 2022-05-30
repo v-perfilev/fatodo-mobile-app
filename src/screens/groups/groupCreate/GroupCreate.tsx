@@ -12,12 +12,8 @@ const GroupCreate = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
 
-  const goToGroupView = (group: Group): void =>
-    navigation.replace('GroupView', {
-      groupId: group.id,
-      colorScheme: group.color,
-    });
   const goBack = (): void => navigation.goBack();
+  const goToGroupView = (group: Group): void => navigation.replace('GroupView', {group});
 
   const request = (formData: FormData, stopSubmitting: () => void): void => {
     dispatch(GroupThunks.createGroup(formData))

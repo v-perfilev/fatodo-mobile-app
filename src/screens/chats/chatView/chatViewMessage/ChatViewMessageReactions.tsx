@@ -39,18 +39,18 @@ const ChatContentMessageReactions = ({message, isOutcoming}: ChatViewMessageReac
   };
 
   const updateActiveReaction = (): void => {
-    const reaction = message.reactions.find((r) => r.userId === account?.id);
+    const reaction = message.reactions.find((r) => r.userId === account.id);
     setActiveReaction(reaction?.type);
   };
 
   const handlePress = useCallback(
     (r: MessageReactionType) => (): void => {
       if (r === activeReaction) {
-        dispatch(ChatThunks.noReaction(message.id));
+        dispatch(ChatThunks.noReaction({messageId: message.id, account}));
       } else if (r === 'LIKE') {
-        dispatch(ChatThunks.likeReaction(message.id));
+        dispatch(ChatThunks.likeReaction({messageId: message.id, account}));
       } else if (r === 'DISLIKE') {
-        dispatch(ChatThunks.dislikeReaction(message.id));
+        dispatch(ChatThunks.dislikeReaction({messageId: message.id, account}));
       }
     },
     [message, activeReaction],

@@ -20,7 +20,7 @@ type GroupListCardHeaderProps = {
 const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHeaderProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
 
-  const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group.id, colorScheme: group.color});
+  const goToGroupView = (): void => navigation.navigate('GroupView', {group});
 
   return (
     <Pressable onPress={goToGroupView}>

@@ -13,26 +13,31 @@ import {Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
-import {ItemThunks} from '../../../store/item/itemActions';
+import {ItemActions, ItemThunks} from '../../../store/item/itemActions';
+import {GroupActions} from '../../../store/group/groupActions';
 
 const ItemEdit = () => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<GroupNavigationProp>();
+  const [loading, setLoading] = useDelayedState();
+  const route = useRoute<RouteProp<GroupParamList, 'ItemEdit'>>();
+  const routeItemId = route.params.itemId;
+  const routeItem = route.params.item;
+  const routeGroup = route.params.group;
   const group = useAppSelector(GroupSelectors.group);
   const groupLoading = useAppSelector(GroupSelectors.loading);
   const item = useAppSelector(ItemSelectors.item);
   const itemLoading = useAppSelector(ItemSelectors.loading);
   const reminders = useAppSelector(ItemSelectors.reminders);
-  const navigation = useNavigation<GroupNavigationProp>();
-  const route = useRoute<RouteProp<GroupParamList, 'ItemEdit'>>();
-  const [loading, setLoading] = useDelayedState();
-  const itemId = route.params.itemId;
-  const colorScheme = route.params.colorScheme;
 
+  const goBack = (): void => navigation.goBack();
   const goToItemView = (): void =>
     navigation.getParent().getId() === 'ItemView'
       ? navigation.goBack()
-      : navigation.navigate('ItemView', {itemId, colorScheme: group.color});
-  const goBack = (): void => navigation.goBack();
+      : navigation.navigate('ItemView', {
+          group,
+          item,
+        });
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
     dispatch(ItemThunks.updateItem(dto))
@@ -41,17 +46,35 @@ const ItemEdit = () => {
       .catch(() => stopSubmitting());
   };
 
-  useEffect(() => {
-    setLoading(true);
-    dispatch(ItemThunks.fetchItem(itemId))
+  const setGroupAndItem = (): void => {
+    dispatch(GroupActions.setGroup(routeGroup)).then(() => setLoading(false));
+    dispatch(ItemActions.setItem(routeItem)).then(() => setLoading(false));
+  };
+
+  const loadItem = (): void => {
+    dispatch(ItemThunks.fetchItem(routeItemId))
       .unwrap()
-      .catch(() => goToItemView())
+      .catch(() => goBack())
       .finally(() => setLoading(false));
-  }, [itemId]);
+  };
+
+  useEffect(() => {
+    if (routeGroup && routeItem && (routeGroup.id !== group?.id || routeItem.id !== item?.id)) {
+      setGroupAndItem();
+    } else if (routeItemId) {
+      loadItem();
+    } else if (!routeGroup && !routeItem && !routeItemId) {
+      goBack();
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   const theme = useMemo<Theme>(() => {
-    return group || colorScheme ? ThemeFactory.getTheme(group?.color || colorScheme) : ThemeFactory.getDefaultTheme();
-  }, [group, colorScheme]);
+    return group || routeGroup
+      ? ThemeFactory.getTheme(group?.color || routeGroup.color)
+      : ThemeFactory.getDefaultTheme();
+  }, [group, routeGroup]);
 
   return (
     <ThemeProvider theme={theme}>

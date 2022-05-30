@@ -23,7 +23,7 @@ const ChatRenameDialog = ({chat, show, close}: ChatRenameDialogProps) => {
   const {t} = useTranslation();
 
   const request = (title: string, stopSubmitting: () => void): void => {
-    dispatch(ChatThunks.renameChat({chatId: chat.id, title}))
+    dispatch(ChatThunks.renameChat({chat, title}))
       .unwrap()
       .then(() => close())
       .catch(() => stopSubmitting());

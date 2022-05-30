@@ -1,22 +1,19 @@
 import React, {useMemo, useState} from 'react';
-import {useAppDispatch} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import FHStack from '../../../components/boxes/FHStack';
 import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
 import FBox from '../../../components/boxes/FBox';
 import SendMessageIcon from '../../../components/icons/SendMessageIcon';
 import {MessageDTO} from '../../../models/dto/MessageDTO';
-import {Chat} from '../../../models/Chat';
 import IconButton from '../../../components/controls/IconButton';
 import {useTranslation} from 'react-i18next';
 import {ChatThunks} from '../../../store/chat/chatActions';
+import ChatSelectors from '../../../store/chat/chatSelectors';
 
-type ChatViewControlProps = {
-  chat: Chat;
-};
-
-const ChatViewControl = ({chat}: ChatViewControlProps) => {
+const ChatViewControl = () => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
+  const chat = useAppSelector(ChatSelectors.chat);
   const [messageBody, setMessageBody] = useState<string>('');
   const [updater, setUpdater] = useState<string>(undefined);
 

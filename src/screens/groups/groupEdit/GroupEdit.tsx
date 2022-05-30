@@ -11,22 +11,20 @@ import {Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
-import {GroupThunks} from '../../../store/group/groupActions';
+import {GroupActions, GroupThunks} from '../../../store/group/groupActions';
 
 const GroupEdit = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
+  const [loading, setLoading] = useDelayedState();
   const route = useRoute<RouteProp<GroupParamList, 'GroupEdit'>>();
   const group = useAppSelector(GroupSelectors.group);
-  const [loading, setLoading] = useDelayedState();
-  const groupId = route.params.groupId;
-  const colorScheme = route.params.colorScheme;
+  const routeGroupId = route.params.groupId;
+  const routeGroup = route.params.group;
 
-  const goToGroupView = (): void =>
-    navigation.getParent().getId() === 'GroupView'
-      ? navigation.replace('GroupView', {groupId: group.id, colorScheme: group.color})
-      : navigation.goBack();
   const goBack = (): void => navigation.goBack();
+  const goToGroupView = (): void =>
+    navigation.getParent().getId() === 'GroupView' ? navigation.goBack() : navigation.replace('GroupView', {group});
 
   const request = (formData: FormData, stopSubmitting: () => void): void => {
     dispatch(GroupThunks.updateGroup(formData))
@@ -35,17 +33,34 @@ const GroupEdit = () => {
       .catch(() => stopSubmitting());
   };
 
-  useEffect(() => {
-    setLoading(true);
-    dispatch(GroupThunks.fetchGroup(groupId))
+  const setGroup = (): void => {
+    dispatch(GroupActions.setGroup(routeGroup)).then(() => setLoading(false));
+  };
+
+  const loadGroup = (): void => {
+    dispatch(GroupThunks.fetchGroup(routeGroupId))
       .unwrap()
-      .catch(() => goToGroupView())
+      .catch(() => goBack())
       .finally(() => setLoading(false));
-  }, [groupId]);
+  };
+
+  useEffect(() => {
+    if (routeGroup && routeGroup.id !== group?.id) {
+      setGroup();
+    } else if (routeGroupId && routeGroupId !== group?.id) {
+      loadGroup();
+    } else if (!routeGroup && !routeGroupId) {
+      goBack();
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   const theme = useMemo<Theme>(() => {
-    return group || colorScheme ? ThemeFactory.getTheme(group?.color || colorScheme) : ThemeFactory.getDefaultTheme();
-  }, [group, colorScheme]);
+    return group || routeGroup
+      ? ThemeFactory.getTheme(group?.color || routeGroup.color)
+      : ThemeFactory.getDefaultTheme();
+  }, [group, routeGroup]);
 
   return (
     <ThemeProvider theme={theme}>
