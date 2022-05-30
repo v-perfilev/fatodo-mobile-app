@@ -1,6 +1,14 @@
 import {TFunction} from 'i18next';
-import {EventMessageParams, EventMessageType, Message} from '../../models/Message';
+import {
+  EventMessageParams,
+  EventMessageType,
+  Message,
+  MessageReaction,
+  MessageReactionType,
+} from '../../models/Message';
 import {User} from '../../models/User';
+import {ChatItem} from '../../models/ChatItem';
+import {DateFormatters} from './DateUtils';
 
 export class MessageUtils {
   public static parseEventMessage = (message: Message): EventMessageParams => {
@@ -58,4 +66,29 @@ export class MessageUtils {
   public static extractTextFromParams = (params: EventMessageParams): string => {
     return params?.text || '';
   };
+
+  public static convertMessagesToChatItems = (messagesToConvert: Message[]): ChatItem[] => {
+    const handledDates = [] as string[];
+    const handledItems = [] as ChatItem[];
+    messagesToConvert.forEach((message) => {
+      const date = DateFormatters.formatDateWithYear(new Date(message.createdAt));
+      if (!handledDates.includes(date)) {
+        handledDates.push(date);
+        handledItems.push({date});
+      }
+      handledItems.push({message});
+    });
+    return handledItems.reverse();
+  };
+
+  public static createStubReaction = (
+    messageId: string,
+    userId: string,
+    type: MessageReactionType,
+  ): MessageReaction => ({
+    messageId,
+    userId,
+    type,
+    timestamp: new Date(),
+  });
 }

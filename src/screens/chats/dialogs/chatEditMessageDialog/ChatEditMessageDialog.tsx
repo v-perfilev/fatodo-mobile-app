@@ -24,7 +24,7 @@ const ChatEditMessageDialog = ({message, show, close}: ChatEditMessageDialogProp
   const {t} = useTranslation();
 
   const request = (dto: MessageDTO, stopSubmitting: () => void): void => {
-    dispatch(ChatThunks.editMessage({messageId: message.id, dto}))
+    dispatch(ChatThunks.editMessage({message, dto}))
       .unwrap()
       .then(() => close())
       .catch(() => stopSubmitting());

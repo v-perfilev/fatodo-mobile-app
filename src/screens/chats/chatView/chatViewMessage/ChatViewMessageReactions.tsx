@@ -46,11 +46,11 @@ const ChatContentMessageReactions = ({message, isOutcoming}: ChatViewMessageReac
   const handlePress = useCallback(
     (r: MessageReactionType) => (): void => {
       if (r === activeReaction) {
-        dispatch(ChatThunks.noReaction({messageId: message.id, account}));
+        dispatch(ChatThunks.noReaction({message, account}));
       } else if (r === 'LIKE') {
-        dispatch(ChatThunks.likeReaction({messageId: message.id, account}));
+        dispatch(ChatThunks.likeReaction({message, account}));
       } else if (r === 'DISLIKE') {
-        dispatch(ChatThunks.dislikeReaction({messageId: message.id, account}));
+        dispatch(ChatThunks.dislikeReaction({message, account}));
       }
     },
     [message, activeReaction],

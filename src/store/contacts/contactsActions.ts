@@ -6,6 +6,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import ContactService from '../../services/ContactService';
 import {ContactRequestDTO} from '../../models/dto/ContactRequestDTO';
 import {SnackActions} from '../snack/snackActions';
+import {ContactUtils} from '../../shared/utils/ContactUtils';
 
 export class ContactsActions {
   static addRelation = (relation: ContactRelation) => async (dispatch: AppDispatch) => {
@@ -74,14 +75,14 @@ export class ContactsThunks {
 
   static sendRequest = createAsyncThunk(TYPES.SEND_REQUEST, async (dto: ContactRequestDTO, thunkAPI) => {
     await ContactService.sendRequest(dto);
-    const request = {id: undefined, requesterId: undefined, recipientId: dto.recipientId} as ContactRequest;
+    const request = ContactUtils.createStubRequest(dto.recipientId);
     thunkAPI.dispatch(ContactsActions.addOutcomingRequest(request));
     thunkAPI.dispatch(SnackActions.handleCode('contact.requestSent', 'info'));
   });
 
   static acceptIncomingRequest = createAsyncThunk(TYPES.ACCEPT_INCOMING_REQUEST, async (userId: string, thunkAPI) => {
     await ContactService.acceptRequest(userId);
-    const relation = {id: undefined, firstUserId: undefined, secondUserId: userId} as ContactRelation;
+    const relation = ContactUtils.createStubRelation(userId);
     thunkAPI.dispatch(ContactsActions.addRelation(relation));
     thunkAPI.dispatch(ContactsActions.removeIncomingRequest(userId));
     thunkAPI.dispatch(SnackActions.handleCode('contact.requestAccepted', 'info'));

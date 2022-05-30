@@ -8,11 +8,33 @@ import {SnackActions} from '../snack/snackActions';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {MessageDTO} from '../../models/dto/MessageDTO';
 import {UserAccount} from '../../models/User';
+import {Message, MessageReactionType} from '../../models/Message';
 
 export class ChatActions {
   static selectChat = (chat: Chat) => async (dispatch: AppDispatch) => {
     dispatch(chatSlice.actions.selectChat(chat));
   };
+
+  static addMessage = (message: Message) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.addMessage(message));
+  };
+
+  static editMessage = (message: Message) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.editMessage(message));
+  };
+
+  static markMessageAsRead = (messageId: string, account: UserAccount) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.markMessageAsRead({messageId, account}));
+  };
+
+  static deleteMessageReaction = (message: Message, account: UserAccount) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.deleteMessageReaction({message, account}));
+  };
+
+  static setMessageReaction =
+    (message: Message, reactionType: MessageReactionType, account: UserAccount) => async (dispatch: AppDispatch) => {
+      dispatch(chatSlice.actions.setMessageReaction({message, reactionType, account}));
+    };
 }
 
 enum TYPES {
@@ -47,35 +69,35 @@ export class ChatThunks {
     },
   );
 
-  static markAsRead = createAsyncThunk(
+  static markMessageAsRead = createAsyncThunk(
     TYPES.MARK_AS_READ,
-    async ({messageId, account}: {messageId: string; account: UserAccount}) => {
+    async ({messageId, account}: {messageId: string; account: UserAccount}, thunkAPI) => {
       await ChatService.markMessageAsRead(messageId);
-      // TODO handler
+      thunkAPI.dispatch(ChatActions.markMessageAsRead(messageId, account));
     },
   );
 
   static noReaction = createAsyncThunk(
     TYPES.NO_REACTION,
-    async ({messageId, account}: {messageId: string; account: UserAccount}) => {
-      await ChatService.noneMessageReaction(messageId);
-      // TODO handler
+    async ({message, account}: {message: Message; account: UserAccount}, thunkAPI) => {
+      await ChatService.noneMessageReaction(message.id);
+      thunkAPI.dispatch(ChatActions.deleteMessageReaction(message, account));
     },
   );
 
   static likeReaction = createAsyncThunk(
     TYPES.LIKE_REACTION,
-    async ({messageId, account}: {messageId: string; account: UserAccount}) => {
-      await ChatService.likeMessageReaction(messageId);
-      // TODO handler
+    async ({message, account}: {message: Message; account: UserAccount}, thunkAPI) => {
+      await ChatService.likeMessageReaction(message.id);
+      thunkAPI.dispatch(ChatActions.setMessageReaction(message, 'LIKE', account));
     },
   );
 
   static dislikeReaction = createAsyncThunk(
     TYPES.DISLIKE_REACTION,
-    async ({messageId, account}: {messageId: string; account: UserAccount}) => {
-      await ChatService.dislikeMessageReaction(messageId);
-      // TODO handler
+    async ({message, account}: {message: Message; account: UserAccount}, thunkAPI) => {
+      await ChatService.dislikeMessageReaction(message.id);
+      thunkAPI.dispatch(ChatActions.setMessageReaction(message, 'DISLIKE', account));
     },
   );
 
@@ -128,24 +150,28 @@ export class ChatThunks {
 
   static sendMessage = createAsyncThunk(
     TYPES.SEND_MESSAGE,
-    async ({chatId, dto}: {chatId: string; dto: MessageDTO}) => {
-      await ChatService.sendIndirectMessage(chatId, dto);
-      // TODO handler
+    async ({chatId, dto}: {chatId: string; dto: MessageDTO}, thunkAPI) => {
+      const result = await ChatService.sendIndirectMessage(chatId, dto);
+      thunkAPI.dispatch(ChatActions.addMessage(result.data));
+      // TODO chats last message handler
     },
   );
 
   static editMessage = createAsyncThunk(
     TYPES.EDIT_MESSAGE,
-    async ({messageId, dto}: {messageId: string; dto: MessageDTO}, thunkAPI) => {
-      await ChatService.editMessage(messageId, dto);
-      // TODO handler
+    async ({message, dto}: {message: Message; dto: MessageDTO}, thunkAPI) => {
+      const result = await ChatService.editMessage(message.id, dto);
+      thunkAPI.dispatch(ChatActions.editMessage(result.data));
+      // TODO chats last message handler
       thunkAPI.dispatch(SnackActions.handleCode('chat.messageEdited', 'info'));
     },
   );
 
-  static deleteMessage = createAsyncThunk(TYPES.DELETE_MESSAGE, async (messageId: string, thunkAPI) => {
-    await ChatService.deleteMessage(messageId);
-    // TODO handler
+  static deleteMessage = createAsyncThunk(TYPES.DELETE_MESSAGE, async (message: Message, thunkAPI) => {
+    await ChatService.deleteMessage(message.id);
+    const updatedMessage = {...message, isDeleted: true} as Message;
+    thunkAPI.dispatch(ChatActions.editMessage(updatedMessage));
+    // TODO chats last message handler
     thunkAPI.dispatch(SnackActions.handleCode('chat.messageDeleted', 'info'));
   });
 }

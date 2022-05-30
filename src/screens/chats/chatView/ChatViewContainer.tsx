@@ -42,7 +42,7 @@ const ChatViewContainer = () => {
   };
 
   const markAsRead = (messageId: string): void => {
-    dispatch(ChatThunks.markAsRead({messageId, account}));
+    dispatch(ChatThunks.markMessageAsRead({messageId, account}));
   };
 
   /*

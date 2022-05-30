@@ -5,13 +5,7 @@ import {Item} from '../../models/Item';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Group} from '../../models/Group';
 import {GroupsThunks} from './groupsActions';
-
-const filterItems = (items: Item[]): Item[] => {
-  return items
-    .filter(ArrayUtils.withIdFilter)
-    .filter(ArrayUtils.uniqueByIdFilter)
-    .sort(ArrayUtils.createdAtDescComparator);
-};
+import {GroupUtils} from '../../shared/utils/GroupUtils';
 
 const initialState: GroupsState = {
   groups: [],
@@ -79,7 +73,7 @@ const groupsSlice = createSlice({
 
     addItem: (state: GroupsState, action) => {
       const item = action.payload as Item;
-      const newItemsValue = filterItems([item, ...MapUtils.getValue(state.items, item.groupId)]);
+      const newItemsValue = GroupUtils.filterItems([item, ...MapUtils.getValue(state.items, item.groupId)]);
       const items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
       const newItemsCountValue = MapUtils.getValue(state.itemsCount, item.groupId) + 1;
       const itemsCount = MapUtils.setValue(state.itemsCount, item.groupId, newItemsCountValue);
@@ -164,7 +158,10 @@ const groupsSlice = createSlice({
     });
     builder.addCase(GroupsThunks.fetchMoreItems.fulfilled, (state: GroupsState, action) => {
       const groupId = action.meta.arg.groupId;
-      const newItemsValue = filterItems([...(MapUtils.getValue(state.items, groupId) || []), ...action.payload.data]);
+      const newItemsValue = GroupUtils.filterItems([
+        ...(MapUtils.getValue(state.items, groupId) || []),
+        ...action.payload.data,
+      ]);
       const items = MapUtils.setValue(state.items, groupId, newItemsValue);
       const itemsCount = MapUtils.setValue(state.itemsCount, groupId, action.payload.count);
       const itemsLoading = MapUtils.setValue(state.itemsLoading, groupId, false);
