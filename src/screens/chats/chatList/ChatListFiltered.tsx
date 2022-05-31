@@ -1,21 +1,15 @@
-import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
+import React, {ReactElement, useCallback, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import {ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import {ListRenderItemInfo} from 'react-native';
 import ChatListStub from './ChatListStub';
 import {Chat} from '../../../models/Chat';
 import ChatListItem from './ChatListItem';
-import {FlatList, Theme, useTheme} from 'native-base';
-import {DEFAULT_SPACE, HALF_DEFAULT_SPACE} from '../../../constants';
+import {FlatList, useTheme} from 'native-base';
 import {ChatsThunks} from '../../../store/chats/chatsActions';
-
-const containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
-  padding: theme.sizes[DEFAULT_SPACE],
-  paddingTop: theme.sizes[HALF_DEFAULT_SPACE],
-  paddingBottom: theme.sizes[HALF_DEFAULT_SPACE],
-});
+import {ListUtils} from '../../../shared/utils/ListUtils';
 
 type ChatListFilteredProps = {
   filter: string;
@@ -27,8 +21,6 @@ const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
   const [loading, setLoading] = useDelayedState();
   const filteredChats = useAppSelector(ChatsSelectors.filteredChats);
 
-  const showStub = useMemo<boolean>(() => filteredChats.length === 0, [filteredChats]);
-
   const loadFilteredChats = (): void => {
     dispatch(ChatsThunks.fetchFilteredChats(filter))
       .unwrap()
@@ -37,7 +29,7 @@ const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
 
   const keyExtractor = useCallback((chat: Chat): string => chat.id, []);
   const renderItem = useCallback((info: ListRenderItemInfo<Chat>): ReactElement => {
-    return <ChatListItem chat={info.item} />;
+    return <ChatListItem chat={info.item} style={ListUtils.itemStyle(theme)} />;
   }, []);
 
   useEffect(() => {
@@ -47,19 +39,16 @@ const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
 
   return (
     <ConditionalSpinner loading={loading}>
-      {showStub ? (
-        <ChatListStub />
-      ) : (
-        <FlatList
-          data={filteredChats}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-          onEndReached={loadFilteredChats}
-          onEndReachedThreshold={5}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={containerStyle(theme)}
-        />
-      )}
+      <FlatList
+        ListEmptyComponent={<ChatListStub />}
+        data={filteredChats}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        onEndReached={loadFilteredChats}
+        onEndReachedThreshold={5}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={ListUtils.containerStyle(theme)}
+      />
     </ConditionalSpinner>
   );
 };

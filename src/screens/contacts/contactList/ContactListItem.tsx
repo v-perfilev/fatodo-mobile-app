@@ -7,12 +7,13 @@ import {MenuElement} from '../../../models/MenuElement';
 import ControlMenu from '../../../components/layouts/ControlMenu';
 import UserMinusIcon from '../../../components/icons/UserMinusIcon';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {IBoxProps} from 'native-base';
 
-type ContactListItemProps = {
+type ContactListItemProps = IBoxProps & {
   relation: ContactRelationWithUser;
 };
 
-const ContactListItem = ({relation}: ContactListItemProps) => {
+const ContactListItem = ({relation, ...props}: ContactListItemProps) => {
   const dispatch = useAppDispatch();
   const [disabled, setDisabled] = useState(false);
 
@@ -33,7 +34,7 @@ const ContactListItem = ({relation}: ContactListItemProps) => {
   ] as MenuElement[];
 
   return (
-    <FHStack defaultSpace>
+    <FHStack defaultSpace {...props}>
       <FHStack grow>
         <UserView user={relation.user} withUsername picSize="sm" />
       </FHStack>

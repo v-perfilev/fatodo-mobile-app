@@ -6,7 +6,7 @@ import TabNavigator from './TabNavigator';
 
 type ChatRouteProps = {
   chat?: Chat;
-  chatId: string;
+  chatId?: string;
 };
 
 export type RootParamList = {

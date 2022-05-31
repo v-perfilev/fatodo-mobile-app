@@ -7,12 +7,14 @@ import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import {Item} from '../../../models/Item';
 import {useAppSelector} from '../../../store/store';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
+import {IBoxProps} from 'native-base';
 
-type GroupListItemProps = RenderItemParams<Group> & {
-  sorting: boolean;
-};
+type GroupListItemProps = IBoxProps &
+  RenderItemParams<Group> & {
+    sorting: boolean;
+  };
 
-const GroupListItem = ({item: group, sorting, drag}: GroupListItemProps) => {
+const GroupListItem = ({item: group, sorting, drag, ...props}: GroupListItemProps) => {
   const listItems = useAppSelector(GroupsSelectors.items);
   const listCounts = useAppSelector(GroupsSelectors.itemsCount);
   const listCollapsed = useAppSelector(GroupsSelectors.itemsCollapsed);
@@ -34,6 +36,7 @@ const GroupListItem = ({item: group, sorting, drag}: GroupListItemProps) => {
       sorting={sorting}
       drag={drag}
       theme={theme}
+      {...props}
     />
   );
 };

@@ -18,12 +18,13 @@ import {Badge, Text} from 'native-base';
 import FVStack from '../../../components/boxes/FVStack';
 import {RootNavigationProp} from '../../../navigators/RootNavigator';
 import {UsersThunks} from '../../../store/users/usersActions';
+import {IPressableProps} from 'native-base/lib/typescript/components/primitives/Pressable/types';
 
-type ChatListItemProps = {
+type ChatListItemProps = IPressableProps & {
   chat: Chat;
 };
 
-const ChatListItem = ({chat}: ChatListItemProps) => {
+const ChatListItem = ({chat, ...props}: ChatListItemProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<RootNavigationProp>();
   const {t} = useTranslation();
@@ -67,7 +68,7 @@ const ChatListItem = ({chat}: ChatListItemProps) => {
   }, []);
 
   return (
-    <PressableButton onPress={goToChat} my="1.5">
+    <PressableButton onPress={goToChat} {...props}>
       <FHStack grow defaultSpace>
         {pic}
         <FHStack grow>

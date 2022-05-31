@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import FScrollView from '../../../components/boxes/FScrollView';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import OutcomingRequestListContainer from './OutcomingRequestListContainer';
+import OutcomingRequestListItems from './OutcomingRequestListItems';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import UsersSelectors from '../../../store/users/usersSelectors';
@@ -51,9 +50,7 @@ const OutcomingRequestList = () => {
 
   return (
     <ConditionalSpinner loading={loading}>
-      <FScrollView>
-        <OutcomingRequestListContainer requests={userRequests} />
-      </FScrollView>
+      <OutcomingRequestListItems requests={userRequests} />
     </ConditionalSpinner>
   );
 };

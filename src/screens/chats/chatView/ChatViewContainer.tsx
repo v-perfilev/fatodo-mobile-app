@@ -1,8 +1,7 @@
-import React, {memo, useCallback, useMemo, useRef} from 'react';
+import React, {memo, useCallback, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import {NativeScrollEvent, NativeSyntheticEvent, ViewToken, VirtualizedList} from 'react-native';
-import ChatViewStub from './ChatViewStub';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {ChatItem} from '../../../models/ChatItem';
 import {TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
@@ -22,8 +21,6 @@ const ChatViewContainer = () => {
   const chatItems = useAppSelector(ChatSelectors.chatItems);
   const allLoaded = useAppSelector(ChatSelectors.allLoaded);
   const account = useAppSelector(AuthSelectors.account);
-
-  const showStub = useMemo<boolean>(() => chatItems.length === 0, [chatItems]);
 
   const loadMessages = (): void => {
     dispatch(ChatThunks.fetchMessages({chatId: chat.id, offset: chatItems.length}));
@@ -75,16 +72,12 @@ const ChatViewContainer = () => {
   return (
     <FBox>
       <ChatViewScrollButton show={showScroll} scrollDown={scrollDown} />
-      {showStub ? (
-        <ChatViewStub />
-      ) : (
-        <ChatViewList
-          loadMessages={!allLoaded ? loadMessages : undefined}
-          onScroll={onScroll}
-          onViewableItemsChanged={onViewableItemsChanged}
-          listRef={listRef}
-        />
-      )}
+      <ChatViewList
+        loadMessages={!allLoaded ? loadMessages : undefined}
+        onScroll={onScroll}
+        onViewableItemsChanged={onViewableItemsChanged}
+        listRef={listRef}
+      />
     </FBox>
   );
 };

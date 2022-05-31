@@ -1,9 +1,8 @@
 import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
-import {Box, FlatList, Theme, useTheme} from 'native-base';
-import {ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import {FlatList, useTheme} from 'native-base';
+import {ListRenderItemInfo} from 'react-native';
 import {useAppSelector} from '../../../../store/store';
 import GroupSelectors from '../../../../store/group/groupSelectors';
-import {DEFAULT_SPACE, HALF_DEFAULT_SPACE} from '../../../../constants';
 import GroupViewItem from '../groupViewItem/GroupViewItem';
 import {Item} from '../../../../models/Item';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
@@ -11,13 +10,7 @@ import AuthSelectors from '../../../../store/auth/authSelectors';
 import GroupViewItemsSkeleton from '../skeletons/GroupViewItemsSkeleton';
 import {useDelayedState} from '../../../../shared/hooks/useDelayedState';
 import GroupViewStub from './GroupViewStub';
-
-const containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
-  padding: theme.sizes[DEFAULT_SPACE],
-  paddingTop: theme.sizes[HALF_DEFAULT_SPACE],
-  paddingBottom: theme.sizes[HALF_DEFAULT_SPACE],
-  flexGrow: 1,
-});
+import {ListUtils} from '../../../../shared/utils/ListUtils';
 
 type GroupViewItemsProps = {
   items: Item[];
@@ -40,11 +33,7 @@ const GroupViewItems = ({items, loadMorePromise, header}: GroupViewItemsProps) =
   const stub = loading ? <GroupViewItemsSkeleton /> : <GroupViewStub />;
   const keyExtractor = useCallback((item: Item): string => item.id, []);
   const renderItem = useCallback((info: ListRenderItemInfo<Item>): ReactElement => {
-    return (
-      <Box my="1.5">
-        <GroupViewItem item={info.item} canEdit={canEdit} />
-      </Box>
-    );
+    return <GroupViewItem item={info.item} canEdit={canEdit} style={ListUtils.itemStyle(theme)} />;
   }, []);
 
   useEffect(() => {
@@ -63,7 +52,7 @@ const GroupViewItems = ({items, loadMorePromise, header}: GroupViewItemsProps) =
       onEndReached={loadMore}
       onEndReachedThreshold={5}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={containerStyle(theme)}
+      contentContainerStyle={ListUtils.containerStyle(theme)}
     />
   );
 };

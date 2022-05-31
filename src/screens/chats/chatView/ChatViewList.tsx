@@ -12,18 +12,13 @@ import {
 } from 'react-native';
 import ChatViewItem from './ChatViewItem';
 import {ChatItem} from '../../../models/ChatItem';
-import {Box, FlatList, Theme, useTheme} from 'native-base';
-import {DEFAULT_SPACE, HALF_DEFAULT_SPACE} from '../../../constants';
+import {FlatList, useTheme} from 'native-base';
+import {ListUtils} from '../../../shared/utils/ListUtils';
+import ChatViewStub from './ChatViewStub';
 
 const invertedStyle = {
   scaleY: -1,
 } as StyleProp<ViewStyle>;
-
-const containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
-  padding: theme.sizes[DEFAULT_SPACE],
-  paddingTop: theme.sizes[HALF_DEFAULT_SPACE],
-  paddingBottom: theme.sizes[HALF_DEFAULT_SPACE],
-});
 
 type ChatViewListProps = {
   loadMessages: () => void;
@@ -38,29 +33,24 @@ const ChatViewList = ({loadMessages, onScroll, onViewableItemsChanged, listRef}:
 
   const keyExtractor = useCallback((item: ChatItem): string => item.message?.id || item.date, []);
   const renderItem = useCallback((info: ListRenderItemInfo<ChatItem>): ReactElement => {
-    return (
-      <Box style={invertedStyle}>
-        <ChatViewItem item={info.item} />
-      </Box>
-    );
+    return <ChatViewItem item={info.item} style={[invertedStyle, ListUtils.itemStyle(theme)]} />;
   }, []);
 
   return (
-    <Box>
-      <FlatList
-        style={invertedStyle}
-        data={chatItems}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        onEndReached={loadMessages}
-        onEndReachedThreshold={5}
-        onViewableItemsChanged={onViewableItemsChanged}
-        onScroll={onScroll}
-        showsVerticalScrollIndicator={false}
-        ref={listRef}
-        contentContainerStyle={containerStyle(theme)}
-      />
-    </Box>
+    <FlatList
+      ListEmptyComponent={<ChatViewStub />}
+      style={invertedStyle}
+      data={chatItems}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem}
+      onEndReached={loadMessages}
+      onEndReachedThreshold={5}
+      onViewableItemsChanged={onViewableItemsChanged}
+      onScroll={onScroll}
+      showsVerticalScrollIndicator={false}
+      ref={listRef}
+      contentContainerStyle={ListUtils.containerStyle(theme)}
+    />
   );
 };
 

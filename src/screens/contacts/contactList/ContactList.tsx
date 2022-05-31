@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import ContactListContainer from './ContactListContainer';
-import FScrollView from '../../../components/boxes/FScrollView';
+import ContactListItems from './ContactListItems';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import UsersSelectors from '../../../store/users/usersSelectors';
@@ -56,9 +55,7 @@ const ContactList = () => {
     <>
       <ContactListControl setFilter={setFilter} />
       <ConditionalSpinner loading={loading}>
-        <FScrollView>
-          <ContactListContainer relations={userRelations} filter={filter} />
-        </FScrollView>
+        <ContactListItems relations={userRelations} filter={filter} />
       </ConditionalSpinner>
     </>
   );

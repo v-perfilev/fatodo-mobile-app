@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, Text} from 'native-base';
+import {Text} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import GroupViewItemIcons from './GroupViewItemIcons';
@@ -10,20 +10,22 @@ import FHStack from '../../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../../store/store';
 import GroupSelectors from '../../../../store/group/groupSelectors';
 import {Item} from '../../../../models/Item';
+import PressableButton from '../../../../components/controls/PressableButton';
+import {IPressableProps} from 'native-base/lib/typescript/components/primitives/Pressable/types';
 
-type GroupViewItemProps = {
+type GroupViewItemProps = IPressableProps & {
   item: Item;
   canEdit: boolean;
 };
 
-const GroupViewItem = ({item, canEdit}: GroupViewItemProps) => {
+const GroupViewItem = ({item, canEdit, ...props}: GroupViewItemProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const group = useAppSelector(GroupSelectors.group);
 
   const goToItemView = (): void => navigation.navigate('ItemView', {group, item});
 
   return (
-    <Pressable onPress={goToItemView}>
+    <PressableButton onPress={goToItemView} {...props}>
       <FHStack space="2" p="1" borderWidth="1" borderColor="gray.200" borderRadius="2" alignItems="center">
         <GroupViewItemIcons item={item} canEdit={canEdit} />
         <FVStack grow>
@@ -34,7 +36,7 @@ const GroupViewItem = ({item, canEdit}: GroupViewItemProps) => {
         </FVStack>
         <GroupViewItemMenuButton item={item} canEdit={canEdit} />
       </FHStack>
-    </Pressable>
+    </PressableButton>
   );
 };
 

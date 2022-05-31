@@ -8,12 +8,13 @@ import CheckIcon from '../../../components/icons/CheckIcon';
 import CloseIcon from '../../../components/icons/CloseIcon';
 import ControlMenu from '../../../components/layouts/ControlMenu';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {IBoxProps} from 'native-base';
 
-type IncomingRequestListItemProps = {
+type IncomingRequestListItemProps = IBoxProps & {
   request: ContactRequestWithUser;
 };
 
-const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
+const IncomingRequestListItem = ({request, ...props}: IncomingRequestListItemProps) => {
   const dispatch = useAppDispatch();
   const [disabled, setDisabled] = useState(false);
 
@@ -46,7 +47,7 @@ const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
   ] as MenuElement[];
 
   return (
-    <FHStack defaultSpace>
+    <FHStack defaultSpace {...props}>
       <FHStack grow>
         <UserView user={request.user} withUsername picSize="sm" />
       </FHStack>
