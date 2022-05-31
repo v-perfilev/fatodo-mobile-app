@@ -6,8 +6,9 @@ import OutlinedButton from '../../../../components/controls/OutlinedButton';
 import PlusIcon from '../../../../components/icons/PlusIcon';
 import {useAppSelector} from '../../../../store/store';
 import GroupSelectors from '../../../../store/group/groupSelectors';
+import {Box} from 'native-base';
 
-const GroupViewItemsCreateButton = () => {
+const GroupViewCreateButton = () => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t, i18n} = useTranslation();
   const group = useAppSelector(GroupSelectors.group);
@@ -17,16 +18,18 @@ const GroupViewItemsCreateButton = () => {
   const text = useMemo<string>(() => t('group:menu.createItem'), [i18n.language]);
 
   return (
-    <OutlinedButton
-      h="45px"
-      rounded="xs"
-      borderColor="gray.200"
-      leftIcon={<PlusIcon size="sm" />}
-      onPress={goToItemCreate}
-    >
-      {text}
-    </OutlinedButton>
+    <Box my="1.5">
+      <OutlinedButton
+        h="48px"
+        rounded="xs"
+        borderColor="gray.200"
+        leftIcon={<PlusIcon size="sm" />}
+        onPress={goToItemCreate}
+      >
+        {text}
+      </OutlinedButton>
+    </Box>
   );
 };
 
-export default GroupViewItemsCreateButton;
+export default GroupViewCreateButton;

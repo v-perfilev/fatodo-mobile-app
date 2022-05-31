@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import DeleteIcon from '../../../components/icons/DeleteIcon';
 import EditIcon from '../../../components/icons/EditIcon';
 import PlusIcon from '../../../components/icons/PlusIcon';
@@ -17,14 +17,23 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import Menu, {MenuItem, MenuItemProps} from '../../../components/controls/Menu';
 import IconButton from '../../../components/controls/IconButton';
 import DotsVerticalIcon from '../../../components/icons/DotsVerticalIcon';
+import ArchiveIcon from '../../../components/icons/ArchiveIcon';
+import PlayIcon from '../../../components/icons/PlayIcon';
 
-const GroupViewHeader = () => {
+type GroupViewHeaderProps = {
+  showArchived: boolean;
+  setShowArchived: Dispatch<SetStateAction<boolean>>;
+};
+
+const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {showGroupMembersDialog, showGroupAddMembersDialog, showGroupLeaveDialog, showGroupDeleteDialog} =
     useGroupDialogContext();
   const {t} = useTranslation();
   const group = useAppSelector(GroupSelectors.group);
   const account = useAppSelector(AuthSelectors.account);
+
+  const toggleShowArchived = (): void => setShowArchived((prevState) => !prevState);
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
   const goToItemCreate = (): void => navigation.navigate('ItemCreate', {group});
@@ -75,9 +84,12 @@ const GroupViewHeader = () => {
     },
   ] as MenuItemProps[];
 
+  const switchArchivedIcon = showArchived ? <ArchiveIcon /> : <PlayIcon />;
+
   return (
     <Header title={group?.title} imageFilename={group?.imageFilename} hideLogo>
       {canEdit && <IconButton colorScheme="white" size="lg" p="1.5" icon={<PlusIcon />} onPress={goToItemCreate} />}
+      <IconButton colorScheme="white" size="lg" p="1.5" icon={switchArchivedIcon} onPress={toggleShowArchived} />
       <Menu
         trigger={(triggerProps) => (
           <IconButton {...triggerProps} colorScheme="white" size="lg" p="1.5" icon={<DotsVerticalIcon />} />

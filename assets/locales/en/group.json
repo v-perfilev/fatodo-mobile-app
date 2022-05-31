@@ -3,6 +3,9 @@
     "create": "Create group",
     "edit": "Edit group"
   },
+  "view": {
+    "itemsNotFound": "No items yet"
+  },
   "fields": {
     "title": {
       "label": "Title",

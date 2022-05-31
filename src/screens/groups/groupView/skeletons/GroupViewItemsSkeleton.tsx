@@ -1,11 +1,12 @@
-import React from 'react';
-import {Skeleton} from 'native-base';
+import React, {useMemo} from 'react';
+import {GROUP_ITEMS_COUNT} from '../../../../constants';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
+import {Skeleton} from 'native-base';
 
-const GroupListCardItemSkeleton = () => {
+const GroupViewItemSkeleton = () => {
   return (
-    <FHStack space="2" p="1" borderWidth="1" borderColor="gray.100" borderRadius="2" alignItems="center">
+    <FHStack h="48px" space="2" p="1" borderWidth="1" borderColor="gray.100" borderRadius="2" alignItems="center">
       <FHStack smallSpace alignItems="center">
         <Skeleton w="24px" h="24px" rounded="lg" />
         <FVStack space="2">
@@ -22,4 +23,16 @@ const GroupListCardItemSkeleton = () => {
   );
 };
 
-export default GroupListCardItemSkeleton;
+const GroupViewItemsSkeleton = () => {
+  const indexArray = useMemo(() => Array.from(Array(GROUP_ITEMS_COUNT).keys()), []);
+
+  return (
+    <FVStack space="3" my="1.5">
+      {indexArray.map((index) => (
+        <GroupViewItemSkeleton key={index} />
+      ))}
+    </FVStack>
+  );
+};
+
+export default GroupViewItemsSkeleton;

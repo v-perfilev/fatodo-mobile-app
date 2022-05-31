@@ -18,7 +18,7 @@ export const AVATARS_IN_CARD = 3;
 
 // GROUPS
 export const CARD_ITEMS_COUNT = 5;
-export const GROUP_ITEMS_COUNT = 10;
+export const GROUP_ITEMS_COUNT = 20;
 
 // IMAGES
 export const IMAGE_SIZE = 500;

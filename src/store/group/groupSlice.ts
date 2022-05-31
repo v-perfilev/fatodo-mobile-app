@@ -60,7 +60,7 @@ const groupSlice = createSlice({
       const activeFunction = !isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValue;
       const archivedFunction = isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValue;
       const activeItems = filterItems(activeFunction(state.activeItems, item));
-      const archivedItems = filterItems(archivedFunction(state.activeItems, item));
+      const archivedItems = filterItems(archivedFunction(state.archivedItems, item));
       return {...state, activeItemsCount, archivedItemsCount, activeItems, archivedItems};
     },
 

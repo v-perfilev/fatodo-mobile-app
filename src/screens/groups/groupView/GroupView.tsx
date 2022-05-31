@@ -1,14 +1,12 @@
 import React, {useMemo, useState} from 'react';
-import {Divider, Theme} from 'native-base';
+import {Theme} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
-import GroupViewUsers from './GroupViewUsers';
-import GroupViewItems from './groupViewItems/GroupViewItems';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import FScrollView from '../../../components/boxes/FScrollView';
-import FVStack from '../../../components/boxes/FVStack';
 import GroupViewHeader from './GroupViewHeader';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
+import GroupViewActiveItems from './groupViewItems/GroupViewActiveItems';
+import GroupViewArchivedItems from './groupViewItems/GroupViewArchivedItems';
 
 type GroupViewProps = WithGroupProps;
 
@@ -21,15 +19,9 @@ const GroupView = ({group, loading}: GroupViewProps) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <GroupViewHeader />
+      <GroupViewHeader showArchived={showArchived} setShowArchived={setShowArchived} />
       <ConditionalSpinner loading={loading}>
-        <FScrollView>
-          <FVStack defaultSpace>
-            <GroupViewUsers />
-            <Divider bg="secondary.500" />
-            <GroupViewItems showArchived={showArchived} setShowArchived={setShowArchived} />
-          </FVStack>
-        </FScrollView>
+        {showArchived ? <GroupViewArchivedItems /> : <GroupViewActiveItems />}
       </ConditionalSpinner>
     </ThemeProvider>
   );
