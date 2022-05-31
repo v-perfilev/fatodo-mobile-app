@@ -10,14 +10,27 @@ import ItemView from '../screens/items/itemView/ItemView';
 import {Group} from '../models/Group';
 import {Item} from '../models/Item';
 
+type GroupRouteProps = {
+  group?: Group;
+  groupId?: string;
+};
+
+type ItemRouteProps = {
+  group?: Group;
+  item?: Item;
+  itemId?: string;
+};
+
 export type GroupParamList = {
   GroupList: undefined;
-  GroupView: {group?: Group; groupId?: string};
+  GroupView: GroupRouteProps;
   GroupCreate: undefined;
-  GroupEdit: {group?: Group; groupId?: string};
-  ItemView: {group?: Group; item?: Item; itemId?: string};
-  ItemCreate: {group?: Group; groupId?: string};
-  ItemEdit: {group?: Group; item?: Item; itemId?: string};
+  GroupEdit: GroupRouteProps;
+  ItemView: ItemRouteProps;
+  ItemCreate: GroupRouteProps;
+  ItemEdit: ItemRouteProps;
+  withGroup: GroupRouteProps;
+  withItem: ItemRouteProps;
 };
 
 const Stack = createNativeStackNavigator<GroupParamList>();

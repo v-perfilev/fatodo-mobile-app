@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Pressable, Text} from 'native-base';
+import {Box, Text} from 'native-base';
 import GroupListCardCollapseButton from './GroupListCardCollapseButton';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
@@ -9,6 +9,7 @@ import {LINEAR_GRADIENT} from '../../../../shared/themes/ThemeFactory';
 import {Group} from '../../../../models/Group';
 import FHStack from '../../../../components/boxes/FHStack';
 import GroupListCardDragButton from './GroupListCardDragButton';
+import PressableButton from '../../../../components/controls/PressableButton';
 
 type GroupListCardHeaderProps = {
   group: Group;
@@ -23,7 +24,7 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
   const goToGroupView = (): void => navigation.navigate('GroupView', {group});
 
   return (
-    <Pressable onPress={goToGroupView}>
+    <PressableButton onPress={goToGroupView}>
       <Box h="45px" pl="3" pr="2" bg={LINEAR_GRADIENT} justifyContent="center">
         <FHStack defaultSpace alignItems="center">
           {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} invertedBorder />}
@@ -42,7 +43,7 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
           </FHStack>
         </FHStack>
       </Box>
-    </Pressable>
+    </PressableButton>
   );
 };
 

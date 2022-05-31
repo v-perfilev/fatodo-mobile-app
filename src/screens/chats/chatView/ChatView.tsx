@@ -1,51 +1,16 @@
 import React, {useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {useAppDispatch} from '../../../store/store';
 import ChatViewContainer from './ChatViewContainer';
-import {RootParamList} from '../../../navigators/RootNavigator';
-import ChatSelectors from '../../../store/chat/chatSelectors';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import {UsersThunks} from '../../../store/users/usersActions';
-import {ChatThunks} from '../../../store/chat/chatActions';
-import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
+import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
 
-const ChatView = () => {
+type ChatViewProps = WithChatProps;
+
+const ChatView = ({chat, loading}: ChatViewProps) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
-  const route = useRoute<RouteProp<RootParamList, 'ChatView'>>();
-  const [loading, setLoading] = useDelayedState(false);
-  const routeChat = route.params.chat;
-  const routeChatId = route.params.chatId;
-  const chat = useAppSelector(ChatSelectors.chat);
-
-  const goBack = (): void => navigation.goBack();
-
-  const selectChat = (): void => {
-    setLoading(true);
-    dispatch(ChatThunks.selectChat(routeChat))
-      .unwrap()
-      .then(() => setLoading(false));
-  };
-
-  const loadChat = (): void => {
-    setLoading(true);
-    dispatch(ChatThunks.fetchChat(routeChatId))
-      .unwrap()
-      .catch(() => goBack())
-      .finally(() => setLoading(false));
-  };
-
-  useEffect(() => {
-    if (routeChat && routeChat.id !== chat?.id) {
-      selectChat();
-    } else if (routeChatId && routeChatId !== chat?.id) {
-      loadChat();
-    } else if (!routeChat && !routeChatId) {
-      goBack();
-    }
-  }, []);
 
   useEffect(() => {
     if (chat) {
@@ -65,4 +30,4 @@ const ChatView = () => {
   );
 };
 
-export default ChatView;
+export default withChatContainer(ChatView);

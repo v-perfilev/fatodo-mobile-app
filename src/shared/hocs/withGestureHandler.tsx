@@ -1,5 +1,3 @@
-import 'react-native-gesture-handler';
-
 import React, {ComponentType} from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {StyleProp} from 'react-native';

@@ -4,9 +4,15 @@ import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navi
 import ChatView from '../screens/chats/chatView/ChatView';
 import TabNavigator from './TabNavigator';
 
+type ChatRouteProps = {
+  chat?: Chat;
+  chatId: string;
+};
+
 export type RootParamList = {
   HomeTabs: undefined;
-  ChatView: {chat?: Chat; chatId?: string};
+  ChatView: ChatRouteProps;
+  withChat: ChatRouteProps;
 };
 
 const Stack = createNativeStackNavigator<RootParamList>();
