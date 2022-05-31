@@ -59,6 +59,7 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
     (group: Group): void => {
       const show = true;
       const close = (): void => updateDialogProps(GroupDialogs.MEMBERS, {show: false});
+
       const switchToAddMembers = (): void => {
         updateDialogProps(GroupDialogs.MEMBERS, {show: false});
         showGroupAddMembersDialog(group);
@@ -74,9 +75,10 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
         switchToAddMembers,
         switchToEditMember,
       } as GroupMembersDialogProps;
+
       setDialogProps(GroupDialogs.MEMBERS, props);
     },
-    [setDialogProps, updateDialogProps, showGroupAddMembersDialog],
+    [setDialogProps, updateDialogProps, showGroupAddMembersDialog, showGroupEditMemberDialog],
   );
 
   const showGroupLeaveDialog = useCallback(

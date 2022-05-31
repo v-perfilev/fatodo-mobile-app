@@ -11,8 +11,8 @@ type Props = IPressableProps & {
 const CheckboxInput: FC<Props> = ({isSelected, ...props}: Props) => {
   return (
     <PressableButton {...props}>
-      <FCenter w="30px" h="30px" borderWidth="1" borderColor="gray.500" borderRadius="5">
-        {isSelected && <CheckIcon color="primary.500" />}
+      <FCenter w="25px" h="25px" borderWidth="1" borderColor="secondary.500" borderRadius="5">
+        {isSelected && <CheckIcon color="primary.500" size="md" />}
       </FCenter>
     </PressableButton>
   );

@@ -7,7 +7,7 @@ import ChatSelectors from '../../../store/chat/chatSelectors';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import {UsersThunks} from '../../../store/users/usersActions';
-import {ChatActions, ChatThunks} from '../../../store/chat/chatActions';
+import {ChatThunks} from '../../../store/chat/chatActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 
@@ -15,7 +15,7 @@ const ChatView = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const route = useRoute<RouteProp<RootParamList, 'ChatView'>>();
-  const [loading, setLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState(false);
   const routeChat = route.params.chat;
   const routeChatId = route.params.chatId;
   const chat = useAppSelector(ChatSelectors.chat);
@@ -23,10 +23,14 @@ const ChatView = () => {
   const goBack = (): void => navigation.goBack();
 
   const selectChat = (): void => {
-    dispatch(ChatActions.selectChat(routeChat)).then(() => setLoading(false));
+    setLoading(true);
+    dispatch(ChatThunks.selectChat(routeChat))
+      .unwrap()
+      .then(() => setLoading(false));
   };
 
   const loadChat = (): void => {
+    setLoading(true);
     dispatch(ChatThunks.fetchChat(routeChatId))
       .unwrap()
       .catch(() => goBack())
@@ -40,8 +44,6 @@ const ChatView = () => {
       loadChat();
     } else if (!routeChat && !routeChatId) {
       goBack();
-    } else {
-      setLoading(false);
     }
   }, []);
 

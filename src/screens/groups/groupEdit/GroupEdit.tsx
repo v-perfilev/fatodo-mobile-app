@@ -16,7 +16,7 @@ import {GroupActions, GroupThunks} from '../../../store/group/groupActions';
 const GroupEdit = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
-  const [loading, setLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState(false);
   const route = useRoute<RouteProp<GroupParamList, 'GroupEdit'>>();
   const group = useAppSelector(GroupSelectors.group);
   const routeGroupId = route.params.groupId;
@@ -34,10 +34,12 @@ const GroupEdit = () => {
   };
 
   const setGroup = (): void => {
+    setLoading(true);
     dispatch(GroupActions.setGroup(routeGroup)).then(() => setLoading(false));
   };
 
   const loadGroup = (): void => {
+    setLoading(true);
     dispatch(GroupThunks.fetchGroup(routeGroupId))
       .unwrap()
       .catch(() => goBack())
@@ -51,8 +53,6 @@ const GroupEdit = () => {
       loadGroup();
     } else if (!routeGroup && !routeGroupId) {
       goBack();
-    } else {
-      setLoading(false);
     }
   }, []);
 

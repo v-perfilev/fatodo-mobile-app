@@ -95,7 +95,7 @@ const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEdi
   );
 
   const actions = group && canAdmin && (
-    <GhostButton startIcon={<UserPlusIcon />} onClick={switchToAddMembers} colorScheme="primary">
+    <GhostButton startIcon={<UserPlusIcon />} onPress={switchToAddMembers} colorScheme="primary">
       {t('group:members.buttons.addUsers')}
     </GhostButton>
   );

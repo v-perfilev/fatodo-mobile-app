@@ -38,6 +38,7 @@ export class ChatActions {
 }
 
 enum TYPES {
+  SELECT_CHAT = 'chat/selectChat',
   FETCH_CHAT = 'chat/fetchChat',
   FETCH_MESSAGES = 'chat/fetchMessages',
   MARK_AS_READ = 'chat/markAsRead',
@@ -56,8 +57,14 @@ enum TYPES {
 }
 
 export class ChatThunks {
-  static fetchChat = createAsyncThunk(TYPES.FETCH_CHAT, async (chatId: string) => {
+  static selectChat = createAsyncThunk(TYPES.SELECT_CHAT, async (chat: Chat, thunkAPI) => {
+    await thunkAPI.dispatch(ChatActions.selectChat(chat));
+    await thunkAPI.dispatch(ChatThunks.fetchMessages({chatId: chat.id, offset: 0}));
+  });
+
+  static fetchChat = createAsyncThunk(TYPES.FETCH_CHAT, async (chatId: string, thunkAPI) => {
     const result = await ChatService.getChatById(chatId);
+    await thunkAPI.dispatch(ChatThunks.fetchMessages({chatId: result.data.id, offset: 0}));
     return result.data;
   });
 

@@ -20,7 +20,7 @@ const ItemCreate = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'ItemCreate'>>();
-  const [loading, setLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState(false);
   const routeGroup = route.params.group;
   const routeGroupId = route.params.groupId;
   const group = useAppSelector(GroupSelectors.group);
@@ -37,10 +37,12 @@ const ItemCreate = () => {
   };
 
   const setGroup = (): void => {
+    setLoading(true);
     dispatch(GroupActions.setGroup(routeGroup)).then(() => setLoading(false));
   };
 
   const loadGroup = (): void => {
+    setLoading(true);
     dispatch(GroupThunks.fetchGroup(routeGroupId))
       .unwrap()
       .catch(() => goBack())
@@ -54,8 +56,6 @@ const ItemCreate = () => {
       loadGroup();
     } else if (!routeGroup && !routeGroupId) {
       goBack();
-    } else {
-      setLoading(false);
     }
   }, []);
 

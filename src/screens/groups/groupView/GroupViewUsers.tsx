@@ -12,7 +12,7 @@ const GroupViewMenu = () => {
   const group = useAppSelector(GroupSelectors.group);
   const users = useAppSelector(UsersSelectors.users);
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
-  const [loading, setLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState(true, 100);
 
   const updateUsersToShow = (): void => {
     const groupUserIds = group.members.map((user) => user.id);

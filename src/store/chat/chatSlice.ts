@@ -24,7 +24,7 @@ const chatSlice = createSlice({
     },
 
     addMessage: (state: ChatState, action) => {
-      const message = action.payload.message as Message;
+      const message = action.payload as Message;
       let messages = state.messages;
       if (state.chat.id === message.chatId) {
         messages = ChatUtils.filterMessages([message, ...state.messages]);
@@ -34,7 +34,7 @@ const chatSlice = createSlice({
     },
 
     editMessage: (state: ChatState, action) => {
-      const message = action.payload.message as Message;
+      const message = action.payload as Message;
       let messages = state.messages;
       if (state.chat.id === message.chatId) {
         messages = ArrayUtils.updateValue(messages, message);

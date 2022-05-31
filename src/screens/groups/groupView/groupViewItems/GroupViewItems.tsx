@@ -29,9 +29,7 @@ const GroupViewItems = ({showArchived, setShowArchived}: GroupViewItemsProps) =>
   const archivedItemsCount = useAppSelector(GroupSelectors.archivedItemsCount);
   const activeItems = useAppSelector(GroupSelectors.activeItems);
   const archivedItems = useAppSelector(GroupSelectors.archivedItems);
-  const activeItemsLoading = useAppSelector(GroupSelectors.activeItemsLoading);
-  const archivedItemsLoading = useAppSelector(GroupSelectors.archivedItemsLoading);
-  const [loading, setLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState(true);
   const [page, setPage] = useState<number>(0);
 
   const items = useMemo<Item[]>(() => {
@@ -61,11 +59,13 @@ const GroupViewItems = ({showArchived, setShowArchived}: GroupViewItemsProps) =>
   };
 
   const loadActive = (groupId: string, offset?: number, size?: number): void => {
-    dispatch(GroupThunks.fetchActiveItems({groupId, offset, size}));
+    setLoading(true);
+    dispatch(GroupThunks.fetchActiveItems({groupId, offset, size})).then(() => setLoading(false));
   };
 
   const loadArchived = (groupId: string, offset?: number, size?: number): void => {
-    dispatch(GroupThunks.fetchArchivedItems({groupId, offset, size}));
+    setLoading(true);
+    dispatch(GroupThunks.fetchArchivedItems({groupId, offset, size})).then(() => setLoading(false));
   };
 
   const loadInitial = (load: (groupId: string, offset?: number, size?: number) => void): void => {
@@ -82,10 +82,6 @@ const GroupViewItems = ({showArchived, setShowArchived}: GroupViewItemsProps) =>
   };
 
   useEffect(() => {
-    setLoading(true);
-  }, []);
-
-  useEffect(() => {
     if (items?.length > 0) {
       loadItemsUsers();
     }
@@ -97,8 +93,10 @@ const GroupViewItems = ({showArchived, setShowArchived}: GroupViewItemsProps) =>
       loadInitial(loadArchived);
     } else if (!showArchived && !activeItemsCount) {
       loadInitial(loadActive);
+    } else {
+      setLoading(false);
     }
-  }, [group?.id, showArchived]);
+  }, [showArchived]);
 
   useEffect(() => {
     if (page > 0 && showArchived) {
@@ -107,11 +105,6 @@ const GroupViewItems = ({showArchived, setShowArchived}: GroupViewItemsProps) =>
       loadMoreIfNeeded(loadActive);
     }
   }, [page]);
-
-  useEffect(() => {
-    const newLoading = (!showArchived && activeItemsLoading) || (showArchived && archivedItemsLoading);
-    setLoading(newLoading);
-  }, [showArchived, activeItemsLoading, archivedItemsLoading]);
 
   const canEdit = useMemo<boolean>(() => group && GroupUtils.canEdit(account, group), [group, account]);
 

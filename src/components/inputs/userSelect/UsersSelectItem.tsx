@@ -13,9 +13,11 @@ type UsersSelectInputProps = {
 
 const UsersSelectItem = ({user, isSelected, toggleSelected}: UsersSelectInputProps) => {
   return (
-    <FHStack>
-      <UrlPic alt={user.username} url={user.imageFilename} size="md" border={1} />
-      <Text>{user.username}</Text>
+    <FHStack grow alignItems="center">
+      <FHStack grow smallSpace alignItems="center">
+        <UrlPic alt={user.username} url={user.imageFilename} size="sm" border={1} />
+        <Text isTruncated>{user.username}</Text>
+      </FHStack>
       <CheckboxInput onPress={toggleSelected} isSelected={isSelected} />
     </FHStack>
   );

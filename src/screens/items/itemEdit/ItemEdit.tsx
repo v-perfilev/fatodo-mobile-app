@@ -19,7 +19,7 @@ import {GroupActions} from '../../../store/group/groupActions';
 const ItemEdit = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
-  const [loading, setLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState(false);
   const route = useRoute<RouteProp<GroupParamList, 'ItemEdit'>>();
   const routeItemId = route.params.itemId;
   const routeItem = route.params.item;
@@ -47,11 +47,13 @@ const ItemEdit = () => {
   };
 
   const setGroupAndItem = (): void => {
+    setLoading(true);
     dispatch(GroupActions.setGroup(routeGroup)).then(() => setLoading(false));
     dispatch(ItemActions.setItem(routeItem)).then(() => setLoading(false));
   };
 
   const loadItem = (): void => {
+    setLoading(true);
     dispatch(ItemThunks.fetchItem(routeItemId))
       .unwrap()
       .catch(() => goBack())
@@ -65,8 +67,6 @@ const ItemEdit = () => {
       loadItem();
     } else if (!routeGroup && !routeItem && !routeItemId) {
       goBack();
-    } else {
-      setLoading(false);
     }
   }, []);
 

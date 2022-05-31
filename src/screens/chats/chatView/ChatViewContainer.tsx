@@ -1,31 +1,21 @@
-import React, {memo, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {memo, useCallback, useMemo, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import {NativeScrollEvent, NativeSyntheticEvent, ViewToken, VirtualizedList} from 'react-native';
-import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import ChatViewStub from './ChatViewStub';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {ChatItem} from '../../../models/ChatItem';
 import {TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import {MessageUtils} from '../../../shared/utils/MessageUtils';
-import {UserAccount} from '../../../models/User';
 import ChatViewScrollButton from './ChatViewScrollButton';
 import ChatViewList from './ChatViewList';
 import {ChatThunks} from '../../../store/chat/chatActions';
-
-const getUnreadIds = (info: {viewableItems: ViewToken[]; changed: ViewToken[]}, account: UserAccount): string[] => {
-  return info.viewableItems
-    .map((token) => token.item)
-    .filter((item) => MessageUtils.isIncomingMessage(item.message, account))
-    .filter((item) => !MessageUtils.isReadMessage(item.message, account))
-    .map((item) => item.message.id);
-};
+import FBox from '../../../components/boxes/FBox';
+import {ChatUtils} from '../../../shared/utils/ChatUtils';
 
 const ChatViewContainer = () => {
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useDelayedState(false);
-  const [showScroll, setShowScroll] = useDelayedState(false, 500);
+  const [showScroll, setShowScroll] = useDelayedState(false);
   const unreadTimersRef = useRef<Map<string, any>>(new Map());
   const listRef = useRef<VirtualizedList<ChatItem>>();
   const chat = useAppSelector(ChatSelectors.chat);
@@ -36,9 +26,7 @@ const ChatViewContainer = () => {
   const showStub = useMemo<boolean>(() => chatItems.length === 0, [chatItems]);
 
   const loadMessages = (): void => {
-    dispatch(ChatThunks.fetchMessages({chatId: chat.id, offset: chatItems.length}))
-      .unwrap()
-      .finally(() => setLoading(false));
+    dispatch(ChatThunks.fetchMessages({chatId: chat.id, offset: chatItems.length}));
   };
 
   const markAsRead = (messageId: string): void => {
@@ -64,7 +52,7 @@ const ChatViewContainer = () => {
   }, []);
 
   const onViewableItemsChanged = useCallback((info: {viewableItems: ViewToken[]; changed: ViewToken[]}): void => {
-    const unreadIds = getUnreadIds(info, account);
+    const unreadIds = ChatUtils.getUnreadIds(info, account);
     const timerIds = Array.from(unreadTimersRef.current.keys());
     const idsToAdd = unreadIds.filter((id) => !timerIds.includes(id));
     const idsToDelete = timerIds.filter((id) => !unreadIds.includes(id));
@@ -84,15 +72,8 @@ const ChatViewContainer = () => {
     listRef.current.scrollToOffset({offset: 0});
   }, [listRef.current]);
 
-  useEffect(() => {
-    if (chat) {
-      setLoading(true);
-      loadMessages();
-    }
-  }, [chat]);
-
   return (
-    <ConditionalSpinner loading={loading}>
+    <FBox>
       <ChatViewScrollButton show={showScroll} scrollDown={scrollDown} />
       {showStub ? (
         <ChatViewStub />
@@ -104,7 +85,7 @@ const ChatViewContainer = () => {
           listRef={listRef}
         />
       )}
-    </ConditionalSpinner>
+    </FBox>
   );
 };
 

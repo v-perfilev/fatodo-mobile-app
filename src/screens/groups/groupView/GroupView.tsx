@@ -20,8 +20,7 @@ const GroupView = () => {
   const route = useRoute<RouteProp<GroupParamList, 'GroupView'>>();
   const dispatch = useAppDispatch();
   const group = useAppSelector(GroupSelectors.group);
-  const groupLoading = useAppSelector(GroupSelectors.loading);
-  const [loading, setLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState(false);
   const [showArchived, setShowArchived] = useState<boolean>(false);
   const routeGroupId = route.params.groupId;
   const routeGroup = route.params.group;
@@ -29,10 +28,12 @@ const GroupView = () => {
   const goBack = (): void => navigation.goBack();
 
   const setGroup = (): void => {
+    setLoading(true);
     dispatch(GroupActions.setGroup(routeGroup)).then(() => setLoading(false));
   };
 
   const loadGroup = (): void => {
+    setLoading(true);
     dispatch(GroupThunks.fetchGroup(routeGroupId))
       .unwrap()
       .catch(() => goBack())
@@ -46,8 +47,6 @@ const GroupView = () => {
       loadGroup();
     } else if (!routeGroup && !routeGroupId) {
       goBack();
-    } else {
-      setLoading(false);
     }
   }, []);
 
@@ -60,7 +59,7 @@ const GroupView = () => {
   return (
     <ThemeProvider theme={theme}>
       <GroupViewHeader />
-      <ConditionalSpinner loading={loading || groupLoading}>
+      <ConditionalSpinner loading={loading}>
         <FScrollView>
           <FVStack defaultSpace>
             <GroupViewUsers />

@@ -9,7 +9,17 @@ type ChatViewScrollButtonProps = {
 
 const ChatViewScrollButton = ({show, scrollDown}: ChatViewScrollButtonProps) => {
   const button = (
-    <IconButton zIndex="100" position="absolute" bottom="3" right="3" icon={<ArrowDownIcon />} onPress={scrollDown} />
+    <IconButton
+      zIndex="100"
+      position="absolute"
+      bottom="3"
+      right="3"
+      colorScheme="white"
+      bgColorScheme="primary"
+      bgTransparency="90"
+      icon={<ArrowDownIcon />}
+      onPress={scrollDown}
+    />
   );
 
   return show ? button : null;

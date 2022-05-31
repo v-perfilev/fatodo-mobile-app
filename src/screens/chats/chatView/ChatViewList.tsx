@@ -46,19 +46,21 @@ const ChatViewList = ({loadMessages, onScroll, onViewableItemsChanged, listRef}:
   }, []);
 
   return (
-    <FlatList
-      style={invertedStyle}
-      data={chatItems}
-      keyExtractor={keyExtractor}
-      renderItem={renderItem}
-      onEndReached={loadMessages}
-      onEndReachedThreshold={5}
-      onViewableItemsChanged={onViewableItemsChanged}
-      onScroll={onScroll}
-      showsVerticalScrollIndicator={false}
-      ref={listRef}
-      contentContainerStyle={containerStyle(theme)}
-    />
+    <Box>
+      <FlatList
+        style={invertedStyle}
+        data={chatItems}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        onEndReached={loadMessages}
+        onEndReachedThreshold={5}
+        onViewableItemsChanged={onViewableItemsChanged}
+        onScroll={onScroll}
+        showsVerticalScrollIndicator={false}
+        ref={listRef}
+        contentContainerStyle={containerStyle(theme)}
+      />
+    </Box>
   );
 };
 

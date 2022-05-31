@@ -63,7 +63,7 @@ const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersD
   );
 
   const actions = chat && !chat.isDirect && (
-    <GhostButton startIcon={<UserPlusIcon />} onClick={switchToAddMembers} colorScheme="primary">
+    <GhostButton startIcon={<UserPlusIcon />} onPress={switchToAddMembers} colorScheme="primary">
       {t('chat:members.buttons.addUsers')}
     </GhostButton>
   );
