@@ -26,7 +26,7 @@ const GroupListContainer = ({sorting}: GroupListContainerProps) => {
   const renderItem = (props: RenderItemParams<Group>) => {
     return (
       <ScaleDecorator activeScale={1.03}>
-        <GroupListItem sorting={sorting} {...props} style={ListUtils.itemStyle(theme)} />
+        <GroupListItem sorting={sorting} style={ListUtils.itemStyle(theme)} {...props} />
       </ScaleDecorator>
     );
   };

@@ -5,8 +5,10 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import ChatService from '../../services/ChatService';
 import {SnackActions} from '../snack/snackActions';
 import {MessageDTO} from '../../models/dto/MessageDTO';
+import {Message} from '../../models/Message';
 
 export class ChatsActions {
+  // TODO add first message
   static addChat = (chat: Chat) => (dispatch: AppDispatch) => {
     dispatch(chatsSlice.actions.addChat(chat));
   };
@@ -17,6 +19,10 @@ export class ChatsActions {
 
   static removeChat = (chat: Chat) => (dispatch: AppDispatch) => {
     dispatch(chatsSlice.actions.removeChat(chat));
+  };
+
+  static updateLastMessage = (message: Message) => (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.updateLastMessage(message));
   };
 }
 

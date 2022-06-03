@@ -128,7 +128,7 @@ export class GroupThunks {
   static editGroupMember = createAsyncThunk(
     TYPES.EDIT_GROUP_MEMBER,
     async ({group, member}: {group: Group; member: GroupMember}, thunkAPI) => {
-      group.members = ArrayUtils.updateValue(group.members, member);
+      group.members = ArrayUtils.updateValueWithId(group.members, member);
       await ItemService.editGroupMember(group.id, member);
       thunkAPI.dispatch(GroupsActions.updateGroup(group));
       thunkAPI.dispatch(GroupActions.updateGroup(group));

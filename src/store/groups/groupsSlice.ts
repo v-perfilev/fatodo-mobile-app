@@ -57,13 +57,13 @@ const groupsSlice = createSlice({
 
     updateGroup: (state: GroupsState, action) => {
       const group = action.payload;
-      const groups = ArrayUtils.updateValue(state.groups, group);
+      const groups = ArrayUtils.updateValueWithId(state.groups, group);
       return {...state, groups};
     },
 
     removeGroup: (state: GroupsState, action) => {
       const group = action.payload as Group;
-      const groups = ArrayUtils.deleteValueById(state.groups, group.id);
+      const groups = ArrayUtils.deleteValueWithId(state.groups, group);
       const items = MapUtils.deleteValue(state.items, group.id);
       const itemsCount = MapUtils.deleteValue(state.itemsCount, group.id);
       const itemsCollapsed = MapUtils.deleteValue(state.itemsCollapsed, group.id);
@@ -84,7 +84,7 @@ const groupsSlice = createSlice({
       const item = action.payload as Item;
       let items = state.items;
       if (!item.archived) {
-        const newItemsValue = ArrayUtils.updateValue(MapUtils.getValue(state.items, item.groupId), item);
+        const newItemsValue = ArrayUtils.updateValueWithId(MapUtils.getValue(state.items, item.groupId), item);
         items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
       }
       return {...state, items};
@@ -95,7 +95,7 @@ const groupsSlice = createSlice({
       let items = state.items;
       let itemsCount = state.itemsCount;
       if (!item.archived) {
-        const newItemsValue = ArrayUtils.deleteValue(MapUtils.getValue(state.items, item.groupId), item);
+        const newItemsValue = ArrayUtils.deleteValueWithId(MapUtils.getValue(state.items, item.groupId), item);
         items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
         const newItemsCountValue = MapUtils.getValue(state.itemsCount, item.groupId) - 1;
         itemsCount = MapUtils.setValue(state.itemsCount, item.groupId, newItemsCountValue);

@@ -5,7 +5,7 @@ export class ArrayUtils {
 
   public static addValuesToEnd = (array: any[], values: any[]): any[] => [...array, ...values];
 
-  public static updateValue = (array: {id: string}[], value: {id: string}): any[] => {
+  public static updateValueWithId = (array: {id: string}[], value: {id: string}): any[] => {
     const arrayCopy = [...array];
     const itemInList = arrayCopy.find((i) => i.id === value.id);
     if (itemInList) {
@@ -15,7 +15,16 @@ export class ArrayUtils {
     return arrayCopy;
   };
 
-  public static deleteValue = (array: {id: string}[], value: {id: string}): any[] => {
+  public static deleteValue = (array: any[], value: any): any[] => {
+    const arrayCopy = [...array];
+    const index = arrayCopy.indexOf(value);
+    if (index >= 0) {
+      arrayCopy.splice(index, 1);
+    }
+    return arrayCopy;
+  };
+
+  public static deleteValueWithId = (array: {id: string}[], value: {id: string}): any[] => {
     const arrayCopy = [...array];
     const itemInList = arrayCopy.find((i) => i.id === value.id);
     if (itemInList) {
@@ -23,11 +32,6 @@ export class ArrayUtils {
       arrayCopy.splice(index, 1);
     }
     return arrayCopy;
-  };
-
-  public static deleteValueById = (array: any[], id: string): any[] => {
-    const arrayCopy = [...array];
-    return arrayCopy.filter((a) => a.id !== id);
   };
 
   public static deleteValueByIndex = (array: any[], index: number): any[] => {

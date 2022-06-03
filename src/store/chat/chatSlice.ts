@@ -37,7 +37,7 @@ const chatSlice = createSlice({
       const message = action.payload as Message;
       let messages = state.messages;
       if (state.chat.id === message.chatId) {
-        messages = ArrayUtils.updateValue(messages, message);
+        messages = ArrayUtils.updateValueWithId(messages, message);
       }
       const chatItems = MessageUtils.convertMessagesToChatItems(messages);
       return {...state, messages, chatItems};
@@ -52,7 +52,7 @@ const chatSlice = createSlice({
       if (!status) {
         const newStatus = {} as MessageStatus;
         message.reactions = ArrayUtils.addValueToEnd(message.statuses, newStatus);
-        messages = ArrayUtils.updateValue(messages, message);
+        messages = ArrayUtils.updateValueWithId(messages, message);
       }
       return {...state, messages};
     },
@@ -64,7 +64,7 @@ const chatSlice = createSlice({
       let messages = state.messages;
       if (reaction) {
         message.reactions = ArrayUtils.deleteValue(message.reactions, reaction);
-        messages = ArrayUtils.updateValue(messages, message);
+        messages = ArrayUtils.updateValueWithId(messages, message);
       }
       return {...state, messages};
     },
@@ -80,7 +80,7 @@ const chatSlice = createSlice({
       }
       const newReaction = MessageUtils.createStubReaction(message.id, account.id, newReactionType);
       message.reactions = ArrayUtils.addValueToEnd(message.reactions, newReaction);
-      messages = ArrayUtils.updateValue(messages, message);
+      messages = ArrayUtils.updateValueWithId(messages, message);
       return {...state, messages};
     },
   },

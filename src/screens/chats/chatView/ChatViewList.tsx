@@ -1,4 +1,4 @@
-import React, {memo, MutableRefObject, ReactElement, useCallback} from 'react';
+import React, {MutableRefObject, ReactElement, useCallback} from 'react';
 import {useAppSelector} from '../../../store/store';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import {
@@ -36,11 +36,12 @@ const ChatViewList = ({loadMessages, onScroll, onViewableItemsChanged, listRef}:
     return <ChatViewItem item={info.item} style={[invertedStyle, ListUtils.itemStyle(theme)]} />;
   }, []);
 
+  // TODO optimize
   return (
     <FlatList
       ListEmptyComponent={<ChatViewStub />}
       style={invertedStyle}
-      data={chatItems}
+      data={chatItems.slice(0, 10)}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       onEndReached={loadMessages}
@@ -48,10 +49,12 @@ const ChatViewList = ({loadMessages, onScroll, onViewableItemsChanged, listRef}:
       onViewableItemsChanged={onViewableItemsChanged}
       onScroll={onScroll}
       showsVerticalScrollIndicator={false}
+      maxToRenderPerBatch={15}
+      removeClippedSubviews
       ref={listRef}
       contentContainerStyle={ListUtils.containerStyle(theme)}
     />
   );
 };
 
-export default memo(ChatViewList);
+export default ChatViewList;

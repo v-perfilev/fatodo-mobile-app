@@ -3,6 +3,7 @@ import {ChatsState} from './chatsType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Chat} from '../../models/Chat';
 import {ChatsThunks} from './chatsActions';
+import {Message} from '../../models/Message';
 
 const initialState: ChatsState = {
   totalUnreadMessageCount: 0,
@@ -19,18 +20,31 @@ const chatsSlice = createSlice({
   initialState,
   reducers: {
     addChat: (state: ChatsState, action) => {
-      const chat = action.payload;
+      const chat = action.payload as Chat;
       const chats = ArrayUtils.addValueToStart(state.chats, chat).filter(ArrayUtils.uniqueByIdFilter);
       return {...state, chats};
     },
+
     updateChat: (state: ChatsState, action) => {
-      const chat = action.payload;
-      const chats = ArrayUtils.updateValue(state.chats, chat);
+      const chat = action.payload as Chat;
+      const chats = ArrayUtils.updateValueWithId(state.chats, chat);
       return {...state, chats};
     },
+
     removeChat: (state: ChatsState, action) => {
-      const chat = action.payload;
-      const chats = ArrayUtils.deleteValue(state.chats, chat);
+      const chat = action.payload as Chat;
+      const chats = ArrayUtils.deleteValueWithId(state.chats, chat);
+      return {...state, chats};
+    },
+
+    updateLastMessage: (state: ChatsState, action) => {
+      const message = action.payload as Message;
+      const chat = state.chats.find((chat) => chat.id === message.chatId);
+      let chats = state.chats;
+      if (chat) {
+        chat.lastMessage = message;
+        chats = ArrayUtils.updateValueWithId(state.chats, chat);
+      }
       return {...state, chats};
     },
   },

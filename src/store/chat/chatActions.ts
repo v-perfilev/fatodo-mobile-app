@@ -148,7 +148,7 @@ export class ChatThunks {
   static removeChatMember = createAsyncThunk(
     TYPES.REMOVE_CHAT_MEMBER,
     async ({chat, userId}: {chat: Chat; userId: string}, thunkAPI) => {
-      chat.members = ArrayUtils.deleteValueById(chat.members, userId);
+      chat.members = ArrayUtils.deleteValue(chat.members, userId);
       await ChatService.removeUsersFromChat(chat.id, [userId]);
       thunkAPI.dispatch(ChatsActions.updateChat(chat));
       thunkAPI.dispatch(SnackActions.handleCode('chat.edited', 'info'));
@@ -159,8 +159,8 @@ export class ChatThunks {
     TYPES.SEND_MESSAGE,
     async ({chatId, dto}: {chatId: string; dto: MessageDTO}, thunkAPI) => {
       const result = await ChatService.sendIndirectMessage(chatId, dto);
+      thunkAPI.dispatch(ChatsActions.updateLastMessage(result.data));
       thunkAPI.dispatch(ChatActions.addMessage(result.data));
-      // TODO chats last message handler
     },
   );
 
@@ -168,8 +168,8 @@ export class ChatThunks {
     TYPES.EDIT_MESSAGE,
     async ({message, dto}: {message: Message; dto: MessageDTO}, thunkAPI) => {
       const result = await ChatService.editMessage(message.id, dto);
+      thunkAPI.dispatch(ChatsActions.updateLastMessage(result.data));
       thunkAPI.dispatch(ChatActions.editMessage(result.data));
-      // TODO chats last message handler
       thunkAPI.dispatch(SnackActions.handleCode('chat.messageEdited', 'info'));
     },
   );
@@ -177,8 +177,8 @@ export class ChatThunks {
   static deleteMessage = createAsyncThunk(TYPES.DELETE_MESSAGE, async (message: Message, thunkAPI) => {
     await ChatService.deleteMessage(message.id);
     const updatedMessage = {...message, isDeleted: true} as Message;
+    thunkAPI.dispatch(ChatsActions.updateLastMessage(updatedMessage));
     thunkAPI.dispatch(ChatActions.editMessage(updatedMessage));
-    // TODO chats last message handler
     thunkAPI.dispatch(SnackActions.handleCode('chat.messageDeleted', 'info'));
   });
 }

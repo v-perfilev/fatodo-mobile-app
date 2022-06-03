@@ -47,8 +47,8 @@ const groupSlice = createSlice({
     updateItem: (state: GroupState, action) => {
       const item = action.payload as Item;
       const isArchived = item.archived;
-      const activeItems = !isArchived ? ArrayUtils.updateValue(state.activeItems, item) : state.activeItems;
-      const archivedItems = isArchived ? ArrayUtils.updateValue(state.archivedItems, item) : state.activeItems;
+      const activeItems = !isArchived ? ArrayUtils.updateValueWithId(state.activeItems, item) : state.activeItems;
+      const archivedItems = isArchived ? ArrayUtils.updateValueWithId(state.archivedItems, item) : state.activeItems;
       return {...state, activeItems, archivedItems};
     },
 
@@ -57,8 +57,8 @@ const groupSlice = createSlice({
       const isArchived = item.archived;
       const activeItemsCount = state.activeItemsCount + (!isArchived ? 1 : -1);
       const archivedItemsCount = state.archivedItemsCount + (isArchived ? 1 : -1);
-      const activeFunction = !isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValue;
-      const archivedFunction = isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValue;
+      const activeFunction = !isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValueWithId;
+      const archivedFunction = isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValueWithId;
       const activeItems = filterItems(activeFunction(state.activeItems, item));
       const archivedItems = filterItems(archivedFunction(state.archivedItems, item));
       return {...state, activeItemsCount, archivedItemsCount, activeItems, archivedItems};
@@ -67,8 +67,8 @@ const groupSlice = createSlice({
     updateItemStatus: (state: GroupState, action) => {
       const item = action.payload as Item;
       const isArchived = item.archived;
-      const activeItems = !isArchived ? ArrayUtils.updateValue(state.activeItems, item) : state.activeItems;
-      const archivedItems = isArchived ? ArrayUtils.updateValue(state.archivedItems, item) : state.archivedItems;
+      const activeItems = !isArchived ? ArrayUtils.updateValueWithId(state.activeItems, item) : state.activeItems;
+      const archivedItems = isArchived ? ArrayUtils.updateValueWithId(state.archivedItems, item) : state.archivedItems;
       return {...state, activeItems, archivedItems};
     },
 
@@ -77,8 +77,8 @@ const groupSlice = createSlice({
       const isArchived = item.archived;
       const activeItemsCount = state.activeItemsCount + (!isArchived ? -1 : 0);
       const archivedItemsCount = state.archivedItemsCount + (isArchived ? -1 : 0);
-      const activeItems = !isArchived ? ArrayUtils.deleteValue(state.activeItems, item) : state.activeItems;
-      const archivedItems = isArchived ? ArrayUtils.deleteValue(state.archivedItems, item) : state.archivedItems;
+      const activeItems = !isArchived ? ArrayUtils.deleteValueWithId(state.activeItems, item) : state.activeItems;
+      const archivedItems = isArchived ? ArrayUtils.deleteValueWithId(state.archivedItems, item) : state.archivedItems;
       return {...state, activeItemsCount, archivedItemsCount, activeItems, archivedItems};
     },
   },
