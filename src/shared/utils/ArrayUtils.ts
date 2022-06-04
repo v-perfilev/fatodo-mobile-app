@@ -1,9 +1,5 @@
 export class ArrayUtils {
-  public static addValueToStart = (array: any[], value: any): any[] => [value, ...array];
-
   public static addValueToEnd = (array: any[], value: any): any[] => [...array, value];
-
-  public static addValuesToEnd = (array: any[], values: any[]): any[] => [...array, ...values];
 
   public static updateValueWithId = (array: {id: string}[], value: {id: string}): any[] => {
     const arrayCopy = [...array];

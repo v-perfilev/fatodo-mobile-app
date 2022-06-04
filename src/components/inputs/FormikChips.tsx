@@ -27,7 +27,7 @@ const FormikChips = (props: FormikChipsProps<any>) => {
 
   const addValue = (value: any): void => {
     if (value && !arrayValue.includes(value)) {
-      const array = ArrayUtils.addValueToEnd(arrayValue, value);
+      const array = [...arrayValue, value];
       setFieldValue(name, array);
     }
   };

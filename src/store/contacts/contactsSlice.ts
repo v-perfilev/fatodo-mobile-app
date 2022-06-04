@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ContactsState} from './contactsType';
-import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {ContactRelation} from '../../models/ContactRelation';
 import {ContactRequest} from '../../models/ContactRequest';
 import {ContactsThunks} from './contactsActions';
@@ -21,7 +20,7 @@ const contactsSlice = createSlice({
   reducers: {
     addRelation: (state: ContactsState, action: PayloadAction<ContactRelation>) => {
       const relation = action.payload;
-      const relations = ArrayUtils.addValueToEnd(state.relations, relation);
+      const relations = [...state.relations, relation];
       const relationCount = state.relationCount + 1;
       return {...state, relations, relationCount};
     },
@@ -35,7 +34,7 @@ const contactsSlice = createSlice({
 
     addIncomingRequest: (state: ContactsState, action: PayloadAction<ContactRequest>) => {
       const request = action.payload;
-      const incomingRequests = ArrayUtils.addValueToEnd(state.incomingRequests, request);
+      const incomingRequests = [...state.incomingRequests, request];
       const incomingRequestCount = state.incomingRequestCount + 1;
       return {...state, incomingRequests, incomingRequestCount};
     },
@@ -49,7 +48,7 @@ const contactsSlice = createSlice({
 
     addOutcomingRequest: (state: ContactsState, action: PayloadAction<ContactRequest>) => {
       const request = action.payload;
-      const incomingRequests = ArrayUtils.addValueToEnd(state.outcomingRequests, request);
+      const incomingRequests = [...state.outcomingRequests, request];
       const incomingRequestCount = state.outcomingRequestCount + 1;
       return {...state, incomingRequests, incomingRequestCount};
     },

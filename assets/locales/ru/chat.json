@@ -33,6 +33,7 @@
     "CREATE_CHAT": "{{username}} создал чат с {{usernames}}",
     "RENAME_CHAT": "{{user}}name переименовал чат в \"{{title}}\"",
     "LEAVE_CHAT": "{{username}} покинул чат",
+    "CLEAR_CHAT": "Вы очистили историю чата",
     "ADD_MEMBERS": "{{username}} добавил в чат новых пользователей: {{usernames}}",
     "DELETE_MEMBERS": "{{username}} удалил из чата пользователей: {{usernames}}"
   },

@@ -41,7 +41,8 @@ const ChatViewList = ({loadMessages, onScroll, onViewableItemsChanged, listRef}:
     <FlatList
       ListEmptyComponent={<ChatViewStub />}
       style={invertedStyle}
-      data={chatItems.slice(0, 10)}
+      data={chatItems}
+      // data={chatItems.slice(0, 15)}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       onEndReached={loadMessages}
@@ -49,7 +50,7 @@ const ChatViewList = ({loadMessages, onScroll, onViewableItemsChanged, listRef}:
       onViewableItemsChanged={onViewableItemsChanged}
       onScroll={onScroll}
       showsVerticalScrollIndicator={false}
-      maxToRenderPerBatch={15}
+      maxToRenderPerBatch={10}
       removeClippedSubviews
       ref={listRef}
       contentContainerStyle={ListUtils.containerStyle(theme)}

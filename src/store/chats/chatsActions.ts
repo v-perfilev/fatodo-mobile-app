@@ -25,21 +25,21 @@ export class ChatsThunks {
 
   static createDirectChat = createAsyncThunk(TYPES.CREATE_DIRECT_CHAT, async (userId: string, thunkAPI) => {
     const result = await ChatService.createDirectChat(userId);
-    thunkAPI.dispatch(chatsSlice.actions.addChat(result.data));
+    thunkAPI.dispatch(chatsSlice.actions.addChat({chat: result.data, userIds: [userId]}));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'chat.created', variant: 'info'}));
   });
 
   static createIndirectChat = createAsyncThunk(TYPES.CREATE_INDIRECT_CHAT, async (userIds: string[], thunkAPI) => {
     const result = await ChatService.createIndirectChat(userIds);
-    thunkAPI.dispatch(chatsSlice.actions.addChat(result.data));
+    thunkAPI.dispatch(chatsSlice.actions.addChat({chat: result.data, userIds}));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'chat.created', variant: 'info'}));
   });
 
   static sendDirectMessage = createAsyncThunk(
     TYPES.SEND_DIRECT_MESSAGE,
-    async ({userId, dto}: {userId: string; dto: MessageDTO}) => {
+    async ({userId, dto}: {userId: string; dto: MessageDTO}, thunkAPI) => {
       await ChatService.sendDirectMessage(userId, dto);
-      // TODO handle if presented
+      thunkAPI.dispatch(chatsSlice.actions.updateLastDirectMessage);
     },
   );
 }

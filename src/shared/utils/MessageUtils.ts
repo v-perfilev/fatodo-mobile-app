@@ -1,14 +1,9 @@
 import {TFunction} from 'i18next';
-import {
-  EventMessageParams,
-  EventMessageType,
-  Message,
-  MessageReaction,
-  MessageReactionType,
-} from '../../models/Message';
+import {EventMessageParams, EventMessageType, Message} from '../../models/Message';
 import {User} from '../../models/User';
 import {ChatItem} from '../../models/ChatItem';
 import {DateFormatters} from './DateUtils';
+import {ArrayUtils} from './ArrayUtils';
 
 export class MessageUtils {
   public static parseEventMessage = (message: Message): EventMessageParams => {
@@ -21,10 +16,10 @@ export class MessageUtils {
     users: User[],
     t: TFunction,
   ): string => {
-    let text = '';
     const username = MessageUtils.extractUsernameFromMessage(users, message);
     const usernames = MessageUtils.extractUsernamesFromParams(users, params);
     const title = MessageUtils.extractTextFromParams(params);
+    let text = '';
     if (
       params?.type === EventMessageType.CREATE_DIRECT_CHAT ||
       params?.type === EventMessageType.CREATE_CHAT ||
@@ -36,6 +31,8 @@ export class MessageUtils {
       text = t('chat:event.' + params.type, {username, title});
     } else if (params?.type === EventMessageType.LEAVE_CHAT) {
       text = t('chat:event.' + params.type, {username});
+    } else if (params?.type === EventMessageType.CLEAR_CHAT) {
+      text = t('chat:event.' + params.type);
     }
     return text;
   };
@@ -81,14 +78,7 @@ export class MessageUtils {
     return handledItems.reverse();
   };
 
-  public static createStubReaction = (
-    messageId: string,
-    userId: string,
-    type: MessageReactionType,
-  ): MessageReaction => ({
-    messageId,
-    userId,
-    type,
-    timestamp: new Date(),
-  });
+  public static filterMessages = (messages: Message[]): Message[] => {
+    return messages.filter(ArrayUtils.uniqueByIdFilter).sort(ArrayUtils.createdAtComparator);
+  };
 }

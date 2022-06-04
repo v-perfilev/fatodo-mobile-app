@@ -1,9 +1,20 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ChatsState} from './chatsType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
-import {Chat} from '../../models/Chat';
+import {buildDirectChat, Chat} from '../../models/Chat';
 import {ChatsThunks} from './chatsActions';
-import {Message} from '../../models/Message';
+import {buildEventMessage, EventMessageType, Message} from '../../models/Message';
+import {ChatUtils} from '../../shared/utils/ChatUtils';
+
+interface ChatDirectMessagePayload {
+  message: Message;
+  secondUserId: string;
+}
+
+interface ChatCreatePayload {
+  chat: Chat;
+  userIds: string[];
+}
 
 const initialState: ChatsState = {
   totalUnreadMessageCount: 0,
@@ -19,10 +30,13 @@ const chatsSlice = createSlice({
   name: 'chats',
   initialState,
   reducers: {
-    // TODO add first message
-    addChat: (state: ChatsState, action: PayloadAction<Chat>) => {
-      const chat = action.payload;
-      const chats = ArrayUtils.addValueToStart(state.chats, chat).filter(ArrayUtils.uniqueByIdFilter);
+    addChat: (state: ChatsState, action: PayloadAction<ChatCreatePayload>) => {
+      const chat = action.payload.chat;
+      const userIds = action.payload.userIds;
+      const eventType = chat.isDirect ? EventMessageType.CREATE_DIRECT_CHAT : EventMessageType.CREATE_CHAT;
+      const lastMessage = buildEventMessage(chat.createdBy, eventType, userIds);
+      const newChat = {...chat, lastMessage} as Chat;
+      const chats = ChatUtils.filterChats([newChat, ...state.chats]);
       return {...state, chats};
     },
 
@@ -43,8 +57,35 @@ const chatsSlice = createSlice({
       const chat = state.chats.find((chat) => chat.id === message.chatId);
       let chats = state.chats;
       if (chat) {
-        chat.lastMessage = message;
-        chats = ArrayUtils.updateValueWithId(state.chats, chat);
+        const updatedChat = {...chat, lastMessage: message};
+        chats = ArrayUtils.updateValueWithId(state.chats, updatedChat);
+      }
+      return {...state, chats};
+    },
+
+    updateLastDirectMessage: (state: ChatsState, action: PayloadAction<ChatDirectMessagePayload>) => {
+      const message = action.payload.message;
+      const secondUserId = action.payload.secondUserId;
+      const chat = state.chats.find((chat) => chat.id === message.chatId);
+      let chats;
+      if (chat) {
+        const updatedChat = {...chat, lastMessage: message};
+        chats = ArrayUtils.updateValueWithId(state.chats, updatedChat);
+      } else {
+        const updatedChat = buildDirectChat(message, secondUserId);
+        chats = ChatUtils.filterChats([updatedChat, ...state.chats]);
+      }
+      return {...state, chats};
+    },
+
+    clearChat: (state: ChatsState, action: PayloadAction<string>) => {
+      const chatId = action.payload;
+      const chat = state.chats.find((chat) => chat.id === chatId);
+      let chats = state.chats;
+      if (chat) {
+        const message = buildEventMessage(undefined, EventMessageType.CLEAR_CHAT, undefined);
+        const updatedChat = {...chat, lastMessage: message};
+        chats = ArrayUtils.updateValueWithId(state.chats, updatedChat);
       }
       return {...state, chats};
     },
@@ -61,7 +102,7 @@ const chatsSlice = createSlice({
     });
     builder.addCase(ChatsThunks.fetchChats.fulfilled, (state: ChatsState, action) => {
       const newChats = action.payload;
-      const chats = ArrayUtils.addValuesToEnd(state.chats, newChats).filter(ArrayUtils.uniqueByIdFilter);
+      const chats = ChatUtils.filterChats([...state.chats, ...newChats]);
       const loading = false;
       const moreLoading = false;
       const allLoaded = newChats.length === 0;
@@ -81,8 +122,8 @@ const chatsSlice = createSlice({
       return {...state, filteredChats};
     });
     builder.addCase(ChatsThunks.fetchFilteredChats.fulfilled, (state: ChatsState, action) => {
-      const newChats = action.payload;
-      const filteredChats = newChats.filter(ArrayUtils.uniqueByIdFilter);
+      const chats = action.payload;
+      const filteredChats = ChatUtils.filterChats(chats);
       return {...state, filteredChats};
     });
     builder.addCase(ChatsThunks.fetchFilteredChats.rejected, (state: ChatsState) => {

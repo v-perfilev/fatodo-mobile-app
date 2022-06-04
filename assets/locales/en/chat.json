@@ -32,6 +32,7 @@
     "CREATE_CHAT": "{{username}} created chat with {{usernames}}",
     "RENAME_CHAT": "{{username}} renamed the chat to \"{{title}}\"",
     "LEAVE_CHAT": "{{username}} left the chat",
+    "CLEAR_CHAT": "You cleared the chat history",
     "ADD_MEMBERS": "{{username}} added new members to the chat: {{usernames}}",
     "DELETE_MEMBERS": "{{username}} deleted members from the chat: {{usernames}}"
   },

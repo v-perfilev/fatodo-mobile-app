@@ -1,24 +1,30 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ChatState} from './chatType';
-import {Message, MessageReactionType, MessageStatus} from '../../models/Message';
+import {
+  buildEventMessage,
+  buildMessageReaction,
+  buildMessageStatus,
+  EventMessageType,
+  Message,
+  MessageReactionType,
+} from '../../models/Message';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {ChatThunks} from './chatActions';
 import {UserAccount} from '../../models/User';
-import {ChatUtils} from '../../shared/utils/ChatUtils';
 import {MessageUtils} from '../../shared/utils/MessageUtils';
 import {Chat} from '../../models/Chat';
 
-export interface ChatMessageIdPayload {
+interface ChatMessageIdPayload {
   messageId: string;
   account: UserAccount;
 }
 
-export interface ChatMessagePayload {
+interface ChatMessagePayload {
   message: Message;
   account: UserAccount;
 }
 
-export interface ChatReactionPayload {
+interface ChatReactionPayload {
   message: Message;
   reactionType: MessageReactionType;
   account: UserAccount;
@@ -45,7 +51,7 @@ const chatSlice = createSlice({
       const message = action.payload;
       let messages = state.messages;
       if (state.chat.id === message.chatId) {
-        messages = ChatUtils.filterMessages([message, ...state.messages]);
+        messages = MessageUtils.filterMessages([message, ...state.messages]);
       }
       const chatItems = MessageUtils.convertMessagesToChatItems(messages);
       return {...state, messages, chatItems};
@@ -68,9 +74,10 @@ const chatSlice = createSlice({
       const status = message?.statuses.find((s) => s.userId === account.id);
       let messages = state.messages;
       if (!status) {
-        const newStatus = {} as MessageStatus;
-        message.reactions = ArrayUtils.addValueToEnd(message.statuses, newStatus);
-        messages = ArrayUtils.updateValueWithId(messages, message);
+        const newStatus = buildMessageStatus(messageId, account.id, 'READ');
+        const updatedStatuses = [...message.statuses, newStatus];
+        const updatedMessage = {...message, statuses: updatedStatuses};
+        messages = ArrayUtils.updateValueWithId(messages, updatedMessage);
       }
       return {...state, messages};
     },
@@ -81,8 +88,9 @@ const chatSlice = createSlice({
       const reaction = message.reactions.find((s) => s.userId === account.id);
       let messages = state.messages;
       if (reaction) {
-        message.reactions = ArrayUtils.deleteValue(message.reactions, reaction);
-        messages = ArrayUtils.updateValueWithId(messages, message);
+        const updatedReactions = ArrayUtils.deleteValue(message.reactions, reaction);
+        const updatedMessage = {...message, reactions: updatedReactions};
+        messages = ArrayUtils.updateValueWithId(messages, updatedMessage);
       }
       return {...state, messages};
     },
@@ -93,13 +101,22 @@ const chatSlice = createSlice({
       const account = action.payload.account;
       const reaction = message.reactions.find((s) => s.userId === account.id);
       let messages = state.messages;
+      let updatedReactions = message.reactions;
       if (reaction) {
-        message.reactions = ArrayUtils.deleteValue(message.reactions, reaction);
+        updatedReactions = ArrayUtils.deleteValue(updatedReactions, reaction);
       }
-      const newReaction = MessageUtils.createStubReaction(message.id, account.id, newReactionType);
-      message.reactions = ArrayUtils.addValueToEnd(message.reactions, newReaction);
-      messages = ArrayUtils.updateValueWithId(messages, message);
+      const newReaction = buildMessageReaction(message.id, account.id, newReactionType);
+      updatedReactions = [...updatedReactions, newReaction];
+      const updatedMessage = {...message, reactions: updatedReactions};
+      messages = ArrayUtils.updateValueWithId(messages, updatedMessage);
       return {...state, messages};
+    },
+
+    clearChat: (state: ChatState) => {
+      const message = buildEventMessage(undefined, EventMessageType.CLEAR_CHAT, undefined);
+      const messages = [message];
+      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
+      return {...state, messages, chatItems};
     },
   },
   extraReducers: (builder) => {
@@ -128,7 +145,7 @@ const chatSlice = createSlice({
     });
     builder.addCase(ChatThunks.fetchMessages.fulfilled, (state: ChatState, action) => {
       const newMessages = action.payload;
-      const messages = ChatUtils.filterMessages([...state.messages, ...newMessages]);
+      const messages = MessageUtils.filterMessages([...state.messages, ...newMessages]);
       const chatItems = MessageUtils.convertMessagesToChatItems(messages);
       const loading = false;
       const moreLoading = false;

@@ -1,6 +1,5 @@
 import {Chat} from '../../models/Chat';
 import {User, UserAccount} from '../../models/User';
-import {Message} from '../../models/Message';
 import {ArrayUtils} from './ArrayUtils';
 import {ViewToken} from 'react-native';
 import {MessageUtils} from './MessageUtils';
@@ -30,7 +29,9 @@ export class ChatUtils {
       .map((item) => item.message.id);
   };
 
-  public static filterMessages = (messages: Message[]): Message[] => {
-    return messages.filter(ArrayUtils.uniqueByIdFilter).sort(ArrayUtils.createdAtComparator);
+  public static filterChats = (chats: Chat[]): Chat[] => {
+    return chats
+      .filter(ArrayUtils.uniqueByIdFilter)
+      .sort((a, b) => ArrayUtils.createdAtComparator(a.lastMessage, b.lastMessage));
   };
 }

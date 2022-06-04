@@ -9,3 +9,11 @@ export interface Chat extends AbstractAuditing {
   members: string[];
   lastMessage: Message;
 }
+
+export const buildDirectChat = (message: Message, secondUserId: string): Chat => ({
+  id: message.chatId,
+  title: undefined,
+  isDirect: true,
+  members: [message.userId, secondUserId],
+  lastMessage: message,
+});

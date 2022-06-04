@@ -1,4 +1,5 @@
 import {AbstractAuditing} from './AbstractAuditing';
+import {ID_STUB} from '../constants';
 
 export const messageReactionTypes = ['LIKE', 'DISLIKE'];
 
@@ -56,6 +57,40 @@ export enum EventMessageType {
   CREATE_CHAT = 'CREATE_CHAT',
   RENAME_CHAT = 'RENAME_CHAT',
   LEAVE_CHAT = 'LEAVE_CHAT',
+  CLEAR_CHAT = 'CLEAR_CHAT',
   ADD_MEMBERS = 'ADD_MEMBERS',
   DELETE_MEMBERS = 'DELETE_MEMBERS',
 }
+
+export const buildEventMessage = (userId: string, type: EventMessageType, ids: string[]): Message => {
+  const params = {type, ids} as EventMessageParams;
+  return {
+    id: ID_STUB,
+    chatId: undefined,
+    userId,
+    text: JSON.stringify(params),
+    reference: undefined,
+    isDeleted: false,
+    isEvent: true,
+    statuses: [],
+    reactions: [],
+  };
+};
+
+export const buildMessageReaction = (
+  messageId: string,
+  userId: string,
+  type: MessageReactionType,
+): MessageReaction => ({
+  messageId,
+  userId,
+  type,
+  timestamp: new Date(),
+});
+
+export const buildMessageStatus = (messageId: string, userId: string, type: MessageStatusType): MessageStatus => ({
+  messageId,
+  userId,
+  type,
+  timestamp: new Date(),
+});

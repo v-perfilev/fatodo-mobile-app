@@ -7,7 +7,7 @@ import {Group} from '../../models/Group';
 import {GroupsThunks} from './groupsActions';
 import {GroupUtils} from '../../shared/utils/GroupUtils';
 
-export interface GroupsCollapsedPayload {
+interface GroupsCollapsedPayload {
   groupId: string;
   value: boolean;
 }
