@@ -11,16 +11,16 @@ import {LanguageUtils} from '../../shared/utils/LanguageUtils';
 import {ForgotPasswordDTO} from '../../models/dto/ForgotPasswordDTO';
 
 export class AuthActions {
-  static login = () => async (dispatch: AppDispatch) => {
+  static login = () => (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.authenticated());
   };
 
-  static loading = (value: boolean) => async (dispatch: AppDispatch) => {
+  static loading = (value: boolean) => (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.loading(value));
   };
 
-  static logout = () => async (dispatch: AppDispatch) => {
-    await SecurityUtils.clearAuthToken();
+  static logout = () => (dispatch: AppDispatch) => {
+    SecurityUtils.clearAuthToken().finally();
     dispatch(authSlice.actions.clearAuth());
   };
 }

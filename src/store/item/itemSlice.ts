@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ItemState} from './itemType';
 import {ItemThunks} from './itemActions';
 import {Item} from '../../models/Item';
@@ -13,8 +13,8 @@ const itemSlice = createSlice({
   name: 'item',
   initialState,
   reducers: {
-    setItem: (state: ItemState, action) => {
-      const item = action.payload as Item;
+    setItem: (state: ItemState, action: PayloadAction<Item>) => {
+      const item = action.payload;
       return {...initialState, item};
     },
   },

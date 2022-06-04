@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ChatState} from './chatType';
 import {Message, MessageReactionType, MessageStatus} from '../../models/Message';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
@@ -6,6 +6,23 @@ import {ChatThunks} from './chatActions';
 import {UserAccount} from '../../models/User';
 import {ChatUtils} from '../../shared/utils/ChatUtils';
 import {MessageUtils} from '../../shared/utils/MessageUtils';
+import {Chat} from '../../models/Chat';
+
+export interface ChatMessageIdPayload {
+  messageId: string;
+  account: UserAccount;
+}
+
+export interface ChatMessagePayload {
+  message: Message;
+  account: UserAccount;
+}
+
+export interface ChatReactionPayload {
+  message: Message;
+  reactionType: MessageReactionType;
+  account: UserAccount;
+}
 
 const initialState: ChatState = {
   chat: undefined,
@@ -19,12 +36,13 @@ const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    selectChat: (state: ChatState, action) => {
-      return {...initialState, chat: action.payload};
+    selectChat: (state: ChatState, action: PayloadAction<Chat>) => {
+      const chat = action.payload;
+      return {...initialState, chat};
     },
 
-    addMessage: (state: ChatState, action) => {
-      const message = action.payload as Message;
+    addMessage: (state: ChatState, action: PayloadAction<Message>) => {
+      const message = action.payload;
       let messages = state.messages;
       if (state.chat.id === message.chatId) {
         messages = ChatUtils.filterMessages([message, ...state.messages]);
@@ -33,8 +51,8 @@ const chatSlice = createSlice({
       return {...state, messages, chatItems};
     },
 
-    editMessage: (state: ChatState, action) => {
-      const message = action.payload as Message;
+    editMessage: (state: ChatState, action: PayloadAction<Message>) => {
+      const message = action.payload;
       let messages = state.messages;
       if (state.chat.id === message.chatId) {
         messages = ArrayUtils.updateValueWithId(messages, message);
@@ -43,9 +61,9 @@ const chatSlice = createSlice({
       return {...state, messages, chatItems};
     },
 
-    markMessageAsRead: (state: ChatState, action) => {
-      const messageId = action.payload.messageId as string;
-      const account = action.payload.account as UserAccount;
+    markMessageAsRead: (state: ChatState, action: PayloadAction<ChatMessageIdPayload>) => {
+      const messageId = action.payload.messageId;
+      const account = action.payload.account;
       const message = state.messages.find((m) => m.id === messageId);
       const status = message?.statuses.find((s) => s.userId === account.id);
       let messages = state.messages;
@@ -57,9 +75,9 @@ const chatSlice = createSlice({
       return {...state, messages};
     },
 
-    deleteMessageReaction: (state: ChatState, action) => {
-      const message = action.payload.message as Message;
-      const account = action.payload.account as UserAccount;
+    deleteMessageReaction: (state: ChatState, action: PayloadAction<ChatMessagePayload>) => {
+      const message = action.payload.message;
+      const account = action.payload.account;
       const reaction = message.reactions.find((s) => s.userId === account.id);
       let messages = state.messages;
       if (reaction) {
@@ -69,10 +87,10 @@ const chatSlice = createSlice({
       return {...state, messages};
     },
 
-    setMessageReaction: (state: ChatState, action) => {
-      const message = action.payload.message as Message;
-      const newReactionType = action.payload.reactionType as MessageReactionType;
-      const account = action.payload.account as UserAccount;
+    setMessageReaction: (state: ChatState, action: PayloadAction<ChatReactionPayload>) => {
+      const message = action.payload.message;
+      const newReactionType = action.payload.reactionType;
+      const account = action.payload.account;
       const reaction = message.reactions.find((s) => s.userId === account.id);
       let messages = state.messages;
       if (reaction) {

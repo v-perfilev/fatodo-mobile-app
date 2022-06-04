@@ -1,6 +1,7 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AuthState} from './authType';
 import {AuthThunks} from './authActions';
+import {UserAccount} from '../../models/User';
 
 const initialState: AuthState = {
   isAuthenticated: false,
@@ -16,14 +17,17 @@ const authSlice = createSlice({
       ...state,
       isAuthenticated: true,
     }),
-    account: (state: AuthState, action) => ({
-      ...state,
-      account: action.payload,
-    }),
-    loading: (state: AuthState, action) => ({
-      ...state,
-      loading: action.payload,
-    }),
+
+    account: (state: AuthState, action: PayloadAction<UserAccount>) => {
+      const account = action.payload;
+      return {...state, account};
+    },
+
+    loading: (state: AuthState, action: PayloadAction<boolean>) => {
+      const loading = action.payload;
+      return {...state, loading};
+    },
+
     clearAuth: () => ({
       ...initialState,
     }),

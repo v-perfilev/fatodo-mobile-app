@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {GroupsState} from './groupsType';
 import {MapUtils} from '../../shared/utils/MapUtils';
 import {Item} from '../../models/Item';
@@ -6,6 +6,11 @@ import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Group} from '../../models/Group';
 import {GroupsThunks} from './groupsActions';
 import {GroupUtils} from '../../shared/utils/GroupUtils';
+
+export interface GroupsCollapsedPayload {
+  groupId: string;
+  value: boolean;
+}
 
 const initialState: GroupsState = {
   groups: [],
@@ -21,7 +26,7 @@ const groupsSlice = createSlice({
   name: 'groups',
   initialState,
   reducers: {
-    setGroups: (state: GroupsState, action) => {
+    setGroups: (state: GroupsState, action: PayloadAction<Group[]>) => {
       const groups = action.payload;
       return {...state, groups};
     },
@@ -39,30 +44,33 @@ const groupsSlice = createSlice({
       return {...state, groups, cachedGroups};
     },
 
-    setCollapsed: (state: GroupsState, action) => {
-      const itemsCollapsed = MapUtils.setValue(state.itemsCollapsed, action.payload.id, action.payload.value);
+    setCollapsed: (state: GroupsState, action: PayloadAction<GroupsCollapsedPayload>) => {
+      const groupId = action.payload.groupId;
+      const value = action.payload.value;
+      const itemsCollapsed = MapUtils.setValue(state.itemsCollapsed, groupId, value);
       return {...state, itemsCollapsed};
     },
 
-    setAllCollapsed: (state: GroupsState, action) => {
-      const itemsCollapsed = MapUtils.setAllValues(state.itemsCollapsed, action.payload);
+    setAllCollapsed: (state: GroupsState, action: PayloadAction<boolean>) => {
+      const value = action.payload;
+      const itemsCollapsed = MapUtils.setAllValues(state.itemsCollapsed, value);
       return {...state, itemsCollapsed};
     },
 
-    addGroup: (state: GroupsState, action) => {
+    addGroup: (state: GroupsState, action: PayloadAction<Group>) => {
       const group = action.payload;
       const groups = [...state.groups, group];
       return {...state, groups};
     },
 
-    updateGroup: (state: GroupsState, action) => {
+    updateGroup: (state: GroupsState, action: PayloadAction<Group>) => {
       const group = action.payload;
       const groups = ArrayUtils.updateValueWithId(state.groups, group);
       return {...state, groups};
     },
 
-    removeGroup: (state: GroupsState, action) => {
-      const group = action.payload as Group;
+    removeGroup: (state: GroupsState, action: PayloadAction<Group>) => {
+      const group = action.payload;
       const groups = ArrayUtils.deleteValueWithId(state.groups, group);
       const items = MapUtils.deleteValue(state.items, group.id);
       const itemsCount = MapUtils.deleteValue(state.itemsCount, group.id);
@@ -71,8 +79,8 @@ const groupsSlice = createSlice({
       return {...state, groups, items, itemsCount, itemsCollapsed, itemsLoading};
     },
 
-    addItem: (state: GroupsState, action) => {
-      const item = action.payload as Item;
+    addItem: (state: GroupsState, action: PayloadAction<Item>) => {
+      const item = action.payload;
       const newItemsValue = GroupUtils.filterItems([item, ...MapUtils.getValue(state.items, item.groupId)]);
       const items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
       const newItemsCountValue = MapUtils.getValue(state.itemsCount, item.groupId) + 1;
@@ -80,8 +88,8 @@ const groupsSlice = createSlice({
       return {...state, items, itemsCount};
     },
 
-    updateItem: (state: GroupsState, action) => {
-      const item = action.payload as Item;
+    updateItem: (state: GroupsState, action: PayloadAction<Item>) => {
+      const item = action.payload;
       let items = state.items;
       if (!item.archived) {
         const newItemsValue = ArrayUtils.updateValueWithId(MapUtils.getValue(state.items, item.groupId), item);
@@ -90,8 +98,8 @@ const groupsSlice = createSlice({
       return {...state, items};
     },
 
-    removeItem: (state: GroupsState, action) => {
-      const item = action.payload as Item;
+    removeItem: (state: GroupsState, action: PayloadAction<Item>) => {
+      const item = action.payload;
       let items = state.items;
       let itemsCount = state.itemsCount;
       if (!item.archived) {

@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {GroupState} from './groupType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Item} from '../../models/Item';
@@ -27,33 +27,33 @@ const groupSlice = createSlice({
   name: 'group',
   initialState,
   reducers: {
-    setGroup: (state: GroupState, action) => {
-      const group = action.payload as Group;
+    setGroup: (state: GroupState, action: PayloadAction<Group>) => {
+      const group = action.payload;
       return {...initialState, group};
     },
 
-    updateGroup: (state: GroupState, action) => {
-      const group = action.payload as Group;
+    updateGroup: (state: GroupState, action: PayloadAction<Group>) => {
+      const group = action.payload;
       return {...state, group};
     },
 
-    addItem: (state: GroupState, action) => {
-      const item = action.payload as Item;
+    addItem: (state: GroupState, action: PayloadAction<Item>) => {
+      const item = action.payload;
       const activeItems = filterItems([...ArrayUtils.addValueToEnd(state.activeItems, item)]);
       const activeItemsCount = state.activeItemsCount + 1;
       return {...state, activeItems, activeItemsCount};
     },
 
-    updateItem: (state: GroupState, action) => {
-      const item = action.payload as Item;
+    updateItem: (state: GroupState, action: PayloadAction<Item>) => {
+      const item = action.payload;
       const isArchived = item.archived;
       const activeItems = !isArchived ? ArrayUtils.updateValueWithId(state.activeItems, item) : state.activeItems;
       const archivedItems = isArchived ? ArrayUtils.updateValueWithId(state.archivedItems, item) : state.activeItems;
       return {...state, activeItems, archivedItems};
     },
 
-    updateItemArchived: (state: GroupState, action) => {
-      const item = action.payload as Item;
+    updateItemArchived: (state: GroupState, action: PayloadAction<Item>) => {
+      const item = action.payload;
       const isArchived = item.archived;
       const activeItemsCount = state.activeItemsCount + (!isArchived ? 1 : -1);
       const archivedItemsCount = state.archivedItemsCount + (isArchived ? 1 : -1);
@@ -64,16 +64,16 @@ const groupSlice = createSlice({
       return {...state, activeItemsCount, archivedItemsCount, activeItems, archivedItems};
     },
 
-    updateItemStatus: (state: GroupState, action) => {
-      const item = action.payload as Item;
+    updateItemStatus: (state: GroupState, action: PayloadAction<Item>) => {
+      const item = action.payload;
       const isArchived = item.archived;
       const activeItems = !isArchived ? ArrayUtils.updateValueWithId(state.activeItems, item) : state.activeItems;
       const archivedItems = isArchived ? ArrayUtils.updateValueWithId(state.archivedItems, item) : state.archivedItems;
       return {...state, activeItems, archivedItems};
     },
 
-    removeItem: (state: GroupState, action) => {
-      const item = action.payload as Item;
+    removeItem: (state: GroupState, action: PayloadAction<Item>) => {
+      const item = action.payload;
       const isArchived = item.archived;
       const activeItemsCount = state.activeItemsCount + (!isArchived ? -1 : 0);
       const archivedItemsCount = state.archivedItemsCount + (isArchived ? -1 : 0);

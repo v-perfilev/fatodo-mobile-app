@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ChatsState} from './chatsType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Chat} from '../../models/Chat';
@@ -19,26 +19,26 @@ const chatsSlice = createSlice({
   name: 'chats',
   initialState,
   reducers: {
-    addChat: (state: ChatsState, action) => {
-      const chat = action.payload as Chat;
+    addChat: (state: ChatsState, action: PayloadAction<Chat>) => {
+      const chat = action.payload;
       const chats = ArrayUtils.addValueToStart(state.chats, chat).filter(ArrayUtils.uniqueByIdFilter);
       return {...state, chats};
     },
 
-    updateChat: (state: ChatsState, action) => {
-      const chat = action.payload as Chat;
+    updateChat: (state: ChatsState, action: PayloadAction<Chat>) => {
+      const chat = action.payload;
       const chats = ArrayUtils.updateValueWithId(state.chats, chat);
       return {...state, chats};
     },
 
-    removeChat: (state: ChatsState, action) => {
-      const chat = action.payload as Chat;
+    removeChat: (state: ChatsState, action: PayloadAction<Chat>) => {
+      const chat = action.payload;
       const chats = ArrayUtils.deleteValueWithId(state.chats, chat);
       return {...state, chats};
     },
 
-    updateLastMessage: (state: ChatsState, action) => {
-      const message = action.payload as Message;
+    updateLastMessage: (state: ChatsState, action: PayloadAction<Message>) => {
+      const message = action.payload;
       const chat = state.chats.find((chat) => chat.id === message.chatId);
       let chats = state.chats;
       if (chat) {

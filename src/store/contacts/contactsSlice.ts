@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ContactsState} from './contactsType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {ContactRelation} from '../../models/ContactRelation';
@@ -19,43 +19,43 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: {
-    addRelation: (state: ContactsState, action) => {
-      const relation = action.payload as ContactRelation;
+    addRelation: (state: ContactsState, action: PayloadAction<ContactRelation>) => {
+      const relation = action.payload;
       const relations = ArrayUtils.addValueToEnd(state.relations, relation);
       const relationCount = state.relationCount + 1;
       return {...state, relations, relationCount};
     },
 
-    removeRelation: (state: ContactsState, action) => {
-      const userId = action.payload as string;
+    removeRelation: (state: ContactsState, action: PayloadAction<string>) => {
+      const userId = action.payload;
       const relations = state.relations.filter((relation) => relation.secondUserId !== userId);
       const relationCount = state.relationCount - 1;
       return {...state, relationCount, relations};
     },
 
-    addIncomingRequest: (state: ContactsState, action) => {
-      const request = action.payload as ContactRequest;
+    addIncomingRequest: (state: ContactsState, action: PayloadAction<ContactRequest>) => {
+      const request = action.payload;
       const incomingRequests = ArrayUtils.addValueToEnd(state.incomingRequests, request);
       const incomingRequestCount = state.incomingRequestCount + 1;
       return {...state, incomingRequests, incomingRequestCount};
     },
 
-    removeIncomingRequest: (state: ContactsState, action) => {
-      const userId = action.payload as string;
+    removeIncomingRequest: (state: ContactsState, action: PayloadAction<string>) => {
+      const userId = action.payload;
       const incomingRequests = state.incomingRequests.filter((request) => request.requesterId !== userId);
       const incomingRequestCount = state.incomingRequestCount - 1;
       return {...state, incomingRequests, incomingRequestCount};
     },
 
-    addOutcomingRequest: (state: ContactsState, action) => {
-      const request = action.payload as ContactRequest;
+    addOutcomingRequest: (state: ContactsState, action: PayloadAction<ContactRequest>) => {
+      const request = action.payload;
       const incomingRequests = ArrayUtils.addValueToEnd(state.outcomingRequests, request);
       const incomingRequestCount = state.outcomingRequestCount + 1;
       return {...state, incomingRequests, incomingRequestCount};
     },
 
-    removeOutcomingRequest: (state: ContactsState, action) => {
-      const userId = action.payload as string;
+    removeOutcomingRequest: (state: ContactsState, action: PayloadAction<string>) => {
+      const userId = action.payload;
       const incomingRequests = state.outcomingRequests.filter((request) => request.recipientId !== userId);
       const incomingRequestCount = state.outcomingRequestCount - 1;
       return {...state, incomingRequests, incomingRequestCount};
