@@ -37,6 +37,10 @@ export class MessageUtils {
     return text;
   };
 
+  public static isMessage = (message: Message): boolean => {
+    return message && !message.isEvent;
+  };
+
   public static isIncomingMessage = (message: Message, account: User): boolean => {
     return message && account && message.userId !== account.id;
   };

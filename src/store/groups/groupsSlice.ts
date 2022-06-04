@@ -155,32 +155,6 @@ const groupsSlice = createSlice({
       const itemsLoading = MapUtils.setValues(state.itemsLoading, groupIds, false);
       return {...state, itemsLoading};
     });
-
-    /*
-    fetchMoreItems
-    */
-    builder.addCase(GroupsThunks.fetchMoreItems.pending, (state: GroupsState, action) => {
-      const groupId = action.meta.arg.groupId;
-      const itemsLoading = MapUtils.setValue(state.itemsLoading, groupId, true);
-      return {...state, itemsLoading};
-    });
-    builder.addCase(GroupsThunks.fetchMoreItems.fulfilled, (state: GroupsState, action) => {
-      const groupId = action.meta.arg.groupId;
-      const newItemsValue = GroupUtils.filterItems([
-        ...(MapUtils.getValue(state.items, groupId) || []),
-        ...action.payload.data,
-      ]);
-      const items = MapUtils.setValue(state.items, groupId, newItemsValue);
-      const itemsCount = MapUtils.setValue(state.itemsCount, groupId, action.payload.count);
-      const itemsLoading = MapUtils.setValue(state.itemsLoading, groupId, false);
-
-      return {...state, items, itemsCount, itemsLoading};
-    });
-    builder.addCase(GroupsThunks.fetchMoreItems.rejected, (state: GroupsState, action) => {
-      const groupId = action.meta.arg.groupId;
-      const itemsLoading = MapUtils.setValue(state.itemsLoading, groupId, false);
-      return {...state, itemsLoading};
-    });
   },
 });
 

@@ -11,6 +11,7 @@ import ChatViewList from './ChatViewList';
 import {ChatThunks} from '../../../store/chat/chatActions';
 import FBox from '../../../components/boxes/FBox';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
+import {Box} from 'native-base';
 
 const ChatViewContainer = () => {
   const dispatch = useAppDispatch();
@@ -72,12 +73,14 @@ const ChatViewContainer = () => {
   return (
     <FBox>
       <ChatViewScrollButton show={showScroll} scrollDown={scrollDown} />
-      <ChatViewList
-        loadMessages={!allLoaded ? loadMessages : undefined}
-        onScroll={onScroll}
-        onViewableItemsChanged={onViewableItemsChanged}
-        listRef={listRef}
-      />
+      <Box>
+        <ChatViewList
+          loadMessages={!allLoaded ? loadMessages : undefined}
+          onScroll={onScroll}
+          onViewableItemsChanged={onViewableItemsChanged}
+          listRef={listRef}
+        />
+      </Box>
     </FBox>
   );
 };

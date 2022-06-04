@@ -41,8 +41,8 @@ const ChatViewList = ({loadMessages, onScroll, onViewableItemsChanged, listRef}:
     <FlatList
       ListEmptyComponent={<ChatViewStub />}
       style={invertedStyle}
-      data={chatItems}
-      // data={chatItems.slice(0, 15)}
+      // data={chatItems}
+      data={chatItems.slice(0, 15)}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       onEndReached={loadMessages}

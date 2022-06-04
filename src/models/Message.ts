@@ -74,6 +74,7 @@ export const buildEventMessage = (userId: string, type: EventMessageType, ids: s
     isEvent: true,
     statuses: [],
     reactions: [],
+    createdAt: new Date().getTime(),
   };
 };
 

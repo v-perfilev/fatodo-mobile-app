@@ -27,7 +27,7 @@ const ChatClearDialog = ({chat, show, close, onSuccess = () => null}: ChatClearD
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(ChatThunks.clearChat(chat.id))
+    dispatch(ChatThunks.clearChat(chat))
       .unwrap()
       .then(() => {
         onSuccess();

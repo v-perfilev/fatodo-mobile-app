@@ -24,6 +24,7 @@ export class ChatUtils {
   ): string[] => {
     return info.viewableItems
       .map((token) => token.item)
+      .filter((item) => MessageUtils.isMessage(item.message))
       .filter((item) => MessageUtils.isIncomingMessage(item.message, account))
       .filter((item) => !MessageUtils.isReadMessage(item.message, account))
       .map((item) => item.message.id);

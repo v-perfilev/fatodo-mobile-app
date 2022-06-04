@@ -27,7 +27,7 @@ const ChatDeleteDialog = ({chat, show, close, onSuccess = () => null}: ChatDelet
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(ChatThunks.deleteChat(chat.id))
+    dispatch(ChatThunks.deleteChat(chat))
       .unwrap()
       .then(() => {
         onSuccess();

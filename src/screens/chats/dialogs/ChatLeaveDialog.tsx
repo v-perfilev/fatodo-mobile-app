@@ -27,7 +27,7 @@ const ChatLeaveDialog = ({chat, show, close, onSuccess = () => null}: ChatLeaveD
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(ChatThunks.leaveChat(chat.id))
+    dispatch(ChatThunks.leaveChat(chat))
       .unwrap()
       .then(() => {
         onSuccess();
