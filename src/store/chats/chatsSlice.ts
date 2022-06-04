@@ -19,6 +19,7 @@ const chatsSlice = createSlice({
   name: 'chats',
   initialState,
   reducers: {
+    // TODO add first message
     addChat: (state: ChatsState, action: PayloadAction<Chat>) => {
       const chat = action.payload;
       const chats = ArrayUtils.addValueToStart(state.chats, chat).filter(ArrayUtils.uniqueByIdFilter);

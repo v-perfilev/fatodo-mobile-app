@@ -4,11 +4,11 @@ import {AppDispatch} from '../store';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {RegistrationDTO} from '../../models/dto/RegistrationDTO';
 import AuthService from '../../services/AuthService';
-import {SnackActions} from '../snack/snackActions';
 import {LoginDTO} from '../../models/dto/LoginDTO';
 import UserService from '../../services/UserService';
 import {LanguageUtils} from '../../shared/utils/LanguageUtils';
 import {ForgotPasswordDTO} from '../../models/dto/ForgotPasswordDTO';
+import snackSlice from '../snack/snackSlice';
 
 export class AuthActions {
   static login = () => (dispatch: AppDispatch) => {
@@ -35,7 +35,7 @@ enum TYPES {
 export class AuthThunks {
   static register = createAsyncThunk(TYPES.REGISTER, async (dto: RegistrationDTO, thunkAPI) => {
     await AuthService.register(dto);
-    thunkAPI.dispatch(SnackActions.handleCode('auth.registered', 'info'));
+    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'auth.registered', variant: 'info'}));
   });
 
   static authenticate = createAsyncThunk(TYPES.AUTHENTICATE, async (dto: LoginDTO, thunkAPI) => {
@@ -54,6 +54,6 @@ export class AuthThunks {
 
   static forgotPassword = createAsyncThunk(TYPES.FORGOT_PASSWORD, async (dto: ForgotPasswordDTO, thunkAPI) => {
     await AuthService.requestResetPasswordCode(dto);
-    thunkAPI.dispatch(SnackActions.handleCode('auth.afterForgotPassword', 'info'));
+    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'auth.afterForgotPassword', variant: 'info'}));
   });
 }

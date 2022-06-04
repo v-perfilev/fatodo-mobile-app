@@ -1,4 +1,4 @@
-import {Snack, SnackVariant} from '../../models/Snack';
+import {Snack} from '../../models/Snack';
 import snackSlice from './snackSlice';
 import {AxiosResponse} from 'axios';
 import {AppDispatch} from '../store';
@@ -20,9 +20,5 @@ export class SnackActions {
 
   static handleResponse = (response: AxiosResponse) => (dispatch: AppDispatch) => {
     dispatch(snackSlice.actions.handleResponse(response));
-  };
-
-  static handleCode = (code: string, variant: SnackVariant) => (dispatch: AppDispatch) => {
-    dispatch(snackSlice.actions.handleCode({code, variant}));
   };
 }

@@ -2,12 +2,13 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import ItemService from '../../services/ItemService';
 import NotificationService from '../../services/NotificationService';
 import {ItemDTO} from '../../models/dto/ItemDTO';
-import {GroupsActions} from '../groups/groupsActions';
-import {GroupActions, GroupThunks} from '../group/groupActions';
-import {SnackActions} from '../snack/snackActions';
+import {GroupThunks} from '../group/groupActions';
 import {AppDispatch} from '../store';
 import {Item} from '../../models/Item';
 import itemSlice from './itemSlice';
+import snackSlice from '../snack/snackSlice';
+import groupsSlice from '../groups/groupsSlice';
+import groupSlice from '../group/groupSlice';
 
 export class ItemActions {
   static setItem = (item: Item) => async (dispatch: AppDispatch) => {
@@ -38,17 +39,17 @@ export class ItemThunks {
 
   static createItem = createAsyncThunk(TYPES.CREATE_ITEM, async (dto: ItemDTO, thunkAPI) => {
     const response = await ItemService.createItem(dto);
-    thunkAPI.dispatch(GroupsActions.addItem(response.data));
-    thunkAPI.dispatch(GroupActions.addItem(response.data));
-    thunkAPI.dispatch(SnackActions.handleCode('item.created', 'info'));
+    thunkAPI.dispatch(groupsSlice.actions.addItem(response.data));
+    thunkAPI.dispatch(groupSlice.actions.addItem(response.data));
+    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'item.created', variant: 'info'}));
     return response.data;
   });
 
   static updateItem = createAsyncThunk(TYPES.UPDATE_ITEM, async (dto: ItemDTO, thunkAPI) => {
     const response = await ItemService.updateItem(dto);
-    thunkAPI.dispatch(GroupsActions.updateItem(response.data));
-    thunkAPI.dispatch(GroupActions.updateItem(response.data));
-    thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
+    thunkAPI.dispatch(groupsSlice.actions.updateItem(response.data));
+    thunkAPI.dispatch(groupSlice.actions.updateItem(response.data));
+    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'item.edited', variant: 'info'}));
     return response.data;
   });
 }

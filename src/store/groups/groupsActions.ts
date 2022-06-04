@@ -1,10 +1,9 @@
 import {AppDispatch} from '../store';
 import groupsSlice from './groupsSlice';
 import {Group} from '../../models/Group';
-import {Item} from '../../models/Item';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ItemService from '../../services/ItemService';
-import {SnackActions} from '../snack/snackActions';
+import snackSlice from '../snack/snackSlice';
 
 export class GroupsActions {
   static setGroups = (groups: Group[]) => (dispatch: AppDispatch) => {
@@ -19,36 +18,12 @@ export class GroupsActions {
     dispatch(groupsSlice.actions.resetGroupsFromCache());
   };
 
-  static setCollapsed = (id: string, value: boolean) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.setCollapsed({id, value}));
+  static setCollapsed = (groupId: string, value: boolean) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.setCollapsed({groupId, value}));
   };
 
   static setAllCollapsed = (value: boolean) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.setAllCollapsed(value));
-  };
-
-  static addGroup = (group: Group) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.addGroup(group));
-  };
-
-  static updateGroup = (group: Group) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.updateGroup(group));
-  };
-
-  static removeGroup = (group: Group) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.removeGroup(group));
-  };
-
-  static addItem = (item: Item) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.addItem(item));
-  };
-
-  static updateItem = (item: Item) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.updateItem(item));
-  };
-
-  static removeItem = (item: Item) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.removeItem(item));
   };
 }
 
@@ -84,18 +59,18 @@ export class GroupsThunks {
 
   static deleteGroup = createAsyncThunk(TYPES.DELETE_GROUP, async (group: Group, thunkAPI) => {
     await ItemService.deleteGroup(group.id);
-    thunkAPI.dispatch(GroupsActions.removeGroup(group));
-    thunkAPI.dispatch(SnackActions.handleCode('group.deleted', 'info'));
+    thunkAPI.dispatch(groupsSlice.actions.removeGroup(group));
+    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.deleted', variant: 'info'}));
   });
 
   static leaveGroup = createAsyncThunk(TYPES.LEAVE_GROUP, async (group: Group, thunkAPI) => {
     await ItemService.leaveGroup(group.id);
-    thunkAPI.dispatch(GroupsActions.removeGroup(group));
-    thunkAPI.dispatch(SnackActions.handleCode('group.left', 'info'));
+    thunkAPI.dispatch(groupsSlice.actions.removeGroup(group));
+    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.left', variant: 'info'}));
   });
 
   static updateOrder = createAsyncThunk(TYPES.UPDATE_ORDER, async (order: string[], thunkAPI) => {
     await ItemService.setGroupOrder(order);
-    thunkAPI.dispatch(SnackActions.handleCode('group.sorted', 'info'));
+    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.sorted', variant: 'info'}));
   });
 }

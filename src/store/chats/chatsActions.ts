@@ -1,30 +1,8 @@
-import {AppDispatch} from '../store';
-import {Chat} from '../../models/Chat';
 import chatsSlice from './chatsSlice';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ChatService from '../../services/ChatService';
-import {SnackActions} from '../snack/snackActions';
 import {MessageDTO} from '../../models/dto/MessageDTO';
-import {Message} from '../../models/Message';
-
-export class ChatsActions {
-  // TODO add first message
-  static addChat = (chat: Chat) => (dispatch: AppDispatch) => {
-    dispatch(chatsSlice.actions.addChat(chat));
-  };
-
-  static updateChat = (chat: Chat) => (dispatch: AppDispatch) => {
-    dispatch(chatsSlice.actions.updateChat(chat));
-  };
-
-  static removeChat = (chat: Chat) => (dispatch: AppDispatch) => {
-    dispatch(chatsSlice.actions.removeChat(chat));
-  };
-
-  static updateLastMessage = (message: Message) => (dispatch: AppDispatch) => {
-    dispatch(chatsSlice.actions.updateLastMessage(message));
-  };
-}
+import snackSlice from '../snack/snackSlice';
 
 enum TYPES {
   FETCH_CHATS = 'chats/fetchChats',
@@ -47,14 +25,14 @@ export class ChatsThunks {
 
   static createDirectChat = createAsyncThunk(TYPES.CREATE_DIRECT_CHAT, async (userId: string, thunkAPI) => {
     const result = await ChatService.createDirectChat(userId);
-    thunkAPI.dispatch(ChatsActions.addChat(result.data));
-    thunkAPI.dispatch(SnackActions.handleCode('chat.created', 'info'));
+    thunkAPI.dispatch(chatsSlice.actions.addChat(result.data));
+    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'chat.created', variant: 'info'}));
   });
 
   static createIndirectChat = createAsyncThunk(TYPES.CREATE_INDIRECT_CHAT, async (userIds: string[], thunkAPI) => {
     const result = await ChatService.createIndirectChat(userIds);
-    thunkAPI.dispatch(ChatsActions.addChat(result.data));
-    thunkAPI.dispatch(SnackActions.handleCode('chat.created', 'info'));
+    thunkAPI.dispatch(chatsSlice.actions.addChat(result.data));
+    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'chat.created', variant: 'info'}));
   });
 
   static sendDirectMessage = createAsyncThunk(
