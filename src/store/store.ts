@@ -9,6 +9,7 @@ import groupSlice from './group/groupSlice';
 import itemSlice from './item/itemSlice';
 import chatsSlice from './chats/chatsSlice';
 import chatSlice from './chat/chatSlice';
+import {IS_DEVELOPMENT} from '../constants';
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,8 @@ export const store = configureStore({
     chats: chatsSlice.reducer,
     chat: chatSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  devTools: IS_DEVELOPMENT,
 });
 
 export type RootState = ReturnType<typeof store.getState>;

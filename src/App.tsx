@@ -16,15 +16,9 @@ import {store, useAppDispatch, useAppSelector} from './store/store';
 import AuthSelectors from './store/auth/authSelectors';
 import RootNavigator from './navigators/RootNavigator';
 import AuthNavigator from './navigators/AuthNavigator';
-import {LogBox} from 'react-native';
 import {SnackActions} from './store/snack/snackActions';
 import {ContactsThunks} from './store/contacts/contactsActions';
 import {AuthActions, AuthThunks} from './store/auth/authActions';
-
-// disable logs
-LogBox.ignoreLogs([
-  'Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.',
-]);
 
 // setup axios
 const axiosActions = bindActionCreators(
