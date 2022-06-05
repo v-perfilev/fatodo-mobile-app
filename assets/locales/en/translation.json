@@ -16,7 +16,8 @@
     "IncomingRequestList": "Incoming requests",
     "OutcomingRequestList": "Outcoming requests",
     "ChatList": "Chats",
-    "ChatView": "Chat"
+    "ChatView": "Chat",
+    "CommentsView": "Comments"
   },
   "buttons": {
     "agree": "Agree",

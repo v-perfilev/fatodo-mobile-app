@@ -1,73 +1,74 @@
 import React, {memo, ReactElement, useCallback, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
-import {Message, MessageReactionType, messageReactionTypes} from '../../../../models/Message';
 import FVStack from '../../../../components/boxes/FVStack';
 import ReactionView from '../../../../components/views/ReactionView';
 import PressableButton from '../../../../components/controls/PressableButton';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
-import {ChatThunks} from '../../../../store/chat/chatActions';
+import {Comment, CommentReactionType, commentReactionTypes} from '../../../../models/Comment';
+import {CommentsThunks} from '../../../../store/comments/commentsActions';
 
-const buildReactionMap = (message: Message, isOutcoming: boolean): Map<MessageReactionType, number> => {
+const buildReactionMap = (comment: Comment, isOwnComment: boolean): Map<CommentReactionType, number> => {
   const map = new Map();
-  messageReactionTypes.forEach((reaction) => {
-    const count = message?.reactions.filter((r) => r.type === reaction).length;
-    if (!isOutcoming || count > 0) {
+  commentReactionTypes.forEach((reaction) => {
+    const count = comment?.reactions.filter((r) => r.type === reaction).length;
+    if (!isOwnComment || count > 0) {
       map.set(reaction, count);
     }
   });
   return map;
 };
 
-type ChatViewMessageReactionsProps = {
-  message: Message;
-  isOutcoming: boolean;
+type CommentViewCommentReactionsProps = {
+  comment: Comment;
+  isOwnComment: boolean;
 };
 
-const ChatViewMessageReactions = ({message, isOutcoming}: ChatViewMessageReactionsProps) => {
+const CommentViewCommentReactions = ({comment, isOwnComment}: CommentViewCommentReactionsProps) => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.account);
-  const [activeReaction, setActiveReaction] = useState<MessageReactionType>();
-  const [reactionMap, setReactionMap] = useState<Map<MessageReactionType, number>>(
-    buildReactionMap(message, isOutcoming),
+  const [activeReaction, setActiveReaction] = useState<CommentReactionType>();
+  const [reactionMap, setReactionMap] = useState<Map<CommentReactionType, number>>(
+    buildReactionMap(comment, isOwnComment),
   );
 
   const updateReactionsMap = (): void => {
-    const newReactionMap = buildReactionMap(message, isOutcoming);
+    const newReactionMap = buildReactionMap(comment, isOwnComment);
     setReactionMap(newReactionMap);
   };
 
   const updateActiveReaction = (): void => {
-    const reaction = message.reactions.find((r) => r.userId === account.id);
+    const reaction = comment.reactions.find((r) => r.userId === account.id);
     setActiveReaction(reaction?.type);
   };
 
   const handlePress = useCallback(
-    (r: MessageReactionType) => (): void => {
+    (r: CommentReactionType) => (): void => {
+      // TODO
       if (r === activeReaction) {
-        dispatch(ChatThunks.noReaction({message, account}));
+        dispatch(CommentsThunks.test());
       } else if (r === 'LIKE') {
-        dispatch(ChatThunks.likeReaction({message, account}));
+        dispatch(CommentsThunks.test());
       } else if (r === 'DISLIKE') {
-        dispatch(ChatThunks.dislikeReaction({message, account}));
+        dispatch(CommentsThunks.test());
       }
     },
-    [message, activeReaction],
+    [comment, activeReaction],
   );
 
   useEffect(() => {
     updateReactionsMap();
     updateActiveReaction();
-  }, [message.reactions]);
+  }, [comment.reactions]);
 
-  const reaction = (r: MessageReactionType, key: number): ReactElement => {
+  const reaction = (r: CommentReactionType, key: number): ReactElement => {
     const count = reactionMap.get(r);
     const color = r === activeReaction ? 'primary.500' : 'gray.400';
     const onPress = handlePress(r);
     return (
-      <PressableButton onPress={onPress} isDisabled={isOutcoming} key={key}>
-        <FHStack h="20px" smallSpace reversed alignItems="center">
+      <PressableButton onPress={onPress} isDisabled={isOwnComment} key={key}>
+        <FHStack h="20px" smallSpace alignItems="center">
           {count > 0 && (
             <Text color="gray.400" fontSize="xs">
               {count}
@@ -86,4 +87,4 @@ const ChatViewMessageReactions = ({message, isOutcoming}: ChatViewMessageReactio
   );
 };
 
-export default memo(ChatViewMessageReactions);
+export default memo(CommentViewCommentReactions);
