@@ -1,9 +1,7 @@
-import React, {memo, useCallback, useRef} from 'react';
+import React, {memo, useCallback, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatSelectors from '../../../store/chat/chatSelectors';
-import {NativeScrollEvent, NativeSyntheticEvent, ViewToken, VirtualizedList} from 'react-native';
-import {useDelayedState} from '../../../shared/hooks/useDelayedState';
-import {ChatItem} from '../../../models/ChatItem';
+import {FlatList, ViewToken} from 'react-native';
 import {TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import ChatViewScrollButton from './ChatViewScrollButton';
@@ -15,9 +13,9 @@ import {Box} from 'native-base';
 
 const ChatViewContainer = () => {
   const dispatch = useAppDispatch();
-  const [showScroll, setShowScroll] = useDelayedState(false);
+  const [hideScroll, setHideScroll] = useState<boolean>(true);
   const unreadTimersRef = useRef<Map<string, any>>(new Map());
-  const listRef = useRef<VirtualizedList<ChatItem>>();
+  const listRef = useRef<FlatList>();
   const chat = useAppSelector(ChatSelectors.chat);
   const chatItems = useAppSelector(ChatSelectors.chatItems);
   const allLoaded = useAppSelector(ChatSelectors.allLoaded);
@@ -62,22 +60,19 @@ const ChatViewContainer = () => {
   scroll down button
    */
 
-  const onScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>): void => {
-    setShowScroll(event.nativeEvent.contentOffset.y > 0);
-  }, []);
-
   const scrollDown = useCallback((): void => {
+    setHideScroll(true);
     listRef.current.scrollToOffset({offset: 0});
   }, [listRef.current]);
 
   return (
     <FBox>
-      <ChatViewScrollButton show={showScroll} scrollDown={scrollDown} />
+      <ChatViewScrollButton show={!hideScroll} scrollDown={scrollDown} />
       <Box>
         <ChatViewList
           loadMessages={!allLoaded ? loadMessages : undefined}
-          onScroll={onScroll}
           onViewableItemsChanged={onViewableItemsChanged}
+          setIsOnTheTop={setHideScroll}
           listRef={listRef}
         />
       </Box>
