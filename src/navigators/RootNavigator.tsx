@@ -3,16 +3,23 @@ import {Chat} from '../models/Chat';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ChatView from '../screens/chats/chatView/ChatView';
 import TabNavigator from './TabNavigator';
+import CommentsView from '../screens/comments/commentsView/CommentsView';
 
 type ChatRouteProps = {
   chat?: Chat;
   chatId?: string;
 };
 
+type CommentsRouteProps = {
+  targetId?: string;
+};
+
 export type RootParamList = {
   HomeTabs: undefined;
   ChatView: ChatRouteProps;
+  CommentsView: CommentsRouteProps;
   withChat: ChatRouteProps;
+  withComments: CommentsRouteProps;
 };
 
 const Stack = createNativeStackNavigator<RootParamList>();
@@ -24,6 +31,7 @@ const RootNavigator = () => {
     <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_bottom'}} initialRouteName="HomeTabs">
       <Stack.Screen name="HomeTabs" component={TabNavigator} />
       <Stack.Screen name="ChatView" component={ChatView} />
+      <Stack.Screen name="CommentsView" component={CommentsView} />
     </Stack.Navigator>
   );
 };

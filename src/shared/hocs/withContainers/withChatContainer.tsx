@@ -1,9 +1,8 @@
 import React, {ComponentType, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import {useDelayedState} from '../../hooks/useDelayedState';
-import {RootParamList} from '../../../navigators/RootNavigator';
+import {RootNavigationProp, RootParamList} from '../../../navigators/RootNavigator';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import {ChatThunks} from '../../../store/chat/chatActions';
 import {Chat} from '../../../models/Chat';
@@ -15,7 +14,7 @@ export type WithChatProps = {
 
 const withChatContainer = (Component: ComponentType<WithChatProps>) => (props: any) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<RootNavigationProp>();
   const [loading, setLoading] = useDelayedState();
   const route = useRoute<RouteProp<RootParamList, 'withChat'>>();
   const routeChat = route.params.chat;

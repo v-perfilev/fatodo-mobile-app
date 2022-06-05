@@ -4,13 +4,13 @@ import ChatSelectors from '../../../store/chat/chatSelectors';
 import {ViewToken} from 'react-native';
 import {TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import ChatViewScrollButton from './ChatViewScrollButton';
 import ChatViewList from './ChatViewList';
 import {ChatThunks} from '../../../store/chat/chatActions';
 import FBox from '../../../components/boxes/FBox';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {Box} from 'native-base';
 import {FlatListType} from '../../../components/surfaces/FlatList';
+import ScrollButton from '../../../components/controls/ScrollButton';
 
 const ChatViewContainer = () => {
   const dispatch = useAppDispatch();
@@ -68,7 +68,7 @@ const ChatViewContainer = () => {
 
   return (
     <FBox>
-      <ChatViewScrollButton show={!hideScroll} scrollDown={scrollDown} />
+      <ScrollButton show={!hideScroll} scrollDown={scrollDown} />
       <Box>
         <ChatViewList
           loadMessages={!allLoaded ? loadMessages : undefined}

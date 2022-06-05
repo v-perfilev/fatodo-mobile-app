@@ -1,13 +1,13 @@
 import React, {memo} from 'react';
-import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
-import IconButton from '../../../components/controls/IconButton';
+import IconButton from './IconButton';
+import ArrowDownIcon from '../icons/ArrowDownIcon';
 
-type ChatViewScrollButtonProps = {
+type ScrollButtonProps = {
   show: boolean;
   scrollDown: () => void;
 };
 
-const ChatViewScrollButton = ({show, scrollDown}: ChatViewScrollButtonProps) => {
+const ScrollButton = ({show, scrollDown}: ScrollButtonProps) => {
   const button = (
     <IconButton
       zIndex="100"
@@ -25,4 +25,4 @@ const ChatViewScrollButton = ({show, scrollDown}: ChatViewScrollButtonProps) => 
   return show ? button : null;
 };
 
-export default memo(ChatViewScrollButton);
+export default memo(ScrollButton);

@@ -1,5 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {IS_DEVELOPMENT} from '../constants';
 import authSlice from './auth/authSlice';
 import snackSlice from './snack/snackSlice';
 import contactsSlice from './contacts/contactsSlice';
@@ -9,7 +10,7 @@ import groupSlice from './group/groupSlice';
 import itemSlice from './item/itemSlice';
 import chatsSlice from './chats/chatsSlice';
 import chatSlice from './chat/chatSlice';
-import {IS_DEVELOPMENT} from '../constants';
+import commentsSlice from './comments/commentsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     item: itemSlice.reducer,
     chats: chatsSlice.reducer,
     chat: chatSlice.reducer,
+    comments: commentsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   devTools: IS_DEVELOPMENT,
