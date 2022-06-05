@@ -36,8 +36,7 @@ const CommentsViewControl = () => {
   const handleSend = (): void => {
     setMessageBody('');
     setUpdater('');
-    // TODO
-    dispatch(CommentsThunks.test());
+    dispatch(CommentsThunks.sendComment({targetId, dto}));
   };
 
   return (

@@ -4,7 +4,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useDelayedState} from '../../hooks/useDelayedState';
 import {RootNavigationProp, RootParamList} from '../../../navigators/RootNavigator';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
-import {CommentsThunks} from '../../../store/comments/commentsActions';
+import {CommentsActions, CommentsThunks} from '../../../store/comments/commentsActions';
 
 export type WithCommentsProps = {
   loading: boolean;
@@ -20,9 +20,9 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
 
   const goBack = (): void => navigation.goBack();
 
-  const loadComments = (): void => {
-    // TODO
-    dispatch(CommentsThunks.test())
+  const loadComments = async (): Promise<void> => {
+    await dispatch(CommentsActions.init());
+    dispatch(CommentsThunks.fetchComments({targetId, offset: 0}))
       .unwrap()
       .catch(() => goBack())
       .finally(() => setLoading(false));
@@ -30,7 +30,7 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
 
   useEffect(() => {
     if (routeTargetId && routeTargetId !== targetId) {
-      loadComments();
+      loadComments().finally();
     } else if (!routeTargetId) {
       goBack();
     } else {

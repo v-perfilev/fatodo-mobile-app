@@ -45,13 +45,12 @@ const CommentViewCommentReactions = ({comment, isOwnComment}: CommentViewComment
 
   const handlePress = useCallback(
     (r: CommentReactionType) => (): void => {
-      // TODO
       if (r === activeReaction) {
-        dispatch(CommentsThunks.test());
+        dispatch(CommentsThunks.noReaction({comment, account}));
       } else if (r === 'LIKE') {
-        dispatch(CommentsThunks.test());
+        dispatch(CommentsThunks.likeReaction({comment, account}));
       } else if (r === 'DISLIKE') {
-        dispatch(CommentsThunks.test());
+        dispatch(CommentsThunks.dislikeReaction({comment, account}));
       }
     },
     [comment, activeReaction],

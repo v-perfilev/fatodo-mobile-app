@@ -17,8 +17,7 @@ const CommentsViewContainer = () => {
   const allLoaded = useAppSelector(CommentsSelectors.allLoaded);
 
   const loadComments = (): void => {
-    // TODO
-    dispatch(CommentsThunks.test());
+    dispatch(CommentsThunks.fetchComments({targetId, offset: comments.length}));
   };
 
   /*

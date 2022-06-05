@@ -5,6 +5,13 @@ import {Comment} from '../../models/Comment';
 import {CommentDTO} from '../../models/dto/CommentDTO';
 import commentsSlice from './commentsSlice';
 import snackSlice from '../snack/snackSlice';
+import {AppDispatch} from '../store';
+
+export class CommentsActions {
+  static init = () => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.init());
+  };
+}
 
 enum TYPES {
   FETCH_COMMENTS = 'comments/fetchComments',
