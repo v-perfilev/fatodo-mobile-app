@@ -35,3 +35,14 @@ export interface CommentReactions {
   commentId: string;
   reactions: CommentReaction[];
 }
+
+export const buildCommentReaction = (
+  commentId: string,
+  userId: string,
+  type: CommentReactionType,
+): CommentReaction => ({
+  commentId,
+  userId,
+  type,
+  timestamp: new Date(),
+});

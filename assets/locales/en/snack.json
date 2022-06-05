@@ -36,9 +36,11 @@
     "deleted": "Chat deleted",
     "cleared": "Chat history deleted",
     "left": "You left the chat",
-    "messageEdited": "Message edited"
+    "messageEdited": "Message edited",
+    "messageDeleted": "Message deleted"
   },
   "comment": {
-    "commentEdited": "Comment edited"
+    "commentEdited": "Comment edited",
+    "commentDeleted": "Comment deleted"
   }
 }
