@@ -1,7 +1,7 @@
 import React, {memo, useCallback, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatSelectors from '../../../store/chat/chatSelectors';
-import {FlatList, ViewToken} from 'react-native';
+import {ViewToken} from 'react-native';
 import {TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import ChatViewScrollButton from './ChatViewScrollButton';
@@ -10,12 +10,13 @@ import {ChatThunks} from '../../../store/chat/chatActions';
 import FBox from '../../../components/boxes/FBox';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {Box} from 'native-base';
+import {FlatListType} from '../../../components/surfaces/FlatList';
 
 const ChatViewContainer = () => {
   const dispatch = useAppDispatch();
   const [hideScroll, setHideScroll] = useState<boolean>(true);
   const unreadTimersRef = useRef<Map<string, any>>(new Map());
-  const listRef = useRef<FlatList>();
+  const listRef = useRef<FlatListType>();
   const chat = useAppSelector(ChatSelectors.chat);
   const chatItems = useAppSelector(ChatSelectors.chatItems);
   const allLoaded = useAppSelector(ChatSelectors.allLoaded);

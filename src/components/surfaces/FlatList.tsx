@@ -3,7 +3,7 @@ import {useTheme} from 'native-base';
 import {IFlatListProps} from 'native-base/lib/typescript/components/basic/FlatList';
 import {ListUtils} from '../../shared/utils/ListUtils';
 import {
-  FlatList,
+  FlatList as RNFlatList,
   LayoutChangeEvent,
   ListRenderItemInfo,
   NativeScrollEvent,
@@ -12,21 +12,16 @@ import {
 } from 'react-native';
 import {ChatItem} from '../../models/ChatItem';
 
-type FFlatListProps<T> = Partial<IFlatListProps<T>> & {
+export type FlatListType = RNFlatList;
+
+type FlatListProps<T> = Partial<IFlatListProps<T>> & {
   renderItemWithLayout: (item: T, onLayout: (event: LayoutChangeEvent) => void) => ReactElement;
   keyExtractor: (item: T) => string;
   setIsOnTheTop?: Dispatch<SetStateAction<boolean>>;
-  listRef?: MutableRefObject<FlatList>;
+  listRef?: MutableRefObject<RNFlatList>;
 };
 
-const FFlatList = ({
-  data,
-  renderItemWithLayout,
-  keyExtractor,
-  setIsOnTheTop,
-  listRef,
-  ...props
-}: FFlatListProps<any>) => {
+const FlatList = ({data, renderItemWithLayout, keyExtractor, setIsOnTheTop, listRef, ...props}: FlatListProps<any>) => {
   const theme = useTheme();
   const heights = useRef<Map<string, number>>(new Map());
 
@@ -71,7 +66,7 @@ const FFlatList = ({
   }, []);
 
   return (
-    <FlatList
+    <RNFlatList
       data={data}
       renderItem={_renderItem}
       getItemLayout={_getItemLayout}
@@ -91,4 +86,4 @@ const FFlatList = ({
   );
 };
 
-export default FFlatList;
+export default FlatList;

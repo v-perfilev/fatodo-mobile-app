@@ -1,13 +1,13 @@
 import React, {Dispatch, MutableRefObject, ReactElement, SetStateAction, useCallback} from 'react';
 import {useAppSelector} from '../../../store/store';
 import ChatSelectors from '../../../store/chat/chatSelectors';
-import {FlatList, LayoutChangeEvent, StyleProp, ViewStyle, ViewToken} from 'react-native';
+import {LayoutChangeEvent, StyleProp, ViewStyle, ViewToken} from 'react-native';
 import ChatViewItem from './ChatViewItem';
 import {ChatItem} from '../../../models/ChatItem';
 import {useTheme} from 'native-base';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import ChatViewStub from './ChatViewStub';
-import FFlatList from '../../../components/boxes/FFlatList';
+import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
 
 const invertedStyle = {
   scaleY: -1,
@@ -17,7 +17,7 @@ type ChatViewListProps = {
   loadMessages: () => void;
   onViewableItemsChanged: (info: {viewableItems: ViewToken[]; changed: ViewToken[]}) => void;
   setIsOnTheTop: Dispatch<SetStateAction<boolean>>;
-  listRef: MutableRefObject<FlatList>;
+  listRef: MutableRefObject<FlatListType>;
 };
 
 const ChatViewList = ({loadMessages, onViewableItemsChanged, setIsOnTheTop, listRef}: ChatViewListProps) => {
@@ -30,7 +30,7 @@ const ChatViewList = ({loadMessages, onViewableItemsChanged, setIsOnTheTop, list
   }, []);
 
   return (
-    <FFlatList
+    <FlatList
       ListEmptyComponent={<ChatViewStub />}
       data={chatItems}
       renderItemWithLayout={renderItem}
