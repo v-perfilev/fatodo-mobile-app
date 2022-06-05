@@ -8,6 +8,7 @@ import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
 import ReactionsIcon from '../../../../components/icons/ReactionsIcon';
 import {Comment} from '../../../../models/Comment';
 import ReplyIcon from '../../../../components/icons/ReplyIcon';
+import {useCommentDialogContext} from '../../../../shared/contexts/dialogContexts/CommentDialogContext';
 
 type CommentsViewCommentMenuProps = {
   comment: Comment;
@@ -17,21 +18,22 @@ type CommentsViewCommentMenuProps = {
 
 const CommentsViewCommentMenu = ({comment, isOwnComment, setReference}: CommentsViewCommentMenuProps) => {
   const {t} = useTranslation();
+  const {showCommentReactionsDialog, showCommentEditDialog, showCommentDeleteDialog} = useCommentDialogContext();
 
   const replyToComment = (): void => {
     setReference(comment);
   };
 
   const openReactionsDialog = (): void => {
-    // TODO
+    showCommentReactionsDialog(comment);
   };
 
   const editComment = (): void => {
-    // TODO
+    showCommentEditDialog(comment);
   };
 
   const deleteComment = (): void => {
-    // TODO
+    showCommentDeleteDialog(comment);
   };
 
   const menuItems = [

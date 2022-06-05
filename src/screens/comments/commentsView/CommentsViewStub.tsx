@@ -8,7 +8,7 @@ const CommentsViewStub = () => {
 
   return (
     <FCenter grow mb="60px">
-      <Text>{t('comments:view.commentsNotFound')}</Text>
+      <Text>{t('comment:view.commentsNotFound')}</Text>
     </FCenter>
   );
 };

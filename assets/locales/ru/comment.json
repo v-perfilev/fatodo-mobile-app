@@ -1,0 +1,38 @@
+{
+  "view": {
+    "inputPlaceholder": "Оставьте свой комментарий...",
+    "reference": "Ответ на",
+    "commentsNotFound": "Пока комментариев нет"
+  },
+  "comment": {
+    "deleted": "Комментарий удалён",
+    "reference": "Ответ на",
+    "buttons": {
+      "reference": "Ответить"
+    },
+    "actions": {
+      "reactions": "Реакции",
+      "edit": "Редактировать",
+      "delete": "Удалить"
+    }
+  },
+  "reactions": {
+    "title": "Реакции на комментарий",
+    "reactionsNotFound": "Пока реакций нет"
+  },
+  "editComment": {
+    "title": "Редактировать сообщение",
+    "fields": {
+      "text": {
+        "label": "Текст",
+        "required": "Обязательное поле"
+      }
+    },
+    "send": "Редактировать",
+    "cancel": "Отменить"
+  },
+  "deleteComment": {
+    "title": "Удаление комментария",
+    "text": "Вы уверены, что хотите удалить комментария?"
+  }
+}

@@ -22,7 +22,7 @@ const CommentsViewCommentReference = ({reference}: CommentViewCommentReferencePr
   return (
     <FHStack smallSpace>
       <Text color="gray.400" fontWeight="bold">
-        {t('comment:comment.reference')}:
+        {t('comment:view.reference')}:
       </Text>
       <Text fontWeight="bold">
         {user.username}, {date}

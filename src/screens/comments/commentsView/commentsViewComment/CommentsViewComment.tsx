@@ -62,7 +62,7 @@ const CommentsViewComment = ({comment, setReference}: CommentsViewCommentProps) 
         {!comment.isDeleted && <Text color="gray.700">{comment.text}</Text>}
         {comment.isDeleted && (
           <Text color="gray.400" fontWeight="bold">
-            {t('comment:view.deleted')}
+            {t('comment:comment.deleted')}
           </Text>
         )}
       </FVStack>

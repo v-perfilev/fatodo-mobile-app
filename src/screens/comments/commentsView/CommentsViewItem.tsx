@@ -1,17 +1,26 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, SetStateAction, useEffect} from 'react';
 import {Box, IBoxProps} from 'native-base';
 import {Comment} from '../../../models/Comment';
 import CommentsViewComment from './commentsViewComment/CommentsViewComment';
+import {UsersThunks} from '../../../store/users/usersActions';
+import {useAppDispatch} from '../../../store/store';
 
 type CommentsViewItemProps = IBoxProps & {
-  item: Comment;
+  comment: Comment;
   setReference: Dispatch<SetStateAction<Comment>>;
 };
 
-const CommentsViewItem = ({item, setReference, ...props}: CommentsViewItemProps) => {
+const CommentsViewItem = ({comment, setReference, ...props}: CommentsViewItemProps) => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const userIds = [comment.userId, comment.reference?.userId];
+    dispatch(UsersThunks.handleUserIds(userIds));
+  }, []);
+
   return (
     <Box {...props}>
-      <CommentsViewComment comment={item} setReference={setReference} />
+      <CommentsViewComment comment={comment} setReference={setReference} />
     </Box>
   );
 };

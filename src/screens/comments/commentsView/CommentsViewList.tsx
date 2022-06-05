@@ -14,18 +14,26 @@ const invertedStyle = {
 } as StyleProp<ViewStyle>;
 
 type CommentsViewListProps = {
+  setReference: Dispatch<SetStateAction<Comment>>;
   loadComments: () => void;
   setIsOnTheTop: Dispatch<SetStateAction<boolean>>;
   listRef: MutableRefObject<FlatListType>;
 };
 
-const CommentsViewList = ({loadComments, setIsOnTheTop, listRef}: CommentsViewListProps) => {
+const CommentsViewList = ({setReference, loadComments, setIsOnTheTop, listRef}: CommentsViewListProps) => {
   const theme = useTheme();
   const comments = useAppSelector(CommentsSelectors.comments);
 
   const keyExtractor = useCallback((item: Comment): string => item.id, []);
   const renderItem = useCallback((item: Comment, onLayout: (event: LayoutChangeEvent) => void): ReactElement => {
-    return <CommentsViewItem onLayout={onLayout} item={item} style={[invertedStyle, ListUtils.itemStyle(theme)]} />;
+    return (
+      <CommentsViewItem
+        onLayout={onLayout}
+        comment={item}
+        setReference={setReference}
+        style={[invertedStyle, ListUtils.itemStyle(theme)]}
+      />
+    );
   }, []);
 
   return (
