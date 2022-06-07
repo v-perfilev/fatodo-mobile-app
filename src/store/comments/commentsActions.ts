@@ -6,6 +6,7 @@ import {CommentDTO} from '../../models/dto/CommentDTO';
 import commentsSlice from './commentsSlice';
 import snackSlice from '../snack/snackSlice';
 import {AppDispatch} from '../store';
+import {AxiosResponse} from 'axios';
 
 export class CommentsActions {
   static init = () => async (dispatch: AppDispatch) => {
@@ -26,9 +27,10 @@ enum TYPES {
 export class CommentsThunks {
   static fetchComments = createAsyncThunk(
     TYPES.FETCH_COMMENTS,
-    async ({targetId, offset}: {targetId: string; offset: number}) => {
-      const result = await CommentService.getAllPageable(targetId, offset);
-      return result.data;
+    async ({targetId, offset}: {targetId: string; offset: number}, thunkAPI) => {
+      return await CommentService.getAllPageable(targetId, offset)
+        .then((response: AxiosResponse) => response.data)
+        .catch((response: AxiosResponse) => thunkAPI.rejectWithValue(response.status));
     },
   );
 

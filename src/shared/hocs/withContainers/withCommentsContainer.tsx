@@ -20,17 +20,17 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
 
   const goBack = (): void => navigation.goBack();
 
-  const loadComments = async (): Promise<void> => {
-    await dispatch(CommentsActions.init());
-    dispatch(CommentsThunks.fetchComments({targetId, offset: 0}))
+  const loadComments = (): void => {
+    dispatch(CommentsActions.init());
+    dispatch(CommentsThunks.fetchComments({targetId: routeTargetId, offset: 0}))
       .unwrap()
-      .catch(() => goBack())
+      .catch((status) => (status !== 404 ? goBack() : null))
       .finally(() => setLoading(false));
   };
 
   useEffect(() => {
     if (routeTargetId && routeTargetId !== targetId) {
-      loadComments().finally();
+      loadComments();
     } else if (!routeTargetId) {
       goBack();
     } else {
