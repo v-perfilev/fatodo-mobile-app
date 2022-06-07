@@ -4,6 +4,7 @@ import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navi
 import ChatView from '../screens/chats/chatView/ChatView';
 import TabNavigator from './TabNavigator';
 import CommentsView from '../screens/comments/commentsView/CommentsView';
+import {ColorScheme} from '../shared/themes/ThemeFactory';
 
 type ChatRouteProps = {
   chat?: Chat;
@@ -11,7 +12,8 @@ type ChatRouteProps = {
 };
 
 type CommentsRouteProps = {
-  targetId?: string;
+  targetId: string;
+  colorScheme?: ColorScheme;
 };
 
 export type RootParamList = {

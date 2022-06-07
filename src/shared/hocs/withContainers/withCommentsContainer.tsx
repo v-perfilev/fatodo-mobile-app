@@ -5,9 +5,11 @@ import {useDelayedState} from '../../hooks/useDelayedState';
 import {RootNavigationProp, RootParamList} from '../../../navigators/RootNavigator';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {CommentsActions, CommentsThunks} from '../../../store/comments/commentsActions';
+import {ColorScheme} from '../../themes/ThemeFactory';
 
 export type WithCommentsProps = {
   loading: boolean;
+  colorScheme: ColorScheme;
 };
 
 const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (props: any) => {
@@ -16,6 +18,7 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
   const [loading, setLoading] = useDelayedState();
   const route = useRoute<RouteProp<RootParamList, 'withComments'>>();
   const routeTargetId = route.params.targetId;
+  const routeColorScheme = route.params.colorScheme;
   const targetId = useAppSelector(CommentsSelectors.targetId);
 
   const goBack = (): void => navigation.goBack();
@@ -38,7 +41,7 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
     }
   }, []);
 
-  return <Component loading={loading} {...props} />;
+  return <Component loading={loading} colorScheme={routeColorScheme} {...props} />;
 };
 
 export default withCommentsContainer;
