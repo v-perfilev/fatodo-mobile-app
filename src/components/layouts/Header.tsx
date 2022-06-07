@@ -2,12 +2,12 @@ import React, {PropsWithChildren, useCallback, useEffect, useState} from 'react'
 import {Text} from 'native-base';
 import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-import PressableButton from '../controls/PressableButton';
 import ColoredStatusBar from './ColoredStatusBar';
 import UrlPic from '../surfaces/UrlPic';
 import ArrowBackIcon from '../icons/ArrowBackIcon';
 import FHStack from '../boxes/FHStack';
 import Logo from './Logo';
+import IconButton from '../controls/IconButton';
 
 type HeaderProps = PropsWithChildren<{
   title?: string;
@@ -39,9 +39,7 @@ const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle
       <ColoredStatusBar />
       <FHStack h="50px" defaultSpace px="2" bg="primary.500" alignItems="center">
         {!hideGoBack && canGoBack && (
-          <PressableButton onPress={goBack}>
-            <ArrowBackIcon color="white" size="7" />
-          </PressableButton>
+          <IconButton colorScheme="white" size="xl" p="1" icon={<ArrowBackIcon />} onPress={goBack} />
         )}
         {!hideLogo && <Logo size="35px" />}
         {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="9" border="1" invertedBorder />}

@@ -7,6 +7,7 @@ import GroupViewHeader from './GroupViewHeader';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import GroupViewActiveItems from './groupViewItems/GroupViewActiveItems';
 import GroupViewArchivedItems from './groupViewItems/GroupViewArchivedItems';
+import GroupViewCorner from './GroupViewCorner';
 
 type GroupViewProps = WithGroupProps;
 
@@ -20,6 +21,7 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   return (
     <ThemeProvider theme={theme}>
       <GroupViewHeader showArchived={showArchived} setShowArchived={setShowArchived} />
+      <GroupViewCorner />
       <ConditionalSpinner loading={loading}>
         {showArchived ? <GroupViewArchivedItems /> : <GroupViewActiveItems />}
       </ConditionalSpinner>

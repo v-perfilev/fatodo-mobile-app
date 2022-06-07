@@ -21,6 +21,7 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import {UsersThunks} from '../../../store/users/usersActions';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
+import ItemViewCorner from './ItemViewCorner';
 
 type ItemViewProps = WithItemProps;
 
@@ -54,6 +55,7 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
   return (
     <ThemeProvider theme={theme}>
       <ItemViewHeader account={account} />
+      <ItemViewCorner />
       <ConditionalSpinner loading={loading}>
         <FScrollView>
           <FVStack defaultSpace>

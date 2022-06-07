@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
-import IconButton from './IconButton';
 import ArrowDownIcon from '../icons/ArrowDownIcon';
+import CornerButton from './CornerButton';
 
 type ScrollButtonProps = {
   show: boolean;
@@ -8,21 +8,7 @@ type ScrollButtonProps = {
 };
 
 const ScrollButton = ({show, scrollDown}: ScrollButtonProps) => {
-  const button = (
-    <IconButton
-      zIndex="100"
-      position="absolute"
-      bottom="3"
-      right="3"
-      colorScheme="white"
-      bgColorScheme="primary"
-      bgTransparency="90"
-      icon={<ArrowDownIcon />}
-      onPress={scrollDown}
-    />
-  );
-
-  return show ? button : null;
+  return show ? <CornerButton icon={<ArrowDownIcon />} onPress={scrollDown} /> : null;
 };
 
 export default memo(ScrollButton);
