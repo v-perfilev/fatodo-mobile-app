@@ -1,7 +1,6 @@
 import React, {Dispatch, memo, SetStateAction, useCallback, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import FBox from '../../../components/boxes/FBox';
-import {Box} from 'native-base';
 import {FlatListType} from '../../../components/surfaces/FlatList';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {CommentsThunks} from '../../../store/comments/commentsActions';
@@ -37,14 +36,12 @@ const CommentsViewContainer = ({setReference}: CommentsViewContainerProps) => {
   return (
     <FBox>
       <ScrollButton show={!hideScroll} scrollDown={scrollDown} />
-      <Box>
-        <CommentsViewList
-          setReference={setReference}
-          loadComments={!allLoaded ? loadComments : undefined}
-          setIsOnTheTop={setHideScroll}
-          listRef={listRef}
-        />
-      </Box>
+      <CommentsViewList
+        setReference={setReference}
+        loadComments={!allLoaded ? loadComments : undefined}
+        setIsOnTheTop={setHideScroll}
+        listRef={listRef}
+      />
     </FBox>
   );
 };

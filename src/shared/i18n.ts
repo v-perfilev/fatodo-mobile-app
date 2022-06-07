@@ -28,6 +28,9 @@ import contactRU from '../../assets/locales/ru/contact.json';
 // chat
 import chatEN from '../../assets/locales/en/chat.json';
 import chatRU from '../../assets/locales/ru/chat.json';
+// comment
+import commentEN from '../../assets/locales/en/comment.json';
+import commentRU from '../../assets/locales/ru/comment.json';
 
 export const languages = [
   {
@@ -51,6 +54,7 @@ const resources = {
     item: itemEN,
     contact: contactEN,
     chat: chatEN,
+    comment: commentEN,
   },
   ru: {
     translation: translationRU,
@@ -62,6 +66,7 @@ const resources = {
     item: itemRU,
     contact: contactRU,
     chat: chatRU,
+    comment: commentRU,
   },
 };
 

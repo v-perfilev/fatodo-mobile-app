@@ -1,13 +1,15 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Text} from 'native-base';
+import {IBoxProps, Text} from 'native-base';
 import FCenter from '../../../components/boxes/FCenter';
 
-const ChatViewStub = () => {
+type ChatViewStubProps = IBoxProps;
+
+const ChatViewStub = (props: ChatViewStubProps) => {
   const {t} = useTranslation();
 
   return (
-    <FCenter grow mb="60px">
+    <FCenter grow {...props}>
       <Text>{t('chat:view.messagesNotFound')}</Text>
     </FCenter>
   );

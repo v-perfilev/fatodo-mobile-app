@@ -48,7 +48,7 @@ const CommentsViewControl = ({reference, clearReference}: CommentsViewControlPro
 
   return (
     <FHStack space="2" p="2" alignItems="center" borderTopWidth="1" borderTopColor="gray.200">
-      <FVStack smallSpace>
+      <FVStack grow smallSpace>
         {reference && <CommentsViewControlReference reference={reference} clearReference={clearReference} />}
         <ClearableTextInput
           h="36px"
