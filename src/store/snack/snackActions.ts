@@ -1,6 +1,5 @@
 import {Snack} from '../../models/Snack';
 import snackSlice from './snackSlice';
-import {AxiosResponse} from 'axios';
 import {AppDispatch} from '../store';
 
 export class SnackActions {
@@ -18,7 +17,7 @@ export class SnackActions {
     dispatch(snackSlice.actions.removeSnack(key));
   };
 
-  static handleResponse = (response: AxiosResponse) => (dispatch: AppDispatch) => {
-    dispatch(snackSlice.actions.handleResponse(response));
+  static handleResponse = (status: number, feedbackCode: string) => (dispatch: AppDispatch) => {
+    dispatch(snackSlice.actions.handleResponse({status, feedbackCode}));
   };
 }

@@ -2,12 +2,15 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ReduxSnack, SnackState} from './snackType';
 import {Snack, SnackBuilder, SnackVariant} from '../../models/Snack';
 import {TranslationUtils} from '../../shared/utils/TranslationUtils';
-import {ResponseUtils} from '../../shared/utils/ResponseUtils';
-import {AxiosResponse} from 'axios';
 
 export interface SnackCodePayload {
   code: string;
   variant: SnackVariant;
+}
+
+interface SnackResponsePayload {
+  status: number;
+  feedbackCode: string;
 }
 
 const initialState: SnackState = {
@@ -28,10 +31,9 @@ const snackSlice = createSlice({
       return {list};
     },
 
-    handleResponse: (state: SnackState, action: PayloadAction<AxiosResponse>) => {
-      const response = action.payload;
-      const feedbackCode = ResponseUtils.getFeedbackCode(response);
-      const status = ResponseUtils.getStatus(response);
+    handleResponse: (state: SnackState, action: PayloadAction<SnackResponsePayload>) => {
+      const feedbackCode = action.payload.feedbackCode;
+      const status = action.payload.status;
       const isStatusCorrect = status && status < 500;
       const message = TranslationUtils.getFeedbackTranslation(feedbackCode);
       const snack = isStatusCorrect && message ? new SnackBuilder(message).setStatusColor(status).build() : null;

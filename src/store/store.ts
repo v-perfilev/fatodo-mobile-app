@@ -25,7 +25,6 @@ export const store = configureStore({
     chat: chatSlice.reducer,
     comments: commentsSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   devTools: IS_DEVELOPMENT,
 });
 

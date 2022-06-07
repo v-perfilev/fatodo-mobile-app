@@ -14,7 +14,7 @@ export const axiosIgnore404 = axios.create();
 interface SetupAxiosActions {
   onUnauthenticated: () => void;
   enqueueSnack: (snack: Snack) => void;
-  handleResponse: (response: AxiosResponse) => void;
+  handleResponse: (status: number, feedbackCode: string) => void;
 }
 
 export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleResponse}: SetupAxiosActions): void => {
@@ -30,7 +30,8 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
     } else if (!status) {
       enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('connection'));
     } else {
-      handleResponse(response);
+      const feedbackCode = ResponseUtils.getFeedbackCode(response);
+      handleResponse(status, feedbackCode);
     }
   };
 
@@ -41,7 +42,8 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
     } else if (!status) {
       enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('connection'));
     } else if (status !== 404) {
-      handleResponse(response);
+      const feedbackCode = ResponseUtils.getFeedbackCode(response);
+      handleResponse(status, feedbackCode);
     }
   };
 
@@ -55,13 +57,13 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
   const defaultOnResponseError = (err: AxiosError): AxiosPromise => {
     defaultHandleErrorFeedback(err.response);
     handleErrorStatus(err.response);
-    return Promise.reject(err);
+    return Promise.reject(err.response);
   };
 
   const ignore404OnResponseError = (err: AxiosError): AxiosPromise => {
     ignore404handleErrorFeedback(err.response);
     handleErrorStatus(err.response);
-    return Promise.reject(err);
+    return Promise.reject(err.response);
   };
 
   const onRequest = async (request: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
