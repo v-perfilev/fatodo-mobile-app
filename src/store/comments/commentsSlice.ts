@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {CommentsState} from './commentsType';
 import {CommentsThunks} from './commentsActions';
 import {CommentUtils} from '../../shared/utils/CommentUtils';
-import {buildCommentReaction, Comment, CommentReactionType} from '../../models/Comment';
+import {buildCommentReaction, Comment, CommentReactions, CommentReactionType} from '../../models/Comment';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {UserAccount} from '../../models/User';
 
@@ -29,6 +29,37 @@ const commentsSlice = createSlice({
   name: 'comments',
   initialState,
   reducers: {
+    addCommentWs: (state: CommentsState, action: PayloadAction<Comment>) => {
+      const comment = action.payload;
+      let comments = state.comments;
+      if (state.targetId === comment.targetId) {
+        const commentInThread = ArrayUtils.findValueWithId(state.comments, comment);
+        comments = commentInThread
+          ? ArrayUtils.replaceValue(state.comments, commentInThread, comment)
+          : CommentUtils.filterComments([comment, ...state.comments]);
+      }
+      return {...state, comments};
+    },
+
+    updateCommentWs: (state: CommentsState, action: PayloadAction<Comment>) => {
+      const comment = action.payload;
+      const comments = ArrayUtils.updateValueWithId(state.comments, comment);
+      return {...state, comments};
+    },
+
+    updateCommentReactionsWs: (state: CommentsState, action: PayloadAction<CommentReactions>) => {
+      const targetId = action.payload.targetId;
+      const commentId = action.payload.targetId;
+      const reactions = action.payload.reactions;
+      let comments = state.comments;
+      if (state.targetId === targetId) {
+        const commentInList = ArrayUtils.findValueById(state.comments, commentId);
+        const updatedComment = {...commentInList, reactions};
+        comments = ArrayUtils.updateValueWithId(state.comments, updatedComment);
+      }
+      return {...state, comments};
+    },
+
     init: (state: CommentsState, action: PayloadAction<string>) => {
       const targetId = action.payload;
       const comments = [] as Comment[];

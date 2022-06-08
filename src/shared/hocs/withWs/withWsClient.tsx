@@ -1,7 +1,10 @@
 import * as React from 'react';
 import {ComponentType, useState} from 'react';
-import {WsContext, WsTopicsAndHandler} from '../contexts/WsContext';
-import WsClient from '../../components/ws/WsClient';
+import {WsContext, WsTopicsAndHandler} from '../../contexts/WsContext';
+import WsClient from '../../../components/ws/WsClient';
+import {flowRight} from 'lodash';
+import withWsChat from './withWsChat';
+import withWsComment from './withWsComment';
 
 const withWsClient = (Component: ComponentType) => (props: any) => {
   const [topicsAndHandlers, setTopicsAndHandlers] = useState<Map<string, WsTopicsAndHandler>>(new Map());
@@ -45,4 +48,4 @@ const withWsClient = (Component: ComponentType) => (props: any) => {
   );
 };
 
-export default withWsClient;
+export default flowRight([withWsClient, withWsChat, withWsComment]);

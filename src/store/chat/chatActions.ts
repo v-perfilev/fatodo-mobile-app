@@ -5,9 +5,28 @@ import ChatService from '../../services/ChatService';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {MessageDTO} from '../../models/dto/MessageDTO';
 import {UserAccount} from '../../models/User';
-import {Message} from '../../models/Message';
+import {Message, MessageReactions, MessageStatuses} from '../../models/Message';
 import snackSlice from '../snack/snackSlice';
 import chatsSlice from '../chats/chatsSlice';
+import {AppDispatch} from '../store';
+
+export class ChatActions {
+  static addMessageWs = (message: Message) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.addMessageWs(message));
+  };
+
+  static updateMessageWs = (message: Message) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.updateMessageWs(message));
+  };
+
+  static updateMessageReactionsWs = (messageReactions: MessageReactions) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.updateMessageReactionsWs(messageReactions));
+  };
+
+  static updateMessageStatusesWs = (messageStatuses: MessageStatuses) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.updateMessageStatusesWs(messageStatuses));
+  };
+}
 
 enum TYPES {
   SELECT_CHAT = 'chat/selectChat',

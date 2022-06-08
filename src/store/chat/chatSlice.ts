@@ -6,7 +6,9 @@ import {
   buildMessageStatus,
   EventMessageType,
   Message,
+  MessageReactions,
   MessageReactionType,
+  MessageStatuses,
 } from '../../models/Message';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {ChatThunks} from './chatActions';
@@ -42,6 +44,54 @@ const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
+    addMessageWs: (state: ChatState, action: PayloadAction<Message>) => {
+      const message = action.payload;
+      let messages = state.messages;
+      if (state.chat.id === message.chatId) {
+        const messageInList = MessageUtils.findMessage(state.messages, message);
+        messages = messageInList
+          ? ArrayUtils.replaceValue(state.messages, messageInList, message)
+          : MessageUtils.filterMessages([message, ...state.messages]);
+      }
+      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
+      return {...state, messages, chatItems};
+    },
+
+    updateMessageWs: (state: ChatState, action: PayloadAction<Message>) => {
+      const message = action.payload;
+      const messages = ArrayUtils.updateValueWithId(state.messages, message);
+      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
+      return {...state, messages, chatItems};
+    },
+
+    updateMessageReactionsWs: (state: ChatState, action: PayloadAction<MessageReactions>) => {
+      const chatId = action.payload.chatId;
+      const messageId = action.payload.messageId;
+      const reactions = action.payload.reactions;
+      let messages = state.messages;
+      if (state.chat.id === chatId) {
+        const messageInList = ArrayUtils.findValueById(state.messages, messageId);
+        const updatedMessage = {...messageInList, reactions};
+        messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
+      }
+      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
+      return {...state, messages, chatItems};
+    },
+
+    updateMessageStatusesWs: (state: ChatState, action: PayloadAction<MessageStatuses>) => {
+      const chatId = action.payload.chatId;
+      const messageId = action.payload.messageId;
+      const statuses = action.payload.statuses;
+      let messages = state.messages;
+      if (state.chat.id === chatId) {
+        const messageInList = ArrayUtils.findValueById(state.messages, messageId);
+        const updatedMessage = {...messageInList, statuses};
+        messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
+      }
+      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
+      return {...state, messages, chatItems};
+    },
+
     selectChat: (state: ChatState, action: PayloadAction<Chat>) => {
       const chat = action.payload;
       return {...initialState, chat};

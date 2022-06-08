@@ -85,4 +85,8 @@ export class MessageUtils {
   public static filterMessages = (messages: Message[]): Message[] => {
     return messages.filter(ArrayUtils.uniqueByIdFilter).sort(ArrayUtils.createdAtComparator);
   };
+
+  public static findMessage = (messages: Message[], m: Message): Message => {
+    return ArrayUtils.findValueWithId(messages, m) || ArrayUtils.findValueWithUserIdAndText(messages, m);
+  };
 }

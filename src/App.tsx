@@ -19,7 +19,7 @@ import AuthNavigator from './navigators/AuthNavigator';
 import {SnackActions} from './store/snack/snackActions';
 import {ContactsThunks} from './store/contacts/contactsActions';
 import {AuthActions, AuthThunks} from './store/auth/authActions';
-import withWsClient from './shared/hocs/withWsClient';
+import withWsClient from './shared/hocs/withWs/withWsClient';
 
 // setup axios
 const axiosActions = bindActionCreators(

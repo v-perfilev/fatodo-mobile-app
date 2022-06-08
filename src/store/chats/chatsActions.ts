@@ -3,6 +3,18 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import ChatService from '../../services/ChatService';
 import {MessageDTO} from '../../models/dto/MessageDTO';
 import snackSlice from '../snack/snackSlice';
+import {AppDispatch} from '../store';
+import {Chat} from '../../models/Chat';
+
+export class ChatsActions {
+  static addChatWs = (chat: Chat) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.addChatWs(chat));
+  };
+
+  static updateChatWs = (chat: Chat) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.updateChatWs(chat));
+  };
+}
 
 enum TYPES {
   FETCH_CHATS = 'chats/fetchChats',

@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import CommentService from '../../services/CommentService';
 import {UserAccount} from '../../models/User';
-import {Comment} from '../../models/Comment';
+import {Comment, CommentReactions} from '../../models/Comment';
 import {CommentDTO} from '../../models/dto/CommentDTO';
 import commentsSlice from './commentsSlice';
 import snackSlice from '../snack/snackSlice';
@@ -11,6 +11,18 @@ import {AxiosResponse} from 'axios';
 export class CommentsActions {
   static init = (targetId: string) => async (dispatch: AppDispatch) => {
     dispatch(commentsSlice.actions.init(targetId));
+  };
+
+  static addCommentWs = (comment: Comment) => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.addCommentWs(comment));
+  };
+
+  static updateCommentWs = (comment: Comment) => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.updateCommentWs(comment));
+  };
+
+  static updateCommentReactionsWs = (commentReactions: CommentReactions) => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.updateCommentReactionsWs(commentReactions));
   };
 }
 
