@@ -7,8 +7,8 @@ import UsersSelectors from '../../../store/users/usersSelectors';
 import {CommentUtils} from '../../../shared/utils/CommentUtils';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import FHStack from '../../../components/boxes/FHStack';
-import IconButton from '../../../components/controls/IconButton';
 import CloseIcon from '../../../components/icons/CloseIcon';
+import PressableButton from '../../../components/controls/PressableButton';
 
 type CommentViewCommentReferenceProps = {
   reference: ReferenceComment;
@@ -24,13 +24,15 @@ const CommentsViewCommentReference = ({reference, clearReference}: CommentViewCo
 
   return (
     <FHStack smallSpace alignItems="center">
-      <Text color="gray.400" fontWeight="bold">
+      <Text color="gray.400" fontWeight="bold" fontSize="2xs">
         {t('comment:view.reference')}:
       </Text>
-      <Text fontWeight="bold">
+      <Text fontWeight="bold" fontSize="2xs">
         {user.username}, {date}
       </Text>
-      <IconButton icon={<CloseIcon />} onPress={clearReference} />
+      <PressableButton onPress={clearReference}>
+        <CloseIcon size="xs" />
+      </PressableButton>
     </FHStack>
   );
 };

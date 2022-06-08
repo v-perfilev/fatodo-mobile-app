@@ -31,7 +31,9 @@ const commentsSlice = createSlice({
   reducers: {
     init: (state: CommentsState, action: PayloadAction<string>) => {
       const targetId = action.payload;
-      return {...initialState, targetId};
+      const comments = [] as Comment[];
+      const allLoaded = false;
+      return {...initialState, targetId, comments, allLoaded};
     },
 
     addComment: (state: CommentsState, action: PayloadAction<Comment>) => {

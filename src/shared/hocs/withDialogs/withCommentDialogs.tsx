@@ -11,7 +11,10 @@ import CommentReactionsDialog, {
   defaultCommentReactionsDialogProps,
 } from '../../../screens/comments/dialogs/commentReactionsDialog/CommentReactionsDialog';
 import {CommentDialogContext} from '../../contexts/dialogContexts/CommentDialogContext';
-import {CommentDeleteDialogProps} from '../../../screens/comments/dialogs/CommentDeleteDialog';
+import CommentDeleteDialog, {
+  CommentDeleteDialogProps,
+  defaultCommentDeleteDialogProps,
+} from '../../../screens/comments/dialogs/CommentDeleteDialog';
 
 enum CommentDialogs {
   REACTIONS = 'COMMENT_REACTIONS_DIALOG',
@@ -55,6 +58,7 @@ const withCommentDialogs = (Component: ComponentType) => (props: any) => {
   const initDialogs = (): void => {
     handleDialog(CommentDialogs.REACTIONS, CommentReactionsDialog, defaultCommentReactionsDialogProps);
     handleDialog(CommentDialogs.EDIT, CommentEditDialog, defaultCommentEditDialogProps);
+    handleDialog(CommentDialogs.DELETE, CommentDeleteDialog, defaultCommentDeleteDialogProps);
   };
 
   useEffect(() => {

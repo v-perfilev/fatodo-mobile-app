@@ -47,12 +47,12 @@ const CommentsViewControl = ({reference, clearReference}: CommentsViewControlPro
   };
 
   return (
-    <FHStack space="2" p="2" alignItems="center" borderTopWidth="1" borderTopColor="gray.200">
-      <FVStack grow smallSpace>
+    <FHStack space="2" px="2" py={reference ? 1 : 2} alignItems="center" borderTopWidth="1" borderTopColor="gray.200">
+      <FVStack grow px="2" pb={reference ? 1 : 0}>
         {reference && <CommentsViewControlReference reference={reference} clearReference={clearReference} />}
         <ClearableTextInput
-          h="36px"
-          px="2"
+          h={reference ? '21px' : '36px'}
+          p="0"
           variant="unstyled"
           placeholder={t('comment:view.inputPlaceholder')}
           value={updater}

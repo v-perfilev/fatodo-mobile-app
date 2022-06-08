@@ -24,7 +24,7 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
   const goBack = (): void => navigation.goBack();
 
   const loadComments = (): void => {
-    dispatch(CommentsActions.init());
+    dispatch(CommentsActions.init(routeTargetId));
     dispatch(CommentsThunks.fetchComments({targetId: routeTargetId, offset: 0}))
       .unwrap()
       .catch((status) => (status !== 404 ? goBack() : null))

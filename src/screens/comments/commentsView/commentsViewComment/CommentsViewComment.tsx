@@ -36,25 +36,24 @@ const CommentsViewComment = ({comment, setReference}: CommentsViewCommentProps) 
         <CommentViewCommentReactions comment={comment} isOwnComment={isOwnComment} />
       </FVStack>
       <FVStack
-        shrink
+        grow
         smallSpace
-        minW="50%"
         borderWidth="1"
-        borderColor={'gray.300'}
+        borderColor="gray.300"
         borderRadius="5"
         backgroundColor="gray.50"
         px="2"
         py="1.5"
       >
         <FHStack defaultSpace alignItems="center">
-          <FHStack grow>
+          <FHStack grow defaultSpace alignItems="center">
             <Text color="primary.500" fontWeight="bold">
               {user?.username}
             </Text>
+            <Text color="gray.400" fontWeight="bold" fontSize="xs">
+              {date}
+            </Text>
           </FHStack>
-          <Text color="gray.400" fontWeight="bold" fontSize="xs">
-            {date}
-          </Text>
           <CommentsViewCommentReferenceButton comment={comment} setReference={setReference} />
           <CommentsViewCommentMenu comment={comment} isOwnComment={isOwnComment} setReference={setReference} />
         </FHStack>

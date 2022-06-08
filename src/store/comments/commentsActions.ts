@@ -9,8 +9,8 @@ import {AppDispatch} from '../store';
 import {AxiosResponse} from 'axios';
 
 export class CommentsActions {
-  static init = () => async (dispatch: AppDispatch) => {
-    dispatch(commentsSlice.actions.init());
+  static init = (targetId: string) => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.init(targetId));
   };
 }
 

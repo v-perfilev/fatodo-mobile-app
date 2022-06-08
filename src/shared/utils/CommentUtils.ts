@@ -17,6 +17,6 @@ export class CommentUtils {
   };
 
   public static filterComments = (comments: Comment[]): Comment[] => {
-    return comments.filter(ArrayUtils.uniqueByIdFilter).sort(ArrayUtils.createdAtComparator);
+    return comments.filter(ArrayUtils.uniqueByIdFilter).sort(ArrayUtils.createdAtComparator).reverse();
   };
 }
