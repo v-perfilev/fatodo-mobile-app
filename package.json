@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.6.2",
     "@reduxjs/toolkit": "^1.8.2",
     "axios": "^0.27.2",
+    "axios-retry": "^3.2.5",
     "buffer": "^6.0.3",
     "formik": "^2.2.9",
     "i18next": "^21.8.8",

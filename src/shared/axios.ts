@@ -4,12 +4,16 @@ import {SecurityUtils} from './utils/SecurityUtils';
 import {ResponseUtils} from './utils/ResponseUtils';
 import {TranslationUtils} from './utils/TranslationUtils';
 import {Snack, SnackBuilder} from '../models/Snack';
+import axiosRetry from 'axios-retry';
 
 axios.defaults.timeout = API_TIMEOUT;
 axios.defaults.baseURL = API_URL;
 
 export const axiosDefault = axios.create();
 export const axiosIgnore404 = axios.create();
+
+axiosRetry(axiosDefault, {retryDelay: axiosRetry.exponentialDelay});
+axiosRetry(axiosIgnore404, {retryDelay: axiosRetry.exponentialDelay});
 
 interface SetupAxiosActions {
   onUnauthenticated: () => void;

@@ -38,7 +38,7 @@ const snackSlice = createSlice({
       const message = TranslationUtils.getFeedbackTranslation(feedbackCode);
       const snack = isStatusCorrect && message ? new SnackBuilder(message).setStatusColor(status).build() : null;
       const reduxSnack = {...snack, dismissed: false, key: `${new Date().getTime()}${Math.random()}`};
-      const list = [...state.list, reduxSnack];
+      const list = snack ? [...state.list, reduxSnack] : state.list;
       return {list};
     },
 

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 // @ts-ignore
 import SockJsClient from 'react-stomp';
-import {AUTHORIZATION_HEADER, AUTHORIZATION_PREFIX, IS_DEVELOPMENT, WS_URL} from '../../constants';
+import {AUTHORIZATION_HEADER, AUTHORIZATION_PREFIX, WS_URL} from '../../constants';
 import {SecurityUtils} from '../../shared/utils/SecurityUtils';
 import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
@@ -16,7 +16,6 @@ const WsClient = ({topics, onMessage}: WsClientProps) => {
   const [token, setToken] = useState<string>();
 
   const headers = {[AUTHORIZATION_HEADER]: AUTHORIZATION_PREFIX + token};
-  const debug = Boolean(IS_DEVELOPMENT).valueOf();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -27,7 +26,7 @@ const WsClient = ({topics, onMessage}: WsClientProps) => {
   }, [isAuthenticated]);
 
   return token ? (
-    <SockJsClient headers={headers} url={WS_URL} topics={topics} onMessage={onMessage} debug={debug} />
+    <SockJsClient headers={headers} url={WS_URL} topics={topics} onMessage={onMessage} debug={false} />
   ) : null;
 };
 

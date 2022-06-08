@@ -37,7 +37,7 @@ const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
         py="1.5"
       >
         <FHStack defaultSpace alignItems="center">
-          <FHStack defaultSpace alignItems="center">
+          <FHStack grow defaultSpace alignItems="center">
             <Text color="primary.500" fontWeight="bold">
               {user?.username}
             </Text>
