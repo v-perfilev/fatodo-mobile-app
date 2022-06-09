@@ -68,6 +68,7 @@ const FlatList = ({data, renderItemWithLayout, keyExtractor, setIsOnTheTop, list
   return (
     <RNFlatList
       data={data}
+      refreshing={true}
       renderItem={_renderItem}
       getItemLayout={_getItemLayout}
       keyExtractor={keyExtractor}

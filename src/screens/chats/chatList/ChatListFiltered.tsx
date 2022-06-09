@@ -3,13 +3,14 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import {ListRenderItemInfo} from 'react-native';
+import {LayoutChangeEvent} from 'react-native';
 import ChatListStub from './ChatListStub';
 import {Chat} from '../../../models/Chat';
 import ChatListItem from './ChatListItem';
-import {FlatList, useTheme} from 'native-base';
+import {useTheme} from 'native-base';
 import {ChatsThunks} from '../../../store/chats/chatsActions';
 import {ListUtils} from '../../../shared/utils/ListUtils';
+import FlatList from '../../../components/surfaces/FlatList';
 
 type ChatListFilteredProps = {
   filter: string;
@@ -28,8 +29,8 @@ const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
   };
 
   const keyExtractor = useCallback((chat: Chat): string => chat.id, []);
-  const renderItem = useCallback((info: ListRenderItemInfo<Chat>): ReactElement => {
-    return <ChatListItem chat={info.item} style={ListUtils.itemStyle(theme)} />;
+  const renderItem = useCallback((chat: Chat, onLayout: (event: LayoutChangeEvent) => void): ReactElement => {
+    return <ChatListItem onLayout={onLayout} chat={chat} style={ListUtils.itemStyle(theme)} />;
   }, []);
 
   useEffect(() => {
@@ -42,12 +43,9 @@ const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
       <FlatList
         ListEmptyComponent={<ChatListStub />}
         data={filteredChats}
-        renderItem={renderItem}
+        renderItemWithLayout={renderItem}
         keyExtractor={keyExtractor}
         onEndReached={loadFilteredChats}
-        onEndReachedThreshold={5}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={ListUtils.containerStyle(theme)}
       />
     </ConditionalSpinner>
   );

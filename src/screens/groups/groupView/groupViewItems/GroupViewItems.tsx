@@ -1,6 +1,6 @@
 import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
-import {FlatList, useTheme} from 'native-base';
-import {ListRenderItemInfo} from 'react-native';
+import {useTheme} from 'native-base';
+import {LayoutChangeEvent} from 'react-native';
 import {useAppSelector} from '../../../../store/store';
 import GroupSelectors from '../../../../store/group/groupSelectors';
 import GroupViewItem from '../groupViewItem/GroupViewItem';
@@ -11,6 +11,7 @@ import GroupViewItemsSkeleton from '../skeletons/GroupViewItemsSkeleton';
 import {useDelayedState} from '../../../../shared/hooks/useDelayedState';
 import GroupViewStub from './GroupViewStub';
 import {ListUtils} from '../../../../shared/utils/ListUtils';
+import FlatList from '../../../../components/surfaces/FlatList';
 
 type GroupViewItemsProps = {
   items: Item[];
@@ -32,8 +33,8 @@ const GroupViewItems = ({items, loadMorePromise, header}: GroupViewItemsProps) =
 
   const stub = loading ? <GroupViewItemsSkeleton /> : <GroupViewStub />;
   const keyExtractor = useCallback((item: Item): string => item.id, []);
-  const renderItem = useCallback((info: ListRenderItemInfo<Item>): ReactElement => {
-    return <GroupViewItem item={info.item} canEdit={canEdit} style={ListUtils.itemStyle(theme)} />;
+  const renderItem = useCallback((item: Item, onLayout: (event: LayoutChangeEvent) => void): ReactElement => {
+    return <GroupViewItem onLayout={onLayout} item={item} canEdit={canEdit} style={ListUtils.itemStyle(theme)} />;
   }, []);
 
   useEffect(() => {
@@ -47,12 +48,9 @@ const GroupViewItems = ({items, loadMorePromise, header}: GroupViewItemsProps) =
       ListHeaderComponent={header}
       ListEmptyComponent={stub}
       data={items}
+      renderItemWithLayout={renderItem}
       keyExtractor={keyExtractor}
-      renderItem={renderItem}
       onEndReached={loadMore}
-      onEndReachedThreshold={5}
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={ListUtils.containerStyle(theme)}
     />
   );
 };

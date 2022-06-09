@@ -2,9 +2,10 @@ import React, {ReactElement, useCallback, useEffect, useState} from 'react';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
 import ContactListStub from './ContactListStub';
 import ContactListItem from './ContactListItem';
-import {FlatList, useTheme} from 'native-base';
-import {ListRenderItemInfo} from 'react-native';
+import {useTheme} from 'native-base';
+import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
+import FlatList from '../../../components/surfaces/FlatList';
 
 type ContactListContainerProps = {
   relations: ContactRelationWithUser[];
@@ -16,9 +17,12 @@ const ContactListItems = ({relations, filter}: ContactListContainerProps) => {
   const [relationsToShow, setRelationsToShow] = useState<ContactRelationWithUser[]>([]);
 
   const keyExtractor = useCallback((relation: ContactRelationWithUser): string => relation.id, []);
-  const renderItem = useCallback((info: ListRenderItemInfo<ContactRelationWithUser>): ReactElement => {
-    return <ContactListItem relation={info.item} style={ListUtils.itemStyle(theme)} />;
-  }, []);
+  const renderItem = useCallback(
+    (relation: ContactRelationWithUser, onLayout: (event: LayoutChangeEvent) => void): ReactElement => {
+      return <ContactListItem onLayout={onLayout} relation={relation} style={ListUtils.itemStyle(theme)} />;
+    },
+    [],
+  );
 
   useEffect(() => {
     const filteredRelations = relations.filter((r) => {
@@ -32,10 +36,8 @@ const ContactListItems = ({relations, filter}: ContactListContainerProps) => {
     <FlatList
       ListEmptyComponent={<ContactListStub />}
       data={relationsToShow}
+      renderItemWithLayout={renderItem}
       keyExtractor={keyExtractor}
-      renderItem={renderItem}
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={ListUtils.containerStyle(theme)}
     />
   );
 };
