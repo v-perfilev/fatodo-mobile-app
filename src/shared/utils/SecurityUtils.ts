@@ -3,8 +3,8 @@ import * as Keychain from 'react-native-keychain';
 import {AxiosResponse} from 'axios';
 
 export class SecurityUtils {
-  public static clearAuthToken = async (): Promise<void> => {
-    await Keychain.resetGenericPassword();
+  public static clearAuthToken = (): void => {
+    Keychain.resetGenericPassword().finally();
   };
 
   public static saveAuthToken = async (username: string, token: string): Promise<void> => {

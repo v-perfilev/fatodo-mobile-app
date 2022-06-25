@@ -2,6 +2,7 @@ import './shared/i18n';
 import './shared/axios';
 
 import React, {useEffect, useState} from 'react';
+import {LogBox} from 'react-native';
 import {flowRight} from 'lodash';
 import {bindActionCreators} from 'redux';
 import {setupAxiosInterceptors} from './shared/axios';
@@ -20,6 +21,10 @@ import {SnackActions} from './store/snack/snackActions';
 import {ContactsThunks} from './store/contacts/contactsActions';
 import {AuthActions, AuthThunks} from './store/auth/authActions';
 import withWsClient from './shared/hocs/withWs/withWsClient';
+
+// ignore some warnings
+const ignoredLogPatterns = ['Require cycle', 'Possible Unhandled Promise Rejection'];
+LogBox.ignoreLogs(ignoredLogPatterns);
 
 // setup axios
 const axiosActions = bindActionCreators(

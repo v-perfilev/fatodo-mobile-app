@@ -20,7 +20,7 @@ export class AuthActions {
   };
 
   static logout = () => (dispatch: AppDispatch) => {
-    SecurityUtils.clearAuthToken().finally();
+    SecurityUtils.clearAuthToken();
     dispatch(authSlice.actions.clearAuth());
   };
 }
