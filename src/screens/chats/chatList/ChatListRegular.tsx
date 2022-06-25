@@ -24,6 +24,10 @@ const ChatListRegular = () => {
       .finally(() => setLoading(false));
   };
 
+  const refreshChats = (): Promise<any> => {
+    return dispatch(ChatsThunks.refreshChats());
+  };
+
   useEffect(() => {
     setLoading(true);
     loadChats();
@@ -39,9 +43,10 @@ const ChatListRegular = () => {
       <FlatList
         ListEmptyComponent={<ChatListStub />}
         data={chats}
-        renderItemWithLayout={renderItem}
+        render={renderItem}
         keyExtractor={keyExtractor}
         onEndReached={loadChats}
+        refresh={refreshChats}
       />
     </ConditionalSpinner>
   );

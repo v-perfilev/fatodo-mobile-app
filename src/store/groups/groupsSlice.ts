@@ -130,6 +130,14 @@ const groupsSlice = createSlice({
     }));
 
     /*
+    refreshGroups
+    */
+    builder.addCase(GroupsThunks.refreshGroups.fulfilled, (state: GroupsState, action) => ({
+      ...state,
+      groups: action.payload,
+    }));
+
+    /*
     fetchItems
     */
     builder.addCase(GroupsThunks.fetchItems.pending, (state: GroupsState, action) => {

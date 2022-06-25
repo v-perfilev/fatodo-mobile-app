@@ -9,11 +9,15 @@ const GroupViewActiveItems = () => {
   const group = useAppSelector(GroupSelectors.group);
   const archivedItems = useAppSelector(GroupSelectors.archivedItems);
 
-  const loadMorePromise = (): Promise<any> => {
+  const loadMore = (): Promise<any> => {
     return dispatch(GroupThunks.fetchArchivedItems({groupId: group.id, offset: archivedItems.length}));
   };
 
-  return <GroupViewItems items={archivedItems} loadMorePromise={loadMorePromise} />;
+  const refresh = (): Promise<any> => {
+    return dispatch(GroupThunks.refreshArchivedItems(group.id));
+  };
+
+  return <GroupViewItems items={archivedItems} loadMorePromise={loadMore} refreshPromise={refresh} />;
 };
 
 export default GroupViewActiveItems;

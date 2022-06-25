@@ -16,10 +16,11 @@ import FlatList from '../../../../components/surfaces/FlatList';
 type GroupViewItemsProps = {
   items: Item[];
   loadMorePromise?: () => Promise<any>;
+  refreshPromise?: () => Promise<any>;
   header?: ReactElement;
 };
 
-const GroupViewItems = ({items, loadMorePromise, header}: GroupViewItemsProps) => {
+const GroupViewItems = ({items, loadMorePromise, refreshPromise, header}: GroupViewItemsProps) => {
   const theme = useTheme();
   const [loading, setLoading] = useDelayedState(items.length === 0);
   const account = useAppSelector(AuthSelectors.account);
@@ -48,9 +49,10 @@ const GroupViewItems = ({items, loadMorePromise, header}: GroupViewItemsProps) =
       ListHeaderComponent={header}
       ListEmptyComponent={stub}
       data={items}
-      renderItemWithLayout={renderItem}
+      render={renderItem}
       keyExtractor={keyExtractor}
       onEndReached={loadMore}
+      refresh={refreshPromise}
     />
   );
 };

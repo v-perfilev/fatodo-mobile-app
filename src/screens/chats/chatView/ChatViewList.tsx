@@ -29,7 +29,7 @@ const ChatViewList = ({loadMessages, onViewableItemsChanged, setIsOnTheTop, list
     <FlatList
       ListEmptyComponent={<ChatViewStub style={ListUtils.invertedStyle} />}
       data={chatItems}
-      renderItemWithLayout={renderItem}
+      render={renderItem}
       keyExtractor={keyExtractor}
       onEndReached={loadMessages}
       onViewableItemsChanged={onViewableItemsChanged}

@@ -1,4 +1,4 @@
-import React, {Dispatch, MutableRefObject, ReactElement, SetStateAction, useCallback, useRef} from 'react';
+import React, {Dispatch, MutableRefObject, ReactElement, SetStateAction, useCallback, useRef, useState} from 'react';
 import {useTheme} from 'native-base';
 import {IFlatListProps} from 'native-base/lib/typescript/components/basic/FlatList';
 import {ListUtils} from '../../shared/utils/ListUtils';
@@ -9,20 +9,23 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   Platform,
+  RefreshControl,
 } from 'react-native';
 import {ChatItem} from '../../models/ChatItem';
 
 export type FlatListType = RNFlatList;
 
 type FlatListProps<T> = Partial<IFlatListProps<T>> & {
-  renderItemWithLayout: (item: T, onLayout: (event: LayoutChangeEvent) => void) => ReactElement;
+  render: (item: T, onLayout: (event: LayoutChangeEvent) => void) => ReactElement;
   keyExtractor: (item: T) => string;
+  refresh?: () => Promise<void>;
   setIsOnTheTop?: Dispatch<SetStateAction<boolean>>;
   listRef?: MutableRefObject<RNFlatList>;
 };
 
-const FlatList = ({data, renderItemWithLayout, keyExtractor, setIsOnTheTop, listRef, ...props}: FlatListProps<any>) => {
+const FlatList = ({data, render, keyExtractor, refresh, setIsOnTheTop, listRef, ...props}: FlatListProps<any>) => {
   const theme = useTheme();
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   const heights = useRef<Map<string, number>>(new Map());
 
   const getItemHeight = useCallback(
@@ -43,9 +46,9 @@ const FlatList = ({data, renderItemWithLayout, keyExtractor, setIsOnTheTop, list
     (info: ListRenderItemInfo<any>): ReactElement => {
       const key = keyExtractor(info.item);
       const onLayout = (event: LayoutChangeEvent): void => _onLayout(key, event);
-      return renderItemWithLayout(info.item, onLayout);
+      return render(info.item, onLayout);
     },
-    [renderItemWithLayout, keyExtractor],
+    [render, keyExtractor],
   );
 
   const _getItemLayout = useCallback(
@@ -65,13 +68,22 @@ const FlatList = ({data, renderItemWithLayout, keyExtractor, setIsOnTheTop, list
     }
   }, []);
 
+  const _onRefresh = (): void => {
+    setRefreshing(true);
+    refresh().finally(() => setRefreshing(false));
+  };
+
+  const _refreshControl = (
+    <RefreshControl colors={[theme.colors.primary['500']]} refreshing={refreshing} onRefresh={_onRefresh} />
+  );
+
   return (
     <RNFlatList
       data={data}
-      refreshing={true}
       renderItem={_renderItem}
       getItemLayout={_getItemLayout}
       keyExtractor={keyExtractor}
+      refreshControl={refresh ? _refreshControl : null}
       onScrollEndDrag={onScrollEnd}
       onMomentumScrollEnd={onScrollEnd}
       showsVerticalScrollIndicator={false}

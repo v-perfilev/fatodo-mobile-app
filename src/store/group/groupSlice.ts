@@ -112,6 +112,23 @@ const groupSlice = createSlice({
     }));
 
     /*
+    refreshActiveItems
+    */
+    builder.addCase(GroupThunks.refreshActiveItems.pending, (state: GroupState) => ({
+      ...state,
+      activeItemsLoading: true,
+    }));
+    builder.addCase(GroupThunks.refreshActiveItems.fulfilled, (state: GroupState, action) => {
+      const activeItemsCount = action.payload.count;
+      const activeItems = GroupUtils.filterItems(action.payload.data);
+      return {...state, activeItemsCount, activeItems, activeItemsLoading: false};
+    });
+    builder.addCase(GroupThunks.refreshActiveItems.rejected, (state: GroupState) => ({
+      ...state,
+      activeItemsLoading: false,
+    }));
+
+    /*
     fetchArchivedItems
     */
     builder.addCase(GroupThunks.fetchArchivedItems.pending, (state: GroupState) => ({
@@ -119,12 +136,28 @@ const groupSlice = createSlice({
       archivedItemsLoading: true,
     }));
     builder.addCase(GroupThunks.fetchArchivedItems.fulfilled, (state: GroupState, action) => {
-      const newArchivedItems = action.payload.data;
       const archivedItemsCount = action.payload.count;
-      const archivedItems = GroupUtils.filterItems([...state.archivedItems, ...newArchivedItems]);
+      const archivedItems = GroupUtils.filterItems([...state.archivedItems, ...action.payload.data]);
       return {...state, archivedItemsCount, archivedItems, archivedItemsLoading: false};
     });
     builder.addCase(GroupThunks.fetchArchivedItems.rejected, (state: GroupState) => ({
+      ...state,
+      archivedItemsLoading: false,
+    }));
+
+    /*
+    refreshArchivedItems
+    */
+    builder.addCase(GroupThunks.refreshArchivedItems.pending, (state: GroupState) => ({
+      ...state,
+      archivedItemsLoading: true,
+    }));
+    builder.addCase(GroupThunks.refreshArchivedItems.fulfilled, (state: GroupState, action) => {
+      const archivedItemsCount = action.payload.count;
+      const archivedItems = GroupUtils.filterItems(action.payload.data);
+      return {...state, archivedItemsCount, archivedItems, archivedItemsLoading: false};
+    });
+    builder.addCase(GroupThunks.refreshArchivedItems.rejected, (state: GroupState) => ({
       ...state,
       archivedItemsLoading: false,
     }));

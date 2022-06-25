@@ -18,6 +18,7 @@ export class ChatsActions {
 
 enum TYPES {
   FETCH_CHATS = 'chats/fetchChats',
+  REFRESH_CHATS = 'chats/refreshChats',
   FETCH_FILTERED_CHATS = 'chats/fetchFilteredChats',
   CREATE_DIRECT_CHAT = 'chats/createDirectChat',
   CREATE_INDIRECT_CHAT = 'chats/createIndirectChat',
@@ -27,6 +28,11 @@ enum TYPES {
 export class ChatsThunks {
   static fetchChats = createAsyncThunk(TYPES.FETCH_CHATS, async (offset: number) => {
     const result = await ChatService.getAllChatsPageable(offset);
+    return result.data;
+  });
+
+  static refreshChats = createAsyncThunk(TYPES.REFRESH_CHATS, async () => {
+    const result = await ChatService.getAllChatsPageable();
     return result.data;
   });
 

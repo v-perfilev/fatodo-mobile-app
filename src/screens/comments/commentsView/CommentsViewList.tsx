@@ -36,7 +36,7 @@ const CommentsViewList = ({setReference, loadComments, setIsOnTheTop, listRef}: 
     <FlatList
       ListEmptyComponent={<CommentsViewStub style={ListUtils.invertedStyle} />}
       data={comments}
-      renderItemWithLayout={renderItem}
+      render={renderItem}
       keyExtractor={keyExtractor}
       onEndReached={loadComments}
       setIsOnTheTop={setIsOnTheTop}

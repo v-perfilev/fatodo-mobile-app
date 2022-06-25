@@ -29,6 +29,7 @@ export class GroupsActions {
 
 enum TYPES {
   FETCH_GROUPS = 'groups/fetchGroups',
+  REFRESH_GROUPS = 'groups/refreshGroups',
   FETCH_ITEMS = 'groups/fetchItems',
   DELETE_GROUP = 'groups/deleteGroup',
   LEAVE_GROUP = 'groups/leaveGroup',
@@ -37,6 +38,13 @@ enum TYPES {
 
 export class GroupsThunks {
   static fetchGroups = createAsyncThunk(TYPES.FETCH_GROUPS, async (_, thunkAPI) => {
+    const response = await ItemService.getAllGroups();
+    const groupIds = response.data.map((g) => g.id);
+    thunkAPI.dispatch(GroupsThunks.fetchItems(groupIds));
+    return response.data;
+  });
+
+  static refreshGroups = createAsyncThunk(TYPES.REFRESH_GROUPS, async (_, thunkAPI) => {
     const response = await ItemService.getAllGroups();
     const groupIds = response.data.map((g) => g.id);
     thunkAPI.dispatch(GroupsThunks.fetchItems(groupIds));

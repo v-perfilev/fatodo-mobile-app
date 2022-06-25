@@ -6,13 +6,20 @@ import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import IncomingRequestListStub from '../incomingRequestList/IncomingRequestListStub';
 import FlatList from '../../../components/surfaces/FlatList';
+import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {useAppDispatch} from '../../../store/store';
 
 type OutcomingRequestListContainerProps = {
   requests: ContactRequestWithUser[];
 };
 
 const OutcomingRequestListItems = ({requests}: OutcomingRequestListContainerProps) => {
+  const dispatch = useAppDispatch();
   const theme = useTheme();
+
+  const refresh = (): Promise<any> => {
+    return dispatch(ContactsThunks.fetchOutcomingRequests());
+  };
 
   const keyExtractor = useCallback((relation: ContactRequestWithUser): string => relation.id, []);
   const renderItem = useCallback(
@@ -26,8 +33,9 @@ const OutcomingRequestListItems = ({requests}: OutcomingRequestListContainerProp
     <FlatList
       ListEmptyComponent={<IncomingRequestListStub />}
       data={requests}
-      renderItemWithLayout={renderItem}
+      render={renderItem}
       keyExtractor={keyExtractor}
+      refresh={refresh}
     />
   );
 };

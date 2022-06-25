@@ -43,7 +43,7 @@ const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
       <FlatList
         ListEmptyComponent={<ChatListStub />}
         data={filteredChats}
-        renderItemWithLayout={renderItem}
+        render={renderItem}
         keyExtractor={keyExtractor}
         onEndReached={loadFilteredChats}
       />

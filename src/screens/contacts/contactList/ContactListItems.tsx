@@ -6,6 +6,8 @@ import {useTheme} from 'native-base';
 import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import FlatList from '../../../components/surfaces/FlatList';
+import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {useAppDispatch} from '../../../store/store';
 
 type ContactListContainerProps = {
   relations: ContactRelationWithUser[];
@@ -13,8 +15,13 @@ type ContactListContainerProps = {
 };
 
 const ContactListItems = ({relations, filter}: ContactListContainerProps) => {
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const [relationsToShow, setRelationsToShow] = useState<ContactRelationWithUser[]>([]);
+
+  const refresh = (): Promise<any> => {
+    return dispatch(ContactsThunks.fetchRelations());
+  };
 
   const keyExtractor = useCallback((relation: ContactRelationWithUser): string => relation.id, []);
   const renderItem = useCallback(
@@ -36,8 +43,9 @@ const ContactListItems = ({relations, filter}: ContactListContainerProps) => {
     <FlatList
       ListEmptyComponent={<ContactListStub />}
       data={relationsToShow}
-      renderItemWithLayout={renderItem}
+      render={renderItem}
       keyExtractor={keyExtractor}
+      refresh={refresh}
     />
   );
 };

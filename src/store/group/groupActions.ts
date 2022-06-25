@@ -18,7 +18,9 @@ export class GroupActions {
 enum TYPES {
   FETCH_GROUP = 'group/fetchGroup',
   FETCH_ACTIVE_ITEMS = 'group/fetchActiveItems',
+  REFRESH_ACTIVE_ITEMS = 'group/refreshActiveItems',
   FETCH_ARCHIVED_ITEMS = 'group/fetchArchivedItems',
+  REFRESH_ARCHIVED_ITEMS = 'group/refreshArchivedItems',
   UPDATE_ITEM_ARCHIVED = 'group/updateItemArchived',
   UPDATE_ITEM_STATUS = 'group/updateItemStatus',
   DELETE_ITEM = 'group/removeItem',
@@ -43,6 +45,11 @@ export class GroupThunks {
     },
   );
 
+  static refreshActiveItems = createAsyncThunk(TYPES.REFRESH_ACTIVE_ITEMS, async (groupId: string) => {
+    const response = await ItemService.getItemsByGroupId(groupId);
+    return response.data;
+  });
+
   static fetchArchivedItems = createAsyncThunk(
     TYPES.FETCH_ARCHIVED_ITEMS,
     async ({groupId, offset, size}: {groupId: string; offset?: number; size?: number}) => {
@@ -50,6 +57,11 @@ export class GroupThunks {
       return response.data;
     },
   );
+
+  static refreshArchivedItems = createAsyncThunk(TYPES.REFRESH_ARCHIVED_ITEMS, async (groupId: string) => {
+    const response = await ItemService.getArchivedItemsByGroupId(groupId);
+    return response.data;
+  });
 
   static updateItemArchived = createAsyncThunk(TYPES.UPDATE_ITEM_ARCHIVED, async (item: Item, thunkAPI) => {
     const response = await ItemService.updateItemArchived(item.id, !item.archived);

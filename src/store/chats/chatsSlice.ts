@@ -32,7 +32,7 @@ const chatsSlice = createSlice({
   reducers: {
     addChatWs: (state: ChatsState, action: PayloadAction<Chat>) => {
       const chat = action.payload;
-      const chatInList = ArrayUtils.findValueWithId(state.chats, chat.id);
+      const chatInList = ArrayUtils.findValueWithId(state.chats, chat);
       let chats = chatInList
         ? ArrayUtils.updateValueWithId(state.chats, chat)
         : ChatUtils.filterChats([chat, ...state.chats]);
@@ -127,6 +127,15 @@ const chatsSlice = createSlice({
       const loading = false;
       const moreLoading = false;
       return {...state, loading, moreLoading};
+    });
+
+    /*
+    refreshChats
+    */
+    builder.addCase(ChatsThunks.refreshChats.fulfilled, (state: ChatsState, action) => {
+      const chats = ChatUtils.filterChats(action.payload);
+      const allLoaded = action.payload.length === 0;
+      return {...state, chats, allLoaded};
     });
 
     /*
