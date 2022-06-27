@@ -9,6 +9,7 @@ import UserService from '../../services/UserService';
 import {LanguageUtils} from '../../shared/utils/LanguageUtils';
 import {ForgotPasswordDTO} from '../../models/dto/ForgotPasswordDTO';
 import snackSlice from '../snack/snackSlice';
+import {ChangePasswordDTO} from '../../models/dto/ChangePasswordDTO';
 
 export class AuthActions {
   static login = () => (dispatch: AppDispatch) => {
@@ -30,6 +31,8 @@ enum TYPES {
   AUTHENTICATE = 'account/authenticate',
   FETCH_ACCOUNT = 'account/fetchAccount',
   FORGOT_PASSWORD = 'account/forgotPassword',
+  CHANGE_PASSWORD = 'account/changePassword',
+  UPDATE_ACCOUNT = 'account/updateAccount',
 }
 
 export class AuthThunks {
@@ -55,5 +58,16 @@ export class AuthThunks {
   static forgotPassword = createAsyncThunk(TYPES.FORGOT_PASSWORD, async (dto: ForgotPasswordDTO, thunkAPI) => {
     await AuthService.requestResetPasswordCode(dto);
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'auth.afterForgotPassword', variant: 'info'}));
+  });
+
+  static changePassword = createAsyncThunk(TYPES.CHANGE_PASSWORD, async (dto: ChangePasswordDTO, thunkAPI) => {
+    await UserService.changePassword(dto);
+    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'auth.afterChangePassword', variant: 'info'}));
+  });
+
+  static updateAccount = createAsyncThunk(TYPES.UPDATE_ACCOUNT, async (formData: FormData, thunkAPI) => {
+    await UserService.updateAccount(formData);
+    await thunkAPI.dispatch(AuthThunks.fetchAccount());
+    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'auth.afterUpdateAccount', variant: 'info'}));
   });
 }

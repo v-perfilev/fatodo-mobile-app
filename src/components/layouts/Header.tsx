@@ -37,14 +37,14 @@ const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle
   return (
     <>
       <ColoredStatusBar />
-      <FHStack h="50px" defaultSpace px="2" bg="primary.500" alignItems="center">
+      <FHStack h="55px" defaultSpace px="2" bg="primary.500" alignItems="center">
         {!hideGoBack && canGoBack && (
-          <IconButton colorScheme="white" size="xl" p="1" icon={<ArrowBackIcon />} onPress={goBack} />
+          <IconButton colorScheme="white" size="2xl" p="1" icon={<ArrowBackIcon />} onPress={goBack} />
         )}
-        {!hideLogo && <Logo size="35px" />}
+        {!hideLogo && <Logo size="40px" />}
         {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="9" border="1" invertedBorder />}
         {!hideTitle && (
-          <Text fontWeight="800" fontSize="md" lineHeight="md" color="white" isTruncated>
+          <Text fontWeight="800" fontSize="xl" lineHeight="xl" color="white" isTruncated>
             {label}
           </Text>
         )}

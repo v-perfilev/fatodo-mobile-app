@@ -10,8 +10,8 @@ import {useTabBarContext} from '../shared/contexts/TabBarContext';
 import {flowRight} from 'lodash';
 import withTabBar from '../shared/hocs/withTabBar';
 import ChatList from '../screens/chats/chatList/ChatList';
-import Account from '../screens/account/Account';
 import AccountIcon from '../components/icons/AccountIcon';
+import AccountNavigator from './AccountNavigator';
 
 type TabParamList = {
   Groups: undefined;
@@ -42,7 +42,7 @@ const TabNavigator = () => {
       <Tab.Screen name="Groups" component={GroupNavigator} options={{tabBarIcon: groupsIcon}} />
       <Tab.Screen name="Chats" component={ChatList} options={{tabBarIcon: chatsIcon}} />
       <Tab.Screen name="Contacts" component={ContactNavigator} options={{tabBarIcon: contactsIcon}} />
-      <Tab.Screen name="Account" component={Account} options={{tabBarIcon: accountIcon}} />
+      <Tab.Screen name="Account" component={AccountNavigator} options={{tabBarIcon: accountIcon}} />
     </Tab.Navigator>
   );
 };

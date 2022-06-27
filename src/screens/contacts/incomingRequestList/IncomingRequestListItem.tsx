@@ -47,9 +47,9 @@ const IncomingRequestListItem = ({request, ...props}: IncomingRequestListItemPro
   ] as MenuElement[];
 
   return (
-    <FHStack defaultSpace {...props}>
+    <FHStack defaultSpace alignItems="center" {...props}>
       <FHStack grow>
-        <UserView user={request.user} withUsername picSize="sm" />
+        <UserView user={request.user} withUsername picSize="md" />
       </FHStack>
       <ControlMenu menu={menuElements} />
     </FHStack>

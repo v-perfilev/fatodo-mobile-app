@@ -1,15 +1,25 @@
 import React from 'react';
 import {HStack, ITextProps, Text, VStack} from 'native-base';
+import {useTranslation} from 'react-i18next';
 
 type LabeledBoxProps = ITextProps & {
   label: string;
   isText?: boolean;
   isVertical?: boolean;
+  showNotSet?: boolean;
 };
 
-const LabeledBox = ({label, isText = false, isVertical = false, children, ...props}: LabeledBoxProps) => {
+const LabeledBox = ({label, isText, isVertical, showNotSet, children, ...props}: LabeledBoxProps) => {
+  const {t} = useTranslation();
   const Wrapper = isVertical ? VStack : HStack;
-  const content = isText ? <Text {...props}>{children}</Text> : children;
+  const handledChildren = showNotSet ? children || t('additional.fieldNotSet') : children;
+  const content = isText ? (
+    <Text {...props} color={children === undefined && showNotSet ? 'gray.500' : undefined}>
+      {handledChildren}
+    </Text>
+  ) : (
+    handledChildren
+  );
   const alignItems = isVertical ? null : 'center';
 
   return (

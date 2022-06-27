@@ -67,7 +67,6 @@ const authSlice = createSlice({
      */
     builder.addCase(AuthThunks.fetchAccount.pending, (state: AuthState) => ({
       ...state,
-      account: undefined,
       loading: true,
     }));
     builder.addCase(AuthThunks.fetchAccount.fulfilled, (state: AuthState, action) => ({

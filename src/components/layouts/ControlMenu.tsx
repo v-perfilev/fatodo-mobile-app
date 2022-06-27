@@ -15,14 +15,14 @@ const ControlMenu = ({menu, disabled}: ControlMenuProps) => {
   }, [menu]);
 
   return (
-    <FContainer itemM="1" justifyContent="space-around">
+    <FContainer itemM="1" alignItems="center" justifyContent="space-around">
       {filteredMenu?.map((action, index) => (
         <IconButton
           colorScheme={action.color}
           icon={action.icon}
           onPress={action.action}
           isDisabled={disabled || action.disabled}
-          size="sm"
+          size="md"
           key={index}
         />
       ))}

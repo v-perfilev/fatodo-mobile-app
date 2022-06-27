@@ -96,7 +96,7 @@ const ChatViewHeader = () => {
     <Header title={title} hideLogo>
       <Menu
         trigger={(triggerProps) => (
-          <IconButton {...triggerProps} colorScheme="white" size="lg" p="1.5" icon={<DotsVerticalIcon />} />
+          <IconButton {...triggerProps} colorScheme="white" size="xl" p="1.5" icon={<DotsVerticalIcon />} />
         )}
       >
         {menuItems.map((itemProps, index) => (

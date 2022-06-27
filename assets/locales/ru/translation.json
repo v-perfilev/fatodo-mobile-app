@@ -17,7 +17,9 @@
     "OutcomingRequestList": "Исходящие запросы",
     "ChatList": "Чаты",
     "ChatView": "Чат",
-    "CommentsView": "Комментарии"
+    "CommentsView": "Комментарии",
+    "AccountView": "Аккаунт",
+    "AccountForm": "Редактировать аккаунт"
   },
   "buttons": {
     "agree": "Подтвердить",
@@ -29,5 +31,8 @@
   },
   "salutations": {
     "you": "Вы"
+  },
+  "additional": {
+    "fieldNotSet": "Не установлено"
   }
 }

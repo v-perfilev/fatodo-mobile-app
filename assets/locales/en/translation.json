@@ -17,7 +17,9 @@
     "OutcomingRequestList": "Outcoming requests",
     "ChatList": "Chats",
     "ChatView": "Chat",
-    "CommentsView": "Comments"
+    "CommentsView": "Comments",
+    "AccountView": "Account",
+    "AccountForm": "Edit account"
   },
   "buttons": {
     "agree": "Agree",
@@ -29,5 +31,8 @@
   },
   "salutations": {
     "you": "You"
+  },
+  "additional": {
+    "fieldNotSet": "Not set"
   }
 }

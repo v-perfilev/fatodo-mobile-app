@@ -59,3 +59,18 @@ export const userValidator = (currentLogin: string, currentEmail: string): Async
       test: async (value): Promise<boolean> => (await UserService.doesUsernameOrEmailExist(value)).data === true,
     },
   );
+
+export const usernameChangeValidator = (currentLogin: string): AsyncValidator =>
+  new AsyncValidator(
+    Yup.string()
+      .required(() => i18n.t('account:fields.username.required'))
+      .matches(usernameRegex, {message: () => i18n.t('account:fields.username.invalid')})
+      .min(5, () => i18n.t('account:fields.username.min5'))
+      .max(20, () => i18n.t('account:fields.username.max20')),
+    {
+      name: 'unique',
+      message: (): string => i18n.t('account:fields.username.notUnique'),
+      test: async (value): Promise<boolean> =>
+        value === currentLogin || (await UserService.doesUsernameExist(value)).data === false,
+    },
+  );

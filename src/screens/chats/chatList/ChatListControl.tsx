@@ -12,7 +12,7 @@ const ChatListControl = ({setFilter}: ChatListControlProps) => {
   const {t} = useTranslation();
 
   return (
-    <FHStack space="2" px="2" py="1" alignItems="center" borderBottomWidth="1" borderBottomColor="gray.200">
+    <FHStack h="50px" space="2" px="2" py="1" alignItems="center" borderBottomWidth="1" borderBottomColor="gray.200">
       <FBox>
         <ClearableTextInput
           h="36px"

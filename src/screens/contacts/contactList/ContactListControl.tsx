@@ -20,7 +20,7 @@ const ContactListControl = ({setFilter}: ContactListHeaderProps) => {
   };
 
   return (
-    <FHStack space="2" p="2" alignItems="center" borderBottomWidth="1" borderBottomColor="gray.200">
+    <FHStack h="50px" space="2" px="2" py="2" alignItems="center" borderBottomWidth="1" borderBottomColor="gray.200">
       <IconButton icon={<UserPlusIcon />} onPress={openContactRequestDialog} />
       <FBox>
         <ClearableTextInput

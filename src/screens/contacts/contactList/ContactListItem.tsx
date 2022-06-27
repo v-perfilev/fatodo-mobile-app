@@ -34,9 +34,9 @@ const ContactListItem = ({relation, ...props}: ContactListItemProps) => {
   ] as MenuElement[];
 
   return (
-    <FHStack defaultSpace {...props}>
+    <FHStack defaultSpace alignItems="center" {...props}>
       <FHStack grow>
-        <UserView user={relation.user} withUsername picSize="sm" />
+        <UserView user={relation.user} withUsername picSize="md" />
       </FHStack>
       <ControlMenu menu={menuElements} />
     </FHStack>
