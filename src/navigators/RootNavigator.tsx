@@ -5,6 +5,8 @@ import ChatView from '../screens/chats/chatView/ChatView';
 import TabNavigator from './TabNavigator';
 import CommentsView from '../screens/comments/commentsView/CommentsView';
 import {ColorScheme} from '../shared/themes/ThemeFactory';
+import {User} from '../models/User';
+import UserView from '../screens/user/userView/UserView';
 
 type ChatRouteProps = {
   chat?: Chat;
@@ -16,12 +18,19 @@ type CommentsRouteProps = {
   colorScheme?: ColorScheme;
 };
 
+type UserRouteProps = {
+  user?: User;
+  userId?: string;
+};
+
 export type RootParamList = {
   HomeTabs: undefined;
   ChatView: ChatRouteProps;
   CommentsView: CommentsRouteProps;
+  UserView: UserRouteProps;
   withChat: ChatRouteProps;
   withComments: CommentsRouteProps;
+  withUser: UserRouteProps;
 };
 
 const Stack = createNativeStackNavigator<RootParamList>();
@@ -34,6 +43,7 @@ const RootNavigator = () => {
       <Stack.Screen name="HomeTabs" component={TabNavigator} />
       <Stack.Screen name="ChatView" component={ChatView} />
       <Stack.Screen name="CommentsView" component={CommentsView} />
+      <Stack.Screen name="UserView" component={UserView} />
     </Stack.Navigator>
   );
 };

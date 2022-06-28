@@ -19,7 +19,8 @@
     "ChatView": "Chat",
     "CommentsView": "Comments",
     "AccountView": "Account",
-    "AccountForm": "Edit account"
+    "AccountForm": "Edit account",
+    "UserView": "User"
   },
   "buttons": {
     "agree": "Agree",

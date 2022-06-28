@@ -15,6 +15,11 @@ export default class ItemService {
     return axios.get(url);
   };
 
+  public static getAllCommonGroups = (userId: string): AxiosPromise<Group[]> => {
+    const url = ItemService.baseUrl + '/groups/' + userId + '/member';
+    return axios.get(url);
+  };
+
   public static getGroup = (id: string): AxiosPromise<Group> => {
     const url = ItemService.baseUrl + '/groups/' + id;
     return axios.get(url);

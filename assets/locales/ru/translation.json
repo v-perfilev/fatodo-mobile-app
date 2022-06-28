@@ -19,7 +19,8 @@
     "ChatView": "Чат",
     "CommentsView": "Комментарии",
     "AccountView": "Аккаунт",
-    "AccountForm": "Редактировать аккаунт"
+    "AccountForm": "Редактировать аккаунт",
+    "UserView": "Пользователь"
   },
   "buttons": {
     "agree": "Подтвердить",

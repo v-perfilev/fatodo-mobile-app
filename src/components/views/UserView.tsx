@@ -5,6 +5,11 @@ import UrlPic from '../surfaces/UrlPic';
 import {ISizes} from 'native-base/lib/typescript/theme/base/sizes';
 import PaperBox from '../surfaces/PaperBox';
 import FHStack from '../boxes/FHStack';
+import {useAppSelector} from '../../store/store';
+import AuthSelectors from '../../store/auth/authSelectors';
+import {useNavigation} from '@react-navigation/native';
+import {RootNavigationProp} from '../../navigators/RootNavigator';
+import PressableButton from '../controls/PressableButton';
 
 type UserViewProps = {
   user: User;
@@ -17,9 +22,14 @@ type UserViewProps = {
 
 export const UserView = (props: UserViewProps) => {
   const {user, picSize = 'xs'} = props;
-  const {withUserPic = true, withUsername = false, withPaperBox = false, withInvertedBorder = false} = props;
+  const {withUserPic = true, withUsername, withPaperBox, withInvertedBorder} = props;
+  const navigation = useNavigation<RootNavigationProp>();
+  const account = useAppSelector(AuthSelectors.account);
+  const isAnotherUser = account.id !== user.id;
 
-  const imageWithUsername = (
+  const goToUser = (): void => navigation.navigate('UserView', {user});
+
+  let result = (
     <FHStack space="2" alignItems="center">
       {withUserPic && (
         <UrlPic file={user.imageFilename} size={picSize} border={1} invertedBorder={withInvertedBorder} />
@@ -28,7 +38,10 @@ export const UserView = (props: UserViewProps) => {
     </FHStack>
   );
 
-  return withPaperBox ? <PaperBox>{imageWithUsername}</PaperBox> : imageWithUsername;
+  result = withPaperBox ? <PaperBox>{result}</PaperBox> : result;
+  result = isAnotherUser ? <PressableButton onPress={goToUser}>{result}</PressableButton> : result;
+
+  return result;
 };
 
 export default UserView;
