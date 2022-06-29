@@ -5,16 +5,13 @@ import Header from '../../../components/layouts/Header';
 import UserFullView from '../../../components/views/UserFullView';
 import FVStack from '../../../components/boxes/FVStack';
 import FScrollView from '../../../components/boxes/FScrollView';
-import {useAppSelector} from '../../../store/store';
-import UserSelectors from '../../../store/user/userSelectors';
+import UserViewGroups from './UserViewGroups';
+import {Divider} from 'native-base';
+import UserViewControl from './UserViewControl';
 
 type UserViewProps = WithUserProps;
 
 const UserView = ({user, loading}: UserViewProps) => {
-  const groups = useAppSelector(UserSelectors.groups);
-
-  console.log(groups);
-
   return (
     <>
       <Header hideLogo />
@@ -22,6 +19,10 @@ const UserView = ({user, loading}: UserViewProps) => {
         <FScrollView>
           <FVStack defaultSpace>
             <UserFullView user={user} />
+            <Divider bg="secondary.500" />
+            <UserViewControl user={user} />
+            <Divider bg="secondary.500" />
+            <UserViewGroups />
           </FVStack>
         </FScrollView>
       </ConditionalSpinner>

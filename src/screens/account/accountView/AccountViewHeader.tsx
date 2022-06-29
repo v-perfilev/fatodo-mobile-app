@@ -1,7 +1,6 @@
-import React, {memo} from 'react';
+import React from 'react';
 import Header from '../../../components/layouts/Header';
 import {useNavigation} from '@react-navigation/native';
-import {flowRight} from 'lodash';
 import IconButton from '../../../components/controls/IconButton';
 import {AccountNavigationProp} from '../../../navigators/AccountNavigator';
 import EditIcon from '../../../components/icons/EditIcon';
@@ -18,4 +17,4 @@ const AccountViewHeader = () => {
   );
 };
 
-export default flowRight([memo])(AccountViewHeader);
+export default AccountViewHeader;

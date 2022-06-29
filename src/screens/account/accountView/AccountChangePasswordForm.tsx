@@ -12,6 +12,7 @@ import {passwordValidator} from '../../../shared/validators';
 import i18n from '../../../shared/i18n';
 import {AuthThunks} from '../../../store/auth/authActions';
 import {ChangePasswordDTO} from '../../../models/dto/ChangePasswordDTO';
+import {Text} from 'native-base';
 
 export interface ChangePasswordFormValues {
   oldPassword: string;
@@ -45,6 +46,9 @@ const AccountChangePasswordForm = () => {
     <Formik initialValues={defaultChangePasswordFormValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       {(formikProps) => (
         <FVStack defaultSpace>
+          <Text color="secondary.500" fontSize="md" fontWeight="bold">
+            {t('account:changePassword.header')}
+          </Text>
           <FormikPasswordInput
             name="oldPassword"
             label={t('account:fields.oldPassword.label')}

@@ -1,5 +1,4 @@
 {
-  "logout": "Выйти",
   "login": {
     "header": "Вход",
     "submit": "Войти"
@@ -78,5 +77,8 @@
     "image": {
       "label": "Изображение"
     }
+  },
+  "actions": {
+    "logout": "Выйти"
   }
 }

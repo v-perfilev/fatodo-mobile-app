@@ -1,5 +1,4 @@
 {
-  "logout": "Log Out",
   "login": {
     "header": "Log In",
     "submit": "Log In"
@@ -75,5 +74,8 @@
     "image": {
       "label": "Image"
     }
+  },
+  "actions": {
+    "logout": "Log Out"
   }
 }
