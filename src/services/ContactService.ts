@@ -18,6 +18,11 @@ export default class ContactService {
     return axios.get(url);
   };
 
+  public static getCommonRelations = (userId: string): AxiosPromise<ContactRelation[]> => {
+    const url = ContactService.baseUrl + '/relations/' + userId + '/user';
+    return axios.get(url);
+  };
+
   public static removeRelation = (userId: string): AxiosPromise<void> => {
     const url = ContactService.baseUrl + '/relations/' + userId;
     return axios.delete(url);

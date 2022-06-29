@@ -3,10 +3,12 @@ import {User} from '../../models/User';
 import {UserState} from './userType';
 import {UserThunks} from './userActions';
 import {Group} from '../../models/Group';
+import {ContactRelation} from '../../models/ContactRelation';
 
 const initialState: UserState = {
   user: undefined,
   groups: [],
+  relations: [],
   loading: false,
 };
 
@@ -48,6 +50,22 @@ const userSlice = createSlice({
     builder.addCase(UserThunks.fetchCommonGroups.rejected, (state: UserState) => {
       const groups = [] as Group[];
       return {...state, groups, loading: false};
+    });
+
+    /*
+    fetchCommonRelations
+    */
+    builder.addCase(UserThunks.fetchCommonRelations.pending, (state: UserState) => {
+      const relations = [] as ContactRelation[];
+      return {...state, relations, loading: true};
+    });
+    builder.addCase(UserThunks.fetchCommonRelations.fulfilled, (state: UserState, action) => {
+      const relations = action.payload;
+      return {...state, relations, loading: false};
+    });
+    builder.addCase(UserThunks.fetchCommonRelations.rejected, (state: UserState) => {
+      const relations = [] as ContactRelation[];
+      return {...state, relations, loading: false};
     });
   },
 });

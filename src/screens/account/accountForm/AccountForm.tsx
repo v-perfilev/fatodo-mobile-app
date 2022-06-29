@@ -91,7 +91,7 @@ const AccountForm = () => {
 
   return (
     <>
-      <Header />
+      <Header hideLogo />
       <FScrollView>
         <Formik
           initialValues={initialValues(account)}
@@ -128,7 +128,7 @@ const AccountForm = () => {
               />
               <FormikSelect
                 name="timezone"
-                label={t('account:fields.language.label')}
+                label={t('account:fields.timezone.label')}
                 options={timezones}
                 view={(t) => <Text>{DateFormatters.formatTimezone(t)}</Text>}
                 isDisabled={formikProps.isSubmitting}

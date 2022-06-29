@@ -8,6 +8,8 @@ class UserSelectors {
 
   static groups = createSelector(getUserState, (state) => state.groups);
 
+  static relations = createSelector(getUserState, (state) => state.relations);
+
   static loading = createSelector(getUserState, (state) => state.loading);
 }
 

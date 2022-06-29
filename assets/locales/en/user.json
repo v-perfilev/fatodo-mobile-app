@@ -3,6 +3,10 @@
     "header": "Common groups",
     "noCommonGroups": "You have no common groups"
   },
+  "commonContacts": {
+    "header": "Common contacts",
+    "noCommonContacts": "You have no common contacts"
+  },
   "actions": {
     "sendContactRequest": "Send contact request",
     "acceptContactRequest": "Accept contact request",

@@ -8,6 +8,7 @@ import FScrollView from '../../../components/boxes/FScrollView';
 import UserViewGroups from './UserViewGroups';
 import {Divider} from 'native-base';
 import UserViewControl from './UserViewControl';
+import UserViewRelations from './UserViewRelations';
 
 type UserViewProps = WithUserProps;
 
@@ -23,6 +24,8 @@ const UserView = ({user, loading}: UserViewProps) => {
             <UserViewControl user={user} />
             <Divider bg="secondary.500" />
             <UserViewGroups />
+            <Divider bg="secondary.500" />
+            <UserViewRelations />
           </FVStack>
         </FScrollView>
       </ConditionalSpinner>
