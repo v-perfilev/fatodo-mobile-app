@@ -61,7 +61,7 @@ const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
     } else if (captchaToken && formValues && loading) {
       handleSubmit();
     }
-  }, [captchaToken, loading, formValues]);
+  }, [captchaToken]);
 
   return (
     <Formik
