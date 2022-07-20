@@ -9,6 +9,7 @@ import itemSlice from './itemSlice';
 import snackSlice from '../snack/snackSlice';
 import groupsSlice from '../groups/groupsSlice';
 import groupSlice from '../group/groupSlice';
+import {UsersThunks} from '../users/usersActions';
 
 export class ItemActions {
   static setItem = (item: Item) => async (dispatch: AppDispatch) => {
@@ -27,6 +28,8 @@ enum TYPES {
 export class ItemThunks {
   static fetchItem = createAsyncThunk(TYPES.FETCH_ITEM, async (itemId: string, thunkAPI) => {
     const response = await ItemService.getItem(itemId);
+    const itemUserIds = [response.data.createdBy, response.data.lastModifiedBy];
+    thunkAPI.dispatch(UsersThunks.handleUserIds(itemUserIds));
     thunkAPI.dispatch(GroupThunks.fetchGroup(response.data.groupId));
     thunkAPI.dispatch(ItemThunks.fetchReminders(itemId));
     return response.data;

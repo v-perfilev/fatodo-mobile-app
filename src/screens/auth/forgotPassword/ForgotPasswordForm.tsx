@@ -58,7 +58,7 @@ const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: Forg
     } else if (captchaToken && formValues && loading) {
       handleSubmit();
     }
-  }, [captchaToken, loading, formValues]);
+  }, [captchaToken]);
 
   return (
     <Formik

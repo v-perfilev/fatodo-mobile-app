@@ -3,12 +3,12 @@ import {Comment} from '../../../../models/Comment';
 import ReplyIcon from '../../../../components/icons/ReplyIcon';
 import PressableButton from '../../../../components/controls/PressableButton';
 
-type CommentsViewCommentReferenceButtonProps = {
+type CommentListItemReferenceButtonProps = {
   comment: Comment;
   setReference: Dispatch<SetStateAction<Comment>>;
 };
 
-const CommentsViewCommentReferenceButton = ({comment, setReference}: CommentsViewCommentReferenceButtonProps) => {
+const CommentListItemReferenceButton = ({comment, setReference}: CommentListItemReferenceButtonProps) => {
   const updateReference = (): void => setReference(comment);
 
   return (
@@ -18,4 +18,4 @@ const CommentsViewCommentReferenceButton = ({comment, setReference}: CommentsVie
   );
 };
 
-export default CommentsViewCommentReferenceButton;
+export default CommentListItemReferenceButton;

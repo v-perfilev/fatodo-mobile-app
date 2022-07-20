@@ -1,9 +1,9 @@
 import {Chat} from '../../../models/Chat';
 import {User} from '../../../models/User';
 import FHStack from '../../../components/boxes/FHStack';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {useAppSelector} from '../../../store/store';
 import UsersSelectors from '../../../store/users/usersSelectors';
-import React, {ReactElement, useEffect, useMemo} from 'react';
+import React, {ReactElement, useMemo} from 'react';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import UrlPic from '../../../components/surfaces/UrlPic';
@@ -17,7 +17,6 @@ import {useNavigation} from '@react-navigation/native';
 import {Badge, Text} from 'native-base';
 import FVStack from '../../../components/boxes/FVStack';
 import {RootNavigationProp} from '../../../navigators/RootNavigator';
-import {UsersThunks} from '../../../store/users/usersActions';
 import {IPressableProps} from 'native-base/lib/typescript/components/primitives/Pressable/types';
 
 type ChatListItemProps = IPressableProps & {
@@ -25,7 +24,6 @@ type ChatListItemProps = IPressableProps & {
 };
 
 const ChatListItem = ({chat, ...props}: ChatListItemProps) => {
-  const dispatch = useAppDispatch();
   const navigation = useNavigation<RootNavigationProp>();
   const {t} = useTranslation();
   const unreadMessageCountMap = useAppSelector(ChatsSelectors.unreadMessageCountMap);
@@ -61,11 +59,6 @@ const ChatListItem = ({chat, ...props}: ChatListItemProps) => {
       <UrlPic alt={null} url={null} size="md" border={1} />
     );
   }, [directUser]);
-
-  useEffect(() => {
-    const userIds = chat.members;
-    dispatch(UsersThunks.handleUserIds(userIds));
-  }, []);
 
   return (
     <PressableButton onPress={goToChat} {...props}>

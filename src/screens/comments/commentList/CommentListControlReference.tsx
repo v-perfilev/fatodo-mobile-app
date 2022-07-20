@@ -10,12 +10,12 @@ import FHStack from '../../../components/boxes/FHStack';
 import CloseIcon from '../../../components/icons/CloseIcon';
 import PressableButton from '../../../components/controls/PressableButton';
 
-type CommentViewCommentReferenceProps = {
+type CommentListControlReferenceProps = {
   reference: ReferenceComment;
   clearReference: () => void;
 };
 
-const CommentsViewCommentReference = ({reference, clearReference}: CommentViewCommentReferenceProps) => {
+const CommentListControlReference = ({reference, clearReference}: CommentListControlReferenceProps) => {
   const {t} = useTranslation();
   const users = useAppSelector(UsersSelectors.users);
 
@@ -37,4 +37,4 @@ const CommentsViewCommentReference = ({reference, clearReference}: CommentViewCo
   );
 };
 
-export default CommentsViewCommentReference;
+export default CommentListControlReference;

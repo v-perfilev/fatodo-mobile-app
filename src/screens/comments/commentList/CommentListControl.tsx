@@ -10,14 +10,14 @@ import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {CommentsThunks} from '../../../store/comments/commentsActions';
 import {Comment} from '../../../models/Comment';
 import FVStack from '../../../components/boxes/FVStack';
-import CommentsViewControlReference from './CommentsViewControlReference';
+import CommentListControlReference from './CommentListControlReference';
 
 type CommentsViewControlProps = {
   reference: Comment;
   clearReference: () => void;
 };
 
-const CommentsViewControl = ({reference, clearReference}: CommentsViewControlProps) => {
+const CommentListControl = ({reference, clearReference}: CommentsViewControlProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const targetId = useAppSelector(CommentsSelectors.targetId);
@@ -49,7 +49,7 @@ const CommentsViewControl = ({reference, clearReference}: CommentsViewControlPro
   return (
     <FHStack space="2" px="2" py={reference ? 1 : 2} alignItems="center" borderTopWidth="1" borderTopColor="gray.200">
       <FVStack grow px="2" pb={reference ? 1 : 0}>
-        {reference && <CommentsViewControlReference reference={reference} clearReference={clearReference} />}
+        {reference && <CommentListControlReference reference={reference} clearReference={clearReference} />}
         <ClearableTextInput
           h={reference ? '21px' : '36px'}
           p="0"
@@ -64,4 +64,4 @@ const CommentsViewControl = ({reference, clearReference}: CommentsViewControlPro
   );
 };
 
-export default CommentsViewControl;
+export default CommentListControl;

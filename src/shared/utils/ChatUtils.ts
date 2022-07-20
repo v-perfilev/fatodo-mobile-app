@@ -18,6 +18,17 @@ export class ChatUtils {
           .join(', ');
   };
 
+  public static extractUserIds = (chats: Chat[]): string[] => {
+    const chatUserIds = chats.flatMap((c) => c.members);
+    const lastMessageUserIds = chats.map((c) => c.lastMessage.userId);
+    const eventUserIds = chats
+      .map((c) => c.lastMessage)
+      .filter((m) => m.isEvent)
+      .map((m) => MessageUtils.parseEventMessage(m))
+      .flatMap((p) => p.ids);
+    return [...chatUserIds, ...lastMessageUserIds, ...eventUserIds];
+  };
+
   public static getUnreadIds = (
     info: {viewableItems: ViewToken[]; changed: ViewToken[]},
     account: UserAccount,

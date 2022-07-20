@@ -12,9 +12,12 @@ import withTabBar from '../shared/hocs/withTabBar';
 import ChatList from '../screens/chats/chatList/ChatList';
 import AccountIcon from '../components/icons/AccountIcon';
 import AccountNavigator from './AccountNavigator';
+import AlarmIcon from '../components/icons/AlarmIcon';
+import EventList from '../screens/events/eventList/EventList';
 
 type TabParamList = {
   Groups: undefined;
+  Events: undefined;
   Chats: undefined;
   Contacts: undefined;
   Account: undefined;
@@ -29,6 +32,7 @@ type TabIconProps = {
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const groupsIcon = ({color, size}: TabIconProps): ReactNode => <GroupsIcon color={color} size={size} />;
+const eventsIcon = ({color, size}: TabIconProps): ReactNode => <AlarmIcon color={color} size={size} />;
 const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={color} size={size} />;
 const contactsIcon = ({color, size}: TabIconProps): ReactNode => <ContactsIcon color={color} size={size} />;
 const accountIcon = ({color, size}: TabIconProps): ReactNode => <AccountIcon color={color} size={size} />;
@@ -40,6 +44,7 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Groups" tabBar={TabNavigatorBar(color)}>
       <Tab.Screen name="Groups" component={GroupNavigator} options={{tabBarIcon: groupsIcon}} />
+      <Tab.Screen name="Events" component={EventList} options={{tabBarIcon: eventsIcon}} />
       <Tab.Screen name="Chats" component={ChatList} options={{tabBarIcon: chatsIcon}} />
       <Tab.Screen name="Contacts" component={ContactNavigator} options={{tabBarIcon: contactsIcon}} />
       <Tab.Screen name="Account" component={AccountNavigator} options={{tabBarIcon: accountIcon}} />

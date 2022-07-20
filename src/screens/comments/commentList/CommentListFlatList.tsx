@@ -6,24 +6,24 @@ import {ListUtils} from '../../../shared/utils/ListUtils';
 import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {Comment} from '../../../models/Comment';
-import CommentsViewStub from './CommentsViewStub';
-import CommentsViewItem from './CommentsViewItem';
+import CommentListStub from './CommentListStub';
+import CommentListComment from './CommentListComment';
 
-type CommentsViewListProps = {
+type CommentListFlatListProps = {
   setReference: Dispatch<SetStateAction<Comment>>;
   loadComments: () => void;
   setIsOnTheTop: Dispatch<SetStateAction<boolean>>;
   listRef: MutableRefObject<FlatListType>;
 };
 
-const CommentsViewList = ({setReference, loadComments, setIsOnTheTop, listRef}: CommentsViewListProps) => {
+const CommentListFlatList = ({setReference, loadComments, setIsOnTheTop, listRef}: CommentListFlatListProps) => {
   const theme = useTheme();
   const comments = useAppSelector(CommentsSelectors.comments);
 
   const keyExtractor = useCallback((item: Comment): string => item.id, []);
   const renderItem = useCallback((item: Comment, onLayout: (event: LayoutChangeEvent) => void): ReactElement => {
     return (
-      <CommentsViewItem
+      <CommentListComment
         onLayout={onLayout}
         comment={item}
         setReference={setReference}
@@ -34,7 +34,7 @@ const CommentsViewList = ({setReference, loadComments, setIsOnTheTop, listRef}: 
 
   return (
     <FlatList
-      ListEmptyComponent={<CommentsViewStub style={ListUtils.invertedStyle} />}
+      ListEmptyComponent={<CommentListStub style={ListUtils.invertedStyle} />}
       data={comments}
       render={renderItem}
       keyExtractor={keyExtractor}
@@ -47,4 +47,4 @@ const CommentsViewList = ({setReference, loadComments, setIsOnTheTop, listRef}: 
   );
 };
 
-export default CommentsViewList;
+export default CommentListFlatList;

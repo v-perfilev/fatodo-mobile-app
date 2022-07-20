@@ -6,7 +6,6 @@ import IncomingRequestListItems from './IncomingRequestListItems';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import UsersSelectors from '../../../store/users/usersSelectors';
-import {UsersThunks} from '../../../store/users/usersActions';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 const IncomingRequestList = () => {
@@ -34,11 +33,6 @@ const IncomingRequestList = () => {
   useEffect(() => {
     dispatch(ContactsThunks.fetchIncomingRequests());
   }, []);
-
-  useEffect(() => {
-    const userIds = incomingRequests.map((r) => r.requesterId);
-    dispatch(UsersThunks.handleUserIds(userIds));
-  }, [incomingRequests]);
 
   useEffect(() => {
     if (users?.length > 0 && incomingRequests?.length > 0) {

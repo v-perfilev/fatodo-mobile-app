@@ -10,17 +10,17 @@ import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 import UserView from '../../../../components/views/UserView';
 import FVStack from '../../../../components/boxes/FVStack';
-import CommentViewCommentReactions from './CommentsViewCommentReactions';
-import CommentsViewCommentMenu from './CommentsViewCommentMenu';
-import CommentsViewCommentReference from './CommentsViewCommentReference';
-import CommentsViewCommentReferenceButton from './CommentsViewCommentReferenceButton';
+import CommentListItemReferenceButton from './CommentListItemReferenceButton';
+import CommentListItemReactions from './CommentListItemReactions';
+import CommentListItemMenu from './CommentListItemMenu';
+import CommentListItemReference from './CommentListItemReference';
 
-type CommentsViewCommentProps = {
+type CommentListItemProps = {
   comment: Comment;
   setReference: Dispatch<SetStateAction<Comment>>;
 };
 
-const CommentsViewComment = ({comment, setReference}: CommentsViewCommentProps) => {
+const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
   const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
   const users = useAppSelector(UsersSelectors.users);
@@ -33,7 +33,7 @@ const CommentsViewComment = ({comment, setReference}: CommentsViewCommentProps) 
     <FHStack space="2">
       <FVStack mt="1.5" space="2">
         {user && <UserView user={user} picSize="sm" />}
-        <CommentViewCommentReactions comment={comment} isOwnComment={isOwnComment} />
+        <CommentListItemReactions comment={comment} isOwnComment={isOwnComment} />
       </FVStack>
       <FVStack
         grow
@@ -54,10 +54,10 @@ const CommentsViewComment = ({comment, setReference}: CommentsViewCommentProps) 
               {date}
             </Text>
           </FHStack>
-          <CommentsViewCommentReferenceButton comment={comment} setReference={setReference} />
-          <CommentsViewCommentMenu comment={comment} isOwnComment={isOwnComment} setReference={setReference} />
+          <CommentListItemReferenceButton comment={comment} setReference={setReference} />
+          <CommentListItemMenu comment={comment} isOwnComment={isOwnComment} setReference={setReference} />
         </FHStack>
-        {comment.reference && <CommentsViewCommentReference reference={comment.reference} />}
+        {comment.reference && <CommentListItemReference reference={comment.reference} />}
         {!comment.isDeleted && <Text color="gray.700">{comment.text}</Text>}
         {comment.isDeleted && (
           <Text color="gray.400" fontWeight="bold">
@@ -69,4 +69,4 @@ const CommentsViewComment = ({comment, setReference}: CommentsViewCommentProps) 
   );
 };
 
-export default CommentsViewComment;
+export default CommentListItem;

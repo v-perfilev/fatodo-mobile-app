@@ -5,6 +5,7 @@
     "Groups": "Группы",
     "Contacts": "Контакты",
     "Chats": "Чаты",
+    "Events": "События",
     "GroupList": "Группы",
     "GroupView": "Группа",
     "GroupCreate": "Создать группу",
@@ -20,7 +21,8 @@
     "CommentsView": "Комментарии",
     "AccountView": "Аккаунт",
     "AccountForm": "Редактировать аккаунт",
-    "UserView": "Пользователь"
+    "UserView": "Пользователь",
+    "EventList": "События"
   },
   "buttons": {
     "agree": "Подтвердить",

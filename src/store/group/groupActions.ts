@@ -8,6 +8,7 @@ import {GroupsThunks} from '../groups/groupsActions';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import snackSlice from '../snack/snackSlice';
 import groupsSlice from '../groups/groupsSlice';
+import {UsersThunks} from '../users/usersActions';
 
 export class GroupActions {
   static setGroup = (group: Group) => async (dispatch: AppDispatch) => {
@@ -32,34 +33,44 @@ enum TYPES {
 }
 
 export class GroupThunks {
-  static fetchGroup = createAsyncThunk(TYPES.FETCH_GROUP, async (groupId: string) => {
+  static fetchGroup = createAsyncThunk(TYPES.FETCH_GROUP, async (groupId: string, thunkAPI) => {
     const response = await ItemService.getGroup(groupId);
+    const groupUserIds = response.data.members.map((m) => m.id);
+    thunkAPI.dispatch(UsersThunks.handleUserIds(groupUserIds));
     return response.data;
   });
 
   static fetchActiveItems = createAsyncThunk(
     TYPES.FETCH_ACTIVE_ITEMS,
-    async ({groupId, offset, size}: {groupId: string; offset?: number; size?: number}) => {
+    async ({groupId, offset, size}: {groupId: string; offset?: number; size?: number}, thunkAPI) => {
       const response = await ItemService.getItemsByGroupId(groupId, offset, size);
+      const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
+      thunkAPI.dispatch(UsersThunks.handleUserIds(itemUserIds));
       return response.data;
     },
   );
 
-  static refreshActiveItems = createAsyncThunk(TYPES.REFRESH_ACTIVE_ITEMS, async (groupId: string) => {
+  static refreshActiveItems = createAsyncThunk(TYPES.REFRESH_ACTIVE_ITEMS, async (groupId: string, thunkAPI) => {
     const response = await ItemService.getItemsByGroupId(groupId);
+    const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
+    thunkAPI.dispatch(UsersThunks.handleUserIds(itemUserIds));
     return response.data;
   });
 
   static fetchArchivedItems = createAsyncThunk(
     TYPES.FETCH_ARCHIVED_ITEMS,
-    async ({groupId, offset, size}: {groupId: string; offset?: number; size?: number}) => {
+    async ({groupId, offset, size}: {groupId: string; offset?: number; size?: number}, thunkAPI) => {
       const response = await ItemService.getArchivedItemsByGroupId(groupId, offset, size);
+      const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
+      thunkAPI.dispatch(UsersThunks.handleUserIds(itemUserIds));
       return response.data;
     },
   );
 
-  static refreshArchivedItems = createAsyncThunk(TYPES.REFRESH_ARCHIVED_ITEMS, async (groupId: string) => {
+  static refreshArchivedItems = createAsyncThunk(TYPES.REFRESH_ARCHIVED_ITEMS, async (groupId: string, thunkAPI) => {
     const response = await ItemService.getArchivedItemsByGroupId(groupId);
+    const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
+    thunkAPI.dispatch(UsersThunks.handleUserIds(itemUserIds));
     return response.data;
   });
 

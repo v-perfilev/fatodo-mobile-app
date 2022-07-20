@@ -7,7 +7,6 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import UsersSelectors from '../../../store/users/usersSelectors';
 import ContactListControl from './ContactListControl';
-import {UsersThunks} from '../../../store/users/usersActions';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 const ContactList = () => {
@@ -37,11 +36,6 @@ const ContactList = () => {
     setLoading(true);
     dispatch(ContactsThunks.fetchRelations());
   }, []);
-
-  useEffect(() => {
-    const userIds = relations.map((r) => r.secondUserId);
-    dispatch(UsersThunks.handleUserIds(userIds));
-  }, [relations]);
 
   useEffect(() => {
     if (users?.length > 0 && relations?.length > 0) {

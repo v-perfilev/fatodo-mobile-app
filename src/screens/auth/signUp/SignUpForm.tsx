@@ -75,7 +75,7 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
     } else if (captchaToken && loading) {
       handleSubmit();
     }
-  }, [captchaToken, loading, formValues]);
+  }, [captchaToken]);
 
   return (
     <Formik

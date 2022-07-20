@@ -20,12 +20,12 @@ const buildReactionMap = (comment: Comment, isOwnComment: boolean): Map<CommentR
   return map;
 };
 
-type CommentViewCommentReactionsProps = {
+type CommentListItemReactionsProps = {
   comment: Comment;
   isOwnComment: boolean;
 };
 
-const CommentViewCommentReactions = ({comment, isOwnComment}: CommentViewCommentReactionsProps) => {
+const CommentListItemReactions = ({comment, isOwnComment}: CommentListItemReactionsProps) => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.account);
   const [activeReaction, setActiveReaction] = useState<CommentReactionType>();
@@ -86,4 +86,4 @@ const CommentViewCommentReactions = ({comment, isOwnComment}: CommentViewComment
   );
 };
 
-export default memo(CommentViewCommentReactions);
+export default memo(CommentListItemReactions);

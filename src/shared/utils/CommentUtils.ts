@@ -11,9 +11,11 @@ export class CommentUtils {
     return users.find((user) => user.id === comment.userId);
   };
 
-  public static extractUsernameFromComment = (users: User[], comment: Comment): string => {
-    const user = users.find((user) => user.id === comment.userId);
-    return user?.username || '';
+  public static extractUserIds = (comments: Comment[]): string[] => {
+    const commentUserIds = comments.map((c) => c.userId);
+    const referenceUserIds = comments.filter((c) => c.reference).map((r) => r.userId);
+    const reactionUserIds = comments.flatMap((c) => c.reactions).map((r) => r.userId);
+    return [...commentUserIds, ...referenceUserIds, ...reactionUserIds];
   };
 
   public static filterComments = (comments: Comment[]): Comment[] => {

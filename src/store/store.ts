@@ -12,6 +12,7 @@ import chatsSlice from './chats/chatsSlice';
 import chatSlice from './chat/chatSlice';
 import commentsSlice from './comments/commentsSlice';
 import userSlice from './user/userSlice';
+import eventsSlice from './events/eventsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     chat: chatSlice.reducer,
     comments: commentsSlice.reducer,
     user: userSlice.reducer,
+    events: eventsSlice.reducer,
   },
   devTools: IS_DEVELOPMENT,
 });

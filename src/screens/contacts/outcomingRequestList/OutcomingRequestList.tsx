@@ -6,7 +6,6 @@ import OutcomingRequestListItems from './OutcomingRequestListItems';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import UsersSelectors from '../../../store/users/usersSelectors';
-import {UsersThunks} from '../../../store/users/usersActions';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 const OutcomingRequestList = () => {
@@ -34,11 +33,6 @@ const OutcomingRequestList = () => {
   useEffect(() => {
     dispatch(ContactsThunks.fetchOutcomingRequests());
   }, []);
-
-  useEffect(() => {
-    const userIds = outcomingRequests.map((r) => r.recipientId);
-    dispatch(UsersThunks.handleUserIds(userIds));
-  }, [outcomingRequests]);
 
   useEffect(() => {
     if (users?.length > 0 && outcomingRequests?.length > 0) {

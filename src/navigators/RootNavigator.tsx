@@ -3,7 +3,7 @@ import {Chat} from '../models/Chat';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ChatView from '../screens/chats/chatView/ChatView';
 import TabNavigator from './TabNavigator';
-import CommentsView from '../screens/comments/commentsView/CommentsView';
+import CommentList from '../screens/comments/commentList/CommentList';
 import {ColorScheme} from '../shared/themes/ThemeFactory';
 import {User} from '../models/User';
 import UserView from '../screens/user/userView/UserView';
@@ -26,7 +26,7 @@ type UserRouteProps = {
 export type RootParamList = {
   HomeTabs: undefined;
   ChatView: ChatRouteProps;
-  CommentsView: CommentsRouteProps;
+  CommentList: CommentsRouteProps;
   UserView: UserRouteProps;
   withChat: ChatRouteProps;
   withComments: CommentsRouteProps;
@@ -42,7 +42,7 @@ const RootNavigator = () => {
     <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_bottom'}} initialRouteName="HomeTabs">
       <Stack.Screen name="HomeTabs" component={TabNavigator} />
       <Stack.Screen name="ChatView" component={ChatView} />
-      <Stack.Screen name="CommentsView" component={CommentsView} />
+      <Stack.Screen name="CommentList" component={CommentList} />
       <Stack.Screen name="UserView" component={UserView} />
     </Stack.Navigator>
   );

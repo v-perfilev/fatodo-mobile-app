@@ -3,9 +3,9 @@ import {useTranslation} from 'react-i18next';
 import {IBoxProps, Text} from 'native-base';
 import FCenter from '../../../components/boxes/FCenter';
 
-type CommentViewStubProps = IBoxProps;
+type CommentListStubProps = IBoxProps;
 
-const CommentsViewStub = (props: CommentViewStubProps) => {
+const CommentListStub = (props: CommentListStubProps) => {
   const {t} = useTranslation();
 
   return (
@@ -15,4 +15,4 @@ const CommentsViewStub = (props: CommentViewStubProps) => {
   );
 };
 
-export default CommentsViewStub;
+export default CommentListStub;

@@ -5,6 +5,7 @@
     "Groups": "Groups",
     "Contacts": "Contacts",
     "Chats": "Chats",
+    "Events": "Events",
     "GroupList": "Groups",
     "GroupView": "Group",
     "GroupCreate": "Create group",
@@ -20,7 +21,8 @@
     "CommentsView": "Comments",
     "AccountView": "Account",
     "AccountForm": "Edit account",
-    "UserView": "User"
+    "UserView": "User",
+    "EventList": "Events"
   },
   "buttons": {
     "agree": "Agree",

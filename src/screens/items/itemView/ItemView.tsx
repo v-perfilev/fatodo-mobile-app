@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {Divider, Theme} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
@@ -19,7 +19,6 @@ import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import ItemSelectors from '../../../store/item/itemSelectors';
-import {UsersThunks} from '../../../store/users/usersActions';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
 import ItemViewCorner from './ItemViewCorner';
 
@@ -33,20 +32,6 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
   const showTags = item?.tags.length > 0;
   const showReminders = reminders?.length > 0;
   const showDividerAfterDescription = showTags || showReminders;
-
-  useEffect(() => {
-    if (item) {
-      const userIds = [item.createdBy, item.lastModifiedBy];
-      dispatch(UsersThunks.handleUserIds(userIds));
-    }
-  }, [item]);
-
-  useEffect(() => {
-    if (group) {
-      const userIds = group.members.map((user) => user.id);
-      dispatch(UsersThunks.handleUserIds(userIds));
-    }
-  }, [group]);
 
   const theme = useMemo<Theme>(() => {
     return group ? ThemeFactory.getTheme(group?.color) : ThemeFactory.getDefaultTheme();

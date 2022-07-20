@@ -4,6 +4,7 @@ import ItemService from '../../services/ItemService';
 import userSlice from './userSlice';
 import UserService from '../../services/UserService';
 import ContactService from '../../services/ContactService';
+import {UsersThunks} from '../users/usersActions';
 
 enum TYPES {
   SELECT_USER = 'user/selectUser',
@@ -39,8 +40,10 @@ export class UserThunks {
     return result.data;
   });
 
-  static fetchCommonRelations = createAsyncThunk(TYPES.FETCH_COMMON_RELATIONS, async (userId: string) => {
+  static fetchCommonRelations = createAsyncThunk(TYPES.FETCH_COMMON_RELATIONS, async (userId: string, thunkAPI) => {
     const result = await ContactService.getCommonRelations(userId);
+    const relationUserIds = result.data.map((r) => r.secondUserId);
+    thunkAPI.dispatch(UsersThunks.handleUserIds(relationUserIds));
     return result.data;
   });
 }

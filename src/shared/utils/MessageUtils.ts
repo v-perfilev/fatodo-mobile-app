@@ -50,6 +50,17 @@ export class MessageUtils {
     return readUserIds && readUserIds.includes(account?.id);
   };
 
+  public static extractUserIds = (messages: Message[]): string[] => {
+    const messageUserIds = messages.map((m) => m.userId);
+    const reactionUserIds = messages.flatMap((m) => m.reactions).map((r) => r.userId);
+    const statusUserIds = messages.flatMap((m) => m.statuses).map((s) => s.userId);
+    const eventUserIds = messages
+      .filter((m) => m.isEvent)
+      .map((m) => MessageUtils.parseEventMessage(m))
+      .flatMap((p) => p.ids);
+    return [...messageUserIds, ...reactionUserIds, ...statusUserIds, ...eventUserIds];
+  };
+
   public static extractUserFromMessage = (users: User[], message: Message): User => {
     return users.find((user) => user.id === message.userId);
   };

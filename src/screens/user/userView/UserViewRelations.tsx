@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import FVStack from '../../../components/boxes/FVStack';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {useAppSelector} from '../../../store/store';
 import UserSelectors from '../../../store/user/userSelectors';
 import {Text} from 'native-base';
 import {useTranslation} from 'react-i18next';
 import UserViewRelation from './UserViewRelation';
-import {UsersThunks} from '../../../store/users/usersActions';
 import UsersSelectors from '../../../store/users/usersSelectors';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
 
 const UserViewGroups = () => {
-  const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const relations = useAppSelector(UserSelectors.relations);
   const users = useAppSelector(UsersSelectors.users);
@@ -28,11 +26,6 @@ const UserViewGroups = () => {
   const resetUserRelations = (): void => {
     setUserRelations([]);
   };
-
-  useEffect(() => {
-    const userIds = relations.map((r) => r.secondUserId);
-    dispatch(UsersThunks.handleUserIds(userIds));
-  }, [relations]);
 
   useEffect(() => {
     if (users?.length > 0 && relations?.length > 0) {

@@ -7,6 +7,9 @@ import commentsSlice from './commentsSlice';
 import snackSlice from '../snack/snackSlice';
 import {AppDispatch} from '../store';
 import {AxiosResponse} from 'axios';
+import {UsersThunks} from '../users/usersActions';
+import {CommentUtils} from '../../shared/utils/CommentUtils';
+import {PageableList} from '../../models/PageableList';
 
 export class CommentsActions {
   static init = (targetId: string) => async (dispatch: AppDispatch) => {
@@ -41,7 +44,11 @@ export class CommentsThunks {
     TYPES.FETCH_COMMENTS,
     async ({targetId, offset}: {targetId: string; offset: number}, thunkAPI) => {
       return await CommentService.getAllPageable(targetId, offset)
-        .then((response: AxiosResponse) => response.data)
+        .then((response: AxiosResponse<PageableList<Comment>>) => {
+          const commentUserIds = CommentUtils.extractUserIds(response.data.data);
+          thunkAPI.dispatch(UsersThunks.handleUserIds(commentUserIds));
+          return response.data;
+        })
         .catch((response: AxiosResponse) => thunkAPI.rejectWithValue(response.status));
     },
   );

@@ -10,13 +10,13 @@ import {Comment} from '../../../../models/Comment';
 import ReplyIcon from '../../../../components/icons/ReplyIcon';
 import {useCommentDialogContext} from '../../../../shared/contexts/dialogContexts/CommentDialogContext';
 
-type CommentsViewCommentMenuProps = {
+type CommentListItemMenuProps = {
   comment: Comment;
   isOwnComment: boolean;
   setReference: Dispatch<SetStateAction<Comment>>;
 };
 
-const CommentsViewCommentMenu = ({comment, isOwnComment, setReference}: CommentsViewCommentMenuProps) => {
+const CommentListItemMenu = ({comment, isOwnComment, setReference}: CommentListItemMenuProps) => {
   const {t} = useTranslation();
   const {showCommentReactionsDialog, showCommentEditDialog, showCommentDeleteDialog} = useCommentDialogContext();
 
@@ -76,4 +76,4 @@ const CommentsViewCommentMenu = ({comment, isOwnComment, setReference}: Comments
   );
 };
 
-export default CommentsViewCommentMenu;
+export default CommentListItemMenu;

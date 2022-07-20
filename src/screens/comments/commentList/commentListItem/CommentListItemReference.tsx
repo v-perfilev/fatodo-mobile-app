@@ -8,11 +8,11 @@ import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 import {useTranslation} from 'react-i18next';
 
-type CommentViewCommentReferenceProps = {
+type CommentListItemReferenceProps = {
   reference: ReferenceComment;
 };
 
-const CommentsViewCommentReference = ({reference}: CommentViewCommentReferenceProps) => {
+const CommentListItemReference = ({reference}: CommentListItemReferenceProps) => {
   const {t} = useTranslation();
   const users = useAppSelector(UsersSelectors.users);
 
@@ -31,4 +31,4 @@ const CommentsViewCommentReference = ({reference}: CommentViewCommentReferencePr
   );
 };
 
-export default CommentsViewCommentReference;
+export default CommentListItemReference;

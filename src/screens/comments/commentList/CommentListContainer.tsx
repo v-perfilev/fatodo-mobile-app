@@ -5,14 +5,14 @@ import {FlatListType} from '../../../components/surfaces/FlatList';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {CommentsThunks} from '../../../store/comments/commentsActions';
 import ScrollButton from '../../../components/controls/ScrollButton';
-import CommentsViewList from './CommentsViewList';
 import {Comment} from '../../../models/Comment';
+import CommentListFlatList from './CommentListFlatList';
 
-type CommentsViewContainerProps = {
+type CommentListContainerProps = {
   setReference: Dispatch<SetStateAction<Comment>>;
 };
 
-const CommentsViewContainer = ({setReference}: CommentsViewContainerProps) => {
+const CommentListContainer = ({setReference}: CommentListContainerProps) => {
   const dispatch = useAppDispatch();
   const [hideScroll, setHideScroll] = useState<boolean>(true);
   const listRef = useRef<FlatListType>();
@@ -36,7 +36,7 @@ const CommentsViewContainer = ({setReference}: CommentsViewContainerProps) => {
   return (
     <FBox>
       <ScrollButton show={!hideScroll} scrollDown={scrollDown} />
-      <CommentsViewList
+      <CommentListFlatList
         setReference={setReference}
         loadComments={!allLoaded ? loadComments : undefined}
         setIsOnTheTop={setHideScroll}
@@ -46,4 +46,4 @@ const CommentsViewContainer = ({setReference}: CommentsViewContainerProps) => {
   );
 };
 
-export default memo(CommentsViewContainer);
+export default memo(CommentListContainer);
