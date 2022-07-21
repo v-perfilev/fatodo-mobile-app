@@ -4,7 +4,7 @@ import {Group} from '../../models/Group';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ItemService from '../../services/ItemService';
 import snackSlice from '../snack/snackSlice';
-import {UsersThunks} from '../users/usersActions';
+import {InfoThunks} from '../info/infoActions';
 
 export class GroupsActions {
   static setGroups = (groups: Group[]) => (dispatch: AppDispatch) => {
@@ -43,7 +43,7 @@ export class GroupsThunks {
     const groupIds = response.data.map((g) => g.id);
     thunkAPI.dispatch(GroupsThunks.fetchItems(groupIds));
     const groupUserIds = response.data.flatMap((g) => g.members).map((m) => m.id);
-    thunkAPI.dispatch(UsersThunks.handleUserIds(groupUserIds));
+    thunkAPI.dispatch(InfoThunks.handleUserIds(groupUserIds));
     return response.data;
   });
 
@@ -52,7 +52,7 @@ export class GroupsThunks {
     const groupIds = response.data.map((g) => g.id);
     thunkAPI.dispatch(GroupsThunks.fetchItems(groupIds));
     const groupUserIds = response.data.flatMap((g) => g.members).map((m) => m.id);
-    thunkAPI.dispatch(UsersThunks.handleUserIds(groupUserIds));
+    thunkAPI.dispatch(InfoThunks.handleUserIds(groupUserIds));
     return response.data;
   });
 
@@ -61,7 +61,7 @@ export class GroupsThunks {
     const itemUserIds = Array.from(response.data.values())
       .flatMap((g) => g.data)
       .flatMap((i) => [i.createdBy, i.lastModifiedBy]);
-    thunkAPI.dispatch(UsersThunks.handleUserIds(itemUserIds));
+    thunkAPI.dispatch(InfoThunks.handleUserIds(itemUserIds));
     return response.data;
   });
 

@@ -6,12 +6,12 @@ import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
-import UsersSelectors from '../../../store/users/usersSelectors';
+import InfoSelectors from '../../../store/info/infoSelectors';
 
 const ItemViewChanges = () => {
   const {t} = useTranslation();
   const item = useAppSelector(ItemSelectors.item);
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
   const [creator, setCreator] = useState<string>();
   const [updater, setUpdater] = useState<string>();
 

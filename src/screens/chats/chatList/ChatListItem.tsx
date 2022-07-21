@@ -2,7 +2,7 @@ import {Chat} from '../../../models/Chat';
 import {User} from '../../../models/User';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../store/store';
-import UsersSelectors from '../../../store/users/usersSelectors';
+import InfoSelectors from '../../../store/info/infoSelectors';
 import React, {ReactElement, useMemo} from 'react';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
@@ -27,7 +27,7 @@ const ChatListItem = ({chat, ...props}: ChatListItemProps) => {
   const navigation = useNavigation<RootNavigationProp>();
   const {t} = useTranslation();
   const unreadMessageCountMap = useAppSelector(ChatsSelectors.unreadMessageCountMap);
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
   const account = useAppSelector(AuthSelectors.account);
 
   const goToChat = (): void => navigation.navigate('ChatView', {chat});

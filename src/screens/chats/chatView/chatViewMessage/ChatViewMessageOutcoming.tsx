@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 import {useAppSelector} from '../../../../store/store';
-import UsersSelectors from '../../../../store/users/usersSelectors';
+import InfoSelectors from '../../../../store/info/infoSelectors';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import FVStack from '../../../../components/boxes/FVStack';
@@ -17,7 +17,7 @@ type ChatViewMessageOutcomingProps = {
 
 const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
   const {t} = useTranslation();
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
 
   const user = MessageUtils.extractUserFromMessage(users, message);
   const date = DateFormatters.formatTime(new Date(message.createdAt));

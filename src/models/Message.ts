@@ -6,6 +6,11 @@ export const messageReactionTypes = ['LIKE', 'DISLIKE'];
 export type MessageStatusType = 'READ';
 export type MessageReactionType = 'LIKE' | 'DISLIKE';
 
+export interface MessageInfo {
+  id: string;
+  text: string;
+}
+
 export interface Message extends AbstractAuditing {
   id: string;
   chatId: string;

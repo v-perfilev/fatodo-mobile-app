@@ -7,7 +7,7 @@ import {Text} from 'native-base';
 import FVStack from '../../../../components/boxes/FVStack';
 import FCenter from '../../../../components/boxes/FCenter';
 import {useAppSelector} from '../../../../store/store';
-import UsersSelectors from '../../../../store/users/usersSelectors';
+import InfoSelectors from '../../../../store/info/infoSelectors';
 import {Comment, CommentReaction} from '../../../../models/Comment';
 import CommentReactionsDialogItem from './CommentReactionsDialogItem';
 
@@ -30,7 +30,7 @@ export const defaultCommentReactionsDialogProps: Readonly<CommentReactionsDialog
 
 const CommentReactionsDialog = ({comment, show, close}: CommentReactionsDialogProps) => {
   const {t} = useTranslation();
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
   const [reactions, setReactions] = useState<CommentReactionWithUser[]>([]);
   const [reactionsToShow, setReactionsToShow] = useState<CommentReactionWithUser[]>([]);
 

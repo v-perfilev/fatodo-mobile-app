@@ -3,7 +3,7 @@ import {FormControl, IFormControlProps, Input} from 'native-base';
 import {FormikProps} from 'formik';
 import {INPUT_FONT_SIZE} from '../../constants';
 import {useAppDispatch} from '../../store/store';
-import {UsersThunks} from '../../store/users/usersActions';
+import {InfoThunks} from '../../store/info/infoActions';
 
 type FormikUserInputProps = IFormControlProps &
   FormikProps<any> & {
@@ -24,7 +24,7 @@ const FormikUserInput = (props: FormikUserInputProps) => {
 
   useEffect(() => {
     if (value.length > 1 && !isError) {
-      dispatch(UsersThunks.fetchUsersByUsernameOrEmail(value))
+      dispatch(InfoThunks.fetchUsersByUsernameOrEmail(value))
         .unwrap()
         .then((user) => setFieldValue(userName, user));
     } else {

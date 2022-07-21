@@ -11,7 +11,7 @@ import FCenter from '../../../../components/boxes/FCenter';
 import {Chat} from '../../../../models/Chat';
 import ChatMembersDialogMember from './ChatMembersDialogMember';
 import {useAppSelector} from '../../../../store/store';
-import UsersSelectors from '../../../../store/users/usersSelectors';
+import InfoSelectors from '../../../../store/info/infoSelectors';
 
 export type ChatMembersDialogProps = {
   chat: Chat;
@@ -30,7 +30,7 @@ export const defaultChatMembersDialogProps: Readonly<ChatMembersDialogProps> = {
 const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersDialogProps) => {
   const {t} = useTranslation();
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
 
   const filterUsersToShow = (text: string): void => {
     const updatedUsersToShow = users.filter((user) => chat.members.includes(user.id) && user.username.includes(text));

@@ -7,6 +7,8 @@ class EventsSelectors {
   static events = createSelector(getEventsState, (state) => state.events);
 
   static loading = createSelector(getEventsState, (state) => state.loading);
+
+  static allLoaded = createSelector(getEventsState, (state) => state.allLoaded);
 }
 
 export default EventsSelectors;

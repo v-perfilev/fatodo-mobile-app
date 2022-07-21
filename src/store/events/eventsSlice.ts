@@ -8,6 +8,7 @@ const initialState: EventsState = {
   count: 0,
   unreadCount: 0,
   loading: false,
+  allLoaded: false,
 };
 
 const eventsSlice = createSlice({
@@ -29,7 +30,8 @@ const eventsSlice = createSlice({
       const events = EventUtils.filterEvents([...state.events, ...newEvents]);
       const count = action.payload.count;
       const unreadCount = action.payload.unread;
-      return {...state, events, count, unreadCount, loading: false};
+      const allLoaded = events.length === count;
+      return {...state, events, count, unreadCount, allLoaded, loading: false};
     });
     builder.addCase(EventsThunks.fetchEvents.rejected, (state: EventsState) => ({
       ...state,

@@ -4,14 +4,14 @@ import {Text} from 'native-base';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import FHStack from '../../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../../store/store';
-import UsersSelectors from '../../../../store/users/usersSelectors';
+import InfoSelectors from '../../../../store/info/infoSelectors';
 
 type GroupListCardItemChangesProps = {
   item: Item;
 };
 
 const GroupListCardItemChanges = ({item}: GroupListCardItemChangesProps) => {
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
 
   const name = useMemo<string>(() => {
     const user = users.find((user) => user.id === item.createdBy);

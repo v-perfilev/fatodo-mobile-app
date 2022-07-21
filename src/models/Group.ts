@@ -1,6 +1,11 @@
 import {User} from './User';
 import {ColorScheme} from '../shared/themes/ThemeFactory';
 
+export interface GroupInfo {
+  id: string;
+  title: string;
+}
+
 export interface Group {
   id: string;
   title: string;

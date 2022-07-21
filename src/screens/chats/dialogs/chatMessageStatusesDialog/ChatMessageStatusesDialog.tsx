@@ -9,7 +9,7 @@ import FCenter from '../../../../components/boxes/FCenter';
 import ChatMessageStatusesDialogItem from './ChatMessageStatusesDialogItem';
 import {Message, MessageStatus} from '../../../../models/Message';
 import {useAppSelector} from '../../../../store/store';
-import UsersSelectors from '../../../../store/users/usersSelectors';
+import InfoSelectors from '../../../../store/info/infoSelectors';
 
 type ReadStatusWithUser = {
   status: MessageStatus;
@@ -30,7 +30,7 @@ export const defaultChatMessageStatusesDialogProps: Readonly<ChatMessageStatuses
 
 const ChatMessageStatusesDialog = ({message, show, close}: ChatMessageStatusesDialogProps) => {
   const {t} = useTranslation();
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
   const [statuses, setStatuses] = useState<ReadStatusWithUser[]>([]);
   const [statusesToShow, setStatusesToShow] = useState<ReadStatusWithUser[]>([]);
 

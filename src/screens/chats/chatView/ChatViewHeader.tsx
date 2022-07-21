@@ -14,7 +14,7 @@ import DeleteIcon from '../../../components/icons/DeleteIcon';
 import {useNavigation} from '@react-navigation/native';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {useAppSelector} from '../../../store/store';
-import UsersSelectors from '../../../store/users/usersSelectors';
+import InfoSelectors from '../../../store/info/infoSelectors';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 
@@ -30,7 +30,7 @@ const ChatViewHeader = () => {
     showChatDeleteDialog,
   } = useChatDialogContext();
   const chat = useAppSelector(ChatSelectors.chat);
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
   const account = useAppSelector(AuthSelectors.account);
 
   const title = useMemo<string>(() => {

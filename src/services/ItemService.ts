@@ -1,7 +1,7 @@
 import {AxiosPromise, AxiosRequestConfig} from 'axios';
-import {Group, GroupMember} from '../models/Group';
+import {Group, GroupInfo, GroupMember} from '../models/Group';
 import {PageableList} from '../models/PageableList';
-import {Item} from '../models/Item';
+import {Item, ItemInfo} from '../models/Item';
 import {ItemDTO} from '../models/dto/ItemDTO';
 import axios from '../shared/axios';
 
@@ -134,5 +134,16 @@ export default class ItemService {
   public static leaveGroup = (groupId: string): AxiosPromise<void> => {
     const url = ItemService.baseUrl + '/members/group/' + groupId + '/leave';
     return axios.get(url);
+  };
+
+  // InfoController
+  public static getGroupInfoByIds = (groupIds: string[]): AxiosPromise<GroupInfo[]> => {
+    const url = ItemService.baseUrl + '/info/groups';
+    return axios.post(url, groupIds);
+  };
+
+  public static getItemInfoByIds = (itemIds: string[]): AxiosPromise<ItemInfo[]> => {
+    const url = ItemService.baseUrl + '/info/items';
+    return axios.post(url, itemIds);
   };
 }

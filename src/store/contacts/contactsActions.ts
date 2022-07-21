@@ -4,7 +4,7 @@ import ContactService from '../../services/ContactService';
 import {ContactRequestDTO} from '../../models/dto/ContactRequestDTO';
 import {ContactUtils} from '../../shared/utils/ContactUtils';
 import snackSlice from '../snack/snackSlice';
-import {UsersThunks} from '../users/usersActions';
+import {InfoThunks} from '../info/infoActions';
 
 enum TYPES {
   FETCH_INFO = 'contacts/fetchInfo',
@@ -27,21 +27,21 @@ export class ContactsThunks {
   static fetchRelations = createAsyncThunk(TYPES.FETCH_RELATIONS, async (_, thunkAPI) => {
     const response = await ContactService.getRelations();
     const relationUserIds = response.data.map((r) => r.secondUserId);
-    thunkAPI.dispatch(UsersThunks.handleUserIds(relationUserIds));
+    thunkAPI.dispatch(InfoThunks.handleUserIds(relationUserIds));
     return response.data;
   });
 
   static fetchOutcomingRequests = createAsyncThunk(TYPES.FETCH_OUTCOMING_REQUESTS, async (_, thunkAPI) => {
     const response = await ContactService.getOutcomingRequests();
     const requestUserIds = response.data.map((r) => r.recipientId);
-    thunkAPI.dispatch(UsersThunks.handleUserIds(requestUserIds));
+    thunkAPI.dispatch(InfoThunks.handleUserIds(requestUserIds));
     return response.data;
   });
 
   static fetchIncomingRequests = createAsyncThunk(TYPES.FETCH_INCOMING_REQUESTS, async (_, thunkAPI) => {
     const response = await ContactService.getIncomingRequests();
     const requestUserIds = response.data.map((r) => r.requesterId);
-    thunkAPI.dispatch(UsersThunks.handleUserIds(requestUserIds));
+    thunkAPI.dispatch(InfoThunks.handleUserIds(requestUserIds));
     return response.data;
   });
 

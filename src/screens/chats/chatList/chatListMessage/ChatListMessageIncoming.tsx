@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 import {useAppSelector} from '../../../../store/store';
-import UsersSelectors from '../../../../store/users/usersSelectors';
+import InfoSelectors from '../../../../store/info/infoSelectors';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
 import FBox from '../../../../components/boxes/FBox';
 
@@ -14,7 +14,7 @@ type ChatListMessageIncomingProps = {
 
 const ChatListMessageIncoming = ({message}: ChatListMessageIncomingProps) => {
   const {t} = useTranslation();
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
 
   const user = MessageUtils.extractUserFromMessage(users, message);
 

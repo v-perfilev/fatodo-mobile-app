@@ -12,7 +12,7 @@ import FVStack from '../../../../components/boxes/FVStack';
 import FCenter from '../../../../components/boxes/FCenter';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
-import UsersSelectors from '../../../../store/users/usersSelectors';
+import InfoSelectors from '../../../../store/info/infoSelectors';
 
 export type GroupMembersDialogProps = {
   group: Group;
@@ -33,7 +33,7 @@ export const defaultGroupMembersDialogProps: Readonly<GroupMembersDialogProps> =
 const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEditMember}: GroupMembersDialogProps) => {
   const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
   const [usersToShow, setUsersToShow] = useState<GroupUser[]>([]);
   const [deletedMemberIds, setDeletedMemberIds] = useState<string[]>([]);
 

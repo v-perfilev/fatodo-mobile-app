@@ -4,7 +4,7 @@ import {IS_DEVELOPMENT} from '../constants';
 import authSlice from './auth/authSlice';
 import snackSlice from './snack/snackSlice';
 import contactsSlice from './contacts/contactsSlice';
-import usersSlice from './users/usersSlice';
+import infoSlice from './info/infoSlice';
 import groupsSlice from './groups/groupsSlice';
 import groupSlice from './group/groupSlice';
 import itemSlice from './item/itemSlice';
@@ -19,7 +19,7 @@ export const store = configureStore({
     auth: authSlice.reducer,
     snack: snackSlice.reducer,
     contacts: contactsSlice.reducer,
-    users: usersSlice.reducer,
+    info: infoSlice.reducer,
     groups: groupsSlice.reducer,
     group: groupSlice.reducer,
     item: itemSlice.reducer,

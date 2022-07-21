@@ -15,12 +15,12 @@ export interface Event {
   createdAt: Date;
 }
 
-interface ContactEvent {
-  firstUserId: number;
-  secondUserId: number;
+export interface ContactEvent {
+  firstUserId: string;
+  secondUserId: string;
 }
 
-interface ItemEvent {
+export interface ItemEvent {
   userId: string;
   groupId: string;
   itemId?: string;
@@ -28,7 +28,7 @@ interface ItemEvent {
   role?: GroupPermission;
 }
 
-interface CommentEvent {
+export interface CommentEvent {
   userId: string;
   parentId: string;
   targetId: string;
@@ -36,7 +36,7 @@ interface CommentEvent {
   reaction?: CommentReactionType;
 }
 
-interface ChatEvent {
+export interface ChatEvent {
   userId: string;
   chatId: string;
   messageId?: string;
@@ -44,7 +44,7 @@ interface ChatEvent {
   reaction?: MessageReactionType;
 }
 
-interface ReminderEvent {
+export interface ReminderEvent {
   groupId: string;
   itemId: string;
 }

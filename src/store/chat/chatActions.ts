@@ -10,8 +10,8 @@ import snackSlice from '../snack/snackSlice';
 import chatsSlice from '../chats/chatsSlice';
 import {AppDispatch} from '../store';
 import {ChatUtils} from '../../shared/utils/ChatUtils';
-import {UsersThunks} from '../users/usersActions';
 import {MessageUtils} from '../../shared/utils/MessageUtils';
+import {InfoThunks} from '../info/infoActions';
 
 export class ChatActions {
   static addMessageWs = (message: Message) => async (dispatch: AppDispatch) => {
@@ -59,7 +59,7 @@ export class ChatThunks {
   static fetchChat = createAsyncThunk(TYPES.FETCH_CHAT, async (chatId: string, thunkAPI) => {
     const result = await ChatService.getChatById(chatId);
     const chatUserIds = ChatUtils.extractUserIds([result.data]);
-    thunkAPI.dispatch(UsersThunks.handleUserIds(chatUserIds));
+    thunkAPI.dispatch(InfoThunks.handleUserIds(chatUserIds));
     await thunkAPI.dispatch(ChatThunks.fetchMessages({chatId: result.data.id, offset: 0}));
     return result.data;
   });
@@ -69,7 +69,7 @@ export class ChatThunks {
     async ({chatId, offset}: {chatId: string; offset: number}, thunkAPI) => {
       const result = await ChatService.getAllMessagesByChatIdPageable(chatId, offset);
       const messageUserIds = MessageUtils.extractUserIds(result.data);
-      thunkAPI.dispatch(UsersThunks.handleUserIds(messageUserIds));
+      thunkAPI.dispatch(InfoThunks.handleUserIds(messageUserIds));
       return result.data;
     },
   );

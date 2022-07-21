@@ -9,7 +9,7 @@ import FCenter from '../../../../components/boxes/FCenter';
 import ChatMessageReactionsDialogItem from './ChatMessageReactionsDialogItem';
 import {Message, MessageReaction} from '../../../../models/Message';
 import {useAppSelector} from '../../../../store/store';
-import UsersSelectors from '../../../../store/users/usersSelectors';
+import InfoSelectors from '../../../../store/info/infoSelectors';
 
 type MessageReactionWithUser = {
   reaction: MessageReaction;
@@ -30,7 +30,7 @@ export const defaultChatMessageReactionsDialogProps: Readonly<ChatMessageReactio
 
 const ChatMessageReactionsDialog = ({message, show, close}: ChatMessageReactionsDialogProps) => {
   const {t} = useTranslation();
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
   const [reactions, setReactions] = useState<MessageReactionWithUser[]>([]);
   const [reactionsToShow, setReactionsToShow] = useState<MessageReactionWithUser[]>([]);
 

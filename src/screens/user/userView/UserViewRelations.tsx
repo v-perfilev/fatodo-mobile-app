@@ -5,13 +5,13 @@ import UserSelectors from '../../../store/user/userSelectors';
 import {Text} from 'native-base';
 import {useTranslation} from 'react-i18next';
 import UserViewRelation from './UserViewRelation';
-import UsersSelectors from '../../../store/users/usersSelectors';
+import InfoSelectors from '../../../store/info/infoSelectors';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
 
 const UserViewGroups = () => {
   const {t} = useTranslation();
   const relations = useAppSelector(UserSelectors.relations);
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
   const [userRelations, setUserRelations] = useState<ContactRelationWithUser[]>([]);
 
   const combineRelationsWithUsers = (): void => {

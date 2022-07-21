@@ -4,6 +4,11 @@ export const commentReactionTypes = ['LIKE', 'DISLIKE'];
 
 export type CommentReactionType = 'LIKE' | 'DISLIKE';
 
+export interface CommentInfo {
+  id: string;
+  text: string;
+}
+
 export interface Comment extends AbstractAuditing {
   id: string;
   threadId: string;

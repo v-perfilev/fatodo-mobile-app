@@ -1,6 +1,7 @@
 import {AxiosPromise} from 'axios';
 import axios from '../shared/axios';
 import {PageableReadableList} from '../models/PageableReadableList';
+import {Event} from '../models/Event';
 
 export default class EventService {
   private static baseUrl = '/api/event/';

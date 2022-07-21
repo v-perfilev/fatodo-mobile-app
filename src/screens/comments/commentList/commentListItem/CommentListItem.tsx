@@ -3,7 +3,7 @@ import React, {Dispatch, SetStateAction} from 'react';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import {useTranslation} from 'react-i18next';
-import UsersSelectors from '../../../../store/users/usersSelectors';
+import InfoSelectors from '../../../../store/info/infoSelectors';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import {CommentUtils} from '../../../../shared/utils/CommentUtils';
 import FHStack from '../../../../components/boxes/FHStack';
@@ -23,7 +23,7 @@ type CommentListItemProps = {
 const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
   const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
 
   const user = CommentUtils.extractUserFromComment(users, comment);
   const date = DateFormatters.formatDependsOnDay(new Date(comment.createdAt));

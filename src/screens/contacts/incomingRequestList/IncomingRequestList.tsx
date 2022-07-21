@@ -5,13 +5,13 @@ import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import IncomingRequestListItems from './IncomingRequestListItems';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
-import UsersSelectors from '../../../store/users/usersSelectors';
+import InfoSelectors from '../../../store/info/infoSelectors';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 const IncomingRequestList = () => {
   const dispatch = useAppDispatch();
   const incomingRequests = useAppSelector(ContactsSelectors.incomingRequests);
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
   const [userRequests, setUserRequests] = useState<ContactRequestWithUser[]>([]);
   const [loading, setLoading] = useDelayedState();
 

@@ -10,6 +10,11 @@ export const itemTypes: ItemType[] = ['TASK', 'EVENT', 'REPETITION', 'NOTE'];
 export const itemPriorityTypes: ItemPriorityType[] = ['LOW', 'NORMAL', 'HIGH'];
 export const itemStatusTypes: ItemStatusType[] = ['CREATED', 'WORK_IN_PROGRESS', 'COMPLETED', 'CLOSED'];
 
+export interface ItemInfo {
+  id: string;
+  title: string;
+}
+
 export interface Item extends AbstractAuditing {
   id: string;
   title: string;

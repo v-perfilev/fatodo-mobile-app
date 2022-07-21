@@ -5,14 +5,14 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import ContactListItems from './ContactListItems';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
-import UsersSelectors from '../../../store/users/usersSelectors';
+import InfoSelectors from '../../../store/info/infoSelectors';
 import ContactListControl from './ContactListControl';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();
   const relations = useAppSelector(ContactsSelectors.relations);
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
   const [userRelations, setUserRelations] = useState<ContactRelationWithUser[]>([]);
   const [loading, setLoading] = useDelayedState();
   const [filter, setFilter] = useState<string>('');

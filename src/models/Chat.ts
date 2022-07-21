@@ -1,6 +1,12 @@
 import {AbstractAuditing} from './AbstractAuditing';
 import {Message} from './Message';
 
+export interface ChatInfo {
+  id: string;
+  title: string;
+  members: string[];
+}
+
 export interface Chat extends AbstractAuditing {
   id: string;
   title: string;

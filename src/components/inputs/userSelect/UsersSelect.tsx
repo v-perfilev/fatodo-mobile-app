@@ -8,8 +8,8 @@ import UsersSelectItem from './UsersSelectItem';
 import FVStack from '../../boxes/FVStack';
 import FCenter from '../../boxes/FCenter';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import UsersSelectors from '../../../store/users/usersSelectors';
-import {UsersActions, UsersThunks} from '../../../store/users/usersActions';
+import InfoSelectors from '../../../store/info/infoSelectors';
+import {InfoActions, InfoThunks} from '../../../store/info/infoActions';
 
 type Props = {
   allowedIds: string[];
@@ -19,7 +19,7 @@ type Props = {
 
 const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(UsersSelectors.users);
+  const users = useAppSelector(InfoSelectors.users);
   const {t} = useTranslation();
   const [filter, setFilter] = useState<string>('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -67,14 +67,14 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
 
   const loadUserFromFilter = (): void => {
     if (filter.length > 0) {
-      dispatch(UsersThunks.fetchUsersByUsernamePart(filter))
+      dispatch(InfoThunks.fetchUsersByUsernamePart(filter))
         .unwrap()
-        .then((users) => dispatch(UsersActions.handleUsers(users)));
+        .then((users) => dispatch(InfoActions.handleUsers(users)));
     }
   };
 
   useEffect(() => {
-    dispatch(UsersThunks.handleUserIds(allowedIds));
+    dispatch(InfoThunks.handleUserIds(allowedIds));
   }, [allowedIds]);
 
   useEffect(() => {
