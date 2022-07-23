@@ -14,47 +14,47 @@ export default class ContactService {
   };
 
   public static getRelations = (): AxiosPromise<ContactRelation[]> => {
-    const url = ContactService.baseUrl + '/relations';
+    const url = ContactService.baseUrl + '/relation';
     return axios.get(url);
   };
 
   public static getCommonRelations = (userId: string): AxiosPromise<ContactRelation[]> => {
-    const url = ContactService.baseUrl + '/relations/' + userId + '/user';
+    const url = ContactService.baseUrl + '/relation/' + userId + '/user';
     return axios.get(url);
   };
 
   public static removeRelation = (userId: string): AxiosPromise<void> => {
-    const url = ContactService.baseUrl + '/relations/' + userId;
+    const url = ContactService.baseUrl + '/relation/' + userId;
     return axios.delete(url);
   };
 
   public static getOutcomingRequests = (): AxiosPromise<ContactRequest[]> => {
-    const url = ContactService.baseUrl + '/requests/outcoming';
+    const url = ContactService.baseUrl + '/request/outcoming';
     return axios.get(url);
   };
 
   public static getIncomingRequests = (): AxiosPromise<ContactRequest[]> => {
-    const url = ContactService.baseUrl + '/requests/incoming';
+    const url = ContactService.baseUrl + '/request/incoming';
     return axios.get(url);
   };
 
   public static sendRequest = (dto: ContactRequestDTO): AxiosPromise<void> => {
-    const url = ContactService.baseUrl + '/requests/send';
+    const url = ContactService.baseUrl + '/request';
     return axios.post(url, dto);
   };
 
   public static removeRequest = (userId: string): AxiosPromise<void> => {
-    const url = ContactService.baseUrl + '/requests/remove/' + userId;
-    return axios.get(url);
+    const url = ContactService.baseUrl + '/request/' + userId;
+    return axios.delete(url);
   };
 
   public static acceptRequest = (userId: string): AxiosPromise<void> => {
-    const url = ContactService.baseUrl + '/requests/accept/' + userId;
-    return axios.get(url);
+    const url = ContactService.baseUrl + '/request/' + userId + '/accept';
+    return axios.put(url);
   };
 
   public static declineRequest = (userId: string): AxiosPromise<void> => {
-    const url = ContactService.baseUrl + '/requests/decline/' + userId;
-    return axios.get(url);
+    const url = ContactService.baseUrl + '/request/' + userId + '/decline';
+    return axios.put(url);
   };
 }

@@ -6,7 +6,7 @@ export default class NotificationService {
   private static baseUrl = '/api/notification';
 
   public static getAllByTargetId = (targetId: string): AxiosPromise<Reminder[]> => {
-    const url = NotificationService.baseUrl + '/reminders/' + targetId;
+    const url = NotificationService.baseUrl + '/reminder/' + targetId;
     return axiosIgnore404.get(url);
   };
 }

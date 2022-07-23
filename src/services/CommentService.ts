@@ -15,23 +15,23 @@ export default class CommentService {
     offset?: number,
     size?: number,
   ): AxiosPromise<PageableList<Comment>> => {
-    const url = CommentService.baseUrl + '/comments/' + targetId;
+    const url = CommentService.baseUrl + '/comment/' + targetId;
     const params = {offset, size};
     return axiosIgnore404.get(url, {params});
   };
 
   public static addComment = (targetId: string, dto: CommentDTO): AxiosPromise<Comment> => {
-    const url = CommentService.baseUrl + '/comments/' + targetId;
+    const url = CommentService.baseUrl + '/comment/' + targetId;
     return axios.post(url, dto);
   };
 
   public static editComment = (commentId: string, dto: CommentDTO): AxiosPromise<Comment> => {
-    const url = CommentService.baseUrl + '/comments/' + commentId;
+    const url = CommentService.baseUrl + '/comment/' + commentId;
     return axios.put(url, dto);
   };
 
   public static deleteComment = (commentId: string): AxiosPromise<void> => {
-    const url = CommentService.baseUrl + '/comments/' + commentId;
+    const url = CommentService.baseUrl + '/comment/' + commentId;
     return axios.delete(url);
   };
 
@@ -39,17 +39,17 @@ export default class CommentService {
     ReactionController
    */
   public static likeCommentReaction = (commentId: string): AxiosPromise<void> => {
-    const url = CommentService.baseUrl + '/reactions/like/' + commentId;
-    return axios.get(url);
+    const url = CommentService.baseUrl + '/reaction/' + commentId + '/like';
+    return axios.post(url);
   };
 
   public static dislikeCommentReaction = (commentId: string): AxiosPromise<void> => {
-    const url = CommentService.baseUrl + '/reactions/dislike/' + commentId;
-    return axios.get(url);
+    const url = CommentService.baseUrl + '/reaction/' + commentId + '/dislike';
+    return axios.post(url);
   };
 
   public static noneCommentReaction = (commentId: string): AxiosPromise<void> => {
-    const url = CommentService.baseUrl + '/reactions/none/' + commentId;
-    return axios.get(url);
+    const url = CommentService.baseUrl + '/reaction/' + commentId;
+    return axios.delete(url);
   };
 }
