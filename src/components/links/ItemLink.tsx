@@ -8,7 +8,7 @@ type ItemLinkProps = {
   item: ItemInfo;
 };
 
-export const GroupLink = ({item}: ItemLinkProps) => {
+export const ItemLink = ({item}: ItemLinkProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
 
   const goToItem = (): void => navigation.navigate('ItemView', {itemId: item.id});
@@ -20,4 +20,4 @@ export const GroupLink = ({item}: ItemLinkProps) => {
   );
 };
 
-export default GroupLink;
+export default ItemLink;

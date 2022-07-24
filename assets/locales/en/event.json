@@ -21,8 +21,20 @@
       "content": "<user/> left <chat/>"
     },
     "reaction": {
-      "title": "Reaction",
+      "title": "Reaction in chat",
       "content": "<user/> reacted on your message in <chat/>"
+    }
+  },
+  "comment": {
+    "add": {
+      "title": "Comment added",
+      "contentWithGroup": "<user/> added comment in group <group/>",
+      "contentWithItem": "<user/> added comment in item <item/>"
+    },
+    "reaction": {
+      "title": "Reaction on comment",
+      "contentWithGroup": "<user/> reacted on your comment in group <group/>",
+      "contentWithItem": "<user/> reaction on your comment in item <item/>"
     }
   },
   "links": {
