@@ -30,7 +30,7 @@ const EventListItem = ({event}: EventListItemProps) => {
     switch (event.type) {
       // ACCOUNT
       case EventType.WELCOME:
-        return <EventWelcome />;
+        return <EventWelcome event={event} />;
 
       // CONTACT
       case EventType.CONTACT_SEND:

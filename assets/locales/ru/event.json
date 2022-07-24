@@ -1,7 +1,97 @@
 {
   "chat": {
     "create": {
-      "title": "New chat created"
+      "title": "Новый чат",
+      "content": "<user/> создал <chat/> с <users/>"
+    },
+    "update": {
+      "title": "Чат отредактирован",
+      "content": "<user/> отредактирол <chat/>"
+    },
+    "memberAdd": {
+      "title": "Чат изменён",
+      "content": "<user/> добавил <users/> в <chat/>"
+    },
+    "memberDelete": {
+      "title": "Чат изменён",
+      "content": "<user/> удалил <users/> из чата <chat/>"
+    },
+    "memberLeave": {
+      "title": "Чат изменён",
+      "content": "<user/> покинул <chat/>"
+    },
+    "reaction": {
+      "title": "Реакция в чате",
+      "content": "<user/> отреагировал на Ваше собощение в чате <chat/>"
     }
+  },
+  "comment": {
+    "add": {
+      "title": "Комментарий доавлен",
+      "contentWithGroup": "<user/> добавил комментарий в группе <group/>",
+      "contentWithItem": "<user/> добавил комментарий в группе <item/>"
+    },
+    "reaction": {
+      "title": "Реакция на комментарий",
+      "contentWithGroup": "<user/> отреагировал на Ваш комментарий к группе <group/>",
+      "contentWithItem": "<user/> отреагировал на Ваш комментарий к записи <item/>"
+    }
+  },
+  "contact": {
+    "accept": {
+      "title": "Запрос принят",
+      "content": "<firstUser/> принял запрос от пользователя <secondUser/>"
+    },
+    "send": {
+      "title": "Запрос отправлен",
+      "content": "<firstUser/> отправил запрос пользователю <secondUser/>"
+    }
+  },
+  "default": {
+    "welcome": {
+      "title": "Добро пожаловать!",
+      "content": "Вы присоединились к Fatodo..."
+    }
+  },
+  "item": {
+    "create": {
+      "title": "Новая запись",
+      "content": "<user/> создал запись <item/> в группе <group/>"
+    },
+    "groupCreate": {
+      "title": "Новая группа",
+      "content": "<user/> создал группу <group/>"
+    },
+    "groupUpdate": {
+      "title": "Группа отредактирована",
+      "content": "<user/> отредактировал группу <group/>"
+    },
+    "memberAdd": {
+      "title": "Группа изменена",
+      "content": "<user/> добавил <users/> в группу <group/>"
+    },
+    "memberDelete": {
+      "title": "Группа изменена",
+      "content": "<user/> удалил <users/> из группы <group/>"
+    },
+    "memberLeave": {
+      "title": "Группа изменена",
+      "content": "<user/> покинул группу <group/>"
+    },
+    "memberRole": {
+      "title": "Группа изменена",
+      "content": "<user/> изменил роль пользователя <users/> в группе <group/>"
+    },
+    "update": {
+      "title": "Запись отредактирована",
+      "content": "<user/> отредактировал запись <item/> в группе <group/>"
+    }
+  },
+  "reminder": {
+    "title": "Напоминание",
+    "content": "Запись <item/> в группе <group/>"
+  },
+  "links": {
+    "chat": "чат"
   }
 }
