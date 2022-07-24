@@ -87,6 +87,10 @@
       "content": "<user/> edited item <item/> in group <group/>"
     }
   },
+  "reminder": {
+    "title": "Reminder",
+    "content": "Item <item/> in group <group/>"
+  },
   "links": {
     "chat": "chat"
   }
