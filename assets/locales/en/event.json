@@ -53,6 +53,40 @@
       "content": "You joined Fatodo..."
     }
   },
+  "item": {
+    "create": {
+      "title": "New item",
+      "content": "<user/> created item <item/> in group <group/>"
+    },
+    "groupCreate": {
+      "title": "New group",
+      "content": "<user/> created group <group/>"
+    },
+    "groupUpdate": {
+      "title": "Group edited",
+      "content": "<user/> edited group <group/>"
+    },
+    "memberAdd": {
+      "title": "Group changed",
+      "content": "<user/> added <users/> to group <group/>"
+    },
+    "memberDelete": {
+      "title": "Group changed",
+      "content": "<user/> deleted <users/> from group <group/>"
+    },
+    "memberLeave": {
+      "title": "Group changed",
+      "content": "<user/> left group <group/>"
+    },
+    "memberRole": {
+      "title": "Group changed",
+      "content": "<user/> changed role of <users/> in group <group/>"
+    },
+    "update": {
+      "title": "Item edited",
+      "content": "<user/> edited item <item/> in group <group/>"
+    }
+  },
   "links": {
     "chat": "chat"
   }
