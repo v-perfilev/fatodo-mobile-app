@@ -49,7 +49,7 @@ export interface ReminderEvent {
   itemId: string;
 }
 
-enum EventType {
+export enum EventType {
   // ACCOUNT
   WELCOME = 'WELCOME',
 
