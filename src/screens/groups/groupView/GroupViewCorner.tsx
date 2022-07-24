@@ -10,7 +10,7 @@ const GroupViewCorner = () => {
   const navigation = useNavigation<RootNavigationProp>();
   const group = useAppSelector(GroupSelectors.group);
 
-  const goToComments = (): void => navigation.navigate('CommentsView', {targetId: group.id, colorScheme: group.color});
+  const goToComments = (): void => navigation.navigate('CommentList', {targetId: group.id, colorScheme: group.color});
 
   return <CornerButton size="lg" p="3" icon={<CommentsIcon />} onPress={goToComments} />;
 };

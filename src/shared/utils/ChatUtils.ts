@@ -5,15 +5,17 @@ import {ViewToken} from 'react-native';
 import {MessageUtils} from './MessageUtils';
 
 export class ChatUtils {
-  public static getDirectChatUser = (chat: Chat, users: User[], account: User): User => {
-    return chat.isDirect ? users.find((user) => chat.members.includes(user.id) && user.id !== account.id) : null;
+  public static getDirectChatUser = (chat: Chat, users: Map<string, User>, account: User): User => {
+    const memberId = chat.members.find((id) => id !== account.id);
+    return chat.isDirect && memberId ? users.get(memberId) : null;
   };
 
-  public static getTitle = (chat: Chat, users: User[], account: User): string => {
+  public static getTitle = (chat: Chat, users: Map<string, User>, account: User): string => {
     return chat.title
       ? chat.title
-      : users
-          .filter((user) => chat.members.includes(user.id) && user.id !== account.id)
+      : chat.members
+          .filter((id) => id !== account.id)
+          .map((id) => users.get(id))
           .map((user) => user.username)
           .join(', ');
   };

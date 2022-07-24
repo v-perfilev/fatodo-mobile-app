@@ -4,6 +4,7 @@ import {User} from '../../models/User';
 import {ChatItem} from '../../models/ChatItem';
 import {DateFormatters} from './DateUtils';
 import {ArrayUtils} from './ArrayUtils';
+import {MapUtils} from './MapUtils';
 
 export class MessageUtils {
   public static parseEventMessage = (message: Message): EventMessageParams => {
@@ -13,7 +14,7 @@ export class MessageUtils {
   public static buildEventMessageText = (
     message: Message,
     params: EventMessageParams,
-    users: User[],
+    users: Map<string, User>,
     t: TFunction,
   ): string => {
     const username = MessageUtils.extractUsernameFromMessage(users, message);
@@ -61,18 +62,20 @@ export class MessageUtils {
     return [...messageUserIds, ...reactionUserIds, ...statusUserIds, ...eventUserIds];
   };
 
-  public static extractUserFromMessage = (users: User[], message: Message): User => {
-    return users.find((user) => user.id === message.userId);
+  public static extractUserFromMessage = (users: Map<string, User>, message: Message): User => {
+    return users.get(message.userId);
   };
 
-  public static extractUsernameFromMessage = (users: User[], message: Message): string => {
-    const user = users.find((user) => user.id === message.userId);
+  public static extractUsernameFromMessage = (users: Map<string, User>, message: Message): string => {
+    const user = users.get(message.userId);
     return user?.username || '';
   };
 
-  public static extractUsernamesFromParams = (users: User[], params: EventMessageParams): string => {
-    const eventUsers = users.filter((user) => params?.ids?.includes(user.id)).map((user) => user.username);
-    return eventUsers && eventUsers.length > 0 ? eventUsers.join(', ') : '';
+  public static extractUsernamesFromParams = (users: Map<string, User>, params: EventMessageParams): string => {
+    const userIds = params?.ids || [];
+    const eventUsers = MapUtils.get(users, userIds);
+    const eventUsernames = eventUsers.map((user) => user.username);
+    return eventUsernames.length > 0 ? eventUsernames.join(', ') : '';
   };
 
   public static extractTextFromParams = (params: EventMessageParams): string => {

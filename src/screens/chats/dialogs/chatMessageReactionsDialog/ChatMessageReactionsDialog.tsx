@@ -40,13 +40,9 @@ const ChatMessageReactionsDialog = ({message, show, close}: ChatMessageReactions
   };
 
   const combineUsersWithReactions = (): void => {
-    const userFilter =
-      (userId: string) =>
-      (user: User): boolean =>
-        user.id === userId;
     const updatedList = message.reactions.map((reaction) => ({
       reaction,
-      user: users.find(userFilter(reaction.userId)),
+      user: users.get(reaction.userId),
     }));
     setReactions(updatedList);
     setReactionsToShow(updatedList);

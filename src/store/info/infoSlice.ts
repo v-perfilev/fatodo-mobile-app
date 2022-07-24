@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {User} from '../../models/User';
 import {InfoState} from './infoType';
 import {InfoThunks} from './infoActions';
@@ -25,8 +24,7 @@ const infoSlice = createSlice({
   initialState,
   reducers: {
     handleUsers: (state: InfoState, action: PayloadAction<User[]>) => {
-      const newUsers = action.payload;
-      const users = [...newUsers, ...state.users].filter(ArrayUtils.uniqueByIdFilter);
+      const users = InfoUtils.prepareFulfilledContent(state.users, action.payload);
       return {...state, users};
     },
   },

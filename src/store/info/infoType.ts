@@ -6,16 +6,16 @@ import {MessageInfo} from '../../models/Message';
 import {CommentInfo} from '../../models/Comment';
 
 export type InfoState = {
-  users: User[];
+  users: [string, User][];
   loadingUserIds: string[];
-  groups: GroupInfo[];
+  groups: [string, GroupInfo][];
   loadingGroupIds: string[];
-  items: ItemInfo[];
+  items: [string, ItemInfo][];
   loadingItemIds: string[];
-  chats: ChatInfo[];
+  chats: [string, ChatInfo][];
   loadingChatIds: string[];
-  messages: MessageInfo[];
+  messages: [string, MessageInfo][];
   loadingMessageIds: string[];
-  comments: CommentInfo[];
+  comments: [string, CommentInfo][];
   loadingCommentIds: string[];
 };

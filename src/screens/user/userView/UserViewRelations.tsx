@@ -15,10 +15,9 @@ const UserViewGroups = () => {
   const [userRelations, setUserRelations] = useState<ContactRelationWithUser[]>([]);
 
   const combineRelationsWithUsers = (): void => {
-    const userMap = new Map(users.map((user) => [user.id, user]));
     const userRelations = relations
-      .filter((r) => userMap.has(r.secondUserId))
-      .map((r) => ({...r, user: userMap.get(r.secondUserId)}))
+      .filter((r) => users.has(r.secondUserId))
+      .map((r) => ({...r, user: users.get(r.secondUserId)}))
       .filter((r) => r.user);
     setUserRelations(userRelations);
   };
@@ -28,7 +27,7 @@ const UserViewGroups = () => {
   };
 
   useEffect(() => {
-    if (users?.length > 0 && relations?.length > 0) {
+    if (users?.size > 0 && relations?.length > 0) {
       combineRelationsWithUsers();
     } else if (relations?.length === 0) {
       resetUserRelations();

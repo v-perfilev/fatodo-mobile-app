@@ -7,8 +7,8 @@ export class CommentUtils {
     return comment && account && comment.userId === account.id;
   };
 
-  public static extractUserFromComment = (users: User[], comment: Comment | ReferenceComment): User => {
-    return users.find((user) => user.id === comment.userId);
+  public static extractUserFromComment = (users: Map<string, User>, comment: Comment | ReferenceComment): User => {
+    return users.get(comment.userId);
   };
 
   public static extractUserIds = (comments: Comment[]): string[] => {

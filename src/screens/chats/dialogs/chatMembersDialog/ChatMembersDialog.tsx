@@ -12,6 +12,7 @@ import {Chat} from '../../../../models/Chat';
 import ChatMembersDialogMember from './ChatMembersDialogMember';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
+import {MapUtils} from '../../../../shared/utils/MapUtils';
 
 export type ChatMembersDialogProps = {
   chat: Chat;
@@ -33,13 +34,15 @@ const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersD
   const users = useAppSelector(InfoSelectors.users);
 
   const filterUsersToShow = (text: string): void => {
-    const updatedUsersToShow = users.filter((user) => chat.members.includes(user.id) && user.username.includes(text));
+    const memberIds = chat.members;
+    const updatedUsersToShow = MapUtils.get(users, memberIds).filter((u) => u.username.includes(text));
     setUsersToShow(updatedUsersToShow);
   };
 
   useEffect(() => {
     if (chat) {
-      const updatedUsersToShow = users.filter((user) => chat.members.includes(user.id));
+      const memberIds = chat.members;
+      const updatedUsersToShow = MapUtils.get(users, memberIds);
       setUsersToShow(updatedUsersToShow);
     }
   }, [chat, users]);

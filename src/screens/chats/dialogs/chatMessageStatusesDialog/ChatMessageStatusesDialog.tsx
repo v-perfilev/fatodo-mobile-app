@@ -40,15 +40,11 @@ const ChatMessageStatusesDialog = ({message, show, close}: ChatMessageStatusesDi
   };
 
   const combineUsersWithStatuses = (): void => {
-    const userFilter =
-      (userId: string) =>
-      (user: User): boolean =>
-        user.id === userId;
     const updatedList = message.statuses
       .filter((status) => status.type === 'READ')
       .map((status) => ({
         status,
-        user: users.find(userFilter(status.userId)),
+        user: users.get(status.userId),
       }));
     setStatuses(updatedList);
     setStatusesToShow(updatedList);

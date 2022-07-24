@@ -4,6 +4,7 @@ import {User} from '../../../../models/User';
 import {Group} from '../../../../models/Group';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
+import {MapUtils} from '../../../../shared/utils/MapUtils';
 
 type GroupListCardAvatarsProps = {
   group: Group;
@@ -17,7 +18,7 @@ const GroupListCardAvatars = ({group}: GroupListCardAvatarsProps) => {
   useEffect(() => {
     if (group && users) {
       const groupUserIds = group.members.map((user) => user.id);
-      const updatedList = users.filter((user) => groupUserIds.includes(user.id));
+      const updatedList = MapUtils.get(users, groupUserIds);
       setUsersToShow(updatedList);
     }
   }, [users, group]);

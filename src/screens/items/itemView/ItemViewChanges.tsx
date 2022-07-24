@@ -22,13 +22,13 @@ const ItemViewChanges = () => {
 
   useEffect(() => {
     if (item?.createdBy) {
-      const user = users.find((u) => u.id === item.createdBy);
-      const username = user.username || item.createdBy;
+      const user = users.get(item.createdBy);
+      const username = user?.username || item.createdBy;
       setCreator(username);
     }
     if (item?.lastModifiedBy) {
-      const user = users.find((u) => u.id === item.lastModifiedBy);
-      const username = user.username || item.lastModifiedBy;
+      const user = users.get(item.lastModifiedBy);
+      const username = user?.username || item.lastModifiedBy;
       setUpdater(username);
     }
   }, [item, users]);

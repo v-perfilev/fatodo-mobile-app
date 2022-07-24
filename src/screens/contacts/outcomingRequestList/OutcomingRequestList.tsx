@@ -21,10 +21,9 @@ const OutcomingRequestList = () => {
   };
 
   const combineRequestsWithUsers = (): void => {
-    const userMap = new Map(users.map((user) => [user.id, user]));
     const userRequests = outcomingRequests
-      .filter((r) => userMap.has(r.recipientId))
-      .map((r) => ({...r, user: userMap.get(r.recipientId)}))
+      .filter((r) => users.has(r.recipientId))
+      .map((r) => ({...r, user: users.get(r.recipientId)}))
       .filter((r) => r.user);
     setUserRequests(userRequests);
     setLoading(false);
@@ -35,7 +34,7 @@ const OutcomingRequestList = () => {
   }, []);
 
   useEffect(() => {
-    if (users?.length > 0 && outcomingRequests?.length > 0) {
+    if (users?.size > 0 && outcomingRequests?.length > 0) {
       combineRequestsWithUsers();
     } else if (outcomingRequests.length === 0) {
       resetUserRequests();

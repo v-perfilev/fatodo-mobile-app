@@ -11,6 +11,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {InfoActions, InfoThunks} from '../../../store/info/infoActions';
 import UserService from '../../../services/UserService';
+import {MapUtils} from '../../../shared/utils/MapUtils';
 
 type Props = {
   allowedIds: string[];
@@ -40,25 +41,10 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
   };
 
   const handleUsersToShow = (): void => {
-    const filterFunc = (user: User): boolean => user.username.toLowerCase().startsWith(filter.toLowerCase());
-    const filterInFunc =
-      (ids: string[]) =>
-      (user: User): boolean =>
-        ids.includes(user.id);
-    const filterNotInFunc =
-      (ids: string[]) =>
-      (user: User): boolean =>
-        !ids.includes(user.id);
-
-    let updatedUsersToShow = filter.length > 0 ? users.filter(filterFunc) : users;
-    updatedUsersToShow = updatedUsersToShow
-      .filter(filterInFunc(allowedIds))
-      .filter(filterNotInFunc(selectedIds))
-      .filter(filterNotInFunc(ignoredIds));
-
-    const selectedUsers = users.filter(filterInFunc(selectedIds));
+    const idsToShow = allowedIds.filter((id) => !selectedIds.includes(id)).filter((id) => !ignoredIds.includes(id));
+    const updatedUsersToShow = MapUtils.get(users, idsToShow);
+    const selectedUsers = MapUtils.get(users, selectedIds);
     updatedUsersToShow.push(...selectedUsers);
-
     setUsersToShow(updatedUsersToShow);
   };
 

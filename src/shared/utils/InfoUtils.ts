@@ -4,8 +4,8 @@ import {AxiosPromise} from 'axios';
 type WithId = {id: string};
 
 export class InfoUtils {
-  public static extractIdsToLoad = (ids: string[], array: WithId[], loadingIds: string[]): string[] => {
-    const existingIds = array.map((v) => v.id);
+  public static extractIdsToLoad = <T>(ids: string[], map: [string, T][], loadingIds: string[]): string[] => {
+    const existingIds = Array.from(map.keys());
     const notAllowedIds = [...existingIds, ...loadingIds];
     return ids
       .filter(ArrayUtils.notUndefinedFilter)
@@ -29,8 +29,15 @@ export class InfoUtils {
     return [...loadingIds, ...newIds];
   };
 
-  public static prepareFulfilledContent = <T extends WithId>(stateValues: T[], newValues: T[]): T[] => {
-    return [...stateValues, ...newValues].filter(ArrayUtils.uniqueByIdFilter);
+  public static prepareFulfilledContent = <T extends WithId>(
+    stateValues: [string, T][],
+    newValues: T[],
+  ): [string, T][] => {
+    const stateMap = new Map(stateValues);
+    const newMap = new Map(newValues.map((v) => [v.id, v]));
+    let newKeys = Array.from(newMap.keys()).filter((k) => !stateMap.has(k));
+    newKeys.map((k) => stateMap.set(k, newMap.get(k)));
+    return [...stateMap];
   };
 
   public static prepareFinishedLoadingIds = (loadingIds: string[], newIds: string[]): string[] => {

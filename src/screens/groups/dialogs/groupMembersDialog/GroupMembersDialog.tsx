@@ -13,6 +13,7 @@ import FCenter from '../../../../components/boxes/FCenter';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import InfoSelectors from '../../../../store/info/infoSelectors';
+import {MapUtils} from '../../../../shared/utils/MapUtils';
 
 export type GroupMembersDialogProps = {
   group: Group;
@@ -48,11 +49,10 @@ const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEdi
 
   const updateUsersToShow = (filter?: string): void => {
     const memberMap = new Map(group.members.map((member) => [member.id, member]));
-    const updatedUsersToShow = users
-      .filter((user) => !deletedMemberIds.includes(user.id))
-      .filter((user) => memberMap.has(user.id))
-      .map((user) => ({...user, ...memberMap.get(user.id)}))
-      .filter((user) => filter === undefined || user.username.includes(filter));
+    const userIds = Array.from(memberMap.keys()).filter((id) => !deletedMemberIds.includes(id));
+    const updatedUsersToShow = MapUtils.get(users, userIds)
+      .filter((user) => filter === undefined || user.username.includes(filter))
+      .map((user) => ({...user, ...memberMap.get(user.id)}));
     setUsersToShow(updatedUsersToShow);
   };
 

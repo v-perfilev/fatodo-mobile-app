@@ -1,4 +1,8 @@
 export class MapUtils {
+  public static get = <T>(map: Map<string, T>, ids: string[]): T[] => {
+    return ids.filter((id) => map.has(id)).map((id) => map.get(id));
+  };
+
   public static getValue = (e: [string, any][], id: string): any => {
     const map = new Map(e);
     return map.get(id);

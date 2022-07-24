@@ -14,7 +14,7 @@ const GroupViewItemChanges = ({item}: GroupViewItemChangesProps) => {
   const users = useAppSelector(InfoSelectors.users);
 
   const name = useMemo<string>(() => {
-    const user = users.find((user) => user.id === item.createdBy);
+    const user = users.get(item.createdBy);
     return user?.username;
   }, [users]);
 
