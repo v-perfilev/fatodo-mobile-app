@@ -10,6 +10,7 @@ import FCenter from '../../boxes/FCenter';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {InfoActions, InfoThunks} from '../../../store/info/infoActions';
+import UserService from '../../../services/UserService';
 
 type Props = {
   allowedIds: string[];
@@ -67,9 +68,7 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
 
   const loadUserFromFilter = (): void => {
     if (filter.length > 0) {
-      dispatch(InfoThunks.fetchUsersByUsernamePart(filter))
-        .unwrap()
-        .then((users) => dispatch(InfoActions.handleUsers(users)));
+      UserService.getAllByUsernamePart(filter).then((response) => dispatch(InfoActions.handleUsers(response.data)));
     }
   };
 

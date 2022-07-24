@@ -1,6 +1,6 @@
 import {AxiosPromise} from 'axios';
 import {PageableList} from '../models/PageableList';
-import {Comment} from '../models/Comment';
+import {Comment, CommentInfo} from '../models/Comment';
 import {CommentDTO} from '../models/dto/CommentDTO';
 import axios, {axiosIgnore404} from '../shared/axios';
 
@@ -8,7 +8,7 @@ export default class CommentService {
   private static baseUrl = '/api/comment';
 
   /*
-    CommentController
+  CommentController
    */
   public static getAllPageable = (
     targetId: string,
@@ -36,7 +36,7 @@ export default class CommentService {
   };
 
   /*
-    ReactionController
+  ReactionController
    */
   public static likeCommentReaction = (commentId: string): AxiosPromise<void> => {
     const url = CommentService.baseUrl + '/reaction/' + commentId + '/like';
@@ -51,5 +51,14 @@ export default class CommentService {
   public static noneCommentReaction = (commentId: string): AxiosPromise<void> => {
     const url = CommentService.baseUrl + '/reaction/' + commentId;
     return axios.delete(url);
+  };
+
+  /*
+  InfoController
+   */
+  public static getCommentInfoByIds = (ids: string[]): AxiosPromise<CommentInfo[]> => {
+    const url = CommentService.baseUrl + '/info/comment';
+    const params = {ids};
+    return axios.get(url, {params});
   };
 }

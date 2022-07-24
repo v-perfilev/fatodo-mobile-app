@@ -8,7 +8,9 @@ import axios from '../shared/axios';
 export default class ItemService {
   private static baseUrl = '/api/item';
 
-  // GroupController
+  /*
+  GroupController
+   */
 
   public static getAllGroups = (): AxiosPromise<Group[]> => {
     const url = ItemService.baseUrl + '/group';
@@ -48,7 +50,9 @@ export default class ItemService {
     return axios.delete(url);
   };
 
-  // ItemController
+  /*
+  ItemController
+   */
 
   public static getPreviewItemsByGroupIds = (groupIds: string[]): AxiosPromise<Map<string, PageableList<Item>>> => {
     const url = ItemService.baseUrl + '/item/preview';
@@ -108,14 +112,18 @@ export default class ItemService {
     return axios.delete(url);
   };
 
-  // ConfigurationController
+  /*
+  ConfigurationController
+   */
 
   public static setGroupOrder = (order: string[]): AxiosPromise<void> => {
     const url = ItemService.baseUrl + '/configuration/order';
     return axios.post(url, order);
   };
 
-  // MemberController
+  /*
+  MemberController
+   */
 
   public static addMembersToGroup = (groupId: string, userIds: string[]): AxiosPromise<void> => {
     const url = ItemService.baseUrl + '/member/' + groupId;
@@ -138,7 +146,10 @@ export default class ItemService {
     return axios.delete(url);
   };
 
-  // InfoController
+  /*
+  InfoController
+   */
+
   public static getGroupInfoByIds = (groupIds: string[]): AxiosPromise<GroupInfo[]> => {
     const url = ItemService.baseUrl + '/info/group';
     const params = {ids: groupIds};

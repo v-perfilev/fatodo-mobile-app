@@ -2,8 +2,7 @@ import React, {useEffect} from 'react';
 import {FormControl, IFormControlProps, Input} from 'native-base';
 import {FormikProps} from 'formik';
 import {INPUT_FONT_SIZE} from '../../constants';
-import {useAppDispatch} from '../../store/store';
-import {InfoThunks} from '../../store/info/infoActions';
+import UserService from '../../services/UserService';
 
 type FormikUserInputProps = IFormControlProps &
   FormikProps<any> & {
@@ -14,7 +13,6 @@ type FormikUserInputProps = IFormControlProps &
   };
 
 const FormikUserInput = (props: FormikUserInputProps) => {
-  const dispatch = useAppDispatch();
   const {name, userName, label, placeholder} = props;
   const {values, errors, touched, handleChange, handleBlur, setFieldValue} = props;
 
@@ -24,9 +22,7 @@ const FormikUserInput = (props: FormikUserInputProps) => {
 
   useEffect(() => {
     if (value.length > 1 && !isError) {
-      dispatch(InfoThunks.fetchUsersByUsernameOrEmail(value))
-        .unwrap()
-        .then((user) => setFieldValue(userName, user));
+      UserService.getByUsernameOrEmail(value).then((response) => setFieldValue(userName, response.data));
     } else {
       setFieldValue(userName, null);
     }

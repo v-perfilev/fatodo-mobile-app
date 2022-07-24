@@ -4,10 +4,9 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import UserService from '../../services/UserService';
 import infoSlice from './infoSlice';
 import {InfoUtils} from '../../shared/utils/InfoUtils';
-import {ChatInfo} from '../../models/Chat';
-import {MessageInfo} from '../../models/Message';
-import {CommentInfo} from '../../models/Comment';
 import ItemService from '../../services/ItemService';
+import ChatService from '../../services/ChatService';
+import CommentService from '../../services/CommentService';
 
 export class InfoActions {
   static handleUsers = (users: User[]) => async (dispatch: AppDispatch) => {
@@ -28,8 +27,6 @@ enum TYPES {
   FETCH_MESSAGES = 'info/fetchMessages',
   HANDLE_COMMENT_IDS = 'info/handleChatIds',
   FETCH_COMMENTS = 'info/fetchComments',
-  FETCH_USERS_BY_USERNAME_PART = 'info/fetchUsersByUsernamePart',
-  FETCH_USERS_BY_USERNAME_OR_EMAIL = 'info/fetchUsersByUsernameOrEmail',
 }
 
 export class InfoThunks {
@@ -82,8 +79,7 @@ export class InfoThunks {
   });
 
   static fetchChats = createAsyncThunk(TYPES.FETCH_CHATS, async (ids: string[]) => {
-    // TODO
-    return (await InfoUtils.fetchIds(ids, undefined)) as ChatInfo[];
+    return await InfoUtils.fetchIds(ids, ChatService.getChatInfoByIds);
   });
 
   /*
@@ -96,8 +92,7 @@ export class InfoThunks {
   });
 
   static fetchMessages = createAsyncThunk(TYPES.FETCH_MESSAGES, async (ids: string[]) => {
-    // TODO
-    return (await InfoUtils.fetchIds(ids, undefined)) as MessageInfo[];
+    return await InfoUtils.fetchIds(ids, ChatService.getMessageInfoByIds);
   });
 
   /*
@@ -110,23 +105,6 @@ export class InfoThunks {
   });
 
   static fetchComments = createAsyncThunk(TYPES.FETCH_COMMENTS, async (ids: string[]) => {
-    // TODO
-    return (await InfoUtils.fetchIds(ids, undefined)) as CommentInfo[];
+    return await InfoUtils.fetchIds(ids, CommentService.getCommentInfoByIds);
   });
-
-  /*
-  Users search
-   */
-  static fetchUsersByUsernamePart = createAsyncThunk(TYPES.FETCH_USERS_BY_USERNAME_PART, async (part: string) => {
-    const result = await UserService.getAllByUsernamePart(part);
-    return result.data;
-  });
-
-  static fetchUsersByUsernameOrEmail = createAsyncThunk(
-    TYPES.FETCH_USERS_BY_USERNAME_OR_EMAIL,
-    async (usernameOrEmail: string) => {
-      const result = await UserService.getByUsernameOrEmail(usernameOrEmail);
-      return result.data;
-    },
-  );
 }

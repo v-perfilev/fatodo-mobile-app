@@ -1,6 +1,6 @@
 import {AxiosPromise} from 'axios';
-import {Chat} from '../models/Chat';
-import {Message} from '../models/Message';
+import {Chat, ChatInfo} from '../models/Chat';
+import {Message, MessageInfo} from '../models/Message';
 import {MessageDTO} from '../models/dto/MessageDTO';
 import axios, {axiosIgnore404} from '../shared/axios';
 
@@ -8,7 +8,7 @@ export default class ChatService {
   private static baseUrl = '/api/chat';
 
   /*
-    ChatController
+  ChatController
    */
   public static getAllChatsPageable = (offset?: number, size?: number): AxiosPromise<Chat[]> => {
     const url = ChatService.baseUrl + '/chat';
@@ -47,7 +47,7 @@ export default class ChatService {
   };
 
   /*
-    MemberController
+  MemberController
    */
   public static addUsersToChat = (chatId: string, userIds: string[]): AxiosPromise<void> => {
     const url = ChatService.baseUrl + '/member/' + chatId;
@@ -76,7 +76,7 @@ export default class ChatService {
   };
 
   /*
-    MessageController
+  MessageController
    */
   public static getAllMessagesByChatIdPageable = (
     chatId: string,
@@ -109,7 +109,7 @@ export default class ChatService {
   };
 
   /*
-    ReactionController
+  ReactionController
    */
   public static likeMessageReaction = (messageId: string): AxiosPromise<void> => {
     const url = ChatService.baseUrl + '/reaction/' + messageId + '/like';
@@ -127,10 +127,25 @@ export default class ChatService {
   };
 
   /*
-    StatusController
+  StatusController
    */
   public static markMessageAsRead = (messageId: string): AxiosPromise<void> => {
     const url = ChatService.baseUrl + '/status/' + messageId + '/read';
     return axios.post(url);
+  };
+
+  /*
+  InfoController
+   */
+  public static getChatInfoByIds = (ids: string[]): AxiosPromise<ChatInfo[]> => {
+    const url = ChatService.baseUrl + '/info/chat';
+    const params = {ids};
+    return axios.get(url, {params});
+  };
+
+  public static getMessageInfoByIds = (ids: string[]): AxiosPromise<MessageInfo[]> => {
+    const url = ChatService.baseUrl + '/info/message';
+    const params = {ids};
+    return axios.get(url, {params});
   };
 }
