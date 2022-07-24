@@ -42,7 +42,7 @@ const TabNavigator = () => {
   const color = theme?.colors.primary['500'] || 'primary.500';
 
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Groups" tabBar={TabNavigatorBar(color)}>
+    <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Events" tabBar={TabNavigatorBar(color)}>
       <Tab.Screen name="Groups" component={GroupNavigator} options={{tabBarIcon: groupsIcon}} />
       <Tab.Screen name="Events" component={EventList} options={{tabBarIcon: eventsIcon}} />
       <Tab.Screen name="Chats" component={ChatList} options={{tabBarIcon: chatsIcon}} />

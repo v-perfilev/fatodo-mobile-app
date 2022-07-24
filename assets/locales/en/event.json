@@ -1,0 +1,31 @@
+{
+  "chat": {
+    "create": {
+      "title": "Chat created",
+      "content": "<user/> created <chat/> with <users/>"
+    },
+    "update": {
+      "title": "Chat edited",
+      "content": "<user/> edited <chat/>"
+    },
+    "memberAdd": {
+      "title": "Chat changed",
+      "content": "<user/> added <users/> to <chat/>"
+    },
+    "memberDelete": {
+      "title": "Chat changed",
+      "content": "<user/> deleted <users/> from <chat/>"
+    },
+    "memberLeave": {
+      "title": "Chat changed",
+      "content": "<user/> left <chat/>"
+    },
+    "reaction": {
+      "title": "Reaction",
+      "content": "<user/> reacted on your message in <chat/>"
+    }
+  },
+  "links": {
+    "chat": "chat"
+  }
+}

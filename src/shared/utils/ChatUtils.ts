@@ -1,4 +1,4 @@
-import {Chat} from '../../models/Chat';
+import {Chat, ChatInfo} from '../../models/Chat';
 import {User, UserAccount} from '../../models/User';
 import {ArrayUtils} from './ArrayUtils';
 import {ViewToken} from 'react-native';
@@ -10,7 +10,7 @@ export class ChatUtils {
     return chat.isDirect && memberId ? users.get(memberId) : null;
   };
 
-  public static getTitle = (chat: Chat, users: Map<string, User>, account: User): string => {
+  public static getTitle = (chat: Chat | ChatInfo, users: Map<string, User>, account: User): string => {
     return chat.title
       ? chat.title
       : chat.members
