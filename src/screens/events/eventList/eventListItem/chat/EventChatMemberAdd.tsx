@@ -12,7 +12,7 @@ const EventChatMemberAdd = ({user, chat, users, date}: WithEventChatProps) => {
 
   const title = t('event:chat.memberAdd.title');
 
-  const User = (): ReactElement => <UserLink user={user} />;
+  const User = (): ReactElement => (user ? <UserLink user={user} /> : null);
   const Chat = (): ReactElement => <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink>;
   const Users = (): ReactElement => <EventListItemUsers users={users} />;
 

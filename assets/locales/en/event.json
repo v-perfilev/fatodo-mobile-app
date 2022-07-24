@@ -37,6 +37,16 @@
       "contentWithItem": "<user/> reaction on your comment in item <item/>"
     }
   },
+  "contact": {
+    "accept": {
+      "title": "Contact request accepted",
+      "content": "<firstUser/> accepted contact request from <secondUser/>"
+    },
+    "send": {
+      "title": "Contact request sent",
+      "content": "<firstUser/> send contact request to <secondUser/>"
+    }
+  },
   "links": {
     "chat": "chat"
   }

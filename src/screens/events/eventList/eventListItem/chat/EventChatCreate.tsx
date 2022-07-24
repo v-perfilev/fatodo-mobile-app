@@ -12,9 +12,9 @@ const EventChatCreate = ({user, chat, users, date}: WithEventChatProps) => {
 
   const title = t('event:chat.create.title');
 
-  const User = (): ReactElement => <UserLink user={user} />;
-  const Chat = (): ReactElement => <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink>;
-  const Users = (): ReactElement => <EventListItemUsers users={users} />;
+  const User = (): ReactElement => (user ? <UserLink user={user} /> : null);
+  const Chat = (): ReactElement => (chat ? <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink> : null);
+  const Users = (): ReactElement => (users ? <EventListItemUsers users={users} /> : null);
 
   let content = (
     <Text>

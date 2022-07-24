@@ -11,8 +11,8 @@ const EventChatReaction = ({user, chat, message, reaction, date}: WithEventChatP
 
   const title = t('event:chat.reaction.title');
 
-  const User = (): ReactElement => <UserLink user={user} />;
-  const Chat = (): ReactElement => <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink>;
+  const User = (): ReactElement => (user ? <UserLink user={user} /> : null);
+  const Chat = (): ReactElement => (chat ? <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink> : null);
 
   let content = (
     <Text>
@@ -20,7 +20,7 @@ const EventChatReaction = ({user, chat, message, reaction, date}: WithEventChatP
     </Text>
   );
 
-  return <EventListItemTemplate title={title} content={content} message={message.text} date={date} />;
+  return <EventListItemTemplate title={title} content={content} message={message?.text} date={date} />;
 };
 
 export default withEventChat(EventChatReaction);

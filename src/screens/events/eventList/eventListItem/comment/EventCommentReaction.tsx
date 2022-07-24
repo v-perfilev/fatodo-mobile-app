@@ -12,7 +12,7 @@ const EventCommentReaction = ({user, group, item, comment, reaction, date}: With
 
   const title = t('event:comment.reaction.title');
 
-  const User = (): ReactElement => <UserLink user={user} />;
+  const User = (): ReactElement => (user ? <UserLink user={user} /> : null);
   const Group = (): ReactElement => (group ? <GroupLink group={group} /> : null);
   const Item = (): ReactElement => (item ? <ItemLink item={item} /> : null);
 
@@ -34,7 +34,7 @@ const EventCommentReaction = ({user, group, item, comment, reaction, date}: With
     );
   }
 
-  return <EventListItemTemplate title={title} content={content} message={comment.text} date={date} />;
+  return <EventListItemTemplate title={title} content={content} message={comment?.text} date={date} />;
 };
 
 export default withEventComment(EventCommentReaction);

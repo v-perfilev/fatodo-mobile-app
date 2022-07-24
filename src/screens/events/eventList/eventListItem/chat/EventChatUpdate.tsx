@@ -11,8 +11,8 @@ const EventChatUpdate = ({user, chat, date}: WithEventChatProps) => {
 
   const title = t('event:chat.update.title');
 
-  const User = (): ReactElement => <UserLink user={user} />;
-  const Chat = (): ReactElement => <ChatLink chat={chat} />;
+  const User = (): ReactElement => (user ? <UserLink user={user} /> : null);
+  const Chat = (): ReactElement => (chat ? <ChatLink chat={chat} /> : null);
 
   let content = (
     <Text>
