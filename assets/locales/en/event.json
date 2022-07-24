@@ -47,6 +47,12 @@
       "content": "<firstUser/> send contact request to <secondUser/>"
     }
   },
+  "default": {
+    "welcome": {
+      "title": "Welcome!",
+      "content": "You joined Fatodo..."
+    }
+  },
   "links": {
     "chat": "chat"
   }
