@@ -1,7 +1,7 @@
 import React from 'react';
 import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
-import PlusIcon from '../../../components/icons/PlusIcon';
 import CornerButton from '../../../components/controls/CornerButton';
+import PlusIcon from '../../../components/icons/PlusIcon';
 
 const ChatListCorner = () => {
   const {showChatCreateDialog} = useChatDialogContext();
@@ -10,7 +10,7 @@ const ChatListCorner = () => {
     showChatCreateDialog();
   };
 
-  return <CornerButton size="2xl" icon={<PlusIcon />} onPress={openCreateChatDialog} />;
+  return <CornerButton icon={<PlusIcon />} onPress={openCreateChatDialog} />;
 };
 
 export default ChatListCorner;

@@ -8,6 +8,11 @@ import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import {GroupsActions, GroupsThunks} from '../../../store/groups/groupsActions';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import DraggableList from '../../../components/surfaces/DraggableList';
+import FBox from '../../../components/boxes/FBox';
+import CornerButton from '../../../components/controls/CornerButton';
+import PlusIcon from '../../../components/icons/PlusIcon';
+import {useNavigation} from '@react-navigation/native';
+import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 
 type GroupListContainerProps = {
   sorting: boolean;
@@ -16,7 +21,10 @@ type GroupListContainerProps = {
 const GroupListContainer = ({sorting}: GroupListContainerProps) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
+  const navigation = useNavigation<GroupNavigationProp>();
   const groups = useAppSelector(GroupsSelectors.groups);
+
+  const goToGroupCreate = (): void => navigation.navigate('GroupCreate');
 
   const refresh = (): Promise<any> => {
     return dispatch(GroupsThunks.refreshGroups());
@@ -37,13 +45,16 @@ const GroupListContainer = ({sorting}: GroupListContainerProps) => {
   const handleDragEnd = ({data}: DragEndParams<Group>): void => setGroups(data);
 
   return (
-    <DraggableList
-      data={groups}
-      renderItem={renderItem}
-      keyExtractor={extractKey}
-      handleDragEnd={handleDragEnd}
-      refresh={!sorting && refresh}
-    />
+    <FBox>
+      <CornerButton icon={<PlusIcon />} onPress={goToGroupCreate} show={!sorting} />
+      <DraggableList
+        data={groups}
+        renderItem={renderItem}
+        keyExtractor={extractKey}
+        handleDragEnd={handleDragEnd}
+        refresh={!sorting && refresh}
+      />
+    </FBox>
   );
 };
 

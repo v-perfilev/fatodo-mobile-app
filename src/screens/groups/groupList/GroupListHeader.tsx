@@ -2,11 +2,8 @@ import React, {memo} from 'react';
 import Header from '../../../components/layouts/Header';
 import CheckIcon from '../../../components/icons/CheckIcon';
 import CloseIcon from '../../../components/icons/CloseIcon';
-import PlusIcon from '../../../components/icons/PlusIcon';
 import ReorderIcon from '../../../components/icons/ReorderIcon';
 import CollapsedIcon from '../../../components/icons/CollapsedIcon';
-import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import {flowRight} from 'lodash';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
@@ -20,11 +17,8 @@ type GroupListHeaderProps = {
 
 const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<GroupNavigationProp>();
   const groups = useAppSelector(GroupsSelectors.groups);
   const allCollapsed = useAppSelector(GroupsSelectors.itemsAllCollapsed);
-
-  const goToGroupCreate = (): void => navigation.navigate('GroupCreate');
 
   const setAllCollapsed = (value: boolean): void => {
     dispatch(GroupsActions.setAllCollapsed(value));
@@ -77,7 +71,6 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
         </>
       ) : (
         <>
-          <IconButton colorScheme="white" size="2xl" p="1" icon={<PlusIcon />} onPress={goToGroupCreate} />
           <IconButton colorScheme="white" size="xl" p="1.5" icon={<ReorderIcon />} onPress={enableSorting} />
           <IconButton
             colorScheme="white"

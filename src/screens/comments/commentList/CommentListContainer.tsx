@@ -4,9 +4,9 @@ import FBox from '../../../components/boxes/FBox';
 import {FlatListType} from '../../../components/surfaces/FlatList';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {CommentsThunks} from '../../../store/comments/commentsActions';
-import ScrollButton from '../../../components/controls/ScrollButton';
 import {Comment} from '../../../models/Comment';
 import CommentListFlatList from './CommentListFlatList';
+import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 
 type CommentListContainerProps = {
   setReference: Dispatch<SetStateAction<Comment>>;
@@ -35,7 +35,7 @@ const CommentListContainer = ({setReference}: CommentListContainerProps) => {
 
   return (
     <FBox>
-      <ScrollButton show={!hideScroll} scrollDown={scrollDown} />
+      <ScrollCornerButton show={!hideScroll} scrollDown={scrollDown} />
       <CommentListFlatList
         setReference={setReference}
         loadComments={!allLoaded ? loadComments : undefined}

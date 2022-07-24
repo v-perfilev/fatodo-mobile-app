@@ -9,7 +9,7 @@ import {ChatThunks} from '../../../store/chat/chatActions';
 import FBox from '../../../components/boxes/FBox';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {FlatListType} from '../../../components/surfaces/FlatList';
-import ScrollButton from '../../../components/controls/ScrollButton';
+import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 
 const ChatViewContainer = () => {
   const dispatch = useAppDispatch();
@@ -67,7 +67,7 @@ const ChatViewContainer = () => {
 
   return (
     <FBox>
-      <ScrollButton show={!hideScroll} scrollDown={scrollDown} />
+      <ScrollCornerButton show={!hideScroll} scrollDown={scrollDown} />
       <ChatViewList
         loadMessages={!allLoaded ? loadMessages : undefined}
         onViewableItemsChanged={onViewableItemsChanged}

@@ -4,8 +4,8 @@ import EventsSelectors from '../../../store/events/eventsSelectors';
 import {EventsThunks} from '../../../store/events/eventsActions';
 import {FlatListType} from '../../../components/surfaces/FlatList';
 import FBox from '../../../components/boxes/FBox';
-import ScrollButton from '../../../components/controls/ScrollButton';
 import EventListFlatList from './EventListFlatList';
+import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 
 const EventListContainer = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ const EventListContainer = () => {
 
   return (
     <FBox>
-      <ScrollButton show={!hideScroll} scrollDown={scrollDown} />
+      <ScrollCornerButton show={!hideScroll} scrollDown={scrollDown} />
       <EventListFlatList
         loadEvents={!allLoaded ? loadEvents : undefined}
         setIsOnTheTop={setHideScroll}

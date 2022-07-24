@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {ContactRelationWithUser} from '../../../models/ContactRelation';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import ContactListItems from './ContactListItems';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import ContactListControl from './ContactListControl';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import ContactListContainer from './ContactListContainer';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();
@@ -48,7 +48,7 @@ const ContactList = () => {
     <>
       <ContactListControl setFilter={setFilter} />
       <ConditionalSpinner loading={loading}>
-        <ContactListItems relations={userRelations} filter={filter} />
+        <ContactListContainer relations={userRelations} filter={filter} />
       </ConditionalSpinner>
     </>
   );

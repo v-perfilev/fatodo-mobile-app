@@ -1,13 +1,13 @@
 import React, {Dispatch, MutableRefObject, ReactElement, SetStateAction, useCallback} from 'react';
 import {useAppSelector} from '../../../store/store';
 import {LayoutChangeEvent} from 'react-native';
-import {useTheme} from 'native-base';
+import {Box, useTheme} from 'native-base';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {Comment} from '../../../models/Comment';
 import CommentListStub from './CommentListStub';
-import CommentListComment from './CommentListComment';
+import CommentListItem from './commentListItem/CommentListItem';
 
 type CommentListFlatListProps = {
   setReference: Dispatch<SetStateAction<Comment>>;
@@ -23,12 +23,9 @@ const CommentListFlatList = ({setReference, loadComments, setIsOnTheTop, listRef
   const keyExtractor = useCallback((item: Comment): string => item.id, []);
   const renderItem = useCallback((item: Comment, onLayout: (event: LayoutChangeEvent) => void): ReactElement => {
     return (
-      <CommentListComment
-        onLayout={onLayout}
-        comment={item}
-        setReference={setReference}
-        style={ListUtils.itemInvertedStyle(theme)}
-      />
+      <Box onLayout={onLayout} style={ListUtils.itemInvertedStyle(theme)}>
+        <CommentListItem comment={item} setReference={setReference} />
+      </Box>
     );
   }, []);
 

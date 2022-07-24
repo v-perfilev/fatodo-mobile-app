@@ -14,7 +14,7 @@ const ItemViewCorner = () => {
 
   const goToComments = (): void => navigation.navigate('CommentList', {targetId: item.id, colorScheme: group.color});
 
-  return <CornerButton size="lg" p="3" icon={<CommentsIcon />} onPress={goToComments} />;
+  return <CornerButton icon={<CommentsIcon />} onPress={goToComments} />;
 };
 
 export default ItemViewCorner;

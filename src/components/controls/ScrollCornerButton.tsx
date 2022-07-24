@@ -7,8 +7,8 @@ type ScrollButtonProps = {
   scrollDown: () => void;
 };
 
-const ScrollButton = ({show, scrollDown}: ScrollButtonProps) => {
+const ScrollCornerButton = ({show, scrollDown}: ScrollButtonProps) => {
   return show ? <CornerButton icon={<ArrowDownIcon />} onPress={scrollDown} /> : null;
 };
 
-export default memo(ScrollButton);
+export default memo(ScrollCornerButton);

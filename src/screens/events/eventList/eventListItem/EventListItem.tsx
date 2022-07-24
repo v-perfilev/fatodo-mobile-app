@@ -1,13 +1,18 @@
 import React from 'react';
-import {Box, IBoxProps} from 'native-base';
 import {Event} from '../../../../models/Event';
+import FHStack from '../../../../components/boxes/FHStack';
+import {Text} from 'native-base';
 
-type EventListItemProps = IBoxProps & {
+type EventListItemProps = {
   event: Event;
 };
 
-const EventListItem = ({event, ...props}: EventListItemProps) => {
-  return <Box {...props}>{event.id}</Box>;
+const EventListItem = ({event}: EventListItemProps) => {
+  return (
+    <FHStack space="2">
+      <Text>{event.id}</Text>
+    </FHStack>
+  );
 };
 
 export default EventListItem;
