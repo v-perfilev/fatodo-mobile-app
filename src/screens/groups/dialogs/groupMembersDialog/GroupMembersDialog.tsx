@@ -48,7 +48,7 @@ const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEdi
   };
 
   const updateUsersToShow = (filter?: string): void => {
-    const memberMap = new Map(group.members.map((member) => [member.id, member]));
+    const memberMap = new Map(group.members.map((member) => [member.userId, member]));
     const userIds = Array.from(memberMap.keys()).filter((id) => !deletedMemberIds.includes(id));
     const updatedUsersToShow = MapUtils.get(users, userIds)
       .filter((user) => filter === undefined || user.username.includes(filter))
@@ -81,7 +81,7 @@ const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEdi
               user={user}
               switchToEditMember={switchToEditMember}
               onDelete={onMemberDelete}
-              key={user.id}
+              key={user.userId}
             />
           ))}
         </FVStack>

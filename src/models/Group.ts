@@ -17,7 +17,7 @@ export interface Group {
 export type GroupPermission = 'ADMIN' | 'EDIT' | 'READ';
 
 export interface GroupMember {
-  id: string;
+  userId: string;
   permission: GroupPermission;
 }
 

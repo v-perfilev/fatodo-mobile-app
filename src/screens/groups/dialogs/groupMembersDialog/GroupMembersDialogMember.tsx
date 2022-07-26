@@ -41,10 +41,10 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: P
 
   const removeUserFromChat = (): void => {
     setRemovingLoading(true);
-    dispatch(GroupThunks.removeGroupMembers({group, userIds: [user.id]}))
+    dispatch(GroupThunks.removeGroupMembers({group, userIds: [user.userId]}))
       .unwrap()
       .then(() => {
-        onDelete(user.id);
+        onDelete(user.userId);
       })
       .finally(() => {
         setRemovingLoading(false);
@@ -67,13 +67,13 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: P
     {
       action: switchToEdit,
       icon: <EditIcon />,
-      hidden: !canAdmin || (user.id === account.id && !canLeave),
+      hidden: !canAdmin || (user.userId === account.id && !canLeave),
     },
     {
       action: switchRemovingConfirmation,
       icon: <UserMinusIcon />,
       color: 'error',
-      hidden: !canAdmin || user.id === account.id,
+      hidden: !canAdmin || user.userId === account.id,
     },
   ] as MenuElement[];
 

@@ -58,7 +58,7 @@ const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) 
   };
 
   const canAdmin = group && GroupUtils.canAdmin(account, group);
-  const canEdit = group && GroupUtils.canAdmin(account, group);
+  const canEdit = group && GroupUtils.canEdit(account, group);
   const canLeave = group && GroupUtils.canLeave(account, group);
 
   const menuElements = [

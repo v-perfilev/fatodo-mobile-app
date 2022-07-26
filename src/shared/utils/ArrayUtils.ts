@@ -1,4 +1,5 @@
 type WithId = {id: string};
+type WithUserId = {userId: string};
 type WithIdAndUserIdAndText = {id: string; userId: string; text: string};
 
 export class ArrayUtils {
@@ -26,6 +27,16 @@ export class ArrayUtils {
   public static updateValueWithId = (array: WithId[], value: WithId): any[] => {
     const arrayCopy = [...array];
     const itemInList = arrayCopy.find((i) => i.id === value.id);
+    if (itemInList) {
+      const index = arrayCopy.indexOf(itemInList);
+      arrayCopy[index] = value;
+    }
+    return arrayCopy;
+  };
+
+  public static updateValueWithUserId = (array: WithUserId[], value: WithUserId): any[] => {
+    const arrayCopy = [...array];
+    const itemInList = arrayCopy.find((i) => i.userId === value.userId);
     if (itemInList) {
       const index = arrayCopy.indexOf(itemInList);
       arrayCopy[index] = value;

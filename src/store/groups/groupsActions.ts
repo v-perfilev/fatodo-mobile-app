@@ -42,7 +42,7 @@ export class GroupsThunks {
     const response = await ItemService.getAllGroups();
     const groupIds = response.data.map((g) => g.id);
     thunkAPI.dispatch(GroupsThunks.fetchItems(groupIds));
-    const groupUserIds = response.data.flatMap((g) => g.members).map((m) => m.id);
+    const groupUserIds = response.data.flatMap((g) => g.members).map((m) => m.userId);
     thunkAPI.dispatch(InfoThunks.handleUserIds(groupUserIds));
     return response.data;
   });
@@ -51,7 +51,7 @@ export class GroupsThunks {
     const response = await ItemService.getAllGroups();
     const groupIds = response.data.map((g) => g.id);
     thunkAPI.dispatch(GroupsThunks.fetchItems(groupIds));
-    const groupUserIds = response.data.flatMap((g) => g.members).map((m) => m.id);
+    const groupUserIds = response.data.flatMap((g) => g.members).map((m) => m.userId);
     thunkAPI.dispatch(InfoThunks.handleUserIds(groupUserIds));
     return response.data;
   });

@@ -35,7 +35,7 @@ enum TYPES {
 export class GroupThunks {
   static fetchGroup = createAsyncThunk(TYPES.FETCH_GROUP, async (groupId: string, thunkAPI) => {
     const response = await ItemService.getGroup(groupId);
-    const groupUserIds = response.data.members.map((m) => m.id);
+    const groupUserIds = response.data.members.map((m) => m.userId);
     thunkAPI.dispatch(InfoThunks.handleUserIds(groupUserIds));
     return response.data;
   });
@@ -116,7 +116,7 @@ export class GroupThunks {
   static addGroupMembers = createAsyncThunk(
     TYPES.ADD_GROUP_MEMBERS,
     async ({group, userIds}: {group: Group; userIds: string[]}, thunkAPI) => {
-      const newMembers = userIds.map((userId) => ({id: userId, permission: 'READ'} as GroupMember));
+      const newMembers = userIds.map((userId) => ({userId: userId, permission: 'READ'} as GroupMember));
       const updatedMembers = [...group.members, ...newMembers];
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.addMembersToGroup(group.id, userIds);
@@ -129,7 +129,7 @@ export class GroupThunks {
   static editGroupMember = createAsyncThunk(
     TYPES.EDIT_GROUP_MEMBER,
     async ({group, member}: {group: Group; member: GroupMember}, thunkAPI) => {
-      const updatedMembers = ArrayUtils.updateValueWithId(group.members, member);
+      const updatedMembers = ArrayUtils.updateValueWithUserId(group.members, member);
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.editGroupMember(group.id, member);
       thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
@@ -141,7 +141,7 @@ export class GroupThunks {
   static removeGroupMembers = createAsyncThunk(
     TYPES.REMOVE_GROUP_MEMBERS,
     async ({group, userIds}: {group: Group; userIds: string[]}, thunkAPI) => {
-      const updatedMembers = group.members.filter((m) => !userIds.includes(m.id));
+      const updatedMembers = group.members.filter((m) => !userIds.includes(m.userId));
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.removeMembersFromGroup(group.id, userIds);
       thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));

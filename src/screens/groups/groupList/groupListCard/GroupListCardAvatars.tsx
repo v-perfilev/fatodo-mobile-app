@@ -17,7 +17,7 @@ const GroupListCardAvatars = ({group}: GroupListCardAvatarsProps) => {
 
   useEffect(() => {
     if (group && users) {
-      const groupUserIds = group.members.map((user) => user.id);
+      const groupUserIds = group.members.map((user) => user.userId);
       const updatedList = MapUtils.get(users, groupUserIds);
       setUsersToShow(updatedList);
     }

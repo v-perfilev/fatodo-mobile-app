@@ -49,7 +49,7 @@ const GroupAddMembersDialog = ({group, show, close}: GroupAddMembersDialogProps)
   }, [show, relations]);
 
   const isUserIdListEmpty = userIds.length === 0;
-  const ignoredIds = group?.members.map((m) => m.id);
+  const ignoredIds = group?.members.map((m) => m.userId);
 
   const content = group && <UsersSelect allowedIds={contactIds} ignoredIds={ignoredIds} setUserIds={setUserIds} />;
 
