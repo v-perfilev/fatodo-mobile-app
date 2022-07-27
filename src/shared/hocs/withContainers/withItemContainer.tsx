@@ -1,5 +1,5 @@
 import React, {ComponentType, useEffect} from 'react';
-import {GroupActions} from '../../../store/group/groupActions';
+import {GroupActions, GroupThunks} from '../../../store/group/groupActions';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
@@ -38,6 +38,12 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
   const loadItem = (): void => {
     dispatch(ItemThunks.fetchItem(routeItemId))
       .unwrap()
+      .catch(() => goBack());
+  };
+
+  const loadGroup = (groupId: string): void => {
+    dispatch(GroupThunks.fetchGroup(groupId))
+      .unwrap()
       .catch(() => goBack())
       .finally(() => setLoading(false));
   };
@@ -53,6 +59,10 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    item && loadGroup(item.groupId);
+  }, [item]);
 
   return <Component loading={loading} group={group || routeGroup} item={item || routeItem} {...props} />;
 };

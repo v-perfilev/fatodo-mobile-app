@@ -17,13 +17,12 @@ import {useNavigation} from '@react-navigation/native';
 import {Badge, Text} from 'native-base';
 import FVStack from '../../../components/boxes/FVStack';
 import {RootNavigationProp} from '../../../navigators/RootNavigator';
-import {IPressableProps} from 'native-base/lib/typescript/components/primitives/Pressable/types';
 
-type ChatListItemProps = IPressableProps & {
+type ChatListItemProps = {
   chat: Chat;
 };
 
-const ChatListItem = ({chat, ...props}: ChatListItemProps) => {
+const ChatListItem = ({chat}: ChatListItemProps) => {
   const navigation = useNavigation<RootNavigationProp>();
   const {t} = useTranslation();
   const unreadMessageCountMap = useAppSelector(ChatsSelectors.unreadMessageCountMap);
@@ -61,7 +60,7 @@ const ChatListItem = ({chat, ...props}: ChatListItemProps) => {
   }, [directUser]);
 
   return (
-    <PressableButton onPress={goToChat} {...props}>
+    <PressableButton onPress={goToChat}>
       <FHStack grow defaultSpace>
         {pic}
         <FHStack grow>

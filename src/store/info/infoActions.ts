@@ -36,7 +36,7 @@ export class InfoThunks {
   static handleUserIds = createAsyncThunk(TYPES.HANDLE_USER_IDS, async (ids: string[], thunkAPI) => {
     const {users, loadingUserIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, users, loadingUserIds);
-    thunkAPI.dispatch(InfoThunks.fetchUsers(idsToLoad));
+    idsToLoad.length > 0 && thunkAPI.dispatch(InfoThunks.fetchUsers(idsToLoad));
   });
 
   static fetchUsers = createAsyncThunk(TYPES.FETCH_USERS, async (ids: string[]) => {
@@ -49,7 +49,7 @@ export class InfoThunks {
   static handleGroupIds = createAsyncThunk(TYPES.HANDLE_GROUP_IDS, async (ids: string[], thunkAPI) => {
     const {groups, loadingGroupIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, groups, loadingGroupIds);
-    thunkAPI.dispatch(InfoThunks.fetchGroups(idsToLoad));
+    idsToLoad.length > 0 && thunkAPI.dispatch(InfoThunks.fetchGroups(idsToLoad));
   });
 
   static fetchGroups = createAsyncThunk(TYPES.FETCH_GROUPS, async (ids: string[]) => {
@@ -62,7 +62,7 @@ export class InfoThunks {
   static handleItemIds = createAsyncThunk(TYPES.HANDLE_ITEM_IDS, async (ids: string[], thunkAPI) => {
     const {items, loadingItemIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, items, loadingItemIds);
-    thunkAPI.dispatch(InfoThunks.fetchItems(idsToLoad));
+    idsToLoad.length > 0 && thunkAPI.dispatch(InfoThunks.fetchItems(idsToLoad));
   });
 
   static fetchItems = createAsyncThunk(TYPES.FETCH_ITEMS, async (ids: string[]) => {
@@ -75,7 +75,7 @@ export class InfoThunks {
   static handleChatIds = createAsyncThunk(TYPES.HANDLE_CHAT_IDS, async (ids: string[], thunkAPI) => {
     const {chats, loadingChatIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, chats, loadingChatIds);
-    thunkAPI.dispatch(InfoThunks.fetchChats(idsToLoad));
+    idsToLoad.length > 0 && thunkAPI.dispatch(InfoThunks.fetchChats(idsToLoad));
   });
 
   static fetchChats = createAsyncThunk(TYPES.FETCH_CHATS, async (ids: string[]) => {
@@ -88,7 +88,7 @@ export class InfoThunks {
   static handleMessageIds = createAsyncThunk(TYPES.HANDLE_MESSAGE_IDS, async (ids: string[], thunkAPI) => {
     const {messages, loadingMessageIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, messages, loadingMessageIds);
-    thunkAPI.dispatch(InfoThunks.fetchMessages(idsToLoad));
+    idsToLoad.length > 0 && thunkAPI.dispatch(InfoThunks.fetchMessages(idsToLoad));
   });
 
   static fetchMessages = createAsyncThunk(TYPES.FETCH_MESSAGES, async (ids: string[]) => {
@@ -101,7 +101,7 @@ export class InfoThunks {
   static handleCommentIds = createAsyncThunk(TYPES.HANDLE_COMMENT_IDS, async (ids: string[], thunkAPI) => {
     const {comments, loadingCommentIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, comments, loadingCommentIds);
-    thunkAPI.dispatch(InfoThunks.fetchComments(idsToLoad));
+    idsToLoad.length > 0 && thunkAPI.dispatch(InfoThunks.fetchComments(idsToLoad));
   });
 
   static fetchComments = createAsyncThunk(TYPES.FETCH_COMMENTS, async (ids: string[]) => {

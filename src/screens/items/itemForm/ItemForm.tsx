@@ -13,7 +13,6 @@ import {ItemDTO} from '../../../models/dto/ItemDTO';
 import FormikTypeInput from '../../../components/inputs/FormikTypeInput';
 import FormikPriorityInput from '../../../components/inputs/FormikPriorityInput';
 import FormikMultilineInput from '../../../components/inputs/FormikMultilineInput';
-import FormikTagsInput from '../../../components/inputs/FormikTagsInput';
 import FormikRemindersInput from '../../../components/inputs/formikRemindersInput/FormikRemindersInput';
 import FormikDateTimePicker from '../../../components/inputs/FormikDateTimePicker';
 import FVStack from '../../../components/boxes/FVStack';
@@ -30,7 +29,6 @@ export interface ItemFormValues {
   date?: Date;
   description?: string;
   reminders?: Reminder[];
-  tags?: string[];
 }
 
 const defaultItemFormValues: Readonly<ItemFormValues> = {
@@ -41,7 +39,6 @@ const defaultItemFormValues: Readonly<ItemFormValues> = {
   date: null,
   description: '',
   reminders: [],
-  tags: [],
 };
 
 const initialValues = (item: Item, reminders: Reminder[], account: UserAccount): ItemFormValues =>
@@ -54,7 +51,6 @@ const initialValues = (item: Item, reminders: Reminder[], account: UserAccount):
         date: DateConverters.getDateFromParamDate(item.date, account.info.timezone),
         description: item.description,
         reminders: reminders,
-        tags: item.tags,
       }
     : defaultItemFormValues;
 
@@ -88,7 +84,6 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
       date: DateConverters.getParamDateFromTimeAndDate(values.time, values.date, account.info.timezone),
       description: values.description,
       reminders: !deleteReminders && remindersChanged ? values.reminders : undefined,
-      tags: values.tags,
       groupId: group.id,
       deleteReminders: deleteReminders ? true : undefined,
     } as ItemDTO;
@@ -156,8 +151,6 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
           />
 
           <FormikRemindersInput name="reminders" label={t('item:fields.reminders.label')} {...formikProps} />
-
-          <FormikTagsInput name="tags" label={t('item:fields.tags.label')} {...formikProps} />
 
           <FHStack defaultSpace mt="3" justifyContent="flex-end">
             <SolidButton

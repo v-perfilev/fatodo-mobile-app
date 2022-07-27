@@ -1,18 +1,23 @@
-import React, {memo, useCallback, useRef, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatSelectors from '../../../store/chat/chatSelectors';
-import {ViewToken} from 'react-native';
+import {LayoutChangeEvent, ViewToken} from 'react-native';
 import {TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import ChatViewList from './ChatViewList';
 import {ChatThunks} from '../../../store/chat/chatActions';
 import FBox from '../../../components/boxes/FBox';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
-import {FlatListType} from '../../../components/surfaces/FlatList';
+import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
 import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
+import ChatViewStub from './ChatViewStub';
+import {ChatItem} from '../../../models/ChatItem';
+import ChatViewItem from './ChatViewItem';
+import {Box, useTheme} from 'native-base';
+import {ListUtils} from '../../../shared/utils/ListUtils';
 
 const ChatViewContainer = () => {
   const dispatch = useAppDispatch();
+  const theme = useTheme();
   const [hideScroll, setHideScroll] = useState<boolean>(true);
   const unreadTimersRef = useRef<Map<string, any>>(new Map());
   const listRef = useRef<FlatListType>();
@@ -21,13 +26,31 @@ const ChatViewContainer = () => {
   const allLoaded = useAppSelector(ChatSelectors.allLoaded);
   const account = useAppSelector(AuthSelectors.account);
 
-  const loadMessages = (): void => {
-    dispatch(ChatThunks.fetchMessages({chatId: chat.id, offset: chatItems.length}));
+  /*
+  loaders
+   */
+
+  const load = async (): Promise<void> => {
+    await dispatch(ChatThunks.fetchMessages({chatId: chat.id, offset: chatItems.length}));
   };
 
-  const markAsRead = (messageId: string): void => {
-    dispatch(ChatThunks.markMessageAsRead({messageId, account}));
+  const refresh = async (): Promise<void> => {
+    await dispatch(ChatThunks.refreshMessages(chat.id));
   };
+
+  /*
+  keyExtractor and renderItem
+   */
+
+  const keyExtractor = useCallback((item: ChatItem): string => item.message?.id || item.date, []);
+  const renderItem = useCallback(
+    (item: ChatItem, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+      <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
+        <ChatViewItem item={item} />
+      </Box>
+    ),
+    [],
+  );
 
   /*
   mark as read
@@ -35,7 +58,7 @@ const ChatViewContainer = () => {
 
   const addTimer = useCallback((messageId: string): void => {
     const timerId = setTimeout(() => {
-      markAsRead(messageId);
+      dispatch(ChatThunks.markMessageAsRead({messageId, account}));
       unreadTimersRef.current.delete(messageId);
     }, TIMEOUT_BEFORE_MARK_AS_READ);
     unreadTimersRef.current.set(messageId, timerId);
@@ -68,8 +91,14 @@ const ChatViewContainer = () => {
   return (
     <FBox>
       <ScrollCornerButton show={!hideScroll} scrollDown={scrollDown} />
-      <ChatViewList
-        loadMessages={!allLoaded ? loadMessages : undefined}
+      <FlatList
+        inverted
+        ListEmptyComponent={<ChatViewStub />}
+        data={chatItems}
+        render={renderItem}
+        keyExtractor={keyExtractor}
+        onEndReached={!allLoaded ? load : undefined}
+        refresh={refresh}
         onViewableItemsChanged={onViewableItemsChanged}
         setIsOnTheTop={setHideScroll}
         listRef={listRef}

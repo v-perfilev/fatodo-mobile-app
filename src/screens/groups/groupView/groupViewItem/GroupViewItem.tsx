@@ -11,21 +11,20 @@ import {useAppSelector} from '../../../../store/store';
 import GroupSelectors from '../../../../store/group/groupSelectors';
 import {Item} from '../../../../models/Item';
 import PressableButton from '../../../../components/controls/PressableButton';
-import {IPressableProps} from 'native-base/lib/typescript/components/primitives/Pressable/types';
 
-type GroupViewItemProps = IPressableProps & {
+type GroupViewItemProps = {
   item: Item;
   canEdit: boolean;
 };
 
-const GroupViewItem = ({item, canEdit, ...props}: GroupViewItemProps) => {
+const GroupViewItem = ({item, canEdit}: GroupViewItemProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const group = useAppSelector(GroupSelectors.group);
 
   const goToItemView = (): void => navigation.navigate('ItemView', {group, item});
 
   return (
-    <PressableButton onPress={goToItemView} {...props}>
+    <PressableButton onPress={goToItemView}>
       <FHStack space="2" p="1" borderWidth="1" borderColor="gray.200" borderRadius="2" alignItems="center">
         <GroupViewItemIcons item={item} canEdit={canEdit} />
         <FVStack grow>

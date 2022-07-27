@@ -2,30 +2,26 @@ import React, {ReactElement, useCallback} from 'react';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
 import IncomingRequestListStub from './IncomingRequestListStub';
 import IncomingRequestListItem from './IncomingRequestListItem';
-import {useTheme} from 'native-base';
+import {Box, useTheme} from 'native-base';
 import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import FlatList from '../../../components/surfaces/FlatList';
-import {ContactsThunks} from '../../../store/contacts/contactsActions';
-import {useAppDispatch} from '../../../store/store';
 
 type IncomingRequestListContainerProps = {
+  load: () => Promise<void>;
   requests: ContactRequestWithUser[];
 };
 
-const IncomingRequestListItems = ({requests}: IncomingRequestListContainerProps) => {
-  const dispatch = useAppDispatch();
+const IncomingRequestListContainer = ({load, requests}: IncomingRequestListContainerProps) => {
   const theme = useTheme();
-
-  const refresh = (): Promise<any> => {
-    return dispatch(ContactsThunks.fetchIncomingRequests());
-  };
 
   const keyExtractor = useCallback((relation: ContactRequestWithUser): string => relation.id, []);
   const renderItem = useCallback(
-    (request: ContactRequestWithUser, onLayout: (event: LayoutChangeEvent) => void): ReactElement => {
-      return <IncomingRequestListItem onLayout={onLayout} request={request} style={ListUtils.itemStyle(theme)} />;
-    },
+    (request: ContactRequestWithUser, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+      <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
+        <IncomingRequestListItem request={request} />
+      </Box>
+    ),
     [],
   );
 
@@ -35,9 +31,8 @@ const IncomingRequestListItems = ({requests}: IncomingRequestListContainerProps)
       data={requests}
       render={renderItem}
       keyExtractor={keyExtractor}
-      refresh={refresh}
+      refresh={load}
     />
   );
 };
-
-export default IncomingRequestListItems;
+export default IncomingRequestListContainer;

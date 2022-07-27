@@ -116,16 +116,8 @@ const groupSlice = createSlice({
     */
     builder.addCase(GroupThunks.refreshActiveItems.pending, (state: GroupState) => ({
       ...state,
-      activeItemsLoading: true,
-    }));
-    builder.addCase(GroupThunks.refreshActiveItems.fulfilled, (state: GroupState, action) => {
-      const activeItemsCount = action.payload.count;
-      const activeItems = GroupUtils.filterItems(action.payload.data);
-      return {...state, activeItemsCount, activeItems, activeItemsLoading: false};
-    });
-    builder.addCase(GroupThunks.refreshActiveItems.rejected, (state: GroupState) => ({
-      ...state,
-      activeItemsLoading: false,
+      activeItems: [],
+      activeItemsCount: 0,
     }));
 
     /*
@@ -150,16 +142,8 @@ const groupSlice = createSlice({
     */
     builder.addCase(GroupThunks.refreshArchivedItems.pending, (state: GroupState) => ({
       ...state,
-      archivedItemsLoading: true,
-    }));
-    builder.addCase(GroupThunks.refreshArchivedItems.fulfilled, (state: GroupState, action) => {
-      const archivedItemsCount = action.payload.count;
-      const archivedItems = GroupUtils.filterItems(action.payload.data);
-      return {...state, archivedItemsCount, archivedItems, archivedItemsLoading: false};
-    });
-    builder.addCase(GroupThunks.refreshArchivedItems.rejected, (state: GroupState) => ({
-      ...state,
-      archivedItemsLoading: false,
+      archivedItems: [],
+      archivedItemsCount: 0,
     }));
 
     /*

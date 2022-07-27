@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ContactRequestWithUser} from '../../../models/ContactRequest';
-import IncomingRequestListItems from './IncomingRequestListItems';
+import IncomingRequestListContainer from './IncomingRequestListContainer';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import InfoSelectors from '../../../store/info/infoSelectors';
@@ -14,6 +14,11 @@ const IncomingRequestList = () => {
   const users = useAppSelector(InfoSelectors.users);
   const [userRequests, setUserRequests] = useState<ContactRequestWithUser[]>([]);
   const [loading, setLoading] = useDelayedState();
+
+  const load = async (): Promise<void> => {
+    setLoading(true);
+    await dispatch(ContactsThunks.fetchIncomingRequests());
+  };
 
   const resetUserRequests = (): void => {
     setUserRequests([]);
@@ -30,7 +35,7 @@ const IncomingRequestList = () => {
   };
 
   useEffect(() => {
-    dispatch(ContactsThunks.fetchIncomingRequests());
+    load().finally();
   }, []);
 
   useEffect(() => {
@@ -43,7 +48,7 @@ const IncomingRequestList = () => {
 
   return (
     <ConditionalSpinner loading={loading}>
-      <IncomingRequestListItems requests={userRequests} />
+      <IncomingRequestListContainer load={load} requests={userRequests} />
     </ConditionalSpinner>
   );
 };

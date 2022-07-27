@@ -31,6 +31,7 @@ export class CommentsActions {
 
 enum TYPES {
   FETCH_COMMENTS = 'comments/fetchComments',
+  REFRESH_COMMENTS = 'comments/refreshComments',
   SEND_COMMENT = 'comments/sendComment',
   EDIT_COMMENT = 'comments/editComment',
   DELETE_COMMENT = 'comments/deleteComment',
@@ -52,6 +53,10 @@ export class CommentsThunks {
         .catch((response: AxiosResponse) => thunkAPI.rejectWithValue(response.status));
     },
   );
+
+  static refreshComments = createAsyncThunk(TYPES.REFRESH_COMMENTS, async (targetId: string, thunkAPI) => {
+    thunkAPI.dispatch(CommentsThunks.fetchComments({targetId, offset: 0}));
+  });
 
   static sendComment = createAsyncThunk(
     TYPES.SEND_COMMENT,

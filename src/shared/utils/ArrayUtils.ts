@@ -91,6 +91,10 @@ export class ArrayUtils {
     return value !== undefined;
   };
 
+  public static notNullFilter = (value: any): boolean => {
+    return value !== null;
+  };
+
   public static withIdFilter = (value: any): boolean => {
     return value.id !== undefined && value.id !== null;
   };

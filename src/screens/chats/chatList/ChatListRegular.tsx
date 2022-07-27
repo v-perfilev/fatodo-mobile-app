@@ -1,7 +1,6 @@
-import {useTheme} from 'native-base';
+import {Box, useTheme} from 'native-base';
 import React, {ReactElement, useCallback, useEffect} from 'react';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {LayoutChangeEvent} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
@@ -15,28 +14,30 @@ import FlatList from '../../../components/surfaces/FlatList';
 const ChatListRegular = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
-  const [loading, setLoading] = useDelayedState();
   const chats = useAppSelector(ChatsSelectors.chats);
+  const loading = useAppSelector(ChatsSelectors.loading);
 
-  const loadChats = (): void => {
-    dispatch(ChatsThunks.fetchChats(chats.length))
-      .unwrap()
-      .finally(() => setLoading(false));
+  const load = async (): Promise<void> => {
+    await dispatch(ChatsThunks.fetchChats(chats.length));
   };
 
-  const refreshChats = (): Promise<any> => {
-    return dispatch(ChatsThunks.refreshChats());
+  const refresh = async (): Promise<void> => {
+    await dispatch(ChatsThunks.refreshChats());
   };
 
   useEffect(() => {
-    setLoading(true);
-    loadChats();
+    load().finally();
   }, []);
 
   const keyExtractor = useCallback((chat: Chat): string => chat.id, []);
-  const renderItem = useCallback((chat: Chat, onLayout: (event: LayoutChangeEvent) => void): ReactElement => {
-    return <ChatListItem onLayout={onLayout} chat={chat} style={ListUtils.itemStyle(theme)} />;
-  }, []);
+  const renderItem = useCallback(
+    (chat: Chat, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+      <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
+        <ChatListItem chat={chat} />
+      </Box>
+    ),
+    [],
+  );
 
   return (
     <ConditionalSpinner loading={loading}>
@@ -45,8 +46,8 @@ const ChatListRegular = () => {
         data={chats}
         render={renderItem}
         keyExtractor={keyExtractor}
-        onEndReached={loadChats}
-        refresh={refreshChats}
+        onEndReached={load}
+        refresh={refresh}
       />
     </ConditionalSpinner>
   );

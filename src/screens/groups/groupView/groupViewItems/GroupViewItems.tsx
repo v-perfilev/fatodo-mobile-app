@@ -1,5 +1,5 @@
 import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
-import {useTheme} from 'native-base';
+import {Box, useTheme} from 'native-base';
 import {LayoutChangeEvent} from 'react-native';
 import {useAppSelector} from '../../../../store/store';
 import GroupSelectors from '../../../../store/group/groupSelectors';
@@ -15,12 +15,12 @@ import FlatList from '../../../../components/surfaces/FlatList';
 
 type GroupViewItemsProps = {
   items: Item[];
-  loadMorePromise?: () => Promise<any>;
-  refreshPromise?: () => Promise<any>;
+  load?: () => Promise<any>;
+  refresh?: () => Promise<any>;
   header?: ReactElement;
 };
 
-const GroupViewItems = ({items, loadMorePromise, refreshPromise, header}: GroupViewItemsProps) => {
+const GroupViewItems = ({items, load, refresh, header}: GroupViewItemsProps) => {
   const theme = useTheme();
   const [loading, setLoading] = useDelayedState(items.length === 0);
   const account = useAppSelector(AuthSelectors.account);
@@ -28,15 +28,28 @@ const GroupViewItems = ({items, loadMorePromise, refreshPromise, header}: GroupV
 
   const canEdit = useMemo<boolean>(() => group && GroupUtils.canEdit(account, group), [group, account]);
 
+  /*
+  loaders
+   */
+
   const loadMore = (): void => {
-    loadMorePromise().then(() => setLoading(false));
+    load().then(() => setLoading(false));
   };
+
+  /*
+  stub, keyExtractor and renderItem
+   */
 
   const stub = loading ? <GroupViewItemsSkeleton /> : <GroupViewStub />;
   const keyExtractor = useCallback((item: Item): string => item.id, []);
-  const renderItem = useCallback((item: Item, onLayout: (event: LayoutChangeEvent) => void): ReactElement => {
-    return <GroupViewItem onLayout={onLayout} item={item} canEdit={canEdit} style={ListUtils.itemStyle(theme)} />;
-  }, []);
+  const renderItem = useCallback(
+    (item: Item, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+      <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
+        <GroupViewItem item={item} canEdit={canEdit} />
+      </Box>
+    ),
+    [],
+  );
 
   useEffect(() => {
     if (items.length === 0) {
@@ -52,7 +65,7 @@ const GroupViewItems = ({items, loadMorePromise, refreshPromise, header}: GroupV
       render={renderItem}
       keyExtractor={keyExtractor}
       onEndReached={loadMore}
-      refresh={refreshPromise}
+      refresh={refresh}
     />
   );
 };

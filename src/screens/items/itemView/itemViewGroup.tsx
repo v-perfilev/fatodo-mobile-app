@@ -10,7 +10,7 @@ const ItemViewGroup = () => {
 
   return (
     <LabeledBox label={t('item:labels.group')} isText>
-      {group.title}
+      {group?.title}
     </LabeledBox>
   );
 };

@@ -22,6 +22,7 @@ enum TYPES {
   FETCH_CHATS = 'chats/fetchChats',
   REFRESH_CHATS = 'chats/refreshChats',
   FETCH_FILTERED_CHATS = 'chats/fetchFilteredChats',
+  REFRESH_FILTERED_CHATS = 'chats/refreshFilteredChats',
   CREATE_DIRECT_CHAT = 'chats/createDirectChat',
   CREATE_INDIRECT_CHAT = 'chats/createIndirectChat',
   SEND_DIRECT_MESSAGE = 'chats/sendDirectMessage',
@@ -36,10 +37,7 @@ export class ChatsThunks {
   });
 
   static refreshChats = createAsyncThunk(TYPES.REFRESH_CHATS, async (_, thunkAPI) => {
-    const result = await ChatService.getAllChatsPageable();
-    const chatUserIds = ChatUtils.extractUserIds(result.data);
-    thunkAPI.dispatch(InfoThunks.handleUserIds(chatUserIds));
-    return result.data;
+    thunkAPI.dispatch(ChatsThunks.fetchChats(0));
   });
 
   static fetchFilteredChats = createAsyncThunk(TYPES.FETCH_FILTERED_CHATS, async (filter: string, thunkAPI) => {

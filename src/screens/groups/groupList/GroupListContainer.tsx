@@ -26,13 +26,17 @@ const GroupListContainer = ({sorting}: GroupListContainerProps) => {
 
   const goToGroupCreate = (): void => navigation.navigate('GroupCreate');
 
-  const refresh = (): Promise<any> => {
-    return dispatch(GroupsThunks.refreshGroups());
+  /*
+  loaders
+   */
+
+  const refresh = async (): Promise<void> => {
+    await dispatch(GroupsThunks.fetchGroups());
   };
 
-  const setGroups = (groups: Group[]): void => {
-    dispatch(GroupsActions.setGroups(groups));
-  };
+  /*
+  keyExtractor and renderItem
+   */
 
   const extractKey = (group: Group): string => group.id;
   const renderItem = (props: RenderItemParams<Group>) => {
@@ -42,7 +46,14 @@ const GroupListContainer = ({sorting}: GroupListContainerProps) => {
       </ScaleDecorator>
     );
   };
-  const handleDragEnd = ({data}: DragEndParams<Group>): void => setGroups(data);
+
+  /*
+  dragHandler
+   */
+
+  const handleDragEnd = ({data}: DragEndParams<Group>): void => {
+    dispatch(GroupsActions.setGroups(data));
+  };
 
   return (
     <FBox>

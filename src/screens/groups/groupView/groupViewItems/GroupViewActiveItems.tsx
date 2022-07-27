@@ -10,17 +10,17 @@ const GroupViewActiveItems = () => {
   const group = useAppSelector(GroupSelectors.group);
   const activeItems = useAppSelector(GroupSelectors.activeItems);
 
-  const loadMore = (): Promise<any> => {
-    return dispatch(GroupThunks.fetchActiveItems({groupId: group.id, offset: activeItems.length}));
+  const load = async (): Promise<void> => {
+    await dispatch(GroupThunks.fetchActiveItems({groupId: group.id, offset: activeItems.length}));
   };
 
-  const refresh = (): Promise<any> => {
-    return dispatch(GroupThunks.refreshActiveItems(group.id));
+  const refresh = async (): Promise<void> => {
+    await dispatch(GroupThunks.refreshActiveItems(group.id));
   };
 
   const header = <GroupViewCreateButton />;
 
-  return <GroupViewItems items={activeItems} loadMorePromise={loadMore} refreshPromise={refresh} header={header} />;
+  return <GroupViewItems items={activeItems} load={load} refresh={refresh} header={header} />;
 };
 
 export default GroupViewActiveItems;

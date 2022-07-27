@@ -35,6 +35,7 @@ enum TYPES {
   SELECT_CHAT = 'chat/selectChat',
   FETCH_CHAT = 'chat/fetchChat',
   FETCH_MESSAGES = 'chat/fetchMessages',
+  REFRESH_MESSAGES = 'chat/refreshMessages',
   MARK_AS_READ = 'chat/markAsRead',
   NO_REACTION = 'chat/noReaction',
   LIKE_REACTION = 'chat/likeReaction',
@@ -73,6 +74,10 @@ export class ChatThunks {
       return result.data;
     },
   );
+
+  static refreshMessages = createAsyncThunk(TYPES.REFRESH_MESSAGES, async (chatId: string, thunkAPI) => {
+    thunkAPI.dispatch(ChatThunks.fetchMessages({chatId, offset: 0}));
+  });
 
   static markMessageAsRead = createAsyncThunk(
     TYPES.MARK_AS_READ,

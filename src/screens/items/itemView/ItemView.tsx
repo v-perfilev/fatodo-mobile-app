@@ -5,7 +5,6 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ItemViewHeader from './ItemViewHeader';
 import ItemViewDescription from './ItemViewDescription';
-import ItemViewTags from './ItemViewTags';
 import ItemViewChanges from './ItemViewChanges';
 import ItemViewDate from './itemViewDate';
 import ItemViewPriority from './itemViewPriority';
@@ -16,7 +15,7 @@ import ItemViewName from './itemViewName';
 import FScrollView from '../../../components/boxes/FScrollView';
 import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
@@ -24,14 +23,11 @@ import ItemViewCorner from './ItemViewCorner';
 
 type ItemViewProps = WithItemProps;
 
-const ItemView = ({group, item, loading}: ItemViewProps) => {
-  const dispatch = useAppDispatch();
+const ItemView = ({group, loading}: ItemViewProps) => {
   const account = useAppSelector(AuthSelectors.account);
   const reminders = useAppSelector(ItemSelectors.reminders);
 
-  const showTags = item?.tags.length > 0;
   const showReminders = reminders?.length > 0;
-  const showDividerAfterDescription = showTags || showReminders;
 
   const theme = useMemo<Theme>(() => {
     return group ? ThemeFactory.getTheme(group?.color) : ThemeFactory.getDefaultTheme();
@@ -53,9 +49,8 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
             <ItemViewDate />
             <Divider bg="secondary.500" />
             <ItemViewDescription />
-            {showDividerAfterDescription && <Divider bg="secondary.500" />}
+            {showReminders && <Divider bg="secondary.500" />}
             {showReminders && <ItemReminders />}
-            {showTags && <ItemViewTags />}
             <Divider bg="secondary.500" />
             <ItemViewChanges />
           </FVStack>

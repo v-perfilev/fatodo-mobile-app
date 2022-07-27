@@ -132,10 +132,11 @@ const chatsSlice = createSlice({
     /*
     refreshChats
     */
-    builder.addCase(ChatsThunks.refreshChats.fulfilled, (state: ChatsState, action) => {
-      const chats = ChatUtils.filterChats(action.payload);
-      const allLoaded = action.payload.length === 0;
-      return {...state, chats, allLoaded};
+    builder.addCase(ChatsThunks.refreshChats.pending, (state: ChatsState) => {
+      const chats = [] as Chat[];
+      const loading = true;
+      const moreLoading = false;
+      return {...state, chats, loading, moreLoading};
     });
 
     /*

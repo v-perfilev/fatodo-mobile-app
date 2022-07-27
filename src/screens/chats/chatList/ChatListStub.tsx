@@ -1,13 +1,13 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text} from 'native-base';
 import FCenter from '../../../components/boxes/FCenter';
 
-const ChatListStub: FC = () => {
+const ChatListStub = () => {
   const {t} = useTranslation();
 
   return (
-    <FCenter grow mb="60px">
+    <FCenter grow>
       <Text>{t('chat:list.chatsNotFound')}</Text>
     </FCenter>
   );

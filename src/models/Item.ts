@@ -23,7 +23,6 @@ export interface Item extends AbstractAuditing {
   date?: DateParams;
   description?: string;
   reminders?: Reminder[];
-  tags?: string[];
   status: ItemStatusType;
   archived: boolean;
   groupId: string;

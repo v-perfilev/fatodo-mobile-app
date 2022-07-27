@@ -1,15 +1,13 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {IBoxProps, Text} from 'native-base';
+import {Text} from 'native-base';
 import FCenter from '../../../components/boxes/FCenter';
 
-type CommentListStubProps = IBoxProps;
-
-const CommentListStub = (props: CommentListStubProps) => {
+const CommentListStub = () => {
   const {t} = useTranslation();
 
   return (
-    <FCenter grow {...props}>
+    <FCenter grow>
       <Text>{t('comment:view.commentsNotFound')}</Text>
     </FCenter>
   );

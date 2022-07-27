@@ -139,6 +139,16 @@ const commentsSlice = createSlice({
       const moreLoading = false;
       return {...state, loading, moreLoading};
     });
+
+    /*
+    refreshComments
+    */
+    builder.addCase(CommentsThunks.refreshComments.pending, (state: CommentsState) => {
+      const comments = [] as Comment[];
+      const loading = true;
+      const moreLoading = false;
+      return {...state, comments, loading, moreLoading};
+    });
   },
 });
 

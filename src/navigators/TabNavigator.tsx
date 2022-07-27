@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {BottomTabNavigationProp, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TabNavigatorBar from '../components/layouts/TabNavigatorBar';
 import GroupNavigator from './GroupNavigator';
 import ContactNavigator from './ContactNavigator';
@@ -16,11 +16,11 @@ import AlarmIcon from '../components/icons/AlarmIcon';
 import EventList from '../screens/events/eventList/EventList';
 
 type TabParamList = {
-  Groups: undefined;
-  Events: undefined;
-  Chats: undefined;
-  Contacts: undefined;
-  Account: undefined;
+  Groups: any;
+  Events: any;
+  Chats: any;
+  Contacts: any;
+  Account: any;
 };
 
 type TabIconProps = {
@@ -30,6 +30,8 @@ type TabIconProps = {
 };
 
 const Tab = createBottomTabNavigator<TabParamList>();
+
+export type TabNavigationProp = BottomTabNavigationProp<TabParamList>;
 
 const groupsIcon = ({color, size}: TabIconProps): ReactNode => <GroupsIcon color={color} size={size} />;
 const eventsIcon = ({color, size}: TabIconProps): ReactNode => <AlarmIcon color={color} size={size} />;

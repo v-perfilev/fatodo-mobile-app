@@ -17,6 +17,11 @@ const ContactList = () => {
   const [loading, setLoading] = useDelayedState();
   const [filter, setFilter] = useState<string>('');
 
+  const load = async (): Promise<void> => {
+    setLoading(true);
+    await dispatch(ContactsThunks.fetchRelations());
+  };
+
   const resetUserRelations = (): void => {
     setUserRelations([]);
     setLoading(false);
@@ -32,8 +37,7 @@ const ContactList = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
-    dispatch(ContactsThunks.fetchRelations());
+    load().finally();
   }, []);
 
   useEffect(() => {
@@ -48,7 +52,7 @@ const ContactList = () => {
     <>
       <ContactListControl setFilter={setFilter} />
       <ConditionalSpinner loading={loading}>
-        <ContactListContainer relations={userRelations} filter={filter} />
+        <ContactListContainer load={load} relations={userRelations} filter={filter} />
       </ConditionalSpinner>
     </>
   );

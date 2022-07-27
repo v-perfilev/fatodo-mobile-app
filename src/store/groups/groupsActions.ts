@@ -30,7 +30,6 @@ export class GroupsActions {
 
 enum TYPES {
   FETCH_GROUPS = 'groups/fetchGroups',
-  REFRESH_GROUPS = 'groups/refreshGroups',
   FETCH_ITEMS = 'groups/fetchItems',
   DELETE_GROUP = 'groups/deleteGroup',
   LEAVE_GROUP = 'groups/leaveGroup',
@@ -41,16 +40,9 @@ export class GroupsThunks {
   static fetchGroups = createAsyncThunk(TYPES.FETCH_GROUPS, async (_, thunkAPI) => {
     const response = await ItemService.getAllGroups();
     const groupIds = response.data.map((g) => g.id);
-    thunkAPI.dispatch(GroupsThunks.fetchItems(groupIds));
-    const groupUserIds = response.data.flatMap((g) => g.members).map((m) => m.userId);
-    thunkAPI.dispatch(InfoThunks.handleUserIds(groupUserIds));
-    return response.data;
-  });
-
-  static refreshGroups = createAsyncThunk(TYPES.REFRESH_GROUPS, async (_, thunkAPI) => {
-    const response = await ItemService.getAllGroups();
-    const groupIds = response.data.map((g) => g.id);
-    thunkAPI.dispatch(GroupsThunks.fetchItems(groupIds));
+    if (groupIds.length > 0) {
+      thunkAPI.dispatch(GroupsThunks.fetchItems(groupIds));
+    }
     const groupUserIds = response.data.flatMap((g) => g.members).map((m) => m.userId);
     thunkAPI.dispatch(InfoThunks.handleUserIds(groupUserIds));
     return response.data;

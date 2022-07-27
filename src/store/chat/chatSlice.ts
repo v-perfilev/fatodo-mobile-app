@@ -207,6 +207,16 @@ const chatSlice = createSlice({
       const moreLoading = false;
       return {...state, loading, moreLoading};
     });
+
+    /*
+    refreshMessages
+    */
+    builder.addCase(ChatThunks.refreshMessages.pending, (state: ChatState) => {
+      const messages = [] as Message[];
+      const loading = true;
+      const moreLoading = false;
+      return {...state, messages, loading, moreLoading};
+    });
   },
 });
 

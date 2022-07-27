@@ -9,6 +9,7 @@ export class InfoUtils {
     const notAllowedIds = [...existingIds, ...loadingIds];
     return ids
       .filter(ArrayUtils.notUndefinedFilter)
+      .filter(ArrayUtils.notNullFilter)
       .filter(ArrayUtils.uniqueFilter)
       .filter((id) => !notAllowedIds.includes(id));
   };

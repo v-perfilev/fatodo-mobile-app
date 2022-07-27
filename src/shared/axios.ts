@@ -5,15 +5,18 @@ import {ResponseUtils} from './utils/ResponseUtils';
 import {TranslationUtils} from './utils/TranslationUtils';
 import {Snack, SnackBuilder} from '../models/Snack';
 import axiosRetry from 'axios-retry';
+import qs from 'qs';
 
 axios.defaults.timeout = API_TIMEOUT;
 axios.defaults.baseURL = API_URL;
+axios.defaults.paramsSerializer = (params: any) => qs.stringify(params, {arrayFormat: 'comma'});
 
 export const axiosDefault = axios.create();
 export const axiosIgnore404 = axios.create();
 
-axiosRetry(axiosDefault, {retryDelay: axiosRetry.exponentialDelay});
-axiosRetry(axiosIgnore404, {retryDelay: axiosRetry.exponentialDelay});
+const retryDelay = axiosRetry.exponentialDelay;
+axiosRetry(axiosDefault, {retryDelay});
+axiosRetry(axiosIgnore404, {retryDelay});
 
 interface SetupAxiosActions {
   onUnauthenticated: () => void;
@@ -27,15 +30,22 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
     enqueueSnack(snack);
   };
 
+  const logError = (response: AxiosResponse): void => {
+    console.warn(response.status, ': ', response.data.path, ' - ', response.data.message);
+  };
+
   const defaultHandleErrorFeedback = (response: AxiosResponse): void => {
     const status = ResponseUtils.getStatus(response);
     if (status >= 500) {
       enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('default'));
+      logError(response);
     } else if (!status) {
       enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('connection'));
+      logError(response);
     } else {
       const feedbackCode = ResponseUtils.getFeedbackCode(response);
       handleResponse(status, feedbackCode);
+      logError(response);
     }
   };
 
@@ -43,11 +53,14 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
     const status = ResponseUtils.getStatus(response);
     if (status >= 500) {
       enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('default'));
+      logError(response);
     } else if (!status) {
       enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('connection'));
+      logError(response);
     } else if (status !== 404) {
       const feedbackCode = ResponseUtils.getFeedbackCode(response);
       handleResponse(status, feedbackCode);
+      logError(response);
     }
   };
 
