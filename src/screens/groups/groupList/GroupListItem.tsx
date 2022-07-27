@@ -5,12 +5,10 @@ import {Group} from '../../../models/Group';
 import {Item} from '../../../models/Item';
 import {useAppSelector} from '../../../store/store';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
-import {IBoxProps} from 'native-base';
 
-type GroupListItemProps = IBoxProps &
-  RenderItemParams<Group> & {
-    sorting: boolean;
-  };
+type GroupListItemProps = RenderItemParams<Group> & {
+  sorting: boolean;
+};
 
 const GroupListItem = ({item: group, ...props}: GroupListItemProps) => {
   const listItems = useAppSelector(GroupsSelectors.items);

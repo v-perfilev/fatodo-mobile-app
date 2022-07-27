@@ -1,7 +1,7 @@
 import React from 'react';
 import {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
 import {Group} from '../../../models/Group';
-import {useTheme} from 'native-base';
+import {Box, useTheme} from 'native-base';
 import GroupListItem from './GroupListItem';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
@@ -42,7 +42,9 @@ const GroupListContainer = ({sorting}: GroupListContainerProps) => {
   const renderItem = (props: RenderItemParams<Group>) => {
     return (
       <ScaleDecorator activeScale={1.03}>
-        <GroupListItem sorting={sorting} style={ListUtils.itemStyle(theme)} {...props} />
+        <Box style={ListUtils.itemStyle(theme)}>
+          <GroupListItem sorting={sorting} {...props} />
+        </Box>
       </ScaleDecorator>
     );
   };

@@ -3,6 +3,10 @@ import {StyleProp, ViewStyle} from 'react-native';
 import {DEFAULT_SPACE, HALF_DEFAULT_SPACE} from '../../constants';
 
 export class ListUtils {
+  public static draggableStyle: StyleProp<ViewStyle> = {
+    height: '100%',
+  };
+
   public static containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
     padding: theme.sizes[DEFAULT_SPACE],
     paddingTop: theme.sizes[HALF_DEFAULT_SPACE],
