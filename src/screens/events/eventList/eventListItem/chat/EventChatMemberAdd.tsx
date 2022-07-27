@@ -6,6 +6,7 @@ import UserLink from '../../../../../components/links/UserLink';
 import ChatLink from '../../../../../components/links/ChatLink';
 import EventListItemUsers from '../EventListItemUsers';
 import EventListItemTemplate from '../EventListItemTemplate';
+import UserView from '../../../../../components/views/UserView';
 
 const EventChatMemberAdd = ({user, chat, users, date}: WithEventChatProps) => {
   const {t} = useTranslation();
@@ -16,13 +17,15 @@ const EventChatMemberAdd = ({user, chat, users, date}: WithEventChatProps) => {
   const Chat = (): ReactElement => <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink>;
   const Users = (): ReactElement => <EventListItemUsers users={users} />;
 
-  let content = (
+  const image = user ? <UserView user={user} picSize="md" /> : null;
+
+  const content = (
     <Text>
       <Trans i18nKey="event:chat.memberAdd.content" components={{user: <User />, chat: <Chat />, users: <Users />}} />
     </Text>
   );
 
-  return <EventListItemTemplate title={title} content={content} date={date} />;
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
 };
 
 export default withEventChat(EventChatMemberAdd);

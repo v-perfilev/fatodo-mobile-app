@@ -6,6 +6,7 @@ import UserLink from '../../../../../components/links/UserLink';
 import ChatLink from '../../../../../components/links/ChatLink';
 import EventListItemUsers from '../EventListItemUsers';
 import EventListItemTemplate from '../EventListItemTemplate';
+import UserView from '../../../../../components/views/UserView';
 
 const EventChatMemberDelete = ({user, chat, users, date}: WithEventChatProps) => {
   const {t} = useTranslation();
@@ -16,7 +17,9 @@ const EventChatMemberDelete = ({user, chat, users, date}: WithEventChatProps) =>
   const Chat = (): ReactElement => (chat ? <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink> : null);
   const Users = (): ReactElement => (users ? <EventListItemUsers users={users} /> : null);
 
-  let content = (
+  const image = user ? <UserView user={user} picSize="md" /> : null;
+
+  const content = (
     <Text>
       <Trans
         i18nKey="event:chat.memberDelete.content"
@@ -25,7 +28,7 @@ const EventChatMemberDelete = ({user, chat, users, date}: WithEventChatProps) =>
     </Text>
   );
 
-  return <EventListItemTemplate title={title} content={content} date={date} />;
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
 };
 
 export default withEventChat(EventChatMemberDelete);

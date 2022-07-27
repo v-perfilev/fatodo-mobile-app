@@ -10,6 +10,7 @@ import {LayoutChangeEvent} from 'react-native';
 import {Box, useTheme} from 'native-base';
 import EventListItem from './eventListItem/EventListItem';
 import {ListUtils} from '../../../shared/utils/ListUtils';
+import EventListSeparator from './EventListSeparator';
 
 const EventListContainer = () => {
   const dispatch = useAppDispatch();
@@ -58,6 +59,7 @@ const EventListContainer = () => {
       <ScrollCornerButton show={!hideScroll} scrollDown={scrollDown} />
       <FlatList
         inverted
+        ItemSeparatorComponent={EventListSeparator}
         data={events}
         render={renderItem}
         keyExtractor={keyExtractor}

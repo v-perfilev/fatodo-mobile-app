@@ -5,6 +5,7 @@ import React, {ReactElement} from 'react';
 import UserLink from '../../../../../components/links/UserLink';
 import ChatLink from '../../../../../components/links/ChatLink';
 import EventListItemTemplate from '../EventListItemTemplate';
+import UserView from '../../../../../components/views/UserView';
 
 const EventChatUpdate = ({user, chat, date}: WithEventChatProps) => {
   const {t} = useTranslation();
@@ -14,13 +15,15 @@ const EventChatUpdate = ({user, chat, date}: WithEventChatProps) => {
   const User = (): ReactElement => (user ? <UserLink user={user} /> : null);
   const Chat = (): ReactElement => (chat ? <ChatLink chat={chat} /> : null);
 
-  let content = (
+  const image = user ? <UserView user={user} picSize="md" /> : null;
+
+  const content = (
     <Text>
       <Trans i18nKey="event:chat.update.content" components={{user: <User />, chat: <Chat />}} />
     </Text>
   );
 
-  return <EventListItemTemplate title={title} content={content} date={date} />;
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
 };
 
 export default withEventChat(EventChatUpdate);

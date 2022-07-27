@@ -6,6 +6,7 @@ import UserLink from '../../../../../components/links/UserLink';
 import GroupLink from '../../../../../components/links/GroupLink';
 import ItemLink from '../../../../../components/links/ItemLink';
 import EventListItemTemplate from '../EventListItemTemplate';
+import UserView from '../../../../../components/views/UserView';
 
 const EventItemUpdate = ({user, group, item, date}: WithEventItemProps) => {
   const {t} = useTranslation();
@@ -16,13 +17,15 @@ const EventItemUpdate = ({user, group, item, date}: WithEventItemProps) => {
   const Group = (): ReactElement => (group ? <GroupLink group={group} /> : null);
   const Item = (): ReactElement => (item ? <ItemLink item={item} /> : null);
 
-  let content = (
+  const image = user ? <UserView user={user} picSize="md" /> : null;
+
+  const content = (
     <Text>
       <Trans i18nKey="event:item.update.content" components={{user: <User />, group: <Group />, item: <Item />}} />
     </Text>
   );
 
-  return <EventListItemTemplate title={title} content={content} date={date} />;
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
 };
 
 export default withEventItem(EventItemUpdate);

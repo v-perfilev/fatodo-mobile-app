@@ -6,6 +6,7 @@ import React, {ReactElement} from 'react';
 import ChatLink from '../../../../../components/links/ChatLink';
 import {Text} from 'native-base';
 import EventListItemUsers from '../EventListItemUsers';
+import UserView from '../../../../../components/views/UserView';
 
 const EventChatCreate = ({user, chat, users, date}: WithEventChatProps) => {
   const {t} = useTranslation();
@@ -16,13 +17,15 @@ const EventChatCreate = ({user, chat, users, date}: WithEventChatProps) => {
   const Chat = (): ReactElement => (chat ? <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink> : null);
   const Users = (): ReactElement => (users ? <EventListItemUsers users={users} /> : null);
 
-  let content = (
+  const image = user ? <UserView user={user} picSize="md" /> : null;
+
+  const content = (
     <Text>
       <Trans i18nKey="event:chat.create.content" components={{user: <User />, chat: <Chat />, users: <Users />}} />
     </Text>
   );
 
-  return <EventListItemTemplate title={title} content={content} date={date} />;
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
 };
 
 export default withEventChat(EventChatCreate);

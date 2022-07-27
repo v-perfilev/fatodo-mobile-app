@@ -4,6 +4,7 @@ import {Trans, useTranslation} from 'react-i18next';
 import React, {ReactElement} from 'react';
 import UserLink from '../../../../../components/links/UserLink';
 import EventListItemTemplate from '../EventListItemTemplate';
+import UserView from '../../../../../components/views/UserView';
 
 const EventContactAccept = ({firstUser, secondUser, date}: WithEventContactProps) => {
   const {t} = useTranslation();
@@ -13,7 +14,9 @@ const EventContactAccept = ({firstUser, secondUser, date}: WithEventContactProps
   const FirstUser = (): ReactElement => (firstUser ? <UserLink user={firstUser} /> : null);
   const SecondUser = (): ReactElement => (secondUser ? <UserLink user={secondUser} /> : null);
 
-  let content = (
+  const image = <UserView user={firstUser} picSize="md" />;
+
+  const content = (
     <Text>
       <Trans
         i18nKey="event:contact.accept.content"
@@ -22,7 +25,7 @@ const EventContactAccept = ({firstUser, secondUser, date}: WithEventContactProps
     </Text>
   );
 
-  return <EventListItemTemplate title={title} content={content} date={date} />;
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
 };
 
 export default withEventContact(EventContactAccept);

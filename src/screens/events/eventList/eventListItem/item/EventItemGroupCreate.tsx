@@ -5,6 +5,7 @@ import React, {ReactElement} from 'react';
 import UserLink from '../../../../../components/links/UserLink';
 import GroupLink from '../../../../../components/links/GroupLink';
 import EventListItemTemplate from '../EventListItemTemplate';
+import UserView from '../../../../../components/views/UserView';
 
 const EventItemGroupCreate = ({user, group, date}: WithEventItemProps) => {
   const {t} = useTranslation();
@@ -14,13 +15,15 @@ const EventItemGroupCreate = ({user, group, date}: WithEventItemProps) => {
   const User = (): ReactElement => (user ? <UserLink user={user} /> : null);
   const Group = (): ReactElement => (group ? <GroupLink group={group} /> : null);
 
-  let content = (
+  const image = user ? <UserView user={user} picSize="md" /> : null;
+
+  const content = (
     <Text>
       <Trans i18nKey="event:item.groupCreate.content" components={{user: <User />, group: <Group />}} />
     </Text>
   );
 
-  return <EventListItemTemplate title={title} content={content} date={date} />;
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
 };
 
 export default withEventItem(EventItemGroupCreate);
