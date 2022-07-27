@@ -15,7 +15,9 @@ class GroupsSelectors {
   static itemsCollapsed = createSelector(getGroupsState, (state) => new Map(state.itemsCollapsed));
 
   static itemsAllCollapsed = createSelector(getGroupsState, (state) =>
-    Array.from(new Map(state.itemsCollapsed).values()).reduce((acc, val) => acc && val, true),
+    state.itemsCollapsed.length > 0
+      ? Array.from(new Map(state.itemsCollapsed).values()).reduce((acc, val) => acc && val, true)
+      : false,
   );
 
   static itemsLoading = createSelector(getGroupsState, (state) => new Map(state.itemsLoading));

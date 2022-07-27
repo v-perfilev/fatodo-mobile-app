@@ -3,23 +3,23 @@ import {IIconProps, PresenceTransition} from 'native-base';
 import ArrowDownIcon from './ArrowDownIcon';
 
 type CollapsedIconProps = IIconProps & {
-  visible: boolean;
+  hidden: boolean;
 };
 
-const CollapsedIcon = ({visible, ...props}: CollapsedIconProps) => {
+const CollapsedIcon = ({hidden, ...props}: CollapsedIconProps) => {
   const initial = {
-    rotate: '0deg',
+    rotate: '180deg',
   };
 
   const animate = {
-    rotate: '180deg',
+    rotate: '360deg',
     transition: {
       duration: 300,
     },
   };
 
   return (
-    <PresenceTransition visible={visible} initial={initial} animate={animate}>
+    <PresenceTransition visible={!hidden} initial={initial} animate={animate}>
       <ArrowDownIcon {...props} />
     </PresenceTransition>
   );

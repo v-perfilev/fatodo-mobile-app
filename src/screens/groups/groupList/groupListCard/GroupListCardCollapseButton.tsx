@@ -29,7 +29,7 @@ const GroupListCardCollapseButton = ({group, collapsed}: GroupListCardCollapseBu
       colorScheme="white"
       size="xl"
       p="0.5"
-      icon={<CollapsedIcon visible={!collapsed} />}
+      icon={<CollapsedIcon hidden={!collapsed} />}
       onPress={handlePress}
     />
   );

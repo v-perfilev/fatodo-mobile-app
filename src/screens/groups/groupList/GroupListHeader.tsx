@@ -76,7 +76,7 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
             colorScheme="white"
             size="2xl"
             p="1"
-            icon={<CollapsedIcon visible={!allCollapsed} />}
+            icon={<CollapsedIcon hidden={!allCollapsed} />}
             onPress={switchCollapsed}
           />
         </>
