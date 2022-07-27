@@ -48,7 +48,8 @@ export class GroupsThunks {
 
   static fetchItems = createAsyncThunk(TYPES.FETCH_ITEMS, async (groupIds: string[], thunkAPI) => {
     const response = await ItemService.getPreviewItemsByGroupIds(groupIds);
-    const itemUserIds = Array.from(response.data.values())
+    const pageableListMap = new Map(Object.entries(response.data));
+    const itemUserIds = Array.from(pageableListMap.values())
       .flatMap((g) => g.data)
       .flatMap((i) => [i.createdBy, i.lastModifiedBy]);
     thunkAPI.dispatch(InfoThunks.handleUserIds(itemUserIds));
