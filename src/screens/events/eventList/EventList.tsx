@@ -1,20 +1,17 @@
 import React, {useEffect} from 'react';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import Header from '../../../components/layouts/Header';
-import {useAppDispatch} from '../../../store/store';
-import {useDelayedState} from '../../../shared/hooks/useDelayedState';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {EventsThunks} from '../../../store/events/eventsActions';
 import EventListContainer from './EventListContainer';
+import EventsSelectors from '../../../store/events/eventsSelectors';
 
 const EventList = () => {
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useDelayedState();
+  const loading = useAppSelector(EventsSelectors.loading);
 
   useEffect(() => {
-    setLoading(true);
-    dispatch(EventsThunks.fetchEvents(0))
-      .unwrap()
-      .finally(() => setLoading(false));
+    dispatch(EventsThunks.fetchEvents(0));
   }, []);
 
   return (
