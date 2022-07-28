@@ -4,7 +4,8 @@ import {AxiosPromise} from 'axios';
 type WithId = {id: string};
 
 export class InfoUtils {
-  public static extractIdsToLoad = <T>(ids: string[], map: [string, T][], loadingIds: string[]): string[] => {
+  public static extractIdsToLoad = <T>(ids: string[], entries: [string, T][], loadingIds: string[]): string[] => {
+    const map = new Map(entries);
     const existingIds = Array.from(map.keys());
     const notAllowedIds = [...existingIds, ...loadingIds];
     return ids
