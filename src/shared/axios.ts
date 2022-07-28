@@ -25,13 +25,21 @@ interface SetupAxiosActions {
 }
 
 export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleResponse}: SetupAxiosActions): void => {
-  const enqueueErrorNotification = (message: string): void => {
-    const snack = new SnackBuilder(message).setVariantColor('error').build();
-    enqueueSnack(snack);
+  const logRequest = (request: AxiosRequestConfig): void => {
+    const consoleMsg = `Request sent: ${request.method.toUpperCase()} ${request.url}`;
+    console.info(consoleMsg);
   };
 
   const logError = (response: AxiosResponse): void => {
-    console.warn(response.status, ': ', response.data.path, ' - ', response.data.message);
+    const responsePath = response.data.path || 'unknown path';
+    const responseMsg = response.data.message || 'no message';
+    const consoleMsg = `Request failed: ${responsePath} - ${response.status}:  ${responseMsg}`;
+    console.warn(consoleMsg);
+  };
+
+  const enqueueErrorNotification = (message: string): void => {
+    const snack = new SnackBuilder(message).setVariantColor('error').build();
+    enqueueSnack(snack);
   };
 
   const defaultHandleErrorFeedback = (response: AxiosResponse): void => {
@@ -88,6 +96,7 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
     if (token) {
       request.headers.authorization = `Bearer ${token}`;
     }
+    logRequest(request);
     return request;
   };
 
