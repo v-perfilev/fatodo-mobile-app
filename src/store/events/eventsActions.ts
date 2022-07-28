@@ -2,9 +2,12 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import EventService from '../../services/EventService';
 import {EventUtils} from '../../shared/utils/EventUtils';
 import {InfoThunks} from '../info/infoActions';
+import {Event} from '../../models/Event';
 
 enum TYPES {
   FETCH_EVENTS = 'events/fetchEvents',
+  ADD_EVENT = 'events/addEvent',
+  LOAD_DEPENDENCIES = 'events/loadDependencies',
   FETCH_UNREAD_COUNT = 'events/getUnreadCount',
   REFRESH_UNREAD_COUNT = 'events/refreshUnreadCount',
 }
@@ -12,25 +15,34 @@ enum TYPES {
 export class EventsThunks {
   static fetchEvents = createAsyncThunk(TYPES.FETCH_EVENTS, async (offset: number, thunkAPI) => {
     const response = await EventService.getEventsPageable(offset);
+    thunkAPI.dispatch(EventsThunks.loadDependencies(response.data.data));
+    return response.data;
+  });
+
+  static addEvent = createAsyncThunk(TYPES.ADD_EVENT, async (event: Event, thunkAPI) => {
+    thunkAPI.dispatch(EventsThunks.loadDependencies([event]));
+    return event;
+  });
+
+  static loadDependencies = createAsyncThunk(TYPES.LOAD_DEPENDENCIES, async (events: Event[], thunkAPI) => {
     // handle userIds
-    const userIds = EventUtils.extractEventsUserIds(response.data.data);
+    const userIds = EventUtils.extractEventsUserIds(events);
     thunkAPI.dispatch(InfoThunks.handleUserIds(userIds));
     // handle groupIds
-    const groupIds = EventUtils.extractEventsGroupIds(response.data.data);
+    const groupIds = EventUtils.extractEventsGroupIds(events);
     thunkAPI.dispatch(InfoThunks.handleGroupIds(groupIds));
     // handle itemIds
-    const itemIds = EventUtils.extractEventsItemIds(response.data.data);
+    const itemIds = EventUtils.extractEventsItemIds(events);
     thunkAPI.dispatch(InfoThunks.handleItemIds(itemIds));
     // handle chatIds
-    const chatIds = EventUtils.extractEventsChatIds(response.data.data);
+    const chatIds = EventUtils.extractEventsChatIds(events);
     thunkAPI.dispatch(InfoThunks.handleChatIds(chatIds));
     // handle messageIds
-    const messageIds = EventUtils.extractEventsMessageIds(response.data.data);
+    const messageIds = EventUtils.extractEventsMessageIds(events);
     thunkAPI.dispatch(InfoThunks.handleMessageIds(messageIds));
     // handle commentIds
-    const commentIds = EventUtils.extractEventsCommentIds(response.data.data);
+    const commentIds = EventUtils.extractEventsCommentIds(events);
     thunkAPI.dispatch(InfoThunks.handleCommentIds(commentIds));
-    return response.data;
   });
 
   static fetchUnreadCount = createAsyncThunk(TYPES.FETCH_UNREAD_COUNT, async () => {

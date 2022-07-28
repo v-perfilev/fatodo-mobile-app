@@ -14,9 +14,7 @@ const initialState: EventsState = {
 const eventsSlice = createSlice({
   name: 'events',
   initialState,
-  reducers: {
-    // TODO
-  },
+  reducers: {},
   extraReducers: (builder) => {
     /*
     fetchEvents
@@ -37,6 +35,17 @@ const eventsSlice = createSlice({
       ...state,
       loading: false,
     }));
+
+    /*
+    addEvent
+    */
+    builder.addCase(EventsThunks.addEvent.fulfilled, (state: EventsState, action) => {
+      const event = action.payload;
+      const events = EventUtils.filterEvents([...state.events, event]);
+      const count = state.count + 1;
+      const unreadCount = state.unreadCount + 1;
+      return {...state, events, count, unreadCount};
+    });
 
     /*
     fetchUnreadCount
