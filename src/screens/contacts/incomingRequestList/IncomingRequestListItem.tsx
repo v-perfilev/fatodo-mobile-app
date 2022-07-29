@@ -1,32 +1,37 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import UserView from '../../../components/views/UserView';
 import FHStack from '../../../components/boxes/FHStack';
-import {ContactRequestWithUser} from '../../../models/ContactRequest';
-import {useAppDispatch} from '../../../store/store';
+import {ContactRequest} from '../../../models/ContactRequest';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {MenuElement} from '../../../models/MenuElement';
 import CheckIcon from '../../../components/icons/CheckIcon';
 import CloseIcon from '../../../components/icons/CloseIcon';
 import ControlMenu from '../../../components/layouts/ControlMenu';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import InfoSelectors from '../../../store/info/infoSelectors';
+import {User} from '../../../models/User';
 
 type IncomingRequestListItemProps = {
-  request: ContactRequestWithUser;
+  request: ContactRequest;
 };
 
 const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
   const dispatch = useAppDispatch();
+  const users = useAppSelector(InfoSelectors.users);
   const [disabled, setDisabled] = useState(false);
+
+  const user = useMemo<User>(() => users.get(request.requesterId), [users]);
 
   const acceptRequest = (): void => {
     setDisabled(true);
-    dispatch(ContactsThunks.acceptIncomingRequest(request.user.id))
+    dispatch(ContactsThunks.acceptIncomingRequest(request.requesterId))
       .unwrap()
       .catch(() => setDisabled(false));
   };
 
   const declineRequest = (): void => {
     setDisabled(true);
-    dispatch(ContactsThunks.declineIncomingRequest(request.user.id))
+    dispatch(ContactsThunks.declineIncomingRequest(request.requesterId))
       .unwrap()
       .catch(() => setDisabled(false));
   };
@@ -48,7 +53,7 @@ const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
   return (
     <FHStack defaultSpace alignItems="center">
       <FHStack grow>
-        <UserView user={request.user} withUsername picSize="md" />
+        <UserView user={user} withUsername picSize="md" />
       </FHStack>
       <ControlMenu menu={menuElements} />
     </FHStack>

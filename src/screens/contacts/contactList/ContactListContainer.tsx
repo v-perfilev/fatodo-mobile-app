@@ -1,6 +1,6 @@
 import React, {memo, ReactElement, useCallback, useEffect, useState} from 'react';
 import FBox from '../../../components/boxes/FBox';
-import {ContactRelationWithUser} from '../../../models/ContactRelation';
+import {ContactRelation} from '../../../models/ContactRelation';
 import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
 import CornerButton from '../../../components/controls/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
@@ -10,25 +10,33 @@ import {LayoutChangeEvent} from 'react-native';
 import {Box, useTheme} from 'native-base';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import ContactListItem from './ContactListItem';
+import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import InfoSelectors from '../../../store/info/infoSelectors';
 
 type ContactListContainerProps = {
-  load: () => Promise<void>;
-  relations: ContactRelationWithUser[];
+  relations: ContactRelation[];
   filter: string;
 };
 
-const CommentListContainer = ({load, relations, filter}: ContactListContainerProps) => {
+const CommentListContainer = ({relations, filter}: ContactListContainerProps) => {
+  const dispatch = useAppDispatch();
   const theme = useTheme();
-  const [relationsToShow, setRelationsToShow] = useState<ContactRelationWithUser[]>([]);
   const {showContactRequestDialog} = useContactDialogContext();
+  const users = useAppSelector(InfoSelectors.users);
+  const [relationsToShow, setRelationsToShow] = useState<ContactRelation[]>([]);
 
   const openContactRequestDialog = (): void => {
     showContactRequestDialog();
   };
 
-  const keyExtractor = useCallback((relation: ContactRelationWithUser): string => relation.id, []);
+  const refresh = async (): Promise<void> => {
+    await dispatch(ContactsThunks.fetchRelations());
+  };
+
+  const keyExtractor = useCallback((relation: ContactRelation): string => relation.id, []);
   const renderItem = useCallback(
-    (relation: ContactRelationWithUser, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    (relation: ContactRelation, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
         <ContactListItem relation={relation} />
       </Box>
@@ -38,7 +46,8 @@ const CommentListContainer = ({load, relations, filter}: ContactListContainerPro
 
   useEffect(() => {
     const filteredRelations = relations.filter((r) => {
-      const str = r.user.username + r.user.firstname + r.user.lastname;
+      const user = users.get(r.secondUserId);
+      const str = user?.username + user?.firstname + user?.lastname;
       return str.includes(filter);
     });
     setRelationsToShow(filteredRelations);
@@ -52,7 +61,7 @@ const CommentListContainer = ({load, relations, filter}: ContactListContainerPro
         data={relationsToShow}
         render={renderItem}
         keyExtractor={keyExtractor}
-        refresh={load}
+        refresh={refresh}
       />
     </FBox>
   );

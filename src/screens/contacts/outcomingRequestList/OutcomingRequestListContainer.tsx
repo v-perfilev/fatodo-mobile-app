@@ -1,19 +1,25 @@
 import React, {ReactElement, useCallback} from 'react';
-import {ContactRequestWithUser} from '../../../models/ContactRequest';
+import {ContactRequest, ContactRequestWithUser} from '../../../models/ContactRequest';
 import OutcomingRequestListItem from './OutcomingRequestListItem';
 import {Box, useTheme} from 'native-base';
 import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
-import IncomingRequestListStub from '../incomingRequestList/IncomingRequestListStub';
 import FlatList from '../../../components/surfaces/FlatList';
+import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {useAppDispatch} from '../../../store/store';
+import OutcomingRequestListStub from './OutcomingRequestListStub';
 
 type OutcomingRequestListContainerProps = {
-  load: () => Promise<void>;
-  requests: ContactRequestWithUser[];
+  requests: ContactRequest[];
 };
 
-const OutcomingRequestListContainer = ({load, requests}: OutcomingRequestListContainerProps) => {
+const OutcomingRequestListContainer = ({requests}: OutcomingRequestListContainerProps) => {
+  const dispatch = useAppDispatch();
   const theme = useTheme();
+
+  const refresh = async (): Promise<void> => {
+    await dispatch(ContactsThunks.fetchOutcomingRequests());
+  };
 
   const keyExtractor = useCallback((relation: ContactRequestWithUser): string => relation.id, []);
   const renderItem = useCallback(
@@ -27,11 +33,11 @@ const OutcomingRequestListContainer = ({load, requests}: OutcomingRequestListCon
 
   return (
     <FlatList
-      ListEmptyComponent={<IncomingRequestListStub />}
+      ListEmptyComponent={<OutcomingRequestListStub />}
       data={requests}
       render={renderItem}
       keyExtractor={keyExtractor}
-      refresh={load}
+      refresh={refresh}
     />
   );
 };
