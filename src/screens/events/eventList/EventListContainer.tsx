@@ -24,8 +24,8 @@ const EventListContainer = () => {
   loaders
    */
 
-  const load = (): void => {
-    dispatch(EventsThunks.fetchEvents(events.length));
+  const load = async (): Promise<void> => {
+    await dispatch(EventsThunks.fetchEvents(events.length));
   };
 
   const refresh = async (): Promise<void> => {
