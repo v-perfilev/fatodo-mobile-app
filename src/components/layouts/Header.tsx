@@ -29,9 +29,7 @@ const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle
   const goBack = useCallback(() => navigation.goBack(), [isFocused]);
 
   useEffect(() => {
-    if (isFocused) {
-      setCanGoBack(navigation.canGoBack());
-    }
+    isFocused && setCanGoBack(navigation.canGoBack());
   }, [isFocused]);
 
   return (

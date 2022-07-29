@@ -13,12 +13,12 @@ export default class EventService {
   };
 
   public static getUnreadCount = (): AxiosPromise<number> => {
-    const url = EventService.baseUrl + '/unread';
+    const url = EventService.baseUrl + '/user-event/unread';
     return axios.get(url);
   };
 
   public static refresh = (): AxiosPromise<void> => {
-    const url = EventService.baseUrl + '/refresh';
+    const url = EventService.baseUrl + '/user-event/refresh';
     return axios.get(url);
   };
 }

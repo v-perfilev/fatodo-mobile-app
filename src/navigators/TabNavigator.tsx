@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useCallback} from 'react';
 import {BottomTabNavigationProp, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TabNavigatorBar from '../components/layouts/TabNavigatorBar';
 import GroupNavigator from './GroupNavigator';
@@ -14,6 +14,11 @@ import AccountIcon from '../components/icons/AccountIcon';
 import AccountNavigator from './AccountNavigator';
 import AlarmIcon from '../components/icons/AlarmIcon';
 import EventList from '../screens/events/eventList/EventList';
+import {Badge, Box} from 'native-base';
+import {useAppSelector} from '../store/store';
+import EventsSelectors from '../store/events/eventsSelectors';
+import ChatsSelectors from '../store/chats/chatsSelectors';
+import ContactsSelectors from '../store/contacts/contactsSelectors';
 
 type TabParamList = {
   Groups: any;
@@ -41,14 +46,29 @@ const accountIcon = ({color, size}: TabIconProps): ReactNode => <AccountIcon col
 
 const TabNavigator = () => {
   const {theme} = useTabBarContext();
+  const unreadEventCount = useAppSelector(EventsSelectors.unreadCount);
+  const unreadMessageCount = useAppSelector(ChatsSelectors.totalUnreadMessageCount);
+  const incomingRequestCount = useAppSelector(ContactsSelectors.incomingRequestCount);
   const color = theme?.colors.primary['500'] || 'primary.500';
 
   return (
     <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Events" tabBar={TabNavigatorBar(color)}>
       <Tab.Screen name="Groups" component={GroupNavigator} options={{tabBarIcon: groupsIcon}} />
-      <Tab.Screen name="Events" component={EventList} options={{tabBarIcon: eventsIcon}} />
-      <Tab.Screen name="Chats" component={ChatList} options={{tabBarIcon: chatsIcon}} />
-      <Tab.Screen name="Contacts" component={ContactNavigator} options={{tabBarIcon: contactsIcon}} />
+      <Tab.Screen
+        name="Events"
+        component={EventList}
+        options={{tabBarIcon: eventsIcon, tabBarBadge: unreadEventCount}}
+      />
+      <Tab.Screen
+        name="Chats"
+        component={ChatList}
+        options={{tabBarIcon: chatsIcon, tabBarBadge: unreadMessageCount}}
+      />
+      <Tab.Screen
+        name="Contacts"
+        component={ContactNavigator}
+        options={{tabBarIcon: contactsIcon, tabBarBadge: incomingRequestCount}}
+      />
       <Tab.Screen name="Account" component={AccountNavigator} options={{tabBarIcon: accountIcon}} />
     </Tab.Navigator>
   );

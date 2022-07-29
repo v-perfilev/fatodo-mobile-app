@@ -10,6 +10,8 @@ class ContactsSelectors {
     incomingRequestCount: state.incomingRequestCount,
   }));
 
+  static incomingRequestCount = createSelector(getContactsState, (state) => state.incomingRequestCount);
+
   static relations = createSelector(getContactsState, (state) => state.relations);
 
   static outcomingRequests = createSelector(getContactsState, (state) => state.outcomingRequests);
