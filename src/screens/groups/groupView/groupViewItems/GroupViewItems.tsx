@@ -7,7 +7,6 @@ import GroupViewItem from '../groupViewItem/GroupViewItem';
 import {Item} from '../../../../models/Item';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import AuthSelectors from '../../../../store/auth/authSelectors';
-import GroupViewItemsSkeleton from '../skeletons/GroupViewItemsSkeleton';
 import GroupViewStub from './GroupViewStub';
 import {ListUtils} from '../../../../shared/utils/ListUtils';
 import FlatList from '../../../../components/surfaces/FlatList';
@@ -16,15 +15,13 @@ type GroupViewItemsProps = {
   items: Item[];
   load: () => Promise<void>;
   refresh: () => Promise<void>;
-  loading: boolean;
   header?: ReactElement;
 };
 
-const GroupViewItems = ({items, load, refresh, loading: itemsLoading, header}: GroupViewItemsProps) => {
+const GroupViewItems = ({items, load, refresh, header}: GroupViewItemsProps) => {
   const theme = useTheme();
   const account = useAppSelector(AuthSelectors.account);
   const group = useAppSelector(GroupSelectors.group);
-  const loading = useAppSelector(GroupSelectors.loading);
 
   const canEdit = useMemo<boolean>(() => group && GroupUtils.canEdit(account, group), [group, account]);
 
@@ -32,7 +29,6 @@ const GroupViewItems = ({items, load, refresh, loading: itemsLoading, header}: G
   stub, keyExtractor and renderItem
    */
 
-  const stub = loading || itemsLoading ? <GroupViewItemsSkeleton /> : <GroupViewStub />;
   const keyExtractor = useCallback((item: Item): string => item.id, []);
   const renderItem = useCallback(
     (item: Item, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
@@ -52,7 +48,7 @@ const GroupViewItems = ({items, load, refresh, loading: itemsLoading, header}: G
   return (
     <FlatList
       ListHeaderComponent={header}
-      ListEmptyComponent={stub}
+      ListEmptyComponent={<GroupViewStub />}
       data={items}
       render={renderItem}
       keyExtractor={keyExtractor}

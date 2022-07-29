@@ -12,9 +12,7 @@ const IncomingRequestList = () => {
   const [loading, setLoading] = useDelayedState();
 
   useEffect(() => {
-    dispatch(ContactsThunks.fetchIncomingRequests())
-      .unwrap()
-      .finally(() => setLoading(false));
+    dispatch(ContactsThunks.fetchIncomingRequests()).finally(() => setLoading(false));
   }, []);
 
   return (

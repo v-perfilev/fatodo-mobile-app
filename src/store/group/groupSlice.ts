@@ -112,15 +112,6 @@ const groupSlice = createSlice({
     }));
 
     /*
-    refreshActiveItems
-    */
-    builder.addCase(GroupThunks.refreshActiveItems.pending, (state: GroupState) => ({
-      ...state,
-      activeItems: [],
-      activeItemsCount: 0,
-    }));
-
-    /*
     fetchArchivedItems
     */
     builder.addCase(GroupThunks.fetchArchivedItems.pending, (state: GroupState) => ({
@@ -135,15 +126,6 @@ const groupSlice = createSlice({
     builder.addCase(GroupThunks.fetchArchivedItems.rejected, (state: GroupState) => ({
       ...state,
       archivedItemsLoading: false,
-    }));
-
-    /*
-    refreshArchivedItems
-    */
-    builder.addCase(GroupThunks.refreshArchivedItems.pending, (state: GroupState) => ({
-      ...state,
-      archivedItems: [],
-      archivedItemsCount: 0,
     }));
 
     /*

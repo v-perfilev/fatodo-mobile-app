@@ -14,9 +14,7 @@ const ContactList = () => {
   const [filter, setFilter] = useState<string>('');
 
   useEffect(() => {
-    dispatch(ContactsThunks.fetchRelations())
-      .unwrap()
-      .finally(() => setLoading(false));
+    dispatch(ContactsThunks.fetchRelations()).finally(() => setLoading(false));
   }, []);
 
   return (

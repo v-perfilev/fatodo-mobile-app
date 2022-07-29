@@ -12,9 +12,7 @@ const OutcomingRequestList = () => {
   const [loading, setLoading] = useDelayedState();
 
   useEffect(() => {
-    dispatch(ContactsThunks.fetchOutcomingRequests())
-      .unwrap()
-      .finally(() => setLoading(false));
+    dispatch(ContactsThunks.fetchOutcomingRequests()).finally(() => setLoading(false));
   }, []);
 
   return (

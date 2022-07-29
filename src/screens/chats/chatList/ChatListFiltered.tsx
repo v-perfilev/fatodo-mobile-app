@@ -10,6 +10,7 @@ import {Box, useTheme} from 'native-base';
 import {ChatsThunks} from '../../../store/chats/chatsActions';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import FlatList from '../../../components/surfaces/FlatList';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
 type ChatListFilteredProps = {
   filter: string;
@@ -19,7 +20,7 @@ const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const filteredChats = useAppSelector(ChatsSelectors.filteredChats);
-  const loading = useAppSelector(ChatsSelectors.loading);
+  const [loading, setLoading] = useDelayedState();
 
   const load = async (): Promise<void> => {
     await dispatch(ChatsThunks.fetchFilteredChats(filter));
@@ -36,7 +37,7 @@ const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
   );
 
   useEffect(() => {
-    load().finally();
+    load().finally(() => setLoading(false));
   }, [filter]);
 
   return (

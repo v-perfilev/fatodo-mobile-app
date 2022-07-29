@@ -2,23 +2,23 @@ import React, {useEffect, useState} from 'react';
 import GroupListContainer from './GroupListContainer';
 import GroupListHeader from './GroupListHeader';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import GroupsSelectors from '../../../store/groups/groupsSelectors';
+import {useAppDispatch} from '../../../store/store';
 import {GroupsThunks} from '../../../store/groups/groupsActions';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
 const GroupList = () => {
   const dispatch = useAppDispatch();
-  const groupsLoading = useAppSelector(GroupsSelectors.loading);
   const [sorting, setSorting] = useState<boolean>(false);
+  const [loading, setLoading] = useDelayedState();
 
   useEffect(() => {
-    dispatch(GroupsThunks.fetchGroups());
+    dispatch(GroupsThunks.fetchGroups()).finally(() => setLoading(false));
   }, []);
 
   return (
     <>
       <GroupListHeader sorting={sorting} setSorting={setSorting} />
-      <ConditionalSpinner loading={groupsLoading}>
+      <ConditionalSpinner loading={loading}>
         <GroupListContainer sorting={sorting} />
       </ConditionalSpinner>
     </>

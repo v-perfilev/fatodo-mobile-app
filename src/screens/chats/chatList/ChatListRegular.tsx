@@ -10,12 +10,13 @@ import ChatListItem from './ChatListItem';
 import {ChatsThunks} from '../../../store/chats/chatsActions';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import FlatList from '../../../components/surfaces/FlatList';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
 const ChatListRegular = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const chats = useAppSelector(ChatsSelectors.chats);
-  const loading = useAppSelector(ChatsSelectors.loading);
+  const [loading, setLoading] = useDelayedState();
 
   const load = async (): Promise<void> => {
     await dispatch(ChatsThunks.fetchChats(chats.length));
@@ -26,7 +27,7 @@ const ChatListRegular = () => {
   };
 
   useEffect(() => {
-    load().finally();
+    load().finally(() => setLoading(false));
   }, []);
 
   const keyExtractor = useCallback((chat: Chat): string => chat.id, []);

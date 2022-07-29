@@ -11,9 +11,7 @@ const EventList = () => {
   const [loading, setLoading] = useDelayedState();
 
   useEffect(() => {
-    dispatch(EventsThunks.fetchEvents(0))
-      .unwrap()
-      .finally(() => setLoading(false));
+    dispatch(EventsThunks.fetchEvents(0)).finally(() => setLoading(false));
   }, []);
 
   return (
