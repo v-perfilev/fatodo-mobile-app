@@ -32,7 +32,7 @@ enum TYPES {
 export class InfoThunks {
   /*
   Users
-   */
+  */
   static handleUserIds = createAsyncThunk(TYPES.HANDLE_USER_IDS, async (ids: string[], thunkAPI) => {
     const {users, loadingUserIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, users, loadingUserIds);
@@ -45,7 +45,7 @@ export class InfoThunks {
 
   /*
   Groups
-   */
+  */
   static handleGroupIds = createAsyncThunk(TYPES.HANDLE_GROUP_IDS, async (ids: string[], thunkAPI) => {
     const {groups, loadingGroupIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, groups, loadingGroupIds);
@@ -58,7 +58,7 @@ export class InfoThunks {
 
   /*
   Items
-   */
+  */
   static handleItemIds = createAsyncThunk(TYPES.HANDLE_ITEM_IDS, async (ids: string[], thunkAPI) => {
     const {items, loadingItemIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, items, loadingItemIds);
@@ -71,7 +71,7 @@ export class InfoThunks {
 
   /*
   Chats
-   */
+  */
   static handleChatIds = createAsyncThunk(TYPES.HANDLE_CHAT_IDS, async (ids: string[], thunkAPI) => {
     const {chats, loadingChatIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, chats, loadingChatIds);
@@ -84,7 +84,7 @@ export class InfoThunks {
 
   /*
   Messages
-   */
+  */
   static handleMessageIds = createAsyncThunk(TYPES.HANDLE_MESSAGE_IDS, async (ids: string[], thunkAPI) => {
     const {messages, loadingMessageIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, messages, loadingMessageIds);
@@ -97,7 +97,7 @@ export class InfoThunks {
 
   /*
   Comments
-   */
+  */
   static handleCommentIds = createAsyncThunk(TYPES.HANDLE_COMMENT_IDS, async (ids: string[], thunkAPI) => {
     const {comments, loadingCommentIds} = (thunkAPI.getState() as RootState).info;
     const idsToLoad = InfoUtils.extractIdsToLoad(ids, comments, loadingCommentIds);

@@ -17,10 +17,10 @@ interface ChatCreatePayload {
 }
 
 const initialState: ChatsState = {
-  totalUnreadMessageCount: 0,
-  unreadMessageCountMap: [],
   chats: [],
   filteredChats: [],
+  unreadCount: 0,
+  unreadMap: [],
   loading: false,
   moreLoading: false,
   allLoaded: false,
@@ -116,11 +116,12 @@ const chatsSlice = createSlice({
       return {...state, loading, moreLoading};
     });
     builder.addCase(ChatsThunks.fetchChats.fulfilled, (state: ChatsState, action) => {
-      const newChats = action.payload;
+      const newChats = action.payload.data;
+      const count = action.payload.count;
       const chats = ChatUtils.filterChats([...state.chats, ...newChats]);
       const loading = false;
       const moreLoading = false;
-      const allLoaded = newChats.length === 0;
+      const allLoaded = chats.length === count;
       return {...state, chats, loading, moreLoading, allLoaded};
     });
     builder.addCase(ChatsThunks.fetchChats.rejected, (state: ChatsState) => {
@@ -154,6 +155,16 @@ const chatsSlice = createSlice({
     builder.addCase(ChatsThunks.fetchFilteredChats.rejected, (state: ChatsState) => {
       const filteredChats = [] as Chat[];
       return {...state, filteredChats};
+    });
+
+    /*
+    fetchUnreadMessagesMap
+    */
+    builder.addCase(ChatsThunks.fetchUnreadMessagesMap.fulfilled, (state: ChatsState, action) => {
+      const unreadMessagesMap = action.payload;
+      const unreadCount = Array.from(unreadMessagesMap.values()).reduce((a, b) => a + b.length, 0);
+      const unreadMap = [...unreadMessagesMap];
+      return {...state, unreadCount, unreadMap};
     });
   },
 });

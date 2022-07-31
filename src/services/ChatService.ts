@@ -3,6 +3,7 @@ import {Chat, ChatInfo} from '../models/Chat';
 import {Message, MessageInfo} from '../models/Message';
 import {MessageDTO} from '../models/dto/MessageDTO';
 import axios, {axiosIgnore404} from '../shared/axios';
+import {PageableList} from '../models/PageableList';
 
 export default class ChatService {
   private static baseUrl = '/api/chat';
@@ -10,7 +11,7 @@ export default class ChatService {
   /*
   ChatController
    */
-  public static getAllChatsPageable = (offset?: number, size?: number): AxiosPromise<Chat[]> => {
+  public static getAllChatsPageable = (offset?: number, size?: number): AxiosPromise<PageableList<Chat>> => {
     const url = ChatService.baseUrl + '/chat';
     const params = {offset, size};
     return axios.get(url, {params});
@@ -82,7 +83,7 @@ export default class ChatService {
     chatId: string,
     offset?: number,
     size?: number,
-  ): AxiosPromise<Message[]> => {
+  ): AxiosPromise<PageableList<Message>> => {
     const url = ChatService.baseUrl + '/message/' + chatId;
     const params = {offset, size};
     return axios.get(url, {params});

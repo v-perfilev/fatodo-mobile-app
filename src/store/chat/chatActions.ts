@@ -69,7 +69,8 @@ export class ChatThunks {
     TYPES.FETCH_MESSAGES,
     async ({chatId, offset}: {chatId: string; offset: number}, thunkAPI) => {
       const result = await ChatService.getAllMessagesByChatIdPageable(chatId, offset);
-      const messageUserIds = MessageUtils.extractUserIds(result.data);
+      const messages = result.data.data;
+      const messageUserIds = MessageUtils.extractUserIds(messages);
       thunkAPI.dispatch(InfoThunks.handleUserIds(messageUserIds));
       return result.data;
     },

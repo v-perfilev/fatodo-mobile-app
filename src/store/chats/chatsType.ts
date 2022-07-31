@@ -1,10 +1,10 @@
 import {Chat} from '../../models/Chat';
 
 export type ChatsState = {
-  totalUnreadMessageCount: number;
-  unreadMessageCountMap: [string, number][];
   chats: Chat[];
   filteredChats: Chat[];
+  unreadCount: number;
+  unreadMap: [string, string[]][];
   loading: boolean;
   moreLoading: boolean;
   allLoaded: boolean;

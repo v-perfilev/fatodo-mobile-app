@@ -4,13 +4,13 @@ import {RootState} from '../store';
 const getChatsState = (state: RootState) => state.chats;
 
 class ChatsSelectors {
-  static totalUnreadMessageCount = createSelector(getChatsState, (state) => state.totalUnreadMessageCount);
-
-  static unreadMessageCountMap = createSelector(getChatsState, (state) => new Map(state.unreadMessageCountMap));
-
   static chats = createSelector(getChatsState, (state) => state.chats);
 
   static filteredChats = createSelector(getChatsState, (state) => state.filteredChats);
+
+  static unreadCount = createSelector(getChatsState, (state) => state.unreadCount);
+
+  static unreadMap = createSelector(getChatsState, (state) => new Map(state.unreadMap));
 
   static loading = createSelector(getChatsState, (state) => state.loading);
 

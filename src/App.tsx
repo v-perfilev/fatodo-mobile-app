@@ -21,6 +21,7 @@ import {SnackActions} from './store/snack/snackActions';
 import {ContactsThunks} from './store/contacts/contactsActions';
 import {AuthActions, AuthThunks} from './store/auth/authActions';
 import withWsClient from './shared/hocs/withWs/withWsClient';
+import {ChatsThunks} from './store/chats/chatsActions';
 
 // ignore some warnings
 const ignoredLogPatterns = ['Require cycle', 'Possible Unhandled Promise Rejection'];
@@ -59,6 +60,7 @@ const App = () => {
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(ContactsThunks.fetchInfo());
+      dispatch(ChatsThunks.fetchUnreadMessagesMap());
     }
   }, [isAuthenticated]);
 

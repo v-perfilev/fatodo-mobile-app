@@ -1,4 +1,4 @@
-import React, {ReactNode, useCallback} from 'react';
+import React, {ReactNode} from 'react';
 import {BottomTabNavigationProp, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TabNavigatorBar from '../components/layouts/TabNavigatorBar';
 import GroupNavigator from './GroupNavigator';
@@ -14,7 +14,6 @@ import AccountIcon from '../components/icons/AccountIcon';
 import AccountNavigator from './AccountNavigator';
 import AlarmIcon from '../components/icons/AlarmIcon';
 import EventList from '../screens/events/eventList/EventList';
-import {Badge, Box} from 'native-base';
 import {useAppSelector} from '../store/store';
 import EventsSelectors from '../store/events/eventsSelectors';
 import ChatsSelectors from '../store/chats/chatsSelectors';
@@ -47,7 +46,7 @@ const accountIcon = ({color, size}: TabIconProps): ReactNode => <AccountIcon col
 const TabNavigator = () => {
   const {theme} = useTabBarContext();
   const unreadEventCount = useAppSelector(EventsSelectors.unreadCount);
-  const unreadMessageCount = useAppSelector(ChatsSelectors.totalUnreadMessageCount);
+  const unreadMessageCount = useAppSelector(ChatsSelectors.unreadCount);
   const incomingRequestCount = useAppSelector(ContactsSelectors.incomingRequestCount);
   const color = theme?.colors.primary['500'] || 'primary.500';
 

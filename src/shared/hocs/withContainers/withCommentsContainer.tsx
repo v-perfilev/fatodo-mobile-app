@@ -8,6 +8,7 @@ import {CommentsActions, CommentsThunks} from '../../../store/comments/commentsA
 import {ColorScheme} from '../../themes/ThemeFactory';
 
 export type WithCommentsProps = {
+  targetId: string;
   loading: boolean;
   colorScheme: ColorScheme;
 };
@@ -41,7 +42,7 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
     }
   }, []);
 
-  return <Component loading={loading} colorScheme={routeColorScheme} {...props} />;
+  return <Component targetId={targetId} loading={loading} colorScheme={routeColorScheme} {...props} />;
 };
 
 export default withCommentsContainer;

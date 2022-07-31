@@ -7,15 +7,17 @@ import {CommentInfo} from '../../models/Comment';
 
 export type InfoState = {
   users: [string, User][];
-  loadingUserIds: string[];
   groups: [string, GroupInfo][];
-  loadingGroupIds: string[];
   items: [string, ItemInfo][];
-  loadingItemIds: string[];
   chats: [string, ChatInfo][];
-  loadingChatIds: string[];
   messages: [string, MessageInfo][];
-  loadingMessageIds: string[];
   comments: [string, CommentInfo][];
+
+  // loading
+  loadingUserIds: string[];
+  loadingGroupIds: string[];
+  loadingItemIds: string[];
+  loadingChatIds: string[];
+  loadingMessageIds: string[];
   loadingCommentIds: string[];
 };

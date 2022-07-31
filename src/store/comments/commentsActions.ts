@@ -38,6 +38,8 @@ enum TYPES {
   NO_REACTION = 'comments/noReaction',
   LIKE_REACTION = 'comments/likeReaction',
   DISLIKE_REACTION = 'comments/dislikeReaction',
+  FETCH_THREAD_INFO = 'comments/fetchThreadInfo',
+  REFRESH_THREAD = 'comments/refreshThread',
 }
 
 export class CommentsThunks {
@@ -105,4 +107,16 @@ export class CommentsThunks {
       thunkAPI.dispatch(commentsSlice.actions.setCommentReaction({comment, reactionType: 'DISLIKE', account}));
     },
   );
+
+  /*
+  ThreadInfo
+  */
+  static fetchThreadInfo = createAsyncThunk(TYPES.FETCH_THREAD_INFO, async (targetIds: string[]) => {
+    const response = await CommentService.getThreadInfoByTargetIds(targetIds);
+    return response.data;
+  });
+
+  static refreshThread = createAsyncThunk(TYPES.REFRESH_THREAD, async (targetId: string) => {
+    await CommentService.refreshThread(targetId);
+  });
 }

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import withCommentsContainer, {WithCommentsProps} from '../../../shared/hocs/withContainers/withCommentsContainer';
 import {Comment} from '../../../models/Comment';
@@ -8,15 +8,24 @@ import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import CommentListContainer from './CommentListContainer';
 import CommentListControl from './CommentListControl';
+import {useIsFocused} from '@react-navigation/native';
+import {useAppDispatch} from '../../../store/store';
+import {CommentsThunks} from '../../../store/comments/commentsActions';
 
 type CommentListProps = WithCommentsProps;
 
-const CommentList = ({loading, colorScheme}: CommentListProps) => {
+const CommentList = ({targetId, loading, colorScheme}: CommentListProps) => {
+  const dispatch = useAppDispatch();
+  const isFocused = useIsFocused();
   const [reference, setReference] = useState<Comment>();
 
   const clearReference = (): void => {
     setReference(null);
   };
+
+  useEffect(() => {
+    isFocused && !loading && dispatch(CommentsThunks.refreshComments(targetId));
+  }, [isFocused, loading]);
 
   const theme = useMemo<Theme>(() => {
     return colorScheme ? ThemeFactory.getTheme(colorScheme) : ThemeFactory.getDefaultTheme();

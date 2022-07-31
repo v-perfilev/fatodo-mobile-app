@@ -194,13 +194,13 @@ const chatSlice = createSlice({
       return {...state, loading, moreLoading};
     });
     builder.addCase(ChatThunks.fetchMessages.fulfilled, (state: ChatState, action) => {
-      const newMessages = action.payload;
+      const newMessages = action.payload.data;
+      const count = action.payload.count;
       const messages = MessageUtils.filterMessages([...state.messages, ...newMessages]);
-      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
       const loading = false;
       const moreLoading = false;
-      const allLoaded = newMessages.length === 0;
-      return {...state, messages, chatItems, loading, moreLoading, allLoaded};
+      const allLoaded = messages.length === count;
+      return {...state, messages, loading, moreLoading, allLoaded};
     });
     builder.addCase(ChatThunks.fetchMessages.rejected, (state: ChatState) => {
       const loading = false;

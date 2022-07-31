@@ -19,6 +19,6 @@ export default class EventService {
 
   public static refresh = (): AxiosPromise<void> => {
     const url = EventService.baseUrl + '/user-event/refresh';
-    return axios.get(url);
+    return axios.put(url);
   };
 }

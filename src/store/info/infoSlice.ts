@@ -6,16 +6,16 @@ import {InfoUtils} from '../../shared/utils/InfoUtils';
 
 const initialState: InfoState = {
   users: [],
-  loadingUserIds: [],
   groups: [],
-  loadingGroupIds: [],
   items: [],
-  loadingItemIds: [],
   chats: [],
-  loadingChatIds: [],
   messages: [],
-  loadingMessageIds: [],
   comments: [],
+  loadingUserIds: [],
+  loadingGroupIds: [],
+  loadingItemIds: [],
+  loadingChatIds: [],
+  loadingMessageIds: [],
   loadingCommentIds: [],
 };
 

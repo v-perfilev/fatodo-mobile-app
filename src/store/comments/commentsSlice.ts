@@ -20,6 +20,7 @@ interface CommentReactionPayload {
 const initialState: CommentsState = {
   targetId: undefined,
   comments: [],
+  threadsInfo: [],
   loading: false,
   moreLoading: false,
   allLoaded: false,
@@ -148,6 +149,21 @@ const commentsSlice = createSlice({
       const loading = true;
       const moreLoading = false;
       return {...state, comments, loading, moreLoading};
+    });
+
+    /*
+    fetchThreadInfo
+    */
+    builder.addCase(CommentsThunks.fetchThreadInfo.fulfilled, (state: CommentsState, action) => {
+      const newInfo = action.payload;
+      const commentThreads = CommentUtils.addInfo(state.threadsInfo, newInfo);
+      return {...state, commentThreads};
+    });
+
+    builder.addCase(CommentsThunks.refreshThread.fulfilled, (state: CommentsState, action) => {
+      const targetId = action.meta.arg;
+      const commentThreads = CommentUtils.refreshInfo(state.threadsInfo, targetId);
+      return {...state, commentThreads};
     });
   },
 });

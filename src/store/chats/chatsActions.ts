@@ -22,16 +22,17 @@ enum TYPES {
   FETCH_CHATS = 'chats/fetchChats',
   REFRESH_CHATS = 'chats/refreshChats',
   FETCH_FILTERED_CHATS = 'chats/fetchFilteredChats',
-  REFRESH_FILTERED_CHATS = 'chats/refreshFilteredChats',
   CREATE_DIRECT_CHAT = 'chats/createDirectChat',
   CREATE_INDIRECT_CHAT = 'chats/createIndirectChat',
   SEND_DIRECT_MESSAGE = 'chats/sendDirectMessage',
+  FETCH_UNREAD_MESSAGES_MAP = 'chats/fetchUnreadMessagesMap',
 }
 
 export class ChatsThunks {
   static fetchChats = createAsyncThunk(TYPES.FETCH_CHATS, async (offset: number, thunkAPI) => {
     const result = await ChatService.getAllChatsPageable(offset);
-    const chatUserIds = ChatUtils.extractUserIds(result.data);
+    const chats = result.data.data;
+    const chatUserIds = ChatUtils.extractUserIds(chats);
     thunkAPI.dispatch(InfoThunks.handleUserIds(chatUserIds));
     return result.data;
   });
@@ -66,4 +67,9 @@ export class ChatsThunks {
       thunkAPI.dispatch(chatsSlice.actions.updateLastDirectMessage);
     },
   );
+
+  static fetchUnreadMessagesMap = createAsyncThunk(TYPES.FETCH_UNREAD_MESSAGES_MAP, async (_, thunkAPI) => {
+    const response = await ChatService.getUnreadMessagesMap();
+    return response.data;
+  });
 }

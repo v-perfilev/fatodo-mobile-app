@@ -25,7 +25,7 @@ type ChatListItemProps = {
 const ChatListItem = ({chat}: ChatListItemProps) => {
   const navigation = useNavigation<RootNavigationProp>();
   const {t} = useTranslation();
-  const unreadMessageCountMap = useAppSelector(ChatsSelectors.unreadMessageCountMap);
+  const unreadMessageCountMap = useAppSelector(ChatsSelectors.unreadMap);
   const users = useAppSelector(InfoSelectors.users);
   const account = useAppSelector(AuthSelectors.account);
 

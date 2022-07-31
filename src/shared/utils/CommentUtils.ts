@@ -1,4 +1,4 @@
-import {Comment, ReferenceComment} from '../../models/Comment';
+import {Comment, CommentThreadInfo, ReferenceComment} from '../../models/Comment';
 import {User} from '../../models/User';
 import {ArrayUtils} from './ArrayUtils';
 
@@ -20,5 +20,27 @@ export class CommentUtils {
 
   public static filterComments = (comments: Comment[]): Comment[] => {
     return comments.filter(ArrayUtils.uniqueByIdFilter).sort(ArrayUtils.createdAtComparator).reverse();
+  };
+
+  public static addInfo = (
+    threadsInfo: [string, CommentThreadInfo][],
+    newInfo: CommentThreadInfo[],
+  ): [string, CommentThreadInfo][] => {
+    const infoMap = new Map(threadsInfo);
+    newInfo.forEach((i) => infoMap.set(i.targetId, i));
+    return [...infoMap];
+  };
+
+  public static refreshInfo = (
+    threadsInfo: [string, CommentThreadInfo][],
+    targetId: string,
+  ): [string, CommentThreadInfo][] => {
+    const infoMap = new Map(threadsInfo);
+    const info = infoMap.get(targetId);
+    if (info) {
+      info.unread = 0;
+      infoMap.set(targetId, info);
+    }
+    return [...infoMap];
   };
 }

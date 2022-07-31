@@ -4,6 +4,14 @@ export const commentReactionTypes = ['LIKE', 'DISLIKE'];
 
 export type CommentReactionType = 'LIKE' | 'DISLIKE';
 
+export interface CommentThreadInfo {
+  parentId: string;
+  targetId: string;
+  type: string;
+  count: number;
+  unread: number;
+}
+
 export interface CommentInfo {
   id: string;
   text: string;
