@@ -8,6 +8,7 @@ import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import {ChatsThunks} from '../../../store/chats/chatsActions';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import OutlinedButton from '../../../components/controls/OutlinedButton';
 
 export type ChatCreateDialogProps = {
   show: boolean;
@@ -69,17 +70,17 @@ const ChatCreateDialog = ({show, close}: ChatCreateDialogProps) => {
 
   const actions = (
     <>
-      <GhostButton
+      <GhostButton onPress={close} colorScheme="secondary" isDisabled={isSubmitting}>
+        {t('chat:createChat.cancel')}
+      </GhostButton>
+      <OutlinedButton
         colorScheme="primary"
         isDisabled={isSubmitting || isUserIdListEmpty}
         isLoading={isSubmitting}
         onPress={create}
       >
         {t('chat:createChat.send')}
-      </GhostButton>
-      <GhostButton onPress={close} colorScheme="secondary" isDisabled={isSubmitting}>
-        {t('chat:createChat.cancel')}
-      </GhostButton>
+      </OutlinedButton>
     </>
   );
 

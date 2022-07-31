@@ -8,6 +8,7 @@ import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import {Group} from '../../../models/Group';
 import {GroupThunks} from '../../../store/group/groupActions';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import OutlinedButton from '../../../components/controls/OutlinedButton';
 
 export type GroupAddMembersDialogProps = {
   group: Group;
@@ -55,17 +56,17 @@ const GroupAddMembersDialog = ({group, show, close}: GroupAddMembersDialogProps)
 
   const actions = (
     <>
-      <GhostButton
+      <GhostButton onPress={close} colorScheme="secondary" isDisabled={isSubmitting}>
+        {t('group:addMembers.buttons.cancel')}
+      </GhostButton>
+      <OutlinedButton
         colorScheme="primary"
         isDisabled={isSubmitting || isUserIdListEmpty}
         isLoading={isSubmitting}
         onPress={addUsers}
       >
         {t('group:addMembers.buttons.send')}
-      </GhostButton>
-      <GhostButton onPress={close} colorScheme="secondary" isDisabled={isSubmitting}>
-        {t('group:addMembers.buttons.cancel')}
-      </GhostButton>
+      </OutlinedButton>
     </>
   );
 

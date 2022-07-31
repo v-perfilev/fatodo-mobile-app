@@ -3,7 +3,6 @@ import {useAppDispatch} from '../../../store/store';
 import {Formik, FormikHelpers} from 'formik';
 import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
-import SolidButton from '../../../components/controls/SolidButton';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBar';
 import {useTranslation} from 'react-i18next';
@@ -13,6 +12,7 @@ import i18n from '../../../shared/i18n';
 import {AuthThunks} from '../../../store/auth/authActions';
 import {ChangePasswordDTO} from '../../../models/dto/ChangePasswordDTO';
 import {Text} from 'native-base';
+import OutlinedButton from '../../../components/controls/OutlinedButton';
 
 export interface ChangePasswordFormValues {
   oldPassword: string;
@@ -64,7 +64,7 @@ const AccountChangePasswordForm = () => {
           <PasswordStrengthBar password={formikProps.values.newPassword} />
 
           <FHStack defaultSpace mt="3" justifyContent="flex-end">
-            <SolidButton
+            <OutlinedButton
               colorScheme="primary"
               size="md"
               isLoading={formikProps.isSubmitting}
@@ -72,7 +72,7 @@ const AccountChangePasswordForm = () => {
               onPress={formikProps.submitForm}
             >
               {t('item:actions.save')}
-            </SolidButton>
+            </OutlinedButton>
           </FHStack>
         </FVStack>
       )}

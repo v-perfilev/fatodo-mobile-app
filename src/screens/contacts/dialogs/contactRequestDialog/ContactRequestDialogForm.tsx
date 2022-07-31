@@ -12,6 +12,7 @@ import AuthSelectors from '../../../../store/auth/authSelectors';
 import {ContactRequestDTO} from '../../../../models/dto/ContactRequestDTO';
 import GhostButton from '../../../../components/controls/GhostButton';
 import FormikUserInput from '../../../../components/inputs/FormikUserInput';
+import OutlinedButton from '../../../../components/controls/OutlinedButton';
 
 export interface ContactRequestFormValues {
   usernameOrEmail: string;
@@ -68,17 +69,17 @@ const ContactRequestDialogForm = ({request, cancel}: ContactRequestDialogFormPro
             {...formikProps}
           />
           <FHStack defaultSpace justifyContent="flex-end">
-            <GhostButton
+            <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
+              {t('contact:addContact.cancel')}
+            </GhostButton>
+            <OutlinedButton
               colorScheme="primary"
               isLoading={formikProps.isSubmitting}
               isDisabled={!formikProps.isValid || formikProps.isSubmitting}
               onPress={formikProps.submitForm}
             >
               {t('group:actions.save')}
-            </GhostButton>
-            <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
-              {t('contact:addContact.cancel')}
-            </GhostButton>
+            </OutlinedButton>
           </FHStack>
         </FVStack>
       )}

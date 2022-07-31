@@ -8,8 +8,8 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import {Divider} from 'native-base';
 import AccountChangePasswordForm from './AccountChangePasswordForm';
 import {useTranslation} from 'react-i18next';
-import SolidButton from '../../../components/controls/SolidButton';
 import AccountViewHeader from './AccountViewHeader';
+import OutlinedButton from '../../../components/controls/OutlinedButton';
 
 const AccountView = () => {
   const dispatch = useAppDispatch();
@@ -33,9 +33,9 @@ const AccountView = () => {
               <Divider bg="secondary.500" />
             </FVStack>
           )}
-          <SolidButton mt="3" onPress={logout}>
+          <OutlinedButton mt="3" onPress={logout}>
             {t('account:actions.logout')}
-          </SolidButton>
+          </OutlinedButton>
         </FVStack>
       </FScrollView>
     </>

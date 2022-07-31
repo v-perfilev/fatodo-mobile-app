@@ -17,7 +17,7 @@ export const UserLink = ({user}: UserLinkProps) => {
 
   const goToUser = (): void => navigation.navigate('UserView', {user});
 
-  return !isAnotherUser ? (
+  return isAnotherUser ? (
     <Text color="primary.500" onPress={goToUser}>
       {user.username}
     </Text>

@@ -9,6 +9,7 @@ import GhostButton from '../../../../components/controls/GhostButton';
 import {MessageDTO} from '../../../../models/dto/MessageDTO';
 import i18n from '../../../../shared/i18n';
 import {Message} from '../../../../models/Message';
+import OutlinedButton from '../../../../components/controls/OutlinedButton';
 
 export interface ChatEditMessageFormValues {
   text: string;
@@ -50,17 +51,17 @@ const ChatEditMessageForm = ({message, request, cancel}: ChatEditMessageFormProp
             {...formikProps}
           />
           <FHStack defaultSpace justifyContent="flex-end">
-            <GhostButton
+            <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
+              {t('chat:editMessage.cancel')}
+            </GhostButton>
+            <OutlinedButton
               colorScheme="primary"
               isLoading={formikProps.isSubmitting}
               isDisabled={!formikProps.isValid || formikProps.isSubmitting}
               onPress={formikProps.submitForm}
             >
               {t('chat:editMessage.send')}
-            </GhostButton>
-            <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
-              {t('chat:editMessage.cancel')}
-            </GhostButton>
+            </OutlinedButton>
           </FHStack>
         </FVStack>
       )}

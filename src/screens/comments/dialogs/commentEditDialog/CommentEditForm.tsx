@@ -10,6 +10,7 @@ import {MessageDTO} from '../../../../models/dto/MessageDTO';
 import i18n from '../../../../shared/i18n';
 import {Comment} from '../../../../models/Comment';
 import {CommentDTO} from '../../../../models/dto/CommentDTO';
+import OutlinedButton from '../../../../components/controls/OutlinedButton';
 
 export interface CommentEditFormValues {
   text: string;
@@ -51,17 +52,17 @@ const CommentEditForm = ({comment, request, cancel}: CommentEditFormProps) => {
             {...formikProps}
           />
           <FHStack defaultSpace justifyContent="flex-end">
-            <GhostButton
+            <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
+              {t('comment:editComment.cancel')}
+            </GhostButton>
+            <OutlinedButton
               colorScheme="primary"
               isLoading={formikProps.isSubmitting}
               isDisabled={!formikProps.isValid || formikProps.isSubmitting}
               onPress={formikProps.submitForm}
             >
               {t('comment:editComment.send')}
-            </GhostButton>
-            <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
-              {t('comment:editComment.cancel')}
-            </GhostButton>
+            </OutlinedButton>
           </FHStack>
         </FVStack>
       )}

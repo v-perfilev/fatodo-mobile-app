@@ -8,6 +8,7 @@ import GhostButton from '../../../../components/controls/GhostButton';
 import i18n from '../../../../shared/i18n';
 import {Chat} from '../../../../models/Chat';
 import FormikTextInput from '../../../../components/inputs/FormikTextInput';
+import OutlinedButton from '../../../../components/controls/OutlinedButton';
 
 export interface ChatRenameFormValues {
   title: string;
@@ -48,17 +49,17 @@ const ChatRenameForm = ({chat, request, cancel}: ChatRenameFormProps) => {
             {...formikProps}
           />
           <FHStack defaultSpace justifyContent="flex-end">
-            <GhostButton
+            <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
+              {t('chat:renameChat.cancel')}
+            </GhostButton>
+            <OutlinedButton
               colorScheme="primary"
               isLoading={formikProps.isSubmitting}
               isDisabled={!formikProps.isValid || formikProps.isSubmitting}
               onPress={formikProps.submitForm}
             >
               {t('chat:renameChat.send')}
-            </GhostButton>
-            <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
-              {t('chat:renameChat.cancel')}
-            </GhostButton>
+            </OutlinedButton>
           </FHStack>
         </FVStack>
       )}

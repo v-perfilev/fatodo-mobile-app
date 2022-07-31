@@ -6,7 +6,6 @@ import Header from '../../../components/layouts/Header';
 import {AuthThunks} from '../../../store/auth/authActions';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {useTranslation} from 'react-i18next';
-import SolidButton from '../../../components/controls/SolidButton';
 import {Formik, FormikHelpers} from 'formik';
 import FHStack from '../../../components/boxes/FHStack';
 import * as Yup from 'yup';
@@ -21,6 +20,7 @@ import {DateFormatters} from '../../../shared/utils/DateUtils';
 import ImageUpload from '../../../components/inputs/imageUpload/ImageUpload';
 import {useNavigation} from '@react-navigation/native';
 import {AccountNavigationProp} from '../../../navigators/AccountNavigator';
+import OutlinedButton from '../../../components/controls/OutlinedButton';
 
 export interface AccountFormValues {
   username: string;
@@ -145,7 +145,7 @@ const AccountForm = () => {
               />
 
               <FHStack defaultSpace mt="3" justifyContent="flex-end">
-                <SolidButton
+                <OutlinedButton
                   colorScheme="primary"
                   size="md"
                   isLoading={formikProps.isSubmitting}
@@ -153,7 +153,7 @@ const AccountForm = () => {
                   onPress={formikProps.submitForm}
                 >
                   {t('item:actions.save')}
-                </SolidButton>
+                </OutlinedButton>
               </FHStack>
             </FVStack>
           )}

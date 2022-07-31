@@ -7,13 +7,13 @@ import UserPlusIcon from '../../../../components/icons/UserPlusIcon';
 import ModalDialog from '../../../../components/modals/ModalDialog';
 import {Text} from 'native-base';
 import GroupMembersDialogMember from './GroupMembersDialogMember';
-import GhostButton from '../../../../components/controls/GhostButton';
 import FVStack from '../../../../components/boxes/FVStack';
 import FCenter from '../../../../components/boxes/FCenter';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import InfoSelectors from '../../../../store/info/infoSelectors';
 import {MapUtils} from '../../../../shared/utils/MapUtils';
+import OutlinedButton from '../../../../components/controls/OutlinedButton';
 
 export type GroupMembersDialogProps = {
   group: Group;
@@ -95,9 +95,9 @@ const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEdi
   );
 
   const actions = group && canAdmin && (
-    <GhostButton startIcon={<UserPlusIcon />} onPress={switchToAddMembers} colorScheme="primary">
+    <OutlinedButton startIcon={<UserPlusIcon />} onPress={switchToAddMembers} colorScheme="primary">
       {t('group:members.buttons.addUsers')}
-    </GhostButton>
+    </OutlinedButton>
   );
 
   return (

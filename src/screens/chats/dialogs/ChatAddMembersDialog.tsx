@@ -8,6 +8,7 @@ import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import {Chat} from '../../../models/Chat';
 import {ChatThunks} from '../../../store/chat/chatActions';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import OutlinedButton from '../../../components/controls/OutlinedButton';
 
 export type ChatAddMembersDialogProps = {
   chat: Chat;
@@ -55,17 +56,17 @@ const ChatAddMembersDialog = ({chat, show, close}: ChatAddMembersDialogProps) =>
 
   const actions = (
     <>
-      <GhostButton
+      <GhostButton onPress={close} colorScheme="secondary" isDisabled={isSubmitting}>
+        {t('group:addMembers.buttons.cancel')}
+      </GhostButton>
+      <OutlinedButton
         colorScheme="primary"
         isDisabled={isSubmitting || isUserIdListEmpty}
         isLoading={isSubmitting}
         onPress={addUsers}
       >
         {t('group:addMembers.buttons.send')}
-      </GhostButton>
-      <GhostButton onPress={close} colorScheme="secondary" isDisabled={isSubmitting}>
-        {t('group:addMembers.buttons.cancel')}
-      </GhostButton>
+      </OutlinedButton>
     </>
   );
 

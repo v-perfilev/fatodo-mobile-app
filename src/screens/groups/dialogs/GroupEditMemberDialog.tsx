@@ -8,6 +8,7 @@ import FVStack from '../../../components/boxes/FVStack';
 import PermissionSelect from '../../../components/inputs/permissionSelect/PermissionSelect';
 import {useAppDispatch} from '../../../store/store';
 import {GroupThunks} from '../../../store/group/groupActions';
+import OutlinedButton from '../../../components/controls/OutlinedButton';
 
 export type GroupEditMemberDialogProps = {
   group: Group;
@@ -55,12 +56,12 @@ const GroupEditMemberDialog: FC<Props> = ({group, user, show, close}: Props) => 
 
   const actions = (
     <>
-      <GhostButton colorScheme="primary" isDisabled={isSubmitting} isLoading={isSubmitting} onPress={editMember}>
-        {t('group:editMember.buttons.send')}
-      </GhostButton>
       <GhostButton colorScheme="secondary" isDisabled={isSubmitting} onPress={close}>
         {t('group:editMember.buttons.cancel')}
       </GhostButton>
+      <OutlinedButton colorScheme="primary" isDisabled={isSubmitting} isLoading={isSubmitting} onPress={editMember}>
+        {t('group:editMember.buttons.send')}
+      </OutlinedButton>
     </>
   );
 

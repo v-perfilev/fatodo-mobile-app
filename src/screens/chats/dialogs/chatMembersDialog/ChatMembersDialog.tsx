@@ -5,7 +5,6 @@ import ClearableTextInput from '../../../../components/inputs/ClearableTextInput
 import UserPlusIcon from '../../../../components/icons/UserPlusIcon';
 import ModalDialog from '../../../../components/modals/ModalDialog';
 import {Text} from 'native-base';
-import GhostButton from '../../../../components/controls/GhostButton';
 import FVStack from '../../../../components/boxes/FVStack';
 import FCenter from '../../../../components/boxes/FCenter';
 import {Chat} from '../../../../models/Chat';
@@ -13,6 +12,7 @@ import ChatMembersDialogMember from './ChatMembersDialogMember';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
 import {MapUtils} from '../../../../shared/utils/MapUtils';
+import OutlinedButton from '../../../../components/controls/OutlinedButton';
 
 export type ChatMembersDialogProps = {
   chat: Chat;
@@ -66,9 +66,9 @@ const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersD
   );
 
   const actions = chat && !chat.isDirect && (
-    <GhostButton startIcon={<UserPlusIcon />} onPress={switchToAddMembers} colorScheme="primary">
+    <OutlinedButton startIcon={<UserPlusIcon />} onPress={switchToAddMembers} colorScheme="primary">
       {t('chat:members.buttons.addUsers')}
-    </GhostButton>
+    </OutlinedButton>
   );
 
   return (

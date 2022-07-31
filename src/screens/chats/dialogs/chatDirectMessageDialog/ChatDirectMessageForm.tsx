@@ -10,6 +10,7 @@ import {MessageDTO} from '../../../../models/dto/MessageDTO';
 import i18n from '../../../../shared/i18n';
 import FormikTextInput from '../../../../components/inputs/FormikTextInput';
 import {User} from '../../../../models/User';
+import OutlinedButton from '../../../../components/controls/OutlinedButton';
 
 export interface ChatDirectMessageFormValues {
   username: string;
@@ -66,17 +67,17 @@ const ChatDirectMessageForm = ({user, request, cancel}: ChatDirectMessageFormPro
             {...formikProps}
           />
           <FHStack defaultSpace justifyContent="flex-end">
-            <GhostButton
+            <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
+              {t('chat:directMessage.cancel')}
+            </GhostButton>
+            <OutlinedButton
               colorScheme="primary"
               isLoading={formikProps.isSubmitting}
               isDisabled={!formikProps.isValid || formikProps.isSubmitting}
               onPress={formikProps.submitForm}
             >
               {t('chat:directMessage.send')}
-            </GhostButton>
-            <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
-              {t('chat:directMessage.cancel')}
-            </GhostButton>
+            </OutlinedButton>
           </FHStack>
         </FVStack>
       )}

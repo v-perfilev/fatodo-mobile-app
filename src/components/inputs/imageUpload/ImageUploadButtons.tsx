@@ -1,12 +1,12 @@
 import React from 'react';
 import {Image} from '../../../models/Image';
 import {Theme, useTheme} from 'native-base';
-import SolidButton from '../../controls/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {openPicker, Options} from 'react-native-image-crop-picker';
 import {IMAGE_SIZE} from '../../../constants';
 import {ImageUtils} from '../../../shared/utils/imageUtils';
 import FHStack from '../../boxes/FHStack';
+import OutlinedButton from '../../controls/OutlinedButton';
 
 type ImageUploadButtonsProps = {
   image: Image;
@@ -56,13 +56,13 @@ const ImageUploadButtons = ({image, setImage, crop, loading, setLoading}: ImageU
 
   return (
     <FHStack defaultSpace>
-      <SolidButton size="sm" onPress={selectImage} isLoading={loading}>
+      <OutlinedButton size="sm" onPress={selectImage} isLoading={loading}>
         {image ? t('common:imageUpload.buttons.update') : t('common:imageUpload.buttons.upload')}
-      </SolidButton>
+      </OutlinedButton>
       {image?.filename && (
-        <SolidButton size="sm" colorScheme="secondary" isDisabled={loading} onPress={clearImage}>
+        <OutlinedButton size="sm" colorScheme="secondary" isDisabled={loading} onPress={clearImage}>
           {t('common:imageUpload.buttons.clear')}
-        </SolidButton>
+        </OutlinedButton>
       )}
     </FHStack>
   );

@@ -5,12 +5,13 @@ import {ColorScheme} from '../../../shared/themes/ThemeFactory';
 import * as Yup from 'yup';
 import i18n from '../../../shared/i18n';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
-import SolidButton from '../../../components/controls/SolidButton';
 import {useTranslation} from 'react-i18next';
 import FormikThemeInput from '../../../components/inputs/FormikThemeInput';
 import ImageUpload from '../../../components/inputs/imageUpload/ImageUpload';
 import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
+import GhostButton from '../../../components/controls/GhostButton';
+import OutlinedButton from '../../../components/controls/OutlinedButton';
 
 export interface GroupFormValues {
   title: string;
@@ -101,7 +102,10 @@ const GroupForm = ({group, request, cancel}: GroupFormProps) => {
             {...formikProps}
           />
           <FHStack defaultSpace justifyContent="flex-end">
-            <SolidButton
+            <GhostButton colorScheme="secondary" size="md" isDisabled={formikProps.isSubmitting} onPress={cancel}>
+              {t('group:actions.cancel')}
+            </GhostButton>
+            <OutlinedButton
               colorScheme="primary"
               size="md"
               isLoading={formikProps.isSubmitting}
@@ -109,10 +113,7 @@ const GroupForm = ({group, request, cancel}: GroupFormProps) => {
               onPress={formikProps.submitForm}
             >
               {t('group:actions.save')}
-            </SolidButton>
-            <SolidButton colorScheme="secondary" size="md" isDisabled={formikProps.isSubmitting} onPress={cancel}>
-              {t('group:actions.cancel')}
-            </SolidButton>
+            </OutlinedButton>
           </FHStack>
         </FVStack>
       )}

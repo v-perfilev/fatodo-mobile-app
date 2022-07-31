@@ -4,7 +4,6 @@ import {Group} from '../../../models/Group';
 import * as Yup from 'yup';
 import i18n from '../../../shared/i18n';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
-import SolidButton from '../../../components/controls/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {Item, ItemPriorityType, itemPriorityTypes, ItemType, itemTypes} from '../../../models/Item';
 import {Reminder} from '../../../models/Reminder';
@@ -20,6 +19,8 @@ import FHStack from '../../../components/boxes/FHStack';
 import {UserAccount} from '../../../models/User';
 import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import GhostButton from '../../../components/controls/GhostButton';
+import OutlinedButton from '../../../components/controls/OutlinedButton';
 
 export interface ItemFormValues {
   title: string;
@@ -153,7 +154,10 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
           <FormikRemindersInput name="reminders" label={t('item:fields.reminders.label')} {...formikProps} />
 
           <FHStack defaultSpace mt="3" justifyContent="flex-end">
-            <SolidButton
+            <GhostButton colorScheme="secondary" size="md" isDisabled={formikProps.isSubmitting} onPress={cancel}>
+              {t('item:actions.cancel')}
+            </GhostButton>
+            <OutlinedButton
               colorScheme="primary"
               size="md"
               isLoading={formikProps.isSubmitting}
@@ -161,10 +165,7 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
               onPress={formikProps.submitForm}
             >
               {t('item:actions.save')}
-            </SolidButton>
-            <SolidButton colorScheme="secondary" size="md" isDisabled={formikProps.isSubmitting} onPress={cancel}>
-              {t('item:actions.cancel')}
-            </SolidButton>
+            </OutlinedButton>
           </FHStack>
         </FVStack>
       )}

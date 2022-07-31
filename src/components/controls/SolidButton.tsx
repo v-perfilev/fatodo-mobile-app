@@ -7,7 +7,7 @@ const SolidButton = React.forwardRef((props: SolidButtonProps, ref: HTMLElement)
   const {children, ...other} = props;
 
   return (
-    <Button {...other} variant="solid" ref={ref as MutableRefObject<any>}>
+    <Button {...other} variant="solid" ref={ref as MutableRefObject<any>} minW="90px">
       {children}
     </Button>
   );
