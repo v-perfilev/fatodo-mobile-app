@@ -10,20 +10,20 @@ import {InfoThunks} from '../info/infoActions';
 import {UserAccount} from '../../models/User';
 
 export class ChatsActions {
-  static addChatWs = (chat: Chat) => async (dispatch: AppDispatch) => {
-    dispatch(chatsSlice.actions.addChatWs(chat));
+  static addChat = (chat: Chat) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.addChat(chat));
   };
 
-  static addChatLastMessageWs = (chat: Chat, account: UserAccount) => async (dispatch: AppDispatch) => {
-    dispatch(chatsSlice.actions.addChatWs(chat));
+  static updateChat = (chat: Chat) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.updateChat(chat));
+  };
+
+  static addChatLastMessage = (chat: Chat, account: UserAccount) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.addChat(chat));
     const message = chat.lastMessage;
     if (!message?.isEvent && message?.userId === account.id) {
       dispatch(chatsSlice.actions.addUnread(message));
     }
-  };
-
-  static updateChatWs = (chat: Chat) => async (dispatch: AppDispatch) => {
-    dispatch(chatsSlice.actions.updateChatWs(chat));
   };
 }
 
@@ -59,13 +59,13 @@ export class ChatsThunks {
 
   static createDirectChat = createAsyncThunk(TYPES.CREATE_DIRECT_CHAT, async (userId: string, thunkAPI) => {
     const result = await ChatService.createDirectChat(userId);
-    thunkAPI.dispatch(chatsSlice.actions.addChat({chat: result.data, userIds: [userId]}));
+    thunkAPI.dispatch(chatsSlice.actions.createChat({chat: result.data, userIds: [userId]}));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'chat.created', variant: 'info'}));
   });
 
   static createIndirectChat = createAsyncThunk(TYPES.CREATE_INDIRECT_CHAT, async (userIds: string[], thunkAPI) => {
     const result = await ChatService.createIndirectChat(userIds);
-    thunkAPI.dispatch(chatsSlice.actions.addChat({chat: result.data, userIds}));
+    thunkAPI.dispatch(chatsSlice.actions.createChat({chat: result.data, userIds}));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'chat.created', variant: 'info'}));
   });
 

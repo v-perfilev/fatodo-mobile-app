@@ -18,11 +18,11 @@ const withWsComment = (Component: ComponentType) => (props: any) => {
 
   const handler = useCallback((msg: any, topic: string): void => {
     if (topic.startsWith(WsCommentDestinations.COMMENT_NEW)) {
-      dispatch(CommentsActions.addCommentWs(msg));
+      dispatch(CommentsActions.addComment(msg));
     } else if (topic.startsWith(WsCommentDestinations.COMMENT_UPDATE)) {
-      dispatch(CommentsActions.updateCommentWs(msg));
+      dispatch(CommentsActions.updateComment(msg));
     } else if (topic.startsWith(WsCommentDestinations.COMMENT_REACTION)) {
-      dispatch(CommentsActions.updateCommentReactionsWs(msg));
+      dispatch(CommentsActions.updateCommentReactions(msg));
     }
   }, []);
 

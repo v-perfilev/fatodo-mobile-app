@@ -27,21 +27,21 @@ const withWsChat = (Component: ComponentType) => (props: any) => {
 
   const handler = useCallback((msg: any, topic: string): void => {
     if (topic === WsChatDestinations.CHAT_NEW) {
-      dispatch(ChatsActions.addChatWs(msg));
+      dispatch(ChatsActions.addChat(msg));
     } else if (topic.startsWith(WsChatDestinations.CHAT_UPDATE)) {
-      dispatch(ChatsActions.updateChatWs(msg));
+      dispatch(ChatsActions.updateChat(msg));
     } else if (topic.startsWith(WsChatDestinations.CHAT_LAST_MESSAGE)) {
-      dispatch(ChatsActions.addChatLastMessageWs(msg, account));
+      dispatch(ChatsActions.addChatLastMessage(msg, account));
     } else if (topic.startsWith(WsChatDestinations.CHAT_LAST_MESSAGE_UPDATE)) {
-      dispatch(ChatsActions.updateChatWs(msg));
+      dispatch(ChatsActions.updateChat(msg));
     } else if (topic.startsWith(WsChatDestinations.MESSAGE_NEW)) {
-      dispatch(ChatActions.addMessageWs(msg));
+      dispatch(ChatActions.addMessage(msg));
     } else if (topic.startsWith(WsChatDestinations.MESSAGE_UPDATE)) {
-      dispatch(ChatActions.updateMessageWs(msg));
+      dispatch(ChatActions.updateMessage(msg));
     } else if (topic.startsWith(WsChatDestinations.MESSAGE_STATUS)) {
-      dispatch(ChatActions.updateMessageStatusesWs(msg));
+      dispatch(ChatActions.updateMessageStatuses(msg));
     } else if (topic.startsWith(WsChatDestinations.MESSAGE_REACTION)) {
-      dispatch(ChatActions.updateMessageReactionsWs(msg));
+      dispatch(ChatActions.updateMessageReactions(msg));
     }
   }, []);
 

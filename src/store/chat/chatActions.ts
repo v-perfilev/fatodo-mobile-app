@@ -20,20 +20,20 @@ interface ChatMessageReadPayload {
 }
 
 export class ChatActions {
-  static addMessageWs = (message: Message) => async (dispatch: AppDispatch) => {
-    dispatch(chatSlice.actions.addMessageWs(message));
+  static addMessage = (message: Message) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.addMessage(message));
   };
 
-  static updateMessageWs = (message: Message) => async (dispatch: AppDispatch) => {
-    dispatch(chatSlice.actions.updateMessageWs(message));
+  static updateMessage = (message: Message) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.updateMessage(message));
   };
 
-  static updateMessageReactionsWs = (messageReactions: MessageReactions) => async (dispatch: AppDispatch) => {
-    dispatch(chatSlice.actions.updateMessageReactionsWs(messageReactions));
+  static updateMessageReactions = (messageReactions: MessageReactions) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.updateMessageReactions(messageReactions));
   };
 
-  static updateMessageStatusesWs = (messageStatuses: MessageStatuses) => async (dispatch: AppDispatch) => {
-    dispatch(chatSlice.actions.updateMessageStatusesWs(messageStatuses));
+  static updateMessageStatuses = (messageStatuses: MessageStatuses) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.updateMessageStatuses(messageStatuses));
   };
 }
 
@@ -183,7 +183,7 @@ export class ChatThunks {
     async ({message, dto}: {message: Message; dto: MessageDTO}, thunkAPI) => {
       const result = await ChatService.editMessage(message.id, dto);
       thunkAPI.dispatch(chatsSlice.actions.updateLastMessage(result.data));
-      thunkAPI.dispatch(chatSlice.actions.editMessage(result.data));
+      thunkAPI.dispatch(chatSlice.actions.updateMessage(result.data));
       thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'chat.messageEdited', variant: 'info'}));
     },
   );
@@ -192,7 +192,7 @@ export class ChatThunks {
     await ChatService.deleteMessage(message.id);
     const updatedMessage = {...message, isDeleted: true} as Message;
     thunkAPI.dispatch(chatsSlice.actions.updateLastMessage(updatedMessage));
-    thunkAPI.dispatch(chatSlice.actions.editMessage(updatedMessage));
+    thunkAPI.dispatch(chatSlice.actions.updateMessage(updatedMessage));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'chat.messageDeleted', variant: 'info'}));
   });
 }

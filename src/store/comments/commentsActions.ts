@@ -16,16 +16,16 @@ export class CommentsActions {
     dispatch(commentsSlice.actions.init(targetId));
   };
 
-  static addCommentWs = (comment: Comment) => async (dispatch: AppDispatch) => {
-    dispatch(commentsSlice.actions.addCommentWs(comment));
+  static addComment = (comment: Comment) => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.addComment(comment));
   };
 
-  static updateCommentWs = (comment: Comment) => async (dispatch: AppDispatch) => {
-    dispatch(commentsSlice.actions.updateCommentWs(comment));
+  static updateComment = (comment: Comment) => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.editComment(comment));
   };
 
-  static updateCommentReactionsWs = (commentReactions: CommentReactions) => async (dispatch: AppDispatch) => {
-    dispatch(commentsSlice.actions.updateCommentReactionsWs(commentReactions));
+  static updateCommentReactions = (commentReactions: CommentReactions) => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.updateCommentReactions(commentReactions));
   };
 }
 

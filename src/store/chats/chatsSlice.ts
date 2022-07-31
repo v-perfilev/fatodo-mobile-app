@@ -35,7 +35,7 @@ const chatsSlice = createSlice({
   name: 'chats',
   initialState,
   reducers: {
-    addChatWs: (state: ChatsState, action: PayloadAction<Chat>) => {
+    addChat: (state: ChatsState, action: PayloadAction<Chat>) => {
       const chat = action.payload;
       const chatInList = ArrayUtils.findValueWithId(state.chats, chat);
       let chats = chatInList
@@ -44,13 +44,7 @@ const chatsSlice = createSlice({
       return {...state, chats};
     },
 
-    updateChatWs: (state: ChatsState, action: PayloadAction<Chat>) => {
-      const chat = action.payload;
-      const chats = ArrayUtils.updateValueWithId(state.chats, chat);
-      return {...state, chats};
-    },
-
-    addChat: (state: ChatsState, action: PayloadAction<ChatCreatePayload>) => {
+    createChat: (state: ChatsState, action: PayloadAction<ChatCreatePayload>) => {
       const chat = action.payload.chat;
       const userIds = action.payload.userIds;
       const eventType = chat.isDirect ? EventMessageType.CREATE_DIRECT_CHAT : EventMessageType.CREATE_CHAT;

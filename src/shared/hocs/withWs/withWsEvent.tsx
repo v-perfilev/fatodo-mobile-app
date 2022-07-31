@@ -16,7 +16,7 @@ const withWsEvent = (Component: ComponentType) => (props: any) => {
 
   const handler = useCallback((msg: any, topic: string): void => {
     if (topic.startsWith(WsEventDestinations.EVENT)) {
-      dispatch(EventsActions.addEventWs(msg));
+      dispatch(EventsActions.addEvent(msg));
     }
   }, []);
 

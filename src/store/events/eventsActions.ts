@@ -7,9 +7,9 @@ import {AppDispatch} from '../store';
 import eventsSlice from './eventsSlice';
 
 export class EventsActions {
-  static addEventWs = (event: Event) => async (dispatch: AppDispatch) => {
+  static addEvent = (event: Event) => async (dispatch: AppDispatch) => {
     dispatch(EventsThunks.loadDependencies([event]));
-    dispatch(eventsSlice.actions.addEventWs(event));
+    dispatch(eventsSlice.actions.addEvent(event));
   };
 }
 

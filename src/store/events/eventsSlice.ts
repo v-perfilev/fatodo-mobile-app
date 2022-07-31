@@ -16,7 +16,7 @@ const eventsSlice = createSlice({
   name: 'events',
   initialState,
   reducers: {
-    addEventWs: (state: EventsState, action: PayloadAction<Event>) => {
+    addEvent: (state: EventsState, action: PayloadAction<Event>) => {
       const event = action.payload;
       const events = EventUtils.filterEvents([...state.events, event]);
       const count = state.count + 1;
