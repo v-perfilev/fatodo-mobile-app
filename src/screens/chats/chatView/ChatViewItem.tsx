@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
-import {ChatItem} from '../../../models/ChatItem';
-import {Message} from '../../../models/Message';
+import {ChatItem, Message} from '../../../models/Message';
 import ChatViewMessage from './chatViewMessage/ChatViewMessage';
 import ChatViewDate from './ChatViewDate';
 

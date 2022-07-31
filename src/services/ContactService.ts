@@ -1,9 +1,7 @@
 import {AxiosPromise} from 'axios';
-import {ContactInfo} from '../models/ContactInfo';
-import {ContactRelation} from '../models/ContactRelation';
-import {ContactRequest} from '../models/ContactRequest';
 import {ContactRequestDTO} from '../models/dto/ContactRequestDTO';
 import axios from '../shared/axios';
+import {ContactInfo, ContactRelation, ContactRequest} from '../models/Contact';
 
 export default class ContactService {
   private static baseUrl = '/api/contact';

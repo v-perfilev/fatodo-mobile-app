@@ -1,5 +1,4 @@
 import React, {ReactElement, useCallback} from 'react';
-import {ContactRequest, ContactRequestWithUser} from '../../../models/ContactRequest';
 import OutcomingRequestListItem from './OutcomingRequestListItem';
 import {Box, useTheme} from 'native-base';
 import {LayoutChangeEvent} from 'react-native';
@@ -8,6 +7,7 @@ import FlatList from '../../../components/surfaces/FlatList';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 import {useAppDispatch} from '../../../store/store';
 import OutcomingRequestListStub from './OutcomingRequestListStub';
+import {ContactRequest} from '../../../models/Contact';
 
 type OutcomingRequestListContainerProps = {
   requests: ContactRequest[];
@@ -21,9 +21,9 @@ const OutcomingRequestListContainer = ({requests}: OutcomingRequestListContainer
     await dispatch(ContactsThunks.fetchOutcomingRequests());
   };
 
-  const keyExtractor = useCallback((relation: ContactRequestWithUser): string => relation.id, []);
+  const keyExtractor = useCallback((relation: ContactRequest): string => relation.id, []);
   const renderItem = useCallback(
-    (request: ContactRequestWithUser, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    (request: ContactRequest, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
         <OutcomingRequestListItem request={request} />
       </Box>

@@ -6,6 +6,13 @@ export const messageReactionTypes = ['LIKE', 'DISLIKE'];
 export type MessageStatusType = 'READ';
 export type MessageReactionType = 'LIKE' | 'DISLIKE';
 
+export type ChatItemType = 'event' | 'outcoming' | 'incoming' | null;
+
+export type ChatItem = {
+  message?: Message;
+  date?: string;
+};
+
 export interface MessageInfo {
   id: string;
   text: string;

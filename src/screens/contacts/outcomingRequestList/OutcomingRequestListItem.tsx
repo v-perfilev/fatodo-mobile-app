@@ -1,5 +1,4 @@
 import React, {useMemo, useState} from 'react';
-import {ContactRequest} from '../../../models/ContactRequest';
 import FHStack from '../../../components/boxes/FHStack';
 import UserView from '../../../components/views/UserView';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -10,6 +9,7 @@ import {ContactsThunks} from '../../../store/contacts/contactsActions';
 import {IBoxProps} from 'native-base';
 import {User} from '../../../models/User';
 import InfoSelectors from '../../../store/info/infoSelectors';
+import {ContactRequest} from '../../../models/Contact';
 
 type OutcomingRequestListItemProps = IBoxProps & {
   request: ContactRequest;

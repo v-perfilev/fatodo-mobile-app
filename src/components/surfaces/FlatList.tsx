@@ -11,7 +11,7 @@ import {
   Platform,
   RefreshControl,
 } from 'react-native';
-import {ChatItem} from '../../models/ChatItem';
+import {ChatItem} from '../../models/Message';
 
 export type FlatListType = RNFlatList;
 

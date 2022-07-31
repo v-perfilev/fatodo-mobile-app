@@ -1,5 +1,4 @@
 import React, {useMemo, useState} from 'react';
-import {ContactRelation} from '../../../models/ContactRelation';
 import UserView from '../../../components/views/UserView';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -9,6 +8,7 @@ import UserMinusIcon from '../../../components/icons/UserMinusIcon';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 import {User} from '../../../models/User';
 import InfoSelectors from '../../../store/info/infoSelectors';
+import {ContactRelation} from '../../../models/Contact';
 
 type ContactListItemProps = {
   relation: ContactRelation;

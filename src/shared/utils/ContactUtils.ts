@@ -1,6 +1,5 @@
-import {ContactRelation} from '../../models/ContactRelation';
-import {ContactRequest} from '../../models/ContactRequest';
 import {User} from '../../models/User';
+import {ContactRelation, ContactRequest} from '../../models/Contact';
 
 export class ContactUtils {
   public static isContact = (user: User, relations: ContactRelation[]): boolean => {

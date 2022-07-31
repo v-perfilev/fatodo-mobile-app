@@ -1,7 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import UserView from '../../../components/views/UserView';
 import FHStack from '../../../components/boxes/FHStack';
-import {ContactRequest} from '../../../models/ContactRequest';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {MenuElement} from '../../../models/MenuElement';
 import CheckIcon from '../../../components/icons/CheckIcon';
@@ -10,6 +9,7 @@ import ControlMenu from '../../../components/layouts/ControlMenu';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {User} from '../../../models/User';
+import {ContactRequest} from '../../../models/Contact';
 
 type IncomingRequestListItemProps = {
   request: ContactRequest;

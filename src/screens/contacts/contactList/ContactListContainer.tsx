@@ -1,6 +1,5 @@
 import React, {memo, ReactElement, useCallback, useEffect, useState} from 'react';
 import FBox from '../../../components/boxes/FBox';
-import {ContactRelation} from '../../../models/ContactRelation';
 import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
 import CornerButton from '../../../components/controls/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
@@ -13,6 +12,7 @@ import ContactListItem from './ContactListItem';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
+import {ContactRelation} from '../../../models/Contact';
 
 type ContactListContainerProps = {
   relations: ContactRelation[];

@@ -1,5 +1,4 @@
 import React, {ReactElement, useCallback} from 'react';
-import {ContactRequest} from '../../../models/ContactRequest';
 import IncomingRequestListStub from './IncomingRequestListStub';
 import IncomingRequestListItem from './IncomingRequestListItem';
 import {Box, useTheme} from 'native-base';
@@ -8,6 +7,7 @@ import {ListUtils} from '../../../shared/utils/ListUtils';
 import FlatList from '../../../components/surfaces/FlatList';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 import {useAppDispatch} from '../../../store/store';
+import {ContactRequest} from '../../../models/Contact';
 
 type IncomingRequestListContainerProps = {
   requests: ContactRequest[];

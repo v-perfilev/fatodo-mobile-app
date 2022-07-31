@@ -1,7 +1,6 @@
 import {TFunction} from 'i18next';
-import {EventMessageParams, EventMessageType, Message} from '../../models/Message';
+import {ChatItem, EventMessageParams, EventMessageType, Message} from '../../models/Message';
 import {User} from '../../models/User';
-import {ChatItem} from '../../models/ChatItem';
 import {DateFormatters} from './DateUtils';
 import {ArrayUtils} from './ArrayUtils';
 import {MapUtils} from './MapUtils';

@@ -1,6 +1,5 @@
 import {Chat} from '../../models/Chat';
-import {Message} from '../../models/Message';
-import {ChatItem} from '../../models/ChatItem';
+import {ChatItem, Message} from '../../models/Message';
 
 export type ChatState = {
   chat: Chat;

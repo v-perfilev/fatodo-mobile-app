@@ -1,8 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ContactsState} from './contactsType';
-import {ContactRelation} from '../../models/ContactRelation';
-import {ContactRequest} from '../../models/ContactRequest';
 import {ContactsThunks} from './contactsActions';
+import {ContactRelation, ContactRequest} from '../../models/Contact';
 
 const initialState: ContactsState = {
   relationCount: 0,

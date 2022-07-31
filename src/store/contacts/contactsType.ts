@@ -1,5 +1,4 @@
-import {ContactRelation} from '../../models/ContactRelation';
-import {ContactRequest} from '../../models/ContactRequest';
+import {ContactRelation, ContactRequest} from '../../models/Contact';
 
 export type ContactsState = {
   relationCount: number;

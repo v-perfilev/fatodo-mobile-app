@@ -10,10 +10,10 @@ import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
 import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 import ChatViewStub from './ChatViewStub';
-import {ChatItem} from '../../../models/ChatItem';
 import ChatViewItem from './ChatViewItem';
 import {Box, useTheme} from 'native-base';
 import {ListUtils} from '../../../shared/utils/ListUtils';
+import {ChatItem} from '../../../models/Message';
 
 const ChatViewContainer = () => {
   const dispatch = useAppDispatch();
