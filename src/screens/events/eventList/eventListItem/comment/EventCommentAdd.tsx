@@ -17,7 +17,7 @@ const EventCommentAdd = ({user, group, item, comment, date}: WithEventCommentPro
   const Group = (): ReactElement => (group ? <GroupLink group={group} /> : null);
   const Item = (): ReactElement => (item ? <ItemLink item={item} /> : null);
 
-  const image = user ? <UserView user={user} picSize="md" /> : null;
+  const image = <UserView user={user} picSize="md" />;
 
   let content = null;
 

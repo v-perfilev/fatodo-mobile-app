@@ -17,7 +17,7 @@ const EventChatMemberDelete = ({user, chat, users, date}: WithEventChatProps) =>
   const Chat = (): ReactElement => (chat ? <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink> : null);
   const Users = (): ReactElement => (users ? <EventListItemUsers users={users} /> : null);
 
-  const image = user ? <UserView user={user} picSize="md" /> : null;
+  const image = <UserView user={user} picSize="md" />;
 
   const content = (
     <Text>

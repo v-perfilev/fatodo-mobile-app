@@ -25,16 +25,16 @@ export const UserView = (props: UserViewProps) => {
   const {withUserPic = true, withUsername, withPaperBox, withInvertedBorder} = props;
   const navigation = useNavigation<RootNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
-  const isAnotherUser = account.id !== user.id;
+  const isAnotherUser = account.id !== user?.id;
 
   const goToUser = (): void => navigation.navigate('UserView', {user});
 
   let result = (
     <FHStack space="2" alignItems="center">
       {withUserPic && (
-        <UrlPic file={user.imageFilename} size={picSize} border={1} invertedBorder={withInvertedBorder} />
+        <UrlPic file={user?.imageFilename} size={picSize} border={1} invertedBorder={withInvertedBorder} />
       )}
-      {withUsername && <Text fontSize="sm">{user.username}</Text>}
+      {withUsername && <Text fontSize="sm">{user?.username}</Text>}
     </FHStack>
   );
 

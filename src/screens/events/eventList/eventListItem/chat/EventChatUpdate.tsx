@@ -15,7 +15,7 @@ const EventChatUpdate = ({user, chat, date}: WithEventChatProps) => {
   const User = (): ReactElement => (user ? <UserLink user={user} /> : null);
   const Chat = (): ReactElement => (chat ? <ChatLink chat={chat} /> : null);
 
-  const image = user ? <UserView user={user} picSize="md" /> : null;
+  const image = <UserView user={user} picSize="md" />;
 
   const content = (
     <Text>

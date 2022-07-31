@@ -17,7 +17,7 @@ const EventItemMemberAdd = ({user, group, users, date}: WithEventItemProps) => {
   const Group = (): ReactElement => (group ? <GroupLink group={group} /> : null);
   const Users = (): ReactElement => (users ? <EventListItemUsers users={users} /> : null);
 
-  const image = user ? <UserView user={user} picSize="md" /> : null;
+  const image = <UserView user={user} picSize="md" />;
 
   const content = (
     <Text>

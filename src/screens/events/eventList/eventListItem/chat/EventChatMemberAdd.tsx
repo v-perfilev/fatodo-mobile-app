@@ -17,7 +17,7 @@ const EventChatMemberAdd = ({user, chat, users, date}: WithEventChatProps) => {
   const Chat = (): ReactElement => <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink>;
   const Users = (): ReactElement => <EventListItemUsers users={users} />;
 
-  const image = user ? <UserView user={user} picSize="md" /> : null;
+  const image = <UserView user={user} picSize="md" />;
 
   const content = (
     <Text>
