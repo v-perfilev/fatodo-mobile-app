@@ -26,7 +26,7 @@ const WsClient = ({topics, onMessage}: WsClientProps) => {
   }, [isAuthenticated]);
 
   return token ? (
-    <SockJsClient headers={headers} url={WS_URL} topics={topics} onMessage={onMessage} debug={true} />
+    <SockJsClient headers={headers} url={WS_URL} topics={topics} onMessage={onMessage} debug={false} />
   ) : null;
 };
 
