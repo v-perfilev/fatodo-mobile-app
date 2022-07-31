@@ -13,6 +13,12 @@ import {ChatUtils} from '../../shared/utils/ChatUtils';
 import {MessageUtils} from '../../shared/utils/MessageUtils';
 import {InfoThunks} from '../info/infoActions';
 
+interface ChatMessageReadPayload {
+  chatId: string;
+  messageId: string;
+  account: UserAccount;
+}
+
 export class ChatActions {
   static addMessageWs = (message: Message) => async (dispatch: AppDispatch) => {
     dispatch(chatSlice.actions.addMessageWs(message));
@@ -82,8 +88,9 @@ export class ChatThunks {
 
   static markMessageAsRead = createAsyncThunk(
     TYPES.MARK_AS_READ,
-    async ({messageId, account}: {messageId: string; account: UserAccount}, thunkAPI) => {
+    async ({chatId, messageId, account}: ChatMessageReadPayload, thunkAPI) => {
       await ChatService.markMessageAsRead(messageId);
+      thunkAPI.dispatch(chatsSlice.actions.removeUnread({chatId, messageId}));
       thunkAPI.dispatch(chatSlice.actions.markMessageAsRead({messageId, account}));
     },
   );

@@ -5,6 +5,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import {ChatsActions} from '../../../store/chats/chatsActions';
 import {ChatActions} from '../../../store/chat/chatActions';
+import AuthSelectors from '../../../store/auth/authSelectors';
 
 enum WsChatDestinations {
   CHAT_NEW = '/user/chat/new',
@@ -21,6 +22,7 @@ const withWsChat = (Component: ComponentType) => (props: any) => {
   const dispatch = useAppDispatch();
   const {setTopicsAndHandler, removeTopicsAndHandler} = useWsContext();
   const chat = useAppSelector(ChatSelectors.chat);
+  const account = useAppSelector(AuthSelectors.account);
   const chatId = chat?.id;
 
   const handler = useCallback((msg: any, topic: string): void => {
@@ -29,7 +31,7 @@ const withWsChat = (Component: ComponentType) => (props: any) => {
     } else if (topic.startsWith(WsChatDestinations.CHAT_UPDATE)) {
       dispatch(ChatsActions.updateChatWs(msg));
     } else if (topic.startsWith(WsChatDestinations.CHAT_LAST_MESSAGE)) {
-      dispatch(ChatsActions.addChatWs(msg));
+      dispatch(ChatsActions.addChatLastMessageWs(msg, account));
     } else if (topic.startsWith(WsChatDestinations.CHAT_LAST_MESSAGE_UPDATE)) {
       dispatch(ChatsActions.updateChatWs(msg));
     } else if (topic.startsWith(WsChatDestinations.MESSAGE_NEW)) {
@@ -37,9 +39,9 @@ const withWsChat = (Component: ComponentType) => (props: any) => {
     } else if (topic.startsWith(WsChatDestinations.MESSAGE_UPDATE)) {
       dispatch(ChatActions.updateMessageWs(msg));
     } else if (topic.startsWith(WsChatDestinations.MESSAGE_STATUS)) {
-      dispatch(ChatActions.updateMessageReactionsWs(msg));
-    } else if (topic.startsWith(WsChatDestinations.MESSAGE_REACTION)) {
       dispatch(ChatActions.updateMessageStatusesWs(msg));
+    } else if (topic.startsWith(WsChatDestinations.MESSAGE_REACTION)) {
+      dispatch(ChatActions.updateMessageReactionsWs(msg));
     }
   }, []);
 

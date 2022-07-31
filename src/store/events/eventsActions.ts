@@ -3,10 +3,18 @@ import EventService from '../../services/EventService';
 import {EventUtils} from '../../shared/utils/EventUtils';
 import {InfoThunks} from '../info/infoActions';
 import {Event} from '../../models/Event';
+import {AppDispatch} from '../store';
+import eventsSlice from './eventsSlice';
+
+export class EventsActions {
+  static addEventWs = (event: Event) => async (dispatch: AppDispatch) => {
+    dispatch(EventsThunks.loadDependencies([event]));
+    dispatch(eventsSlice.actions.addEventWs(event));
+  };
+}
 
 enum TYPES {
   FETCH_EVENTS = 'events/fetchEvents',
-  ADD_EVENT = 'events/addEvent',
   LOAD_DEPENDENCIES = 'events/loadDependencies',
   FETCH_UNREAD_COUNT = 'events/getUnreadCount',
   REFRESH_UNREAD_COUNT = 'events/refreshUnreadCount',
@@ -17,11 +25,6 @@ export class EventsThunks {
     const response = await EventService.getEventsPageable(offset);
     thunkAPI.dispatch(EventsThunks.loadDependencies(response.data.data));
     return response.data;
-  });
-
-  static addEvent = createAsyncThunk(TYPES.ADD_EVENT, async (event: Event, thunkAPI) => {
-    thunkAPI.dispatch(EventsThunks.loadDependencies([event]));
-    return event;
   });
 
   static loadDependencies = createAsyncThunk(TYPES.LOAD_DEPENDENCIES, async (events: Event[], thunkAPI) => {

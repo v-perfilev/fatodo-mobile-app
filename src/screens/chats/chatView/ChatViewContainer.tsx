@@ -58,7 +58,7 @@ const ChatViewContainer = () => {
 
   const addTimer = useCallback((messageId: string): void => {
     const timerId = setTimeout(() => {
-      dispatch(ChatThunks.markMessageAsRead({messageId, account}));
+      dispatch(ChatThunks.markMessageAsRead({chatId: chat.id, messageId, account}));
       unreadTimersRef.current.delete(messageId);
     }, TIMEOUT_BEFORE_MARK_AS_READ);
     unreadTimersRef.current.set(messageId, timerId);

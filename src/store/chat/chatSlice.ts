@@ -64,20 +64,6 @@ const chatSlice = createSlice({
       return {...state, messages, chatItems};
     },
 
-    updateMessageReactionsWs: (state: ChatState, action: PayloadAction<MessageReactions>) => {
-      const chatId = action.payload.chatId;
-      const messageId = action.payload.messageId;
-      const reactions = action.payload.reactions;
-      let messages = state.messages;
-      if (state.chat.id === chatId) {
-        const messageInList = ArrayUtils.findValueById(state.messages, messageId);
-        const updatedMessage = {...messageInList, reactions};
-        messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
-      }
-      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
-      return {...state, messages, chatItems};
-    },
-
     updateMessageStatusesWs: (state: ChatState, action: PayloadAction<MessageStatuses>) => {
       const chatId = action.payload.chatId;
       const messageId = action.payload.messageId;
@@ -86,6 +72,20 @@ const chatSlice = createSlice({
       if (state.chat.id === chatId) {
         const messageInList = ArrayUtils.findValueById(state.messages, messageId);
         const updatedMessage = {...messageInList, statuses};
+        messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
+      }
+      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
+      return {...state, messages, chatItems};
+    },
+
+    updateMessageReactionsWs: (state: ChatState, action: PayloadAction<MessageReactions>) => {
+      const chatId = action.payload.chatId;
+      const messageId = action.payload.messageId;
+      const reactions = action.payload.reactions;
+      let messages = state.messages;
+      if (state.chat.id === chatId) {
+        const messageInList = ArrayUtils.findValueById(state.messages, messageId);
+        const updatedMessage = {...messageInList, reactions};
         messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
       }
       const chatItems = MessageUtils.convertMessagesToChatItems(messages);

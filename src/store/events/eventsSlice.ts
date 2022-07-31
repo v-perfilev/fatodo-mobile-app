@@ -1,7 +1,8 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {EventsState} from './eventsType';
 import {EventsThunks} from './eventsActions';
 import {EventUtils} from '../../shared/utils/EventUtils';
+import {Event} from '../../models/Event';
 
 const initialState: EventsState = {
   events: [],
@@ -14,7 +15,15 @@ const initialState: EventsState = {
 const eventsSlice = createSlice({
   name: 'events',
   initialState,
-  reducers: {},
+  reducers: {
+    addEventWs: (state: EventsState, action: PayloadAction<Event>) => {
+      const event = action.payload;
+      const events = EventUtils.filterEvents([...state.events, event]);
+      const count = state.count + 1;
+      const unreadCount = state.unreadCount + 1;
+      return {...state, events, count, unreadCount};
+    },
+  },
   extraReducers: (builder) => {
     /*
     fetchEvents
@@ -35,17 +44,6 @@ const eventsSlice = createSlice({
       ...state,
       loading: false,
     }));
-
-    /*
-    addEvent
-    */
-    builder.addCase(EventsThunks.addEvent.fulfilled, (state: EventsState, action) => {
-      const event = action.payload;
-      const events = EventUtils.filterEvents([...state.events, event]);
-      const count = state.count + 1;
-      const unreadCount = state.unreadCount + 1;
-      return {...state, events, count, unreadCount};
-    });
 
     /*
     fetchUnreadCount

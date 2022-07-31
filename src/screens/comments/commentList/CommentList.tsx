@@ -9,14 +9,16 @@ import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import CommentListContainer from './CommentListContainer';
 import CommentListControl from './CommentListControl';
 import {useIsFocused} from '@react-navigation/native';
-import {useAppDispatch} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {CommentsThunks} from '../../../store/comments/commentsActions';
+import CommentsSelectors from '../../../store/comments/commentsSelectors';
 
 type CommentListProps = WithCommentsProps;
 
 const CommentList = ({targetId, loading, colorScheme}: CommentListProps) => {
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
+  const comments = useAppSelector(CommentsSelectors.comments);
   const [reference, setReference] = useState<Comment>();
 
   const clearReference = (): void => {
@@ -25,7 +27,7 @@ const CommentList = ({targetId, loading, colorScheme}: CommentListProps) => {
 
   useEffect(() => {
     isFocused && !loading && dispatch(CommentsThunks.refreshComments(targetId));
-  }, [isFocused, loading]);
+  }, [comments, isFocused, loading]);
 
   const theme = useMemo<Theme>(() => {
     return colorScheme ? ThemeFactory.getTheme(colorScheme) : ThemeFactory.getDefaultTheme();

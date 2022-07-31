@@ -16,6 +16,11 @@ interface ChatCreatePayload {
   userIds: string[];
 }
 
+interface ChatMessageReadPayload {
+  chatId: string;
+  messageId: string;
+}
+
 const initialState: ChatsState = {
   chats: [],
   filteredChats: [],
@@ -104,6 +109,21 @@ const chatsSlice = createSlice({
       }
       return {...state, chats};
     },
+
+    addUnread: (state: ChatsState, action: PayloadAction<Message>) => {
+      const message = action.payload;
+      const unreadMap = ChatUtils.addMessageToUnread(state.unreadMap, message);
+      const unreadCount = ChatUtils.calcUnreadCount(unreadMap);
+      return {...state, unreadMap, unreadCount};
+    },
+
+    removeUnread: (state: ChatsState, action: PayloadAction<ChatMessageReadPayload>) => {
+      const chatId = action.payload.chatId;
+      const messageId = action.payload.messageId;
+      const unreadMap = ChatUtils.removeMessageFromUnread(state.unreadMap, chatId, messageId);
+      const unreadCount = ChatUtils.calcUnreadCount(unreadMap);
+      return {...state, unreadMap, unreadCount};
+    },
   },
   extraReducers: (builder) => {
     /*
@@ -162,8 +182,8 @@ const chatsSlice = createSlice({
     */
     builder.addCase(ChatsThunks.fetchUnreadMessagesMap.fulfilled, (state: ChatsState, action) => {
       const unreadMessagesMap = action.payload;
-      const unreadCount = Array.from(unreadMessagesMap.values()).reduce((a, b) => a + b.length, 0);
       const unreadMap = [...unreadMessagesMap];
+      const unreadCount = ChatUtils.calcUnreadCount(unreadMap);
       return {...state, unreadCount, unreadMap};
     });
   },

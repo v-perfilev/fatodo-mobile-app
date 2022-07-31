@@ -3,7 +3,7 @@ import {ComponentType, useCallback, useEffect, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {useWsContext} from '../../contexts/WsContext';
-import {EventsThunks} from '../../../store/events/eventsActions';
+import {EventsActions} from '../../../store/events/eventsActions';
 
 enum WsEventDestinations {
   EVENT = '/user/event',
@@ -16,7 +16,7 @@ const withWsEvent = (Component: ComponentType) => (props: any) => {
 
   const handler = useCallback((msg: any, topic: string): void => {
     if (topic.startsWith(WsEventDestinations.EVENT)) {
-      dispatch(EventsThunks.addEvent(msg));
+      dispatch(EventsActions.addEventWs(msg));
     }
   }, []);
 

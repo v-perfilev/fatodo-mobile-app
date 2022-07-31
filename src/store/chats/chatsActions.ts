@@ -7,10 +7,19 @@ import {AppDispatch} from '../store';
 import {Chat} from '../../models/Chat';
 import {ChatUtils} from '../../shared/utils/ChatUtils';
 import {InfoThunks} from '../info/infoActions';
+import {UserAccount} from '../../models/User';
 
 export class ChatsActions {
   static addChatWs = (chat: Chat) => async (dispatch: AppDispatch) => {
     dispatch(chatsSlice.actions.addChatWs(chat));
+  };
+
+  static addChatLastMessageWs = (chat: Chat, account: UserAccount) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.addChatWs(chat));
+    const message = chat.lastMessage;
+    if (!message?.isEvent && message?.userId === account.id) {
+      dispatch(chatsSlice.actions.addUnread(message));
+    }
   };
 
   static updateChatWs = (chat: Chat) => async (dispatch: AppDispatch) => {
@@ -68,7 +77,7 @@ export class ChatsThunks {
     },
   );
 
-  static fetchUnreadMessagesMap = createAsyncThunk(TYPES.FETCH_UNREAD_MESSAGES_MAP, async (_, thunkAPI) => {
+  static fetchUnreadMessagesMap = createAsyncThunk(TYPES.FETCH_UNREAD_MESSAGES_MAP, async (_) => {
     const response = await ChatService.getUnreadMessagesMap();
     return response.data;
   });

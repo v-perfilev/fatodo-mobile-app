@@ -25,15 +25,16 @@ type ChatListItemProps = {
 const ChatListItem = ({chat}: ChatListItemProps) => {
   const navigation = useNavigation<RootNavigationProp>();
   const {t} = useTranslation();
-  const unreadMessageCountMap = useAppSelector(ChatsSelectors.unreadMap);
+  const unreadMap = useAppSelector(ChatsSelectors.unreadMap);
   const users = useAppSelector(InfoSelectors.users);
   const account = useAppSelector(AuthSelectors.account);
 
   const goToChat = (): void => navigation.navigate('ChatView', {chat});
 
   const unreadCount = useMemo<number>(() => {
-    return unreadMessageCountMap.get(chat.id);
-  }, [unreadMessageCountMap, chat.id]);
+    const countMap = unreadMap.get(chat.id);
+    return countMap?.length || 0;
+  }, [unreadMap, chat.id]);
 
   const directUser = useMemo<User>(() => {
     return ChatUtils.getDirectChatUser(chat, users, account);
