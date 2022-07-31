@@ -3,7 +3,7 @@ import {User} from '../../models/User';
 import {UserState} from './userType';
 import {UserThunks} from './userActions';
 import {Group} from '../../models/Group';
-import {ContactRelation} from '../../models/ContactRelation';
+import {ContactRelation} from '../../models/Contact';
 
 const initialState: UserState = {
   user: undefined,

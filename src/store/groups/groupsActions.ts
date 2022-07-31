@@ -26,6 +26,14 @@ export class GroupsActions {
   static setAllCollapsed = (value: boolean) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.setAllCollapsed(value));
   };
+
+  static removeGroup = (groupId: string) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.removeGroup(groupId));
+  };
+
+  static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.removeItem(itemId));
+  };
 }
 
 enum TYPES {
@@ -58,13 +66,13 @@ export class GroupsThunks {
 
   static deleteGroup = createAsyncThunk(TYPES.DELETE_GROUP, async (group: Group, thunkAPI) => {
     await ItemService.deleteGroup(group.id);
-    thunkAPI.dispatch(groupsSlice.actions.removeGroup(group));
+    thunkAPI.dispatch(groupsSlice.actions.removeGroup(group.id));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.deleted', variant: 'info'}));
   });
 
   static leaveGroup = createAsyncThunk(TYPES.LEAVE_GROUP, async (group: Group, thunkAPI) => {
     await ItemService.leaveGroup(group.id);
-    thunkAPI.dispatch(groupsSlice.actions.removeGroup(group));
+    thunkAPI.dispatch(groupsSlice.actions.removeGroup(group.id));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.left', variant: 'info'}));
   });
 

@@ -2,12 +2,18 @@ import * as React from 'react';
 import {ComponentType, useCallback, useEffect, useMemo} from 'react';
 import {useWsContext} from '../../contexts/WsContext';
 import {ClearEvent} from '../../../models/ClearEvent';
+import {useAppDispatch} from '../../../store/store';
+import {ChatsActions} from '../../../store/chats/chatsActions';
+import {GroupsActions} from '../../../store/groups/groupsActions';
+import {GroupActions} from '../../../store/group/groupActions';
+import {ContactsActions} from '../../../store/contacts/contactsActions';
 
 enum WsClearDestinations {
   CLEAR = '/user/clear',
 }
 
 const withWsClear = (Component: ComponentType) => (props: any) => {
+  const dispatch = useAppDispatch();
   const {setTopicsAndHandler, removeTopicsAndHandler} = useWsContext();
 
   const handler = useCallback((msg: any, topic: string): void => {
@@ -15,22 +21,23 @@ const withWsClear = (Component: ComponentType) => (props: any) => {
       const clearEvent = msg as ClearEvent;
       switch (clearEvent.type) {
         case 'GROUP':
-          // TODO
+          dispatch(GroupsActions.removeGroup(clearEvent.id));
           break;
         case 'ITEM':
-          // TODO
+          dispatch(GroupsActions.removeItem(clearEvent.id));
+          dispatch(GroupActions.removeItem(clearEvent.id));
           break;
         case 'CONTACT':
-          // TODO
+          dispatch(ContactsActions.removeRelation(clearEvent.id));
           break;
         case 'INCOMING_REQUEST':
-          // TODO
+          dispatch(ContactsActions.removeIncomingRequest(clearEvent.id));
           break;
         case 'OUTCOMING_REQUEST':
-          // TODO
+          dispatch(ContactsActions.removeOutcomingRequest(clearEvent.id));
           break;
         case 'CHAT':
-          // TODO
+          dispatch(ChatsActions.removeChat(clearEvent.id));
           break;
       }
     }

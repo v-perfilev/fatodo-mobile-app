@@ -66,14 +66,21 @@ const groupSlice = createSlice({
       return {...state, activeItems, archivedItems};
     },
 
-    removeItem: (state: GroupState, action: PayloadAction<Item>) => {
-      const item = action.payload;
-      const isArchived = item.archived;
-      const activeItemsCount = state.activeItemsCount + (!isArchived ? -1 : 0);
-      const archivedItemsCount = state.archivedItemsCount + (isArchived ? -1 : 0);
-      const activeItems = !isArchived ? ArrayUtils.deleteValueWithId(state.activeItems, item) : state.activeItems;
-      const archivedItems = isArchived ? ArrayUtils.deleteValueWithId(state.archivedItems, item) : state.archivedItems;
-      return {...state, activeItemsCount, archivedItemsCount, activeItems, archivedItems};
+    removeItem: (state: GroupState, action: PayloadAction<string>) => {
+      const itemId = action.payload;
+      const itemArray = [...state.activeItems, ...state.archivedItems];
+      const item = ArrayUtils.findValueById(itemArray, itemId);
+      if (item) {
+        const isArchived = item.archived;
+        const activeItemsCount = state.activeItemsCount + (!isArchived ? -1 : 0);
+        const archivedItemsCount = state.archivedItemsCount + (isArchived ? -1 : 0);
+        const activeItems = !isArchived ? ArrayUtils.deleteValueWithId(state.activeItems, item) : state.activeItems;
+        const archivedItems = isArchived
+          ? ArrayUtils.deleteValueWithId(state.archivedItems, item)
+          : state.archivedItems;
+        return {...state, activeItemsCount, archivedItemsCount, activeItems, archivedItems};
+      }
+      return {...state};
     },
   },
   extraReducers: (builder) => {

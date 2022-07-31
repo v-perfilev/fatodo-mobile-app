@@ -5,6 +5,48 @@ import {ContactRequestDTO} from '../../models/dto/ContactRequestDTO';
 import {ContactUtils} from '../../shared/utils/ContactUtils';
 import snackSlice from '../snack/snackSlice';
 import {InfoThunks} from '../info/infoActions';
+import {AppDispatch} from '../store';
+import {ContactRequestEvent} from '../../models/Contact';
+
+export class ContactsActions {
+  static addIncomingRequest = (requestEvent: ContactRequestEvent) => async (dispatch: AppDispatch) => {
+    const request = ContactUtils.createStubRequest(requestEvent.requesterId, requestEvent.recipientId);
+    dispatch(contactsSlice.actions.addIncomingRequest(request));
+    dispatch(InfoThunks.handleUserIds([requestEvent.requesterId]));
+  };
+
+  static addOutcomingRequest = (requestEvent: ContactRequestEvent) => async (dispatch: AppDispatch) => {
+    const request = ContactUtils.createStubRequest(requestEvent.requesterId, requestEvent.recipientId);
+    dispatch(contactsSlice.actions.addOutcomingRequest(request));
+    dispatch(InfoThunks.handleUserIds([requestEvent.recipientId]));
+  };
+
+  static acceptIncomingRequest = (requestEvent: ContactRequestEvent) => async (dispatch: AppDispatch) => {
+    const relation = ContactUtils.createStubRelation(requestEvent.requesterId);
+    dispatch(contactsSlice.actions.removeIncomingRequest(requestEvent.requesterId));
+    dispatch(contactsSlice.actions.addRelation(relation));
+    dispatch(InfoThunks.handleUserIds([requestEvent.requesterId]));
+  };
+
+  static acceptOutcomingRequest = (requestEvent: ContactRequestEvent) => async (dispatch: AppDispatch) => {
+    const relation = ContactUtils.createStubRelation(requestEvent.recipientId);
+    dispatch(contactsSlice.actions.removeOutcomingRequest(requestEvent.recipientId));
+    dispatch(contactsSlice.actions.addRelation(relation));
+    dispatch(InfoThunks.handleUserIds([requestEvent.recipientId]));
+  };
+
+  static removeRelation = (secondUserId: string) => async (dispatch: AppDispatch) => {
+    dispatch(contactsSlice.actions.removeRelation(secondUserId));
+  };
+
+  static removeIncomingRequest = (requesterId: string) => async (dispatch: AppDispatch) => {
+    dispatch(contactsSlice.actions.removeIncomingRequest(requesterId));
+  };
+
+  static removeOutcomingRequest = (recipientId: string) => async (dispatch: AppDispatch) => {
+    dispatch(contactsSlice.actions.removeOutcomingRequest(recipientId));
+  };
+}
 
 enum TYPES {
   FETCH_INFO = 'contacts/fetchInfo',
@@ -53,7 +95,7 @@ export class ContactsThunks {
 
   static sendRequest = createAsyncThunk(TYPES.SEND_REQUEST, async (dto: ContactRequestDTO, thunkAPI) => {
     await ContactService.sendRequest(dto);
-    const request = ContactUtils.createStubRequest(dto.recipientId);
+    const request = ContactUtils.createStubRequest(undefined, dto.recipientId);
     thunkAPI.dispatch(contactsSlice.actions.addOutcomingRequest(request));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'contact.requestSent', variant: 'info'}));
   });

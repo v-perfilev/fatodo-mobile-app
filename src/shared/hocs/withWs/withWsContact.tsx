@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {ComponentType, useCallback, useEffect, useMemo} from 'react';
 import {useWsContext} from '../../contexts/WsContext';
+import {useAppDispatch} from '../../../store/store';
+import {ContactsActions} from '../../../store/contacts/contactsActions';
 
 enum WsContactDestinations {
   CONTACT_REQUEST_INCOMING = '/user/contact/request-incoming',
@@ -10,17 +12,18 @@ enum WsContactDestinations {
 }
 
 const withWsContact = (Component: ComponentType) => (props: any) => {
+  const dispatch = useAppDispatch();
   const {setTopicsAndHandler, removeTopicsAndHandler} = useWsContext();
 
   const handler = useCallback((msg: any, topic: string): void => {
     if (topic.startsWith(WsContactDestinations.CONTACT_REQUEST_INCOMING)) {
-      // TODO
+      dispatch(ContactsActions.addIncomingRequest(msg));
     } else if (topic.startsWith(WsContactDestinations.CONTACT_REQUEST_OUTCOMING)) {
-      // TODO
+      dispatch(ContactsActions.addOutcomingRequest(msg));
     } else if (topic.startsWith(WsContactDestinations.CONTACT_ACCEPT_INCOMING)) {
-      // TODO
+      dispatch(ContactsActions.acceptIncomingRequest(msg));
     } else if (topic.startsWith(WsContactDestinations.CONTACT_ACCEPT_OUTCOMING)) {
-      // TODO
+      dispatch(ContactsActions.acceptOutcomingRequest(msg));
     }
   }, []);
 

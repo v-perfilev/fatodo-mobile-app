@@ -52,13 +52,14 @@ const chatSlice = createSlice({
     addMessage: (state: ChatState, action: PayloadAction<Message>) => {
       const message = action.payload;
       let messages = state.messages;
+      let chatItems = state.chatItems;
       if (state.chat.id === message.chatId) {
         const messageInList = MessageUtils.findMessage(state.messages, message);
         messages = messageInList
           ? ArrayUtils.replaceValue(state.messages, messageInList, message)
           : MessageUtils.filterMessages([message, ...state.messages]);
+        chatItems = MessageUtils.convertMessagesToChatItems(messages);
       }
-      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
       return {...state, messages, chatItems};
     },
 
@@ -78,12 +79,13 @@ const chatSlice = createSlice({
       const messageId = action.payload.messageId;
       const statuses = action.payload.statuses;
       let messages = state.messages;
+      let chatItems = state.chatItems;
       if (state.chat.id === chatId) {
         const messageInList = ArrayUtils.findValueById(state.messages, messageId);
         const updatedMessage = {...messageInList, statuses};
         messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
+        chatItems = MessageUtils.convertMessagesToChatItems(messages);
       }
-      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
       return {...state, messages, chatItems};
     },
 
@@ -93,13 +95,15 @@ const chatSlice = createSlice({
       const message = state.messages.find((m) => m.id === messageId);
       const status = message?.statuses.find((s) => s.userId === account.id);
       let messages = state.messages;
+      let chatItems = state.chatItems;
       if (!status) {
         const newStatus = buildMessageStatus(messageId, account.id, 'READ');
         const updatedStatuses = [...message.statuses, newStatus];
         const updatedMessage = {...message, statuses: updatedStatuses};
         messages = ArrayUtils.updateValueWithId(messages, updatedMessage);
+        chatItems = MessageUtils.convertMessagesToChatItems(messages);
       }
-      return {...state, messages};
+      return {...state, messages, chatItems};
     },
 
     updateMessageReactions: (state: ChatState, action: PayloadAction<MessageReactions>) => {
@@ -107,12 +111,13 @@ const chatSlice = createSlice({
       const messageId = action.payload.messageId;
       const reactions = action.payload.reactions;
       let messages = state.messages;
+      let chatItems = state.chatItems;
       if (state.chat.id === chatId) {
         const messageInList = ArrayUtils.findValueById(state.messages, messageId);
         const updatedMessage = {...messageInList, reactions};
         messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
+        chatItems = MessageUtils.convertMessagesToChatItems(messages);
       }
-      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
       return {...state, messages, chatItems};
     },
 
@@ -121,12 +126,14 @@ const chatSlice = createSlice({
       const account = action.payload.account;
       const reaction = message.reactions.find((s) => s.userId === account.id);
       let messages = state.messages;
+      let chatItems = state.chatItems;
       if (reaction) {
         const updatedReactions = ArrayUtils.deleteValue(message.reactions, reaction);
         const updatedMessage = {...message, reactions: updatedReactions};
         messages = ArrayUtils.updateValueWithId(messages, updatedMessage);
+        chatItems = MessageUtils.convertMessagesToChatItems(messages);
       }
-      return {...state, messages};
+      return {...state, messages, chatItems};
     },
 
     setMessageReaction: (state: ChatState, action: PayloadAction<ChatReactionPayload>) => {
@@ -134,7 +141,6 @@ const chatSlice = createSlice({
       const newReactionType = action.payload.reactionType;
       const account = action.payload.account;
       const reaction = message.reactions.find((s) => s.userId === account.id);
-      let messages = state.messages;
       let updatedReactions = message.reactions;
       if (reaction) {
         updatedReactions = ArrayUtils.deleteValue(updatedReactions, reaction);
@@ -142,8 +148,9 @@ const chatSlice = createSlice({
       const newReaction = buildMessageReaction(message.id, account.id, newReactionType);
       updatedReactions = [...updatedReactions, newReaction];
       const updatedMessage = {...message, reactions: updatedReactions};
-      messages = ArrayUtils.updateValueWithId(messages, updatedMessage);
-      return {...state, messages};
+      const messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
+      const chatItems = MessageUtils.convertMessagesToChatItems(messages);
+      return {...state, messages, chatItems};
     },
 
     clearChat: (state: ChatState) => {

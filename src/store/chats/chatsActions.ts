@@ -25,6 +25,10 @@ export class ChatsActions {
       dispatch(chatsSlice.actions.addUnread(message));
     }
   };
+
+  static removeChat = (chatId: string) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.removeChat(chatId));
+  };
 }
 
 enum TYPES {

@@ -78,4 +78,10 @@ export class ChatUtils {
     }
     return [...map];
   };
+
+  public static removeChatFromUnread = (unreadMap: [string, string[]][], chatId: string): [string, string[]][] => {
+    const map = new Map(unreadMap);
+    map.delete(chatId);
+    return [...map];
+  };
 }

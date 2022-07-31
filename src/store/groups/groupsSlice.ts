@@ -69,14 +69,18 @@ const groupsSlice = createSlice({
       return {...state, groups};
     },
 
-    removeGroup: (state: GroupsState, action: PayloadAction<Group>) => {
-      const group = action.payload;
-      const groups = ArrayUtils.deleteValueWithId(state.groups, group);
-      const items = MapUtils.deleteValue(state.items, group.id);
-      const itemsCount = MapUtils.deleteValue(state.itemsCount, group.id);
-      const itemsCollapsed = MapUtils.deleteValue(state.itemsCollapsed, group.id);
-      const itemsLoading = MapUtils.deleteValue(state.itemsLoading, group.id);
-      return {...state, groups, items, itemsCount, itemsCollapsed, itemsLoading};
+    removeGroup: (state: GroupsState, action: PayloadAction<string>) => {
+      const groupId = action.payload;
+      const group = ArrayUtils.findValueById(state.groups, groupId);
+      if (group) {
+        const groups = ArrayUtils.deleteValueWithId(state.groups, group);
+        const items = MapUtils.deleteValue(state.items, group.id);
+        const itemsCount = MapUtils.deleteValue(state.itemsCount, group.id);
+        const itemsCollapsed = MapUtils.deleteValue(state.itemsCollapsed, group.id);
+        const itemsLoading = MapUtils.deleteValue(state.itemsLoading, group.id);
+        return {...state, groups, items, itemsCount, itemsCollapsed, itemsLoading};
+      }
+      return {...state};
     },
 
     addItem: (state: GroupsState, action: PayloadAction<Item>) => {
@@ -98,17 +102,19 @@ const groupsSlice = createSlice({
       return {...state, items};
     },
 
-    removeItem: (state: GroupsState, action: PayloadAction<Item>) => {
-      const item = action.payload;
-      let items = state.items;
-      let itemsCount = state.itemsCount;
-      if (!item.archived) {
+    removeItem: (state: GroupsState, action: PayloadAction<string>) => {
+      const itemId = action.payload;
+      const map = new Map(state.items);
+      const itemArray = Array.from(map.values()).flatMap((items) => items);
+      const item = ArrayUtils.findValueById(itemArray, itemId);
+      if (item && !item.archived) {
         const newItemsValue = ArrayUtils.deleteValueWithId(MapUtils.getValue(state.items, item.groupId), item);
-        items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
+        const items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
         const newItemsCountValue = MapUtils.getValue(state.itemsCount, item.groupId) - 1;
-        itemsCount = MapUtils.setValue(state.itemsCount, item.groupId, newItemsCountValue);
+        const itemsCount = MapUtils.setValue(state.itemsCount, item.groupId, newItemsCountValue);
+        return {...state, items, itemsCount};
       }
-      return {...state, items, itemsCount};
+      return {...state};
     },
   },
   extraReducers: (builder) => {

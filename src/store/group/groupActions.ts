@@ -14,6 +14,10 @@ export class GroupActions {
   static setGroup = (group: Group) => async (dispatch: AppDispatch) => {
     dispatch(groupSlice.actions.setGroup(group));
   };
+
+  static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.removeItem(itemId));
+  };
 }
 
 enum TYPES {
@@ -87,8 +91,8 @@ export class GroupThunks {
 
   static deleteItem = createAsyncThunk(TYPES.DELETE_ITEM, async (item: Item, thunkAPI) => {
     await ItemService.deleteItem(item.id);
-    thunkAPI.dispatch(groupsSlice.actions.removeItem(item));
-    thunkAPI.dispatch(groupSlice.actions.removeItem(item));
+    thunkAPI.dispatch(groupsSlice.actions.removeItem(item.id));
+    thunkAPI.dispatch(groupSlice.actions.removeItem(item.id));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'item.deleted', variant: 'info'}));
   });
 

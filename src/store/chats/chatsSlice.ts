@@ -60,10 +60,13 @@ const chatsSlice = createSlice({
       return {...state, chats};
     },
 
-    removeChat: (state: ChatsState, action: PayloadAction<Chat>) => {
-      const chat = action.payload;
-      const chats = ArrayUtils.deleteValueWithId(state.chats, chat);
-      return {...state, chats};
+    removeChat: (state: ChatsState, action: PayloadAction<string>) => {
+      const chatId = action.payload;
+      const chatInList = ArrayUtils.findValueById(state.chats, chatId);
+      const chats = chatInList ? ArrayUtils.deleteValueWithId(state.chats, chatInList) : state.chats;
+      const unreadMap = ChatUtils.removeChatFromUnread(state.unreadMap, chatId);
+      const unreadCount = ChatUtils.calcUnreadCount(unreadMap);
+      return {...state, chats, unreadMap, unreadCount};
     },
 
     updateLastMessage: (state: ChatsState, action: PayloadAction<Message>) => {
@@ -101,7 +104,9 @@ const chatsSlice = createSlice({
         const updatedChat = {...chat, lastMessage: message};
         chats = ArrayUtils.updateValueWithId(state.chats, updatedChat);
       }
-      return {...state, chats};
+      const unreadMap = ChatUtils.removeChatFromUnread(state.unreadMap, chatId);
+      const unreadCount = ChatUtils.calcUnreadCount(unreadMap);
+      return {...state, chats, unreadMap, unreadCount};
     },
 
     addUnread: (state: ChatsState, action: PayloadAction<Message>) => {

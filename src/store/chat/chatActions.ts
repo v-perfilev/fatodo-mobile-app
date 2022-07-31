@@ -137,13 +137,13 @@ export class ChatThunks {
 
   static leaveChat = createAsyncThunk(TYPES.LEAVE_CHAT, async (chat: Chat, thunkAPI) => {
     await ChatService.leaveChat(chat.id);
-    thunkAPI.dispatch(chatsSlice.actions.removeChat(chat));
+    thunkAPI.dispatch(chatsSlice.actions.removeChat(chat.id));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'chat.left', variant: 'info'}));
   });
 
   static deleteChat = createAsyncThunk(TYPES.DELETE_CHAT, async (chat: Chat, thunkAPI) => {
     await ChatService.deleteChat(chat.id);
-    thunkAPI.dispatch(chatsSlice.actions.removeChat(chat));
+    thunkAPI.dispatch(chatsSlice.actions.removeChat(chat.id));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'chat.deleted', variant: 'info'}));
   });
 
