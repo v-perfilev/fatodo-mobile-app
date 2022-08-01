@@ -22,6 +22,7 @@ import {ContactsThunks} from './store/contacts/contactsActions';
 import {AuthActions, AuthThunks} from './store/auth/authActions';
 import withWsClient from './shared/hocs/withWs/withWsClient';
 import {ChatsThunks} from './store/chats/chatsActions';
+import SplashScreen from 'react-native-splash-screen';
 
 // ignore some warnings
 const ignoredLogPatterns = ['Require cycle', 'Possible Unhandled Promise Rejection'];
@@ -48,6 +49,9 @@ const App = () => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    // splash screen
+    SplashScreen.hide();
+    // login
     SecurityUtils.getAuthToken().then(async (token) => {
       if (token) {
         await dispatch(AuthActions.login());
