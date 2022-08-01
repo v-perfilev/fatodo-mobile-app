@@ -7,7 +7,7 @@ const OutlinedButton = React.forwardRef((props: OutlinedButtonProps, ref: HTMLEl
   const {children, ...other} = props;
 
   return (
-    <Button {...other} variant="outline" ref={ref as MutableRefObject<any>} minW="90px">
+    <Button {...other} variant="outline" ref={ref as MutableRefObject<any>}>
       {children}
     </Button>
   );

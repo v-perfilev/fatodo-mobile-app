@@ -1,5 +1,5 @@
-import {ArrayUtils} from './ArrayUtils';
 import {AxiosPromise} from 'axios';
+import {FilterUtils} from './FilterUtils';
 
 type WithId = {id: string};
 
@@ -9,9 +9,9 @@ export class InfoUtils {
     const existingIds = Array.from(map.keys());
     const notAllowedIds = [...existingIds, ...loadingIds];
     return ids
-      .filter(ArrayUtils.notUndefinedFilter)
-      .filter(ArrayUtils.notNullFilter)
-      .filter(ArrayUtils.uniqueFilter)
+      .filter(FilterUtils.notUndefinedFilter)
+      .filter(FilterUtils.notNullFilter)
+      .filter(FilterUtils.uniqueFilter)
       .filter((id) => !notAllowedIds.includes(id));
   };
 

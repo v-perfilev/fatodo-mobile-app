@@ -4,8 +4,18 @@ import {User} from '../../models/User';
 import {DateFormatters} from './DateUtils';
 import {ArrayUtils} from './ArrayUtils';
 import {MapUtils} from './MapUtils';
+import {FilterUtils} from './FilterUtils';
+import {ComparatorUtils} from './ComparatorUtils';
 
 export class MessageUtils {
+  public static filterMessages = (messages: Message[]): Message[] => {
+    return messages.filter(FilterUtils.uniqueByIdFilter).sort(ComparatorUtils.createdAtComparator);
+  };
+
+  public static findMessage = (messages: Message[], m: Message): Message => {
+    return ArrayUtils.findValueWithId(messages, m) || ArrayUtils.findValueWithUserIdAndText(messages, m);
+  };
+
   public static parseEventMessage = (message: Message): EventMessageParams => {
     return message.isEvent ? (JSON.parse(message.text) as EventMessageParams) : null;
   };
@@ -93,13 +103,5 @@ export class MessageUtils {
       handledItems.push({message});
     });
     return handledItems.reverse();
-  };
-
-  public static filterMessages = (messages: Message[]): Message[] => {
-    return messages.filter(ArrayUtils.uniqueByIdFilter).sort(ArrayUtils.createdAtComparator);
-  };
-
-  public static findMessage = (messages: Message[], m: Message): Message => {
-    return ArrayUtils.findValueWithId(messages, m) || ArrayUtils.findValueWithUserIdAndText(messages, m);
   };
 }

@@ -16,8 +16,9 @@ export class CommentsActions {
     dispatch(commentsSlice.actions.init(targetId));
   };
 
-  static addComment = (comment: Comment) => async (dispatch: AppDispatch) => {
-    dispatch(commentsSlice.actions.addComment(comment));
+  static addComment = (comment: Comment, account: UserAccount) => async (dispatch: AppDispatch) => {
+    const isOwnComment = comment.userId === account.id;
+    dispatch(commentsSlice.actions.addComment({comment, isOwnComment}));
   };
 
   static updateComment = (comment: Comment) => async (dispatch: AppDispatch) => {
@@ -64,7 +65,7 @@ export class CommentsThunks {
     TYPES.SEND_COMMENT,
     async ({targetId, dto}: {targetId: string; dto: CommentDTO}, thunkAPI) => {
       const result = await CommentService.addComment(targetId, dto);
-      thunkAPI.dispatch(commentsSlice.actions.addComment(result.data));
+      thunkAPI.dispatch(commentsSlice.actions.addComment({comment: result.data, isOwnComment: true}));
     },
   );
 

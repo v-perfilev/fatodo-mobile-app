@@ -4,8 +4,16 @@ import {ArrayUtils} from './ArrayUtils';
 import {ViewToken} from 'react-native';
 import {MessageUtils} from './MessageUtils';
 import {Message} from '../../models/Message';
+import {FilterUtils} from './FilterUtils';
+import {ComparatorUtils} from './ComparatorUtils';
 
 export class ChatUtils {
+  public static filterChats = (chats: Chat[]): Chat[] => {
+    return chats
+      .filter(FilterUtils.uniqueByIdFilter)
+      .sort((a, b) => ComparatorUtils.createdAtComparator(a.lastMessage, b.lastMessage));
+  };
+
   public static getDirectChatUser = (chat: Chat, users: Map<string, User>, account: User): User => {
     const memberId = chat.members.find((id) => id !== account.id);
     return chat.isDirect && memberId ? users.get(memberId) : null;
@@ -42,12 +50,6 @@ export class ChatUtils {
       .filter((item) => MessageUtils.isIncomingMessage(item.message, account))
       .filter((item) => !MessageUtils.isReadMessage(item.message, account))
       .map((item) => item.message.id);
-  };
-
-  public static filterChats = (chats: Chat[]): Chat[] => {
-    return chats
-      .filter(ArrayUtils.uniqueByIdFilter)
-      .sort((a, b) => ArrayUtils.createdAtComparator(a.lastMessage, b.lastMessage));
   };
 
   public static calcUnreadCount = (unreadMap: [string, string[]][]): number => {

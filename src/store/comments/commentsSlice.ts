@@ -6,12 +6,17 @@ import {buildCommentReaction, Comment, CommentReactions, CommentReactionType} fr
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {UserAccount} from '../../models/User';
 
-interface CommentPayload {
+interface CommentIsOwnPayload {
+  comment: Comment;
+  isOwnComment: boolean;
+}
+
+interface CommentAccountPayload {
   comment: Comment;
   account: UserAccount;
 }
 
-interface CommentReactionPayload {
+interface CommentReactionAccountPayload {
   comment: Comment;
   reactionType: CommentReactionType;
   account: UserAccount;
@@ -37,16 +42,15 @@ const commentsSlice = createSlice({
       return {...initialState, targetId, comments, allLoaded};
     },
 
-    addComment: (state: CommentsState, action: PayloadAction<Comment>) => {
-      const comment = action.payload;
+    addComment: (state: CommentsState, action: PayloadAction<CommentIsOwnPayload>) => {
+      const comment = action.payload.comment;
+      const isOwnComment = action.payload.isOwnComment;
       let comments = state.comments;
       if (state.targetId === comment.targetId) {
-        const commentInThread = ArrayUtils.findValueWithId(state.comments, comment);
-        comments = commentInThread
-          ? ArrayUtils.replaceValue(state.comments, commentInThread, comment)
-          : CommentUtils.filterComments([comment, ...state.comments]);
+        comments = CommentUtils.filterComments([comment, ...state.comments]);
       }
-      return {...state, comments};
+      const threadsInfo = CommentUtils.increaseInfo(state.threadsInfo, comment.targetId, isOwnComment);
+      return {...state, comments, threadsInfo};
     },
 
     editComment: (state: CommentsState, action: PayloadAction<Comment>) => {
@@ -71,7 +75,7 @@ const commentsSlice = createSlice({
       return {...state, comments};
     },
 
-    deleteCommentReaction: (state: CommentsState, action: PayloadAction<CommentPayload>) => {
+    deleteCommentReaction: (state: CommentsState, action: PayloadAction<CommentAccountPayload>) => {
       const comment = action.payload.comment;
       const account = action.payload.account;
       const reaction = comment.reactions.find((s) => s.userId === account.id);
@@ -84,7 +88,7 @@ const commentsSlice = createSlice({
       return {...state, comments};
     },
 
-    setCommentReaction: (state: CommentsState, action: PayloadAction<CommentReactionPayload>) => {
+    setCommentReaction: (state: CommentsState, action: PayloadAction<CommentReactionAccountPayload>) => {
       const comment = action.payload.comment;
       const newReactionType = action.payload.reactionType;
       const account = action.payload.account;

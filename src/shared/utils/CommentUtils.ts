@@ -1,8 +1,13 @@
 import {Comment, CommentThreadInfo, ReferenceComment} from '../../models/Comment';
 import {User} from '../../models/User';
-import {ArrayUtils} from './ArrayUtils';
+import {FilterUtils} from './FilterUtils';
+import {ComparatorUtils} from './ComparatorUtils';
 
 export class CommentUtils {
+  public static filterComments = (comments: Comment[]): Comment[] => {
+    return comments.filter(FilterUtils.uniqueByIdFilter).sort(ComparatorUtils.createdAtComparator).reverse();
+  };
+
   public static isOwnComment = (comment: Comment, account: User): boolean => {
     return comment && account && comment.userId === account.id;
   };
@@ -18,16 +23,26 @@ export class CommentUtils {
     return [...commentUserIds, ...referenceUserIds, ...reactionUserIds];
   };
 
-  public static filterComments = (comments: Comment[]): Comment[] => {
-    return comments.filter(ArrayUtils.uniqueByIdFilter).sort(ArrayUtils.createdAtComparator).reverse();
-  };
-
   public static addInfo = (
     threadsInfo: [string, CommentThreadInfo][],
     newInfo: CommentThreadInfo[],
   ): [string, CommentThreadInfo][] => {
     const infoMap = new Map(threadsInfo);
     newInfo.forEach((i) => infoMap.set(i.targetId, i));
+    return [...infoMap];
+  };
+
+  public static increaseInfo = (
+    threadsInfo: [string, CommentThreadInfo][],
+    targetId: string,
+    isOwnComment: boolean,
+  ): [string, CommentThreadInfo][] => {
+    const infoMap = new Map(threadsInfo);
+    if (infoMap.has(targetId)) {
+      const threadInfo = infoMap.get(targetId);
+      threadInfo.count = threadInfo.count + 1;
+      threadInfo.unread = isOwnComment ? threadInfo.unread : threadInfo.unread + 1;
+    }
     return [...infoMap];
   };
 

@@ -37,10 +37,7 @@ const chatsSlice = createSlice({
   reducers: {
     addChat: (state: ChatsState, action: PayloadAction<Chat>) => {
       const chat = action.payload;
-      const chatInList = ArrayUtils.findValueWithId(state.chats, chat);
-      let chats = chatInList
-        ? ArrayUtils.updateValueWithId(state.chats, chat)
-        : ChatUtils.filterChats([chat, ...state.chats]);
+      let chats = ChatUtils.filterChats([chat, ...state.chats]);
       return {...state, chats};
     },
 

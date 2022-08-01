@@ -4,6 +4,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {useWsContext} from '../../contexts/WsContext';
 import {CommentsActions} from '../../../store/comments/commentsActions';
+import AuthSelectors from '../../../store/auth/authSelectors';
 
 enum WsCommentDestinations {
   COMMENT_NEW = '/user/comment/new/',
@@ -14,11 +15,12 @@ enum WsCommentDestinations {
 const withWsComment = (Component: ComponentType) => (props: any) => {
   const dispatch = useAppDispatch();
   const {setTopicsAndHandler, removeTopicsAndHandler} = useWsContext();
+  const account = useAppSelector(AuthSelectors.account);
   const targetId = useAppSelector(CommentsSelectors.targetId);
 
   const handler = useCallback((msg: any, topic: string): void => {
     if (topic.startsWith(WsCommentDestinations.COMMENT_NEW)) {
-      dispatch(CommentsActions.addComment(msg));
+      dispatch(CommentsActions.addComment(msg, account));
     } else if (topic.startsWith(WsCommentDestinations.COMMENT_UPDATE)) {
       dispatch(CommentsActions.updateComment(msg));
     } else if (topic.startsWith(WsCommentDestinations.COMMENT_REACTION)) {

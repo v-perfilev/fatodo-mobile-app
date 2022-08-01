@@ -1,9 +1,10 @@
-import {ArrayUtils} from './ArrayUtils';
 import {ChatEvent, CommentEvent, ContactEvent, Event, ItemEvent, ReminderEvent} from '../../models/Event';
+import {FilterUtils} from './FilterUtils';
+import {ComparatorUtils} from './ComparatorUtils';
 
 export class EventUtils {
   public static filterEvents = (events: Event[]): Event[] => {
-    return events.filter(ArrayUtils.uniqueByIdFilter).sort(ArrayUtils.createdAtComparator).reverse();
+    return events.filter(FilterUtils.uniqueByIdFilter).sort(ComparatorUtils.createdAtComparator).reverse();
   };
 
   public static extractEventsUserIds = (events: Event[]): string[] => {
