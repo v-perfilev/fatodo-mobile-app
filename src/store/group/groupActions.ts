@@ -14,10 +14,6 @@ export class GroupActions {
   static setGroup = (group: Group) => async (dispatch: AppDispatch) => {
     dispatch(groupSlice.actions.setGroup(group));
   };
-
-  static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
-    dispatch(groupSlice.actions.removeItem(itemId));
-  };
 }
 
 enum TYPES {

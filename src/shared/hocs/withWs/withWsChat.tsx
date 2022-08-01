@@ -10,6 +10,7 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 enum WsChatDestinations {
   CHAT_NEW = '/user/chat/new',
   CHAT_UPDATE = '/user/chat/update',
+  CHAT_DELETE = '/user/chat/delete',
   CHAT_LAST_MESSAGE = '/user/chat/last-message',
   CHAT_LAST_MESSAGE_UPDATE = '/user/chat/last-message-update',
   MESSAGE_NEW = '/user/message/new/',
@@ -30,6 +31,8 @@ const withWsChat = (Component: ComponentType) => (props: any) => {
       dispatch(ChatsActions.addChat(msg));
     } else if (topic.startsWith(WsChatDestinations.CHAT_UPDATE)) {
       dispatch(ChatsActions.updateChat(msg));
+    } else if (topic.startsWith(WsChatDestinations.CHAT_DELETE)) {
+      dispatch(ChatsActions.removeChat(msg));
     } else if (topic.startsWith(WsChatDestinations.CHAT_LAST_MESSAGE)) {
       dispatch(ChatsActions.addChatLastMessage(msg, account));
     } else if (topic.startsWith(WsChatDestinations.CHAT_LAST_MESSAGE_UPDATE)) {

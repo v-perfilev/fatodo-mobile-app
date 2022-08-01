@@ -26,14 +26,6 @@ export class GroupsActions {
   static setAllCollapsed = (value: boolean) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.setAllCollapsed(value));
   };
-
-  static removeGroup = (groupId: string) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.removeGroup(groupId));
-  };
-
-  static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.removeItem(itemId));
-  };
 }
 
 enum TYPES {

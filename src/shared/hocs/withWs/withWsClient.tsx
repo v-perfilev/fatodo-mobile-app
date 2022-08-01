@@ -7,7 +7,6 @@ import withWsChat from './withWsChat';
 import withWsComment from './withWsComment';
 import withWsEvent from './withWsEvent';
 import withWsContact from './withWsContact';
-import withWsClear from './withWsClear';
 
 const withWsClient = (Component: ComponentType) => (props: any) => {
   const [topicsAndHandlers, setTopicsAndHandlers] = useState<Map<string, WsTopicsAndHandler>>(new Map());
@@ -51,4 +50,4 @@ const withWsClient = (Component: ComponentType) => (props: any) => {
   );
 };
 
-export default flowRight([withWsClient, withWsClear, withWsChat, withWsComment, withWsEvent, withWsContact]);
+export default flowRight([withWsClient, withWsChat, withWsComment, withWsEvent, withWsContact]);

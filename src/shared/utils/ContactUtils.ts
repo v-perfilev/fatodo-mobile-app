@@ -23,9 +23,16 @@ export class ContactUtils {
     secondUserId,
   });
 
-  public static createStubRequest = (requesterId: string, recipientId: string): ContactRequest => ({
+  public static createStubIncomingRequest = (requesterId: string): ContactRequest => ({
     id: undefined,
     requesterId,
+    recipientId: undefined,
+    message: undefined,
+  });
+
+  public static createStubOutcomingRequest = (recipientId: string): ContactRequest => ({
+    id: undefined,
+    requesterId: undefined,
     recipientId,
     message: undefined,
   });

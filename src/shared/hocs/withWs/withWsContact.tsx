@@ -9,6 +9,9 @@ enum WsContactDestinations {
   CONTACT_REQUEST_OUTCOMING = '/user/contact/request-outcoming',
   CONTACT_ACCEPT_INCOMING = '/user/contact/accept-incoming',
   CONTACT_ACCEPT_OUTCOMING = '/user/contact/accept-outcoming',
+  CONTACT_DELETE_REQUEST_INCOMING = '/user/contact/delete-request-incoming',
+  CONTACT_DELETE_REQUEST_OUTCOMING = '/user/contact/delete-request-outcoming',
+  CONTACT_DELETE_RELATION = '/user/contact/delete-relation',
 }
 
 const withWsContact = (Component: ComponentType) => (props: any) => {
@@ -24,6 +27,12 @@ const withWsContact = (Component: ComponentType) => (props: any) => {
       dispatch(ContactsActions.acceptIncomingRequest(msg));
     } else if (topic.startsWith(WsContactDestinations.CONTACT_ACCEPT_OUTCOMING)) {
       dispatch(ContactsActions.acceptOutcomingRequest(msg));
+    } else if (topic.startsWith(WsContactDestinations.CONTACT_DELETE_REQUEST_INCOMING)) {
+      dispatch(ContactsActions.removeIncomingRequest(msg));
+    } else if (topic.startsWith(WsContactDestinations.CONTACT_DELETE_REQUEST_OUTCOMING)) {
+      dispatch(ContactsActions.removeOutcomingRequest(msg));
+    } else if (topic.startsWith(WsContactDestinations.CONTACT_DELETE_RELATION)) {
+      dispatch(ContactsActions.removeRelation(msg));
     }
   }, []);
 
