@@ -50,7 +50,7 @@ const App = () => {
 
   useEffect(() => {
     // splash screen
-    SplashScreen.hide();
+    setTimeout(() => SplashScreen.hide(), 1000);
     // login
     SecurityUtils.getAuthToken().then(async (token) => {
       if (token) {
