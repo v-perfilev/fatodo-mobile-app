@@ -27,8 +27,7 @@ const snackSlice = createSlice({
       const message = TranslationUtils.getSnackTranslation(code);
       const snack = message ? new SnackBuilder(message).setVariantColor(variant).build() : null;
       const reduxSnack = {...snack, dismissed: false, key: `${new Date().getTime()}${Math.random()}`};
-      const list = [...state.list, reduxSnack];
-      return {list};
+      state.list = [...state.list, reduxSnack];
     },
 
     handleResponse: (state: SnackState, action: PayloadAction<SnackResponsePayload>) => {
@@ -38,28 +37,24 @@ const snackSlice = createSlice({
       const message = TranslationUtils.getFeedbackTranslation(feedbackCode);
       const snack = isStatusCorrect && message ? new SnackBuilder(message).setStatusColor(status).build() : null;
       const reduxSnack = {...snack, dismissed: false, key: `${new Date().getTime()}${Math.random()}`};
-      const list = snack ? [...state.list, reduxSnack] : state.list;
-      return {list};
+      state.list = snack ? [...state.list, reduxSnack] : state.list;
     },
 
     enqueueSnack: (state: SnackState, action: PayloadAction<Snack>) => {
       const snack = action.payload;
       const reduxSnack = {...snack, dismissed: false, key: `${new Date().getTime()}${Math.random()}`};
-      const list = [...state.list, reduxSnack];
-      return {list};
+      state.list = [...state.list, reduxSnack];
     },
 
     closeSnack: (state: SnackState, action: PayloadAction<string>) => {
       const isDismissAll = (n: ReduxSnack): boolean => action.payload === 'all' || n.key === action.payload;
       const handle = (n: ReduxSnack): ReduxSnack => (isDismissAll(n) ? {...n, dismissed: true} : {...n});
-      const list = state.list.map((notification) => handle(notification));
-      return {list};
+      state.list = state.list.map((notification) => handle(notification));
     },
 
     removeSnack: (state: SnackState, action: PayloadAction<string>) => {
       const filter = (n: ReduxSnack): boolean => n.key !== action.payload;
-      const list = state.list.filter((notification) => filter(notification));
-      return {list};
+      state.list = state.list.filter((notification) => filter(notification));
     },
   },
 });

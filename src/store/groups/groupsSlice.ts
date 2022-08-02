@@ -27,79 +27,67 @@ const groupsSlice = createSlice({
   initialState,
   reducers: {
     setGroups: (state: GroupsState, action: PayloadAction<Group[]>) => {
-      const groups = action.payload;
-      return {...state, groups};
+      state.groups = action.payload;
     },
 
     cacheGroups: (state: GroupsState) => {
-      const cachedGroups = state.groups;
-      return {...state, cachedGroups};
+      state.cachedGroups = state.groups;
     },
 
     resetGroupsFromCache: (state: GroupsState) => {
       const cachedGroupIds = state.cachedGroups.map((g) => g.id);
       const newGroups = state.groups.filter((g) => !cachedGroupIds.includes(g.id));
-      const groups = [...newGroups, ...state.cachedGroups];
-      const cachedGroups = [] as Group[];
-      return {...state, groups, cachedGroups};
+      state.groups = [...newGroups, ...state.cachedGroups];
+      state.cachedGroups = [];
     },
 
     setCollapsed: (state: GroupsState, action: PayloadAction<GroupsCollapsedPayload>) => {
       const groupId = action.payload.groupId;
       const value = action.payload.value;
-      const itemsCollapsed = MapUtils.setValue(state.itemsCollapsed, groupId, value);
-      return {...state, itemsCollapsed};
+      state.itemsCollapsed = MapUtils.setValue(state.itemsCollapsed, groupId, value);
     },
 
     setAllCollapsed: (state: GroupsState, action: PayloadAction<boolean>) => {
       const value = action.payload;
-      const itemsCollapsed = MapUtils.setAllValues(state.itemsCollapsed, value);
-      return {...state, itemsCollapsed};
+      state.itemsCollapsed = MapUtils.setAllValues(state.itemsCollapsed, value);
     },
 
     addGroup: (state: GroupsState, action: PayloadAction<Group>) => {
       const group = action.payload;
-      const groups = [...state.groups, group];
-      return {...state, groups};
+      state.groups = [...state.groups, group];
     },
 
     updateGroup: (state: GroupsState, action: PayloadAction<Group>) => {
       const group = action.payload;
-      const groups = ArrayUtils.updateValueWithId(state.groups, group);
-      return {...state, groups};
+      state.groups = ArrayUtils.updateValueWithId(state.groups, group);
     },
 
     removeGroup: (state: GroupsState, action: PayloadAction<string>) => {
       const groupId = action.payload;
       const group = ArrayUtils.findValueById(state.groups, groupId);
       if (group) {
-        const groups = ArrayUtils.deleteValueWithId(state.groups, group);
-        const items = MapUtils.deleteValue(state.items, group.id);
-        const itemsCount = MapUtils.deleteValue(state.itemsCount, group.id);
-        const itemsCollapsed = MapUtils.deleteValue(state.itemsCollapsed, group.id);
-        const itemsLoading = MapUtils.deleteValue(state.itemsLoading, group.id);
-        return {...state, groups, items, itemsCount, itemsCollapsed, itemsLoading};
+        state.groups = ArrayUtils.deleteValueWithId(state.groups, group);
+        state.items = MapUtils.deleteValue(state.items, group.id);
+        state.itemsCount = MapUtils.deleteValue(state.itemsCount, group.id);
+        state.itemsCollapsed = MapUtils.deleteValue(state.itemsCollapsed, group.id);
+        state.itemsLoading = MapUtils.deleteValue(state.itemsLoading, group.id);
       }
-      return {...state};
     },
 
     addItem: (state: GroupsState, action: PayloadAction<Item>) => {
       const item = action.payload;
       const newItemsValue = GroupUtils.filterItems([item, ...MapUtils.getValue(state.items, item.groupId)]);
-      const items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
       const newItemsCountValue = MapUtils.getValue(state.itemsCount, item.groupId) + 1;
-      const itemsCount = MapUtils.setValue(state.itemsCount, item.groupId, newItemsCountValue);
-      return {...state, items, itemsCount};
+      state.items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
+      state.itemsCount = MapUtils.setValue(state.itemsCount, item.groupId, newItemsCountValue);
     },
 
     updateItem: (state: GroupsState, action: PayloadAction<Item>) => {
       const item = action.payload;
-      let items = state.items;
       if (!item.archived) {
         const newItemsValue = ArrayUtils.updateValueWithId(MapUtils.getValue(state.items, item.groupId), item);
-        items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
+        state.items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
       }
-      return {...state, items};
     },
 
     removeItem: (state: GroupsState, action: PayloadAction<string>) => {
@@ -109,57 +97,50 @@ const groupsSlice = createSlice({
       const item = ArrayUtils.findValueById(itemArray, itemId);
       if (item && !item.archived) {
         const newItemsValue = ArrayUtils.deleteValueWithId(MapUtils.getValue(state.items, item.groupId), item);
-        const items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
         const newItemsCountValue = MapUtils.getValue(state.itemsCount, item.groupId) - 1;
-        const itemsCount = MapUtils.setValue(state.itemsCount, item.groupId, newItemsCountValue);
-        return {...state, items, itemsCount};
+        state.items = MapUtils.setValue(state.items, item.groupId, newItemsValue);
+        state.itemsCount = MapUtils.setValue(state.itemsCount, item.groupId, newItemsCountValue);
       }
-      return {...state};
     },
   },
   extraReducers: (builder) => {
     /*
     fetchGroups
     */
-    builder.addCase(GroupsThunks.fetchGroups.pending, () => ({
-      ...initialState,
-      loading: true,
-    }));
-    builder.addCase(GroupsThunks.fetchGroups.fulfilled, (state: GroupsState, action) => ({
-      ...state,
-      groups: action.payload,
-      loading: false,
-    }));
-    builder.addCase(GroupsThunks.fetchGroups.rejected, () => ({
-      ...initialState,
-      loading: false,
-    }));
+    builder.addCase(GroupsThunks.fetchGroups.pending, () => {
+      const loading = true;
+      return {...initialState, loading};
+    });
+    builder.addCase(GroupsThunks.fetchGroups.fulfilled, (state: GroupsState, action) => {
+      state.groups = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(GroupsThunks.fetchGroups.rejected, () => {
+      return {...initialState};
+    });
 
     /*
     fetchItems
     */
     builder.addCase(GroupsThunks.fetchItems.pending, (state: GroupsState, action) => {
       const groupIds = action.meta.arg;
-      const items = MapUtils.setValues(state.items, groupIds, []);
-      const itemsCount = MapUtils.setValues(state.itemsCount, groupIds, 0);
-      const itemsCollapsed = MapUtils.setValues(state.itemsCollapsed, groupIds, false);
-      const itemsLoading = MapUtils.setValues(state.itemsLoading, groupIds, true);
-      return {...state, items, itemsCount, itemsCollapsed, itemsLoading};
+      state.items = MapUtils.setValues(state.items, groupIds, []);
+      state.itemsCount = MapUtils.setValues(state.itemsCount, groupIds, 0);
+      state.itemsCollapsed = MapUtils.setValues(state.itemsCollapsed, groupIds, false);
+      state.itemsLoading = MapUtils.setValues(state.itemsLoading, groupIds, true);
     });
     builder.addCase(GroupsThunks.fetchItems.fulfilled, (state: GroupsState, action) => {
       const groupIds = action.meta.arg;
       const pageableListMap = new Map(Object.entries(action.payload));
       const itemFunc = (id: string): Item[] => (pageableListMap.has(id) ? pageableListMap.get(id).data : []);
       const countFunc = (id: string): number => (pageableListMap.has(id) ? pageableListMap.get(id).count : 0);
-      const items = MapUtils.setValuesFunc(state.items, groupIds, itemFunc);
-      const itemsCount = MapUtils.setValuesFunc(state.itemsCount, groupIds, countFunc);
-      const itemsLoading = MapUtils.setValues(state.itemsLoading, groupIds, false);
-      return {...state, items, itemsCount, itemsLoading};
+      state.items = MapUtils.setValuesFunc(state.items, groupIds, itemFunc);
+      state.itemsCount = MapUtils.setValuesFunc(state.itemsCount, groupIds, countFunc);
+      state.itemsLoading = MapUtils.setValues(state.itemsLoading, groupIds, false);
     });
     builder.addCase(GroupsThunks.fetchItems.rejected, (state: GroupsState, action) => {
       const groupIds = action.meta.arg;
-      const itemsLoading = MapUtils.setValues(state.itemsLoading, groupIds, false);
-      return {...state, itemsLoading};
+      state.itemsLoading = MapUtils.setValues(state.itemsLoading, groupIds, false);
     });
   },
 });

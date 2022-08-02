@@ -27,43 +27,44 @@ const groupSlice = createSlice({
     },
 
     updateGroup: (state: GroupState, action: PayloadAction<Group>) => {
-      const group = action.payload;
-      return {...state, group};
+      state.group = action.payload;
     },
 
     addItem: (state: GroupState, action: PayloadAction<Item>) => {
       const item = action.payload;
-      const activeItems = GroupUtils.filterItems([...state.activeItems, item]);
-      const activeItemsCount = state.activeItemsCount + 1;
-      return {...state, activeItems, activeItemsCount};
+      state.activeItems = GroupUtils.filterItems([...state.activeItems, item]);
+      state.activeItemsCount = state.activeItemsCount + 1;
     },
 
     updateItem: (state: GroupState, action: PayloadAction<Item>) => {
       const item = action.payload;
       const isArchived = item.archived;
-      const activeItems = !isArchived ? ArrayUtils.updateValueWithId(state.activeItems, item) : state.activeItems;
-      const archivedItems = isArchived ? ArrayUtils.updateValueWithId(state.archivedItems, item) : state.activeItems;
-      return {...state, activeItems, archivedItems};
+      if (isArchived) {
+        state.archivedItems = ArrayUtils.updateValueWithId(state.archivedItems, item);
+      } else {
+        state.activeItems = ArrayUtils.updateValueWithId(state.activeItems, item);
+      }
     },
 
     updateItemArchived: (state: GroupState, action: PayloadAction<Item>) => {
       const item = action.payload;
       const isArchived = item.archived;
-      const activeItemsCount = state.activeItemsCount + (!isArchived ? 1 : -1);
-      const archivedItemsCount = state.archivedItemsCount + (isArchived ? 1 : -1);
       const activeFunction = !isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValueWithId;
       const archivedFunction = isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValueWithId;
-      const activeItems = GroupUtils.filterItems(activeFunction(state.activeItems, item));
-      const archivedItems = GroupUtils.filterItems(archivedFunction(state.archivedItems, item));
-      return {...state, activeItemsCount, archivedItemsCount, activeItems, archivedItems};
+      state.activeItems = GroupUtils.filterItems(activeFunction(state.activeItems, item));
+      state.archivedItems = GroupUtils.filterItems(archivedFunction(state.archivedItems, item));
+      state.activeItemsCount = state.activeItemsCount + (!isArchived ? 1 : -1);
+      state.archivedItemsCount = state.archivedItemsCount + (isArchived ? 1 : -1);
     },
 
     updateItemStatus: (state: GroupState, action: PayloadAction<Item>) => {
       const item = action.payload;
       const isArchived = item.archived;
-      const activeItems = !isArchived ? ArrayUtils.updateValueWithId(state.activeItems, item) : state.activeItems;
-      const archivedItems = isArchived ? ArrayUtils.updateValueWithId(state.archivedItems, item) : state.archivedItems;
-      return {...state, activeItems, archivedItems};
+      if (isArchived) {
+        state.archivedItems = ArrayUtils.updateValueWithId(state.archivedItems, item);
+      } else {
+        state.activeItems = ArrayUtils.updateValueWithId(state.activeItems, item);
+      }
     },
 
     removeItem: (state: GroupState, action: PayloadAction<string>) => {
@@ -72,102 +73,89 @@ const groupSlice = createSlice({
       const item = ArrayUtils.findValueById(itemArray, itemId);
       if (item) {
         const isArchived = item.archived;
-        const activeItemsCount = state.activeItemsCount + (!isArchived ? -1 : 0);
-        const archivedItemsCount = state.archivedItemsCount + (isArchived ? -1 : 0);
-        const activeItems = !isArchived ? ArrayUtils.deleteValueWithId(state.activeItems, item) : state.activeItems;
-        const archivedItems = isArchived
-          ? ArrayUtils.deleteValueWithId(state.archivedItems, item)
-          : state.archivedItems;
-        return {...state, activeItemsCount, archivedItemsCount, activeItems, archivedItems};
+        if (isArchived) {
+          state.archivedItems = ArrayUtils.deleteValueWithId(state.archivedItems, item);
+        } else {
+          state.activeItems = ArrayUtils.deleteValueWithId(state.activeItems, item);
+        }
+        state.activeItemsCount = state.activeItemsCount + (!isArchived ? -1 : 0);
+        state.archivedItemsCount = state.archivedItemsCount + (isArchived ? -1 : 0);
       }
-      return {...state};
     },
   },
   extraReducers: (builder) => {
     /*
     fetchGroup
     */
-    builder.addCase(GroupThunks.fetchGroup.pending, () => ({
-      ...initialState,
-      loading: true,
-    }));
-    builder.addCase(GroupThunks.fetchGroup.fulfilled, (state: GroupState, action) => ({
-      ...state,
-      group: action.payload,
-      loading: false,
-    }));
-    builder.addCase(GroupThunks.fetchGroup.rejected, () => ({
-      ...initialState,
-      loading: false,
-    }));
+    builder.addCase(GroupThunks.fetchGroup.pending, () => {
+      const loading = true;
+      return {...initialState, loading};
+    });
+    builder.addCase(GroupThunks.fetchGroup.fulfilled, (state: GroupState, action) => {
+      state.group = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(GroupThunks.fetchGroup.rejected, () => {
+      return {...initialState};
+    });
 
     /*
     fetchActiveItems
     */
-    builder.addCase(GroupThunks.fetchActiveItems.pending, (state: GroupState) => ({
-      ...state,
-      activeItemsLoading: true,
-    }));
-    builder.addCase(GroupThunks.fetchActiveItems.fulfilled, (state: GroupState, action) => {
-      const activeItemsCount = action.payload.count;
-      const activeItems = GroupUtils.filterItems([...state.activeItems, ...action.payload.data]);
-      return {...state, activeItemsCount, activeItems, activeItemsLoading: false};
+    builder.addCase(GroupThunks.fetchActiveItems.pending, (state: GroupState) => {
+      state.activeItemsLoading = true;
     });
-    builder.addCase(GroupThunks.fetchActiveItems.rejected, (state: GroupState) => ({
-      ...state,
-      activeItemsLoading: false,
-    }));
+    builder.addCase(GroupThunks.fetchActiveItems.fulfilled, (state: GroupState, action) => {
+      state.activeItems = GroupUtils.filterItems([...state.activeItems, ...action.payload.data]);
+      state.activeItemsCount = action.payload.count;
+      state.activeItemsLoading = false;
+    });
+    builder.addCase(GroupThunks.fetchActiveItems.rejected, (state: GroupState) => {
+      state.activeItemsLoading = false;
+    });
 
     /*
     fetchArchivedItems
     */
-    builder.addCase(GroupThunks.fetchArchivedItems.pending, (state: GroupState) => ({
-      ...state,
-      archivedItemsLoading: true,
-    }));
-    builder.addCase(GroupThunks.fetchArchivedItems.fulfilled, (state: GroupState, action) => {
-      const archivedItemsCount = action.payload.count;
-      const archivedItems = GroupUtils.filterItems([...state.archivedItems, ...action.payload.data]);
-      return {...state, archivedItemsCount, archivedItems, archivedItemsLoading: false};
+    builder.addCase(GroupThunks.fetchArchivedItems.pending, (state: GroupState) => {
+      state.archivedItemsLoading = true;
     });
-    builder.addCase(GroupThunks.fetchArchivedItems.rejected, (state: GroupState) => ({
-      ...state,
-      archivedItemsLoading: false,
-    }));
+    builder.addCase(GroupThunks.fetchArchivedItems.fulfilled, (state: GroupState, action) => {
+      state.archivedItems = GroupUtils.filterItems([...state.archivedItems, ...action.payload.data]);
+      state.archivedItemsCount = action.payload.count;
+      state.archivedItemsLoading = false;
+    });
+    builder.addCase(GroupThunks.fetchArchivedItems.rejected, (state: GroupState) => {
+      state.archivedItemsLoading = false;
+    });
 
     /*
     createGroup
     */
-    builder.addCase(GroupThunks.createGroup.pending, (state: GroupState) => ({
-      ...state,
-      loading: true,
-    }));
-    builder.addCase(GroupThunks.createGroup.fulfilled, (state: GroupState, action) => ({
-      ...state,
-      group: action.payload,
-      loading: false,
-    }));
-    builder.addCase(GroupThunks.createGroup.rejected, () => ({
-      ...initialState,
-      loading: false,
-    }));
+    builder.addCase(GroupThunks.createGroup.pending, (state: GroupState) => {
+      state.loading = true;
+    });
+    builder.addCase(GroupThunks.createGroup.fulfilled, (state: GroupState, action) => {
+      state.group = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(GroupThunks.createGroup.rejected, () => {
+      return {...initialState};
+    });
 
     /*
     updateGroup
     */
-    builder.addCase(GroupThunks.updateGroup.pending, (state: GroupState) => ({
-      ...state,
-      loading: true,
-    }));
-    builder.addCase(GroupThunks.updateGroup.fulfilled, (state: GroupState, action) => ({
-      ...state,
-      group: action.payload,
-      loading: false,
-    }));
-    builder.addCase(GroupThunks.updateGroup.rejected, () => ({
-      ...initialState,
-      loading: false,
-    }));
+    builder.addCase(GroupThunks.updateGroup.pending, (state: GroupState) => {
+      state.loading = true;
+    });
+    builder.addCase(GroupThunks.updateGroup.fulfilled, (state: GroupState, action) => {
+      state.group = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(GroupThunks.updateGroup.rejected, () => {
+      return {...initialState};
+    });
   },
 });
 

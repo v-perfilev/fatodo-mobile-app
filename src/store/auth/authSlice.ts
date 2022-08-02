@@ -13,84 +13,78 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    authenticated: (state: AuthState) => ({
-      ...state,
-      isAuthenticated: true,
-    }),
+    authenticated: (state: AuthState) => {
+      state.isAuthenticated = true;
+    },
 
     account: (state: AuthState, action: PayloadAction<UserAccount>) => {
-      const account = action.payload;
-      return {...state, account};
+      state.account = action.payload;
     },
 
     loading: (state: AuthState, action: PayloadAction<boolean>) => {
-      const loading = action.payload;
-      return {...state, loading};
+      state.loading = action.payload;
     },
 
-    clearAuth: () => ({
-      ...initialState,
-    }),
+    clearAuth: () => {
+      return {...initialState};
+    },
   },
   extraReducers: (builder) => {
     /*
     register
     */
-    builder.addCase(AuthThunks.register.pending, () => ({
-      ...initialState,
-      loading: true,
-    }));
-    builder.addCase(AuthThunks.register.fulfilled, () => ({
-      ...initialState,
-    }));
-    builder.addCase(AuthThunks.register.rejected, () => ({
-      ...initialState,
-    }));
+    builder.addCase(AuthThunks.register.pending, () => {
+      const loading = true;
+      return {...initialState, loading};
+    });
+    builder.addCase(AuthThunks.register.fulfilled, () => {
+      return {...initialState};
+    });
+    builder.addCase(AuthThunks.register.rejected, () => {
+      return {...initialState};
+    });
 
     /*
     authenticate
      */
-    builder.addCase(AuthThunks.authenticate.pending, () => ({
-      ...initialState,
-      loading: true,
-    }));
-    builder.addCase(AuthThunks.authenticate.fulfilled, (state: AuthState) => ({
-      ...state,
-      isAuthenticated: true,
-    }));
-    builder.addCase(AuthThunks.authenticate.rejected, () => ({
-      ...initialState,
-    }));
+    builder.addCase(AuthThunks.authenticate.pending, () => {
+      const loading = true;
+      return {...initialState, loading};
+    });
+    builder.addCase(AuthThunks.authenticate.fulfilled, (state: AuthState) => {
+      state.isAuthenticated = true;
+    });
+    builder.addCase(AuthThunks.authenticate.rejected, () => {
+      return {...initialState};
+    });
 
     /*
     fetchAccount
      */
-    builder.addCase(AuthThunks.fetchAccount.pending, (state: AuthState) => ({
-      ...state,
-      loading: true,
-    }));
-    builder.addCase(AuthThunks.fetchAccount.fulfilled, (state: AuthState, action) => ({
-      ...state,
-      account: action.payload,
-      loading: false,
-    }));
-    builder.addCase(AuthThunks.fetchAccount.rejected, () => ({
-      ...initialState,
-    }));
+    builder.addCase(AuthThunks.fetchAccount.pending, (state: AuthState) => {
+      state.loading = true;
+    });
+    builder.addCase(AuthThunks.fetchAccount.fulfilled, (state: AuthState, action) => {
+      state.account = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(AuthThunks.fetchAccount.rejected, () => {
+      return {...initialState};
+    });
 
     /*
     forgotPassword
     */
-    builder.addCase(AuthThunks.forgotPassword.pending, () => ({
-      ...initialState,
-      loading: true,
-    }));
-    builder.addCase(AuthThunks.forgotPassword.fulfilled, () => ({
-      ...initialState,
-    }));
-    builder.addCase(AuthThunks.forgotPassword.rejected, () => ({
-      ...initialState,
-    }));
+    builder.addCase(AuthThunks.forgotPassword.pending, () => {
+      const loading = true;
+      return {...initialState, loading};
+    });
+    builder.addCase(AuthThunks.forgotPassword.fulfilled, () => {
+      return {...initialState};
+    });
+    builder.addCase(AuthThunks.forgotPassword.rejected, () => {
+      return {...initialState};
+    });
   },
 });
 
