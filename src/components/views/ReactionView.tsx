@@ -8,12 +8,12 @@ import LikeIcon from '../icons/LikeIcon';
 import DislikeIcon from '../icons/DislikeIcon';
 
 type ReactionViewProps = IIconProps & {
-  statusType: MessageReactionType & CommentReactionType;
+  reactionType: MessageReactionType & CommentReactionType;
 };
 
-const ReactionView = ({statusType, ...props}: ReactionViewProps) => {
+const ReactionView = ({reactionType, ...props}: ReactionViewProps) => {
   const iconElement = useMemo<ReactElement>(() => {
-    switch (statusType) {
+    switch (reactionType) {
       case 'LIKE':
         return <LikeIcon />;
       case 'DISLIKE':
@@ -21,7 +21,7 @@ const ReactionView = ({statusType, ...props}: ReactionViewProps) => {
       default:
         return <LikeIcon />;
     }
-  }, [statusType]);
+  }, [reactionType]);
 
   const icon = useMemo<ReactElement>(() => React.cloneElement(iconElement, {...props}), [iconElement]);
 

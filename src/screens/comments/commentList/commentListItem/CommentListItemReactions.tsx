@@ -73,7 +73,7 @@ const CommentListItemReactions = ({comment, isOwnComment}: CommentListItemReacti
               {count}
             </Text>
           )}
-          <ReactionView statusType={r} size="sm" color={color} />
+          <ReactionView reactionType={r} size="sm" color={color} />
         </FHStack>
       </PressableButton>
     );

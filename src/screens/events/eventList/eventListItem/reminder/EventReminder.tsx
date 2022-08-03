@@ -5,6 +5,8 @@ import React, {ReactElement} from 'react';
 import GroupLink from '../../../../../components/links/GroupLink';
 import ItemLink from '../../../../../components/links/ItemLink';
 import EventListItemTemplate from '../EventListItemTemplate';
+import IconPic from '../../../../../components/surfaces/IconPic';
+import AlarmIcon from '../../../../../components/icons/AlarmIcon';
 
 const EventReminder = ({group, item, date}: WithEventReminderProps) => {
   const {t} = useTranslation();
@@ -14,13 +16,15 @@ const EventReminder = ({group, item, date}: WithEventReminderProps) => {
   const Group = (): ReactElement => (group ? <GroupLink group={group} /> : null);
   const Item = (): ReactElement => (item ? <ItemLink item={item} /> : null);
 
+  const image = <IconPic icon={<AlarmIcon />} size="md" />;
+
   let content = (
     <Text>
       <Trans i18nKey="event:reminder.content" components={{group: <Group />, item: <Item />}} />
     </Text>
   );
 
-  return <EventListItemTemplate title={title} content={content} date={date} />;
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
 };
 
 export default withEventReminder(EventReminder);

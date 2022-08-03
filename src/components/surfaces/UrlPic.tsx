@@ -2,7 +2,6 @@ import React, {memo, useMemo} from 'react';
 import {ImageUtils} from '../../shared/utils/imageUtils';
 import {Avatar, Image} from 'native-base';
 import {ISizes} from 'native-base/lib/typescript/theme/base/sizes';
-import {flowRight} from 'lodash';
 
 const img = require('../../../assets/images/fallback.jpg');
 
@@ -29,4 +28,4 @@ const UrlPic = ({file, size, border = 0, invertedBorder}: UrlPicProps) => {
   );
 };
 
-export default flowRight(memo)(UrlPic);
+export default memo(UrlPic);

@@ -13,7 +13,7 @@ type ChatMessageReactionsDialogItemProps = {
 const ChatMessageReactionsDialogItem = ({reaction, user}: ChatMessageReactionsDialogItemProps) => {
   return (
     <FHStack grow defaultSpace alignItems="center">
-      <ReactionView statusType={reaction.type} color="primary.500" />
+      <ReactionView reactionType={reaction.type} color="primary.500" />
       <UserView user={user} withUsername withUserPic picSize="sm" />
     </FHStack>
   );

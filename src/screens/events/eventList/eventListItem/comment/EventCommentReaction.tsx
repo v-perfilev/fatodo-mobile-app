@@ -6,7 +6,7 @@ import UserLink from '../../../../../components/links/UserLink';
 import EventListItemTemplate from '../EventListItemTemplate';
 import GroupLink from '../../../../../components/links/GroupLink';
 import ItemLink from '../../../../../components/links/ItemLink';
-import UserView from '../../../../../components/views/UserView';
+import UserReactionView from '../../../../../components/views/UserReactionView';
 
 const EventCommentReaction = ({user, group, item, comment, reaction, date}: WithEventCommentProps) => {
   const {t} = useTranslation();
@@ -17,7 +17,7 @@ const EventCommentReaction = ({user, group, item, comment, reaction, date}: With
   const Group = (): ReactElement => (group ? <GroupLink group={group} /> : null);
   const Item = (): ReactElement => (item ? <ItemLink item={item} /> : null);
 
-  const image = <UserView user={user} picSize="md" />;
+  const image = <UserReactionView user={user} size="md" reactionType={reaction} />;
 
   let content = null;
 
