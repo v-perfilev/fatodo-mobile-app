@@ -5,10 +5,10 @@ import ChatService from '../../services/ChatService';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {MessageDTO} from '../../models/dto/MessageDTO';
 import {UserAccount} from '../../models/User';
-import {Message, MessageReactions, MessageStatuses} from '../../models/Message';
+import {buildMessageFromDTO, Message, MessageReactions, MessageStatuses} from '../../models/Message';
 import snackSlice from '../snack/snackSlice';
 import chatsSlice from '../chats/chatsSlice';
-import {AppDispatch} from '../store';
+import {AppDispatch, RootState} from '../store';
 import {ChatUtils} from '../../shared/utils/ChatUtils';
 import {MessageUtils} from '../../shared/utils/MessageUtils';
 import {InfoThunks} from '../info/infoActions';
@@ -89,7 +89,7 @@ export class ChatThunks {
   static markMessageAsRead = createAsyncThunk(
     TYPES.MARK_AS_READ,
     async ({chatId, messageId, account}: ChatMessageReadPayload, thunkAPI) => {
-      await ChatService.markMessageAsRead(messageId);
+      ChatService.markMessageAsRead(messageId);
       thunkAPI.dispatch(chatsSlice.actions.removeUnread({chatId, messageId}));
       thunkAPI.dispatch(chatSlice.actions.markMessageAsRead({messageId, account}));
     },
@@ -98,7 +98,7 @@ export class ChatThunks {
   static noReaction = createAsyncThunk(
     TYPES.NO_REACTION,
     async ({message, account}: {message: Message; account: UserAccount}, thunkAPI) => {
-      await ChatService.noneMessageReaction(message.id);
+      ChatService.noneMessageReaction(message.id);
       thunkAPI.dispatch(chatSlice.actions.deleteMessageReaction({message, account}));
     },
   );
@@ -106,7 +106,7 @@ export class ChatThunks {
   static likeReaction = createAsyncThunk(
     TYPES.LIKE_REACTION,
     async ({message, account}: {message: Message; account: UserAccount}, thunkAPI) => {
-      await ChatService.likeMessageReaction(message.id);
+      ChatService.likeMessageReaction(message.id);
       thunkAPI.dispatch(chatSlice.actions.setMessageReaction({message, reactionType: 'LIKE', account}));
     },
   );
@@ -114,7 +114,7 @@ export class ChatThunks {
   static dislikeReaction = createAsyncThunk(
     TYPES.DISLIKE_REACTION,
     async ({message, account}: {message: Message; account: UserAccount}, thunkAPI) => {
-      await ChatService.dislikeMessageReaction(message.id);
+      ChatService.dislikeMessageReaction(message.id);
       thunkAPI.dispatch(chatSlice.actions.setMessageReaction({message, reactionType: 'DISLIKE', account}));
     },
   );
@@ -172,9 +172,12 @@ export class ChatThunks {
   static sendMessage = createAsyncThunk(
     TYPES.SEND_MESSAGE,
     async ({chatId, dto}: {chatId: string; dto: MessageDTO}, thunkAPI) => {
+      const state = thunkAPI.getState() as RootState;
+      const userId = state.auth.account.id;
+      const message = buildMessageFromDTO(dto, chatId, userId);
+      thunkAPI.dispatch(chatSlice.actions.addMessage(message));
       const result = await ChatService.sendIndirectMessage(chatId, dto);
       thunkAPI.dispatch(chatsSlice.actions.updateLastMessage(result.data));
-      thunkAPI.dispatch(chatSlice.actions.addMessage(result.data));
     },
   );
 
@@ -189,7 +192,7 @@ export class ChatThunks {
   );
 
   static deleteMessage = createAsyncThunk(TYPES.DELETE_MESSAGE, async (message: Message, thunkAPI) => {
-    await ChatService.deleteMessage(message.id);
+    ChatService.deleteMessage(message.id);
     const updatedMessage = {...message, isDeleted: true} as Message;
     thunkAPI.dispatch(chatsSlice.actions.updateLastMessage(updatedMessage));
     thunkAPI.dispatch(chatSlice.actions.updateMessage(updatedMessage));

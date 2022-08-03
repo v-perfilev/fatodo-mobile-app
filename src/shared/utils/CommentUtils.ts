@@ -2,10 +2,16 @@ import {Comment, CommentThreadInfo, ReferenceComment} from '../../models/Comment
 import {User} from '../../models/User';
 import {FilterUtils} from './FilterUtils';
 import {ComparatorUtils} from './ComparatorUtils';
+import {Message} from '../../models/Message';
+import {ArrayUtils} from './ArrayUtils';
 
 export class CommentUtils {
   public static filterComments = (comments: Comment[]): Comment[] => {
     return comments.filter(FilterUtils.uniqueByIdFilter).sort(ComparatorUtils.createdAtComparator).reverse();
+  };
+
+  public static findComment = (comments: Comment[], c: Comment): Message => {
+    return ArrayUtils.findValueWithId(comments, c) || ArrayUtils.findValueWithUserIdAndText(comments, c);
   };
 
   public static isOwnComment = (comment: Comment, account: User): boolean => {

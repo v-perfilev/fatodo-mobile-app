@@ -1,11 +1,11 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import CommentService from '../../services/CommentService';
 import {UserAccount} from '../../models/User';
-import {Comment, CommentReactions} from '../../models/Comment';
+import {buildCommentFromDTO, Comment, CommentReactions} from '../../models/Comment';
 import {CommentDTO} from '../../models/dto/CommentDTO';
 import commentsSlice from './commentsSlice';
 import snackSlice from '../snack/snackSlice';
-import {AppDispatch} from '../store';
+import {AppDispatch, RootState} from '../store';
 import {AxiosResponse} from 'axios';
 import {CommentUtils} from '../../shared/utils/CommentUtils';
 import {PageableList} from '../../models/PageableList';
@@ -17,8 +17,10 @@ export class CommentsActions {
   };
 
   static addComment = (comment: Comment, account: UserAccount) => async (dispatch: AppDispatch) => {
-    const isOwnComment = comment.userId === account.id;
-    dispatch(commentsSlice.actions.addComment({comment, isOwnComment}));
+    const targetId = comment.targetId;
+    const isOwnComment = CommentUtils.isOwnComment(comment, account);
+    dispatch(commentsSlice.actions.addComment(comment));
+    dispatch(commentsSlice.actions.increaseCounter({targetId, isOwnComment}));
   };
 
   static updateComment = (comment: Comment) => async (dispatch: AppDispatch) => {
@@ -64,8 +66,11 @@ export class CommentsThunks {
   static sendComment = createAsyncThunk(
     TYPES.SEND_COMMENT,
     async ({targetId, dto}: {targetId: string; dto: CommentDTO}, thunkAPI) => {
-      const result = await CommentService.addComment(targetId, dto);
-      thunkAPI.dispatch(commentsSlice.actions.addComment({comment: result.data, isOwnComment: true}));
+      const state = thunkAPI.getState() as RootState;
+      const userId = state.auth.account.id;
+      const comment = buildCommentFromDTO(dto, targetId, userId);
+      thunkAPI.dispatch(commentsSlice.actions.addComment(comment));
+      CommentService.addComment(targetId, dto);
     },
   );
 
@@ -79,16 +84,15 @@ export class CommentsThunks {
   );
 
   static deleteComment = createAsyncThunk(TYPES.DELETE_COMMENT, async (comment: Comment, thunkAPI) => {
-    await CommentService.deleteComment(comment.id);
-    const updatedComment = {...comment, isDeleted: true} as Comment;
-    thunkAPI.dispatch(commentsSlice.actions.editComment(updatedComment));
+    CommentService.deleteComment(comment.id);
+    thunkAPI.dispatch(commentsSlice.actions.editComment({...comment, isDeleted: true}));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'comment.commentDeleted', variant: 'info'}));
   });
 
   static noReaction = createAsyncThunk(
     TYPES.NO_REACTION,
     async ({comment, account}: {comment: Comment; account: UserAccount}, thunkAPI) => {
-      await CommentService.noneCommentReaction(comment.id);
+      CommentService.noneCommentReaction(comment.id);
       thunkAPI.dispatch(commentsSlice.actions.deleteCommentReaction({comment, account}));
     },
   );
@@ -96,7 +100,7 @@ export class CommentsThunks {
   static likeReaction = createAsyncThunk(
     TYPES.LIKE_REACTION,
     async ({comment, account}: {comment: Comment; account: UserAccount}, thunkAPI) => {
-      await CommentService.likeCommentReaction(comment.id);
+      CommentService.likeCommentReaction(comment.id);
       thunkAPI.dispatch(commentsSlice.actions.setCommentReaction({comment, reactionType: 'LIKE', account}));
     },
   );
@@ -104,7 +108,7 @@ export class CommentsThunks {
   static dislikeReaction = createAsyncThunk(
     TYPES.DISLIKE_REACTION,
     async ({comment, account}: {comment: Comment; account: UserAccount}, thunkAPI) => {
-      await CommentService.dislikeCommentReaction(comment.id);
+      CommentService.dislikeCommentReaction(comment.id);
       thunkAPI.dispatch(commentsSlice.actions.setCommentReaction({comment, reactionType: 'DISLIKE', account}));
     },
   );

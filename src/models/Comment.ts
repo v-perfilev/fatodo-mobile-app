@@ -1,4 +1,5 @@
 import {AbstractAuditing} from './AbstractAuditing';
+import {CommentDTO} from './dto/CommentDTO';
 
 export const commentReactionTypes = ['LIKE', 'DISLIKE'];
 
@@ -19,7 +20,6 @@ export interface CommentInfo {
 
 export interface Comment extends AbstractAuditing {
   id: string;
-  threadId: string;
   targetId: string;
   userId: string;
   text: string;
@@ -43,7 +43,6 @@ export interface CommentReaction {
 }
 
 export interface CommentReactions {
-  threadId: string;
   targetId: string;
   commentId: string;
   reactions: CommentReaction[];
@@ -58,4 +57,15 @@ export const buildCommentReaction = (
   userId,
   type,
   timestamp: new Date(),
+});
+
+export const buildCommentFromDTO = (dto: CommentDTO, targetId: string, userId: string): Comment => ({
+  ...dto,
+  id: '',
+  targetId,
+  userId,
+  isDeleted: false,
+  reactions: [],
+  createdAt: new Date().getTime(),
+  createdBy: userId,
 });

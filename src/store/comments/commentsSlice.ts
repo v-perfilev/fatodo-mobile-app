@@ -6,11 +6,6 @@ import {buildCommentReaction, Comment, CommentReactions, CommentReactionType} fr
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {UserAccount} from '../../models/User';
 
-interface CommentIsOwnPayload {
-  comment: Comment;
-  isOwnComment: boolean;
-}
-
 interface CommentAccountPayload {
   comment: Comment;
   account: UserAccount;
@@ -20,6 +15,11 @@ interface CommentReactionAccountPayload {
   comment: Comment;
   reactionType: CommentReactionType;
   account: UserAccount;
+}
+
+interface CommentCounterPayload {
+  targetId: string;
+  isOwnComment: boolean;
 }
 
 const initialState: CommentsState = {
@@ -41,13 +41,14 @@ const commentsSlice = createSlice({
       state.allLoaded = false;
     },
 
-    addComment: (state: CommentsState, action: PayloadAction<CommentIsOwnPayload>) => {
-      const comment = action.payload.comment;
-      const isOwnComment = action.payload.isOwnComment;
+    addComment: (state: CommentsState, action: PayloadAction<Comment>) => {
+      const comment = action.payload;
       if (state.targetId === comment.targetId) {
-        state.comments = CommentUtils.filterComments([comment, ...state.comments]);
+        const commentInList = CommentUtils.findComment(state.comments, comment);
+        state.comments = commentInList
+          ? ArrayUtils.replaceValue(state.comments, commentInList, comment)
+          : CommentUtils.filterComments([comment, ...state.comments]);
       }
-      state.threadsInfo = CommentUtils.increaseInfo(state.threadsInfo, comment.targetId, isOwnComment);
     },
 
     editComment: (state: CommentsState, action: PayloadAction<Comment>) => {
@@ -88,6 +89,12 @@ const commentsSlice = createSlice({
       const newReaction = buildCommentReaction(comment.id, account.id, newReactionType);
       const updatedComment = {...comment, reactions: [...oldReactions, newReaction]};
       state.comments = ArrayUtils.updateValueWithId(state.comments, updatedComment);
+    },
+
+    increaseCounter: (state: CommentsState, action: PayloadAction<CommentCounterPayload>) => {
+      const targetId = action.payload.targetId;
+      const isOwnComment = action.payload.isOwnComment;
+      state.threadsInfo = CommentUtils.increaseInfo(state.threadsInfo, targetId, isOwnComment);
     },
   },
   extraReducers: (builder) => {

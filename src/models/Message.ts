@@ -1,5 +1,6 @@
 import {AbstractAuditing} from './AbstractAuditing';
 import {ID_STUB} from '../constants';
+import {MessageDTO} from './dto/MessageDTO';
 
 export const messageReactionTypes = ['LIKE', 'DISLIKE'];
 
@@ -23,7 +24,7 @@ export interface Message extends AbstractAuditing {
   chatId: string;
   userId: string;
   text: string;
-  reference: Message;
+  reference?: Message;
 
   isDeleted: boolean;
   isEvent: boolean;
@@ -106,4 +107,17 @@ export const buildMessageStatus = (messageId: string, userId: string, type: Mess
   userId,
   type,
   timestamp: new Date(),
+});
+
+export const buildMessageFromDTO = (dto: MessageDTO, chatId: string, userId: string): Message => ({
+  ...dto,
+  id: '',
+  chatId,
+  userId,
+  isDeleted: false,
+  isEvent: false,
+  statuses: [],
+  reactions: [],
+  createdAt: new Date().getTime(),
+  createdBy: userId,
 });
