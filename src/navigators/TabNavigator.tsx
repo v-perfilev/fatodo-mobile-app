@@ -18,9 +18,12 @@ import {useAppSelector} from '../store/store';
 import EventsSelectors from '../store/events/eventsSelectors';
 import ChatsSelectors from '../store/chats/chatsSelectors';
 import ContactsSelectors from '../store/contacts/contactsSelectors';
+import CalendarIcon from '../components/icons/CalendarIcon';
+import CalendarView from '../screens/calendar/canlendarView/CalendarView';
 
 type TabParamList = {
   Groups: any;
+  Calendar: any;
   Events: any;
   Chats: any;
   Contacts: any;
@@ -38,6 +41,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 export type TabNavigationProp = BottomTabNavigationProp<TabParamList>;
 
 const groupsIcon = ({color, size}: TabIconProps): ReactNode => <GroupsIcon color={color} size={size} />;
+const calendarIcon = ({color, size}: TabIconProps): ReactNode => <CalendarIcon color={color} size={size} />;
 const eventsIcon = ({color, size}: TabIconProps): ReactNode => <AlarmIcon color={color} size={size} />;
 const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={color} size={size} />;
 const contactsIcon = ({color, size}: TabIconProps): ReactNode => <ContactsIcon color={color} size={size} />;
@@ -53,6 +57,7 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Groups" tabBar={TabNavigatorBar(color)}>
       <Tab.Screen name="Groups" component={GroupNavigator} options={{tabBarIcon: groupsIcon}} />
+      <Tab.Screen name="Calendar" component={CalendarView} options={{tabBarIcon: calendarIcon}} />
       <Tab.Screen
         name="Events"
         component={EventList}

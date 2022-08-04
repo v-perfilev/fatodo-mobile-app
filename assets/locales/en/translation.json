@@ -3,9 +3,10 @@
     "Home": "Home",
     "Account": "Account",
     "Groups": "Groups",
+    "Calendar": "Calendar",
+    "Events": "Events",
     "Contacts": "Contacts",
     "Chats": "Chats",
-    "Events": "Events",
     "GroupList": "Groups",
     "GroupView": "Group",
     "GroupCreate": "Create group",
@@ -22,7 +23,8 @@
     "AccountView": "Account",
     "AccountForm": "Edit account",
     "UserView": "User",
-    "EventList": "Events"
+    "EventList": "Events",
+    "CalendarView": "Calendar"
   },
   "buttons": {
     "agree": "Agree",

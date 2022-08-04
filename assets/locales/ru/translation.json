@@ -3,6 +3,7 @@
     "Home": "Главная",
     "Account": "Аккаунт",
     "Groups": "Группы",
+    "Calendar": "Календарь",
     "Contacts": "Контакты",
     "Chats": "Чаты",
     "Events": "События",
@@ -22,7 +23,8 @@
     "AccountView": "Аккаунт",
     "AccountForm": "Редактировать аккаунт",
     "UserView": "Пользователь",
-    "EventList": "События"
+    "EventList": "События",
+    "CalendarView": "Календарь"
   },
   "buttons": {
     "agree": "Подтвердить",
