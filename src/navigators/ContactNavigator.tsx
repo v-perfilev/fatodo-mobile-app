@@ -3,13 +3,11 @@ import ContactList from '../screens/contacts/contactList/ContactList';
 import OutcomingRequestList from '../screens/contacts/outcomingRequestList/OutcomingRequestList';
 import IncomingRequestList from '../screens/contacts/incomingRequestList/IncomingRequestList';
 import {Dimensions} from 'react-native';
-import {Route, SceneMap, TabView} from 'react-native-tab-view';
+import {Route, SceneMap, TabBar, TabView} from 'react-native-tab-view';
 import {NavigationState, SceneRendererProps} from 'react-native-tab-view/lib/typescript/types';
-import PressableButton from '../components/controls/PressableButton';
-import FCenter from '../components/boxes/FCenter';
 import {useTranslation} from 'react-i18next';
 import FHStack from '../components/boxes/FHStack';
-import {Badge, Text} from 'native-base';
+import {Badge, Text, useTheme} from 'native-base';
 import Header from '../components/layouts/Header';
 import ContactsSelectors from '../store/contacts/contactsSelectors';
 import {useAppSelector} from '../store/store';
@@ -39,6 +37,7 @@ const renderScene = SceneMap({
 
 const ContactNavigator = () => {
   const {t} = useTranslation();
+  const theme = useTheme();
   const contactInfo = useAppSelector(ContactsSelectors.info) as ContactInfo;
   const [index, setIndex] = React.useState<number>(0);
 
@@ -52,26 +51,26 @@ const ContactNavigator = () => {
     ) : null;
   };
 
-  const renderTabBar = ({navigationState}: TabBarProps): ReactNode => {
+  const tabBarColor = theme.colors.primary['500'];
+  const indicatorColor = theme.colors.secondary['500'];
+
+  const renderTabBar = (props: TabBarProps): ReactNode => {
     return (
-      <Header hideGoBack hideTitle>
-        <FHStack grow h="100%" pt="0.5" mr="-2">
-          {navigationState.routes.map((route, i) => {
-            const handlePress = (): void => setIndex(i);
-            const borderColor = index === i ? 'secondary.500' : 'primary.500';
-            return (
-              <PressableButton flexBasis="1" flexGrow="1" onPress={handlePress} key={route.key}>
-                <FCenter grow borderColor={borderColor} borderBottomWidth={4}>
-                  <FHStack smallSpace alignItems="center">
-                    <Text color="white" fontWeight="bold">
-                      {t(`contact:${route.key}.title`)}
-                    </Text>
-                    {renderBadge(route)}
-                  </FHStack>
-                </FCenter>
-              </PressableButton>
-            );
-          })}
+      <Header hideLogo hideGoBack hideTitle>
+        <FHStack grow h="100%" mx="-2">
+          <TabBar
+            {...props}
+            style={{flexGrow: 1, backgroundColor: tabBarColor, shadowColor: tabBarColor}}
+            indicatorStyle={{backgroundColor: indicatorColor, height: 3}}
+            renderLabel={({route}) => (
+              <FHStack smallSpace alignItems="center" py="1">
+                <Text color="white" fontWeight="bold">
+                  {t(`contact:${route.key}.title`)}
+                </Text>
+                {renderBadge(route)}
+              </FHStack>
+            )}
+          />
         </FHStack>
       </Header>
     );
@@ -82,6 +81,7 @@ const ContactNavigator = () => {
       navigationState={{index, routes}}
       renderScene={renderScene}
       renderTabBar={renderTabBar}
+      showPageIndicator={true}
       onIndexChange={setIndex}
       initialLayout={initialLayout}
     />
