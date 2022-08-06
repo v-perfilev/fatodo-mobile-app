@@ -13,6 +13,7 @@ import chatSlice from './chat/chatSlice';
 import commentsSlice from './comments/commentsSlice';
 import userSlice from './user/userSlice';
 import eventsSlice from './events/eventsSlice';
+import calendarSlice from './calendar/calendarSlice';
 
 export const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export const store = configureStore({
     comments: commentsSlice.reducer,
     user: userSlice.reducer,
     events: eventsSlice.reducer,
+    calendar: calendarSlice.reducer,
   },
   devTools: IS_DEVELOPMENT,
 });

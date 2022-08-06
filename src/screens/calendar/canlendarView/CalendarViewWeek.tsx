@@ -5,14 +5,15 @@ import FHStack from '../../../components/boxes/FHStack';
 
 type CalendarViewWeekProps = {
   weekDates: moment.Moment[];
+  year: number;
   month: number;
 };
 
-const CalendarViewWeek = ({weekDates, month}: CalendarViewWeekProps) => {
+const CalendarViewWeek = ({weekDates, year, month}: CalendarViewWeekProps) => {
   return (
     <FHStack>
       {weekDates.map((date, index) => (
-        <CalendarViewDate date={date} month={month} key={index} />
+        <CalendarViewDate date={date} year={year} month={month} key={index} />
       ))}
     </FHStack>
   );

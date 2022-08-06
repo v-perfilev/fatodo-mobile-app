@@ -1,5 +1,6 @@
 import {DateParams} from './DateParams';
 
+export type ReminderThreadType = 'ITEM';
 export type ReminderPeriodicity = 'ONCE' | 'DAILY' | 'WEEKLY' | 'MONTHLY' | 'YEARLY';
 
 export interface Reminder {
@@ -8,4 +9,12 @@ export interface Reminder {
   date: DateParams;
   weekDays?: number[];
   monthDays?: number[];
+}
+
+export interface CalendarReminder {
+  parentId: string;
+  targetId: string;
+  type: ReminderThreadType;
+  periodicity: ReminderPeriodicity;
+  date: Date;
 }
