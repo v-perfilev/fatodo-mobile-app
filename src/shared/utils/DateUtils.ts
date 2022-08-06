@@ -15,6 +15,8 @@ export class DateFormats {
   static dateWithYearFormat = 'DD.MM.YYYY';
 
   static monthFormat = 'MMMM';
+
+  static monthWithYearFormat = 'MMMM YYYY';
 }
 
 export class DateFormatters {
@@ -40,6 +42,10 @@ export class DateFormatters {
 
   static formatMonth = (date: Date): string => {
     return moment(date).format(DateFormats.monthFormat);
+  };
+
+  static formatMonthWithYear = (date: Date): string => {
+    return moment(date).format(DateFormats.monthWithYearFormat);
   };
 
   static formatDependsOnDay = (date: Date): string => {

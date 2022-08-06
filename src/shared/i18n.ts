@@ -1,6 +1,9 @@
 import i18next from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
+require('moment/locale/en-gb.js');
+require('moment/locale/ru.js');
+
 // translation
 import translationEN from '../../assets/locales/en/translation.json';
 import translationRU from '../../assets/locales/ru/translation.json';
