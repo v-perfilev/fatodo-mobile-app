@@ -2,7 +2,7 @@
   "common": {
     "direct": "Директ"
   },
-  "control": {
+  "list": {
     "chatsNotFound": "Пока чатов нет"
   },
   "content": {
