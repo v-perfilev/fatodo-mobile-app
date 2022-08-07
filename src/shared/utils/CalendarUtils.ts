@@ -1,8 +1,21 @@
 import moment from 'moment';
 import {CalendarReminder} from '../../models/Reminder';
 import {ComparatorUtils} from './ComparatorUtils';
+import {CalendarItem} from '../../models/Calendar';
 
 export class CalendarUtils {
+  public static generateCalendarItems = (indent: number = 2, item?: CalendarItem): CalendarItem[] => {
+    const year = item ? item.year : new Date().getFullYear();
+    const month = item ? item.month : new Date().getMonth();
+    const centralMoment = moment({year, month});
+    const items: CalendarItem[] = [];
+    for (let i = -indent; i <= indent; i++) {
+      const m = centralMoment.clone().add(i, 'month');
+      items.push({year: m.year(), month: m.month()});
+    }
+    return items;
+  };
+
   public static getMonthMoment = (year: number, month: number): moment.Moment => {
     return moment({year, month, d: 10});
   };
@@ -10,9 +23,9 @@ export class CalendarUtils {
   public static getOnePageMoments = (year: number, month: number): moment.Moment[] => {
     const monthMoment = moment({year, month, d: 10});
     const firstDateMoment = monthMoment.clone().startOf('month');
-    const firstDateDay = firstDateMoment.day();
+    const firstDateDay = firstDateMoment.day() === 0 ? 7 : firstDateMoment.day();
     const lastDateMoment = monthMoment.clone().endOf('month');
-    const lastDateDay = lastDateMoment.day();
+    const lastDateDay = lastDateMoment.day() === 0 ? 7 : lastDateMoment.day();
     const daysInMonth = monthMoment.daysInMonth();
 
     const dates: moment.Moment[] = [];
@@ -26,11 +39,9 @@ export class CalendarUtils {
       dates.push(date);
     }
 
-    if (lastDateDay !== 0) {
-      for (let i = lastDateDay + 1; i <= 7; i++) {
-        const date = lastDateMoment.clone().add(i - lastDateDay, 'days');
-        dates.push(date);
-      }
+    for (let i = lastDateDay; i < 7; i++) {
+      const date = lastDateMoment.clone().add(i - lastDateDay, 'days');
+      dates.push(date);
     }
 
     return dates;
