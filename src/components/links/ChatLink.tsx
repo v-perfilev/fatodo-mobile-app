@@ -10,9 +10,10 @@ import {TabNavigationProp} from '../../navigators/TabNavigator';
 
 type ChatLinkProps = PropsWithChildren<{
   chat: ChatInfo;
+  color?: string;
 }>;
 
-export const ChatLink = ({chat, children}: ChatLinkProps) => {
+export const ChatLink = ({chat, color = 'primary.500', children}: ChatLinkProps) => {
   const navigation = useNavigation<TabNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const users = useAppSelector(InfoSelectors.users);
@@ -21,7 +22,7 @@ export const ChatLink = ({chat, children}: ChatLinkProps) => {
   const goToChat = (): void => navigation.navigate('Chats', {screen: 'ChatView', params: {chatId: chat.id}});
 
   return (
-    <Text color="primary.500" onPress={goToChat}>
+    <Text color={color} onPress={goToChat}>
       {title}
     </Text>
   );

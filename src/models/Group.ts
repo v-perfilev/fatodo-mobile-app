@@ -4,6 +4,7 @@ import {ColorScheme} from '../shared/themes/ThemeFactory';
 export interface GroupInfo {
   id: string;
   title: string;
+  color: ColorScheme;
 }
 
 export interface Group {

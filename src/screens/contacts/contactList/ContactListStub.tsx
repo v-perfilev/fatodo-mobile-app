@@ -1,16 +1,11 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Text} from 'native-base';
-import FCenter from '../../../components/boxes/FCenter';
+import StubBox from '../../../components/surfaces/StubBox';
 
 const ContactListStub = () => {
   const {t} = useTranslation();
 
-  return (
-    <FCenter grow mb="60px">
-      <Text>{t('contact:relations.relationsNotFound')}</Text>
-    </FCenter>
-  );
+  return <StubBox mb="60px">{t('contact:relations.relationsNotFound')}</StubBox>;
 };
 
 export default ContactListStub;

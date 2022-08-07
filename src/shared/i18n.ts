@@ -40,6 +40,9 @@ import userRU from '../../assets/locales/ru/user.json';
 // event
 import eventEN from '../../assets/locales/en/event.json';
 import eventRU from '../../assets/locales/ru/event.json';
+// calendar
+import calendarEN from '../../assets/locales/en/calendar.json';
+import calendarRU from '../../assets/locales/ru/calendar.json';
 
 export const languages = [
   {
@@ -66,6 +69,7 @@ const resources = {
     comment: commentEN,
     user: userEN,
     event: eventEN,
+    calendar: calendarEN,
   },
   ru: {
     translation: translationRU,
@@ -80,6 +84,7 @@ const resources = {
     comment: commentRU,
     user: userRU,
     event: eventRU,
+    calendar: calendarRU,
   },
 };
 
@@ -88,7 +93,20 @@ i18next.use(initReactI18next).init({
   compatibilityJSON: 'v3',
   resources,
   lng: 'en',
-  ns: ['translation', 'common', 'account', 'feedback', 'snack', 'group', 'item', 'contact', 'chat', 'user', 'event'],
+  ns: [
+    'translation',
+    'common',
+    'account',
+    'feedback',
+    'snack',
+    'group',
+    'item',
+    'contact',
+    'chat',
+    'user',
+    'event',
+    'calendar',
+  ],
   defaultNS: 'translation',
   interpolation: {
     escapeValue: false, // react already safes from xss

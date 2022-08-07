@@ -1,16 +1,11 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Text} from 'native-base';
-import FCenter from '../../../../components/boxes/FCenter';
+import StubBox from '../../../../components/surfaces/StubBox';
 
 const GroupViewStub = () => {
   const {t} = useTranslation();
 
-  return (
-    <FCenter grow>
-      <Text>{t('group:view.itemsNotFound')}</Text>
-    </FCenter>
-  );
+  return <StubBox>{t('group:view.itemsNotFound')}</StubBox>;
 };
 
 export default GroupViewStub;

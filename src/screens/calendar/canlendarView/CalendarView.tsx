@@ -6,7 +6,7 @@ const CalendarView = () => {
   return (
     <>
       <Header hideGoBack />
-      <CalendarViewContainer month={7} year={2022} />
+      <CalendarViewContainer year={2022} month={7} />
     </>
   );
 };

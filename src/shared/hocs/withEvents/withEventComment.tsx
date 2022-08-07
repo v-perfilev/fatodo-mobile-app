@@ -13,7 +13,7 @@ export type WithEventCommentProps = {
   item?: ItemInfo;
   comment?: CommentInfo;
   reaction?: CommentReactionType;
-  date: Date;
+  date: number;
 };
 
 type ContainerProps = {

@@ -1,5 +1,6 @@
 import moment from 'moment';
 import {CalendarReminder} from '../../models/Reminder';
+import {ComparatorUtils} from './ComparatorUtils';
 
 export class CalendarUtils {
   public static getMonthMoment = (year: number, month: number): moment.Moment => {
@@ -52,6 +53,14 @@ export class CalendarUtils {
   };
 
   public static filterByMoment = (reminders: CalendarReminder[], date: moment.Moment): CalendarReminder[] => {
-    return reminders.filter((r) => new Date(r.date).getDate() === date.date());
+    return reminders.filter((r) => new Date(r.date).getDate() === date.date()).sort(ComparatorUtils.dateComparator);
+  };
+
+  public static extractRemindersGroupIds = (reminders: CalendarReminder[]): string[] => {
+    return reminders.map((r) => r.parentId);
+  };
+
+  public static extractRemindersItemIds = (reminders: CalendarReminder[]): string[] => {
+    return reminders.map((r) => r.targetId);
   };
 }

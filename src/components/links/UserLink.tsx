@@ -8,9 +8,10 @@ import {Text} from 'native-base';
 
 type UserLinkProps = {
   user: User;
+  color?: string;
 };
 
-export const UserLink = ({user}: UserLinkProps) => {
+export const UserLink = ({user, color = 'primary.500'}: UserLinkProps) => {
   const navigation = useNavigation<RootNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const isAnotherUser = account.id !== user.id;
@@ -18,7 +19,7 @@ export const UserLink = ({user}: UserLinkProps) => {
   const goToUser = (): void => navigation.navigate('UserView', {user});
 
   return isAnotherUser ? (
-    <Text color="primary.500" onPress={goToUser}>
+    <Text color={color} onPress={goToUser}>
       {user.username}
     </Text>
   ) : (

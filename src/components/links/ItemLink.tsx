@@ -6,15 +6,16 @@ import {TabNavigationProp} from '../../navigators/TabNavigator';
 
 type ItemLinkProps = {
   item: ItemInfo;
+  color?: string;
 };
 
-export const ItemLink = ({item}: ItemLinkProps) => {
+export const ItemLink = ({item, color = 'primary.500'}: ItemLinkProps) => {
   const navigation = useNavigation<TabNavigationProp>();
 
   const goToItem = (): void => navigation.navigate('Groups', {screen: 'ItemView', params: {itemId: item.id}});
 
   return (
-    <Text color="primary.500" onPress={goToItem}>
+    <Text color={color} onPress={goToItem}>
       {item.title}
     </Text>
   );

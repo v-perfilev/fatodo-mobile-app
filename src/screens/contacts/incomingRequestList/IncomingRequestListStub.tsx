@@ -1,16 +1,11 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Text} from 'native-base';
-import FCenter from '../../../components/boxes/FCenter';
+import StubBox from '../../../components/surfaces/StubBox';
 
 const IncomingRequestListStub = () => {
   const {t} = useTranslation();
 
-  return (
-    <FCenter grow>
-      <Text>{t('contact:incoming.requestsNotFound')}</Text>
-    </FCenter>
-  );
+  return <StubBox>{t('contact:incoming.requestsNotFound')}</StubBox>;
 };
 
 export default IncomingRequestListStub;

@@ -1,16 +1,11 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Text} from 'native-base';
-import FCenter from '../../../components/boxes/FCenter';
+import StubBox from '../../../components/surfaces/StubBox';
 
 const CommentListStub = () => {
   const {t} = useTranslation();
 
-  return (
-    <FCenter grow>
-      <Text>{t('comment:view.commentsNotFound')}</Text>
-    </FCenter>
-  );
+  return <StubBox>{t('comment:view.commentsNotFound')}</StubBox>;
 };
 
 export default CommentListStub;

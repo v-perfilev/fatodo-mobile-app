@@ -10,7 +10,7 @@ type EventListItemTemplateProps = {
   title: string;
   content: ReactElement;
   message?: string;
-  date: Date;
+  date: number;
 };
 
 const EventListItemTemplate = ({image, title, content, message, date}: EventListItemTemplateProps) => {

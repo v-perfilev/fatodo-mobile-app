@@ -1,16 +1,11 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Text} from 'native-base';
-import FCenter from '../../../components/boxes/FCenter';
+import StubBox from '../../../components/surfaces/StubBox';
 
 const ChatViewStub = () => {
   const {t} = useTranslation();
 
-  return (
-    <FCenter grow>
-      <Text>{t('chat:view.messagesNotFound')}</Text>
-    </FCenter>
-  );
+  return <StubBox>{t('chat:view.messagesNotFound')}</StubBox>;
 };
 
 export default ChatViewStub;
