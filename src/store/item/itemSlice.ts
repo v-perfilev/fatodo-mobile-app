@@ -67,8 +67,8 @@ const itemSlice = createSlice({
       state.reminders = action.meta.arg.reminders;
       state.loading = false;
     });
-    builder.addCase(ItemThunks.updateItem.rejected, () => {
-      return {...initialState};
+    builder.addCase(ItemThunks.updateItem.rejected, (state: ItemState) => {
+      state.loading = false;
     });
   },
 });

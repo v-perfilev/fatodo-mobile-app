@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {CalendarState} from './calendarType';
 import {CalendarThunks} from './calendarActions';
 import {MapUtils} from '../../shared/utils/MapUtils';
+import {CalendarUtils} from '../../shared/utils/CalendarUtils';
 
 const initialState: CalendarState = {
   reminders: [],
@@ -20,7 +21,7 @@ const calendarSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(CalendarThunks.fetchReminders.fulfilled, (state: CalendarState, action) => {
-      const key = String(action.meta.arg.year + action.meta.arg.month);
+      const key = CalendarUtils.buildMonthKey(action.meta.arg.year, action.meta.arg.month);
       const reminders = action.payload;
       state.reminders = MapUtils.setValue(state.reminders, key, reminders);
       state.loading = true;

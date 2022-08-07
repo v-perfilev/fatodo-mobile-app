@@ -7,6 +7,7 @@ import FHStack from '../../../components/boxes/FHStack';
 import PressableButton from '../../../components/controls/PressableButton';
 import {useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
+import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 
 type CalendarViewDateProps = {
   date: moment.Moment;
@@ -25,11 +26,12 @@ const CalendarViewDots = () => (
 );
 
 const CalendarViewDate = ({date, year, month}: CalendarViewDateProps) => {
-  const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, String(year + month)));
+  const monthKey = CalendarUtils.buildMonthKey(year, month);
+  const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, monthKey));
 
   const isActiveMonth = date.month() === month;
 
-  const remindersCount = reminders.filter((r) => r.date.getDate() === date.date()).length;
+  const remindersCount = CalendarUtils.filterByMoment(reminders, date).length;
   const itemsToShowCount = remindersCount > 3 ? 3 : remindersCount;
   const showDots = remindersCount > 3;
 

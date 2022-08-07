@@ -37,14 +37,14 @@ export interface MessageStatus {
   messageId: string;
   userId: string;
   type: MessageStatusType;
-  timestamp: Date;
+  timestamp: number;
 }
 
 export interface MessageReaction {
   messageId: string;
   userId: string;
   type: MessageReactionType;
-  timestamp: Date;
+  timestamp: number;
 }
 
 export interface MessageStatuses {
@@ -99,14 +99,14 @@ export const buildMessageReaction = (
   messageId,
   userId,
   type,
-  timestamp: new Date(),
+  timestamp: new Date().getTime(),
 });
 
 export const buildMessageStatus = (messageId: string, userId: string, type: MessageStatusType): MessageStatus => ({
   messageId,
   userId,
   type,
-  timestamp: new Date(),
+  timestamp: new Date().getTime(),
 });
 
 export const buildMessageFromDTO = (dto: MessageDTO, chatId: string, userId: string): Message => ({

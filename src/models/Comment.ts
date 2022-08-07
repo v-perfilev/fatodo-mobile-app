@@ -39,7 +39,7 @@ export interface CommentReaction {
   commentId: string;
   userId: string;
   type: CommentReactionType;
-  timestamp: Date;
+  timestamp: number;
 }
 
 export interface CommentReactions {
@@ -56,7 +56,7 @@ export const buildCommentReaction = (
   commentId,
   userId,
   type,
-  timestamp: new Date(),
+  timestamp: new Date().getTime(),
 });
 
 export const buildCommentFromDTO = (dto: CommentDTO, targetId: string, userId: string): Comment => ({

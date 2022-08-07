@@ -1,4 +1,5 @@
 import moment from 'moment';
+import {CalendarReminder} from '../../models/Reminder';
 
 export class CalendarUtils {
   public static getMonthMoment = (year: number, month: number): moment.Moment => {
@@ -44,5 +45,13 @@ export class CalendarUtils {
       weekDates[weekIndex].push(d);
     });
     return weekDates;
+  };
+
+  public static buildMonthKey = (year: number, month: number): string => {
+    return year + '_' + month;
+  };
+
+  public static filterByMoment = (reminders: CalendarReminder[], date: moment.Moment): CalendarReminder[] => {
+    return reminders.filter((r) => new Date(r.date).getDate() === date.date());
   };
 }

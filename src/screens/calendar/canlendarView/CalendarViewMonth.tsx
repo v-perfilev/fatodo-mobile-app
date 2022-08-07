@@ -16,7 +16,7 @@ const CalendarViewMonth = ({year, month}: CalendarViewMonthProps) => {
   return (
     <FVStack>
       {weeks.map((week, index) => (
-        <CalendarViewWeek weekDates={week} year={month} month={month} key={index} />
+        <CalendarViewWeek weekDates={week} year={year} month={month} key={index} />
       ))}
     </FVStack>
   );

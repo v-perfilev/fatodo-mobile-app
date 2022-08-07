@@ -16,5 +16,5 @@ export interface CalendarReminder {
   targetId: string;
   type: ReminderThreadType;
   periodicity: ReminderPeriodicity;
-  date: Date;
+  date: number;
 }

@@ -12,7 +12,7 @@ export interface Event {
   chatEvent?: ChatEvent;
   reminderEvent?: ReminderEvent;
 
-  createdAt: Date;
+  createdAt: number;
 }
 
 export interface ContactEvent {
