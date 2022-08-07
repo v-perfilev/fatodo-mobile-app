@@ -46,7 +46,7 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
           {showBadgeNode && badgeNode}
           <Box opacity={opacity}>{icon({focused: isFocused, color: 'white', size: 6})}</Box>
         </Box>
-        <Text color="white" fontSize="2xs" opacity={opacity}>
+        <Text color="white" fontSize="2xs" opacity={opacity} isTruncated>
           {label}
         </Text>
       </FCenter>
