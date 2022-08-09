@@ -10,6 +10,7 @@ import CalendarViewWeekDays from './CalendarViewWeekDays';
 import CalendarViewMonth from './CalendarViewMonth';
 import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
 import {CalendarItem, CalendarRoute} from '../../../models/Calendar';
+import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 
 type CalendarViewContainerProps = {
   month: CalendarRoute;
@@ -26,9 +27,11 @@ const CalendarViewContainer = ({month, selectMonth, isActive}: CalendarViewConta
   };
 
   useEffect(() => {
-    const date = moment();
+    const date = CalendarUtils.getNowMoment();
     const isCurrentMonth = date.month() === month.month && date.year() === month.year;
-    if (month && (isCurrentMonth || activeDate)) {
+    const shouldCurrentMonthUpdate = isCurrentMonth && activeDate?.date() !== date.date();
+    const shouldAnotherMonthUpdate = !isCurrentMonth && activeDate;
+    if (shouldCurrentMonthUpdate || shouldAnotherMonthUpdate) {
       setActiveDate(isCurrentMonth ? date : undefined);
     }
   }, [isActive]);
@@ -49,4 +52,8 @@ const CalendarViewContainer = ({month, selectMonth, isActive}: CalendarViewConta
   );
 };
 
-export default memo(CalendarViewContainer);
+function isEqual(prevProps: CalendarViewContainerProps, nextProps: CalendarViewContainerProps): boolean {
+  return prevProps.isActive === nextProps.isActive;
+}
+
+export default memo(CalendarViewContainer, isEqual);

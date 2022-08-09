@@ -8,6 +8,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import {CalendarThunks} from '../../../store/calendar/calendarActions';
 import {SceneRendererProps} from 'react-native-tab-view/lib/typescript/types';
+import {Dimensions} from 'react-native';
 
 type RenderProps = {route: CalendarRoute} & SceneRendererProps;
 
@@ -54,7 +55,7 @@ const CalendarView = () => {
         renderScene={renderScene}
         onIndexChange={calcRoutes}
         renderTabBar={() => null}
-        onSwipeStart={console.log}
+        initialLayout={{width: Dimensions.get('window').width}}
       />
     </>
   );

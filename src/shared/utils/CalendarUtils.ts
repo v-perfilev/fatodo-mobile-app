@@ -26,6 +26,10 @@ export class CalendarUtils {
     return moment({year, month, d: 10});
   };
 
+  public static getNowMoment = (): moment.Moment => {
+    return moment().set({hours: 12, minutes: 0, seconds: 0, milliseconds: 0});
+  };
+
   public static getOnePageMoments = (year: number, month: number): moment.Moment[] => {
     const monthMoment = moment({year, month, d: 10});
     const firstDateMoment = monthMoment.clone().startOf('month');
