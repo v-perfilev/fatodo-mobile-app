@@ -9,14 +9,15 @@ import CalendarViewMonthName from './CalendarViewMonthName';
 import CalendarViewWeekDays from './CalendarViewWeekDays';
 import CalendarViewMonth from './CalendarViewMonth';
 import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
-import {CalendarRoute} from '../../../models/Calendar';
+import {CalendarItem, CalendarRoute} from '../../../models/Calendar';
 
 type CalendarViewContainerProps = {
   month: CalendarRoute;
+  selectMonth: (month: CalendarItem) => void;
   isActive: boolean;
 };
 
-const CalendarViewContainer = ({month, isActive}: CalendarViewContainerProps) => {
+const CalendarViewContainer = ({month, selectMonth, isActive}: CalendarViewContainerProps) => {
   const dispatch = useAppDispatch();
   const [activeDate, setActiveDate] = useState<moment.Moment>();
 
@@ -33,7 +34,7 @@ const CalendarViewContainer = ({month, isActive}: CalendarViewContainerProps) =>
   return (
     <FScrollView p="0" refresh={refresh}>
       <FVStack flex="1" flexGrow="1" space="2" py="2">
-        <CalendarViewMonthName monthRoute={month} />
+        <CalendarViewMonthName month={month} selectMonth={selectMonth} />
         <Divider />
         <FVStack mx="1" space="2">
           <CalendarViewWeekDays />

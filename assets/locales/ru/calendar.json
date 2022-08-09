@@ -2,5 +2,12 @@
   "list": {
     "dateNotSelected": "Дата не выбрана",
     "noReminders": "Нет напоминаний на выбранную дату"
+  },
+  "selectMonth": {
+    "title": "Выбрать месяц",
+    "buttons": {
+      "send": "Выбрать",
+      "cancel": "Отменить"
+    }
   }
 }

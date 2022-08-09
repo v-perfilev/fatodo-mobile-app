@@ -3,12 +3,15 @@ import Header from '../../../components/layouts/Header';
 import CalendarViewContainer from './CalendarViewContainer';
 import {TabView} from 'react-native-tab-view';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {CalendarRoute} from '../../../models/Calendar';
+import {CalendarItem, CalendarRoute} from '../../../models/Calendar';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import {CalendarThunks} from '../../../store/calendar/calendarActions';
+import {SceneRendererProps} from 'react-native-tab-view/lib/typescript/types';
 
-const calendarIndent = 3;
+type RenderProps = {route: CalendarRoute} & SceneRendererProps;
+
+export const calendarIndent = 3;
 const initialRoutes = CalendarUtils.generateCalendarRoutes(calendarIndent);
 
 const CalendarView = () => {
@@ -22,8 +25,17 @@ const CalendarView = () => {
     setRoutes(updatedRoute);
   };
 
-  const renderScene = ({route}: {route: CalendarRoute}): ReactElement => (
-    <CalendarViewContainer month={route} isActive={routes.indexOf(route) === calendarIndent} />
+  const selectMonth = (month: CalendarItem): void => {
+    const updatedRoute = CalendarUtils.generateCalendarRoutes(calendarIndent, month);
+    setRoutes(updatedRoute);
+  };
+
+  const renderScene = ({route}: RenderProps): ReactElement => (
+    <CalendarViewContainer
+      month={route}
+      selectMonth={selectMonth}
+      isActive={routes.indexOf(route) === calendarIndent}
+    />
   );
 
   useEffect(() => {
@@ -44,5 +56,4 @@ const CalendarView = () => {
     </>
   );
 };
-
 export default CalendarView;

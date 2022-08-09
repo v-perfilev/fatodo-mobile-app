@@ -1,10 +1,10 @@
-import {Box, CheckIcon, Flex, FormControl, theme} from 'native-base';
+import {CheckIcon, Flex, FormControl} from 'native-base';
 import PressableButton from '../controls/PressableButton';
 import ClearableTextInput from './ClearableTextInput';
-import DatePicker from 'react-native-date-picker';
-import React, {useEffect, useState} from 'react';
-import {DateFormatters, DateUtils} from '../../shared/utils/DateUtils';
+import React, {useState} from 'react';
+import {DateFormatters} from '../../shared/utils/DateUtils';
 import IconButton from '../controls/IconButton';
+import DateTimePicker from './DateTimePicker';
 
 type DateTimeSelectProps = {
   label: string;
@@ -25,22 +25,11 @@ const getFormatter = (mode: 'date' | 'time' | 'dateWithoutYear'): ((date: Date) 
   }
 };
 
-const getPickerMode = (mode: 'date' | 'time' | 'dateWithoutYear'): 'date' | 'time' => {
-  if (mode === 'date' || mode === 'dateWithoutYear') {
-    return 'date';
-  } else {
-    return 'time';
-  }
-};
-
 const DateTimeSelect = ({label, setResult, mode, locale, minimumDate}: DateTimeSelectProps) => {
   const [show, setShow] = useState<boolean>(false);
   const [value, setValue] = useState<Date>(undefined);
 
-  const initialValue = minimumDate || DateUtils.addMinutes(new Date(), 20);
-
   const formatter = getFormatter(mode);
-  const pickerMode = getPickerMode(mode);
 
   const openPicker = (): void => setShow(true);
 
@@ -55,25 +44,6 @@ const DateTimeSelect = ({label, setResult, mode, locale, minimumDate}: DateTimeS
       setResult(undefined);
     }
   };
-
-  useEffect(() => {
-    if (show && !value) {
-      setValue(initialValue);
-    }
-  }, [show]);
-
-  const picker = (
-    <DatePicker
-      date={value || initialValue}
-      onDateChange={setValue}
-      mode={pickerMode}
-      locale={locale}
-      is24hourSource="locale"
-      textColor={theme.colors.primary['700']}
-      fadeToColor="none"
-      minimumDate={minimumDate}
-    />
-  );
 
   return (
     <>
@@ -91,13 +61,7 @@ const DateTimeSelect = ({label, setResult, mode, locale, minimumDate}: DateTimeS
 
       {show && (
         <Flex width="100%" height="100%" position="absolute" alignItems="center" zIndex="1000" bg="gray.50">
-          {mode === 'dateWithoutYear' ? (
-            <Box w={215} overflow="hidden">
-              {picker}
-            </Box>
-          ) : (
-            picker
-          )}
+          <DateTimePicker setValue={setValue} mode={mode} locale={locale} minDate={minimumDate} />
           <Flex position="absolute" bottom="0">
             <IconButton icon={<CheckIcon />} onPress={closePicker} />
           </Flex>

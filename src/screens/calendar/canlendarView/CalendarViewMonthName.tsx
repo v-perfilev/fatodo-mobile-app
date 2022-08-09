@@ -4,22 +4,37 @@ import {DateFormatters} from '../../../shared/utils/DateUtils';
 import {Text} from 'native-base';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import FBox from '../../../components/boxes/FBox';
-import {CalendarRoute} from '../../../models/Calendar';
+import {CalendarItem, CalendarRoute} from '../../../models/Calendar';
+import PressableButton from '../../../components/controls/PressableButton';
+import {useCalendarDialogContext} from '../../../shared/contexts/dialogContexts/CalendarDialogContext';
+import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 
 type CalendarViewMonthNameProps = {
-  monthRoute: CalendarRoute;
+  month: CalendarRoute;
+  selectMonth: (month: CalendarItem) => void;
 };
 
-const CalendarViewMonthName = ({monthRoute}: CalendarViewMonthNameProps) => {
-  const monthMoment = CalendarUtils.getMonthMoment(monthRoute.year, monthRoute.month);
+const CalendarViewMonthName = ({month, selectMonth}: CalendarViewMonthNameProps) => {
+  const {showSelectMonthDialog} = useCalendarDialogContext();
+
+  const monthMoment = CalendarUtils.getMonthMoment(month.year, month.month);
   const monthWithYear = DateFormatters.formatMonthWithYear(monthMoment.toDate());
+
+  const handleMonthClick = (): void => {
+    showSelectMonthDialog(month, selectMonth);
+  };
 
   return (
     <FHStack>
       <FBox alignItems="center">
-        <Text fontSize="18" fontWeight="extrabold" color="gray.400">
-          {monthWithYear.toUpperCase()}
-        </Text>
+        <PressableButton onPress={handleMonthClick}>
+          <FHStack smallSpace alignItems="center">
+            <Text fontSize="18" fontWeight="extrabold" color="gray.400">
+              {monthWithYear.toUpperCase()}
+            </Text>
+            <ArrowDownIcon />
+          </FHStack>
+        </PressableButton>
       </FBox>
     </FHStack>
   );
