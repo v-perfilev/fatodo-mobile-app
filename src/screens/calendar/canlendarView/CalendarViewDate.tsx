@@ -12,22 +12,21 @@ import Bullet from '../../../components/surfaces/Bullet';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {FilterUtils} from '../../../shared/utils/FilterUtils';
 import {ColorScheme} from '../../../shared/themes/ThemeFactory';
+import {CalendarRoute} from '../../../models/Calendar';
 
 type CalendarViewDateProps = {
+  month: CalendarRoute;
   date: moment.Moment;
-  year: number;
-  month: number;
   activeDate: moment.Moment;
   selectDate: Dispatch<SetStateAction<moment.Moment>>;
 };
 
-const CalendarViewDate = ({date, year, month, activeDate, selectDate}: CalendarViewDateProps) => {
-  const monthKey = CalendarUtils.buildMonthKey(year, month);
-  const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, monthKey));
+const CalendarViewDate = ({month, date, activeDate, selectDate}: CalendarViewDateProps) => {
+  const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, month.key));
   const groups = useAppSelector(InfoSelectors.groups);
 
-  const isActiveMonth = date.month() === month;
-  const isActiveDate = date === activeDate;
+  const isActiveMonth = date.month() === month.month;
+  const isActiveDate = date.date() === activeDate?.date();
 
   const handlePress = (): void => {
     isActiveMonth && selectDate(date);

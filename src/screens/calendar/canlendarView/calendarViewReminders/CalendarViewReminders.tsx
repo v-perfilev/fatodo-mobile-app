@@ -8,17 +8,19 @@ import CalendarViewRemindersNotSelectedStub from './CalendarViewRemindersNotSele
 import CalendarViewRemindersEmptyStub from './CalendarViewRemindersEmptyStub';
 import CalendarViewReminderItem from './CalendarViewReminderItem';
 import FVStack from '../../../../components/boxes/FVStack';
+import {CalendarRoute} from '../../../../models/Calendar';
 
 type CalendarViewRemindersProps = {
-  year: number;
-  month: number;
+  month: CalendarRoute;
   date: moment.Moment;
 };
 
-const CalendarViewReminders = ({year, month, date}: CalendarViewRemindersProps) => {
-  const monthKey = CalendarUtils.buildMonthKey(year, month);
-  const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, monthKey));
-  const dateReminders = useMemo(() => (date ? CalendarUtils.filterByMoment(reminders, date) : []), [date, reminders]);
+const CalendarViewReminders = ({month, date}: CalendarViewRemindersProps) => {
+  const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, month.key));
+
+  const dateReminders = useMemo(() => {
+    return date ? CalendarUtils.filterByMoment(reminders, date) : [];
+  }, [date, reminders]);
 
   const showNotSelectedStub = !date;
   const showEmptyStub = date && dateReminders.length === 0;

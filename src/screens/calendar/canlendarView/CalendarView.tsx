@@ -1,49 +1,45 @@
-import React, {ComponentType, ReactElement, useMemo, useState} from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import Header from '../../../components/layouts/Header';
 import CalendarViewContainer from './CalendarViewContainer';
-import {SceneMap, TabView} from 'react-native-tab-view';
+import {TabView} from 'react-native-tab-view';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {CalendarItem} from '../../../models/Calendar';
+import {CalendarRoute} from '../../../models/Calendar';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import CalendarSelectors from '../../../store/calendar/calendarSelectors';
+import {CalendarThunks} from '../../../store/calendar/calendarActions';
 
-const CalendarElement = (year: number, month: number) => (): ReactElement =>
-  <CalendarViewContainer year={year} month={month} />;
-
-const buildSceneMap = (items: CalendarItem[]) => {
-  const scenes: {[key: string]: ComponentType<any>} = {};
-  items.forEach((calendarItem) => {
-    const key = CalendarUtils.buildMonthKey(calendarItem.year, calendarItem.month);
-    scenes[key] = CalendarElement(calendarItem.year, calendarItem.month);
-  });
-  return SceneMap(scenes);
-};
-
-const buildRoutes = (items: CalendarItem[]) => {
-  return items.map((i) => ({key: CalendarUtils.buildMonthKey(i.year, i.month)}));
-};
-
-const initialItems = CalendarUtils.generateCalendarItems(1);
+const calendarIndent = 3;
+const initialRoutes = CalendarUtils.generateCalendarRoutes(calendarIndent);
 
 const CalendarView = () => {
-  const [items, setItems] = useState<CalendarItem[]>(initialItems);
+  const dispatch = useAppDispatch();
+  const loadedKeys = useAppSelector(CalendarSelectors.loadedKeys);
+  const [routes, setRoutes] = useState<CalendarRoute[]>(initialRoutes);
 
-  const renderScene = useMemo(() => buildSceneMap(items), [items]);
-  const routes = useMemo(() => buildRoutes(items), [items]);
-
-  const handleIndexChange = (newIndex: number): void => {
-    const year = items[newIndex].year;
-    const month = items[newIndex].month;
-    const newItems = CalendarUtils.generateCalendarItems(1, {year, month});
-    setItems(newItems);
+  const calcRoutes = (index: number): void => {
+    const route = routes[index];
+    const updatedRoute = CalendarUtils.generateCalendarRoutes(calendarIndent, route);
+    setRoutes(updatedRoute);
   };
+
+  const renderScene = ({route}: {route: CalendarRoute}): ReactElement => (
+    <CalendarViewContainer month={route} isActive={routes.indexOf(route) === calendarIndent} />
+  );
+
+  useEffect(() => {
+    const actualKeys = routes.map((r) => r.key);
+    const missingKeys = actualKeys.filter((key) => !loadedKeys.includes(key));
+    missingKeys.length >= calendarIndent && dispatch(CalendarThunks.handleReminderKeys(missingKeys));
+  }, [loadedKeys, routes]);
 
   return (
     <>
       <Header hideGoBack />
       <TabView
-        navigationState={{index: 1, routes}}
+        navigationState={{index: calendarIndent, routes}}
         renderScene={renderScene}
+        onIndexChange={calcRoutes}
         renderTabBar={() => null}
-        onIndexChange={handleIndexChange}
       />
     </>
   );

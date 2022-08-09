@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
+import React, {memo, useEffect, useState} from 'react';
+import {useAppDispatch} from '../../../store/store';
 import {CalendarThunks} from '../../../store/calendar/calendarActions';
 import moment from 'moment';
 import {Divider} from 'native-base';
@@ -9,42 +9,41 @@ import CalendarViewMonthName from './CalendarViewMonthName';
 import CalendarViewWeekDays from './CalendarViewWeekDays';
 import CalendarViewMonth from './CalendarViewMonth';
 import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
-import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import CalendarSelectors from '../../../store/calendar/calendarSelectors';
+import {CalendarRoute} from '../../../models/Calendar';
 
 type CalendarViewContainerProps = {
-  year: number;
-  month: number;
+  month: CalendarRoute;
+  isActive: boolean;
 };
 
-const CalendarViewContainer = ({year, month}: CalendarViewContainerProps) => {
+const CalendarViewContainer = ({month, isActive}: CalendarViewContainerProps) => {
   const dispatch = useAppDispatch();
-  const monthKey = CalendarUtils.buildMonthKey(year, month);
-  const hasReminders = useAppSelector((state) => CalendarSelectors.hasReminders(state, monthKey));
-  const [date, setDate] = useState<moment.Moment>();
+  const [activeDate, setActiveDate] = useState<moment.Moment>();
 
   const refresh = async (): Promise<void> => {
-    await dispatch(CalendarThunks.fetchReminders({year, month}));
+    await dispatch(CalendarThunks.fetchReminders([month.key]));
   };
 
   useEffect(() => {
-    !hasReminders && dispatch(CalendarThunks.fetchReminders({year, month}));
-  }, []);
+    const date = moment();
+    const isCurrentMonth = date.month() === month.month && date.year() === month.year;
+    isActive && setActiveDate(isCurrentMonth ? date : undefined);
+  }, [isActive]);
 
   return (
     <FScrollView p="0" refresh={refresh}>
       <FVStack flex="1" flexGrow="1" space="2" py="2">
-        <CalendarViewMonthName year={year} month={month} />
+        <CalendarViewMonthName monthRoute={month} />
         <Divider />
         <FVStack mx="1" space="2">
           <CalendarViewWeekDays />
-          <CalendarViewMonth year={year} month={month} activeDate={date} selectDate={setDate} />
+          <CalendarViewMonth month={month} activeDate={activeDate} selectDate={setActiveDate} />
         </FVStack>
         <Divider />
-        <CalendarViewReminders year={year} month={month} date={date} />
+        <CalendarViewReminders month={month} date={activeDate} />
       </FVStack>
     </FScrollView>
   );
 };
 
-export default CalendarViewContainer;
+export default memo(CalendarViewContainer);

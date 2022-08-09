@@ -5,9 +5,15 @@ import {axiosDefault, axiosIgnore404} from '../shared/axios';
 export default class NotificationService {
   private static baseUrl = '/api/notification';
 
-  public static getAllByMonth = (year: number, month: number, timezone: string): AxiosPromise<CalendarReminder[]> => {
+  public static getAllByMonths = (
+    yearFrom: number,
+    monthFrom: number,
+    yearTo: number,
+    monthTo: number,
+    timezone: string,
+  ): AxiosPromise<Map<string, CalendarReminder[]>> => {
     const url = NotificationService.baseUrl + '/reminder/calendar';
-    const params = {year, month, timezone};
+    const params = {yearFrom, monthFrom, yearTo, monthTo, timezone};
     return axiosDefault.get(url, {params});
   };
 

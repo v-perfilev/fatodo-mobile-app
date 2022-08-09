@@ -3,29 +3,22 @@ import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import moment from 'moment';
 import CalendarViewWeek from './CalendarViewWeek';
 import FVStack from '../../../components/boxes/FVStack';
+import {CalendarRoute} from '../../../models/Calendar';
 
 type CalendarViewMonthProps = {
-  year: number;
-  month: number;
+  month: CalendarRoute;
   activeDate: moment.Moment;
   selectDate: Dispatch<SetStateAction<moment.Moment>>;
 };
 
-const CalendarViewMonth = ({year, month, activeDate, selectDate}: CalendarViewMonthProps) => {
-  const pageDates = useMemo<moment.Moment[]>(() => CalendarUtils.getOnePageMoments(year, month), [year, month]);
+const CalendarViewMonth = ({month, activeDate, selectDate}: CalendarViewMonthProps) => {
+  const pageDates = useMemo<moment.Moment[]>(() => CalendarUtils.getOnePageMoments(month.year, month.month), [month]);
   const weeks = useMemo<moment.Moment[][]>(() => CalendarUtils.splitMonthInWeeks(pageDates), [pageDates]);
 
   return (
     <FVStack>
       {weeks.map((week, index) => (
-        <CalendarViewWeek
-          weekDates={week}
-          year={year}
-          month={month}
-          activeDate={activeDate}
-          selectDate={selectDate}
-          key={index}
-        />
+        <CalendarViewWeek month={month} weekDates={week} activeDate={activeDate} selectDate={selectDate} key={index} />
       ))}
     </FVStack>
   );

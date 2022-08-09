@@ -1,19 +1,23 @@
 import moment from 'moment';
 import {CalendarReminder} from '../../models/Reminder';
 import {ComparatorUtils} from './ComparatorUtils';
-import {CalendarItem} from '../../models/Calendar';
+import {CalendarItem, CalendarRoute} from '../../models/Calendar';
+import {MapUtils} from './MapUtils';
 
 export class CalendarUtils {
-  public static generateCalendarItems = (indent: number = 2, item?: CalendarItem): CalendarItem[] => {
+  public static generateCalendarRoutes = (indent: number = 3, item?: CalendarItem): CalendarRoute[] => {
     const year = item ? item.year : new Date().getFullYear();
     const month = item ? item.month : new Date().getMonth();
     const centralMoment = moment({year, month});
-    const items: CalendarItem[] = [];
+    const routes: CalendarRoute[] = [];
     for (let i = -indent; i <= indent; i++) {
       const m = centralMoment.clone().add(i, 'month');
-      items.push({year: m.year(), month: m.month()});
+      const year = m.year();
+      const month = m.month();
+      const key = CalendarUtils.buildMonthKey(year, month);
+      routes.push({key, year, month});
     }
-    return items;
+    return routes;
   };
 
   public static getMonthMoment = (year: number, month: number): moment.Moment => {
@@ -59,10 +63,6 @@ export class CalendarUtils {
     return weekDates;
   };
 
-  public static buildMonthKey = (year: number, month: number): string => {
-    return year + '_' + month;
-  };
-
   public static filterByMoment = (reminders: CalendarReminder[], date: moment.Moment): CalendarReminder[] => {
     return reminders.filter((r) => new Date(r.date).getDate() === date.date()).sort(ComparatorUtils.dateComparator);
   };
@@ -73,5 +73,46 @@ export class CalendarUtils {
 
   public static extractRemindersItemIds = (reminders: CalendarReminder[]): string[] => {
     return reminders.map((r) => r.targetId);
+  };
+
+  public static extractKeysToLoad = <T>(keys: string[], reminders: [string, T][], loadingKeys: string[]): string[] => {
+    const map = new Map(reminders);
+    const existingKeys = Array.from(map.keys());
+    const notAllowedIds = [...existingKeys, ...loadingKeys];
+    return keys.filter((key) => !notAllowedIds.includes(key));
+  };
+
+  public static extractDatesToLoad = (keys: string[]): [number, number, number, number] => {
+    const sortedKeys = keys.sort();
+    const yearFrom = Number(sortedKeys[0].slice(0, 4));
+    const monthFrom = Number(sortedKeys[0].slice(5));
+    const yearTo = Number(sortedKeys[sortedKeys.length - 1].slice(0, 4));
+    const monthTo = Number(sortedKeys[sortedKeys.length - 1].slice(5));
+    return [yearFrom, monthFrom, yearTo, monthTo];
+  };
+
+  public static buildMonthKey = (year: number, month: number): string => {
+    return year + '_' + month;
+  };
+
+  public static updateRemindersMap = (
+    stateMap: [string, CalendarReminder[]][],
+    newMap: [string, CalendarReminder[]][],
+    keys: string[],
+  ): [string, any][] => {
+    const map = new Map(newMap);
+    keys.forEach((key) => {
+      const value = map.get(key) || [];
+      stateMap = MapUtils.setValue(stateMap, key, value);
+    });
+    return stateMap;
+  };
+
+  public static preparePendingLoadingKeys = (loadingKeys: string[], newKeys: string[]): string[] => {
+    return [...loadingKeys, ...newKeys];
+  };
+
+  public static prepareFinishedLoadingKeys = (loadingKeys: string[], newKeys: string[]): string[] => {
+    return loadingKeys.filter((key) => !newKeys.includes(key));
   };
 }
