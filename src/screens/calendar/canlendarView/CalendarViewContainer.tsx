@@ -28,7 +28,9 @@ const CalendarViewContainer = ({month, selectMonth, isActive}: CalendarViewConta
   useEffect(() => {
     const date = moment();
     const isCurrentMonth = date.month() === month.month && date.year() === month.year;
-    isActive && setActiveDate(isCurrentMonth ? date : undefined);
+    if (month && (isCurrentMonth || activeDate)) {
+      setActiveDate(isCurrentMonth ? date : undefined);
+    }
   }, [isActive]);
 
   return (

@@ -26,8 +26,10 @@ const CalendarView = () => {
   };
 
   const selectMonth = (month: CalendarItem): void => {
+    const updatedRouteWithoutIndent = CalendarUtils.generateCalendarRoutes(0, month);
     const updatedRoute = CalendarUtils.generateCalendarRoutes(calendarIndent, month);
-    setRoutes(updatedRoute);
+    setRoutes(updatedRouteWithoutIndent);
+    setTimeout(() => setRoutes(updatedRoute), 50);
   };
 
   const renderScene = ({route}: RenderProps): ReactElement => (
@@ -52,6 +54,7 @@ const CalendarView = () => {
         renderScene={renderScene}
         onIndexChange={calcRoutes}
         renderTabBar={() => null}
+        onSwipeStart={console.log}
       />
     </>
   );

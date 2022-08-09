@@ -15,7 +15,9 @@ export class CalendarUtils {
       const year = m.year();
       const month = m.month();
       const key = CalendarUtils.buildMonthKey(year, month);
-      routes.push({key, year, month});
+      if (year >= 1900 && year <= 2100) {
+        routes.push({key, year, month});
+      }
     }
     return routes;
   };
