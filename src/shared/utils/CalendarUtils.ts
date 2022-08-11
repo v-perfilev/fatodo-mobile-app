@@ -64,7 +64,7 @@ export class CalendarUtils {
       dates.push(date);
     }
 
-    for (let i = lastDateDay; i < 7; i++) {
+    for (let i = lastDateDay + 1; i <= 7; i++) {
       const date = lastDateMoment.clone().add(i - lastDateDay, 'days');
       dates.push(date);
     }
