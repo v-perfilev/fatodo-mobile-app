@@ -2,29 +2,28 @@ import React, {useMemo} from 'react';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
 import {useAppSelector} from '../../../../store/store';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
-import moment from 'moment';
 import FBox from '../../../../components/boxes/FBox';
 import CalendarViewRemindersNotSelectedStub from './CalendarViewRemindersNotSelectedStub';
 import CalendarViewRemindersEmptyStub from './CalendarViewRemindersEmptyStub';
 import CalendarViewReminderItem from './CalendarViewReminderItem';
 import FVStack from '../../../../components/boxes/FVStack';
-import {CalendarMonth} from '../../../../models/Calendar';
+import {CalendarDate, CalendarMonth} from '../../../../models/Calendar';
 
 type CalendarViewRemindersProps = {
   month: CalendarMonth;
-  date: moment.Moment;
+  activeDate: CalendarDate;
 };
 
-const CalendarViewReminders = ({month, date}: CalendarViewRemindersProps) => {
+const CalendarViewReminders = ({month, activeDate}: CalendarViewRemindersProps) => {
   const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, month.key));
 
   const dateReminders = useMemo(() => {
-    return date ? CalendarUtils.filterByMoment(reminders, date) : [];
-  }, [date, reminders]);
+    return activeDate ? CalendarUtils.filterRemindersByDate(reminders, activeDate) : [];
+  }, [activeDate, reminders]);
 
-  const showNotSelectedStub = !date;
-  const showEmptyStub = date && dateReminders.length === 0;
-  const showReminders = date && dateReminders.length > 0;
+  const showNotSelectedStub = !activeDate;
+  const showEmptyStub = activeDate && dateReminders.length === 0;
+  const showReminders = activeDate && dateReminders.length > 0;
 
   return (
     <FBox>

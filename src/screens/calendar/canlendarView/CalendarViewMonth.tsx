@@ -1,26 +1,29 @@
 import React, {Dispatch, SetStateAction, useMemo} from 'react';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import moment from 'moment';
-import CalendarViewWeek from './CalendarViewWeek';
-import FVStack from '../../../components/boxes/FVStack';
-import {CalendarMonth} from '../../../models/Calendar';
+import {CalendarDate, CalendarMonth} from '../../../models/Calendar';
+import FHStack from '../../../components/boxes/FHStack';
+import CalendarViewDate from './CalendarViewDate';
+import {Dimensions} from 'react-native';
+import {Box} from 'native-base';
 
 type CalendarViewMonthProps = {
   month: CalendarMonth;
-  activeDate: moment.Moment;
-  selectDate: Dispatch<SetStateAction<moment.Moment>>;
+  activeDate: CalendarDate;
+  selectDate: Dispatch<SetStateAction<CalendarDate>>;
 };
 
 const CalendarViewMonth = ({month, activeDate, selectDate}: CalendarViewMonthProps) => {
-  const pageDates = useMemo<moment.Moment[]>(() => CalendarUtils.getOnePageMoments(month.year, month.month), [month]);
-  const weeks = useMemo<moment.Moment[][]>(() => CalendarUtils.splitMonthInWeeks(pageDates), [pageDates]);
+  const pageDates = useMemo<CalendarDate[]>(() => CalendarUtils.getOnePageDates(month.year, month.month), [month]);
+  const width = (Dimensions.get('window').width - 6) / 7;
 
   return (
-    <FVStack>
-      {weeks.map((week, index) => (
-        <CalendarViewWeek month={month} weekDates={week} activeDate={activeDate} selectDate={selectDate} key={index} />
+    <FHStack mx="3px" flexWrap="wrap">
+      {pageDates.map((date, index) => (
+        <Box w={width} key={index}>
+          <CalendarViewDate date={date} month={month} activeDate={activeDate} selectDate={selectDate} />
+        </Box>
       ))}
-    </FVStack>
+    </FHStack>
   );
 };
 

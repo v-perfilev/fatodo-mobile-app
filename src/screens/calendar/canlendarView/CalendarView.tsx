@@ -3,7 +3,7 @@ import Header from '../../../components/layouts/Header';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 // import {ScrollView} from 'native-base';
-import {Dimensions, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
+import {Dimensions, NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 import FBox from '../../../components/boxes/FBox';
 import CalendarViewContainer from './CalendarViewContainer';
 import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
@@ -12,7 +12,7 @@ import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import {CalendarActions, CalendarThunks} from '../../../store/calendar/calendarActions';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 
-const loadIndent = 3;
+const loadIndent = 4;
 const months = CalendarUtils.generateAllCalendarMonths();
 const monthKeys = months.map((r) => r.key);
 const getInitialMonth = (): CalendarMonth => CalendarUtils.generateCurrentCalendarMonth();
@@ -63,8 +63,8 @@ const CalendarView = () => {
 
   const keyExtractor = useCallback((month: CalendarMonth): string => month.key, []);
   const renderItem = useCallback(
-    (month: CalendarMonth, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <FBox onLayout={onLayout} width={singleWidth}>
+    (month: CalendarMonth): ReactElement => (
+      <FBox width={singleWidth}>
         <CalendarViewContainer month={month} selectMonth={selectMonth} />
       </FBox>
     ),

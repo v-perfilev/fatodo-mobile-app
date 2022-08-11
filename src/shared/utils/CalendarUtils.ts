@@ -1,7 +1,7 @@
 import moment from 'moment';
 import {CalendarReminder} from '../../models/Reminder';
 import {ComparatorUtils} from './ComparatorUtils';
-import {CalendarItem, CalendarMonth} from '../../models/Calendar';
+import {CalendarDate, CalendarItem, CalendarMonth} from '../../models/Calendar';
 import {MapUtils} from './MapUtils';
 
 export class CalendarUtils {
@@ -41,39 +41,41 @@ export class CalendarUtils {
     return moment({year, month, d: 10});
   };
 
-  public static getNowMoment = (): moment.Moment => {
-    return moment().set({hours: 12, minutes: 0, seconds: 0, milliseconds: 0});
+  public static getNowDate = (isCurrentMonth = true): CalendarDate => {
+    return {date: new Date().getDate(), isCurrentMonth};
   };
 
-  public static getOnePageMoments = (year: number, month: number): moment.Moment[] => {
+  public static getOnePageDates = (year: number, month: number): CalendarDate[] => {
     const monthMoment = moment({year, month, d: 10});
+    const previousMonthMoment = monthMoment.clone().subtract(1, 'month');
     const firstDateMoment = monthMoment.clone().startOf('month');
     const firstDateDay = firstDateMoment.day() === 0 ? 7 : firstDateMoment.day();
     const lastDateMoment = monthMoment.clone().endOf('month');
     const lastDateDay = lastDateMoment.day() === 0 ? 7 : lastDateMoment.day();
     const daysInMonth = monthMoment.daysInMonth();
+    const daysPreviousInMonth = previousMonthMoment.daysInMonth();
 
-    const dates: moment.Moment[] = [];
+    const dates: CalendarDate[] = [];
     for (let i = 1; i < firstDateDay; i++) {
-      const date = firstDateMoment.clone().subtract(firstDateDay - i, 'days');
+      const date: CalendarDate = {date: daysPreviousInMonth - firstDateDay + i + 1, isCurrentMonth: false};
       dates.push(date);
     }
 
-    for (let i = 0; i < daysInMonth; i++) {
-      const date = firstDateMoment.clone().add(i, 'day');
+    for (let i = 1; i <= daysInMonth; i++) {
+      const date: CalendarDate = {date: i, isCurrentMonth: true};
       dates.push(date);
     }
 
     for (let i = lastDateDay + 1; i <= 7; i++) {
-      const date = lastDateMoment.clone().add(i - lastDateDay, 'days');
+      const date: CalendarDate = {date: i - lastDateDay, isCurrentMonth: false};
       dates.push(date);
     }
 
     return dates;
   };
 
-  public static splitMonthInWeeks = (dates: moment.Moment[]): moment.Moment[][] => {
-    const weekDates: moment.Moment[][] = [];
+  public static splitMonthInWeeks = (dates: CalendarDate[]): CalendarDate[][] => {
+    const weekDates: CalendarDate[][] = [];
     dates.forEach((d, i) => {
       const weekIndex = Math.floor(i / 7);
       if (!weekDates[weekIndex]) {
@@ -84,8 +86,8 @@ export class CalendarUtils {
     return weekDates;
   };
 
-  public static filterByMoment = (reminders: CalendarReminder[], date: moment.Moment): CalendarReminder[] => {
-    return reminders.filter((r) => new Date(r.date).getDate() === date.date()).sort(ComparatorUtils.dateComparator);
+  public static filterRemindersByDate = (reminders: CalendarReminder[], date: CalendarDate): CalendarReminder[] => {
+    return reminders.filter((r) => new Date(r.date).getDate() === date.date).sort(ComparatorUtils.dateComparator);
   };
 
   public static extractRemindersGroupIds = (reminders: CalendarReminder[]): string[] => {
