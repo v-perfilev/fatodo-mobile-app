@@ -6,7 +6,7 @@ import CalendarSelectMonthDialog, {
   CalendarSelectMonthDialogProps,
   defaultCalendarSelectMonthDialogProps,
 } from '../../../screens/calendar/canlendarView/dialogs/CalendarSelectMonthDialog';
-import {CalendarItem, CalendarRoute} from '../../../models/Calendar';
+import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 
 enum CalendarDialogs {
   SELECT_MONTH = 'CALENDAR_SELECT_MONTH',
@@ -16,7 +16,7 @@ const withCalendarDialogs = (Component: ComponentType) => (props: any) => {
   const {handleDialog, setDialogProps, clearDialogProps} = useDialogContext();
 
   const showSelectMonthDialog = useCallback(
-    (month: CalendarRoute, selectMonth: (month: CalendarItem) => void): void => {
+    (month: CalendarMonth, selectMonth: (month: CalendarItem) => void): void => {
       const show = true;
       const close = (): void => {
         clearDialogProps(CalendarDialogs.SELECT_MONTH);

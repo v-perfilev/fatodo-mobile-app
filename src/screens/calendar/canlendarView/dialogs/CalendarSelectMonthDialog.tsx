@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {CalendarItem, CalendarRoute} from '../../../../models/Calendar';
+import {CalendarItem, CalendarMonth} from '../../../../models/Calendar';
 import DateTimePicker from '../../../../components/inputs/DateTimePicker';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
@@ -10,7 +10,7 @@ import GhostButton from '../../../../components/controls/GhostButton';
 import FBox from '../../../../components/boxes/FBox';
 
 export type CalendarSelectMonthDialogProps = {
-  month: CalendarRoute;
+  month: CalendarMonth;
   selectMonth: (month: CalendarItem) => void;
   show: boolean;
   close: () => void;

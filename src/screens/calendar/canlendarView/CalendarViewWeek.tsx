@@ -2,10 +2,10 @@ import React, {Dispatch, SetStateAction} from 'react';
 import moment from 'moment';
 import CalendarViewDate from './CalendarViewDate';
 import FHStack from '../../../components/boxes/FHStack';
-import {CalendarRoute} from '../../../models/Calendar';
+import {CalendarMonth} from '../../../models/Calendar';
 
 type CalendarViewWeekProps = {
-  month: CalendarRoute;
+  month: CalendarMonth;
   weekDates: moment.Moment[];
   activeDate: moment.Moment;
   selectDate: Dispatch<SetStateAction<moment.Moment>>;

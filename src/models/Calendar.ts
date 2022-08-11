@@ -3,6 +3,6 @@ export interface CalendarItem {
   month: number;
 }
 
-export interface CalendarRoute extends CalendarItem {
+export interface CalendarMonth extends CalendarItem {
   key: string;
 }

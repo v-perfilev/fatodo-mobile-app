@@ -1,11 +1,11 @@
 import moment from 'moment';
 import {CalendarReminder} from '../../models/Reminder';
 import {ComparatorUtils} from './ComparatorUtils';
-import {CalendarItem, CalendarRoute} from '../../models/Calendar';
+import {CalendarItem, CalendarMonth} from '../../models/Calendar';
 import {MapUtils} from './MapUtils';
 
 export class CalendarUtils {
-  public static generateCurrentCalendarRoute = (): CalendarRoute => {
+  public static generateCurrentCalendarMonth = (): CalendarMonth => {
     const now = moment();
     const year = now.year();
     const month = now.month();
@@ -13,8 +13,8 @@ export class CalendarUtils {
     return {key, year, month};
   };
 
-  public static generateAllCalendarRoutes = (): CalendarRoute[] => {
-    const routes: CalendarRoute[] = [];
+  public static generateAllCalendarMonths = (): CalendarMonth[] => {
+    const routes: CalendarMonth[] = [];
     for (let year = 1900; year <= 2100; year++) {
       for (let month = 0; month < 11; month++) {
         const key = CalendarUtils.buildMonthKey(year, month);
@@ -24,9 +24,9 @@ export class CalendarUtils {
     return routes;
   };
 
-  public static generateCalendarRoutes = (item: CalendarItem, indent: number = 3): CalendarRoute[] => {
+  public static generateCalendarMonths = (item: CalendarItem, indent: number = 3): CalendarMonth[] => {
     const centralMoment = moment({year: item.year, month: item.month});
-    const routes: CalendarRoute[] = [];
+    const routes: CalendarMonth[] = [];
     for (let i = -indent; i <= indent; i++) {
       const m = centralMoment.clone().add(i, 'month');
       const year = m.year();

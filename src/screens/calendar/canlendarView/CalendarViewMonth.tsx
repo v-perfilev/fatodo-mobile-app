@@ -3,10 +3,10 @@ import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import moment from 'moment';
 import CalendarViewWeek from './CalendarViewWeek';
 import FVStack from '../../../components/boxes/FVStack';
-import {CalendarRoute} from '../../../models/Calendar';
+import {CalendarMonth} from '../../../models/Calendar';
 
 type CalendarViewMonthProps = {
-  month: CalendarRoute;
+  month: CalendarMonth;
   activeDate: moment.Moment;
   selectDate: Dispatch<SetStateAction<moment.Moment>>;
 };

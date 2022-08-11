@@ -1,5 +1,5 @@
-import React, {memo, useEffect, useRef, useState} from 'react';
-import {useAppDispatch} from '../../../store/store';
+import React, {memo, useEffect, useMemo, useRef, useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {CalendarThunks} from '../../../store/calendar/calendarActions';
 import moment from 'moment';
 import {Divider} from 'native-base';
@@ -9,20 +9,25 @@ import CalendarViewMonthName from './CalendarViewMonthName';
 import CalendarViewWeekDays from './CalendarViewWeekDays';
 import CalendarViewMonth from './CalendarViewMonth';
 import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
-import {CalendarItem, CalendarRoute} from '../../../models/Calendar';
+import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {ScrollView} from 'react-native';
+import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 
 type CalendarViewContainerProps = {
-  month: CalendarRoute;
+  month: CalendarMonth;
   selectMonth: (month: CalendarItem) => void;
-  isActive: boolean;
 };
 
-const CalendarViewContainer = ({month, selectMonth, isActive}: CalendarViewContainerProps) => {
+const CalendarViewContainer = ({month, selectMonth}: CalendarViewContainerProps) => {
   const dispatch = useAppDispatch();
+  const activeMonth = useAppSelector(CalendarSelectors.activeMonth);
   const [activeDate, setActiveDate] = useState<moment.Moment>();
   const ref = useRef<ScrollView>();
+
+  const isActive = useMemo<boolean>(() => {
+    return month.key === activeMonth?.key;
+  }, [activeMonth]);
 
   const refresh = async (): Promise<void> => {
     await dispatch(CalendarThunks.fetchReminders([month.key]));
@@ -63,8 +68,4 @@ const CalendarViewContainer = ({month, selectMonth, isActive}: CalendarViewConta
   );
 };
 
-function isEqual(prevProps: CalendarViewContainerProps, nextProps: CalendarViewContainerProps): boolean {
-  return prevProps.isActive === nextProps.isActive;
-}
-
-export default memo(CalendarViewContainer, isEqual);
+export default memo(CalendarViewContainer);

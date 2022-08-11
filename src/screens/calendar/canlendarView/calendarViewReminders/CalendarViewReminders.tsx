@@ -8,10 +8,10 @@ import CalendarViewRemindersNotSelectedStub from './CalendarViewRemindersNotSele
 import CalendarViewRemindersEmptyStub from './CalendarViewRemindersEmptyStub';
 import CalendarViewReminderItem from './CalendarViewReminderItem';
 import FVStack from '../../../../components/boxes/FVStack';
-import {CalendarRoute} from '../../../../models/Calendar';
+import {CalendarMonth} from '../../../../models/Calendar';
 
 type CalendarViewRemindersProps = {
-  month: CalendarRoute;
+  month: CalendarMonth;
   date: moment.Moment;
 };
 

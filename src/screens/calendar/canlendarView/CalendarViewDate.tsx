@@ -12,10 +12,10 @@ import Bullet from '../../../components/surfaces/Bullet';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {FilterUtils} from '../../../shared/utils/FilterUtils';
 import {ColorScheme} from '../../../shared/themes/ThemeFactory';
-import {CalendarRoute} from '../../../models/Calendar';
+import {CalendarMonth} from '../../../models/Calendar';
 
 type CalendarViewDateProps = {
-  month: CalendarRoute;
+  month: CalendarMonth;
   date: moment.Moment;
   activeDate: moment.Moment;
   selectDate: Dispatch<SetStateAction<moment.Moment>>;

@@ -1,7 +1,7 @@
 import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
 import Header from '../../../components/layouts/Header';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {CalendarItem, CalendarRoute} from '../../../models/Calendar';
+import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 // import {ScrollView} from 'native-base';
 import {Dimensions, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 import FBox from '../../../components/boxes/FBox';
@@ -9,26 +9,26 @@ import CalendarViewContainer from './CalendarViewContainer';
 import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
-import {CalendarThunks} from '../../../store/calendar/calendarActions';
+import {CalendarActions, CalendarThunks} from '../../../store/calendar/calendarActions';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 
 const loadIndent = 3;
-const routes = CalendarUtils.generateAllCalendarRoutes();
-const routeKeys = routes.map((r) => r.key);
-const getInitialRoute = (): CalendarRoute => CalendarUtils.generateCurrentCalendarRoute();
-const getInitialIndex = (): number => routeKeys.indexOf(getInitialRoute().key);
+const months = CalendarUtils.generateAllCalendarMonths();
+const monthKeys = months.map((r) => r.key);
+const getInitialMonth = (): CalendarMonth => CalendarUtils.generateCurrentCalendarMonth();
+const getInitialIndex = (): number => monthKeys.indexOf(getInitialMonth().key);
 
 const CalendarView = () => {
   const dispatch = useAppDispatch();
   const loadedKeys = useAppSelector(CalendarSelectors.loadedKeys);
-  const [activeRoute, setActiveRoute] = useState<CalendarRoute>(getInitialRoute());
+  const activeMonth = useAppSelector(CalendarSelectors.activeMonth);
   const [singleWidth, setSingleWidth] = useState<number>(Dimensions.get('window').width);
   const listRef = useRef<FlatListType>();
 
   const loadReminders = (): void => {
-    const actualKeyLoaded = loadedKeys.includes(activeRoute.key);
-    let routesToLoad = CalendarUtils.generateCalendarRoutes(activeRoute, loadIndent);
-    const keysToLoad = routesToLoad.map((r) => r.key);
+    const actualKeyLoaded = loadedKeys.includes(activeMonth.key);
+    let monthsToLoad = CalendarUtils.generateCalendarMonths(activeMonth, loadIndent);
+    const keysToLoad = monthsToLoad.map((r) => r.key);
     const missingKeys = keysToLoad.filter((key) => !loadedKeys.includes(key));
     const shouldLoad = !actualKeyLoaded || missingKeys.length >= loadIndent;
     shouldLoad && dispatch(CalendarThunks.handleReminderKeys(missingKeys));
@@ -45,41 +45,41 @@ const CalendarView = () => {
   const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
     const offset = event.nativeEvent.contentOffset.x;
     const index = Math.round(offset / singleWidth);
-    if (index < routes.length) {
-      const activeRoute = routes[index];
-      setActiveRoute(activeRoute);
+    if (index < months.length) {
+      const activeMonth = months[index];
+      dispatch(CalendarActions.selectMonth(activeMonth));
     }
   };
 
   const selectMonth = (month: CalendarItem): void => {
     const key = CalendarUtils.buildMonthKey(month.year, month.month);
-    const index = routeKeys.indexOf(key);
-    if (index && index < routes.length) {
-      const activeRoute = routes[index];
-      setActiveRoute(activeRoute);
+    const index = monthKeys.indexOf(key);
+    if (index && index < months.length) {
+      const activeMonth = months[index];
+      dispatch(CalendarActions.selectMonth(activeMonth));
       scrollToItem(index, false);
     }
   };
 
-  const keyExtractor = useCallback((route: CalendarRoute): string => route.key, []);
+  const keyExtractor = useCallback((month: CalendarMonth): string => month.key, []);
   const renderItem = useCallback(
-    (route: CalendarRoute, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    (month: CalendarMonth, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <FBox onLayout={onLayout} width={singleWidth}>
-        <CalendarViewContainer month={route} selectMonth={selectMonth} isActive={route.key === activeRoute.key} />
+        <CalendarViewContainer month={month} selectMonth={selectMonth} />
       </FBox>
     ),
-    [activeRoute],
+    [],
   );
 
   useEffect(() => {
-    loadReminders();
-  }, [activeRoute]);
+    activeMonth && loadReminders();
+  }, [activeMonth]);
 
   return (
     <>
       <Header hideGoBack />
       <FlatList
-        data={routes}
+        data={months}
         render={renderItem}
         keyExtractor={keyExtractor}
         contentContainerStyle={ListUtils.defaultContainerStyle()}
@@ -92,8 +92,7 @@ const CalendarView = () => {
         initialScrollIndex={getInitialIndex()}
         onMomentumScrollEnd={handleScrollEnd}
         listRef={listRef}
-        initialNumToRender={3}
-        maxToRenderPerBatch={3}
+        updateCellsBatchingPeriod={10}
         windowSize={3}
       />
     </>

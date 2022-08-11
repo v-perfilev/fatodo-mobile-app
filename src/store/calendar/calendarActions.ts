@@ -1,9 +1,17 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {RootState} from '../store';
+import {AppDispatch, RootState} from '../store';
 import NotificationService from '../../services/NotificationService';
 import {InfoThunks} from '../info/infoActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
+import {CalendarMonth} from '../../models/Calendar';
+import calendarSlice from './calendarSlice';
+
+export class CalendarActions {
+  static selectMonth = (month: CalendarMonth) => async (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.selectMonth(month));
+  };
+}
 
 enum TYPES {
   HANDLE_REMINDER_KEYS = 'calendar/handleReminderKeys',

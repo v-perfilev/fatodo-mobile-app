@@ -1,9 +1,11 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {CalendarState} from './calendarType';
 import {CalendarThunks} from './calendarActions';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
+import {CalendarMonth} from '../../models/Calendar';
 
 const initialState: CalendarState = {
+  activeMonth: undefined,
   reminders: [],
   loading: false,
   loadingKeys: [],
@@ -12,7 +14,11 @@ const initialState: CalendarState = {
 const calendarSlice = createSlice({
   name: 'calendar',
   initialState,
-  reducers: {},
+  reducers: {
+    selectMonth: (state: CalendarState, action: PayloadAction<CalendarMonth>) => {
+      state.activeMonth = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     /*
     fetchReminders
