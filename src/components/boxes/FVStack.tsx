@@ -11,11 +11,11 @@ type FlexVStackProps = IVStackProps & {
   smallSpace?: boolean;
 };
 
-const FVStack = ({grow, basis, shrink, defaultSpace, smallSpace, children, ...props}: FlexVStackProps) => {
+const FVStack = React.forwardRef((props: FlexVStackProps, ref: any) => {
+  const {grow, basis, shrink, defaultSpace, smallSpace, children, ...otherProps} = props;
+
   const flexGrow = useMemo<string>(() => (grow ? '1' : '0'), []);
-
   const flexBasis = useMemo<number>(() => (basis ? 1 : undefined), []);
-
   const flexShrink = useMemo<number>(() => (shrink ? 1 : undefined), []);
 
   const space = useMemo<number>(() => {
@@ -29,10 +29,10 @@ const FVStack = ({grow, basis, shrink, defaultSpace, smallSpace, children, ...pr
   }, []);
 
   return (
-    <VStack flexGrow={flexGrow} flexBasis={flexBasis} flexShrink={flexShrink} space={space} {...props}>
+    <VStack flexGrow={flexGrow} flexBasis={flexBasis} flexShrink={flexShrink} space={space} ref={ref} {...otherProps}>
       {children}
     </VStack>
   );
-};
+});
 
 export default FVStack;

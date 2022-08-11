@@ -5,14 +5,14 @@ type FCenterProps = ICenterProps & {
   grow?: boolean;
 };
 
-const FCenter = ({grow, children, ...props}: FCenterProps) => {
+const FCenter = React.forwardRef(({grow, children, ...props}: FCenterProps, ref: any) => {
   const flexGrow = useMemo<number>(() => (grow ? 1 : 0), []);
 
   return (
-    <Center flexGrow={flexGrow} {...props}>
+    <Center flexGrow={flexGrow} ref={ref} {...props}>
       {children}
     </Center>
   );
-};
+});
 
 export default FCenter;

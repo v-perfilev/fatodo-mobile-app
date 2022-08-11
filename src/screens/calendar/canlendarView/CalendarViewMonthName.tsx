@@ -32,7 +32,7 @@ const CalendarViewMonthName = ({month, selectMonth}: CalendarViewMonthNameProps)
             <Text fontSize="18" fontWeight="extrabold" color="gray.400">
               {monthWithYear.toUpperCase()}
             </Text>
-            <ArrowDownIcon />
+            <ArrowDownIcon color="primary.500" size="xl" />
           </FHStack>
         </PressableButton>
       </FBox>

@@ -7,13 +7,14 @@ type FContainerProps = IFlexProps & {
   itemMy?: number | string;
 };
 
-const FContainer = ({itemM, itemMx, itemMy, children, ...props}: FContainerProps) => {
+const FContainer = React.forwardRef((props: FContainerProps, ref: any) => {
+  const {itemM, itemMx, itemMy, children, ...otherProps} = props;
   const containerM = itemM ? -itemM : undefined;
   const containerMx = itemMx ? -itemMx : undefined;
   const containerMy = itemMy ? -itemMy : undefined;
 
   return (
-    <Flex m={containerM} mx={containerMx} my={containerMy} flexDir="row" wrap="wrap" {...props}>
+    <Flex m={containerM} mx={containerMx} my={containerMy} flexDir="row" wrap="wrap" ref={ref} {...otherProps}>
       {React.Children.map(children, (child, index) => (
         <Box m={itemM} mx={itemMx} my={itemMy} key={index}>
           {child}
@@ -21,6 +22,6 @@ const FContainer = ({itemM, itemMx, itemMy, children, ...props}: FContainerProps
       ))}
     </Flex>
   );
-};
+});
 
 export default FContainer;

@@ -10,9 +10,10 @@ type FHStackProps = IHStackProps & {
   smallSpace?: boolean;
 };
 
-const FHStack = ({grow, basis, defaultSpace, smallSpace, children, ...props}: FHStackProps) => {
-  const flexGrow = useMemo<string>(() => (grow ? '1' : '0'), []);
+const FHStack = React.forwardRef((props: FHStackProps, ref: any) => {
+  const {grow, basis, defaultSpace, smallSpace, children, ...otherProps} = props;
 
+  const flexGrow = useMemo<string>(() => (grow ? '1' : '0'), []);
   const flexBasis = useMemo<number>(() => (basis ? 1 : undefined), []);
 
   const space = useMemo<number>(() => {
@@ -26,10 +27,10 @@ const FHStack = ({grow, basis, defaultSpace, smallSpace, children, ...props}: FH
   }, []);
 
   return (
-    <HStack flexGrow={flexGrow} flexBasis={flexBasis} space={space} {...props}>
+    <HStack flexGrow={flexGrow} flexBasis={flexBasis} space={space} ref={ref} {...otherProps}>
       {children}
     </HStack>
   );
-};
+});
 
 export default FHStack;

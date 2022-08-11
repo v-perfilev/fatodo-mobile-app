@@ -9,7 +9,8 @@ type FScrollViewProps = IScrollViewProps & {
   refresh?: () => Promise<void>;
 };
 
-const FScrollView = ({refresh, children, p = DEFAULT_SPACE, px, py, pt, pr, pb, pl, ...props}: FScrollViewProps) => {
+const FScrollView = React.forwardRef((props: FScrollViewProps, ref: any) => {
+  const {refresh, children, p = DEFAULT_SPACE, px, py, pt, pr, pb, pl, ...otherProps} = props;
   const theme = useTheme();
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
@@ -26,14 +27,15 @@ const FScrollView = ({refresh, children, p = DEFAULT_SPACE, px, py, pt, pr, pb, 
     <ScrollView
       refreshControl={refresh ? _refreshControl : null}
       _contentContainerStyle={containerStyle}
-      {...props}
       showsVerticalScrollIndicator={false}
+      ref={ref}
+      {...otherProps}
     >
       <Flex flex="1" m={p} mx={px} my={py} mt={pt} mr={pr} mb={pb} ml={pl}>
         {children}
       </Flex>
     </ScrollView>
   );
-};
+});
 
 export default FScrollView;

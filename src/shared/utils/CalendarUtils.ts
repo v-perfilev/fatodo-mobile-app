@@ -5,19 +5,26 @@ import {CalendarItem, CalendarRoute} from '../../models/Calendar';
 import {MapUtils} from './MapUtils';
 
 export class CalendarUtils {
-  public static generateCalendarRoutes = (indent: number = 3, item?: CalendarItem): CalendarRoute[] => {
-    const year = item ? item.year : new Date().getFullYear();
-    const month = item ? item.month : new Date().getMonth();
-    const centralMoment = moment({year, month});
+  public static generateAllCalendarRoutes = (): CalendarRoute[] => {
+    const routes: CalendarRoute[] = [];
+    for (let year = 1900; year <= 2100; year++) {
+      for (let month = 0; month < 11; month++) {
+        const key = CalendarUtils.buildMonthKey(year, month);
+        routes.push({key, year, month});
+      }
+    }
+    return routes;
+  };
+
+  public static generateCalendarRoutes = (item: CalendarItem, indent: number = 3): CalendarRoute[] => {
+    const centralMoment = moment({year: item.year, month: item.month});
     const routes: CalendarRoute[] = [];
     for (let i = -indent; i <= indent; i++) {
       const m = centralMoment.clone().add(i, 'month');
       const year = m.year();
       const month = m.month();
       const key = CalendarUtils.buildMonthKey(year, month);
-      if (year >= 1900 && year <= 2100) {
-        routes.push({key, year, month});
-      }
+      routes.push({key, year, month});
     }
     return routes;
   };
@@ -89,11 +96,10 @@ export class CalendarUtils {
   };
 
   public static extractDatesToLoad = (keys: string[]): [number, number, number, number] => {
-    const sortedKeys = keys.sort();
-    const yearFrom = Number(sortedKeys[0].slice(0, 4));
-    const monthFrom = Number(sortedKeys[0].slice(5));
-    const yearTo = Number(sortedKeys[sortedKeys.length - 1].slice(0, 4));
-    const monthTo = Number(sortedKeys[sortedKeys.length - 1].slice(5));
+    const yearFrom = Number(keys[0].slice(0, 4));
+    const monthFrom = Number(keys[0].slice(5));
+    const yearTo = Number(keys[keys.length - 1].slice(0, 4));
+    const monthTo = Number(keys[keys.length - 1].slice(5));
     return [yearFrom, monthFrom, yearTo, monthTo];
   };
 

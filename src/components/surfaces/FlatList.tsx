@@ -11,35 +11,67 @@ import {
   Platform,
   RefreshControl,
 } from 'react-native';
-import {ChatItem} from '../../models/Message';
 
 export type FlatListType = RNFlatList;
 
 type FlatListProps<T> = Partial<IFlatListProps<T>> & {
   render: (item: T, onLayout: (event: LayoutChangeEvent) => void) => ReactElement;
   keyExtractor: (item: T) => string;
+  fixedLength?: number;
   refresh?: () => Promise<void>;
   setIsOnTheTop?: Dispatch<SetStateAction<boolean>>;
   listRef?: MutableRefObject<RNFlatList>;
 };
 
-const FlatList = ({data, render, keyExtractor, refresh, setIsOnTheTop, listRef, ...props}: FlatListProps<any>) => {
+const FlatList = ({
+  data,
+  render,
+  keyExtractor,
+  fixedLength,
+  refresh,
+  setIsOnTheTop,
+  listRef,
+  ...props
+}: FlatListProps<any>) => {
   const theme = useTheme();
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const heights = useRef<Map<string, number>>(new Map());
+  const lengthMap = useRef<Map<string, number>>(new Map());
 
-  const getItemHeight = useCallback(
+  const getItemLength = useCallback(
     (index: number): number => {
-      const item = data[index];
-      const key = keyExtractor(item);
-      return heights.current.get(key) || 0;
+      let length;
+      if (fixedLength) {
+        length = fixedLength;
+      } else {
+        const item = data[index];
+        const key = keyExtractor(item);
+        length = lengthMap.current.get(key) || 0;
+      }
+      return length;
     },
     [data, keyExtractor],
   );
 
+  const getItemOffset = useCallback(
+    (index: number): number => {
+      let offset;
+      if (fixedLength) {
+        offset = index * fixedLength;
+      } else {
+        offset = Array.from(Array(index).keys())
+          .map((i) => getItemLength(i))
+          .reduce((a, c) => a + c, 0);
+      }
+      return offset;
+    },
+    [getItemLength],
+  );
+
   const _onLayout = useCallback((key: string, event: LayoutChangeEvent): void => {
-    const height = event.nativeEvent.layout.height;
-    heights.current.set(key, height);
+    if (!fixedLength) {
+      const height = event.nativeEvent.layout.height;
+      lengthMap.current.set(key, height);
+    }
   }, []);
 
   const _renderItem = useCallback(
@@ -52,14 +84,12 @@ const FlatList = ({data, render, keyExtractor, refresh, setIsOnTheTop, listRef, 
   );
 
   const _getItemLayout = useCallback(
-    (data: ChatItem[], index: number) => {
-      const length = getItemHeight(index);
-      const offset = Array.from(Array(index).keys())
-        .map((i) => getItemHeight(i))
-        .reduce((a, c) => a + c, 0);
+    (data: any, index: number) => {
+      const length = getItemLength(index);
+      const offset = getItemOffset(index);
       return {length, offset, index};
     },
-    [getItemHeight],
+    [getItemLength, getItemOffset],
   );
 
   const onScrollEnd = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>): void => {
@@ -86,6 +116,7 @@ const FlatList = ({data, render, keyExtractor, refresh, setIsOnTheTop, listRef, 
       refreshControl={refresh ? _refreshControl : null}
       onScrollEndDrag={onScrollEnd}
       onMomentumScrollEnd={onScrollEnd}
+      showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={Platform.OS === 'android'}
       contentContainerStyle={ListUtils.containerStyle(theme)}
