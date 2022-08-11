@@ -7,14 +7,18 @@ export class ListUtils {
     height: '100%',
   };
 
-  public static containerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
+  public static defaultContainerStyle = (): StyleProp<unknown> => ({
+    flexGrow: 1,
+  });
+
+  public static themedContainerStyle = (theme: Theme): StyleProp<ViewStyle> => ({
     padding: theme.sizes[DEFAULT_SPACE],
     paddingTop: theme.sizes[HALF_DEFAULT_SPACE],
     paddingBottom: theme.sizes[HALF_DEFAULT_SPACE],
     flexGrow: 1,
   });
 
-  public static itemStyle = (theme: Theme): StyleProp<ViewStyle> => ({
+  public static themedItemStyle = (theme: Theme): StyleProp<ViewStyle> => ({
     paddingTop: theme.sizes[HALF_DEFAULT_SPACE],
     paddingBottom: theme.sizes[HALF_DEFAULT_SPACE],
   });

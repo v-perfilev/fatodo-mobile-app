@@ -37,7 +37,7 @@ const CommentListContainer = ({relations, filter}: ContactListContainerProps) =>
   const keyExtractor = useCallback((relation: ContactRelation): string => relation.id, []);
   const renderItem = useCallback(
     (relation: ContactRelation, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
+      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
         <ContactListItem relation={relation} />
       </Box>
     ),

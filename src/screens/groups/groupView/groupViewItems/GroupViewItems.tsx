@@ -32,7 +32,7 @@ const GroupViewItems = ({items, load, refresh, header}: GroupViewItemsProps) => 
   const keyExtractor = useCallback((item: Item): string => item.id, []);
   const renderItem = useCallback(
     (item: Item, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
+      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
         <GroupViewItem item={item} canEdit={canEdit} />
       </Box>
     ),

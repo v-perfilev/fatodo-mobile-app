@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {Flex, IScrollViewProps, ScrollView, useTheme} from 'native-base';
 import {DEFAULT_SPACE} from '../../constants';
 import {RefreshControl} from 'react-native';
-
-const containerStyle = {flexGrow: 1};
+import {ListUtils} from '../../shared/utils/ListUtils';
 
 type FScrollViewProps = IScrollViewProps & {
   refresh?: () => Promise<void>;
@@ -26,7 +25,7 @@ const FScrollView = React.forwardRef((props: FScrollViewProps, ref: any) => {
   return (
     <ScrollView
       refreshControl={refresh ? _refreshControl : null}
-      _contentContainerStyle={containerStyle}
+      _contentContainerStyle={ListUtils.defaultContainerStyle()}
       showsVerticalScrollIndicator={false}
       ref={ref}
       {...otherProps}

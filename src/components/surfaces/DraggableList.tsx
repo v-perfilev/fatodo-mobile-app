@@ -39,7 +39,7 @@ const DraggableList = ({data, renderItem, keyExtractor, handleDragEnd, refresh, 
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={Platform.OS === 'android'}
       style={ListUtils.draggableStyle}
-      contentContainerStyle={ListUtils.containerStyle(theme)}
+      contentContainerStyle={ListUtils.themedContainerStyle(theme)}
       {...props}
       initialNumToRender={props.initialNumToRender || 15}
       maxToRenderPerBatch={props.maxToRenderPerBatch || 15}

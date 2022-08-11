@@ -119,7 +119,7 @@ const FlatList = ({
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={Platform.OS === 'android'}
-      contentContainerStyle={ListUtils.containerStyle(theme)}
+      contentContainerStyle={ListUtils.themedContainerStyle(theme)}
       ref={listRef}
       {...props}
       initialNumToRender={props.initialNumToRender || 15}

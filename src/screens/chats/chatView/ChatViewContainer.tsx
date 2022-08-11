@@ -45,7 +45,7 @@ const ChatViewContainer = () => {
   const keyExtractor = useCallback((item: ChatItem): string => item.message?.id || item.date, []);
   const renderItem = useCallback(
     (item: ChatItem, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
+      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
         <ChatViewItem item={item} />
       </Box>
     ),

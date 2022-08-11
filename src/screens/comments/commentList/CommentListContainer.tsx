@@ -44,7 +44,7 @@ const CommentListContainer = ({setReference}: CommentListContainerProps) => {
   const keyExtractor = useCallback((item: Comment): string => item.id, []);
   const renderItem = useCallback(
     (item: Comment, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
+      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
         <CommentListItem comment={item} setReference={setReference} />
       </Box>
     ),

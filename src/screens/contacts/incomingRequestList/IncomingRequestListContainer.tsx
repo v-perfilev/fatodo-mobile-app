@@ -24,7 +24,7 @@ const IncomingRequestListContainer = ({requests}: IncomingRequestListContainerPr
   const keyExtractor = useCallback((relation: ContactRequest): string => relation.id, []);
   const renderItem = useCallback(
     (request: ContactRequest, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
+      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
         <IncomingRequestListItem request={request} />
       </Box>
     ),

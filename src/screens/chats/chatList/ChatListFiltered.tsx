@@ -29,7 +29,7 @@ const ChatListFiltered = ({filter}: ChatListFilteredProps) => {
   const keyExtractor = useCallback((chat: Chat): string => chat.id, []);
   const renderItem = useCallback(
     (chat: Chat, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
+      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
         <ChatListItem chat={chat} />
       </Box>
     ),

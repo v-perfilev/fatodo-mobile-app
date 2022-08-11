@@ -5,6 +5,14 @@ import {CalendarItem, CalendarRoute} from '../../models/Calendar';
 import {MapUtils} from './MapUtils';
 
 export class CalendarUtils {
+  public static generateCurrentCalendarRoute = (): CalendarRoute => {
+    const now = moment();
+    const year = now.year();
+    const month = now.month();
+    const key = CalendarUtils.buildMonthKey(year, month);
+    return {key, year, month};
+  };
+
   public static generateAllCalendarRoutes = (): CalendarRoute[] => {
     const routes: CalendarRoute[] = [];
     for (let year = 1900; year <= 2100; year++) {

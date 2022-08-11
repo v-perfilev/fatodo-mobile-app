@@ -39,7 +39,7 @@ const EventListContainer = () => {
   const keyExtractor = useCallback((event: Event): string => event.id, []);
   const renderItem = useCallback((event: Event, onLayout: (event: LayoutChangeEvent) => void): ReactElement => {
     return (
-      <Box onLayout={onLayout} style={ListUtils.itemStyle(theme)}>
+      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
         <EventListItem event={event} />
       </Box>
     );

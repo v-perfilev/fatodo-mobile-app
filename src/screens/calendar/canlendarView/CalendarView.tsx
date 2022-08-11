@@ -10,18 +10,19 @@ import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import {CalendarThunks} from '../../../store/calendar/calendarActions';
+import {ListUtils} from '../../../shared/utils/ListUtils';
 
 const loadIndent = 3;
 const routes = CalendarUtils.generateAllCalendarRoutes();
 const routeKeys = routes.map((r) => r.key);
-const initialRoute: CalendarRoute = {key: '2022_7', year: 2022, month: 7};
-const initialIndex = routes.map((r) => r.key).indexOf(initialRoute.key);
+const getInitialRoute = (): CalendarRoute => CalendarUtils.generateCurrentCalendarRoute();
+const getInitialIndex = (): number => routeKeys.indexOf(getInitialRoute().key);
 
 const CalendarView = () => {
   const dispatch = useAppDispatch();
-  const [singleWidth, setSingleWidth] = React.useState<number>(Dimensions.get('window').width);
   const loadedKeys = useAppSelector(CalendarSelectors.loadedKeys);
-  const [activeRoute, setActiveRoute] = useState<CalendarRoute>(initialRoute);
+  const [activeRoute, setActiveRoute] = useState<CalendarRoute>(getInitialRoute());
+  const [singleWidth, setSingleWidth] = useState<number>(Dimensions.get('window').width);
   const listRef = useRef<FlatListType>();
 
   const loadReminders = (): void => {
@@ -81,14 +82,14 @@ const CalendarView = () => {
         data={routes}
         render={renderItem}
         keyExtractor={keyExtractor}
-        contentContainerStyle={{flexGrow: 1}}
+        contentContainerStyle={ListUtils.defaultContainerStyle()}
         onContentSizeChange={calcDimensions}
         scrollEventThrottle={200}
         horizontal
         pagingEnabled
-        fixedLength={singleWidth}
-        initialScrollIndex={initialIndex}
         decelerationRate="fast"
+        fixedLength={singleWidth}
+        initialScrollIndex={getInitialIndex()}
         onMomentumScrollEnd={handleScrollEnd}
         listRef={listRef}
         initialNumToRender={3}
