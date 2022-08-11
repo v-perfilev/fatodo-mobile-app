@@ -46,11 +46,11 @@ const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
   };
 
   const handleSubmit = (): void => {
-    const dto = {
+    const dto: LoginDTO = {
       user: formValues.user.trim(),
       password: formValues.password.trim(),
       token: captchaToken,
-    } as LoginDTO;
+    };
 
     dispatch(AuthThunks.authenticate(dto));
   };

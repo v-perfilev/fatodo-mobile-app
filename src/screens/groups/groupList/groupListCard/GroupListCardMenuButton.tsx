@@ -36,7 +36,7 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
     showGroupDeleteDialog(group);
   };
 
-  const menuItems = [
+  const menuItems: MenuItemProps[] = [
     {
       action: goToItemCreate,
       icon: <PlusIcon color="primary.500" />,
@@ -60,7 +60,7 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
       text: t('group:menu.deleteGroup'),
       hidden: !canAdmin,
     },
-  ] as MenuItemProps[];
+  ];
 
   return (
     <Menu

@@ -1,13 +1,13 @@
 import {Button, IButtonProps} from 'native-base';
-import React, {MutableRefObject} from 'react';
+import React from 'react';
 
 type OutlinedButtonProps = IButtonProps;
 
-const OutlinedButton = React.forwardRef((props: OutlinedButtonProps, ref: HTMLElement) => {
+const OutlinedButton = React.forwardRef((props: OutlinedButtonProps, ref: any) => {
   const {children, ...other} = props;
 
   return (
-    <Button {...other} variant="outline" ref={ref as MutableRefObject<any>}>
+    <Button {...other} variant="outline" ref={ref}>
       {children}
     </Button>
   );

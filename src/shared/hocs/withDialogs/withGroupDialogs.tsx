@@ -39,7 +39,7 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
     (group: Group): void => {
       const show = true;
       const close = (): void => updateDialogProps(GroupDialogs.ADD_MEMBERS, {show: false});
-      const props = {group, show, close} as GroupAddMembersDialogProps;
+      const props: GroupAddMembersDialogProps = {group, show, close};
       setDialogProps(GroupDialogs.ADD_MEMBERS, props);
     },
     [setDialogProps, updateDialogProps],
@@ -49,7 +49,7 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
     (group: Group, user: GroupUser): void => {
       const show = true;
       const close = (): void => updateDialogProps(GroupDialogs.EDIT_MEMBER, {show: false});
-      const props = {group, user, show, close} as GroupEditMemberDialogProps;
+      const props: GroupEditMemberDialogProps = {group, user, show, close};
       setDialogProps(GroupDialogs.EDIT_MEMBER, props);
     },
     [setDialogProps, updateDialogProps],
@@ -68,13 +68,13 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
         updateDialogProps(GroupDialogs.MEMBERS, {show: false});
         showGroupEditMemberDialog(group, user);
       };
-      const props = {
+      const props: GroupMembersDialogProps = {
         group,
         show,
         close,
         switchToAddMembers,
         switchToEditMember,
-      } as GroupMembersDialogProps;
+      };
 
       setDialogProps(GroupDialogs.MEMBERS, props);
     },
@@ -85,7 +85,7 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
     (group: Group, onSuccess?: () => void): void => {
       const show = true;
       const close = (): void => clearDialogProps(GroupDialogs.LEAVE);
-      const props = {group, show, close, onSuccess} as GroupLeaveDialogProps;
+      const props: GroupLeaveDialogProps = {group, show, close, onSuccess};
       setDialogProps(GroupDialogs.LEAVE, props);
     },
     [setDialogProps, clearDialogProps],
@@ -95,7 +95,7 @@ const withGroupDialogs = (Component: ComponentType) => (props: any) => {
     (group: Group, onSuccess?: () => void): void => {
       const show = true;
       const close = (): void => clearDialogProps(GroupDialogs.DELETE);
-      const props = {group, show, close, onSuccess} as GroupDeleteDialogProps;
+      const props: GroupDeleteDialogProps = {group, show, close, onSuccess};
       setDialogProps(GroupDialogs.DELETE, props);
     },
     [setDialogProps, clearDialogProps],

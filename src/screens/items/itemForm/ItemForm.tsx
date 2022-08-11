@@ -77,7 +77,7 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
     const remindersChanged = JSON.stringify(reminders) !== JSON.stringify(values.reminders);
     const deleteReminders = remindersChanged && values.reminders.length === 0;
 
-    const dto = {
+    const dto: ItemDTO = {
       id: item ? item.id : null,
       title: values.title,
       type: values.type,
@@ -87,7 +87,7 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
       reminders: !deleteReminders && remindersChanged ? values.reminders : undefined,
       groupId: group.id,
       deleteReminders: deleteReminders ? true : undefined,
-    } as ItemDTO;
+    };
 
     request(dto, () => helpers.setSubmitting(false));
   };

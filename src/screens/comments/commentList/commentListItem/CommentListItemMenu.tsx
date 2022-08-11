@@ -36,7 +36,7 @@ const CommentListItemMenu = ({comment, isOwnComment, setReference}: CommentListI
     showCommentDeleteDialog(comment);
   };
 
-  const menuItems = [
+  const menuItems: MenuItemProps[] = [
     {
       action: replyToComment,
       icon: <ReplyIcon color="primary.500" />,
@@ -59,7 +59,7 @@ const CommentListItemMenu = ({comment, isOwnComment, setReference}: CommentListI
       text: t('comment:comment.actions.delete'),
       hidden: !isOwnComment || comment.isDeleted,
     },
-  ] as MenuItemProps[];
+  ];
 
   return (
     <Menu

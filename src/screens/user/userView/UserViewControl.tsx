@@ -35,7 +35,7 @@ const UserViewControl = ({user}: UserViewControlProps) => {
   const isIncomingRequest = ContactUtils.isIncomingRequest(user, incomingRequests);
 
   const sendContactRequest = (): void => {
-    const dto = {recipientId: user.id} as ContactRequestDTO;
+    const dto: ContactRequestDTO = {recipientId: user.id};
     setLoading(true);
     dispatch(ContactsThunks.sendRequest(dto)).then(() => setLoading(false));
   };

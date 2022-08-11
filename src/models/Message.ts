@@ -76,7 +76,7 @@ export enum EventMessageType {
 }
 
 export const buildEventMessage = (userId: string, type: EventMessageType, ids: string[]): Message => {
-  const params = {type, ids} as EventMessageParams;
+  const params: EventMessageParams = {type, ids};
   return {
     id: ID_STUB,
     chatId: undefined,

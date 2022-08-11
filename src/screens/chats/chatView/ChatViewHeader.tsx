@@ -46,7 +46,7 @@ const ChatViewHeader = () => {
   };
 
   const renameChat = (): void => {
-    showChatRenameDialog(chat, title);
+    showChatRenameDialog(chat);
   };
 
   const cleanChat = (): void => {
@@ -63,7 +63,7 @@ const ChatViewHeader = () => {
     showChatDeleteDialog(chat, onSuccess);
   };
 
-  const menuItems = [
+  const menuItems: MenuItemProps[] = [
     {action: showMembers, icon: <MembersIcon color="primary.500" />, text: t('chat:menu.showMembers')},
     {
       action: addMembers,
@@ -90,7 +90,7 @@ const ChatViewHeader = () => {
       text: t('chat:menu.deleteChat'),
       hidden: chat?.isDirect,
     },
-  ] as MenuItemProps[];
+  ];
 
   return (
     <Header title={title} hideLogo>

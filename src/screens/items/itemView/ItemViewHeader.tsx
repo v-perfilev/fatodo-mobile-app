@@ -36,7 +36,7 @@ const ItemViewHeader = ({account}: ItemViewMenuProps) => {
 
   const canEdit = group && GroupUtils.canAdmin(account, group);
 
-  const menuElements = [
+  const menuElements: MenuItemProps[] = [
     {icon: <EditIcon color="primary.500" />, action: goToItemEdit, text: t('item:actions.edit'), disabled: !canEdit},
     {
       icon: <DeleteIcon color="error.500" />,
@@ -44,7 +44,7 @@ const ItemViewHeader = ({account}: ItemViewMenuProps) => {
       text: t('item:actions.delete'),
       disabled: !canEdit,
     },
-  ] as MenuItemProps[];
+  ];
 
   return (
     <Header title={item?.title} hideLogo>

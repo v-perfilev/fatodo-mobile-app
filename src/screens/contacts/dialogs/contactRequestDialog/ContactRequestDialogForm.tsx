@@ -42,7 +42,7 @@ const ContactRequestDialogForm = ({request, cancel}: ContactRequestDialogFormPro
   const account = useAppSelector(AuthSelectors.account);
 
   const handleSubmit = (values: ContactRequestFormValues, helpers: FormikHelpers<ContactRequestFormValues>) => {
-    const dto = {recipientId: values.user.id, message: values.message} as ContactRequestDTO;
+    const dto: ContactRequestDTO = {recipientId: values.user.id, message: values.message};
     request(dto, () => helpers.setSubmitting(false));
   };
 

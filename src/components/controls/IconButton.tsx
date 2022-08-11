@@ -1,4 +1,4 @@
-import React, {MutableRefObject, ReactElement} from 'react';
+import React, {ReactElement} from 'react';
 import {Box, IButtonProps} from 'native-base';
 import {ColorSchemeType, SizeType} from 'native-base/lib/typescript/components/types';
 import PressableButton from './PressableButton';
@@ -11,7 +11,7 @@ type IconButtonProps = IButtonProps & {
   bgTransparency?: string;
 };
 
-const IconButton = React.forwardRef((props: IconButtonProps, ref: HTMLElement) => {
+const IconButton = React.forwardRef((props: IconButtonProps, ref: any) => {
   const {icon, colorScheme = 'primary', bgColorScheme, bgTransparency = '10', size = 'md', p = '2', ...other} = props;
 
   const prepareColor = (scheme: ColorSchemeType): string => (scheme !== 'white' ? `${scheme}.500` : 'white');
@@ -22,7 +22,7 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref: HTMLElement) =
   const iconElement = React.cloneElement(icon, {color, size});
 
   return (
-    <PressableButton {...other} ref={ref as MutableRefObject<any>} rounded="full" overflow="hidden">
+    <PressableButton {...other} ref={ref} rounded="full" overflow="hidden">
       <Box bgColor={bgColor} p={p}>
         {iconElement}
       </Box>

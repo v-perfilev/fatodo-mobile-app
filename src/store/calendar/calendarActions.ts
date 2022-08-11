@@ -5,18 +5,6 @@ import {InfoThunks} from '../info/infoActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
 
-type CalendarFetchPayload = {
-  yearFrom: number;
-  monthFrom: number;
-  yearTo: number;
-  monthTo: number;
-};
-
-type CalendarRefreshPayload = {
-  year: number;
-  month: number;
-};
-
 enum TYPES {
   HANDLE_REMINDER_KEYS = 'calendar/handleReminderKeys',
   FETCH_REMINDERS = 'calendar/fetchReminders',

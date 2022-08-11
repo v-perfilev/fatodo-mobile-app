@@ -29,14 +29,14 @@ const OutcomingRequestListItem = ({request, ...props}: OutcomingRequestListItemP
       .catch(() => setDisabled(false));
   };
 
-  const menuElements = [
+  const menuElements: MenuElement[] = [
     {
       action: removeRequest,
       icon: <UserMinusIcon />,
       color: 'error',
       disabled: disabled,
     },
-  ] as MenuElement[];
+  ];
 
   return (
     <FHStack defaultSpace alignItems="center" {...props}>

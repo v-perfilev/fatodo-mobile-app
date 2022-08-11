@@ -36,7 +36,7 @@ const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
       .catch(() => setDisabled(false));
   };
 
-  const menuElements = [
+  const menuElements: MenuElement[] = [
     {
       action: acceptRequest,
       icon: <CheckIcon />,
@@ -48,7 +48,7 @@ const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
       color: 'error',
       disabled: disabled,
     },
-  ] as MenuElement[];
+  ];
 
   return (
     <FHStack defaultSpace alignItems="center">

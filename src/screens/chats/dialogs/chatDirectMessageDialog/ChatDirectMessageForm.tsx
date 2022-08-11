@@ -41,7 +41,7 @@ const ChatDirectMessageForm = ({user, request, cancel}: ChatDirectMessageFormPro
   const {t} = useTranslation();
 
   const handleSubmit = (values: ChatDirectMessageFormValues, helpers: FormikHelpers<ChatDirectMessageFormValues>) => {
-    const dto = {text: values.text} as MessageDTO;
+    const dto: MessageDTO = {text: values.text};
     request(dto, () => helpers.setSubmitting(false));
   };
 

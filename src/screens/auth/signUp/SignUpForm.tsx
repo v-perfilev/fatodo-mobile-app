@@ -55,14 +55,14 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
     const language = i18n.language;
     const timezone = DateUtils.getTimezone();
 
-    const dto = {
+    const dto: RegistrationDTO = {
       email: formValues.email.trim(),
       username: formValues.username.trim(),
       password: formValues.password.trim(),
       language,
       timezone,
       token: captchaToken,
-    } as RegistrationDTO;
+    };
 
     dispatch(AuthThunks.register(dto))
       .unwrap()

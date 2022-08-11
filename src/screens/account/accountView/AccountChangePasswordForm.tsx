@@ -34,10 +34,10 @@ const AccountChangePasswordForm = () => {
   const {t} = useTranslation();
 
   const handleSubmit = (values: ChangePasswordFormValues, helpers: FormikHelpers<ChangePasswordFormValues>): void => {
-    const dto = {
+    const dto: ChangePasswordDTO = {
       oldPassword: values.oldPassword,
       newPassword: values.newPassword,
-    } as ChangePasswordDTO;
+    };
 
     dispatch(AuthThunks.changePassword(dto)).then(() => helpers.setSubmitting(false));
   };

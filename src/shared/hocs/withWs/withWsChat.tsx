@@ -49,12 +49,12 @@ const withWsChat = (Component: ComponentType) => (props: any) => {
   }, []);
 
   const topics = useMemo<string[]>(() => {
-    const wsTopics = [
+    const wsTopics: string[] = [
       WsChatDestinations.CHAT_NEW,
       WsChatDestinations.CHAT_UPDATE,
       WsChatDestinations.CHAT_LAST_MESSAGE,
       WsChatDestinations.CHAT_LAST_MESSAGE_UPDATE,
-    ] as string[];
+    ];
     if (chatId) {
       wsTopics.push(
         WsChatDestinations.MESSAGE_NEW + chatId,

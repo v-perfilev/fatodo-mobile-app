@@ -92,8 +92,8 @@ export class MessageUtils {
   };
 
   public static convertMessagesToChatItems = (messagesToConvert: Message[]): ChatItem[] => {
-    const handledDates = [] as string[];
-    const handledItems = [] as ChatItem[];
+    const handledDates: string[] = [];
+    const handledItems: ChatItem[] = [];
     messagesToConvert.forEach((message) => {
       const date = DateFormatters.formatDateWithYear(new Date(message.createdAt));
       if (!handledDates.includes(date)) {

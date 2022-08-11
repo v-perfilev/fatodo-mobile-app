@@ -16,8 +16,3 @@ export interface ContactRequest {
   recipientId: string;
   message: string;
 }
-
-export interface ContactRequestEvent {
-  requesterId: string;
-  recipientId: string;
-}

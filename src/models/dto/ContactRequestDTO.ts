@@ -1,4 +1,4 @@
 export interface ContactRequestDTO {
   recipientId: string;
-  message: string;
+  message?: string;
 }

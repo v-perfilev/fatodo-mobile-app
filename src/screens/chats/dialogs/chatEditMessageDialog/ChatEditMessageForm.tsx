@@ -31,7 +31,7 @@ const ChatEditMessageForm = ({message, request, cancel}: ChatEditMessageFormProp
   const {t} = useTranslation();
 
   const handleSubmit = (values: ChatEditMessageFormValues, helpers: FormikHelpers<ChatEditMessageFormValues>) => {
-    const dto = {text: values.text} as MessageDTO;
+    const dto: MessageDTO = {text: values.text};
     request(dto, () => helpers.setSubmitting(false));
   };
 

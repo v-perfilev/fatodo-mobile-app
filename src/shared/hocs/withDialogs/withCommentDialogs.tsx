@@ -29,7 +29,7 @@ const withCommentDialogs = (Component: ComponentType) => (props: any) => {
     (comment: Comment): void => {
       const show = true;
       const close = (): void => updateDialogProps(CommentDialogs.REACTIONS, {show: false});
-      const props = {comment, show, close} as CommentReactionsDialogProps;
+      const props: CommentReactionsDialogProps = {comment, show, close};
       setDialogProps(CommentDialogs.REACTIONS, props);
     },
     [setDialogProps, updateDialogProps],
@@ -39,7 +39,7 @@ const withCommentDialogs = (Component: ComponentType) => (props: any) => {
     (comment: Comment): void => {
       const show = true;
       const close = (): void => updateDialogProps(CommentDialogs.EDIT, {show: false});
-      const props = {comment, show, close} as CommentEditDialogProps;
+      const props: CommentEditDialogProps = {comment, show, close};
       setDialogProps(CommentDialogs.EDIT, props);
     },
     [setDialogProps, updateDialogProps],
@@ -49,7 +49,7 @@ const withCommentDialogs = (Component: ComponentType) => (props: any) => {
     (comment: Comment, onSuccess?: () => void): void => {
       const show = true;
       const close = (): void => clearDialogProps(CommentDialogs.DELETE);
-      const props = {comment, show, close, onSuccess} as CommentDeleteDialogProps;
+      const props: CommentDeleteDialogProps = {comment, show, close, onSuccess};
       setDialogProps(CommentDialogs.DELETE, props);
     },
     [setDialogProps, clearDialogProps],

@@ -61,7 +61,7 @@ const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) 
   const canEdit = group && GroupUtils.canEdit(account, group);
   const canLeave = group && GroupUtils.canLeave(account, group);
 
-  const menuElements = [
+  const menuElements: MenuItemProps[] = [
     {icon: <EditIcon color="primary.500" />, action: goToGroupEdit, text: t('group:actions.edit'), hidden: !canAdmin},
     {icon: <MembersIcon color="primary.500" />, action: openGroupMembersDialog, text: t('group:actions.members')},
     {
@@ -82,7 +82,7 @@ const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) 
       text: t('group:actions.delete'),
       hidden: !canAdmin,
     },
-  ] as MenuItemProps[];
+  ];
 
   const switchArchivedIcon = showArchived ? <ArchiveIcon /> : <PlayIcon />;
 

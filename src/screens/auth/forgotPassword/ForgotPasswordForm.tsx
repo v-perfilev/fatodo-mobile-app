@@ -42,10 +42,10 @@ const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: Forg
   };
 
   const handleSubmit = (): void => {
-    const dto = {
+    const dto: ForgotPasswordDTO = {
       user: formValues.user.trim(),
       token: captchaToken,
-    } as ForgotPasswordDTO;
+    };
 
     dispatch(AuthThunks.forgotPassword(dto))
       .unwrap()

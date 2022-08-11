@@ -36,7 +36,7 @@ const ChatViewMessageMenu = ({message, isOutcoming}: ChatViewMessageMenuProps) =
     showMessageDeleteDialog(message);
   };
 
-  const menuItems = [
+  const menuItems: MenuItemProps[] = [
     {
       action: openReactionsDialog,
       icon: <ReactionsIcon color="primary.500" />,
@@ -59,7 +59,7 @@ const ChatViewMessageMenu = ({message, isOutcoming}: ChatViewMessageMenuProps) =
       text: t('chat:message.actions.delete'),
       hidden: !isOutcoming || message.isDeleted,
     },
-  ] as MenuItemProps[];
+  ];
 
   return (
     <Menu

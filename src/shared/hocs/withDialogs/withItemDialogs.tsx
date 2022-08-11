@@ -19,7 +19,7 @@ const withItemDialogs = (Component: ComponentType) => (props: any) => {
     (item: Item, onSuccess?: () => void): void => {
       const show = true;
       const close = (): void => clearDialogProps(ItemDialogs.DELETE);
-      const props = {item, show, close, onSuccess} as ItemDeleteDialogProps;
+      const props: ItemDeleteDialogProps = {item, show, close, onSuccess};
       setDialogProps(ItemDialogs.DELETE, props);
     },
     [setDialogProps, clearDialogProps],

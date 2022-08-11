@@ -56,7 +56,7 @@ export const StatusSelect = ({statusType, setStatusType, loading}: StatusSelectP
     }
   };
 
-  const menuItems = [
+  const menuItems: MenuItemProps[] = [
     {
       action: setStatusToCreated,
       icon: <StatusCreatedIcon color="primary.500" size="md" />,
@@ -73,7 +73,7 @@ export const StatusSelect = ({statusType, setStatusType, loading}: StatusSelectP
       action: setStatusToClosed,
       icon: <StatusClosedIcon color="primary.500" size="md" />,
     },
-  ] as MenuItemProps[];
+  ];
 
   return (
     <Menu

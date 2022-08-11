@@ -34,7 +34,7 @@ const GroupEditMemberDialog: FC<Props> = ({group, user, show, close}: Props) => 
 
   const editMember = (): void => {
     setIsSubmitting(true);
-    const editedMember = {userId: user.userId, permission} as GroupMember;
+    const editedMember: GroupMember = {userId: user.userId, permission};
     dispatch(GroupThunks.editGroupMember({group, member: editedMember}))
       .unwrap()
       .then(() => close())

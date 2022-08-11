@@ -70,7 +70,7 @@ export class DateConverters {
     if (!time && !date) {
       return null;
     }
-    let result = {timezone} as DateParams;
+    let result: DateParams = {timezone, time: undefined};
     if (time) {
       result = {
         ...result,

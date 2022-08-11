@@ -28,14 +28,14 @@ const ContactListItem = ({relation}: ContactListItemProps) => {
       .catch(() => setDisabled(false));
   };
 
-  const menuElements = [
+  const menuElements: MenuElement[] = [
     {
       action: removeRelation,
       icon: <UserMinusIcon />,
       color: 'error',
       disabled: disabled,
     },
-  ] as MenuElement[];
+  ];
 
   return (
     <FHStack defaultSpace alignItems="center">

@@ -63,7 +63,7 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: P
     />
   );
 
-  const menuElements = [
+  const menuElements: MenuElement[] = [
     {
       action: switchToEdit,
       icon: <EditIcon />,
@@ -75,7 +75,7 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: P
       color: 'error',
       hidden: !canAdmin || user.userId === account.id,
     },
-  ] as MenuElement[];
+  ];
 
   return (
     <FHStack>

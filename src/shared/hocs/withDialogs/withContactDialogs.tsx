@@ -19,7 +19,7 @@ const withContactDialogs = (Component: ComponentType) => (props: any) => {
     const close = (): void => {
       clearDialogProps(ContactDialogs.REQUEST);
     };
-    const props = {show, close} as ContactRequestDialogProps;
+    const props: ContactRequestDialogProps = {show, close};
     setDialogProps(ContactDialogs.REQUEST, props);
   }, [setDialogProps, clearDialogProps]);
 

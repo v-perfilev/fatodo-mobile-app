@@ -29,19 +29,19 @@ export default class ItemService {
 
   public static createGroup = (formData: FormData): AxiosPromise<Group> => {
     const url = ItemService.baseUrl + '/group';
-    const config = {
+    const config: AxiosRequestConfig = {
       headers: {'content-type': 'multipart/form-data'},
       transformRequest: (_) => formData,
-    } as AxiosRequestConfig;
+    };
     return axios.post(url, formData, config);
   };
 
   public static updateGroup = (formData: FormData): AxiosPromise<Group> => {
     const url = ItemService.baseUrl + '/group';
-    const config = {
+    const config: AxiosRequestConfig = {
       headers: {'content-type': 'multipart/form-data'},
       transformRequest: (_) => formData,
-    } as AxiosRequestConfig;
+    };
     return axios.put(url, formData, config);
   };
 

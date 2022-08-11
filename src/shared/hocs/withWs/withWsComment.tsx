@@ -29,7 +29,7 @@ const withWsComment = (Component: ComponentType) => (props: any) => {
   }, []);
 
   const topics = useMemo<string[]>(() => {
-    const wsTopics = [] as string[];
+    const wsTopics: string[] = [];
     if (targetId) {
       wsTopics.push(
         WsCommentDestinations.COMMENT_NEW + targetId,

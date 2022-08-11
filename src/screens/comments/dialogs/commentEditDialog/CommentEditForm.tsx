@@ -32,7 +32,7 @@ const CommentEditForm = ({comment, request, cancel}: CommentEditFormProps) => {
   const {t} = useTranslation();
 
   const handleSubmit = (values: CommentEditFormValues, helpers: FormikHelpers<CommentEditFormValues>) => {
-    const dto = {text: values.text} as MessageDTO;
+    const dto: MessageDTO = {text: values.text};
     request(dto, () => helpers.setSubmitting(false));
   };
 

@@ -48,7 +48,7 @@ const GroupViewItemMenuButton = ({item, canEdit}: GroupViewItemMenuProps) => {
     showItemDeleteDialog(item, onSuccess);
   };
 
-  const menuItems = [
+  const menuItems: MenuItemProps[] = [
     {action: goToItemView, icon: <EyeIcon color="primary.500" />, text: t('group:actions.view')},
     {
       action: toggleArchived,
@@ -60,7 +60,7 @@ const GroupViewItemMenuButton = ({item, canEdit}: GroupViewItemMenuProps) => {
     },
     {action: goToItemEdit, icon: <EditIcon color="primary.500" />, text: t('group:actions.edit')},
     {action: openItemDeleteDialog, icon: <DeleteIcon color="error.500" />, text: t('group:actions.delete')},
-  ] as MenuItemProps[];
+  ];
 
   return (
     <Menu

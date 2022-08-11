@@ -8,7 +8,7 @@ interface ChatDialogState {
   showChatAddMembersDialog: (chat: Chat) => void;
   showChatCreateDialog: () => void;
   showChatMembersDialog: (chat: Chat) => void;
-  showChatRenameDialog: (chat: Chat, title: string) => void;
+  showChatRenameDialog: (chat: Chat) => void;
   showChatClearDialog: (chat: Chat, onSuccess?: () => void) => void;
   showChatLeaveDialog: (chat: Chat, onSuccess?: () => void) => void;
   showChatDeleteDialog: (chat: Chat, onSuccess?: () => void) => void;

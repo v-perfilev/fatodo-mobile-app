@@ -9,7 +9,6 @@ export interface ItemDTO {
   date: DateParams;
   description: string;
   reminders: Reminder[];
-  tags: string[];
   groupId: string;
   deleteReminders?: boolean;
 }

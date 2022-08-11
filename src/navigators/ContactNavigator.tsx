@@ -38,7 +38,7 @@ const renderScene = SceneMap({
 const ContactNavigator = () => {
   const {t} = useTranslation();
   const theme = useTheme();
-  const contactInfo = useAppSelector(ContactsSelectors.info) as ContactInfo;
+  const contactInfo = useAppSelector(ContactsSelectors.info);
   const [index, setIndex] = React.useState<number>(0);
 
   const routes = useMemo<ContactRoute[]>(() => buildRoutes(contactInfo), [contactInfo]);
@@ -53,6 +53,8 @@ const ContactNavigator = () => {
 
   const tabBarColor = theme.colors.primary['500'];
   const indicatorColor = theme.colors.secondary['500'];
+  const tabBarStyle = {flexGrow: 1, backgroundColor: tabBarColor, shadowColor: tabBarColor};
+  const indicatorStyle = {backgroundColor: indicatorColor, height: 3};
 
   const renderTabBar = (props: TabBarProps): ReactNode => {
     return (
@@ -60,8 +62,8 @@ const ContactNavigator = () => {
         <FHStack grow h="100%" mx="-2">
           <TabBar
             {...props}
-            style={{flexGrow: 1, backgroundColor: tabBarColor, shadowColor: tabBarColor}}
-            indicatorStyle={{backgroundColor: indicatorColor, height: 3}}
+            style={tabBarStyle}
+            indicatorStyle={indicatorStyle}
             renderLabel={({route}) => (
               <FHStack smallSpace alignItems="center" py="1">
                 <Text color="white" fontWeight="bold">

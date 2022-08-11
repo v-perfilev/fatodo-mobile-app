@@ -20,7 +20,7 @@ const FormikChips = (props: FormikChipsProps<any>) => {
   const {values, setFieldValue} = props;
   const [showInput, setShowInput] = useState<boolean>(false);
 
-  const arrayValue = (values[name] || []) as any[];
+  const arrayValue: any[] = values[name] || [];
 
   const openInput = (): void => setShowInput(true);
   const closeInput = (): void => setShowInput(false);
