@@ -10,7 +10,7 @@ import {CalendarActions, CalendarThunks} from '../../../store/calendar/calendarA
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import CalendarViewContainer from './CalendarViewContainer';
 
-const loadIndent = 4;
+const loadIndent = 5;
 const months = CalendarUtils.generateAllCalendarMonths();
 const monthKeys = months.map((r) => r.key);
 const getInitialMonth = (): CalendarMonth => CalendarUtils.generateCurrentCalendarMonth();
@@ -93,8 +93,10 @@ const CalendarView = () => {
         initialScrollIndex={getInitialIndex()}
         onMomentumScrollEnd={handleScrollEnd}
         listRef={listRef}
-        initialNumToRender={5}
-        windowSize={5}
+        initialNumToRender={1}
+        maxToRenderPerBatch={3}
+        updateCellsBatchingPeriod={10}
+        windowSize={7}
       />
     </>
   );

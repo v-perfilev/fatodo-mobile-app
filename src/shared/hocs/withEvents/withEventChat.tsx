@@ -13,7 +13,7 @@ export type WithEventChatProps = {
   chat?: ChatInfo;
   message?: MessageInfo;
   reaction?: MessageReactionType;
-  date?: Date;
+  date?: number;
 };
 
 type ContainerProps = {

@@ -8,7 +8,7 @@ import {ItemInfo} from '../../../models/Item';
 export type WithEventReminderProps = {
   group?: GroupInfo;
   item?: ItemInfo;
-  date: Date;
+  date: number;
 };
 
 type ContainerProps = {

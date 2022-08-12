@@ -12,7 +12,7 @@ export type WithEventItemProps = {
   users?: User[];
   group?: GroupInfo;
   item?: ItemInfo;
-  date: Date;
+  date: number;
 };
 
 type ContainerProps = {

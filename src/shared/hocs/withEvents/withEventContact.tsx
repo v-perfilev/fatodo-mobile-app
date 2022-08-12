@@ -7,7 +7,7 @@ import {User} from '../../../models/User';
 export type WithEventContactProps = {
   firstUser: User;
   secondUser: User;
-  date: Date;
+  date: number;
 };
 
 type ContainerProps = {
