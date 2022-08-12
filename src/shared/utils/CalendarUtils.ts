@@ -16,7 +16,7 @@ export class CalendarUtils {
   public static generateAllCalendarMonths = (): CalendarMonth[] => {
     const routes: CalendarMonth[] = [];
     for (let year = 1900; year <= 2100; year++) {
-      for (let month = 0; month < 11; month++) {
+      for (let month = 0; month <= 11; month++) {
         const key = CalendarUtils.buildMonthKey(year, month);
         routes.push({key, year, month});
       }
