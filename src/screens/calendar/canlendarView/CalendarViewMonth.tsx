@@ -20,7 +20,12 @@ const CalendarViewMonth = ({month, activeDate, selectDate}: CalendarViewMonthPro
     <FHStack mx="3px" flexWrap="wrap">
       {pageDates.map((date, index) => (
         <Box w={width} key={index}>
-          <CalendarViewDate date={date} month={month} activeDate={activeDate} selectDate={selectDate} />
+          <CalendarViewDate
+            month={month}
+            date={date}
+            selectDate={selectDate}
+            isActiveDate={date.date === activeDate?.date}
+          />
         </Box>
       ))}
     </FHStack>

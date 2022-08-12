@@ -4,8 +4,8 @@ import {CalendarMonth} from '../../models/Calendar';
 export type CalendarState = {
   activeMonth: CalendarMonth;
   reminders: [string, CalendarReminder[]][];
-  loading: boolean;
 
   // loading
+  loading: boolean;
   loadingKeys: string[];
 };

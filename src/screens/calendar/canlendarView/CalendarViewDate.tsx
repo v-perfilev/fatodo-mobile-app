@@ -10,16 +10,15 @@ import CalendarViewDateReminders from './CalendarViewDateReminders';
 type CalendarViewDateProps = {
   month: CalendarMonth;
   date: CalendarDate;
-  activeDate: CalendarDate;
   selectDate: Dispatch<SetStateAction<CalendarDate>>;
+  isActiveDate: boolean;
 };
 
-const CalendarViewDate = ({month, date, activeDate, selectDate}: CalendarViewDateProps) => {
+const CalendarViewDate = ({month, date, selectDate, isActiveDate}: CalendarViewDateProps) => {
   const handlePress = (): void => {
     date.isCurrentMonth && selectDate(date);
   };
 
-  const isActiveDate = date.date === activeDate?.date;
   let bg = date.isCurrentMonth ? undefined : 'gray.100';
   bg = isActiveDate && date.isCurrentMonth ? 'primary.100:alpha.30' : bg;
   const borderColor = isActiveDate && date.isCurrentMonth ? 'primary.500' : 'gray.200';
