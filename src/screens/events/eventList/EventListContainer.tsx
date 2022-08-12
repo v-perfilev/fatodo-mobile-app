@@ -58,7 +58,6 @@ const EventListContainer = () => {
     <FBox>
       <ScrollCornerButton show={!hideScroll} scrollDown={scrollDown} />
       <FlatList
-        inverted
         ItemSeparatorComponent={EventListSeparator}
         data={events}
         render={renderItem}
