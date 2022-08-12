@@ -8,7 +8,7 @@ const img = require('../../../assets/images/fallback.jpg');
 type UrlPicProps = {
   file: string;
   size: ISizes;
-  border?: number;
+  border?: string | number;
   invertedBorder?: boolean;
 };
 

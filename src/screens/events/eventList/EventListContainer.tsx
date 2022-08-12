@@ -6,13 +6,17 @@ import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
 import FBox from '../../../components/boxes/FBox';
 import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 import {Event} from '../../../models/Event';
-import {LayoutChangeEvent} from 'react-native';
+import {LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 import {Box, useTheme} from 'native-base';
 import EventListItem from './eventListItem/EventListItem';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import EventListSeparator from './EventListSeparator';
 
-const EventListContainer = () => {
+type EventListContainerProps = {
+  onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+};
+
+const EventListContainer = ({onScroll}: EventListContainerProps) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const [hideScroll, setHideScroll] = useState<boolean>(true);
@@ -62,6 +66,7 @@ const EventListContainer = () => {
         data={events}
         render={renderItem}
         keyExtractor={keyExtractor}
+        onScroll={onScroll}
         onEndReached={!allLoaded ? load : undefined}
         refresh={refresh}
         setIsOnTheTop={setHideScroll}
