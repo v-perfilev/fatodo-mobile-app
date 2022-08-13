@@ -1,8 +1,8 @@
-import React, {Dispatch, MutableRefObject, ReactElement, SetStateAction, useCallback, useRef, useState} from 'react';
+import React, {Dispatch, ReactElement, SetStateAction, useCallback, useRef, useState} from 'react';
 import {useTheme} from 'native-base';
 import {IFlatListProps} from 'native-base/lib/typescript/components/basic/FlatList';
-import {ListUtils} from '../../shared/utils/ListUtils';
 import {
+  Animated,
   FlatList as RNFlatList,
   LayoutChangeEvent,
   ListRenderItemInfo,
@@ -20,7 +20,7 @@ type FlatListProps<T> = Partial<IFlatListProps<T>> & {
   fixedLength?: number;
   refresh?: () => Promise<void>;
   setIsOnTheTop?: Dispatch<SetStateAction<boolean>>;
-  listRef?: MutableRefObject<RNFlatList>;
+  listRef?: (instance: FlatListType) => void;
 };
 
 const FlatList = ({
@@ -108,7 +108,7 @@ const FlatList = ({
   );
 
   return (
-    <RNFlatList
+    <Animated.FlatList
       data={data}
       renderItem={_renderItem}
       getItemLayout={_getItemLayout}
@@ -119,7 +119,6 @@ const FlatList = ({
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={Platform.OS === 'android'}
-      contentContainerStyle={ListUtils.themedContainerStyle(theme)}
       ref={listRef}
       {...props}
       initialNumToRender={props.initialNumToRender || 15}

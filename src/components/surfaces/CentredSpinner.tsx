@@ -1,15 +1,12 @@
 import React from 'react';
-import {Spinner} from 'native-base';
-import {ResponsiveValue} from 'native-base/src/components/types';
+import {IBoxProps, Spinner} from 'native-base';
 import FCenter from '../boxes/FCenter';
 
-type CentredSpinnerProps = {
-  size?: ResponsiveValue<'sm' | 'lg'>;
-};
+type CentredSpinnerProps = IBoxProps;
 
-const CentredSpinner = ({size = 'lg'}: CentredSpinnerProps) => {
+const CentredSpinner = ({size = 'lg', ...props}: CentredSpinnerProps) => {
   return (
-    <FCenter grow>
+    <FCenter grow {...props}>
       <Spinner size={size} />
     </FCenter>
   );

@@ -15,6 +15,9 @@ export const AUTHORIZATION_PREFIX = 'Bearer ';
 export const BASE_URL = 'http://75.119.154.167';
 ***REMOVED***
 
+// HEADER
+export const HEADER_HEIGHT = 55;
+
 // AVATARS
 export const AVATARS_IN_CARD = 3;
 
