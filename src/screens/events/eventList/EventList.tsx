@@ -58,9 +58,9 @@ const EventList = () => {
   scroll down button
    */
 
-  const scrollDown = useCallback((): void => {
+  const scrollUp = useCallback((): void => {
     setHideScroll(true);
-    // listRef.current.scrollToOffset({offset: 0});
+    listRef.current.scrollToOffset({offset: 0});
   }, [listRef.current]);
 
   useEffect(() => {
@@ -86,9 +86,9 @@ const EventList = () => {
             onEndReached={!allLoaded ? load : undefined}
             refresh={refresh}
             setIsOnTheTop={setHideScroll}
-            // listRef={mergeRefs([listRef, flatListRef])}
+            listRefs={[listRef, flatListRef]}
           />
-          <ScrollCornerButton show={!hideScroll} scrollDown={scrollDown} />
+          <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />
         </ConditionalSpinner>
       )}
     </CollapsableHeaderContainer>

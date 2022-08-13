@@ -25,9 +25,16 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
   const scrollY = useRef<Animated.Value>(new Animated.Value(0));
   const translateYNumber = useRef<number>();
 
-  const scrollYClamped = Animated.diffClamp(scrollY.current, 0, HEADER_HEIGHT);
+  const clampedScrollY = scrollY.current.interpolate({
+    inputRange: [-1, 0, 1],
+    outputRange: [0, 0, 1],
+    extrapolateLeft: 'extend',
+    extrapolateRight: 'extend',
+  });
 
-  const translateY = scrollYClamped.interpolate({
+  const diffClampScrollY = Animated.diffClamp(clampedScrollY, 0, HEADER_HEIGHT);
+
+  const translateY = diffClampScrollY.interpolate({
     inputRange: [0, HEADER_HEIGHT],
     outputRange: [0, -HEADER_HEIGHT],
   });
@@ -44,8 +51,8 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
     }
   };
 
-  const handleEventSnap = ({nativeEvent}: NativeSyntheticEvent<NativeScrollEvent>): void => {
-    const offsetY = nativeEvent.contentOffset.y;
+  const handleEventSnap = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
+    const offsetY = event.nativeEvent.contentOffset.y;
     const scrollViewFunc = (y: number): void => scrollViewRef.current.scrollTo({y});
     const flatListFunc = (offset: number): void => flatListRef.current.scrollToOffset({offset});
     scrollViewRef.current && handleSnapWithFunc(offsetY, scrollViewFunc);

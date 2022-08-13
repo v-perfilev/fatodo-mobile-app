@@ -101,7 +101,7 @@ const ChatViewContainer = () => {
         refresh={refresh}
         onViewableItemsChanged={onViewableItemsChanged}
         setIsOnTheTop={setHideScroll}
-        listRef={listRef}
+        listRefs={[listRef]}
       />
     </FBox>
   );

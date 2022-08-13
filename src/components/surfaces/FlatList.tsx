@@ -1,4 +1,13 @@
-import React, {Dispatch, ReactElement, SetStateAction, useCallback, useRef, useState} from 'react';
+import React, {
+  Dispatch,
+  MutableRefObject,
+  ReactElement,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {useTheme} from 'native-base';
 import {IFlatListProps} from 'native-base/lib/typescript/components/basic/FlatList';
 import {
@@ -20,7 +29,7 @@ type FlatListProps<T> = Partial<IFlatListProps<T>> & {
   fixedLength?: number;
   refresh?: () => Promise<void>;
   setIsOnTheTop?: Dispatch<SetStateAction<boolean>>;
-  listRef?: (instance: FlatListType) => void;
+  listRefs?: MutableRefObject<FlatListType>[];
 };
 
 const FlatList = ({
@@ -30,12 +39,14 @@ const FlatList = ({
   fixedLength,
   refresh,
   setIsOnTheTop,
-  listRef,
+  listRefs,
+  onMomentumScrollEnd,
   ...props
 }: FlatListProps<any>) => {
   const theme = useTheme();
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const lengthMap = useRef<Map<string, number>>(new Map());
+  const listRef = useRef<FlatListType>();
 
   const getItemLength = useCallback(
     (index: number): number => {
@@ -92,12 +103,6 @@ const FlatList = ({
     [getItemLength, getItemOffset],
   );
 
-  const onScrollEnd = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>): void => {
-    if (setIsOnTheTop) {
-      setIsOnTheTop(event.nativeEvent.contentOffset.y <= 0);
-    }
-  }, []);
-
   const _onRefresh = (): void => {
     setRefreshing(true);
     refresh().finally(() => setRefreshing(false));
@@ -107,6 +112,17 @@ const FlatList = ({
     <RefreshControl colors={[theme.colors.primary['500']]} refreshing={refreshing} onRefresh={_onRefresh} />
   );
 
+  const _onMomentumScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
+    onMomentumScrollEnd && onMomentumScrollEnd(event);
+    setIsOnTheTop && setIsOnTheTop(event.nativeEvent.contentOffset.y <= 0);
+  };
+
+  useEffect(() => {
+    listRefs?.forEach((ref) => {
+      ref.current = listRef.current;
+    });
+  }, [listRef.current]);
+
   return (
     <Animated.FlatList
       data={data}
@@ -114,8 +130,7 @@ const FlatList = ({
       getItemLayout={_getItemLayout}
       keyExtractor={keyExtractor}
       refreshControl={refresh ? _refreshControl : null}
-      onScrollEndDrag={onScrollEnd}
-      onMomentumScrollEnd={onScrollEnd}
+      onMomentumScrollEnd={_onMomentumScrollEnd}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={Platform.OS === 'android'}

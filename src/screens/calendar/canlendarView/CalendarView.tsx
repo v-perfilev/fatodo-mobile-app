@@ -37,7 +37,7 @@ const CalendarView = () => {
   };
 
   const scrollToItem = (index: number, animated = true): void => {
-    listRef.current.scrollToIndex({index, animated});
+    listRef.current?.scrollToIndex({index, animated});
   };
 
   const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
@@ -92,7 +92,7 @@ const CalendarView = () => {
         fixedLength={singleWidth}
         initialScrollIndex={getInitialIndex()}
         onMomentumScrollEnd={handleScrollEnd}
-        listRef={listRef}
+        listRefs={[listRef]}
         initialNumToRender={1}
         maxToRenderPerBatch={3}
         updateCellsBatchingPeriod={10}

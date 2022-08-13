@@ -72,7 +72,7 @@ const CommentListContainer = ({setReference}: CommentListContainerProps) => {
         onEndReached={!allLoaded ? load : undefined}
         refresh={refresh}
         setIsOnTheTop={setHideScroll}
-        listRef={listRef}
+        listRefs={[listRef]}
       />
     </FBox>
   );
