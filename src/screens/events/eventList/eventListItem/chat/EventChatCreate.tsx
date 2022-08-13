@@ -4,7 +4,6 @@ import UserLink from '../../../../../components/links/UserLink';
 import {Trans, useTranslation} from 'react-i18next';
 import React, {ReactElement} from 'react';
 import ChatLink from '../../../../../components/links/ChatLink';
-import {Text} from 'native-base';
 import EventListItemUsers from '../EventListItemUsers';
 import UserView from '../../../../../components/views/UserView';
 
@@ -20,9 +19,7 @@ const EventChatCreate = ({user, chat, users, date}: WithEventChatProps) => {
   const image = <UserView user={user} picSize="md" />;
 
   const content = (
-    <Text>
-      <Trans i18nKey="event:chat.create.content" components={{user: <User />, chat: <Chat />, users: <Users />}} />
-    </Text>
+    <Trans i18nKey="event:chat.create.content" components={{user: <User />, chat: <Chat />, users: <Users />}} />
   );
 
   return <EventListItemTemplate image={image} title={title} content={content} date={date} />;

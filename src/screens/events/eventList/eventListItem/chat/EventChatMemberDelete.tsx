@@ -1,4 +1,3 @@
-import {Text} from 'native-base';
 import withEventChat, {WithEventChatProps} from '../../../../../shared/hocs/withEvents/withEventChat';
 import {Trans, useTranslation} from 'react-i18next';
 import React, {ReactElement} from 'react';
@@ -20,12 +19,7 @@ const EventChatMemberDelete = ({user, chat, users, date}: WithEventChatProps) =>
   const image = <UserView user={user} picSize="md" />;
 
   const content = (
-    <Text>
-      <Trans
-        i18nKey="event:chat.memberDelete.content"
-        components={{user: <User />, chat: <Chat />, users: <Users />}}
-      />
-    </Text>
+    <Trans i18nKey="event:chat.memberDelete.content" components={{user: <User />, chat: <Chat />, users: <Users />}} />
   );
 
   return <EventListItemTemplate image={image} title={title} content={content} date={date} />;

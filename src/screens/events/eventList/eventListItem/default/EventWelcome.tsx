@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text} from 'native-base';
 import {Trans, useTranslation} from 'react-i18next';
 import EventListItemTemplate from '../EventListItemTemplate';
 import {Event} from '../../../../../models/Event';
@@ -18,11 +17,7 @@ const EventWelcome = ({event}: EventWelcomeProps) => {
 
   const title = t('event:default.welcome.title');
 
-  let content = (
-    <Text>
-      <Trans i18nKey="event:default.welcome.content" />
-    </Text>
-  );
+  let content = <Trans i18nKey="event:default.welcome.content" />;
 
   return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
 };

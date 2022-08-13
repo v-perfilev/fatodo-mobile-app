@@ -1,4 +1,3 @@
-import {Text} from 'native-base';
 import withEventItem, {WithEventItemProps} from '../../../../../shared/hocs/withEvents/withEventItem';
 import {Trans, useTranslation} from 'react-i18next';
 import React, {ReactElement} from 'react';
@@ -17,11 +16,7 @@ const EventItemMemberLeave = ({user, group, date}: WithEventItemProps) => {
 
   const image = <UserView user={user} picSize="md" />;
 
-  const content = (
-    <Text>
-      <Trans i18nKey="event:item.memberLeave.content" components={{user: <User />, group: <Group />}} />
-    </Text>
-  );
+  const content = <Trans i18nKey="event:item.memberLeave.content" components={{user: <User />, group: <Group />}} />;
 
   return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
 };

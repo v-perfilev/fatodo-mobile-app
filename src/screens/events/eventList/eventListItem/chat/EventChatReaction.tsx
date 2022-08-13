@@ -1,4 +1,3 @@
-import {Text} from 'native-base';
 import withEventChat, {WithEventChatProps} from '../../../../../shared/hocs/withEvents/withEventChat';
 import {Trans, useTranslation} from 'react-i18next';
 import React, {ReactElement} from 'react';
@@ -17,11 +16,7 @@ const EventChatReaction = ({user, chat, message, reaction, date}: WithEventChatP
 
   const image = <UserReactionView user={user} size="md" reactionType={reaction} />;
 
-  const content = (
-    <Text>
-      <Trans i18nKey="event:chat.reaction.content" components={{user: <User />, chat: <Chat />}} />
-    </Text>
-  );
+  const content = <Trans i18nKey="event:chat.reaction.content" components={{user: <User />, chat: <Chat />}} />;
 
   return <EventListItemTemplate image={image} title={title} content={content} message={message?.text} date={date} />;
 };

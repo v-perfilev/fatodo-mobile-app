@@ -3,7 +3,6 @@ import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
-import FBox from '../../../../components/boxes/FBox';
 
 type EventListItemTemplateProps = {
   image?: ReactElement;
@@ -23,7 +22,7 @@ const EventListItemTemplate = ({image, title, content, message, date}: EventList
           {image}
         </FHStack>
       )}
-      <FVStack grow>
+      <FVStack grow basis>
         <FHStack grow defaultSpace alignItems="center">
           <FHStack grow>
             <Text color="gray.600" fontWeight="bold">
@@ -34,8 +33,8 @@ const EventListItemTemplate = ({image, title, content, message, date}: EventList
             {dateToShow}
           </Text>
         </FHStack>
-        <FBox>{content}</FBox>
-        {message && <Text isTruncated>{message}</Text>}
+        <Text>{content}</Text>
+        {message && <Text>{message}</Text>}
       </FVStack>
     </FHStack>
   );

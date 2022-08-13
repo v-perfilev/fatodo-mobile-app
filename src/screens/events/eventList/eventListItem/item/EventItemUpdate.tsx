@@ -1,4 +1,3 @@
-import {Text} from 'native-base';
 import withEventItem, {WithEventItemProps} from '../../../../../shared/hocs/withEvents/withEventItem';
 import {Trans, useTranslation} from 'react-i18next';
 import React, {ReactElement} from 'react';
@@ -20,9 +19,7 @@ const EventItemUpdate = ({user, group, item, date}: WithEventItemProps) => {
   const image = <UserView user={user} picSize="md" />;
 
   const content = (
-    <Text>
-      <Trans i18nKey="event:item.update.content" components={{user: <User />, group: <Group />, item: <Item />}} />
-    </Text>
+    <Trans i18nKey="event:item.update.content" components={{user: <User />, group: <Group />, item: <Item />}} />
   );
 
   return <EventListItemTemplate image={image} title={title} content={content} date={date} />;

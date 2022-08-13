@@ -1,4 +1,3 @@
-import {Text} from 'native-base';
 import withEventContact, {WithEventContactProps} from '../../../../../shared/hocs/withEvents/withEventContact';
 import {Trans, useTranslation} from 'react-i18next';
 import React, {ReactElement} from 'react';
@@ -17,9 +16,7 @@ const EventContactSend = ({firstUser, secondUser, date}: WithEventContactProps) 
   const image = <UserView user={firstUser} picSize="md" />;
 
   const content = (
-    <Text>
-      <Trans i18nKey="event:contact.send.content" components={{firstUser: <FirstUser />, secondUser: <SecondUser />}} />
-    </Text>
+    <Trans i18nKey="event:contact.send.content" components={{firstUser: <FirstUser />, secondUser: <SecondUser />}} />
   );
 
   return <EventListItemTemplate image={image} title={title} content={content} date={date} />;

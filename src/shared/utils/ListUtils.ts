@@ -24,8 +24,8 @@ export class ListUtils {
   });
 
   public static themedItemStyle = (theme: Theme): StyleProp<ViewStyle> => ({
-    padding: theme.sizes[DEFAULT_SPACE],
-    paddingTop: theme.sizes[HALF_DEFAULT_SPACE],
-    paddingBottom: theme.sizes[HALF_DEFAULT_SPACE],
+    margin: theme.sizes[DEFAULT_SPACE],
+    marginTop: theme.sizes[HALF_DEFAULT_SPACE],
+    marginBottom: theme.sizes[HALF_DEFAULT_SPACE],
   });
 }

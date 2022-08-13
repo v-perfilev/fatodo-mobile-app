@@ -1,4 +1,3 @@
-import {Text} from 'native-base';
 import withEventComment, {WithEventCommentProps} from '../../../../../shared/hocs/withEvents/withEventComment';
 import {Trans, useTranslation} from 'react-i18next';
 import React, {ReactElement} from 'react';
@@ -22,19 +21,11 @@ const EventCommentAdd = ({user, group, item, comment, date}: WithEventCommentPro
   let content = null;
 
   if (Group) {
-    content = (
-      <Text>
-        <Trans i18nKey="event:comment.add.contentWithGroup" components={{user: <User />, group: <Group />}} />
-      </Text>
-    );
+    content = <Trans i18nKey="event:comment.add.contentWithGroup" components={{user: <User />, group: <Group />}} />;
   }
 
   if (Item) {
-    content = (
-      <Text>
-        <Trans i18nKey="event:comment.add.contentWithItem" components={{user: <User />, item: <Item />}} />
-      </Text>
-    );
+    content = <Trans i18nKey="event:comment.add.contentWithItem" components={{user: <User />, item: <Item />}} />;
   }
 
   return <EventListItemTemplate image={image} title={title} content={content} message={comment?.text} date={date} />;
