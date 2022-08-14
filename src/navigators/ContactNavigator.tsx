@@ -1,9 +1,9 @@
-import React, {ReactElement, ReactNode, useMemo} from 'react';
+import React, {ReactElement, useMemo} from 'react';
 import ContactList from '../screens/contacts/contactList/ContactList';
 import OutcomingRequestList from '../screens/contacts/outcomingRequestList/OutcomingRequestList';
 import IncomingRequestList from '../screens/contacts/incomingRequestList/IncomingRequestList';
-import {Dimensions} from 'react-native';
-import {Route, SceneMap, TabBar, TabView} from 'react-native-tab-view';
+import {Dimensions, StyleProp, ViewStyle} from 'react-native';
+import {Route, SceneMap, TabBar, TabBarItemProps, TabView} from 'react-native-tab-view';
 import {NavigationState, SceneRendererProps} from 'react-native-tab-view/lib/typescript/types';
 import {useTranslation} from 'react-i18next';
 import FHStack from '../components/boxes/FHStack';
@@ -12,6 +12,8 @@ import Header from '../components/layouts/Header';
 import ContactsSelectors from '../store/contacts/contactsSelectors';
 import {useAppSelector} from '../store/store';
 import {ContactInfo} from '../store/contacts/contactsType';
+import FBox from '../components/boxes/FBox';
+import {HEADER_HEIGHT} from '../constants';
 
 type TabBarProps = SceneRendererProps & {navigationState: NavigationState<ContactRoute>};
 
@@ -24,7 +26,7 @@ type ContactRoute = Route & {
 const initialLayout = {width: Dimensions.get('window').width};
 
 const buildRoutes = (info: ContactInfo): ContactRoute[] => [
-  {key: 'relations', count: info.relationCount, maxCount: 999, showBadgeAlways: true},
+  {key: 'relations', title: 'test', count: info.relationCount, maxCount: 999, showBadgeAlways: true},
   {key: 'incoming', count: info.incomingRequestCount, maxCount: 9, showBadgeAlways: false},
   {key: 'outcoming', count: info.outcomingRequestCount, maxCount: 9, showBadgeAlways: false},
 ];
@@ -53,26 +55,32 @@ const ContactNavigator = () => {
 
   const tabBarColor = theme.colors.primary['500'];
   const indicatorColor = theme.colors.secondary['500'];
-  const tabBarStyle = {flexGrow: 1, backgroundColor: tabBarColor, shadowColor: tabBarColor};
   const indicatorStyle = {backgroundColor: indicatorColor, height: 3};
+  const tabBarStyle: StyleProp<ViewStyle> = {
+    height: HEADER_HEIGHT,
+    flexGrow: 1,
+    justifyContent: 'center',
+    backgroundColor: tabBarColor,
+  };
 
-  const renderTabBar = (props: TabBarProps): ReactNode => {
+  const renderTabBarItem = (props: TabBarItemProps<ContactRoute>): ReactElement => {
+    return (
+      <FBox flexGrow="1" alignItems="center" key={props.route.key}>
+        <FHStack smallSpace>
+          <Text color="white" fontWeight="bold">
+            {t(`contact:${props.route.key}.title`)}
+          </Text>
+          {renderBadge(props.route)}
+        </FHStack>
+      </FBox>
+    );
+  };
+
+  const renderTabBar = (props: TabBarProps): ReactElement => {
     return (
       <Header hideLogo hideGoBack hideTitle>
-        <FHStack grow h="100%" mx="-2">
-          <TabBar
-            {...props}
-            style={tabBarStyle}
-            indicatorStyle={indicatorStyle}
-            renderLabel={({route}) => (
-              <FHStack smallSpace alignItems="center" py="1">
-                <Text color="white" fontWeight="bold">
-                  {t(`contact:${route.key}.title`)}
-                </Text>
-                {renderBadge(route)}
-              </FHStack>
-            )}
-          />
+        <FHStack mx="-2">
+          <TabBar style={tabBarStyle} indicatorStyle={indicatorStyle} renderTabBarItem={renderTabBarItem} {...props} />
         </FHStack>
       </Header>
     );
