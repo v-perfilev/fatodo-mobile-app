@@ -63,7 +63,7 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
   };
 
   return (
-    <Header>
+    <Header hideGoBack>
       {sorting ? (
         <>
           <IconButton colorScheme="white" size="xl" p="1.5" icon={<CheckIcon />} onPress={saveSorting} />

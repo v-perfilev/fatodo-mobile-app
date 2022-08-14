@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
+import React, {MutableRefObject, useState} from 'react';
 import {useTheme} from 'native-base';
 import {ListUtils} from '../../shared/utils/ListUtils';
 import DraggableFlatList, {DragEndParams, DraggableFlatListProps} from 'react-native-draggable-flatlist';
-import {Platform, RefreshControl} from 'react-native';
+import {Animated, Platform, RefreshControl} from 'react-native';
 import {createNativeWrapper} from 'react-native-gesture-handler';
 
 type DraggableListProps<T> = Partial<DraggableFlatListProps<T>> & {
   keyExtractor: (item: T) => string;
   handleDragEnd: (params: DragEndParams<T>) => void;
   refresh?: () => Promise<void>;
+  listRef?: MutableRefObject<any>;
 };
 
 const NativeRefreshControl = createNativeWrapper(RefreshControl, {
@@ -16,7 +17,17 @@ const NativeRefreshControl = createNativeWrapper(RefreshControl, {
   shouldCancelWhenOutside: false,
 });
 
-const DraggableList = ({data, renderItem, keyExtractor, handleDragEnd, refresh, ...props}: DraggableListProps<any>) => {
+const AnimatedDraggableList = Animated.createAnimatedComponent(DraggableFlatList);
+
+const DraggableList = ({
+  data,
+  renderItem,
+  keyExtractor,
+  handleDragEnd,
+  refresh,
+  listRef,
+  ...props
+}: DraggableListProps<any>) => {
   const theme = useTheme();
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
@@ -30,7 +41,7 @@ const DraggableList = ({data, renderItem, keyExtractor, handleDragEnd, refresh, 
   );
 
   return (
-    <DraggableFlatList
+    <AnimatedDraggableList
       data={data}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
@@ -39,7 +50,7 @@ const DraggableList = ({data, renderItem, keyExtractor, handleDragEnd, refresh, 
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={Platform.OS === 'android'}
       style={ListUtils.draggableStyle}
-      contentContainerStyle={ListUtils.themedContainerStyle(theme)}
+      ref={listRef}
       {...props}
       initialNumToRender={props.initialNumToRender || 15}
       maxToRenderPerBatch={props.maxToRenderPerBatch || 15}

@@ -63,7 +63,9 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
     useNativeDriver: false,
   });
 
-  const handleOffsetScroll = (offset: number): void => scrollY.current.setValue(Math.max(0, offset));
+  const handleOffsetScroll = (offset: number): void => {
+    scrollY.current.setValue(Math.max(0, offset));
+  };
 
   const safeAreaStyle = {flex: 1};
   const headerStyle: StyleProp<any> = {zIndex: 1, position: 'absolute', width: '100%'};
