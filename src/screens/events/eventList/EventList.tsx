@@ -63,6 +63,10 @@ const EventList = () => {
     listRef.current.scrollToOffset({offset: 0});
   }, [listRef.current]);
 
+  /*
+  Effects
+   */
+
   useEffect(() => {
     dispatch(EventsThunks.fetchEvents(0)).finally(() => setLoading(false));
   }, []);
