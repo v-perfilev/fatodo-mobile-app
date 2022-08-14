@@ -25,7 +25,7 @@ const FScrollView = React.forwardRef((props: FScrollViewProps, ref: any) => {
   return (
     <ScrollView
       refreshControl={refresh ? _refreshControl : null}
-      _contentContainerStyle={ListUtils.defaultContainerStyle()}
+      _contentContainerStyle={ListUtils.containerStyle()}
       showsVerticalScrollIndicator={false}
       ref={ref}
       {...otherProps}

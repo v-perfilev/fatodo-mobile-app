@@ -7,7 +7,6 @@ import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import {CalendarActions, CalendarThunks} from '../../../store/calendar/calendarActions';
-import {ListUtils} from '../../../shared/utils/ListUtils';
 import CalendarViewContainer from './CalendarViewContainer';
 
 const loadIndent = 5;
@@ -83,7 +82,6 @@ const CalendarView = () => {
         data={months}
         render={renderItem}
         keyExtractor={keyExtractor}
-        contentContainerStyle={ListUtils.defaultContainerStyle()}
         onContentSizeChange={calcDimensions}
         scrollEventThrottle={200}
         horizontal

@@ -12,17 +12,6 @@ export class ListUtils {
     flexGrow: 1,
   });
 
-  public static defaultContainerStyle = (): StyleProp<unknown> => ({
-    flexGrow: 1,
-  });
-
-  public static themedContainerStyle = (theme: Theme, paddingTop?: number): StyleProp<ViewStyle> => ({
-    padding: theme.sizes[DEFAULT_SPACE],
-    paddingTop: paddingTop || theme.sizes[HALF_DEFAULT_SPACE],
-    paddingBottom: theme.sizes[HALF_DEFAULT_SPACE],
-    flexGrow: 1,
-  });
-
   public static themedItemStyle = (theme: Theme): StyleProp<ViewStyle> => ({
     margin: theme.sizes[DEFAULT_SPACE],
     marginTop: theme.sizes[HALF_DEFAULT_SPACE],
