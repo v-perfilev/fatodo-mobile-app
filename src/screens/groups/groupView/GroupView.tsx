@@ -30,6 +30,10 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   const account = useAppSelector(AuthSelectors.account);
   const activeItems = useAppSelector(GroupSelectors.activeItems);
   const archivedItems = useAppSelector(GroupSelectors.archivedItems);
+  const activeItemsLoading = useAppSelector(GroupSelectors.activeItemsLoading);
+  const archivedItemsLoading = useAppSelector(GroupSelectors.archivedItemsLoading);
+  const allActiveItemsLoaded = useAppSelector(GroupSelectors.allActiveItemsLoaded);
+  const allArchivedItemsLoaded = useAppSelector(GroupSelectors.allArchivedItemsLoaded);
   const [showArchived, setShowArchived] = useState<boolean>(false);
   const [hideScroll, setHideScroll] = useState<boolean>(true);
   const listRef = useRef<FlatListType>();
@@ -87,15 +91,23 @@ stub, keyExtractor and renderItem
   Effects
    */
 
-  // TODO optimize
   useEffect(() => {
-    if (!loading && showArchived) {
+    if (!loading && showArchived && !allArchivedItemsLoaded) {
       loadArchived().finally();
     }
-    if (!loading && !showArchived) {
+    if (!loading && !showArchived && !allActiveItemsLoaded) {
       loadActive().finally();
     }
-  }, [loading, group, showArchived]);
+  }, [loading, showArchived]);
+
+  const _archivedItemsLoading = showArchived && archivedItemsLoading && archivedItems.length === 0;
+  const _activeItemsLoading = !showArchived && activeItemsLoading && activeItems.length === 0;
+  const _loading = loading || _archivedItemsLoading || _activeItemsLoading;
+  const _data = showArchived ? archivedItems : activeItems;
+  const _onArchivedEndReached = !allArchivedItemsLoaded ? loadArchived : undefined;
+  const _onActiveEndReached = !allActiveItemsLoaded ? loadArchived : undefined;
+  const _onEndReacted = showArchived ? _onArchivedEndReached : _onActiveEndReached;
+  const _refresh = showArchived ? refreshArchived : refreshActive;
 
   return (
     <ThemeProvider theme={theme}>
@@ -103,17 +115,17 @@ stub, keyExtractor and renderItem
         header={<GroupViewHeader showArchived={showArchived} setShowArchived={setShowArchived} />}
       >
         {({handleEventScroll, handleEventSnap, flatListRef}: CollapsableHeaderChildrenProps) => (
-          <ConditionalSpinner loading={loading} paddingTop={HEADER_HEIGHT}>
+          <ConditionalSpinner loading={_loading} paddingTop={HEADER_HEIGHT}>
             <FlatList
               contentContainerStyle={ListUtils.containerStyle(HEADER_HEIGHT)}
               ListEmptyComponent={<GroupViewStub />}
-              data={showArchived ? archivedItems : activeItems}
+              data={_data}
               render={renderItem}
               keyExtractor={keyExtractor}
               onScroll={handleEventScroll}
               onMomentumScrollEnd={handleEventSnap}
-              onEndReached={showArchived ? loadArchived : loadActive}
-              refresh={showArchived ? refreshArchived : refreshActive}
+              onEndReached={_onEndReacted}
+              refresh={_refresh}
               setIsOnTheTop={setHideScroll}
               listRefs={[listRef, flatListRef]}
             />

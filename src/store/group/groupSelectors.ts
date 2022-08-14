@@ -19,6 +19,10 @@ class GroupSelectors {
   static activeItemsLoading = createSelector(getGroupState, (state) => state.activeItemsLoading);
 
   static archivedItemsLoading = createSelector(getGroupState, (state) => state.archivedItemsLoading);
+
+  static allActiveItemsLoaded = createSelector(getGroupState, (state) => state.allActiveItemsLoaded);
+
+  static allArchivedItemsLoaded = createSelector(getGroupState, (state) => state.allArchivedItemsLoaded);
 }
 
 export default GroupSelectors;

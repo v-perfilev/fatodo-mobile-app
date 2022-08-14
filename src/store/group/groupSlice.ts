@@ -15,6 +15,8 @@ const initialState: GroupState = {
   loading: false,
   activeItemsLoading: false,
   archivedItemsLoading: false,
+  allActiveItemsLoaded: false,
+  allArchivedItemsLoaded: false,
 };
 
 const groupSlice = createSlice({
@@ -109,6 +111,7 @@ const groupSlice = createSlice({
       state.activeItems = GroupUtils.filterItems([...state.activeItems, ...action.payload.data]);
       state.activeItemsCount = action.payload.count;
       state.activeItemsLoading = false;
+      state.allActiveItemsLoaded = state.activeItems.length === action.payload.count;
     });
     builder.addCase(GroupThunks.fetchActiveItems.rejected, (state: GroupState) => {
       state.activeItemsLoading = false;
@@ -124,6 +127,7 @@ const groupSlice = createSlice({
       state.archivedItems = GroupUtils.filterItems([...state.archivedItems, ...action.payload.data]);
       state.archivedItemsCount = action.payload.count;
       state.archivedItemsLoading = false;
+      state.allArchivedItemsLoaded = state.archivedItems.length === action.payload.count;
     });
     builder.addCase(GroupThunks.fetchArchivedItems.rejected, (state: GroupState) => {
       state.archivedItemsLoading = false;

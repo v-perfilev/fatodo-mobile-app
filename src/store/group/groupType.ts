@@ -10,4 +10,6 @@ export type GroupState = {
   loading: boolean;
   activeItemsLoading: boolean;
   archivedItemsLoading: boolean;
+  allActiveItemsLoaded: boolean;
+  allArchivedItemsLoaded: boolean;
 };
