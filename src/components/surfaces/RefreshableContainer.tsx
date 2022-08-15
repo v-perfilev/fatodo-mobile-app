@@ -16,10 +16,11 @@ export type RefreshableChildrenProps = {
 type RefreshableContainerProps = {
   refresh?: () => Promise<void>;
   parentScrollY?: Animated.Value;
+  inverted?: boolean;
   children: (props: RefreshableChildrenProps) => ReactElement;
 };
 
-const RefreshableContainer = ({refresh, parentScrollY, children}: RefreshableContainerProps) => {
+const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: RefreshableContainerProps) => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
   const panRef = useRef();
@@ -60,7 +61,7 @@ const RefreshableContainer = ({refresh, parentScrollY, children}: RefreshableCon
   };
 
   const handleGestureEvent = (event: GestureEvent<any>) => {
-    const translationY = event.nativeEvent.translationY;
+    const translationY = inverted ? -event.nativeEvent.translationY : event.nativeEvent.translationY;
     if (!overscrollInitValue.value && scrollYValue.value === 0) {
       overscrollInitValue.value = translationY;
     } else if (!!overscrollInitValue.value && scrollYValue.value !== 0) {

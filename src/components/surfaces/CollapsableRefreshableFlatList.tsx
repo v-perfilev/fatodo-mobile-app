@@ -19,7 +19,7 @@ type CollapsableRefreshableFlatListProps = FlatListProps<any> & {
 };
 
 const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefreshableFlatListProps, ref: any) => {
-  const {header, headerHeight, refresh, loading, previousNode, nextNode, children} = props;
+  const {header, headerHeight, refresh, loading, previousNode, nextNode, inverted, children} = props;
 
   return (
     <CollapsableHeaderContainer header={header}>
@@ -27,17 +27,22 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
         <>
           {previousNode}
           <ConditionalSpinner loading={loading} paddingTop={headerHeight}>
-            <RefreshableContainer refresh={refresh} parentScrollY={scrollY}>
+            <RefreshableContainer refresh={refresh} parentScrollY={scrollY} inverted={inverted}>
               {({extraScrollY, refreshing, refreshableRef}: RefreshableChildrenProps) => (
                 <FlatList
                   ListHeaderComponent={
-                    <Refresher extraScrollY={extraScrollY} refreshing={refreshing} inverted={props.inverted} />
+                    <Refresher extraScrollY={extraScrollY} refreshing={refreshing} inverted={inverted} />
                   }
-                  contentContainerStyle={ListUtils.containerStyle(0, headerHeight)}
+                  contentContainerStyle={ListUtils.containerStyle(
+                    0,
+                    !inverted ? headerHeight : undefined,
+                    inverted ? headerHeight : undefined,
+                  )}
                   ItemSeparatorComponent={EventListSeparator}
                   onScroll={handleEventScroll}
                   onMomentumScrollEnd={handleEventSnap}
                   ref={RefUtils.merge(ref, collapsableRef, refreshableRef)}
+                  inverted={inverted}
                   {...props}
                 />
               )}
