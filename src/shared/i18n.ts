@@ -88,29 +88,32 @@ const resources = {
   },
 };
 
-i18next.use(initReactI18next).init({
-  debug: false,
-  compatibilityJSON: 'v3',
-  resources,
-  lng: 'en',
-  ns: [
-    'translation',
-    'common',
-    'account',
-    'feedback',
-    'snack',
-    'group',
-    'item',
-    'contact',
-    'chat',
-    'user',
-    'event',
-    'calendar',
-  ],
-  defaultNS: 'translation',
-  interpolation: {
-    escapeValue: false, // react already safes from xss
-  },
-});
+i18next
+  .use(initReactI18next)
+  .init({
+    debug: false,
+    compatibilityJSON: 'v3',
+    resources,
+    lng: 'en',
+    ns: [
+      'translation',
+      'common',
+      'account',
+      'feedback',
+      'snack',
+      'group',
+      'item',
+      'contact',
+      'chat',
+      'user',
+      'event',
+      'calendar',
+    ],
+    defaultNS: 'translation',
+    interpolation: {
+      escapeValue: false, // react already safes from xss
+    },
+  })
+  .finally();
 
 export default i18next;
