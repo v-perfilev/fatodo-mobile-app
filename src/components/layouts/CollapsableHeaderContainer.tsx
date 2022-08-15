@@ -1,11 +1,10 @@
 import {Animated, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleProp, View} from 'react-native';
-import React, {ReactElement, RefObject, useRef} from 'react';
+import React, {MutableRefObject, ReactElement, useRef} from 'react';
 import {FlatListType} from '../surfaces/FlatList';
 import {HEADER_HEIGHT} from '../../constants';
 
 export type CollapsableHeaderChildrenProps = {
-  scrollViewRef: RefObject<ScrollView>;
-  flatListRef: RefObject<FlatListType>;
+  collapsableRef: MutableRefObject<any>;
   handleEventSnap: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   handleEventScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   handleOffsetScroll: (offset: number) => void;
@@ -20,8 +19,7 @@ const getCloser = (value: number, checkOne: number, checkTwo: number): number =>
   Math.abs(value - checkOne) < Math.abs(value - checkTwo) ? checkOne : checkTwo;
 
 const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContainerProps) => {
-  const scrollViewRef = useRef<ScrollView>();
-  const flatListRef = useRef<FlatListType>();
+  const collapsableRef = useRef<FlatListType & ScrollView>();
   const scrollY = useRef<Animated.Value>(new Animated.Value(0));
   const translateYNumber = useRef<number>();
 
@@ -43,20 +41,14 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
     translateYNumber.current = value;
   });
 
-  const handleSnapWithFunc = (offsetY: number, func: (offset: number) => void): void => {
+  const handleEventSnap = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
     if (!(translateYNumber.current === 0 || translateYNumber.current === -HEADER_HEIGHT)) {
       const shouldAddOffset = getCloser(translateYNumber.current, -HEADER_HEIGHT, 0) === -HEADER_HEIGHT;
-      const offset = shouldAddOffset ? offsetY + HEADER_HEIGHT : offsetY - HEADER_HEIGHT;
-      func(offset);
+      const offsetY = event.nativeEvent.contentOffset.y;
+      const offset = shouldAddOffset ? offsetY + HEADER_HEIGHT / 2 : offsetY - HEADER_HEIGHT / 2;
+      collapsableRef.current?.scrollTo && collapsableRef.current.scrollTo({y: offset});
+      collapsableRef.current?.scrollToOffset && collapsableRef.current.scrollToOffset({offset});
     }
-  };
-
-  const handleEventSnap = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    const scrollViewFunc = (y: number): void => scrollViewRef.current.scrollTo({y});
-    const flatListFunc = (offset: number): void => flatListRef.current.scrollToOffset({offset});
-    scrollViewRef.current && handleSnapWithFunc(offsetY, scrollViewFunc);
-    flatListRef.current && handleSnapWithFunc(offsetY, flatListFunc);
   };
 
   const handleEventScroll = Animated.event([{nativeEvent: {contentOffset: {y: scrollY.current}}}], {
@@ -72,8 +64,7 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
   const animatedHeaderStyle = {transform: [{translateY}]};
 
   const childrenProps: CollapsableHeaderChildrenProps = {
-    scrollViewRef,
-    flatListRef,
+    collapsableRef,
     handleEventSnap,
     handleEventScroll,
     handleOffsetScroll,

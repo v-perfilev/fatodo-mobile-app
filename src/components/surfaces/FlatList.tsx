@@ -1,13 +1,4 @@
-import React, {
-  Dispatch,
-  MutableRefObject,
-  ReactElement,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {Dispatch, ForwardedRef, ReactElement, SetStateAction, useCallback, useRef, useState} from 'react';
 import {useTheme} from 'native-base';
 import {IFlatListProps} from 'native-base/lib/typescript/components/basic/FlatList';
 import {
@@ -29,24 +20,14 @@ type FlatListProps<T> = Partial<IFlatListProps<T>> & {
   fixedLength?: number;
   refresh?: () => Promise<void>;
   setIsOnTheTop?: Dispatch<SetStateAction<boolean>>;
-  listRefs?: MutableRefObject<FlatListType>[];
 };
 
-const FlatList = ({
-  data,
-  render,
-  keyExtractor,
-  fixedLength,
-  refresh,
-  setIsOnTheTop,
-  listRefs,
-  onMomentumScrollEnd,
-  ...props
-}: FlatListProps<any>) => {
+const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<FlatListType>) => {
+  const {data, render, keyExtractor, fixedLength, refresh, setIsOnTheTop, onMomentumScrollEnd} = props;
+
   const theme = useTheme();
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const lengthMap = useRef<Map<string, number>>(new Map());
-  const listRef = useRef<FlatListType>();
 
   const getItemLength = useCallback(
     (index: number): number => {
@@ -117,14 +98,9 @@ const FlatList = ({
     setIsOnTheTop && setIsOnTheTop(event.nativeEvent.contentOffset.y <= 0);
   };
 
-  useEffect(() => {
-    listRefs?.forEach((ref) => {
-      ref.current = listRef.current;
-    });
-  }, [listRef.current]);
-
   return (
     <Animated.FlatList
+      {...props}
       data={data}
       renderItem={_renderItem}
       getItemLayout={_getItemLayout}
@@ -134,14 +110,13 @@ const FlatList = ({
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={Platform.OS === 'android'}
-      ref={listRef}
-      {...props}
       initialNumToRender={props.initialNumToRender || 15}
       maxToRenderPerBatch={props.maxToRenderPerBatch || 15}
       onEndReachedThreshold={props.onEndReachedThreshold || 10}
       windowSize={props.windowSize || 15}
+      ref={ref}
     />
   );
-};
+});
 
 export default FlatList;

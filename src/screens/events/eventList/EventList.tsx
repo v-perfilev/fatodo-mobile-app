@@ -18,6 +18,7 @@ import CollapsableHeaderContainer, {
 } from '../../../components/layouts/CollapsableHeaderContainer';
 import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 import {HEADER_HEIGHT} from '../../../constants';
+import {RefUtils} from '../../../shared/utils/RefUtils';
 
 const EventList = () => {
   const dispatch = useAppDispatch();
@@ -77,7 +78,7 @@ const EventList = () => {
 
   return (
     <CollapsableHeaderContainer header={<Header hideGoBack />}>
-      {({handleEventScroll, handleEventSnap, flatListRef}: CollapsableHeaderChildrenProps) => (
+      {({handleEventScroll, handleEventSnap, collapsableRef}: CollapsableHeaderChildrenProps) => (
         <ConditionalSpinner loading={loading} paddingTop={HEADER_HEIGHT}>
           <FlatList
             contentContainerStyle={ListUtils.containerStyle(HEADER_HEIGHT)}
@@ -90,7 +91,7 @@ const EventList = () => {
             onEndReached={!allLoaded ? load : undefined}
             refresh={refresh}
             setIsOnTheTop={setHideScroll}
-            listRefs={[listRef, flatListRef]}
+            ref={RefUtils.merge([listRef, collapsableRef])}
           />
           <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />
         </ConditionalSpinner>
