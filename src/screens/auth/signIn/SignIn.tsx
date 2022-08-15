@@ -6,9 +6,10 @@ import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import {AuthNavigationProp} from '../../../navigators/AuthNavigator';
 import LanguageMenu from '../../../components/controls/LanguageMenu';
-import FScrollView from '../../../components/boxes/FScrollView';
 import FCenter from '../../../components/boxes/FCenter';
 import FVStack from '../../../components/boxes/FVStack';
+import {ScrollView} from 'native-base';
+import {DEFAULT_SPACE} from '../../../constants';
 
 const SignIn = () => {
   const navigation = useNavigation<AuthNavigationProp>();
@@ -18,7 +19,7 @@ const SignIn = () => {
   const goToSignUp = (): void => navigation.navigate('SignUp');
 
   return (
-    <FScrollView keyboardShouldPersistTaps="handled">
+    <ScrollView p={DEFAULT_SPACE} keyboardShouldPersistTaps="handled">
       <FCenter grow pt="10" pb="5">
         <FVStack w="90%" maxW="300px" defaultSpace>
           <FCenter grow>
@@ -34,7 +35,7 @@ const SignIn = () => {
       <FCenter pt="5" pb="10">
         <LanguageMenu />
       </FCenter>
-    </FScrollView>
+    </ScrollView>
   );
 };
 

@@ -1,12 +1,8 @@
 import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
 import {HEADER_HEIGHT} from '../../../constants';
 import ChatListControl from './ChatListControl';
-import CollapsableHeaderContainer, {
-  CollapsableHeaderChildrenProps,
-} from '../../../components/surfaces/CollapsableHeaderContainer';
 import Header from '../../../components/layouts/Header';
-import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
+import {FlatListType} from '../../../components/surfaces/FlatList';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import ChatListStub from './ChatListStub';
 import ChatListCorner from './ChatListCorner';
@@ -19,7 +15,7 @@ import ChatListItem from './ChatListItem';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
 import {ChatsThunks} from '../../../store/chats/chatsActions';
-import {RefUtils} from '../../../shared/utils/RefUtils';
+import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
 
 type ControlType = 'regular' | 'filtered';
 
@@ -96,30 +92,24 @@ const ChatList = () => {
   }, [loadCounter]);
 
   return (
-    <CollapsableHeaderContainer header={<Header hideGoBack />}>
-      {({handleEventScroll, handleEventSnap, collapsableRef}: CollapsableHeaderChildrenProps) => (
-        <>
-          <ChatListControl setFilter={setFilter} marginTop={HEADER_HEIGHT} />
-          <ConditionalSpinner loading={loading}>
-            <FlatList
-              contentContainerStyle={ListUtils.containerStyle()}
-              ListEmptyComponent={<ChatListStub />}
-              data={type === 'regular' ? chats : filteredChats}
-              render={renderItem}
-              keyExtractor={keyExtractor}
-              onScroll={handleEventScroll}
-              onMomentumScrollEnd={handleEventSnap}
-              onEndReached={type === 'regular' ? load : loadFiltered}
-              refresh={type === 'regular' ? refresh : undefined}
-              setIsOnTheTop={setHideScroll}
-              ref={RefUtils.merge(listRef, collapsableRef)}
-            />
-          </ConditionalSpinner>
-          <ChatListCorner />
-          <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />
-        </>
-      )}
-    </CollapsableHeaderContainer>
+    <CollapsableRefreshableFlatList
+      header={<Header hideGoBack />}
+      headerHeight={HEADER_HEIGHT}
+      refresh={type === 'regular' ? refresh : undefined}
+      previousNode={<ChatListControl setFilter={setFilter} marginTop={HEADER_HEIGHT} />}
+      loading={loading}
+      contentContainerStyle={ListUtils.containerStyle()}
+      ListEmptyComponent={<ChatListStub />}
+      data={type === 'regular' ? chats : filteredChats}
+      render={renderItem}
+      keyExtractor={keyExtractor}
+      onEndReached={type === 'regular' ? load : loadFiltered}
+      setIsOnTheTop={setHideScroll}
+      ref={listRef}
+    >
+      <ChatListCorner />
+      <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />
+    </CollapsableRefreshableFlatList>
   );
 };
 

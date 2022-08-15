@@ -3,13 +3,9 @@ import {Box, Theme} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
-import CollapsableHeaderContainer, {
-  CollapsableHeaderChildrenProps,
-} from '../../../components/surfaces/CollapsableHeaderContainer';
 import GroupViewHeader from './GroupViewHeader';
-import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {HEADER_HEIGHT} from '../../../constants';
-import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
+import {FlatListType} from '../../../components/surfaces/FlatList';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import GroupViewStub from './groupViewItems/GroupViewStub';
 import GroupViewCorner from './GroupViewCorner';
@@ -22,7 +18,7 @@ import {Item} from '../../../models/Item';
 import {LayoutChangeEvent} from 'react-native';
 import GroupViewItem from './groupViewItem/GroupViewItem';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import {RefUtils} from '../../../shared/utils/RefUtils';
+import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
 
 type GroupViewProps = WithGroupProps;
 
@@ -112,29 +108,22 @@ stub, keyExtractor and renderItem
 
   return (
     <ThemeProvider theme={theme}>
-      <CollapsableHeaderContainer
+      <CollapsableRefreshableFlatList
         header={<GroupViewHeader showArchived={showArchived} setShowArchived={setShowArchived} />}
+        headerHeight={HEADER_HEIGHT}
+        loading={_loading}
+        ListEmptyComponent={<GroupViewStub />}
+        data={_data}
+        render={renderItem}
+        keyExtractor={keyExtractor}
+        onEndReached={_onEndReacted}
+        refresh={_refresh}
+        setIsOnTheTop={setHideScroll}
+        ref={listRef}
       >
-        {({handleEventScroll, handleEventSnap, collapsableRef}: CollapsableHeaderChildrenProps) => (
-          <ConditionalSpinner loading={_loading} paddingTop={HEADER_HEIGHT}>
-            <FlatList
-              contentContainerStyle={ListUtils.containerStyle(HEADER_HEIGHT)}
-              ListEmptyComponent={<GroupViewStub />}
-              data={_data}
-              render={renderItem}
-              keyExtractor={keyExtractor}
-              onScroll={handleEventScroll}
-              onMomentumScrollEnd={handleEventSnap}
-              onEndReached={_onEndReacted}
-              refresh={_refresh}
-              setIsOnTheTop={setHideScroll}
-              ref={RefUtils.merge(listRef, collapsableRef)}
-            />
-            <GroupViewCorner />
-            <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />
-          </ConditionalSpinner>
-        )}
-      </CollapsableHeaderContainer>
+        <GroupViewCorner />
+        <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />
+      </CollapsableRefreshableFlatList>
     </ThemeProvider>
   );
 };

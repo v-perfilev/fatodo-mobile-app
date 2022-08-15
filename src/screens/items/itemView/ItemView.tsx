@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {Divider, Theme} from 'native-base';
+import {Divider, ScrollView, Theme} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
@@ -12,7 +12,6 @@ import ItemViewType from './itemViewType';
 import ItemViewGroup from './itemViewGroup';
 import ItemReminders from './ItemReminders';
 import ItemViewName from './itemViewName';
-import FScrollView from '../../../components/boxes/FScrollView';
 import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../store/store';
@@ -20,6 +19,7 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
 import ItemViewCorner from './ItemViewCorner';
+import {DEFAULT_SPACE} from '../../../constants';
 
 type ItemViewProps = WithItemProps;
 
@@ -38,7 +38,7 @@ const ItemView = ({group, loading}: ItemViewProps) => {
       <ItemViewHeader account={account} />
       <ItemViewCorner />
       <ConditionalSpinner loading={loading}>
-        <FScrollView>
+        <ScrollView p={DEFAULT_SPACE}>
           <FVStack defaultSpace>
             <ItemViewName />
             <ItemViewGroup />
@@ -54,7 +54,7 @@ const ItemView = ({group, loading}: ItemViewProps) => {
             <Divider bg="secondary.500" />
             <ItemViewChanges />
           </FVStack>
-        </FScrollView>
+        </ScrollView>
       </ConditionalSpinner>
     </ThemeProvider>
   );

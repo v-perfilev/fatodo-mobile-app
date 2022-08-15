@@ -1,5 +1,4 @@
-import React, {Dispatch, ForwardedRef, ReactElement, SetStateAction, useCallback, useRef, useState} from 'react';
-import {useTheme} from 'native-base';
+import React, {Dispatch, ForwardedRef, ReactElement, SetStateAction, useCallback, useRef} from 'react';
 import {IFlatListProps} from 'native-base/lib/typescript/components/basic/FlatList';
 import {
   Animated,
@@ -9,24 +8,20 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   Platform,
-  RefreshControl,
 } from 'react-native';
 
 export type FlatListType = RNFlatList;
 
-type FlatListProps<T> = Partial<IFlatListProps<T>> & {
+export type FlatListProps<T> = Partial<IFlatListProps<T>> & {
   render: (item: T, onLayout: (event: LayoutChangeEvent) => void) => ReactElement;
   keyExtractor: (item: T) => string;
   fixedLength?: number;
-  refresh?: () => Promise<void>;
   setIsOnTheTop?: Dispatch<SetStateAction<boolean>>;
 };
 
-const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<FlatListType>) => {
-  const {data, render, keyExtractor, fixedLength, refresh, setIsOnTheTop, onMomentumScrollEnd} = props;
+const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<any>) => {
+  const {data, render, keyExtractor, fixedLength, setIsOnTheTop, onMomentumScrollEnd} = props;
 
-  const theme = useTheme();
-  const [refreshing, setRefreshing] = useState<boolean>(false);
   const lengthMap = useRef<Map<string, number>>(new Map());
 
   const getItemLength = useCallback(
@@ -84,15 +79,6 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
     [getItemLength, getItemOffset],
   );
 
-  const _onRefresh = (): void => {
-    setRefreshing(true);
-    refresh().finally(() => setRefreshing(false));
-  };
-
-  const _refreshControl = (
-    <RefreshControl colors={[theme.colors.primary['500']]} refreshing={refreshing} onRefresh={_onRefresh} />
-  );
-
   const _onMomentumScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
     onMomentumScrollEnd && onMomentumScrollEnd(event);
     setIsOnTheTop && setIsOnTheTop(event.nativeEvent.contentOffset.y <= 0);
@@ -105,7 +91,6 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
       renderItem={_renderItem}
       getItemLayout={_getItemLayout}
       keyExtractor={keyExtractor}
-      refreshControl={refresh ? _refreshControl : null}
       onMomentumScrollEnd={_onMomentumScrollEnd}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}

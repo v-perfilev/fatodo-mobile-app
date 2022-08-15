@@ -3,14 +3,14 @@ import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupForm from '../groupForm/GroupForm';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch} from '../../../store/store';
-import {Theme} from 'native-base';
+import {ScrollView, Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
 import {GroupThunks} from '../../../store/group/groupActions';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
+import {DEFAULT_SPACE} from '../../../constants';
 
 type GroupEditProps = WithGroupProps;
 
@@ -37,9 +37,9 @@ const GroupEdit = ({group, loading}: GroupEditProps) => {
     <ThemeProvider theme={theme}>
       <Header />
       <ConditionalSpinner loading={loading}>
-        <FScrollView>
+        <ScrollView p={DEFAULT_SPACE}>
           <GroupForm group={group} request={request} cancel={goBack} />
-        </FScrollView>
+        </ScrollView>
       </ConditionalSpinner>
     </ThemeProvider>
   );

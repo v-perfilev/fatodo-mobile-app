@@ -4,15 +4,15 @@ import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import ItemForm from '../itemForm/ItemForm';
-import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch} from '../../../store/store';
-import {Theme} from 'native-base';
+import {ScrollView, Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
 import {ItemThunks} from '../../../store/item/itemActions';
 import {Item} from '../../../models/Item';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
+import {DEFAULT_SPACE} from '../../../constants';
 
 type ItemCreateProps = WithGroupProps;
 
@@ -38,9 +38,9 @@ const ItemCreate = ({group, loading}: ItemCreateProps) => {
     <ThemeProvider theme={theme}>
       <Header />
       <ConditionalSpinner loading={loading}>
-        <FScrollView>
+        <ScrollView p={DEFAULT_SPACE}>
           <ItemForm group={group} request={request} cancel={goBack} />
-        </FScrollView>
+        </ScrollView>
       </ConditionalSpinner>
     </ThemeProvider>
   );

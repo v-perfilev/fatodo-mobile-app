@@ -1,15 +1,15 @@
 import React, {useCallback} from 'react';
-import FScrollView from '../../../components/boxes/FScrollView';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {AuthActions} from '../../../store/auth/authActions';
 import UserFullView from '../../../components/views/UserFullView';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import {Divider} from 'native-base';
+import {Divider, ScrollView} from 'native-base';
 import AccountChangePasswordForm from './AccountChangePasswordForm';
 import {useTranslation} from 'react-i18next';
 import AccountViewHeader from './AccountViewHeader';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
+import {DEFAULT_SPACE} from '../../../constants';
 
 const AccountView = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +23,7 @@ const AccountView = () => {
   return (
     <>
       <AccountViewHeader />
-      <FScrollView>
+      <ScrollView p={DEFAULT_SPACE}>
         <FVStack defaultSpace>
           <UserFullView user={account} account={account} />
           <Divider bg="secondary.500" />
@@ -37,7 +37,7 @@ const AccountView = () => {
             {t('account:actions.logout')}
           </OutlinedButton>
         </FVStack>
-      </FScrollView>
+      </ScrollView>
     </>
   );
 };

@@ -8,6 +8,7 @@ export type CollapsableHeaderChildrenProps = {
   handleEventSnap: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   handleEventScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   handleOffsetScroll: (offset: number) => void;
+  scrollY: Animated.Value;
 };
 
 type CollapsableHeaderContainerProps = {
@@ -43,16 +44,16 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
 
   const handleEventSnap = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
     if (!(translateYNumber.current === 0 || translateYNumber.current === -HEADER_HEIGHT)) {
-      const shouldAddOffset = getCloser(translateYNumber.current, -HEADER_HEIGHT, 0) === -HEADER_HEIGHT;
+      const shouldRemoveOffset = getCloser(translateYNumber.current, -HEADER_HEIGHT, 0) === -HEADER_HEIGHT;
       const offsetY = event.nativeEvent.contentOffset.y;
-      const offset = shouldAddOffset ? offsetY + HEADER_HEIGHT / 2 : offsetY - HEADER_HEIGHT / 2;
+      const offset = shouldRemoveOffset ? offsetY - translateYNumber.current : offsetY + translateYNumber.current;
       collapsableRef.current?.scrollTo && collapsableRef.current.scrollTo({y: offset});
       collapsableRef.current?.scrollToOffset && collapsableRef.current.scrollToOffset({offset});
     }
   };
 
   const handleEventScroll = Animated.event([{nativeEvent: {contentOffset: {y: scrollY.current}}}], {
-    useNativeDriver: false,
+    useNativeDriver: true,
   });
 
   const handleOffsetScroll = (offset: number): void => {
@@ -68,6 +69,7 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
     handleEventSnap,
     handleEventScroll,
     handleOffsetScroll,
+    scrollY: scrollY.current,
   };
 
   return (

@@ -2,11 +2,12 @@ import React from 'react';
 import GroupForm from '../groupForm/GroupForm';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
-import FScrollView from '../../../components/boxes/FScrollView';
 import {useAppDispatch} from '../../../store/store';
 import {Group} from '../../../models/Group';
 import Header from '../../../components/layouts/Header';
 import {GroupThunks} from '../../../store/group/groupActions';
+import {ScrollView} from 'native-base';
+import {DEFAULT_SPACE} from '../../../constants';
 
 const GroupCreate = () => {
   const dispatch = useAppDispatch();
@@ -24,9 +25,9 @@ const GroupCreate = () => {
   return (
     <>
       <Header />
-      <FScrollView>
+      <ScrollView p={DEFAULT_SPACE}>
         <GroupForm request={request} cancel={goBack} />
-      </FScrollView>
+      </ScrollView>
     </>
   );
 };

@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {ReactElement, useEffect, useRef, useState} from 'react';
 import GroupListHeader from './GroupListHeader';
-import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {GroupsActions, GroupsThunks} from '../../../store/groups/groupsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
@@ -14,19 +13,21 @@ import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import CornerButton from '../../../components/controls/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
-import DraggableList from '../../../components/surfaces/DraggableList';
-import CollapsableHeaderContainer, {
-  CollapsableHeaderChildrenProps,
-} from '../../../components/surfaces/CollapsableHeaderContainer';
 import {HEADER_HEIGHT} from '../../../constants';
+import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
+import {FlatListType} from '../../../components/surfaces/FlatList';
+import CollapsableDraggableList from '../../../components/surfaces/CollapsableDraggableList';
+import {LayoutChangeEvent} from 'react-native';
 
 const GroupList = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const navigation = useNavigation<GroupNavigationProp>();
   const groups = useAppSelector(GroupsSelectors.groups);
+  const [hideScroll, setHideScroll] = useState<boolean>(true);
   const [sorting, setSorting] = useState<boolean>(false);
   const [loading, setLoading] = useDelayedState();
+  const listRef = useRef<FlatListType>();
 
   const goToGroupCreate = (): void => navigation.navigate('GroupCreate');
 
@@ -42,16 +43,21 @@ const GroupList = () => {
   keyExtractor and renderItem
    */
 
-  const extractKey = (group: Group): string => group.id;
-  const renderItem = (props: RenderItemParams<Group>) => {
-    return (
-      <ScaleDecorator activeScale={1.03}>
-        <Box style={ListUtils.themedItemStyle(theme)}>
-          <GroupListItem sorting={sorting} {...props} />
-        </Box>
-      </ScaleDecorator>
-    );
-  };
+  const keyExtractor = (group: Group): string => group.id;
+
+  const renderDraggableItem = (props: RenderItemParams<Group>) => (
+    <ScaleDecorator activeScale={1.03}>
+      <Box style={ListUtils.themedItemStyle(theme)}>
+        <GroupListItem sorting={sorting} {...props} />
+      </Box>
+    </ScaleDecorator>
+  );
+
+  const renderFlatItem = (group: Group, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+      <GroupListItem item={group} sorting={false} isActive={false} drag={undefined} />
+    </Box>
+  );
 
   /*
   dragHandler
@@ -65,26 +71,37 @@ const GroupList = () => {
     dispatch(GroupsThunks.fetchGroups()).finally(() => setLoading(false));
   }, []);
 
-  return (
-    <CollapsableHeaderContainer header={<GroupListHeader sorting={sorting} setSorting={setSorting} />}>
-      {({handleOffsetScroll, handleEventSnap, collapsableRef}: CollapsableHeaderChildrenProps) => (
-        <ConditionalSpinner loading={loading} paddingTop={HEADER_HEIGHT}>
-          <DraggableList
-            contentContainerStyle={ListUtils.containerStyle(HEADER_HEIGHT)}
-            data={groups}
-            renderItem={renderItem}
-            keyExtractor={extractKey}
-            handleDragEnd={handleDragEnd}
-            refresh={!sorting && refresh}
-            onScrollOffsetChange={handleOffsetScroll}
-            onMomentumScrollEnd={handleEventSnap}
-            ref={collapsableRef}
-          />
-          <CornerButton icon={<PlusIcon />} onPress={goToGroupCreate} show={!sorting} />
-        </ConditionalSpinner>
-      )}
-    </CollapsableHeaderContainer>
+  const header = <GroupListHeader sorting={sorting} setSorting={setSorting} />;
+
+  const draggableList = (
+    <CollapsableDraggableList
+      header={header}
+      headerHeight={HEADER_HEIGHT}
+      loading={loading}
+      data={groups}
+      renderItem={renderDraggableItem}
+      keyExtractor={keyExtractor}
+      handleDragEnd={handleDragEnd}
+    />
   );
+
+  const flatList = (
+    <CollapsableRefreshableFlatList
+      header={header}
+      headerHeight={HEADER_HEIGHT}
+      refresh={refresh}
+      loading={loading}
+      data={groups}
+      render={renderFlatItem}
+      keyExtractor={keyExtractor}
+      setIsOnTheTop={setHideScroll}
+      ref={listRef}
+    >
+      <CornerButton icon={<PlusIcon />} onPress={goToGroupCreate} show={!sorting} />
+    </CollapsableRefreshableFlatList>
+  );
+
+  return sorting ? draggableList : flatList;
 };
 
 export default GroupList;

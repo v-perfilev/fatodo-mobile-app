@@ -6,7 +6,8 @@ import CalendarViewContent from './CalendarViewContent';
 import {ScrollView} from 'react-native';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarThunks} from '../../../store/calendar/calendarActions';
-import FScrollView from '../../../components/boxes/FScrollView';
+import RefreshableScrollView from '../../../components/surfaces/RefreshableScrollView';
+import FBox from '../../../components/boxes/FBox';
 
 type CalendarViewContainerProps = {
   month: CalendarMonth;
@@ -48,14 +49,16 @@ const CalendarViewContainer = ({month, selectMonth, width}: CalendarViewContaine
   }, [isActiveMonth]);
 
   return (
-    <FScrollView width={width} p="0" refresh={refresh} ref={ref}>
-      <CalendarViewContent
-        month={month}
-        selectMonth={selectMonth}
-        activeDate={activeDate}
-        setActiveDate={setActiveDate}
-      />
-    </FScrollView>
+    <FBox width={width}>
+      <RefreshableScrollView refresh={refresh} ref={ref}>
+        <CalendarViewContent
+          month={month}
+          selectMonth={selectMonth}
+          activeDate={activeDate}
+          setActiveDate={setActiveDate}
+        />
+      </RefreshableScrollView>
+    </FBox>
   );
 };
 

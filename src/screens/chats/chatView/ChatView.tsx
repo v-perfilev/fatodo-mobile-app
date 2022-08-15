@@ -1,13 +1,9 @@
 import React, {ReactElement, useCallback, useRef, useState} from 'react';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
-import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
-import CollapsableHeaderContainer, {
-  CollapsableHeaderChildrenProps,
-} from '../../../components/surfaces/CollapsableHeaderContainer';
 import {HEADER_HEIGHT, TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
-import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
+import {FlatListType} from '../../../components/surfaces/FlatList';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 import ChatViewStub from './ChatViewStub';
@@ -20,6 +16,7 @@ import {ChatItem} from '../../../models/Message';
 import {LayoutChangeEvent, ViewToken} from 'react-native';
 import ChatViewItem from './ChatViewItem';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
+import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
 
 type ChatViewProps = WithChatProps;
 
@@ -97,29 +94,23 @@ const ChatView = ({loading}: ChatViewProps) => {
   }, [listRef.current]);
 
   return (
-    <CollapsableHeaderContainer header={<ChatViewHeader />}>
-      {({handleEventScroll, handleEventSnap, flatListRef}: CollapsableHeaderChildrenProps) => (
-        <ConditionalSpinner loading={loading} paddingTop={HEADER_HEIGHT}>
-          <FlatList
-            contentContainerStyle={ListUtils.containerStyle(HEADER_HEIGHT)}
-            inverted
-            ListEmptyComponent={<ChatViewStub />}
-            data={chatItems}
-            render={renderItem}
-            keyExtractor={keyExtractor}
-            onScroll={handleEventScroll}
-            onMomentumScrollEnd={handleEventSnap}
-            onEndReached={!allLoaded ? load : undefined}
-            refresh={refresh}
-            onViewableItemsChanged={onViewableItemsChanged}
-            setIsOnTheTop={setHideScroll}
-            listRefs={[listRef, flatListRef]}
-          />
-          <ScrollCornerButton show={!hideScroll} scrollDown={scrollDown} />
-          <ChatViewControl />
-        </ConditionalSpinner>
-      )}
-    </CollapsableHeaderContainer>
+    <CollapsableRefreshableFlatList
+      header={<ChatViewHeader />}
+      headerHeight={HEADER_HEIGHT}
+      nextNode={<ChatViewControl />}
+      loading={loading}
+      inverted
+      ListEmptyComponent={<ChatViewStub />}
+      data={chatItems}
+      render={renderItem}
+      keyExtractor={keyExtractor}
+      onEndReached={!allLoaded ? load : undefined}
+      onViewableItemsChanged={onViewableItemsChanged}
+      setIsOnTheTop={setHideScroll}
+      ref={listRef}
+    >
+      <ScrollCornerButton show={!hideScroll} scrollDown={scrollDown} />
+    </CollapsableRefreshableFlatList>
   );
 };
 
