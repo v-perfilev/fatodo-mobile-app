@@ -10,6 +10,7 @@ import {useTranslation} from 'react-i18next';
 import AccountViewHeader from './AccountViewHeader';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
 import {DEFAULT_SPACE} from '../../../constants';
+import {ListUtils} from '../../../shared/utils/ListUtils';
 
 const AccountView = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ const AccountView = () => {
   return (
     <>
       <AccountViewHeader />
-      <ScrollView p={DEFAULT_SPACE}>
+      <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
         <FVStack defaultSpace>
           <UserFullView user={account} account={account} />
           <Divider bg="secondary.500" />

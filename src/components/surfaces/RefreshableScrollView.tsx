@@ -24,7 +24,7 @@ const RefreshableScrollView = React.forwardRef((props: RefreshableScrollViewProp
           ref={RefUtils.merge(ref, refreshableRef)}
           {...props}
         >
-          <Refresher paddingTop={extraScrollY} refreshing={refreshing} />
+          <Refresher extraScrollY={extraScrollY} refreshing={refreshing} />
           {children}
         </Animated.ScrollView>
       )}

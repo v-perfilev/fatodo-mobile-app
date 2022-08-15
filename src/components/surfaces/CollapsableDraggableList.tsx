@@ -20,7 +20,7 @@ const CollapsableDraggableList = React.forwardRef((props: CollapsableDraggableLi
       {({handleOffsetScroll, handleEventSnap, collapsableRef}: CollapsableHeaderChildrenProps) => (
         <ConditionalSpinner loading={loading} paddingTop={headerHeight}>
           <DraggableList
-            contentContainerStyle={ListUtils.containerStyle(headerHeight)}
+            contentContainerStyle={ListUtils.containerStyle(0, headerHeight)}
             onScrollOffsetChange={handleOffsetScroll}
             onMomentumScrollEnd={handleEventSnap}
             ref={RefUtils.merge(ref, collapsableRef)}

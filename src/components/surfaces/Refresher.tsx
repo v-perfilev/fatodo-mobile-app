@@ -5,16 +5,27 @@ import {MAX_REFRESH_HEIGHT} from '../../constants';
 import FCenter from '../boxes/FCenter';
 
 type RefresherProps = {
-  paddingTop: Animated.Value;
+  extraScrollY: Animated.Value;
   refreshing: boolean;
+  inverted?: boolean;
 };
 
-const Refresher = ({paddingTop, refreshing}: RefresherProps) => {
-  const animatedStyle: StyleProp<any> = {paddingTop};
+const Refresher = ({extraScrollY, refreshing, inverted}: RefresherProps) => {
+  const animatedStyle: StyleProp<any> = {
+    paddingTop: !inverted ? extraScrollY : undefined,
+    paddingBottom: inverted ? extraScrollY : undefined,
+  };
 
   return (
     <Animated.View style={animatedStyle}>
-      <FCenter position="absolute" left="0" right="0" bottom="0" height={MAX_REFRESH_HEIGHT}>
+      <FCenter
+        position="absolute"
+        left="0"
+        right="0"
+        top={inverted ? 0 : undefined}
+        bottom={!inverted ? 0 : undefined}
+        height={MAX_REFRESH_HEIGHT}
+      >
         <Spinner size="lg" />
         <Text>{refreshing ? 'loading' : ''}</Text>
       </FCenter>

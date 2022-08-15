@@ -79,7 +79,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
         headerHeight={HEADER_HEIGHT}
         nextNode={<CommentListControl reference={reference} clearReference={clearReference} />}
         loading={loading}
-        // inverted
+        inverted
         ListEmptyComponent={<CommentListStub />}
         data={comments}
         render={renderItem}

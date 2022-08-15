@@ -8,6 +8,7 @@ import Header from '../../../components/layouts/Header';
 import {GroupThunks} from '../../../store/group/groupActions';
 import {ScrollView} from 'native-base';
 import {DEFAULT_SPACE} from '../../../constants';
+import {ListUtils} from '../../../shared/utils/ListUtils';
 
 const GroupCreate = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +26,7 @@ const GroupCreate = () => {
   return (
     <>
       <Header />
-      <ScrollView p={DEFAULT_SPACE}>
+      <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
         <GroupForm request={request} cancel={goBack} />
       </ScrollView>
     </>

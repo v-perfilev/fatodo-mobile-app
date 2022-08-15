@@ -30,8 +30,10 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
             <RefreshableContainer refresh={refresh} parentScrollY={scrollY}>
               {({extraScrollY, refreshing, refreshableRef}: RefreshableChildrenProps) => (
                 <FlatList
-                  ListHeaderComponent={<Refresher paddingTop={extraScrollY} refreshing={refreshing} />}
-                  contentContainerStyle={ListUtils.containerStyle(headerHeight)}
+                  ListHeaderComponent={
+                    <Refresher extraScrollY={extraScrollY} refreshing={refreshing} inverted={props.inverted} />
+                  }
+                  contentContainerStyle={ListUtils.containerStyle(0, headerHeight)}
                   ItemSeparatorComponent={EventListSeparator}
                   onScroll={handleEventScroll}
                   onMomentumScrollEnd={handleEventSnap}

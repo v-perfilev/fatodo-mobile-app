@@ -10,6 +10,7 @@ import FCenter from '../../../components/boxes/FCenter';
 import FVStack from '../../../components/boxes/FVStack';
 import {DEFAULT_SPACE} from '../../../constants';
 import {ScrollView} from 'native-base';
+import {ListUtils} from '../../../shared/utils/ListUtils';
 
 const ForgotPassword = () => {
   const navigation = useNavigation<AuthNavigationProp>();
@@ -18,7 +19,7 @@ const ForgotPassword = () => {
   const goToSignIn = (): void => navigation.navigate('SignIn');
 
   return (
-    <ScrollView p={DEFAULT_SPACE} keyboardShouldPersistTaps="handled">
+    <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)} keyboardShouldPersistTaps="handled">
       <FCenter grow pt="10" pb="5">
         <FVStack space="5" w="90%" maxW="300">
           <FCenter grow>

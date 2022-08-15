@@ -13,6 +13,7 @@ import Header from '../../../components/layouts/Header';
 import {ItemThunks} from '../../../store/item/itemActions';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
 import {DEFAULT_SPACE} from '../../../constants';
+import {ListUtils} from '../../../shared/utils/ListUtils';
 
 type ItemEditProps = WithItemProps;
 
@@ -45,7 +46,7 @@ const ItemEdit = ({group, item, loading}: ItemEditProps) => {
     <ThemeProvider theme={theme}>
       <Header />
       <ConditionalSpinner loading={loading}>
-        <ScrollView p={DEFAULT_SPACE}>
+        <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
           <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goBack} />
         </ScrollView>
       </ConditionalSpinner>

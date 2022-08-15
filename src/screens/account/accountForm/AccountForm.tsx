@@ -21,6 +21,7 @@ import {useNavigation} from '@react-navigation/native';
 import {AccountNavigationProp} from '../../../navigators/AccountNavigator';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
 import {DEFAULT_SPACE} from '../../../constants';
+import {ListUtils} from '../../../shared/utils/ListUtils';
 
 export interface AccountFormValues {
   username: string;
@@ -92,7 +93,7 @@ const AccountForm = () => {
   return (
     <>
       <Header hideLogo />
-      <ScrollView p={DEFAULT_SPACE}>
+      <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
         <Formik
           initialValues={initialValues(account)}
           validationSchema={validationSchema(account)}

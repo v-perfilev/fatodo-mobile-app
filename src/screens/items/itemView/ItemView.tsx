@@ -20,6 +20,7 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
 import ItemViewCorner from './ItemViewCorner';
 import {DEFAULT_SPACE} from '../../../constants';
+import {ListUtils} from '../../../shared/utils/ListUtils';
 
 type ItemViewProps = WithItemProps;
 
@@ -38,7 +39,7 @@ const ItemView = ({group, loading}: ItemViewProps) => {
       <ItemViewHeader account={account} />
       <ItemViewCorner />
       <ConditionalSpinner loading={loading}>
-        <ScrollView p={DEFAULT_SPACE}>
+        <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
           <FVStack defaultSpace>
             <ItemViewName />
             <ItemViewGroup />

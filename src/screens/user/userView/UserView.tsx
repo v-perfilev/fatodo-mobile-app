@@ -9,6 +9,7 @@ import {Divider, ScrollView} from 'native-base';
 import UserViewControl from './UserViewControl';
 import UserViewRelations from './UserViewRelations';
 import {DEFAULT_SPACE} from '../../../constants';
+import {ListUtils} from '../../../shared/utils/ListUtils';
 
 type UserViewProps = WithUserProps;
 
@@ -17,7 +18,7 @@ const UserView = ({user, loading}: UserViewProps) => {
     <>
       <Header hideLogo />
       <ConditionalSpinner loading={loading}>
-        <ScrollView p={DEFAULT_SPACE}>
+        <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
           <FVStack defaultSpace>
             <UserFullView user={user} />
             <Divider bg="secondary.500" />

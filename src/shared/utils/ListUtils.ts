@@ -7,8 +7,18 @@ export class ListUtils {
     height: '100%',
   };
 
-  public static containerStyle = (paddingTop?: number): StyleProp<unknown> => ({
-    paddingTop,
+  public static containerStyle = (
+    p?: number,
+    pt?: number,
+    pb?: number,
+    pl?: number,
+    pr?: number,
+  ): StyleProp<unknown> => ({
+    padding: p,
+    paddingTop: pt,
+    paddingBottom: pb,
+    paddingLeft: pl,
+    paddingRight: pr,
     flexGrow: 1,
   });
 

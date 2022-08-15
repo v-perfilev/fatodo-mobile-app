@@ -10,6 +10,7 @@ import FCenter from '../../../components/boxes/FCenter';
 import FVStack from '../../../components/boxes/FVStack';
 import {ScrollView} from 'native-base';
 import {DEFAULT_SPACE} from '../../../constants';
+import {ListUtils} from '../../../shared/utils/ListUtils';
 
 const SignIn = () => {
   const navigation = useNavigation<AuthNavigationProp>();
@@ -19,7 +20,7 @@ const SignIn = () => {
   const goToSignUp = (): void => navigation.navigate('SignUp');
 
   return (
-    <ScrollView p={DEFAULT_SPACE} keyboardShouldPersistTaps="handled">
+    <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)} keyboardShouldPersistTaps="handled">
       <FCenter grow pt="10" pb="5">
         <FVStack w="90%" maxW="300px" defaultSpace>
           <FCenter grow>
