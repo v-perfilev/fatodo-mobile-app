@@ -76,7 +76,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
     <ThemeProvider theme={theme}>
       <CollapsableRefreshableFlatList
         header={<Header />}
-        headerHeight={0}
+        headerHeight={HEADER_HEIGHT}
         nextNode={<CommentListControl reference={reference} clearReference={clearReference} />}
         refresh={refresh}
         loading={loading}

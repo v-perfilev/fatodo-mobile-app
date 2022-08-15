@@ -98,6 +98,7 @@ const ChatView = ({loading}: ChatViewProps) => {
       header={<ChatViewHeader />}
       headerHeight={HEADER_HEIGHT}
       nextNode={<ChatViewControl />}
+      refresh={refresh}
       loading={loading}
       inverted
       ListEmptyComponent={<ChatViewStub />}

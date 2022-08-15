@@ -1,10 +1,11 @@
 import {Animated, Easing, NativeScrollEvent, NativeSyntheticEvent, ScrollView} from 'react-native';
-import React, {MutableRefObject, ReactElement, useRef, useState} from 'react';
+import React, {MutableRefObject, ReactElement, useEffect, useRef} from 'react';
 import {FlatListType} from './FlatList';
 import {NativeViewGestureHandler, PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlerCommon';
 import {useSharedValue} from 'react-native-reanimated';
 import {MAX_REFRESH_HEIGHT} from '../../constants';
+import {useDelayedState} from '../../shared/hooks/useDelayedState';
 
 export type RefreshableChildrenProps = {
   refreshableRef: MutableRefObject<any>;
@@ -21,7 +22,7 @@ type RefreshableContainerProps = {
 };
 
 const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: RefreshableContainerProps) => {
-  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useDelayedState(false);
 
   const panRef = useRef();
   const nativeRef = useRef();
@@ -86,15 +87,16 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
         closeLoader();
       } else {
         setRefreshing(true);
-        refresh().finally(() => {
-          closeLoader();
-          setRefreshing(false);
-        });
+        refresh().finally(() => setRefreshing(false));
       }
       overscrollInitValue.value = undefined;
       shouldRefresh.value = false;
     }
   };
+
+  useEffect(() => {
+    !refreshing && closeLoader();
+  }, [refreshing]);
 
   const refreshGesturesAllowed = refresh && !refreshing;
 

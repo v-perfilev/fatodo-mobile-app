@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
 import GroupListHeader from './GroupListHeader';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {GroupsActions, GroupsThunks} from '../../../store/groups/groupsActions';
@@ -18,6 +18,7 @@ import CollapsableRefreshableFlatList from '../../../components/surfaces/Collaps
 import {FlatListType} from '../../../components/surfaces/FlatList';
 import CollapsableDraggableList from '../../../components/surfaces/CollapsableDraggableList';
 import {LayoutChangeEvent} from 'react-native';
+import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 
 const GroupList = () => {
   const dispatch = useAppDispatch();
@@ -67,6 +68,15 @@ const GroupList = () => {
     dispatch(GroupsActions.setGroups(data));
   };
 
+  /*
+  scroll up button
+   */
+
+  const scrollUp = useCallback((): void => {
+    setHideScroll(true);
+    listRef.current.scrollToOffset({offset: 0});
+  }, [listRef.current]);
+
   useEffect(() => {
     dispatch(GroupsThunks.fetchGroups()).finally(() => setLoading(false));
   }, []);
@@ -97,7 +107,8 @@ const GroupList = () => {
       setIsOnTheTop={setHideScroll}
       ref={listRef}
     >
-      <CornerButton icon={<PlusIcon />} onPress={goToGroupCreate} show={!sorting} />
+      <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />
+      <CornerButton icon={<PlusIcon />} onPress={goToGroupCreate} />
     </CollapsableRefreshableFlatList>
   );
 

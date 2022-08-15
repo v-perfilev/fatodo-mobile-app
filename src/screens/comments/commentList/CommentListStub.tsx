@@ -5,7 +5,7 @@ import StubBox from '../../../components/surfaces/StubBox';
 const CommentListStub = () => {
   const {t} = useTranslation();
 
-  return <StubBox>{t('comment:view.commentsNotFound')}</StubBox>;
+  return <StubBox inverted>{t('comment:view.commentsNotFound')}</StubBox>;
 };
 
 export default CommentListStub;

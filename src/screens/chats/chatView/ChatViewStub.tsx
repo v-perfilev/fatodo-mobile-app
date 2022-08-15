@@ -5,7 +5,7 @@ import StubBox from '../../../components/surfaces/StubBox';
 const ChatViewStub = () => {
   const {t} = useTranslation();
 
-  return <StubBox>{t('chat:view.messagesNotFound')}</StubBox>;
+  return <StubBox inverted>{t('chat:view.messagesNotFound')}</StubBox>;
 };
 
 export default ChatViewStub;

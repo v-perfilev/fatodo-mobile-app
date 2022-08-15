@@ -1,6 +1,6 @@
 import {Animated, StyleProp} from 'react-native';
 import React from 'react';
-import {Spinner, Text} from 'native-base';
+import {Spinner} from 'native-base';
 import {MAX_REFRESH_HEIGHT} from '../../constants';
 import FCenter from '../boxes/FCenter';
 
@@ -26,8 +26,7 @@ const Refresher = ({extraScrollY, refreshing, inverted}: RefresherProps) => {
         bottom={!inverted ? 0 : undefined}
         height={MAX_REFRESH_HEIGHT}
       >
-        <Spinner size="lg" />
-        <Text>{refreshing ? 'loading' : ''}</Text>
+        <Spinner size="lg" color={!refreshing ? 'gray.200' : undefined} />
       </FCenter>
     </Animated.View>
   );

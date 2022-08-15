@@ -1,13 +1,11 @@
 import React, {ReactElement, useCallback, useEffect, useState} from 'react';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
-import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import ContactListControl from './ContactListControl';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
 import CornerButton from '../../../components/controls/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
-import FlatList from '../../../components/surfaces/FlatList';
 import ContactListStub from './ContactListStub';
 import {Box, useTheme} from 'native-base';
 import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
@@ -16,6 +14,7 @@ import {ContactRelation} from '../../../models/Contact';
 import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import ContactListItem from './ContactListItem';
+import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();
@@ -67,20 +66,19 @@ const ContactList = () => {
   }, [relations, filter]);
 
   return (
-    <>
-      <ContactListControl setFilter={setFilter} />
-      <ConditionalSpinner loading={loading}>
-        <CornerButton icon={<PlusIcon />} onPress={openContactRequestDialog} />
-        <FlatList
-          contentContainerStyle={ListUtils.containerStyle()}
-          ListEmptyComponent={<ContactListStub />}
-          data={relationsToShow}
-          render={renderItem}
-          keyExtractor={keyExtractor}
-          refresh={refresh}
-        />
-      </ConditionalSpinner>
-    </>
+    <CollapsableRefreshableFlatList
+      header={undefined}
+      headerHeight={0}
+      previousNode={<ContactListControl setFilter={setFilter} />}
+      loading={loading}
+      ListEmptyComponent={<ContactListStub />}
+      data={relationsToShow}
+      render={renderItem}
+      keyExtractor={keyExtractor}
+      refresh={refresh}
+    >
+      <CornerButton icon={<PlusIcon />} onPress={openContactRequestDialog} />
+    </CollapsableRefreshableFlatList>
   );
 };
 
