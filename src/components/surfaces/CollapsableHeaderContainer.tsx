@@ -1,6 +1,6 @@
 import {Animated, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleProp, View} from 'react-native';
 import React, {MutableRefObject, ReactElement, useRef} from 'react';
-import {FlatListType} from '../surfaces/FlatList';
+import {FlatListType} from './FlatList';
 import {HEADER_HEIGHT} from '../../constants';
 
 export type CollapsableHeaderChildrenProps = {

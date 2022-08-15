@@ -90,11 +90,11 @@ const CalendarView = () => {
         fixedLength={singleWidth}
         initialScrollIndex={getInitialIndex()}
         onMomentumScrollEnd={handleScrollEnd}
-        listRefs={[listRef]}
         initialNumToRender={1}
         maxToRenderPerBatch={3}
         updateCellsBatchingPeriod={10}
         windowSize={7}
+        ref={listRef}
       />
     </>
   );

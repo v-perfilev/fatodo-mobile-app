@@ -5,7 +5,7 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
 import CollapsableHeaderContainer, {
   CollapsableHeaderChildrenProps,
-} from '../../../components/layouts/CollapsableHeaderContainer';
+} from '../../../components/surfaces/CollapsableHeaderContainer';
 import {HEADER_HEIGHT, TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
 import {ListUtils} from '../../../shared/utils/ListUtils';

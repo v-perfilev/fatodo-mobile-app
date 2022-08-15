@@ -3,7 +3,7 @@ import {HEADER_HEIGHT} from '../../../constants';
 import ChatListControl from './ChatListControl';
 import CollapsableHeaderContainer, {
   CollapsableHeaderChildrenProps,
-} from '../../../components/layouts/CollapsableHeaderContainer';
+} from '../../../components/surfaces/CollapsableHeaderContainer';
 import Header from '../../../components/layouts/Header';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
@@ -19,6 +19,7 @@ import ChatListItem from './ChatListItem';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
 import {ChatsThunks} from '../../../store/chats/chatsActions';
+import {RefUtils} from '../../../shared/utils/RefUtils';
 
 type ControlType = 'regular' | 'filtered';
 
@@ -96,7 +97,7 @@ const ChatList = () => {
 
   return (
     <CollapsableHeaderContainer header={<Header hideGoBack />}>
-      {({handleEventScroll, handleEventSnap, flatListRef}: CollapsableHeaderChildrenProps) => (
+      {({handleEventScroll, handleEventSnap, collapsableRef}: CollapsableHeaderChildrenProps) => (
         <>
           <ChatListControl setFilter={setFilter} marginTop={HEADER_HEIGHT} />
           <ConditionalSpinner loading={loading}>
@@ -111,7 +112,7 @@ const ChatList = () => {
               onEndReached={type === 'regular' ? load : loadFiltered}
               refresh={type === 'regular' ? refresh : undefined}
               setIsOnTheTop={setHideScroll}
-              listRefs={[listRef, flatListRef]}
+              ref={RefUtils.merge(listRef, collapsableRef)}
             />
           </ConditionalSpinner>
           <ChatListCorner />

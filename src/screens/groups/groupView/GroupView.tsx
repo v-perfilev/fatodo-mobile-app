@@ -5,7 +5,7 @@ import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import CollapsableHeaderContainer, {
   CollapsableHeaderChildrenProps,
-} from '../../../components/layouts/CollapsableHeaderContainer';
+} from '../../../components/surfaces/CollapsableHeaderContainer';
 import GroupViewHeader from './GroupViewHeader';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {HEADER_HEIGHT} from '../../../constants';
@@ -22,6 +22,7 @@ import {Item} from '../../../models/Item';
 import {LayoutChangeEvent} from 'react-native';
 import GroupViewItem from './groupViewItem/GroupViewItem';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import {RefUtils} from '../../../shared/utils/RefUtils';
 
 type GroupViewProps = WithGroupProps;
 
@@ -114,7 +115,7 @@ stub, keyExtractor and renderItem
       <CollapsableHeaderContainer
         header={<GroupViewHeader showArchived={showArchived} setShowArchived={setShowArchived} />}
       >
-        {({handleEventScroll, handleEventSnap, flatListRef}: CollapsableHeaderChildrenProps) => (
+        {({handleEventScroll, handleEventSnap, collapsableRef}: CollapsableHeaderChildrenProps) => (
           <ConditionalSpinner loading={_loading} paddingTop={HEADER_HEIGHT}>
             <FlatList
               contentContainerStyle={ListUtils.containerStyle(HEADER_HEIGHT)}
@@ -127,7 +128,7 @@ stub, keyExtractor and renderItem
               onEndReached={_onEndReacted}
               refresh={_refresh}
               setIsOnTheTop={setHideScroll}
-              listRefs={[listRef, flatListRef]}
+              ref={RefUtils.merge(listRef, collapsableRef)}
             />
             <GroupViewCorner />
             <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />

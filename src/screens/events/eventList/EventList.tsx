@@ -15,7 +15,7 @@ import EventListSeparator from './EventListSeparator';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import CollapsableHeaderContainer, {
   CollapsableHeaderChildrenProps,
-} from '../../../components/layouts/CollapsableHeaderContainer';
+} from '../../../components/surfaces/CollapsableHeaderContainer';
 import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 import {HEADER_HEIGHT} from '../../../constants';
 import {RefUtils} from '../../../shared/utils/RefUtils';
@@ -91,7 +91,7 @@ const EventList = () => {
             onEndReached={!allLoaded ? load : undefined}
             refresh={refresh}
             setIsOnTheTop={setHideScroll}
-            ref={RefUtils.merge([listRef, collapsableRef])}
+            ref={RefUtils.merge(listRef, collapsableRef)}
           />
           <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />
         </ConditionalSpinner>

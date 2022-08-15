@@ -17,12 +17,8 @@ import PlusIcon from '../../../components/icons/PlusIcon';
 import DraggableList from '../../../components/surfaces/DraggableList';
 import CollapsableHeaderContainer, {
   CollapsableHeaderChildrenProps,
-} from '../../../components/layouts/CollapsableHeaderContainer';
-import Header from '../../../components/layouts/Header';
+} from '../../../components/surfaces/CollapsableHeaderContainer';
 import {HEADER_HEIGHT} from '../../../constants';
-import FlatList from '../../../components/surfaces/FlatList';
-import EventListSeparator from '../../events/eventList/EventListSeparator';
-import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 
 const GroupList = () => {
   const dispatch = useAppDispatch();
@@ -71,7 +67,7 @@ const GroupList = () => {
 
   return (
     <CollapsableHeaderContainer header={<GroupListHeader sorting={sorting} setSorting={setSorting} />}>
-      {({handleOffsetScroll, handleEventSnap, flatListRef}: CollapsableHeaderChildrenProps) => (
+      {({handleOffsetScroll, handleEventSnap, collapsableRef}: CollapsableHeaderChildrenProps) => (
         <ConditionalSpinner loading={loading} paddingTop={HEADER_HEIGHT}>
           <DraggableList
             contentContainerStyle={ListUtils.containerStyle(HEADER_HEIGHT)}
@@ -82,7 +78,7 @@ const GroupList = () => {
             refresh={!sorting && refresh}
             onScrollOffsetChange={handleOffsetScroll}
             onMomentumScrollEnd={handleEventSnap}
-            listRef={flatListRef}
+            ref={collapsableRef}
           />
           <CornerButton icon={<PlusIcon />} onPress={goToGroupCreate} show={!sorting} />
         </ConditionalSpinner>
