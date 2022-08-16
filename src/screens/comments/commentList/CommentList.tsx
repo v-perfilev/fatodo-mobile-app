@@ -6,7 +6,6 @@ import {Box, Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import CommentListControl from './CommentListControl';
-import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import CommentListStub from './CommentListStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -19,6 +18,9 @@ import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {HEADER_HEIGHT} from '../../../constants';
+import {CornerButton} from '../../../models/CornerButton';
+import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
+import CornerManagement from '../../../components/controls/CornerManagement';
 
 type CommentListProps = WithCommentsProps;
 
@@ -72,6 +74,8 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
     listRef.current.scrollToOffset({offset: 0});
   }, [listRef.current]);
 
+  const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
+
   return (
     <ThemeProvider theme={theme}>
       <CollapsableRefreshableFlatList
@@ -88,9 +92,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
         onEndReached={!allLoaded ? load : undefined}
         ref={listRef}
       >
-        {({scrollY}: CollapsableRefreshableChildrenProps) => (
-          <ScrollCornerButton scrollY={scrollY} scroll={scrollDown} />
-        )}
+        {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
       </CollapsableRefreshableFlatList>
     </ThemeProvider>
   );

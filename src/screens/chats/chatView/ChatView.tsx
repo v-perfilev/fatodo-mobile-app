@@ -5,7 +5,6 @@ import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContain
 import {HEADER_HEIGHT, TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import {ListUtils} from '../../../shared/utils/ListUtils';
-import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 import ChatViewStub from './ChatViewStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {Box, useTheme} from 'native-base';
@@ -19,6 +18,9 @@ import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
+import {CornerButton} from '../../../models/CornerButton';
+import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
+import CornerManagement from '../../../components/controls/CornerManagement';
 
 type ChatViewProps = WithChatProps;
 
@@ -93,6 +95,8 @@ const ChatView = ({loading}: ChatViewProps) => {
     listRef.current.scrollToOffset({offset: 0});
   }, [listRef.current]);
 
+  const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
+
   return (
     <CollapsableRefreshableFlatList
       header={<ChatViewHeader />}
@@ -109,7 +113,7 @@ const ChatView = ({loading}: ChatViewProps) => {
       onViewableItemsChanged={onViewableItemsChanged}
       ref={listRef}
     >
-      {({scrollY}: CollapsableRefreshableChildrenProps) => <ScrollCornerButton scrollY={scrollY} scroll={scrollDown} />}
+      {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
     </CollapsableRefreshableFlatList>
   );
 };

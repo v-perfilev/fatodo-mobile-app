@@ -8,8 +8,6 @@ import {HEADER_HEIGHT} from '../../../constants';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import GroupViewStub from './groupViewItems/GroupViewStub';
-import GroupViewCorner from './GroupViewCorner';
-import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import {GroupThunks} from '../../../store/group/groupActions';
@@ -21,11 +19,18 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
+import {CornerButton} from '../../../models/CornerButton';
+import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
+import CornerManagement from '../../../components/controls/CornerManagement';
+import {useNavigation} from '@react-navigation/native';
+import {RootNavigationProp} from '../../../navigators/RootNavigator';
+import CommentsIcon from '../../../components/icons/CommentsIcon';
 
 type GroupViewProps = WithGroupProps;
 
 const GroupView = ({group, loading}: GroupViewProps) => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<RootNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const activeItems = useAppSelector(GroupSelectors.activeItems);
   const archivedItems = useAppSelector(GroupSelectors.archivedItems);
@@ -41,6 +46,8 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   }, [group]);
 
   const canEdit = useMemo<boolean>(() => group && GroupUtils.canEdit(account, group), [group, account]);
+
+  const goToComments = (): void => navigation.navigate('CommentList', {targetId: group.id, colorScheme: group.color});
 
   /*
   loaders
@@ -106,6 +113,11 @@ stub, keyExtractor and renderItem
   const _onEndReacted = showArchived ? _onArchivedEndReached : _onActiveEndReached;
   const _refresh = showArchived ? refreshArchived : refreshActive;
 
+  const buttons: CornerButton[] = [
+    {icon: <CommentsIcon />, action: goToComments},
+    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true},
+  ];
+
   return (
     <ThemeProvider theme={theme}>
       <CollapsableRefreshableFlatList
@@ -120,12 +132,7 @@ stub, keyExtractor and renderItem
         refresh={_refresh}
         ref={listRef}
       >
-        {({scrollY}: CollapsableRefreshableChildrenProps) => (
-          <>
-            <GroupViewCorner />
-            <ScrollCornerButton scrollY={scrollY} scroll={scrollUp} />
-          </>
-        )}
+        {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
       </CollapsableRefreshableFlatList>
     </ThemeProvider>
   );

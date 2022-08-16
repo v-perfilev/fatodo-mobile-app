@@ -16,7 +16,9 @@ import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {HEADER_HEIGHT} from '../../../constants';
-import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
+import CornerManagement from '../../../components/controls/CornerManagement';
+import {CornerButton} from '../../../models/CornerButton';
+import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 
 const EventList = () => {
   const dispatch = useAppDispatch();
@@ -71,6 +73,8 @@ const EventList = () => {
     isFocused && dispatch(EventsThunks.refreshUnreadCount());
   }, [isFocused]);
 
+  const buttons: CornerButton[] = [{icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true}];
+
   return (
     <CollapsableRefreshableFlatList
       header={<Header hideGoBack />}
@@ -84,7 +88,7 @@ const EventList = () => {
       onEndReached={!allLoaded ? load : undefined}
       ref={listRef}
     >
-      {({scrollY}: CollapsableRefreshableChildrenProps) => <ScrollCornerButton scrollY={scrollY} scroll={scrollUp} />}
+      {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
     </CollapsableRefreshableFlatList>
   );
 };

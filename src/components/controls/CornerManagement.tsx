@@ -1,8 +1,9 @@
-import {Box, IIconButtonProps} from 'native-base';
+import {Box, IIconButtonProps, ScaleFade} from 'native-base';
 import {Animated, StyleProp, ViewStyle} from 'react-native';
 import {CornerButton} from '../../models/CornerButton';
 import IconButton from './IconButton';
 import React, {RefObject, useEffect, useRef, useState} from 'react';
+import {useIsFocused} from '@react-navigation/native';
 import CompositeAnimation = Animated.CompositeAnimation;
 
 type CornerManagementProps = {
@@ -46,6 +47,7 @@ const CornerManagementButton = ({button, ...props}: IIconButtonProps & {button: 
 };
 
 const CornerManagement = ({buttons, scrollY}: CornerManagementProps) => {
+  const isFocused = useIsFocused();
   const [positions, setPositions] = useState<number[]>(calculatePositions(buttons, true));
   const positionValues = createAnimatedValues(positions);
 
@@ -86,7 +88,9 @@ const CornerManagement = ({buttons, scrollY}: CornerManagementProps) => {
     <Box zIndex="100" position="absolute" bottom="3" right="3" bg={'red.50'}>
       {buttons.map((button, index) => (
         <Animated.View key={index} style={[{translateY: positionValues[index].current}, viewStyle]}>
-          <CornerManagementButton button={button} />
+          <ScaleFade in={isFocused} duration={2000}>
+            <CornerManagementButton button={button} />
+          </ScaleFade>
         </Animated.View>
       ))}
     </Box>

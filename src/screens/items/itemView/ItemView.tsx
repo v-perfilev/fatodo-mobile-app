@@ -18,15 +18,21 @@ import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
-import ItemViewCorner from './ItemViewCorner';
 import {DEFAULT_SPACE} from '../../../constants';
 import {ListUtils} from '../../../shared/utils/ListUtils';
+import CornerManagement from '../../../components/controls/CornerManagement';
+import {useNavigation} from '@react-navigation/native';
+import {RootNavigationProp} from '../../../navigators/RootNavigator';
+import {CornerButton} from '../../../models/CornerButton';
+import CommentsIcon from '../../../components/icons/CommentsIcon';
 
 type ItemViewProps = WithItemProps;
 
 const ItemView = ({group, loading}: ItemViewProps) => {
+  const navigation = useNavigation<RootNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const reminders = useAppSelector(ItemSelectors.reminders);
+  const item = useAppSelector(ItemSelectors.item);
 
   const showReminders = reminders?.length > 0;
 
@@ -34,10 +40,13 @@ const ItemView = ({group, loading}: ItemViewProps) => {
     return group ? ThemeFactory.getTheme(group?.color) : ThemeFactory.getDefaultTheme();
   }, [group]);
 
+  const goToComments = (): void => navigation.navigate('CommentList', {targetId: item.id, colorScheme: group.color});
+
+  const buttons: CornerButton[] = [{icon: <CommentsIcon />, action: goToComments}];
+
   return (
     <ThemeProvider theme={theme}>
       <ItemViewHeader account={account} />
-      <ItemViewCorner />
       <ConditionalSpinner loading={loading}>
         <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
           <FVStack defaultSpace>
@@ -57,6 +66,7 @@ const ItemView = ({group, loading}: ItemViewProps) => {
           </FVStack>
         </ScrollView>
       </ConditionalSpinner>
+      <CornerManagement buttons={buttons} />
     </ThemeProvider>
   );
 };

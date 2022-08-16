@@ -5,8 +5,6 @@ import Header from '../../../components/layouts/Header';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import ChatListStub from './ChatListStub';
-import ChatListCorner from './ChatListCorner';
-import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Chat} from '../../../models/Chat';
 import {LayoutChangeEvent} from 'react-native';
@@ -18,12 +16,18 @@ import {ChatsThunks} from '../../../store/chats/chatsActions';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
+import CornerManagement from '../../../components/controls/CornerManagement';
+import {CornerButton} from '../../../models/CornerButton';
+import PlusIcon from '../../../components/icons/PlusIcon';
+import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
+import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
 
 type ControlType = 'regular' | 'filtered';
 
 const ChatList = () => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
+  const {showChatCreateDialog} = useChatDialogContext();
   const chats = useAppSelector(ChatsSelectors.chats);
   const filteredChats = useAppSelector(ChatsSelectors.filteredChats);
   const [type, setType] = useState<ControlType>('regular');
@@ -31,6 +35,10 @@ const ChatList = () => {
   const [loading, setLoading] = useDelayedState();
   const listRef = useRef<FlatListType>();
   const [loadCounter, setLoadCounter] = useState<number>(1);
+
+  const openCreateChatDialog = (): void => {
+    showChatCreateDialog();
+  };
 
   /*
   loaders
@@ -91,6 +99,11 @@ const ChatList = () => {
     setLoading(loadCounter > 0);
   }, [loadCounter]);
 
+  const buttons: CornerButton[] = [
+    {icon: <PlusIcon />, action: openCreateChatDialog},
+    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true},
+  ];
+
   return (
     <CollapsableRefreshableFlatList
       header={<Header hideGoBack />}
@@ -106,12 +119,7 @@ const ChatList = () => {
       onEndReached={type === 'regular' ? load : loadFiltered}
       ref={listRef}
     >
-      {({scrollY}: CollapsableRefreshableChildrenProps) => (
-        <>
-          <ChatListCorner />
-          <ScrollCornerButton scrollY={scrollY} scroll={scrollUp} />
-        </>
-      )}
+      {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
     </CollapsableRefreshableFlatList>
   );
 };

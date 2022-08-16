@@ -4,8 +4,6 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import ContactListControl from './ContactListControl';
 import {ContactsThunks} from '../../../store/contacts/contactsActions';
-import CornerButton from '../../../components/controls/CornerButton';
-import PlusIcon from '../../../components/icons/PlusIcon';
 import ContactListStub from './ContactListStub';
 import {Box, useTheme} from 'native-base';
 import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
@@ -15,6 +13,9 @@ import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import ContactListItem from './ContactListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
+import CornerManagement from '../../../components/controls/CornerManagement';
+import {CornerButton} from '../../../models/CornerButton';
+import PlusIcon from '../../../components/icons/PlusIcon';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();
@@ -65,6 +66,8 @@ const ContactList = () => {
     setRelationsToShow(filteredRelations);
   }, [relations, filter]);
 
+  const buttons: CornerButton[] = [{icon: <PlusIcon />, action: openContactRequestDialog}];
+
   return (
     <CollapsableRefreshableFlatList
       header={undefined}
@@ -77,7 +80,7 @@ const ContactList = () => {
       keyExtractor={keyExtractor}
       refresh={refresh}
     >
-      <CornerButton icon={<PlusIcon />} onPress={openContactRequestDialog} />
+      <CornerManagement buttons={buttons} />
     </CollapsableRefreshableFlatList>
   );
 };
