@@ -9,7 +9,7 @@ import {ContactRequest} from '../../../models/Contact';
 import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import OutcomingRequestListItem from './OutcomingRequestListItem';
-import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
+import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 
 const OutcomingRequestList = () => {
   const dispatch = useAppDispatch();

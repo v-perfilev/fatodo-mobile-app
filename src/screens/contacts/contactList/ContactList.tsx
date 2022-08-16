@@ -14,7 +14,7 @@ import {ContactRelation} from '../../../models/Contact';
 import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import ContactListItem from './ContactListItem';
-import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
+import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();

@@ -14,9 +14,9 @@ import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import CornerButton from '../../../components/controls/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import {HEADER_HEIGHT} from '../../../constants';
-import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
-import {FlatListType} from '../../../components/surfaces/FlatList';
-import CollapsableDraggableList from '../../../components/surfaces/CollapsableDraggableList';
+import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
+import {FlatListType} from '../../../components/scrollable/FlatList';
+import CollapsableDraggableList from '../../../components/scrollable/CollapsableDraggableList';
 import {LayoutChangeEvent} from 'react-native';
 
 const GroupList = () => {

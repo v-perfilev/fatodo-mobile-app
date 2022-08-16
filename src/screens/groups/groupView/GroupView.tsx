@@ -5,7 +5,7 @@ import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import GroupViewHeader from './GroupViewHeader';
 import {HEADER_HEIGHT} from '../../../constants';
-import {FlatListType} from '../../../components/surfaces/FlatList';
+import {FlatListType} from '../../../components/scrollable/FlatList';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import GroupViewStub from './groupViewItems/GroupViewStub';
 import GroupViewCorner from './GroupViewCorner';
@@ -20,7 +20,7 @@ import GroupViewItem from './groupViewItem/GroupViewItem';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
-} from '../../../components/surfaces/CollapsableRefreshableFlatList';
+} from '../../../components/scrollable/CollapsableRefreshableFlatList';
 
 type GroupViewProps = WithGroupProps;
 

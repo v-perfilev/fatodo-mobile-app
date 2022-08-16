@@ -1,5 +1,5 @@
 import CollapsableHeaderContainer, {CollapsableHeaderChildrenProps} from './CollapsableHeaderContainer';
-import ConditionalSpinner from './ConditionalSpinner';
+import ConditionalSpinner from '../surfaces/ConditionalSpinner';
 import RefreshableContainer, {RefreshableChildrenProps} from './RefreshableContainer';
 import FlatList, {FlatListProps} from './FlatList';
 import {ListUtils} from '../../shared/utils/ListUtils';

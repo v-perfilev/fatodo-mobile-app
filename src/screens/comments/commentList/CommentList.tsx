@@ -7,7 +7,7 @@ import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import CommentListControl from './CommentListControl';
 import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
-import {FlatListType} from '../../../components/surfaces/FlatList';
+import {FlatListType} from '../../../components/scrollable/FlatList';
 import CommentListStub from './CommentListStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
@@ -17,7 +17,7 @@ import {ListUtils} from '../../../shared/utils/ListUtils';
 import CommentListItem from './commentListItem/CommentListItem';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
-} from '../../../components/surfaces/CollapsableRefreshableFlatList';
+} from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {HEADER_HEIGHT} from '../../../constants';
 
 type CommentListProps = WithCommentsProps;

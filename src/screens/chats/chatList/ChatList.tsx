@@ -2,7 +2,7 @@ import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'rea
 import {HEADER_HEIGHT} from '../../../constants';
 import ChatListControl from './ChatListControl';
 import Header from '../../../components/layouts/Header';
-import {FlatListType} from '../../../components/surfaces/FlatList';
+import {FlatListType} from '../../../components/scrollable/FlatList';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import ChatListStub from './ChatListStub';
 import ChatListCorner from './ChatListCorner';
@@ -17,7 +17,7 @@ import ChatsSelectors from '../../../store/chats/chatsSelectors';
 import {ChatsThunks} from '../../../store/chats/chatsActions';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
-} from '../../../components/surfaces/CollapsableRefreshableFlatList';
+} from '../../../components/scrollable/CollapsableRefreshableFlatList';
 
 type ControlType = 'regular' | 'filtered';
 

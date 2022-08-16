@@ -3,7 +3,7 @@ import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
 import {HEADER_HEIGHT, TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
-import {FlatListType} from '../../../components/surfaces/FlatList';
+import {FlatListType} from '../../../components/scrollable/FlatList';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 import ChatViewStub from './ChatViewStub';
@@ -18,7 +18,7 @@ import ChatViewItem from './ChatViewItem';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
-} from '../../../components/surfaces/CollapsableRefreshableFlatList';
+} from '../../../components/scrollable/CollapsableRefreshableFlatList';
 
 type ChatViewProps = WithChatProps;
 

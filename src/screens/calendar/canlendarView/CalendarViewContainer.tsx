@@ -6,7 +6,7 @@ import CalendarViewContent from './CalendarViewContent';
 import {ScrollView} from 'react-native';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarThunks} from '../../../store/calendar/calendarActions';
-import RefreshableScrollView from '../../../components/surfaces/RefreshableScrollView';
+import RefreshableScrollView from '../../../components/scrollable/RefreshableScrollView';
 import FBox from '../../../components/boxes/FBox';
 
 type CalendarViewContainerProps = {

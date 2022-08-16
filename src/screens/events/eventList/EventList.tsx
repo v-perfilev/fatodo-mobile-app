@@ -4,7 +4,7 @@ import {EventsThunks} from '../../../store/events/eventsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useIsFocused} from '@react-navigation/native';
 import EventsSelectors from '../../../store/events/eventsSelectors';
-import {FlatListType} from '../../../components/surfaces/FlatList';
+import {FlatListType} from '../../../components/scrollable/FlatList';
 import {LayoutChangeEvent} from 'react-native';
 import {Event} from '../../../models/Event';
 import {Box, useTheme} from 'native-base';
@@ -14,7 +14,7 @@ import EventListSeparator from './EventListSeparator';
 import Header from '../../../components/layouts/Header';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
-} from '../../../components/surfaces/CollapsableRefreshableFlatList';
+} from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {HEADER_HEIGHT} from '../../../constants';
 import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 

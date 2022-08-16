@@ -3,7 +3,7 @@ import Header from '../../../components/layouts/Header';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {Dimensions, NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
-import FlatList, {FlatListType} from '../../../components/surfaces/FlatList';
+import FlatList, {FlatListType} from '../../../components/scrollable/FlatList';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import {CalendarActions, CalendarThunks} from '../../../store/calendar/calendarActions';
