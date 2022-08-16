@@ -107,16 +107,15 @@ const groupsSlice = createSlice({
     /*
     fetchGroups
     */
-    builder.addCase(GroupsThunks.fetchGroups.pending, () => {
-      const loading = true;
-      return {...initialState, loading};
+    builder.addCase(GroupsThunks.fetchGroups.pending, (state: GroupsState) => {
+      state.loading = true;
     });
     builder.addCase(GroupsThunks.fetchGroups.fulfilled, (state: GroupsState, action) => {
       state.groups = action.payload;
       state.loading = false;
     });
-    builder.addCase(GroupsThunks.fetchGroups.rejected, () => {
-      return {...initialState};
+    builder.addCase(GroupsThunks.fetchGroups.rejected, (state: GroupsState) => {
+      state.loading = false;
     });
 
     /*

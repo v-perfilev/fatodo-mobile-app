@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
+import React, {ReactElement, useEffect, useRef, useState} from 'react';
 import GroupListHeader from './GroupListHeader';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {GroupsActions, GroupsThunks} from '../../../store/groups/groupsActions';
@@ -11,13 +11,17 @@ import GroupListItem from './GroupListItem';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
-import CornerButton from '../../../components/controls/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import {HEADER_HEIGHT} from '../../../constants';
-import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
+import CollapsableRefreshableFlatList, {
+  CollapsableRefreshableChildrenProps,
+} from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import CollapsableDraggableList from '../../../components/scrollable/CollapsableDraggableList';
 import {LayoutChangeEvent} from 'react-native';
+import {CornerButton} from '../../../models/CornerButton';
+import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
+import CornerManagement from '../../../components/controls/CornerManagement';
 
 const GroupList = () => {
   const dispatch = useAppDispatch();
@@ -70,15 +74,22 @@ const GroupList = () => {
   scroll up button
    */
 
-  const scrollUp = useCallback((): void => {
-    listRef.current.scrollToOffset({offset: 0});
-  }, [listRef.current]);
+  const scrollUp = (): void => listRef.current.scrollToOffset({offset: 0});
+
+  /*
+  effects
+   */
 
   useEffect(() => {
     dispatch(GroupsThunks.fetchGroups()).finally(() => setLoading(false));
   }, []);
 
   const header = <GroupListHeader sorting={sorting} setSorting={setSorting} />;
+
+  const buttons: CornerButton[] = [
+    {icon: <PlusIcon />, action: goToGroupCreate},
+    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true},
+  ];
 
   const draggableList = (
     <CollapsableDraggableList
@@ -103,8 +114,7 @@ const GroupList = () => {
       keyExtractor={keyExtractor}
       ref={listRef}
     >
-      {/*<ScrollCornerButton show={!hideScroll} scroll={scrollUp} />*/}
-      <CornerButton icon={<PlusIcon />} onPress={goToGroupCreate} />
+      {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
     </CollapsableRefreshableFlatList>
   );
 
