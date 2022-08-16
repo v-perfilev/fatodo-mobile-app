@@ -3,7 +3,6 @@ import ConditionalSpinner from '../surfaces/ConditionalSpinner';
 import RefreshableContainer, {RefreshableChildrenProps} from './RefreshableContainer';
 import FlatList, {FlatListProps} from './FlatList';
 import {ListUtils} from '../../shared/utils/ListUtils';
-import EventListSeparator from '../../screens/events/eventList/EventListSeparator';
 import {RefUtils} from '../../shared/utils/RefUtils';
 import React, {ReactElement, ReactNode} from 'react';
 import Refresher from './Refresher';
@@ -45,7 +44,6 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
                     !inverted ? headerHeight : undefined,
                     inverted ? headerHeight : undefined,
                   )}
-                  ItemSeparatorComponent={EventListSeparator}
                   onScroll={handleEventScroll}
                   onMomentumScrollEnd={handleEventSnap}
                   ref={RefUtils.merge(ref, collapsableRef, refreshableRef)}
