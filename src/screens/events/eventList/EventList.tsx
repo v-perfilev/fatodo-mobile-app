@@ -1,5 +1,4 @@
-import React, {ReactElement, useEffect, useRef, useState} from 'react';
-import Header from '../../../components/layouts/Header';
+import React, {ReactElement, useEffect, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {EventsThunks} from '../../../store/events/eventsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
@@ -12,9 +11,12 @@ import {Box, useTheme} from 'native-base';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import EventListItem from './eventListItem/EventListItem';
 import EventListSeparator from './EventListSeparator';
-import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
+import Header from '../../../components/layouts/Header';
+import CollapsableRefreshableFlatList, {
+  CollapsableRefreshableChildrenProps,
+} from '../../../components/surfaces/CollapsableRefreshableFlatList';
 import {HEADER_HEIGHT} from '../../../constants';
-import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
+import ScrollCornerButton from '../../../components/controls/ScrollCornerButton';
 
 const EventList = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +25,6 @@ const EventList = () => {
   const events = useAppSelector(EventsSelectors.events);
   const allLoaded = useAppSelector(EventsSelectors.allLoaded);
   const [loading, setLoading] = useDelayedState();
-  const [hideScroll, setHideScroll] = useState<boolean>(true);
   const listRef = useRef<FlatListType>();
 
   /*
@@ -55,7 +56,6 @@ const EventList = () => {
    */
 
   const scrollUp = (): void => {
-    setHideScroll(true);
     listRef.current.scrollToOffset({offset: 0});
   };
 
@@ -82,10 +82,9 @@ const EventList = () => {
       render={renderItem}
       keyExtractor={keyExtractor}
       onEndReached={!allLoaded ? load : undefined}
-      setIsOnTheTop={setHideScroll}
       ref={listRef}
     >
-      <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />
+      {({scrollY}: CollapsableRefreshableChildrenProps) => <ScrollCornerButton scrollY={scrollY} scroll={scrollUp} />}
     </CollapsableRefreshableFlatList>
   );
 };

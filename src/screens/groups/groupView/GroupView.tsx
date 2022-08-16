@@ -18,7 +18,9 @@ import {Item} from '../../../models/Item';
 import {LayoutChangeEvent} from 'react-native';
 import GroupViewItem from './groupViewItem/GroupViewItem';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
+import CollapsableRefreshableFlatList, {
+  CollapsableRefreshableChildrenProps,
+} from '../../../components/surfaces/CollapsableRefreshableFlatList';
 
 type GroupViewProps = WithGroupProps;
 
@@ -32,7 +34,6 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   const allActiveItemsLoaded = useAppSelector(GroupSelectors.allActiveItemsLoaded);
   const allArchivedItemsLoaded = useAppSelector(GroupSelectors.allArchivedItemsLoaded);
   const [showArchived, setShowArchived] = useState<boolean>(false);
-  const [hideScroll, setHideScroll] = useState<boolean>(true);
   const listRef = useRef<FlatListType>();
 
   const theme = useMemo<Theme>(() => {
@@ -80,7 +81,6 @@ stub, keyExtractor and renderItem
    */
 
   const scrollUp = useCallback((): void => {
-    setHideScroll(true);
     listRef.current.scrollToOffset({offset: 0});
   }, [listRef.current]);
 
@@ -118,11 +118,14 @@ stub, keyExtractor and renderItem
         keyExtractor={keyExtractor}
         onEndReached={_onEndReacted}
         refresh={_refresh}
-        setIsOnTheTop={setHideScroll}
         ref={listRef}
       >
-        <GroupViewCorner />
-        <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />
+        {({scrollY}: CollapsableRefreshableChildrenProps) => (
+          <>
+            <GroupViewCorner />
+            <ScrollCornerButton scrollY={scrollY} scroll={scrollUp} />
+          </>
+        )}
       </CollapsableRefreshableFlatList>
     </ThemeProvider>
   );

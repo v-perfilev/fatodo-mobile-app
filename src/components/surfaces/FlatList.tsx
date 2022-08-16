@@ -1,14 +1,6 @@
-import React, {Dispatch, ForwardedRef, ReactElement, SetStateAction, useCallback, useRef} from 'react';
+import React, {ForwardedRef, ReactElement, useCallback, useRef} from 'react';
 import {IFlatListProps} from 'native-base/lib/typescript/components/basic/FlatList';
-import {
-  Animated,
-  FlatList as RNFlatList,
-  LayoutChangeEvent,
-  ListRenderItemInfo,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  Platform,
-} from 'react-native';
+import {Animated, FlatList as RNFlatList, LayoutChangeEvent, ListRenderItemInfo, Platform} from 'react-native';
 
 export type FlatListType = RNFlatList;
 
@@ -16,11 +8,10 @@ export type FlatListProps<T> = Partial<IFlatListProps<T>> & {
   render: (item: T, onLayout: (event: LayoutChangeEvent) => void) => ReactElement;
   keyExtractor: (item: T) => string;
   fixedLength?: number;
-  setIsOnTheTop?: Dispatch<SetStateAction<boolean>>;
 };
 
 const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<any>) => {
-  const {data, render, keyExtractor, fixedLength, setIsOnTheTop, onMomentumScrollEnd} = props;
+  const {data, render, keyExtractor, fixedLength} = props;
 
   const lengthMap = useRef<Map<string, number>>(new Map());
 
@@ -79,11 +70,6 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
     [getItemLength, getItemOffset],
   );
 
-  const _onMomentumScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
-    onMomentumScrollEnd && onMomentumScrollEnd(event);
-    setIsOnTheTop && setIsOnTheTop(event.nativeEvent.contentOffset.y <= 0);
-  };
-
   return (
     <Animated.FlatList
       {...props}
@@ -91,7 +77,6 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
       renderItem={_renderItem}
       getItemLayout={_getItemLayout}
       keyExtractor={keyExtractor}
-      onMomentumScrollEnd={_onMomentumScrollEnd}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={Platform.OS === 'android'}

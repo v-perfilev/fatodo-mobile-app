@@ -1,14 +1,19 @@
-import React, {memo} from 'react';
+import React, {memo, useState} from 'react';
 import CornerButton from './CornerButton';
 import ArrowUpIcon from '../icons/ArrowUpIcon';
+import {Animated} from 'react-native';
 
 type ScrollButtonProps = {
-  show: boolean;
-  scrollDown: () => void;
+  scrollY: Animated.Value;
+  scroll: () => void;
 };
 
-const ScrollCornerButton = ({show, scrollDown}: ScrollButtonProps) => {
-  return show ? <CornerButton icon={<ArrowUpIcon />} onPress={scrollDown} /> : null;
+const ScrollCornerButton = ({scrollY, scroll}: ScrollButtonProps) => {
+  const [show, setShow] = useState<boolean>(false);
+
+  scrollY.addListener(({value}) => setShow(value > 0));
+
+  return show ? <CornerButton icon={<ArrowUpIcon />} onPress={scroll} /> : null;
 };
 
 export default memo(ScrollCornerButton);

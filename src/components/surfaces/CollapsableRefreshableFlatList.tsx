@@ -7,6 +7,13 @@ import EventListSeparator from '../../screens/events/eventList/EventListSeparato
 import {RefUtils} from '../../shared/utils/RefUtils';
 import React, {ReactElement, ReactNode} from 'react';
 import Refresher from './Refresher';
+import {Animated} from 'react-native';
+
+export type CollapsableRefreshableChildrenProps = {
+  scrollY: Animated.Value;
+};
+
+type ChildrenFuncType = (props: CollapsableRefreshableChildrenProps) => ReactNode;
 
 type CollapsableRefreshableFlatListProps = FlatListProps<any> & {
   header: ReactElement;
@@ -15,7 +22,7 @@ type CollapsableRefreshableFlatListProps = FlatListProps<any> & {
   loading?: boolean;
   previousNode?: ReactNode;
   nextNode?: ReactNode;
-  children?: ReactNode;
+  children?: ReactNode | ChildrenFuncType;
 };
 
 const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefreshableFlatListProps, ref: any) => {
@@ -47,7 +54,7 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
                 />
               )}
             </RefreshableContainer>
-            {children}
+            {typeof children === 'function' ? children({scrollY}) : children}
           </ConditionalSpinner>
           {nextNode}
         </>

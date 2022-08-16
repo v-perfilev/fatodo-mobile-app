@@ -15,14 +15,15 @@ import {CommentsThunks} from '../../../store/comments/commentsActions';
 import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import CommentListItem from './commentListItem/CommentListItem';
-import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
+import CollapsableRefreshableFlatList, {
+  CollapsableRefreshableChildrenProps,
+} from '../../../components/surfaces/CollapsableRefreshableFlatList';
 import {HEADER_HEIGHT} from '../../../constants';
 
 type CommentListProps = WithCommentsProps;
 
 const CommentList = ({loading, colorScheme}: CommentListProps) => {
   const dispatch = useAppDispatch();
-  const [hideScroll, setHideScroll] = useState<boolean>(true);
   const listRef = useRef<FlatListType>();
   const targetId = useAppSelector(CommentsSelectors.targetId);
   const comments = useAppSelector(CommentsSelectors.comments);
@@ -68,7 +69,6 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
    */
 
   const scrollDown = useCallback((): void => {
-    setHideScroll(true);
     listRef.current.scrollToOffset({offset: 0});
   }, [listRef.current]);
 
@@ -86,10 +86,11 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
         render={renderItem}
         keyExtractor={keyExtractor}
         onEndReached={!allLoaded ? load : undefined}
-        setIsOnTheTop={setHideScroll}
         ref={listRef}
       >
-        <ScrollCornerButton show={!hideScroll} scrollDown={scrollDown} />
+        {({scrollY}: CollapsableRefreshableChildrenProps) => (
+          <ScrollCornerButton scrollY={scrollY} scroll={scrollDown} />
+        )}
       </CollapsableRefreshableFlatList>
     </ThemeProvider>
   );

@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useRef} from 'react';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
@@ -16,14 +16,15 @@ import {ChatItem} from '../../../models/Message';
 import {LayoutChangeEvent, ViewToken} from 'react-native';
 import ChatViewItem from './ChatViewItem';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
-import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
+import CollapsableRefreshableFlatList, {
+  CollapsableRefreshableChildrenProps,
+} from '../../../components/surfaces/CollapsableRefreshableFlatList';
 
 type ChatViewProps = WithChatProps;
 
 const ChatView = ({loading}: ChatViewProps) => {
   const dispatch = useAppDispatch();
   const theme = useTheme();
-  const [hideScroll, setHideScroll] = useState<boolean>(true);
   const unreadTimersRef = useRef<Map<string, any>>(new Map());
   const listRef = useRef<FlatListType>();
   const chat = useAppSelector(ChatSelectors.chat);
@@ -89,7 +90,6 @@ const ChatView = ({loading}: ChatViewProps) => {
    */
 
   const scrollDown = useCallback((): void => {
-    setHideScroll(true);
     listRef.current.scrollToOffset({offset: 0});
   }, [listRef.current]);
 
@@ -107,10 +107,9 @@ const ChatView = ({loading}: ChatViewProps) => {
       keyExtractor={keyExtractor}
       onEndReached={!allLoaded ? load : undefined}
       onViewableItemsChanged={onViewableItemsChanged}
-      setIsOnTheTop={setHideScroll}
       ref={listRef}
     >
-      <ScrollCornerButton show={!hideScroll} scrollDown={scrollDown} />
+      {({scrollY}: CollapsableRefreshableChildrenProps) => <ScrollCornerButton scrollY={scrollY} scroll={scrollDown} />}
     </CollapsableRefreshableFlatList>
   );
 };

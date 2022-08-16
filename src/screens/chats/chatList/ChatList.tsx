@@ -15,7 +15,9 @@ import ChatListItem from './ChatListItem';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
 import {ChatsThunks} from '../../../store/chats/chatsActions';
-import CollapsableRefreshableFlatList from '../../../components/surfaces/CollapsableRefreshableFlatList';
+import CollapsableRefreshableFlatList, {
+  CollapsableRefreshableChildrenProps,
+} from '../../../components/surfaces/CollapsableRefreshableFlatList';
 
 type ControlType = 'regular' | 'filtered';
 
@@ -27,7 +29,6 @@ const ChatList = () => {
   const [type, setType] = useState<ControlType>('regular');
   const [filter, setFilter] = useState<string>('');
   const [loading, setLoading] = useDelayedState();
-  const [hideScroll, setHideScroll] = useState<boolean>(true);
   const listRef = useRef<FlatListType>();
   const [loadCounter, setLoadCounter] = useState<number>(1);
 
@@ -66,7 +67,6 @@ const ChatList = () => {
    */
 
   const scrollUp = useCallback((): void => {
-    setHideScroll(true);
     listRef.current.scrollToOffset({offset: 0});
   }, [listRef.current]);
 
@@ -104,11 +104,14 @@ const ChatList = () => {
       render={renderItem}
       keyExtractor={keyExtractor}
       onEndReached={type === 'regular' ? load : loadFiltered}
-      setIsOnTheTop={setHideScroll}
       ref={listRef}
     >
-      <ChatListCorner />
-      <ScrollCornerButton show={!hideScroll} scrollDown={scrollUp} />
+      {({scrollY}: CollapsableRefreshableChildrenProps) => (
+        <>
+          <ChatListCorner />
+          <ScrollCornerButton scrollY={scrollY} scroll={scrollUp} />
+        </>
+      )}
     </CollapsableRefreshableFlatList>
   );
 };
