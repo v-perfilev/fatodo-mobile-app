@@ -46,8 +46,8 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
   const [formValues, setFormValues] = useState<SignUpFormValues>();
 
   const handleClickOnSubmit = (values: SignUpFormValues): void => {
-    setFormValues(values);
     dispatch(AuthActions.loading(true));
+    setFormValues(values);
     requestCaptchaToken();
   };
 
@@ -101,7 +101,7 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
           />
           <PasswordStrengthBar password={formikProps.values.password} />
           <SolidButton
-            colorScheme="secondary"
+            mt="5"
             size="lg"
             isLoading={loading}
             isDisabled={!formikProps.isValid || loading}

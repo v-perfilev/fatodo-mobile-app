@@ -40,8 +40,8 @@ const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
   const [formValues, setFormValues] = useState<SignInFormValues>();
 
   const handleClickOnSubmit = (values: SignInFormValues): void => {
-    setFormValues(values);
     dispatch(AuthActions.loading(true));
+    setFormValues(values);
     requestCaptchaToken();
   };
 
@@ -80,7 +80,7 @@ const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
             {...formikProps}
           />
           <SolidButton
-            colorScheme="secondary"
+            mt="5"
             size="lg"
             isLoading={loading}
             isDisabled={!formikProps.isValid || loading}

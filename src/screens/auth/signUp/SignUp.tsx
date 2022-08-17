@@ -21,7 +21,7 @@ const SignUp = () => {
   return (
     <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)} keyboardShouldPersistTaps="handled">
       <FCenter grow pt="10" pb="5">
-        <FVStack w="90%" maxW="300px" defaultSpace>
+        <FVStack space="5" w="90%" maxW="300px">
           <FCenter grow>
             <Logo withText centerText />
           </FCenter>

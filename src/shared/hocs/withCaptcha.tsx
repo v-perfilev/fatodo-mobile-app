@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ComponentType, useRef, useState} from 'react';
-import Recaptcha from 'react-native-recaptcha-that-works';
+import Recaptcha, {RecaptchaHandles} from 'react-native-recaptcha-that-works';
 import {BASE_URL, RECAPTCHA_KEY} from '../../constants';
 import {StyleSheet, View} from 'react-native';
 
@@ -10,7 +10,7 @@ export type CaptchaProps = {
 };
 
 const withCaptcha = (Component: ComponentType<CaptchaProps>) => (props: any) => {
-  const recaptcha = useRef<any>();
+  const recaptcha = useRef<RecaptchaHandles>();
   const [token, setToken] = useState<string>('');
 
   const requestToken = (): void => {
