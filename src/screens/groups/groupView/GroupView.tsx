@@ -34,10 +34,9 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   const account = useAppSelector(AuthSelectors.account);
   const activeItems = useAppSelector(GroupSelectors.activeItems);
   const archivedItems = useAppSelector(GroupSelectors.archivedItems);
-  const activeItemsLoading = useAppSelector(GroupSelectors.activeItemsLoading);
-  const archivedItemsLoading = useAppSelector(GroupSelectors.archivedItemsLoading);
   const allActiveItemsLoaded = useAppSelector(GroupSelectors.allActiveItemsLoaded);
   const allArchivedItemsLoaded = useAppSelector(GroupSelectors.allArchivedItemsLoaded);
+  const [initialItemsLoading, setInitialItemsLoading] = useState<boolean>(false);
   const [showArchived, setShowArchived] = useState<boolean>(false);
   const listRef = useRef<FlatListType>();
 
@@ -70,8 +69,8 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   };
 
   /*
-stub, keyExtractor and renderItem
- */
+  stub, keyExtractor and renderItem
+   */
 
   const keyExtractor = useCallback((item: Item): string => item.id, []);
   const renderItem = useCallback(
@@ -96,17 +95,20 @@ stub, keyExtractor and renderItem
    */
 
   useEffect(() => {
+    setInitialItemsLoading(true);
+  }, [group]);
+
+  useEffect(() => {
     if (!loading && showArchived && !allArchivedItemsLoaded) {
-      loadArchived().finally();
+      setInitialItemsLoading(true);
+      loadArchived().finally(() => setInitialItemsLoading(false));
     }
     if (!loading && !showArchived && !allActiveItemsLoaded) {
-      loadActive().finally();
+      setInitialItemsLoading(true);
+      loadActive().finally(() => setInitialItemsLoading(false));
     }
   }, [loading, showArchived]);
 
-  const _archivedItemsLoading = showArchived && archivedItemsLoading && archivedItems.length === 0;
-  const _activeItemsLoading = !showArchived && activeItemsLoading && activeItems.length === 0;
-  const _loading = loading || _archivedItemsLoading || _activeItemsLoading;
   const _data = showArchived ? archivedItems : activeItems;
   const _onArchivedEndReached = !allArchivedItemsLoaded ? loadArchived : undefined;
   const _onActiveEndReached = !allActiveItemsLoaded ? loadArchived : undefined;
@@ -123,7 +125,7 @@ stub, keyExtractor and renderItem
       <CollapsableRefreshableFlatList
         header={<GroupViewHeader showArchived={showArchived} setShowArchived={setShowArchived} />}
         headerHeight={HEADER_HEIGHT}
-        loading={_loading}
+        loading={loading || initialItemsLoading}
         ListEmptyComponent={<GroupViewStub />}
         data={_data}
         render={renderItem}
