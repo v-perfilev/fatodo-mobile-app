@@ -2,9 +2,11 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ItemState} from './itemType';
 import {ItemThunks} from './itemActions';
 import {Item} from '../../models/Item';
+import {Group} from '../../models/Group';
 
 const initialState: ItemState = {
   item: undefined,
+  group: undefined,
   reminders: [],
   loading: false,
 };
@@ -13,6 +15,11 @@ const itemSlice = createSlice({
   name: 'item',
   initialState,
   reducers: {
+    setGroup: (state: ItemState, action: PayloadAction<Group>) => {
+      const group = action.payload;
+      return {...initialState, group};
+    },
+
     setItem: (state: ItemState, action: PayloadAction<Item>) => {
       const item = action.payload;
       return {...initialState, item};
@@ -32,6 +39,13 @@ const itemSlice = createSlice({
     });
     builder.addCase(ItemThunks.fetchItem.rejected, () => {
       return {...initialState};
+    });
+
+    /*
+    fetchGroup
+    */
+    builder.addCase(ItemThunks.fetchGroup.fulfilled, (state: ItemState, action) => {
+      state.group = action.payload;
     });
 
     /*

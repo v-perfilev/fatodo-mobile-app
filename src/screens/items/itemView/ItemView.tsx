@@ -28,11 +28,10 @@ import CommentsIcon from '../../../components/icons/CommentsIcon';
 
 type ItemViewProps = WithItemProps;
 
-const ItemView = ({group, loading}: ItemViewProps) => {
+const ItemView = ({group, item, loading}: ItemViewProps) => {
   const navigation = useNavigation<RootNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const reminders = useAppSelector(ItemSelectors.reminders);
-  const item = useAppSelector(ItemSelectors.item);
 
   const showReminders = reminders?.length > 0;
 

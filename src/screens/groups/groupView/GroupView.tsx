@@ -95,15 +95,14 @@ const GroupView = ({group, loading}: GroupViewProps) => {
    */
 
   useEffect(() => {
-    setInitialItemsLoading(true);
-  }, [group]);
-
-  useEffect(() => {
-    if (!loading && showArchived && !allArchivedItemsLoaded) {
+    if (loading) {
+      setInitialItemsLoading(true);
+    }
+    if (!loading && showArchived) {
       setInitialItemsLoading(true);
       loadArchived().finally(() => setInitialItemsLoading(false));
     }
-    if (!loading && !showArchived && !allActiveItemsLoaded) {
+    if (!loading && !showArchived) {
       setInitialItemsLoading(true);
       loadActive().finally(() => setInitialItemsLoading(false));
     }

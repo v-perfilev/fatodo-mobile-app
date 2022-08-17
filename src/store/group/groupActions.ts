@@ -115,7 +115,7 @@ export class GroupThunks {
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.addMembersToGroup(group.id, userIds);
       thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
-      thunkAPI.dispatch(groupSlice.actions.updateGroup(updatedGroup));
+      thunkAPI.dispatch(groupSlice.actions.setGroup(updatedGroup));
       thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.edited', variant: 'info'}));
     },
   );
@@ -127,7 +127,7 @@ export class GroupThunks {
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.editGroupMember(group.id, member);
       thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
-      thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
+      thunkAPI.dispatch(groupSlice.actions.setGroup(updatedGroup));
       thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.edited', variant: 'info'}));
     },
   );
@@ -139,7 +139,7 @@ export class GroupThunks {
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.removeMembersFromGroup(group.id, userIds);
       thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
-      thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
+      thunkAPI.dispatch(groupSlice.actions.setGroup(updatedGroup));
       thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.edited', variant: 'info'}));
     },
   );
