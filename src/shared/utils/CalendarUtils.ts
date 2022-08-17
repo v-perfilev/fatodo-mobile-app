@@ -87,7 +87,9 @@ export class CalendarUtils {
   };
 
   public static filterRemindersByDate = (reminders: CalendarReminder[], date: CalendarDate): CalendarReminder[] => {
-    return reminders.filter((r) => new Date(r.date).getDate() === date.date).sort(ComparatorUtils.dateComparator);
+    return reminders
+      ? reminders.filter((r) => new Date(r.date).getDate() === date.date).sort(ComparatorUtils.dateComparator)
+      : [];
   };
 
   public static extractRemindersGroupIds = (reminders: CalendarReminder[]): string[] => {

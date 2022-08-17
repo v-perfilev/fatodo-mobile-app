@@ -1,4 +1,4 @@
-import React, {Dispatch, memo, SetStateAction} from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import {Text} from 'native-base';
 import PaperBox from '../../../components/surfaces/PaperBox';
 import FVStack from '../../../components/boxes/FVStack';
@@ -40,4 +40,4 @@ const CalendarViewDate = ({month, date, selectDate, isActiveDate}: CalendarViewD
   );
 };
 
-export default memo(CalendarViewDate);
+export default CalendarViewDate;

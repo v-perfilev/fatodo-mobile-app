@@ -8,6 +8,8 @@ import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarThunks} from '../../../store/calendar/calendarActions';
 import RefreshableScrollView from '../../../components/scrollable/RefreshableScrollView';
 import FBox from '../../../components/boxes/FBox';
+import {View} from 'native-base';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
 type CalendarViewContainerProps = {
   month: CalendarMonth;
@@ -18,8 +20,10 @@ type CalendarViewContainerProps = {
 const CalendarViewContainer = ({month, selectMonth, width}: CalendarViewContainerProps) => {
   const dispatch = useAppDispatch();
   const activeMonth = useAppSelector(CalendarSelectors.activeMonth);
+  const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, month.key));
   const [activeDate, setActiveDate] = useState<CalendarDate>();
-  const ref = useRef<ScrollView>();
+  const [loading, setLoading] = useDelayedState(true, 300);
+  const scrollViewRef = useRef<ScrollView>();
 
   const isCurrentMonth = useMemo<boolean>(() => {
     const date = new Date();
@@ -40,8 +44,12 @@ const CalendarViewContainer = ({month, selectMonth, width}: CalendarViewContaine
   };
 
   const scrollToTop = (): void => {
-    ref.current.scrollTo({y: 0});
+    scrollViewRef.current?.scrollTo({y: 0});
   };
+
+  useEffect(() => {
+    !!reminders && setLoading(false);
+  }, [reminders]);
 
   useEffect(() => {
     (activeDate !== undefined || isCurrentMonth) && initDate();
@@ -50,13 +58,14 @@ const CalendarViewContainer = ({month, selectMonth, width}: CalendarViewContaine
 
   return (
     <FBox width={width}>
-      <RefreshableScrollView refresh={refresh} ref={ref}>
+      <RefreshableScrollView refresh={refresh} loading={loading} ref={scrollViewRef}>
         <CalendarViewContent
           month={month}
           selectMonth={selectMonth}
           activeDate={activeDate}
           setActiveDate={setActiveDate}
         />
+        <View />
       </RefreshableScrollView>
     </FBox>
   );

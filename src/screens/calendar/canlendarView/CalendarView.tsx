@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
+import React, {ReactElement, useEffect, useRef, useState} from 'react';
 import Header from '../../../components/layouts/Header';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
@@ -58,12 +58,9 @@ const CalendarView = () => {
     }
   };
 
-  const keyExtractor = useCallback((month: CalendarMonth): string => month.key, []);
-  const renderItem = useCallback(
-    (month: CalendarMonth): ReactElement => (
-      <CalendarViewContainer month={month} selectMonth={selectMonth} width={singleWidth} />
-    ),
-    [singleWidth],
+  const keyExtractor = (month: CalendarMonth): string => month.key;
+  const renderItem = (month: CalendarMonth): ReactElement => (
+    <CalendarViewContainer month={month} selectMonth={selectMonth} width={singleWidth} />
   );
 
   useEffect(() => {
@@ -93,7 +90,7 @@ const CalendarView = () => {
         initialNumToRender={1}
         maxToRenderPerBatch={3}
         updateCellsBatchingPeriod={10}
-        windowSize={7}
+        windowSize={3}
         ref={listRef}
       />
     </>
