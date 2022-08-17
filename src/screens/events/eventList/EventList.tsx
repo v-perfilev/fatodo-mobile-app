@@ -19,6 +19,8 @@ import {HEADER_HEIGHT} from '../../../constants';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
+import PushNotification from 'react-native-push-notification';
+import {showLocalNotification} from '../../../shared/notifications';
 
 const EventList = () => {
   const dispatch = useAppDispatch();
@@ -66,6 +68,7 @@ const EventList = () => {
    */
 
   useEffect(() => {
+    showLocalNotification();
     dispatch(EventsThunks.fetchEvents(0)).finally(() => setLoading(false));
   }, []);
 
