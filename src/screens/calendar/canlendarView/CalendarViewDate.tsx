@@ -1,20 +1,21 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, memo, SetStateAction} from 'react';
 import {Text} from 'native-base';
 import PaperBox from '../../../components/surfaces/PaperBox';
 import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
 import PressableButton from '../../../components/controls/PressableButton';
-import {CalendarDate, CalendarMonth} from '../../../models/Calendar';
+import {CalendarDate} from '../../../models/Calendar';
+import {CalendarReminder} from '../../../models/Reminder';
 import CalendarViewDateReminders from './CalendarViewDateReminders';
 
 type CalendarViewDateProps = {
-  month: CalendarMonth;
   date: CalendarDate;
   selectDate: Dispatch<SetStateAction<CalendarDate>>;
   isActiveDate: boolean;
+  reminders: CalendarReminder[];
 };
 
-const CalendarViewDate = ({month, date, selectDate, isActiveDate}: CalendarViewDateProps) => {
+const CalendarViewDate = ({date, selectDate, isActiveDate, reminders}: CalendarViewDateProps) => {
   const handlePress = (): void => {
     date.isCurrentMonth && selectDate(date);
   };
@@ -33,11 +34,19 @@ const CalendarViewDate = ({month, date, selectDate, isActiveDate}: CalendarViewD
               {date.date}
             </Text>
           </FHStack>
-          {date.isCurrentMonth && <CalendarViewDateReminders month={month} date={date} />}
+          <CalendarViewDateReminders reminders={reminders} />
         </FVStack>
       </PaperBox>
     </PressableButton>
   );
 };
 
-export default CalendarViewDate;
+const arePropsEqual = (prevProps: CalendarViewDateProps, nextProps: CalendarViewDateProps): boolean => {
+  const isDateEqual = prevProps.date === nextProps.date;
+  const isIsActiveEqual = prevProps.isActiveDate === nextProps.isActiveDate;
+  const areRemindersEqual = JSON.stringify(prevProps.reminders) === JSON.stringify(nextProps.reminders);
+
+  return isDateEqual && isIsActiveEqual && areRemindersEqual;
+};
+
+export default memo(CalendarViewDate, arePropsEqual);

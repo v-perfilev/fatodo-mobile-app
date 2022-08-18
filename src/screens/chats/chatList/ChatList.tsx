@@ -21,11 +21,13 @@ import {CornerButton} from '../../../models/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
+import {useIsFocused} from '@react-navigation/native';
 
 type ControlType = 'regular' | 'filtered';
 
 const ChatList = () => {
   const dispatch = useAppDispatch();
+  const isFocused = useIsFocused();
   const theme = useTheme();
   const {showChatCreateDialog} = useChatDialogContext();
   const chats = useAppSelector(ChatsSelectors.chats);
@@ -33,8 +35,9 @@ const ChatList = () => {
   const [type, setType] = useState<ControlType>('regular');
   const [filter, setFilter] = useState<string>('');
   const [loading, setLoading] = useDelayedState();
+  const [filterLoading, setFilterLoading] = useDelayedState();
+  const [filterLoadCounter, setFilterLoadCounter] = useState<number>(0);
   const listRef = useRef<FlatListType>();
-  const [loadCounter, setLoadCounter] = useState<number>(1);
 
   const openCreateChatDialog = (): void => {
     showChatCreateDialog();
@@ -83,21 +86,21 @@ const ChatList = () => {
    */
 
   useEffect(() => {
-    load().finally(() => setLoadCounter((prevState) => prevState - 1));
-  }, []);
+    isFocused && loading && load().finally(() => setLoading(false));
+  }, [isFocused]);
 
   useEffect(() => {
     const filterNotEmpty = filter?.trim().length > 0;
     setType(filterNotEmpty ? 'filtered' : 'regular');
     if (filterNotEmpty) {
-      setLoadCounter((prevState) => prevState + 1);
-      loadFiltered().finally(() => setLoadCounter((prevState) => prevState - 1));
+      setFilterLoadCounter((prevState) => prevState + 1);
+      loadFiltered().finally(() => setFilterLoadCounter((prevState) => prevState - 1));
     }
   }, [filter]);
 
   useEffect(() => {
-    setLoading(loadCounter > 0);
-  }, [loadCounter]);
+    setFilterLoading(filterLoadCounter > 0);
+  }, [filterLoadCounter]);
 
   const buttons: CornerButton[] = [
     {icon: <PlusIcon />, action: openCreateChatDialog},
@@ -110,7 +113,7 @@ const ChatList = () => {
       headerHeight={HEADER_HEIGHT}
       refresh={type === 'regular' ? refresh : undefined}
       previousNode={<ChatListControl setFilter={setFilter} marginTop={HEADER_HEIGHT} />}
-      loading={loading}
+      loading={loading || filterLoading}
       contentContainerStyle={ListUtils.containerStyle()}
       ListEmptyComponent={<ChatListStub />}
       data={type === 'regular' ? chats : filteredChats}

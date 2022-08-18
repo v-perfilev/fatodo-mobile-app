@@ -17,7 +17,7 @@ export const BASE_URL = 'http://75.119.154.167';
 
 // HEADER
 export const HEADER_HEIGHT = 55;
-export const MAX_REFRESH_HEIGHT = 100;
+export const MAX_REFRESH_HEIGHT = 120;
 
 // AVATARS
 export const AVATARS_IN_CARD = 3;

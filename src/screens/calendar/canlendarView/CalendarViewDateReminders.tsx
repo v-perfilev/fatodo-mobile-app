@@ -2,25 +2,21 @@ import React, {memo, useMemo} from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../store/store';
-import CalendarSelectors from '../../../store/calendar/calendarSelectors';
-import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import Bullet from '../../../components/surfaces/Bullet';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {FilterUtils} from '../../../shared/utils/FilterUtils';
 import {ColorScheme} from '../../../shared/themes/ThemeFactory';
-import {CalendarDate, CalendarMonth} from '../../../models/Calendar';
+import {CalendarReminder} from '../../../models/Reminder';
 
 type CalendarViewDateRemindersProps = {
-  month: CalendarMonth;
-  date: CalendarDate;
+  reminders: CalendarReminder[];
 };
 
-const CalendarViewDateReminders = ({month, date}: CalendarViewDateRemindersProps) => {
-  const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, month.key));
+const CalendarViewDateReminders = ({reminders}: CalendarViewDateRemindersProps) => {
   const groups = useAppSelector(InfoSelectors.groups);
 
   const reminderColors = useMemo<ColorScheme[]>(() => {
-    const reminderGroups = CalendarUtils.filterRemindersByDate(reminders, date)
+    const reminderGroups = reminders
       .map((reminder) => groups.get(reminder.parentId))
       .filter(FilterUtils.notUndefinedFilter);
     return reminderGroups.map((g) => g.color);
@@ -45,4 +41,11 @@ const CalendarViewDateReminders = ({month, date}: CalendarViewDateRemindersProps
   );
 };
 
-export default memo(CalendarViewDateReminders);
+const arePropsEqual = (
+  prevProps: CalendarViewDateRemindersProps,
+  nextProps: CalendarViewDateRemindersProps,
+): boolean => {
+  return JSON.stringify(prevProps.reminders) === JSON.stringify(nextProps.reminders);
+};
+
+export default memo(CalendarViewDateReminders, arePropsEqual);

@@ -1,17 +1,10 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AppDispatch, RootState} from '../store';
+import {RootState} from '../store';
 import NotificationService from '../../services/NotificationService';
 import {InfoThunks} from '../info/infoActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
 import {CalendarMonth} from '../../models/Calendar';
-import calendarSlice from './calendarSlice';
-
-export class CalendarActions {
-  static selectMonth = (month: CalendarMonth) => async (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.selectMonth(month));
-  };
-}
 
 enum TYPES {
   HANDLE_REMINDER_KEYS = 'calendar/handleReminderKeys',
@@ -20,10 +13,23 @@ enum TYPES {
 }
 
 export class CalendarThunks {
-  static handleReminderKeys = createAsyncThunk(TYPES.HANDLE_REMINDER_KEYS, async (keys: string[], thunkAPI) => {
+  static handleMonth = createAsyncThunk(TYPES.HANDLE_REMINDER_KEYS, async (month: CalendarMonth, thunkAPI) => {
     const {reminders, loadingKeys} = (thunkAPI.getState() as RootState).calendar;
-    const keysToLoad = CalendarUtils.extractKeysToLoad(keys, reminders, loadingKeys);
-    keysToLoad.length > 0 && thunkAPI.dispatch(CalendarThunks.fetchReminders(keys));
+    const loadedKeys = Array.from(new Map(reminders).keys());
+    const loadIndent = 5;
+
+    const actualKeyLoaded = loadedKeys.includes(month.key);
+
+    let missingMonths = CalendarUtils.generateCalendarMonths(month, loadIndent);
+    const missingKeys = missingMonths.map((r) => r.key);
+
+    const keysToLoad = missingKeys
+      .filter((key) => !loadedKeys.includes(key))
+      .filter((key) => !loadingKeys.includes(key));
+
+    const shouldLoad = !actualKeyLoaded || keysToLoad.length >= loadIndent;
+
+    shouldLoad && thunkAPI.dispatch(CalendarThunks.fetchReminders(keysToLoad));
   });
 
   static fetchReminders = createAsyncThunk(TYPES.FETCH_REMINDERS, async (keys: string[], thunkAPI) => {

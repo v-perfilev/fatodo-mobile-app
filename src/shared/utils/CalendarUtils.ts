@@ -74,18 +74,6 @@ export class CalendarUtils {
     return dates;
   };
 
-  public static splitMonthInWeeks = (dates: CalendarDate[]): CalendarDate[][] => {
-    const weekDates: CalendarDate[][] = [];
-    dates.forEach((d, i) => {
-      const weekIndex = Math.floor(i / 7);
-      if (!weekDates[weekIndex]) {
-        weekDates[weekIndex] = [];
-      }
-      weekDates[weekIndex].push(d);
-    });
-    return weekDates;
-  };
-
   public static filterRemindersByDate = (reminders: CalendarReminder[], date: CalendarDate): CalendarReminder[] => {
     return reminders
       ? reminders.filter((r) => new Date(r.date).getDate() === date.date).sort(ComparatorUtils.dateComparator)
@@ -98,13 +86,6 @@ export class CalendarUtils {
 
   public static extractRemindersItemIds = (reminders: CalendarReminder[]): string[] => {
     return reminders.map((r) => r.targetId);
-  };
-
-  public static extractKeysToLoad = <T>(keys: string[], reminders: [string, T][], loadingKeys: string[]): string[] => {
-    const map = new Map(reminders);
-    const existingKeys = Array.from(map.keys());
-    const notAllowedIds = [...existingKeys, ...loadingKeys];
-    return keys.filter((key) => !notAllowedIds.includes(key));
   };
 
   public static extractDatesToLoad = (keys: string[]): [number, number, number, number] => {

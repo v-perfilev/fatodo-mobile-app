@@ -1,4 +1,4 @@
-import React, {Dispatch, memo, SetStateAction} from 'react';
+import React, {Dispatch, memo, SetStateAction, useMemo} from 'react';
 import {Divider} from 'native-base';
 import FVStack from '../../../components/boxes/FVStack';
 import CalendarViewMonthName from './CalendarViewMonthName';
@@ -6,27 +6,58 @@ import CalendarViewWeekDays from './CalendarViewWeekDays';
 import CalendarViewMonth from './CalendarViewMonth';
 import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
 import {CalendarDate, CalendarItem, CalendarMonth} from '../../../models/Calendar';
+import {CalendarReminder} from '../../../models/Reminder';
 
 type CalendarViewContentProps = {
   month: CalendarMonth;
   selectMonth: (month: CalendarItem) => void;
   activeDate: CalendarDate;
   setActiveDate: Dispatch<SetStateAction<CalendarDate>>;
+  reminderMap: Map<number, CalendarReminder[]>;
+  width: number;
 };
 
-const CalendarViewContent = ({month, selectMonth, activeDate, setActiveDate}: CalendarViewContentProps) => {
+const CalendarViewContent = ({
+  month,
+  selectMonth,
+  activeDate,
+  setActiveDate,
+  reminderMap,
+  width,
+}: CalendarViewContentProps) => {
+  const activeDateReminders = useMemo<CalendarReminder[]>(
+    () => (activeDate ? reminderMap.get(new Date(activeDate.date).getDate()) : undefined),
+    [activeDate, reminderMap],
+  );
+
   return (
     <FVStack flex="1" flexGrow="1" space="2" py="2">
       <CalendarViewMonthName month={month} selectMonth={selectMonth} />
       <Divider />
       <FVStack space="2">
         <CalendarViewWeekDays />
-        <CalendarViewMonth month={month} activeDate={activeDate} selectDate={setActiveDate} />
+        <CalendarViewMonth
+          month={month}
+          activeDate={activeDate}
+          selectDate={setActiveDate}
+          reminderMap={reminderMap}
+          width={width}
+        />
       </FVStack>
       <Divider />
-      <CalendarViewReminders month={month} activeDate={activeDate} />
+      <CalendarViewReminders reminders={activeDateReminders} />
     </FVStack>
   );
 };
 
-export default memo(CalendarViewContent);
+const propsAreEqual = (prevProps: CalendarViewContentProps, nextProps: CalendarViewContentProps): boolean => {
+  const isActiveDateEqual = prevProps.activeDate?.date === nextProps.activeDate?.date;
+
+  const prevPropsReminderMapJson = JSON.stringify([...prevProps.reminderMap]);
+  const nextPropsReminderMapJson = JSON.stringify([...nextProps.reminderMap]);
+  const isReminderMapEqual = prevPropsReminderMapJson === nextPropsReminderMapJson;
+
+  return isActiveDateEqual && isReminderMapEqual;
+};
+
+export default memo(CalendarViewContent, propsAreEqual);

@@ -4,12 +4,9 @@ import {RootState} from '../store';
 const getCalendarState = (state: RootState) => state.calendar;
 
 class CalendarSelectors {
-  static activeMonth = createSelector(getCalendarState, (state) => state.activeMonth);
-
-  static loadedKeys = createSelector(getCalendarState, (state) => Array.from(new Map(state.reminders).keys()));
-
-  static reminders = createSelector([getCalendarState, (state, key: string) => key], (state, key) =>
-    new Map(state.reminders).get(key),
+  static reminders = createSelector(
+    [getCalendarState, (state, key: string) => key],
+    (state, key) => new Map(state.reminders).get(key) || [],
   );
 
   static loading = createSelector(getCalendarState, (state) => state.loading);

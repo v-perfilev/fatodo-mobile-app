@@ -10,9 +10,11 @@ import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import OutcomingRequestListItem from './OutcomingRequestListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
+import {useIsFocused} from '@react-navigation/native';
 
 const OutcomingRequestList = () => {
   const dispatch = useAppDispatch();
+  const isFocused = useIsFocused();
   const theme = useTheme();
   const outcomingRequests = useAppSelector(ContactsSelectors.outcomingRequests);
   const [loading, setLoading] = useDelayedState();
@@ -32,8 +34,8 @@ const OutcomingRequestList = () => {
   );
 
   useEffect(() => {
-    refresh().finally(() => setLoading(false));
-  }, []);
+    isFocused && loading && refresh().finally(() => setLoading(false));
+  }, [isFocused]);
 
   return (
     <CollapsableRefreshableFlatList

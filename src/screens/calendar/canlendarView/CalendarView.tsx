@@ -4,35 +4,25 @@ import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {Dimensions, NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 import FlatList, {FlatListType} from '../../../components/scrollable/FlatList';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
-import CalendarSelectors from '../../../store/calendar/calendarSelectors';
-import {CalendarActions, CalendarThunks} from '../../../store/calendar/calendarActions';
+import {useAppDispatch} from '../../../store/store';
+import {CalendarThunks} from '../../../store/calendar/calendarActions';
 import CalendarViewContainer from './CalendarViewContainer';
+import {useIsFocused} from '@react-navigation/native';
 
-const loadIndent = 5;
 const months = CalendarUtils.generateAllCalendarMonths();
 const monthKeys = months.map((r) => r.key);
 const getInitialMonth = (): CalendarMonth => CalendarUtils.generateCurrentCalendarMonth();
-const getInitialIndex = (): number => monthKeys.indexOf(getInitialMonth().key);
+const getInitialIndex = (month: CalendarMonth): number => monthKeys.indexOf(month.key);
+const width = Dimensions.get('window').width;
 
 const CalendarView = () => {
   const dispatch = useAppDispatch();
-  const loadedKeys = useAppSelector(CalendarSelectors.loadedKeys);
-  const activeMonth = useAppSelector(CalendarSelectors.activeMonth);
-  const [singleWidth, setSingleWidth] = useState<number>(Dimensions.get('window').width);
+  const isFocused = useIsFocused();
+  const [activeMonth, setActiveMonth] = useState<CalendarMonth>(getInitialMonth());
   const listRef = useRef<FlatListType>();
 
   const loadReminders = (): void => {
-    const actualKeyLoaded = loadedKeys.includes(activeMonth.key);
-    let monthsToLoad = CalendarUtils.generateCalendarMonths(activeMonth, loadIndent);
-    const keysToLoad = monthsToLoad.map((r) => r.key);
-    const missingKeys = keysToLoad.filter((key) => !loadedKeys.includes(key));
-    const shouldLoad = !actualKeyLoaded || missingKeys.length >= loadIndent;
-    shouldLoad && dispatch(CalendarThunks.handleReminderKeys(missingKeys));
-  };
-
-  const calcDimensions = () => {
-    setSingleWidth(Dimensions.get('window').width);
+    dispatch(CalendarThunks.handleMonth(activeMonth));
   };
 
   const scrollToItem = (index: number, animated = true): void => {
@@ -41,36 +31,29 @@ const CalendarView = () => {
 
   const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
     const offset = event.nativeEvent.contentOffset.x;
-    const index = Math.round(offset / singleWidth);
+    const index = Math.round(offset / width);
     if (index < months.length) {
-      const activeMonth = months[index];
-      dispatch(CalendarActions.selectMonth(activeMonth));
+      setActiveMonth(months[index]);
     }
   };
 
   const selectMonth = (month: CalendarItem): void => {
     const key = CalendarUtils.buildMonthKey(month.year, month.month);
     const index = monthKeys.indexOf(key);
-    if (index && index < months.length) {
-      const activeMonth = months[index];
-      dispatch(CalendarActions.selectMonth(activeMonth));
+    if (index && index >= 0 && index < months.length) {
       scrollToItem(index, false);
+      setActiveMonth(months[index]);
     }
   };
 
   const keyExtractor = (month: CalendarMonth): string => month.key;
   const renderItem = (month: CalendarMonth): ReactElement => (
-    <CalendarViewContainer month={month} selectMonth={selectMonth} width={singleWidth} />
+    <CalendarViewContainer month={month} selectMonth={selectMonth} activeMonth={activeMonth} width={width} />
   );
 
   useEffect(() => {
-    const initialMonth = getInitialMonth();
-    selectMonth(initialMonth);
-  }, []);
-
-  useEffect(() => {
-    activeMonth && loadReminders();
-  }, [activeMonth]);
+    isFocused && loadReminders();
+  }, [isFocused, activeMonth]);
 
   return (
     <>
@@ -79,13 +62,12 @@ const CalendarView = () => {
         data={months}
         render={renderItem}
         keyExtractor={keyExtractor}
-        onContentSizeChange={calcDimensions}
         scrollEventThrottle={200}
         horizontal
         pagingEnabled
         decelerationRate="fast"
-        fixedLength={singleWidth}
-        initialScrollIndex={getInitialIndex()}
+        fixedLength={width}
+        initialScrollIndex={getInitialIndex(activeMonth)}
         onMomentumScrollEnd={handleScrollEnd}
         initialNumToRender={1}
         maxToRenderPerBatch={3}

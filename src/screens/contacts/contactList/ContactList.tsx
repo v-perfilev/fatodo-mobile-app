@@ -16,9 +16,11 @@ import CollapsableRefreshableFlatList from '../../../components/scrollable/Colla
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {CornerButton} from '../../../models/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
+import {useIsFocused} from '@react-navigation/native';
 
 const ContactList = () => {
   const dispatch = useAppDispatch();
+  const isFocused = useIsFocused();
   const theme = useTheme();
   const {showContactRequestDialog} = useContactDialogContext();
   const relations = useAppSelector(ContactsSelectors.relations);
@@ -54,8 +56,8 @@ const ContactList = () => {
    */
 
   useEffect(() => {
-    refresh().finally(() => setLoading(false));
-  }, []);
+    isFocused && loading && refresh().finally(() => setLoading(false));
+  }, [isFocused]);
 
   useEffect(() => {
     const filteredRelations = relations.filter((r) => {
