@@ -7,6 +7,7 @@ import withWsChat from './withWsChat';
 import withWsComment from './withWsComment';
 import withWsEvent from './withWsEvent';
 import withWsContact from './withWsContact';
+import {WS_URL} from '../../../constants';
 
 const withWsClient = (Component: ComponentType) => (props: any) => {
   const [topicsAndHandlers, setTopicsAndHandlers] = useState<Map<string, WsTopicsAndHandler>>(new Map());
@@ -45,7 +46,7 @@ const withWsClient = (Component: ComponentType) => (props: any) => {
   return (
     <WsContext.Provider value={context}>
       <Component {...props} />
-      <WsClient topics={topics} onMessage={onMessage} />
+      <WsClient url={WS_URL} topics={topics} onMessage={onMessage} />
     </WsContext.Provider>
   );
 };

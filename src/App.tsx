@@ -2,6 +2,8 @@ import './shared/i18n';
 import './shared/axios';
 import './shared/notifications';
 
+import 'text-encoding';
+
 import React, {useEffect, useState} from 'react';
 import {LogBox} from 'react-native';
 import {flowRight} from 'lodash';
