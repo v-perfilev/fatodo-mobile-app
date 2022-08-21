@@ -10,6 +10,7 @@ import {LanguageUtils} from '../../shared/utils/LanguageUtils';
 import {ForgotPasswordDTO} from '../../models/dto/ForgotPasswordDTO';
 import snackSlice from '../snack/snackSlice';
 import {ChangePasswordDTO} from '../../models/dto/ChangePasswordDTO';
+import {NotificationsLocal} from '../../shared/push/notifications';
 
 export class AuthActions {
   static login = () => (dispatch: AppDispatch) => {
@@ -22,6 +23,7 @@ export class AuthActions {
 
   static logout = () => (dispatch: AppDispatch) => {
     SecurityUtils.clearAuthToken();
+    NotificationsLocal.unregisterDeviceFromFirebase();
     dispatch(authSlice.actions.clearAuth());
   };
 }

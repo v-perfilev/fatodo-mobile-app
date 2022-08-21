@@ -1,7 +1,5 @@
 import './shared/i18n';
 import './shared/axios';
-import './shared/notifications';
-
 import 'text-encoding';
 
 import React, {useEffect, useState} from 'react';
@@ -26,10 +24,16 @@ import {AuthActions, AuthThunks} from './store/auth/authActions';
 import withWsClient from './shared/hocs/withWs/withWsClient';
 import {ChatsThunks} from './store/chats/chatsActions';
 import SplashScreen from 'react-native-splash-screen';
+import Notifications from './shared/push/notifications';
+import NotificationsRemote from './shared/push/notificationsRemote';
 
 // ignore some warnings
-const ignoredLogPatterns = ['Require cycle', 'Possible Unhandled Promise Rejection'];
+const ignoredLogPatterns = ['Require cycle', 'Possible Unhandled Promise Rejection', 'NativeBase:'];
 LogBox.ignoreLogs(ignoredLogPatterns);
+
+// setup push notification
+Notifications.init();
+NotificationsRemote.init();
 
 // setup axios
 const axiosActions = bindActionCreators(
@@ -48,12 +52,11 @@ setupAxiosInterceptors({
 
 const App = () => {
   const dispatch = useAppDispatch();
+  const account = useAppSelector(AuthSelectors.account);
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // splash screen
-    setTimeout(() => SplashScreen.hide(), 1000);
     // login
     SecurityUtils.getAuthToken().then(async (token) => {
       if (token) {
@@ -65,9 +68,15 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    // splash screen (timeout needed for initial navigation event)
+    ready && setTimeout(() => SplashScreen.hide(), 500);
+  }, [ready]);
+
+  useEffect(() => {
     if (isAuthenticated) {
       dispatch(ContactsThunks.fetchInfo());
       dispatch(ChatsThunks.fetchUnreadMessagesMap());
+      account?.id && NotificationsRemote.subscribeToFirebase(account.id);
     }
   }, [isAuthenticated]);
 

@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import {BottomTabNavigationProp, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TabNavigatorBar from '../components/layouts/TabNavigatorBar';
-import GroupNavigator from './GroupNavigator';
+import GroupNavigator, {GroupParamList} from './GroupNavigator';
 import ContactNavigator from './ContactNavigator';
 import GroupsIcon from '../components/icons/GroupsIcon';
 import ContactsIcon from '../components/icons/ContactsIcon';
@@ -20,14 +20,15 @@ import ChatsSelectors from '../store/chats/chatsSelectors';
 import ContactsSelectors from '../store/contacts/contactsSelectors';
 import CalendarIcon from '../components/icons/CalendarIcon';
 import CalendarView from '../screens/calendar/canlendarView/CalendarView';
+import {NavigationProps} from './RootNavigator';
 
-type TabParamList = {
-  Groups: any;
-  Calendar: any;
-  Events: any;
-  Chats: any;
-  Contacts: any;
-  Account: any;
+export type TabParamList = {
+  Groups: NavigationProps<GroupParamList>;
+  Calendar: never;
+  Events: never;
+  Chats: never;
+  Contacts: never;
+  Account: never;
 };
 
 type TabIconProps = {

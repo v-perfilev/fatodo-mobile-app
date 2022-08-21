@@ -23,14 +23,14 @@ const WsClient = ({url, topics, onMessage, debug}: WsClientProps) => {
 
   const headers: StompHeaders = {[AUTHORIZATION_HEADER]: AUTHORIZATION_PREFIX + token};
 
-  const onConnected = (logMsg?: string) => (): void => {
-    logMsg && console.debug(logMsg);
+  const onConnected = (logMsg: string) => (): void => {
+    console.info(logMsg);
     subscriptionMap.current.clear();
     setConnected(true);
   };
 
-  const onDisconnected = (logMsg?: string) => (): void => {
-    logMsg && console.debug(logMsg);
+  const onDisconnected = (logMsg: string) => (): void => {
+    console.info(logMsg);
     stompClient.current = undefined;
     subscriptionMap.current.clear();
     setConnected(false);

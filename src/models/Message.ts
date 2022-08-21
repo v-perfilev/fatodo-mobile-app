@@ -9,10 +9,10 @@ export type MessageReactionType = 'LIKE' | 'DISLIKE';
 
 export type ChatItemType = 'event' | 'outcoming' | 'incoming' | null;
 
-export type ChatItem = {
+export interface ChatItem {
   message?: Message;
   date?: string;
-};
+}
 
 export interface MessageInfo {
   id: string;

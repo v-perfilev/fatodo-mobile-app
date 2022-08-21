@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "914624356550",
+    "project_id": "fatodo",
+    "storage_bucket": "fatodo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:914624356550:android:daa05931d361fe57e3f7c7",
+        "android_client_info": {
+          "package_name": "com.fatodoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "914624356550-26u19gr0if8tl6no53cms82g06lugaii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeZKWND83XqgDPD6aHDrjly8IFNNFA68A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "914624356550-26u19gr0if8tl6no53cms82g06lugaii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
