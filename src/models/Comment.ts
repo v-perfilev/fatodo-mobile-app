@@ -20,6 +20,7 @@ export interface CommentInfo {
 
 export interface Comment extends AbstractAuditing {
   id: string;
+  parentId: string;
   targetId: string;
   userId: string;
   text: string;
@@ -36,6 +37,7 @@ export interface ReferenceComment extends AbstractAuditing {
 }
 
 export interface CommentReaction {
+  parentId: string;
   targetId: string;
   commentId: string;
   userId: string;
@@ -43,22 +45,19 @@ export interface CommentReaction {
   date: number;
 }
 
-export const buildCommentReaction = (
-  targetId: string,
-  commentId: string,
-  userId: string,
-  type: CommentReactionType,
-): CommentReaction => ({
-  targetId,
-  commentId,
+export const buildCommentReaction = (comment: Comment, userId: string, type: CommentReactionType): CommentReaction => ({
+  parentId: comment.parentId,
+  targetId: comment.targetId,
+  commentId: comment.id,
   userId,
   type,
   date: new Date().getTime(),
 });
 
-export const buildCommentFromDTO = (dto: CommentDTO, targetId: string, userId: string): Comment => ({
+export const buildCommentFromDTO = (dto: CommentDTO, parentId: string, targetId: string, userId: string): Comment => ({
   ...dto,
   id: '',
+  parentId,
   targetId,
   userId,
   isDeleted: false,

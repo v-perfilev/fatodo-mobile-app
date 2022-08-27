@@ -3,7 +3,7 @@ export interface WsEvent<T> {
   type: WsEventType;
   payload?: T;
   userId?: string;
-  date: Date;
+  date: number;
 }
 
 export type WsEventType =

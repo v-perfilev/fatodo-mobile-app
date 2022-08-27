@@ -28,7 +28,7 @@ const withEventChat =
     const messages = useAppSelector(InfoSelectors.messages);
     const chatEvent = event.chatEvent;
     const reaction = chatEvent.reaction;
-    const date = event.createdAt;
+    const date = event.date;
 
     const eventUser = useMemo<User>(() => chatEvent.userId && users.get(chatEvent.userId), [users]);
     const eventUsers = useMemo<User[]>(() => chatEvent.userIds && MapUtils.get(users, chatEvent.userIds), [users]);

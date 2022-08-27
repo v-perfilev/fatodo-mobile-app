@@ -23,6 +23,7 @@ interface CommentCounterPayload {
 }
 
 const initialState: CommentsState = {
+  parentId: undefined,
   targetId: undefined,
   comments: [],
   threadsInfo: [],
@@ -35,8 +36,10 @@ const commentsSlice = createSlice({
   name: 'comments',
   initialState,
   reducers: {
-    init: (state: CommentsState, action: PayloadAction<string>) => {
-      state.targetId = action.payload;
+    init: (state: CommentsState, action: PayloadAction<[string, string]>) => {
+      const [parentId, targetId] = action.payload;
+      state.parentId = parentId;
+      state.targetId = targetId;
       state.comments = [];
       state.allLoaded = false;
     },
@@ -90,7 +93,7 @@ const commentsSlice = createSlice({
       const account = action.payload.account;
       const reaction = comment.reactions.find((s) => s.userId === account.id);
       let oldReactions = reaction ? ArrayUtils.deleteValue(comment.reactions, reaction) : comment.reactions;
-      const newReaction = buildCommentReaction(comment.targetId, comment.id, account.id, newReactionType);
+      const newReaction = buildCommentReaction(comment, account.id, newReactionType);
       const updatedComment = {...comment, reactions: [...oldReactions, newReaction]};
       state.comments = ArrayUtils.updateValueWithId(state.comments, updatedComment);
     },

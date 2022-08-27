@@ -8,14 +8,22 @@ import eventsSlice from './eventsSlice';
 
 const PREFIX = 'events/';
 
-export class EventsThunks {
+export class EventsActions {
   static addEvent = (event: Event) => async (dispatch: AppDispatch) => {
-    dispatch(EventsThunks.loadDependenciesThunk([event]));
+    dispatch(EventsActions.loadDependenciesThunk([event]));
     dispatch(eventsSlice.actions.addEvent(event));
   };
 
   static removeChatEvents = (chatId: string) => async (dispatch: AppDispatch) => {
     dispatch(eventsSlice.actions.removeChatEvents(chatId));
+  };
+
+  static removeChatReactionEvents = (messageId: string, userId: string) => async (dispatch: AppDispatch) => {
+    dispatch(eventsSlice.actions.removeChatReactionEvents([messageId, userId]));
+  };
+
+  static removeCommentReactionEvents = (commentId: string, userId: string) => async (dispatch: AppDispatch) => {
+    dispatch(eventsSlice.actions.removeCommentReactionEvents([commentId, userId]));
   };
 
   static removeItemEvents = (itemId: string) => async (dispatch: AppDispatch) => {
@@ -36,7 +44,7 @@ export class EventsThunks {
 
   static fetchEventsThunk = createAsyncThunk(PREFIX + 'fetchEvents', async (offset: number, thunkAPI) => {
     const response = await EventService.getEventsPageable(offset);
-    thunkAPI.dispatch(EventsThunks.loadDependenciesThunk(response.data.data));
+    thunkAPI.dispatch(EventsActions.loadDependenciesThunk(response.data.data));
     return response.data;
   });
 

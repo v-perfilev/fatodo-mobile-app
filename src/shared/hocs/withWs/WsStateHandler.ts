@@ -8,14 +8,17 @@ import {ChatsActions} from '../../../store/chats/chatsActions';
 import {ChatActions} from '../../../store/chat/chatActions';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
 import {CommentsActions} from '../../../store/comments/commentsActions';
+import {UserAccount} from '../../../models/User';
 
 type HandlerFunc = (msg: WsEvent<any>) => void;
 
 export class WsStateHandler {
   private readonly dispatch: AppDispatch;
+  private readonly account: UserAccount;
 
-  constructor(dispatch: AppDispatch) {
+  constructor(dispatch: AppDispatch, account: UserAccount) {
     this.dispatch = dispatch;
+    this.account = account;
   }
 
   public handleMessage = (msg: WsEvent<any>): void => {
@@ -89,11 +92,22 @@ export class WsStateHandler {
   };
 
   private handleChatMemberDeleteEvent = (msg: WsEvent<ChatMember[]>): void => {
-    this.dispatch(ChatsActions.deleteMembersAction(msg.payload));
+    const memberIds = msg.payload.map((m) => m.userId);
+    if (memberIds.includes(this.account.id)) {
+      const chatId = msg.payload[0].chatId;
+      this.dispatch(ChatsActions.removeChat(chatId));
+    } else {
+      this.dispatch(ChatsActions.deleteMembers(msg.payload));
+    }
   };
 
   private handleChatMemberLeaveEvent = (msg: WsEvent<ChatMember>): void => {
-    this.dispatch(ChatsActions.deleteMembersAction([msg.payload]));
+    if (msg.payload.userId === this.account.id) {
+      const chatId = msg.payload.chatId;
+      this.dispatch(ChatsActions.removeChat(chatId));
+    } else {
+      this.dispatch(ChatsActions.deleteMembers([msg.payload]));
+    }
   };
 
   private handleChatMessageCreateEvent = (msg: WsEvent<Message>): void => {

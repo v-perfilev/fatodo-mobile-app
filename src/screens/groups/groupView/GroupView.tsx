@@ -46,7 +46,12 @@ const GroupView = ({group, loading}: GroupViewProps) => {
 
   const canEdit = useMemo<boolean>(() => group && GroupUtils.canEdit(account, group), [group, account]);
 
-  const goToComments = (): void => navigation.navigate('CommentList', {targetId: group.id, colorScheme: group.color});
+  const goToComments = (): void =>
+    navigation.navigate('CommentList', {
+      parentId: group.id,
+      targetId: group.id,
+      colorScheme: group.color,
+    });
 
   /*
   loaders

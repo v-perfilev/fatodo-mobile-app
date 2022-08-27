@@ -3,16 +3,16 @@ import {GroupPermission} from './Group';
 import {MessageReactionType} from './Message';
 
 export interface Event {
-  id: string;
+  id?: string;
 
   type: EventType;
+  date: number;
+
   contactEvent?: ContactEvent;
   itemEvent?: ItemEvent;
   commentEvent?: CommentEvent;
   chatEvent?: ChatEvent;
   reminderEvent?: ReminderEvent;
-
-  createdAt: number;
 }
 
 export interface ContactEvent {

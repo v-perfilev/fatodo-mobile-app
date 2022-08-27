@@ -12,7 +12,7 @@ import FVStack from '../../../components/boxes/FVStack';
 import {LoginDTO} from '../../../models/dto/LoginDTO';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {AuthActions, AuthActions} from '../../../store/auth/authActions';
+import {AuthActions} from '../../../store/auth/authActions';
 
 type SignInFormValues = {
   user: string;

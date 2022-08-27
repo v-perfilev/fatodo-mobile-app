@@ -19,7 +19,7 @@ const withEventContact =
   ({event}: ContainerProps) => {
     const users = useAppSelector(InfoSelectors.users);
     const contactEvent = event.contactEvent;
-    const date = event.createdAt;
+    const date = event.date;
 
     const eventFirstUser = useMemo<User>(() => users.get(contactEvent.firstUserId), [users]);
     const eventSecondUser = useMemo<User>(() => users.get(contactEvent.secondUserId), [users]);

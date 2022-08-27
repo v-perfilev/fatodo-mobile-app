@@ -11,7 +11,7 @@ type EventWelcomeProps = {
 
 const EventWelcome = ({event}: EventWelcomeProps) => {
   const {t} = useTranslation();
-  const date = event.createdAt;
+  const date = event.date;
 
   const image = <IconPic icon={<GreetingIcon />} size="md" />;
 

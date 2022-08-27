@@ -26,7 +26,7 @@ const withEventItem =
     const groups = useAppSelector(InfoSelectors.groups);
     const items = useAppSelector(InfoSelectors.items);
     const itemEvent = event.itemEvent;
-    const date = event.createdAt;
+    const date = event.date;
 
     const eventUser = useMemo<User>(() => itemEvent.userId && users.get(itemEvent.userId), [users]);
     const eventUsers = useMemo<User[]>(() => itemEvent.userIds && MapUtils.get(users, itemEvent.userIds), [users]);

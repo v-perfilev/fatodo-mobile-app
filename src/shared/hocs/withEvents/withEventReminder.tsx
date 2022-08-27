@@ -21,7 +21,7 @@ const withEventReminder =
     const groups = useAppSelector(InfoSelectors.groups);
     const items = useAppSelector(InfoSelectors.items);
     const reminderEvent = event.reminderEvent;
-    const date = event.createdAt;
+    const date = event.date;
 
     const eventGroup = useMemo<GroupInfo>(() => reminderEvent.groupId && groups.get(reminderEvent.groupId), [groups]);
     const eventItem = useMemo<ItemInfo>(() => reminderEvent.itemId && items.get(reminderEvent.itemId), [items]);

@@ -8,7 +8,6 @@ import {Chat, ChatMember} from '../../models/Chat';
 import {ChatUtils} from '../../shared/utils/ChatUtils';
 import {InfoActions} from '../info/infoActions';
 import {Message} from '../../models/Message';
-import eventsSlice from '../events/eventsSlice';
 
 const PREFIX = 'chats/';
 
@@ -23,6 +22,14 @@ export class ChatsActions {
 
   static addMembers = (members: ChatMember[]) => async (dispatch: AppDispatch) => {
     dispatch(chatsSlice.actions.addMembers(members));
+  };
+
+  static deleteMembers = (members: ChatMember[]) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.deleteMembers(members));
+  };
+
+  static removeChat = (chatId: string) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.removeChat(chatId));
   };
 
   static fetchChatsThunk = createAsyncThunk(PREFIX + 'fetchChats', async (offset: number, thunkAPI) => {
@@ -106,22 +113,6 @@ export class ChatsActions {
       const account = state.auth.account;
       if (!message?.isEvent && message?.userId === account.id) {
         thunkAPI.dispatch(chatsSlice.actions.addUnread(message));
-      }
-    },
-  );
-
-  static deleteMembersAction = createAsyncThunk(
-    PREFIX + 'deleteMembersAction',
-    async (members: ChatMember[], thunkAPI) => {
-      const state = thunkAPI.getState() as RootState;
-      const account = state.auth.account;
-      const memberIds = members.map((m) => m.userId);
-      if (memberIds.includes(account.id)) {
-        const chatId = members[0].chatId;
-        thunkAPI.dispatch(chatsSlice.actions.removeChat(chatId));
-        thunkAPI.dispatch(eventsSlice.actions.removeChatEvents(chatId));
-      } else {
-        thunkAPI.dispatch(chatsSlice.actions.deleteMembers(members));
       }
     },
   );

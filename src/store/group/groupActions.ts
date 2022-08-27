@@ -9,7 +9,6 @@ import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import snackSlice from '../snack/snackSlice';
 import groupsSlice from '../groups/groupsSlice';
 import {InfoActions} from '../info/infoActions';
-import eventsSlice from '../events/eventsSlice';
 
 const PREFIX = 'group/';
 
@@ -80,9 +79,6 @@ export class GroupActions {
     await ItemService.deleteItem(item.id);
     thunkAPI.dispatch(groupsSlice.actions.removeItem(item.id));
     thunkAPI.dispatch(groupSlice.actions.removeItem(item.id));
-    thunkAPI.dispatch(eventsSlice.actions.removeItemEvents(item.id));
-    thunkAPI.dispatch(eventsSlice.actions.removeCommentEvents(item.id));
-    thunkAPI.dispatch(eventsSlice.actions.removeReminderEventsByItemId(item.id));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'item.deleted', variant: 'info'}));
   });
 

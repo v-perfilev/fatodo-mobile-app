@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {EventsState} from './eventsType';
-import {EventsThunks} from './eventsActions';
+import {EventsActions} from './eventsActions';
 import {EventUtils} from '../../shared/utils/EventUtils';
 import {Event} from '../../models/Event';
 
@@ -26,6 +26,24 @@ const eventsSlice = createSlice({
     removeChatEvents: (state: EventsState, action: PayloadAction<string>) => {
       const chatId = action.payload;
       state.events = state.events.filter((event) => event.chatEvent?.chatId === chatId);
+    },
+
+    removeChatReactionEvents: (state: EventsState, action: PayloadAction<[string, string]>) => {
+      const [messageId, userId] = action.payload;
+      state.events = state.events.filter(
+        (event) =>
+          event.chatEvent?.messageId === messageId && event.chatEvent?.userId === userId && event.chatEvent?.reaction,
+      );
+    },
+
+    removeCommentReactionEvents: (state: EventsState, action: PayloadAction<[string, string]>) => {
+      const [commentId, userId] = action.payload;
+      state.events = state.events.filter(
+        (event) =>
+          event.commentEvent?.commentId === commentId &&
+          event.commentEvent?.userId === userId &&
+          event.commentEvent?.reaction,
+      );
     },
 
     removeItemEvents: (state: EventsState, action: PayloadAction<string>) => {
@@ -64,10 +82,10 @@ const eventsSlice = createSlice({
     /*
     fetchEvents
     */
-    builder.addCase(EventsThunks.fetchEventsThunk.pending, (state: EventsState) => {
+    builder.addCase(EventsActions.fetchEventsThunk.pending, (state: EventsState) => {
       state.loading = true;
     });
-    builder.addCase(EventsThunks.fetchEventsThunk.fulfilled, (state: EventsState, action) => {
+    builder.addCase(EventsActions.fetchEventsThunk.fulfilled, (state: EventsState, action) => {
       const newEvents = action.payload.data;
       state.events = EventUtils.filterEvents([...state.events, ...newEvents]);
       state.count = action.payload.count;
@@ -75,21 +93,21 @@ const eventsSlice = createSlice({
       state.allLoaded = state.events.length === state.count;
       state.loading = false;
     });
-    builder.addCase(EventsThunks.fetchEventsThunk.rejected, (state: EventsState) => {
+    builder.addCase(EventsActions.fetchEventsThunk.rejected, (state: EventsState) => {
       state.loading = false;
     });
 
     /*
     fetchUnreadCount
      */
-    builder.addCase(EventsThunks.fetchUnreadCountThunk.fulfilled, (state: EventsState, action) => {
+    builder.addCase(EventsActions.fetchUnreadCountThunk.fulfilled, (state: EventsState, action) => {
       state.unreadCount = action.payload;
     });
 
     /*
     refreshUnreadCount
      */
-    builder.addCase(EventsThunks.refreshUnreadCountThunk.fulfilled, (state: EventsState) => {
+    builder.addCase(EventsActions.refreshUnreadCountThunk.fulfilled, (state: EventsState) => {
       state.unreadCount = 0;
     });
   },

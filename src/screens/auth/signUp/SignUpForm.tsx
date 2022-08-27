@@ -15,7 +15,7 @@ import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {emailValidator, passwordValidator, usernameValidator} from '../../../shared/validators';
-import {AuthActions, AuthActions} from '../../../store/auth/authActions';
+import {AuthActions} from '../../../store/auth/authActions';
 
 export interface SignUpFormValues {
   email: string;

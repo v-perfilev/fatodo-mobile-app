@@ -1,6 +1,6 @@
 import React, {ReactElement, useEffect, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {EventsThunks} from '../../../store/events/eventsActions';
+import {EventsActions} from '../../../store/events/eventsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useIsFocused} from '@react-navigation/native';
 import EventsSelectors from '../../../store/events/eventsSelectors';
@@ -34,11 +34,11 @@ const EventList = () => {
    */
 
   const load = async (): Promise<void> => {
-    await dispatch(EventsThunks.fetchEventsThunk(events.length));
+    await dispatch(EventsActions.fetchEventsThunk(events.length));
   };
 
   const refresh = async (): Promise<void> => {
-    await dispatch(EventsThunks.fetchEventsThunk(0));
+    await dispatch(EventsActions.fetchEventsThunk(0));
   };
 
   /*
@@ -66,8 +66,8 @@ const EventList = () => {
    */
 
   useEffect(() => {
-    isFocused && loading && dispatch(EventsThunks.fetchEventsThunk(0)).finally(() => setLoading(false));
-    isFocused && dispatch(EventsThunks.refreshUnreadCountThunk());
+    isFocused && loading && dispatch(EventsActions.fetchEventsThunk(0)).finally(() => setLoading(false));
+    isFocused && dispatch(EventsActions.refreshUnreadCountThunk());
   }, [isFocused]);
 
   const buttons: CornerButton[] = [{icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true}];

@@ -29,7 +29,7 @@ const withEventComment =
     const comments = useAppSelector(InfoSelectors.comments);
     const commentEvent = event.commentEvent;
     const reaction = commentEvent.reaction;
-    const date = event.createdAt;
+    const date = event.date;
 
     const eventUser = useMemo<User>(() => commentEvent.userId && users.get(commentEvent.userId), [users]);
     const eventGroup = useMemo<GroupInfo>(() => commentEvent.parentId && groups.get(commentEvent.parentId), [groups]);
