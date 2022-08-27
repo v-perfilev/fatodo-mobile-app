@@ -1,7 +1,7 @@
 import React, {ReactElement, useEffect, useRef, useState} from 'react';
 import GroupListHeader from './GroupListHeader';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {GroupsActions, GroupsThunks} from '../../../store/groups/groupsActions';
+import {GroupsActions} from '../../../store/groups/groupsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Group} from '../../../models/Group';
 import {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
@@ -39,7 +39,7 @@ const GroupList = () => {
    */
 
   const refresh = async (): Promise<void> => {
-    await dispatch(GroupsThunks.fetchGroups());
+    await dispatch(GroupsActions.fetchGroupsThunk());
   };
 
   /*
@@ -81,7 +81,7 @@ const GroupList = () => {
    */
 
   useEffect(() => {
-    dispatch(GroupsThunks.fetchGroups()).finally(() => setLoading(false));
+    dispatch(GroupsActions.fetchGroupsThunk()).finally(() => setLoading(false));
   }, []);
 
   const header = <GroupListHeader sorting={sorting} setSorting={setSorting} />;

@@ -4,7 +4,7 @@ import {MapUtils} from '../../shared/utils/MapUtils';
 import {Item} from '../../models/Item';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Group} from '../../models/Group';
-import {GroupsThunks} from './groupsActions';
+import {GroupsActions} from './groupsActions';
 import {GroupUtils} from '../../shared/utils/GroupUtils';
 
 interface GroupsCollapsedPayload {
@@ -107,28 +107,28 @@ const groupsSlice = createSlice({
     /*
     fetchGroups
     */
-    builder.addCase(GroupsThunks.fetchGroups.pending, (state: GroupsState) => {
+    builder.addCase(GroupsActions.fetchGroupsThunk.pending, (state: GroupsState) => {
       state.loading = true;
     });
-    builder.addCase(GroupsThunks.fetchGroups.fulfilled, (state: GroupsState, action) => {
+    builder.addCase(GroupsActions.fetchGroupsThunk.fulfilled, (state: GroupsState, action) => {
       state.groups = action.payload;
       state.loading = false;
     });
-    builder.addCase(GroupsThunks.fetchGroups.rejected, (state: GroupsState) => {
+    builder.addCase(GroupsActions.fetchGroupsThunk.rejected, (state: GroupsState) => {
       state.loading = false;
     });
 
     /*
     fetchItems
     */
-    builder.addCase(GroupsThunks.fetchItems.pending, (state: GroupsState, action) => {
+    builder.addCase(GroupsActions.fetchItemsThunk.pending, (state: GroupsState, action) => {
       const groupIds = action.meta.arg;
       state.items = MapUtils.setValues(state.items, groupIds, []);
       state.itemsCount = MapUtils.setValues(state.itemsCount, groupIds, 0);
       state.itemsCollapsed = MapUtils.setValues(state.itemsCollapsed, groupIds, false);
       state.itemsLoading = MapUtils.setValues(state.itemsLoading, groupIds, true);
     });
-    builder.addCase(GroupsThunks.fetchItems.fulfilled, (state: GroupsState, action) => {
+    builder.addCase(GroupsActions.fetchItemsThunk.fulfilled, (state: GroupsState, action) => {
       const groupIds = action.meta.arg;
       const pageableListMap = new Map(Object.entries(action.payload));
       const itemFunc = (id: string): Item[] => (pageableListMap.has(id) ? pageableListMap.get(id).data : []);
@@ -137,7 +137,7 @@ const groupsSlice = createSlice({
       state.itemsCount = MapUtils.setValuesFunc(state.itemsCount, groupIds, countFunc);
       state.itemsLoading = MapUtils.setValues(state.itemsLoading, groupIds, false);
     });
-    builder.addCase(GroupsThunks.fetchItems.rejected, (state: GroupsState, action) => {
+    builder.addCase(GroupsActions.fetchItemsThunk.rejected, (state: GroupsState, action) => {
       const groupIds = action.meta.arg;
       state.itemsLoading = MapUtils.setValues(state.itemsLoading, groupIds, false);
     });

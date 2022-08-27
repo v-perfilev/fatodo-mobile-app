@@ -5,7 +5,7 @@ import {useAppDispatch} from '../../../../store/store';
 import CommentEditForm from './CommentEditForm';
 import {Comment} from '../../../../models/Comment';
 import {CommentDTO} from '../../../../models/dto/CommentDTO';
-import {CommentsThunks} from '../../../../store/comments/commentsActions';
+import {CommentsActions} from '../../../../store/comments/commentsActions';
 
 export type CommentEditDialogProps = {
   comment: Comment;
@@ -24,7 +24,7 @@ const CommentEditDialog = ({comment, show, close}: CommentEditDialogProps) => {
   const {t} = useTranslation();
 
   const request = (dto: CommentDTO, stopSubmitting: () => void): void => {
-    dispatch(CommentsThunks.editComment({comment, dto}))
+    dispatch(CommentsActions.editCommentThunk({comment, dto}))
       .unwrap()
       .then(() => close())
       .catch(() => stopSubmitting());

@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {CalendarDate, CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {ScrollView} from 'react-native';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {CalendarThunks} from '../../../store/calendar/calendarActions';
+import {CalendarActions} from '../../../store/calendar/calendarActions';
 import RefreshableScrollView from '../../../components/scrollable/RefreshableScrollView';
 import FBox from '../../../components/boxes/FBox';
 import CalendarViewContent from './CalendarViewContent';
@@ -40,7 +40,7 @@ const CalendarViewContainer = ({month, selectMonth, activeMonth, width}: Calenda
   }, []);
 
   const refresh = async (): Promise<void> => {
-    await dispatch(CalendarThunks.fetchReminders([month.key]));
+    await dispatch(CalendarActions.fetchRemindersThunk([month.key]));
   };
 
   const initDate = (): void => {

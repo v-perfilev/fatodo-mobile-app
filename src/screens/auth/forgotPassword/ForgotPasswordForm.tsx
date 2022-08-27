@@ -11,7 +11,7 @@ import SolidButton from '../../../components/controls/SolidButton';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import {AuthActions, AuthThunks} from '../../../store/auth/authActions';
+import {AuthActions, AuthActions} from '../../../store/auth/authActions';
 
 export interface ForgotPasswordFormValues {
   user: string;
@@ -47,7 +47,7 @@ const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: Forg
       token: captchaToken,
     };
 
-    dispatch(AuthThunks.forgotPassword(dto))
+    dispatch(AuthActions.forgotPasswordThunk(dto))
       .unwrap()
       .then(() => onSuccess());
   };

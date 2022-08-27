@@ -5,7 +5,7 @@ import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import {useAppDispatch} from '../../../store/store';
 import {Group} from '../../../models/Group';
 import Header from '../../../components/layouts/Header';
-import {GroupThunks} from '../../../store/group/groupActions';
+import {GroupActions} from '../../../store/group/groupActions';
 import {ScrollView} from 'native-base';
 import {DEFAULT_SPACE} from '../../../constants';
 import {ListUtils} from '../../../shared/utils/ListUtils';
@@ -18,7 +18,7 @@ const GroupCreate = () => {
   const goToGroupView = (group: Group): void => navigation.replace('GroupView', {group});
 
   const request = (formData: FormData, stopSubmitting: () => void): void => {
-    dispatch(GroupThunks.createGroup(formData))
+    dispatch(GroupActions.createGroupThunk(formData))
       .unwrap()
       .then((group) => goToGroupView(group))
       .catch(() => stopSubmitting());

@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../store/store';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Chat} from '../../../models/Chat';
-import {ChatThunks} from '../../../store/chat/chatActions';
+import {ChatActions} from '../../../store/chat/chatActions';
 
 export type ChatLeaveDialogProps = {
   chat: Chat;
@@ -27,7 +27,7 @@ const ChatLeaveDialog = ({chat, show, close, onSuccess = () => null}: ChatLeaveD
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(ChatThunks.leaveChat(chat))
+    dispatch(ChatActions.leaveChatThunk(chat))
       .unwrap()
       .then(() => {
         onSuccess();

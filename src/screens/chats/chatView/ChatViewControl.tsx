@@ -7,7 +7,7 @@ import SendMessageIcon from '../../../components/icons/SendMessageIcon';
 import {MessageDTO} from '../../../models/dto/MessageDTO';
 import IconButton from '../../../components/controls/IconButton';
 import {useTranslation} from 'react-i18next';
-import {ChatThunks} from '../../../store/chat/chatActions';
+import {ChatActions} from '../../../store/chat/chatActions';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 
 const ChatViewControl = () => {
@@ -36,7 +36,7 @@ const ChatViewControl = () => {
   const handleSend = (): void => {
     setMessageBody('');
     setUpdater('');
-    dispatch(ChatThunks.sendMessage({chatId: chat.id, dto}));
+    dispatch(ChatActions.sendMessageThunk({chatId: chat.id, dto}));
   };
 
   return (

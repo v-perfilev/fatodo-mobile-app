@@ -7,7 +7,7 @@ import GhostButton from '../../../components/controls/GhostButton';
 import FVStack from '../../../components/boxes/FVStack';
 import PermissionSelect from '../../../components/inputs/permissionSelect/PermissionSelect';
 import {useAppDispatch} from '../../../store/store';
-import {GroupThunks} from '../../../store/group/groupActions';
+import {GroupActions} from '../../../store/group/groupActions';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
 
 export type GroupEditMemberDialogProps = {
@@ -35,7 +35,7 @@ const GroupEditMemberDialog: FC<Props> = ({group, user, show, close}: Props) => 
   const editMember = (): void => {
     setIsSubmitting(true);
     const editedMember: GroupMember = {userId: user.userId, permission};
-    dispatch(GroupThunks.editGroupMember({group, member: editedMember}))
+    dispatch(GroupActions.editGroupMemberThunk({group, member: editedMember}))
       .unwrap()
       .then(() => close())
       .finally(() => setIsSubmitting(false));

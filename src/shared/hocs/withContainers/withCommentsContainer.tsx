@@ -4,7 +4,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useDelayedState} from '../../hooks/useDelayedState';
 import {RootNavigationProp, RootParamList} from '../../../navigators/RootNavigator';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
-import {CommentsActions, CommentsThunks} from '../../../store/comments/commentsActions';
+import {CommentsActions} from '../../../store/comments/commentsActions';
 import {ColorScheme} from '../../themes/ThemeFactory';
 
 export type WithCommentsProps = {
@@ -26,7 +26,7 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
 
   const loadComments = (): void => {
     dispatch(CommentsActions.init(routeTargetId));
-    dispatch(CommentsThunks.fetchComments({targetId: routeTargetId, offset: 0}))
+    dispatch(CommentsActions.fetchCommentsThunk({targetId: routeTargetId, offset: 0}))
       .unwrap()
       .catch((status) => (status !== 404 ? goBack() : null))
       .finally(() => setLoading(false));

@@ -34,11 +34,11 @@ const EventList = () => {
    */
 
   const load = async (): Promise<void> => {
-    await dispatch(EventsThunks.fetchEvents(events.length));
+    await dispatch(EventsThunks.fetchEventsThunk(events.length));
   };
 
   const refresh = async (): Promise<void> => {
-    await dispatch(EventsThunks.fetchEvents(0));
+    await dispatch(EventsThunks.fetchEventsThunk(0));
   };
 
   /*
@@ -66,8 +66,8 @@ const EventList = () => {
    */
 
   useEffect(() => {
-    isFocused && loading && dispatch(EventsThunks.fetchEvents(0)).finally(() => setLoading(false));
-    isFocused && dispatch(EventsThunks.refreshUnreadCount());
+    isFocused && loading && dispatch(EventsThunks.fetchEventsThunk(0)).finally(() => setLoading(false));
+    isFocused && dispatch(EventsThunks.refreshUnreadCountThunk());
   }, [isFocused]);
 
   const buttons: CornerButton[] = [{icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true}];

@@ -1,5 +1,5 @@
 import React, {ComponentType, useEffect} from 'react';
-import {GroupActions, GroupThunks} from '../../../store/group/groupActions';
+import {GroupActions} from '../../../store/group/groupActions';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
@@ -28,7 +28,7 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
   };
 
   const loadGroup = (): void => {
-    dispatch(GroupThunks.fetchGroup(routeGroupId))
+    dispatch(GroupActions.fetchGroupThunk(routeGroupId))
       .unwrap()
       .catch(() => goBack())
       .finally(() => setLoading(false));

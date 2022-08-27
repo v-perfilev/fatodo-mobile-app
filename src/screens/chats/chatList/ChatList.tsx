@@ -12,7 +12,7 @@ import {Box, useTheme} from 'native-base';
 import ChatListItem from './ChatListItem';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
-import {ChatsThunks} from '../../../store/chats/chatsActions';
+import {ChatsActions} from '../../../store/chats/chatsActions';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
@@ -48,15 +48,15 @@ const ChatList = () => {
    */
 
   const load = async (): Promise<void> => {
-    await dispatch(ChatsThunks.fetchChats(chats.length));
+    await dispatch(ChatsActions.fetchChatsThunk(chats.length));
   };
 
   const refresh = async (): Promise<void> => {
-    await dispatch(ChatsThunks.refreshChats());
+    await dispatch(ChatsActions.refreshChatsThunk());
   };
 
   const loadFiltered = async (): Promise<void> => {
-    await dispatch(ChatsThunks.fetchFilteredChats(filter));
+    await dispatch(ChatsActions.fetchFilteredChatsThunk(filter));
   };
 
   /*

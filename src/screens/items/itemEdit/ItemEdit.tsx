@@ -10,7 +10,7 @@ import {ScrollView, Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
-import {ItemThunks} from '../../../store/item/itemActions';
+import {ItemActions} from '../../../store/item/itemActions';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
 import {DEFAULT_SPACE} from '../../../constants';
 import {ListUtils} from '../../../shared/utils/ListUtils';
@@ -32,7 +32,7 @@ const ItemEdit = ({group, item, loading}: ItemEditProps) => {
         });
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
-    dispatch(ItemThunks.updateItem(dto))
+    dispatch(ItemActions.updateItemThunk(dto))
       .unwrap()
       .then(() => goToItemView())
       .catch(() => stopSubmitting());

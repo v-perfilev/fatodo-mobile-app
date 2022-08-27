@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ItemState} from './itemType';
-import {ItemThunks} from './itemActions';
+import {ItemActions} from './itemActions';
 import {Item} from '../../models/Item';
 import {Group} from '../../models/Group';
 
@@ -29,59 +29,59 @@ const itemSlice = createSlice({
     /*
     fetchItem
     */
-    builder.addCase(ItemThunks.fetchItem.pending, () => {
+    builder.addCase(ItemActions.fetchItemThunk.pending, () => {
       const loading = true;
       return {...initialState, loading};
     });
-    builder.addCase(ItemThunks.fetchItem.fulfilled, (state: ItemState, action) => {
+    builder.addCase(ItemActions.fetchItemThunk.fulfilled, (state: ItemState, action) => {
       state.item = action.payload;
       state.loading = false;
     });
-    builder.addCase(ItemThunks.fetchItem.rejected, () => {
+    builder.addCase(ItemActions.fetchItemThunk.rejected, () => {
       return {...initialState};
     });
 
     /*
     fetchGroup
     */
-    builder.addCase(ItemThunks.fetchGroup.fulfilled, (state: ItemState, action) => {
+    builder.addCase(ItemActions.fetchGroupThunk.fulfilled, (state: ItemState, action) => {
       state.group = action.payload;
     });
 
     /*
     fetchReminders
     */
-    builder.addCase(ItemThunks.fetchReminders.fulfilled, (state: ItemState, action) => {
+    builder.addCase(ItemActions.fetchRemindersThunk.fulfilled, (state: ItemState, action) => {
       state.reminders = action.payload;
     });
 
     /*
     createItem
     */
-    builder.addCase(ItemThunks.createItem.pending, (state: ItemState) => {
+    builder.addCase(ItemActions.createItemThunk.pending, (state: ItemState) => {
       state.loading = true;
     });
-    builder.addCase(ItemThunks.createItem.fulfilled, (state: ItemState, action) => {
+    builder.addCase(ItemActions.createItemThunk.fulfilled, (state: ItemState, action) => {
       state.item = action.payload;
       state.reminders = action.meta.arg.reminders;
       state.loading = false;
     });
-    builder.addCase(ItemThunks.createItem.rejected, () => {
+    builder.addCase(ItemActions.createItemThunk.rejected, () => {
       return {...initialState};
     });
 
     /*
     updateItem
     */
-    builder.addCase(ItemThunks.updateItem.pending, (state: ItemState) => {
+    builder.addCase(ItemActions.updateItemThunk.pending, (state: ItemState) => {
       state.loading = true;
     });
-    builder.addCase(ItemThunks.updateItem.fulfilled, (state: ItemState, action) => {
+    builder.addCase(ItemActions.updateItemThunk.fulfilled, (state: ItemState, action) => {
       state.item = action.payload;
       state.reminders = action.meta.arg.reminders;
       state.loading = false;
     });
-    builder.addCase(ItemThunks.updateItem.rejected, (state: ItemState) => {
+    builder.addCase(ItemActions.updateItemThunk.rejected, (state: ItemState) => {
       state.loading = false;
     });
   },

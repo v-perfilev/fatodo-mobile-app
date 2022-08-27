@@ -7,7 +7,7 @@ import PressableButton from '../../../../components/controls/PressableButton';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 import {Comment, CommentReactionType, commentReactionTypes} from '../../../../models/Comment';
-import {CommentsThunks} from '../../../../store/comments/commentsActions';
+import {CommentsActions} from '../../../../store/comments/commentsActions';
 
 const buildReactionMap = (comment: Comment, isOwnComment: boolean): Map<CommentReactionType, number> => {
   const map = new Map();
@@ -46,11 +46,11 @@ const CommentListItemReactions = ({comment, isOwnComment}: CommentListItemReacti
   const handlePress = useCallback(
     (r: CommentReactionType) => (): void => {
       if (r === activeReaction) {
-        dispatch(CommentsThunks.noReaction({comment, account}));
+        dispatch(CommentsActions.noReactionThunk({comment, account}));
       } else if (r === 'LIKE') {
-        dispatch(CommentsThunks.likeReaction({comment, account}));
+        dispatch(CommentsActions.likeReactionThunk({comment, account}));
       } else if (r === 'DISLIKE') {
-        dispatch(CommentsThunks.dislikeReaction({comment, account}));
+        dispatch(CommentsActions.dislikeReactionThunk({comment, account}));
       }
     },
     [comment, activeReaction],

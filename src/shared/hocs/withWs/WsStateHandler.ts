@@ -4,10 +4,10 @@ import {Chat, ChatMember} from '../../../models/Chat';
 import {Message, MessageReaction, MessageStatus} from '../../../models/Message';
 import {ContactRelation, ContactRequest} from '../../../models/Contact';
 import {Comment, CommentReaction} from '../../../models/Comment';
-import {ChatsActions, ChatsThunks} from '../../../store/chats/chatsActions';
+import {ChatsActions} from '../../../store/chats/chatsActions';
 import {ChatActions} from '../../../store/chat/chatActions';
-import {ContactsActions, ContactsThunks} from '../../../store/contacts/contactsActions';
-import {CommentsActions, CommentsThunks} from '../../../store/comments/commentsActions';
+import {ContactsActions} from '../../../store/contacts/contactsActions';
+import {CommentsActions} from '../../../store/comments/commentsActions';
 
 type HandlerFunc = (msg: WsEvent<any>) => void;
 
@@ -97,13 +97,13 @@ export class WsStateHandler {
   };
 
   private handleChatMessageCreateEvent = (msg: WsEvent<Message>): void => {
-    this.dispatch(ChatsThunks.addChatLastMessage(msg.payload));
-    this.dispatch(ChatsThunks.increaseMessageCounter(msg.payload));
+    this.dispatch(ChatsActions.addChatLastMessageAction(msg.payload));
+    this.dispatch(ChatsActions.increaseMessageCounterAction(msg.payload));
     this.dispatch(ChatActions.addMessage(msg.payload));
   };
 
   private handleChatMessageUpdateEvent = (msg: WsEvent<Message>): void => {
-    this.dispatch(ChatsThunks.updateChatLastMessage(msg.payload));
+    this.dispatch(ChatsActions.updateChatLastMessageAction(msg.payload));
     this.dispatch(ChatActions.updateMessage(msg.payload));
   };
 
@@ -144,7 +144,7 @@ export class WsStateHandler {
   };
 
   private handleContactDeleteEvent = (msg: WsEvent<ContactRelation>): void => {
-    this.dispatch(ContactsThunks.removeRelationFromList(msg.payload));
+    this.dispatch(ContactsActions.removeRelationAction(msg.payload));
   };
 
   /*
@@ -152,7 +152,7 @@ export class WsStateHandler {
    */
 
   private handleCommentCreateEvent = (msg: WsEvent<Comment>): void => {
-    this.dispatch(CommentsThunks.addComment(msg.payload));
+    this.dispatch(CommentsActions.addCommentAction(msg.payload));
   };
 
   private handleCommentUpdateEvent = (msg: WsEvent<Comment>): void => {

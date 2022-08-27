@@ -4,7 +4,7 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useDelayedState} from '../../hooks/useDelayedState';
 import {RootNavigationProp, RootParamList} from '../../../navigators/RootNavigator';
 import ChatSelectors from '../../../store/chat/chatSelectors';
-import {ChatThunks} from '../../../store/chat/chatActions';
+import {ChatActions} from '../../../store/chat/chatActions';
 import {Chat} from '../../../models/Chat';
 
 export type WithChatProps = {
@@ -24,13 +24,13 @@ const withChatContainer = (Component: ComponentType<WithChatProps>) => (props: a
   const goBack = (): void => navigation.goBack();
 
   const selectChat = (): void => {
-    dispatch(ChatThunks.selectChat(routeChat))
+    dispatch(ChatActions.selectChatThunk(routeChat))
       .unwrap()
       .then(() => setLoading(false));
   };
 
   const loadChat = (): void => {
-    dispatch(ChatThunks.fetchChat(routeChatId))
+    dispatch(ChatActions.fetchChatThunk(routeChatId))
       .unwrap()
       .catch(() => goBack())
       .finally(() => setLoading(false));

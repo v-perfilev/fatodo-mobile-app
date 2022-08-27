@@ -5,7 +5,7 @@ import {useAppDispatch} from '../../../../store/store';
 import {User} from '../../../../models/User';
 import {MessageDTO} from '../../../../models/dto/MessageDTO';
 import ChatDirectMessageForm from './ChatDirectMessageForm';
-import {ChatsThunks} from '../../../../store/chats/chatsActions';
+import {ChatsActions} from '../../../../store/chats/chatsActions';
 
 export type ChatDirectMessageDialogProps = {
   user: User;
@@ -24,7 +24,7 @@ const ChatDirectMessageDialog = ({user, show, close}: ChatDirectMessageDialogPro
   const {t} = useTranslation();
 
   const request = (dto: MessageDTO, stopSubmitting: () => void): void => {
-    dispatch(ChatsThunks.sendDirectMessage({userId: user.id, dto}))
+    dispatch(ChatsActions.sendDirectMessageThunk({userId: user.id, dto}))
       .unwrap()
       .then(() => close())
       .catch(() => stopSubmitting());

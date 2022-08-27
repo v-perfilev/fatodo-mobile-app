@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AuthState} from './authType';
-import {AuthThunks} from './authActions';
+import {AuthActions} from './authActions';
 import {UserAccount} from '../../models/User';
 
 const initialState: AuthState = {
@@ -33,56 +33,56 @@ const authSlice = createSlice({
     /*
     register
     */
-    builder.addCase(AuthThunks.register.pending, () => {
+    builder.addCase(AuthActions.registerThunk.pending, () => {
       const loading = true;
       return {...initialState, loading};
     });
-    builder.addCase(AuthThunks.register.fulfilled, () => {
+    builder.addCase(AuthActions.registerThunk.fulfilled, () => {
       return {...initialState};
     });
-    builder.addCase(AuthThunks.register.rejected, () => {
+    builder.addCase(AuthActions.registerThunk.rejected, () => {
       return {...initialState};
     });
 
     /*
     authenticate
      */
-    builder.addCase(AuthThunks.authenticate.pending, () => {
+    builder.addCase(AuthActions.authenticateThunk.pending, () => {
       const loading = true;
       return {...initialState, loading};
     });
-    builder.addCase(AuthThunks.authenticate.fulfilled, (state: AuthState) => {
+    builder.addCase(AuthActions.authenticateThunk.fulfilled, (state: AuthState) => {
       state.isAuthenticated = true;
     });
-    builder.addCase(AuthThunks.authenticate.rejected, () => {
+    builder.addCase(AuthActions.authenticateThunk.rejected, () => {
       return {...initialState};
     });
 
     /*
     fetchAccount
      */
-    builder.addCase(AuthThunks.fetchAccount.pending, (state: AuthState) => {
+    builder.addCase(AuthActions.fetchAccountThunk.pending, (state: AuthState) => {
       state.loading = true;
     });
-    builder.addCase(AuthThunks.fetchAccount.fulfilled, (state: AuthState, action) => {
+    builder.addCase(AuthActions.fetchAccountThunk.fulfilled, (state: AuthState, action) => {
       state.account = action.payload;
       state.loading = false;
     });
-    builder.addCase(AuthThunks.fetchAccount.rejected, () => {
+    builder.addCase(AuthActions.fetchAccountThunk.rejected, () => {
       return {...initialState};
     });
 
     /*
     forgotPassword
     */
-    builder.addCase(AuthThunks.forgotPassword.pending, () => {
+    builder.addCase(AuthActions.forgotPasswordThunk.pending, () => {
       const loading = true;
       return {...initialState, loading};
     });
-    builder.addCase(AuthThunks.forgotPassword.fulfilled, () => {
+    builder.addCase(AuthActions.forgotPasswordThunk.fulfilled, () => {
       return {...initialState};
     });
-    builder.addCase(AuthThunks.forgotPassword.rejected, () => {
+    builder.addCase(AuthActions.forgotPasswordThunk.rejected, () => {
       return {...initialState};
     });
   },

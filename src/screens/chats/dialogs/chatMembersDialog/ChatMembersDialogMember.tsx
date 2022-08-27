@@ -9,7 +9,7 @@ import AuthSelectors from '../../../../store/auth/authSelectors';
 import {Chat} from '../../../../models/Chat';
 import {User} from '../../../../models/User';
 import IconButton from '../../../../components/controls/IconButton';
-import {ChatThunks} from '../../../../store/chat/chatActions';
+import {ChatActions} from '../../../../store/chat/chatActions';
 
 type ChatMembersDialogMemberProps = {
   chat: Chat;
@@ -29,7 +29,7 @@ const ChatMembersDialogMember = ({chat, user}: ChatMembersDialogMemberProps) => 
 
   const removeUserFromChat = (): void => {
     setRemovingLoading(true);
-    dispatch(ChatThunks.removeChatMember({chat, userId: user.id}))
+    dispatch(ChatActions.removeChatMemberThunk({chat, userId: user.id}))
       .unwrap()
       .finally(() => {
         setRemovingLoading(false);

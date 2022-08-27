@@ -5,7 +5,7 @@ import {useDelayedState} from '../../hooks/useDelayedState';
 import {RootNavigationProp, RootParamList} from '../../../navigators/RootNavigator';
 import {User} from '../../../models/User';
 import UserSelectors from '../../../store/user/userSelectors';
-import {UserThunks} from '../../../store/user/userActions';
+import {UserActions} from '../../../store/user/userActions';
 
 export type WithUserProps = {
   user?: User;
@@ -24,13 +24,13 @@ const withUserContainer = (Component: ComponentType<WithUserProps>) => (props: a
   const goBack = (): void => navigation.goBack();
 
   const selectUser = (): void => {
-    dispatch(UserThunks.selectUser(routeUser))
+    dispatch(UserActions.selectUserThunk(routeUser))
       .unwrap()
       .then(() => setLoading(false));
   };
 
   const loadUser = (): void => {
-    dispatch(UserThunks.fetchUser(routeUserId))
+    dispatch(UserActions.fetchUserThunk(routeUserId))
       .unwrap()
       .catch(() => goBack())
       .finally(() => setLoading(false));

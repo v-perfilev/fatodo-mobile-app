@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ContactsState} from './contactsType';
-import {ContactsThunks} from './contactsActions';
+import {ContactsActions} from './contactsActions';
 import {ContactRelation, ContactRequest} from '../../models/Contact';
 
 const initialState: ContactsState = {
@@ -57,58 +57,58 @@ const contactsSlice = createSlice({
     /*
     fetchInfo
     */
-    builder.addCase(ContactsThunks.fetchInfo.pending, (state: ContactsState) => {
+    builder.addCase(ContactsActions.fetchInfoThunk.pending, (state: ContactsState) => {
       state.loading = true;
     });
-    builder.addCase(ContactsThunks.fetchInfo.fulfilled, (state: ContactsState, action) => {
+    builder.addCase(ContactsActions.fetchInfoThunk.fulfilled, (state: ContactsState, action) => {
       state.relationCount = action.payload.relationCount;
       state.outcomingRequestCount = action.payload.outcomingRequestCount;
       state.incomingRequestCount = action.payload.incomingRequestCount;
       state.loading = false;
     });
-    builder.addCase(ContactsThunks.fetchInfo.rejected, (state: ContactsState) => {
+    builder.addCase(ContactsActions.fetchInfoThunk.rejected, (state: ContactsState) => {
       state.loading = false;
     });
 
     /*
     fetchRelations
     */
-    builder.addCase(ContactsThunks.fetchRelations.pending, (state: ContactsState) => {
+    builder.addCase(ContactsActions.fetchRelationsThunk.pending, (state: ContactsState) => {
       state.loading = true;
     });
-    builder.addCase(ContactsThunks.fetchRelations.fulfilled, (state: ContactsState, action) => {
+    builder.addCase(ContactsActions.fetchRelationsThunk.fulfilled, (state: ContactsState, action) => {
       state.relations = action.payload;
       state.loading = false;
     });
-    builder.addCase(ContactsThunks.fetchRelations.rejected, (state: ContactsState) => {
+    builder.addCase(ContactsActions.fetchRelationsThunk.rejected, (state: ContactsState) => {
       state.loading = false;
     });
 
     /*
     fetchOutcomingRequests
     */
-    builder.addCase(ContactsThunks.fetchOutcomingRequests.pending, (state: ContactsState) => {
+    builder.addCase(ContactsActions.fetchOutcomingRequestsThunk.pending, (state: ContactsState) => {
       state.loading = true;
     });
-    builder.addCase(ContactsThunks.fetchOutcomingRequests.fulfilled, (state: ContactsState, action) => {
+    builder.addCase(ContactsActions.fetchOutcomingRequestsThunk.fulfilled, (state: ContactsState, action) => {
       state.outcomingRequests = action.payload;
       state.loading = false;
     });
-    builder.addCase(ContactsThunks.fetchOutcomingRequests.rejected, (state: ContactsState) => {
+    builder.addCase(ContactsActions.fetchOutcomingRequestsThunk.rejected, (state: ContactsState) => {
       state.loading = false;
     });
 
     /*
     fetchIncomingRequests
     */
-    builder.addCase(ContactsThunks.fetchIncomingRequests.pending, (state: ContactsState) => {
+    builder.addCase(ContactsActions.fetchIncomingRequestsThunk.pending, (state: ContactsState) => {
       state.loading = true;
     });
-    builder.addCase(ContactsThunks.fetchIncomingRequests.fulfilled, (state: ContactsState, action) => {
+    builder.addCase(ContactsActions.fetchIncomingRequestsThunk.fulfilled, (state: ContactsState, action) => {
       state.incomingRequests = action.payload;
       state.loading = false;
     });
-    builder.addCase(ContactsThunks.fetchIncomingRequests.rejected, (state: ContactsState) => {
+    builder.addCase(ContactsActions.fetchIncomingRequestsThunk.rejected, (state: ContactsState) => {
       state.loading = false;
     });
   },

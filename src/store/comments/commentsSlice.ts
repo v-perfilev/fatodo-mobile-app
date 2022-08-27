@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {CommentsState} from './commentsType';
-import {CommentsThunks} from './commentsActions';
+import {CommentsActions} from './commentsActions';
 import {CommentUtils} from '../../shared/utils/CommentUtils';
 import {buildCommentReaction, Comment, CommentReaction, CommentReactionType} from '../../models/Comment';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
@@ -105,12 +105,12 @@ const commentsSlice = createSlice({
     /*
     fetchComments
     */
-    builder.addCase(CommentsThunks.fetchComments.pending, (state: CommentsState, action) => {
+    builder.addCase(CommentsActions.fetchCommentsThunk.pending, (state: CommentsState, action) => {
       const initialLoading = action.meta.arg.offset === 0;
       state.loading = initialLoading;
       state.moreLoading = !initialLoading;
     });
-    builder.addCase(CommentsThunks.fetchComments.fulfilled, (state: CommentsState, action) => {
+    builder.addCase(CommentsActions.fetchCommentsThunk.fulfilled, (state: CommentsState, action) => {
       const newComments = action.payload.data;
       const count = action.payload.count;
       state.comments = CommentUtils.filterComments([...state.comments, ...newComments]);
@@ -118,7 +118,7 @@ const commentsSlice = createSlice({
       state.moreLoading = false;
       state.allLoaded = state.comments.length === count;
     });
-    builder.addCase(CommentsThunks.fetchComments.rejected, (state: CommentsState) => {
+    builder.addCase(CommentsActions.fetchCommentsThunk.rejected, (state: CommentsState) => {
       state.loading = false;
       state.moreLoading = false;
     });
@@ -126,7 +126,7 @@ const commentsSlice = createSlice({
     /*
     refreshComments
     */
-    builder.addCase(CommentsThunks.refreshComments.pending, (state: CommentsState) => {
+    builder.addCase(CommentsActions.refreshCommentsThunk.pending, (state: CommentsState) => {
       state.comments = [];
       state.loading = true;
       state.moreLoading = false;
@@ -135,12 +135,12 @@ const commentsSlice = createSlice({
     /*
     fetchThreadInfo
     */
-    builder.addCase(CommentsThunks.fetchThreadInfo.fulfilled, (state: CommentsState, action) => {
+    builder.addCase(CommentsActions.fetchThreadInfoThunk.fulfilled, (state: CommentsState, action) => {
       const newInfo = action.payload;
       state.threadsInfo = CommentUtils.addInfo(state.threadsInfo, newInfo);
     });
 
-    builder.addCase(CommentsThunks.refreshThread.fulfilled, (state: CommentsState, action) => {
+    builder.addCase(CommentsActions.refreshThreadThunk.fulfilled, (state: CommentsState, action) => {
       const targetId = action.meta.arg;
       state.threadsInfo = CommentUtils.refreshInfo(state.threadsInfo, targetId);
     });

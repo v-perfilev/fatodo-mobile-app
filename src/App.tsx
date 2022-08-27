@@ -19,10 +19,10 @@ import AuthSelectors from './store/auth/authSelectors';
 import RootNavigator from './navigators/RootNavigator';
 import AuthNavigator from './navigators/AuthNavigator';
 import {SnackActions} from './store/snack/snackActions';
-import {ContactsThunks} from './store/contacts/contactsActions';
-import {AuthActions, AuthThunks} from './store/auth/authActions';
+import {ContactsActions} from './store/contacts/contactsActions';
+import {AuthActions} from './store/auth/authActions';
 import withWsClient from './shared/hocs/withWs/withWsClient';
-import {ChatsThunks} from './store/chats/chatsActions';
+import {ChatsActions} from './store/chats/chatsActions';
 import SplashScreen from 'react-native-splash-screen';
 import Notifications from './shared/push/notifications';
 import NotificationsRemote from './shared/push/notificationsRemote';
@@ -61,7 +61,7 @@ const App = () => {
     SecurityUtils.getAuthToken().then(async (token) => {
       if (token) {
         await dispatch(AuthActions.login());
-        await dispatch(AuthThunks.fetchAccount());
+        await dispatch(AuthActions.fetchAccountThunk());
       }
       setReady(true);
     });
@@ -74,8 +74,8 @@ const App = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(ContactsThunks.fetchInfo());
-      dispatch(ChatsThunks.fetchUnreadMessagesMap());
+      dispatch(ContactsActions.fetchInfoThunk());
+      dispatch(ChatsActions.fetchUnreadMessagesMapThunk());
       account?.id && NotificationsRemote.subscribeToFirebase(account.id);
     }
   }, [isAuthenticated]);

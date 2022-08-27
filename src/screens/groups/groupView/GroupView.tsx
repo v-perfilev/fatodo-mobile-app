@@ -10,7 +10,7 @@ import {ListUtils} from '../../../shared/utils/ListUtils';
 import GroupViewStub from './groupViewItems/GroupViewStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupSelectors from '../../../store/group/groupSelectors';
-import {GroupThunks} from '../../../store/group/groupActions';
+import {GroupActions} from '../../../store/group/groupActions';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {Item} from '../../../models/Item';
 import {LayoutChangeEvent} from 'react-native';
@@ -53,19 +53,19 @@ const GroupView = ({group, loading}: GroupViewProps) => {
    */
 
   const loadActive = async (): Promise<void> => {
-    await dispatch(GroupThunks.fetchActiveItems({groupId: group.id, offset: activeItems.length}));
+    await dispatch(GroupActions.fetchActiveItemsThunk({groupId: group.id, offset: activeItems.length}));
   };
 
   const refreshActive = async (): Promise<void> => {
-    await dispatch(GroupThunks.refreshActiveItems(group.id));
+    await dispatch(GroupActions.refreshActiveItemsThunk(group.id));
   };
 
   const loadArchived = async (): Promise<void> => {
-    await dispatch(GroupThunks.fetchArchivedItems({groupId: group.id, offset: archivedItems.length}));
+    await dispatch(GroupActions.fetchArchivedItemsThunk({groupId: group.id, offset: archivedItems.length}));
   };
 
   const refreshArchived = async (): Promise<void> => {
-    await dispatch(GroupThunks.refreshArchivedItems(group.id));
+    await dispatch(GroupActions.refreshArchivedItemsThunk(group.id));
   };
 
   /*

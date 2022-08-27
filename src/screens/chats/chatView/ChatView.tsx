@@ -10,7 +10,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {Box, useTheme} from 'native-base';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import {ChatThunks} from '../../../store/chat/chatActions';
+import {ChatActions} from '../../../store/chat/chatActions';
 import {ChatItem} from '../../../models/Message';
 import {LayoutChangeEvent, ViewToken} from 'react-native';
 import ChatViewItem from './ChatViewItem';
@@ -39,11 +39,11 @@ const ChatView = ({loading}: ChatViewProps) => {
    */
 
   const load = async (): Promise<void> => {
-    await dispatch(ChatThunks.fetchMessages({chatId: chat.id, offset: chatItems.length}));
+    await dispatch(ChatActions.fetchMessagesThunk({chatId: chat.id, offset: chatItems.length}));
   };
 
   const refresh = async (): Promise<void> => {
-    await dispatch(ChatThunks.refreshMessages(chat.id));
+    await dispatch(ChatActions.refreshMessagesThunk(chat.id));
   };
 
   /*
@@ -66,7 +66,7 @@ const ChatView = ({loading}: ChatViewProps) => {
 
   const addTimer = useCallback((messageId: string): void => {
     const timerId = setTimeout(() => {
-      dispatch(ChatThunks.markMessageAsRead({chatId: chat.id, messageId, account}));
+      dispatch(ChatActions.markMessageAsReadThunk({chatId: chat.id, messageId, account}));
       unreadTimersRef.current.delete(messageId);
     }, TIMEOUT_BEFORE_MARK_AS_READ);
     unreadTimersRef.current.set(messageId, timerId);

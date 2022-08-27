@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {MenuElement} from '../../../models/MenuElement';
 import ControlMenu from '../../../components/layouts/ControlMenu';
 import UserMinusIcon from '../../../components/icons/UserMinusIcon';
-import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {ContactsActions} from '../../../store/contacts/contactsActions';
 import {User} from '../../../models/User';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {ContactRelation} from '../../../models/Contact';
@@ -23,7 +23,7 @@ const ContactListItem = ({relation}: ContactListItemProps) => {
 
   const removeRelation = (): void => {
     setDisabled(true);
-    dispatch(ContactsThunks.removeRelation(relation.secondUserId))
+    dispatch(ContactsActions.removeRelationThunk(relation.secondUserId))
       .unwrap()
       .catch(() => setDisabled(false));
   };

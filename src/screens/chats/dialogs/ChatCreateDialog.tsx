@@ -5,8 +5,8 @@ import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
 import GhostButton from '../../../components/controls/GhostButton';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
-import {ChatsThunks} from '../../../store/chats/chatsActions';
-import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {ChatsActions} from '../../../store/chats/chatsActions';
+import {ContactsActions} from '../../../store/contacts/contactsActions';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
 
@@ -30,14 +30,14 @@ const ChatCreateDialog = ({show, close}: ChatCreateDialogProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const createDirect = (): void => {
-    dispatch(ChatsThunks.createDirectChat(userIds[0]))
+    dispatch(ChatsActions.createDirectChatThunk(userIds[0]))
       .unwrap()
       .then(() => close())
       .finally(() => setIsSubmitting(false));
   };
 
   const createIndirect = (): void => {
-    dispatch(ChatsThunks.createIndirectChat(userIds))
+    dispatch(ChatsActions.createIndirectChatThunk(userIds))
       .unwrap()
       .then(() => close())
       .finally(() => setIsSubmitting(false));
@@ -54,7 +54,7 @@ const ChatCreateDialog = ({show, close}: ChatCreateDialogProps) => {
 
   useEffect(() => {
     if (show) {
-      dispatch(ContactsThunks.fetchRelations());
+      dispatch(ContactsActions.fetchRelationsThunk());
     }
   }, [show]);
 

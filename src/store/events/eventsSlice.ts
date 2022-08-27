@@ -27,10 +27,10 @@ const eventsSlice = createSlice({
     /*
     fetchEvents
     */
-    builder.addCase(EventsThunks.fetchEvents.pending, (state: EventsState) => {
+    builder.addCase(EventsThunks.fetchEventsThunk.pending, (state: EventsState) => {
       state.loading = true;
     });
-    builder.addCase(EventsThunks.fetchEvents.fulfilled, (state: EventsState, action) => {
+    builder.addCase(EventsThunks.fetchEventsThunk.fulfilled, (state: EventsState, action) => {
       const newEvents = action.payload.data;
       state.events = EventUtils.filterEvents([...state.events, ...newEvents]);
       state.count = action.payload.count;
@@ -38,21 +38,21 @@ const eventsSlice = createSlice({
       state.allLoaded = state.events.length === state.count;
       state.loading = false;
     });
-    builder.addCase(EventsThunks.fetchEvents.rejected, (state: EventsState) => {
+    builder.addCase(EventsThunks.fetchEventsThunk.rejected, (state: EventsState) => {
       state.loading = false;
     });
 
     /*
     fetchUnreadCount
      */
-    builder.addCase(EventsThunks.fetchUnreadCount.fulfilled, (state: EventsState, action) => {
+    builder.addCase(EventsThunks.fetchUnreadCountThunk.fulfilled, (state: EventsState, action) => {
       state.unreadCount = action.payload;
     });
 
     /*
     refreshUnreadCount
      */
-    builder.addCase(EventsThunks.refreshUnreadCount.fulfilled, (state: EventsState) => {
+    builder.addCase(EventsThunks.refreshUnreadCountThunk.fulfilled, (state: EventsState) => {
       state.unreadCount = 0;
     });
   },

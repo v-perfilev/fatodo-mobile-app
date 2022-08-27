@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../store/store';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Chat} from '../../../models/Chat';
-import {ChatThunks} from '../../../store/chat/chatActions';
+import {ChatActions} from '../../../store/chat/chatActions';
 
 export type ChatClearDialogProps = {
   chat: Chat;
@@ -27,7 +27,7 @@ const ChatClearDialog = ({chat, show, close, onSuccess = () => null}: ChatClearD
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(ChatThunks.clearChat(chat))
+    dispatch(ChatActions.clearChatThunk(chat))
       .unwrap()
       .then(() => {
         onSuccess();

@@ -8,7 +8,7 @@ import {flowRight} from 'lodash';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import IconButton from '../../../components/controls/IconButton';
-import {GroupsActions, GroupsThunks} from '../../../store/groups/groupsActions';
+import {GroupsActions} from '../../../store/groups/groupsActions';
 
 type GroupListHeaderProps = {
   sorting: boolean;
@@ -26,7 +26,7 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
 
   const saveOrder = (): void => {
     const orderedGroupIds = groups.map((g) => g.id);
-    dispatch(GroupsThunks.updateOrder(orderedGroupIds));
+    dispatch(GroupsActions.updateOrderThunk(orderedGroupIds));
   };
 
   const cacheOrder = (): void => {

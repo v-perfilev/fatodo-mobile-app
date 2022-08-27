@@ -3,7 +3,7 @@ import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../store/store';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
-import {ChatThunks} from '../../../store/chat/chatActions';
+import {ChatActions} from '../../../store/chat/chatActions';
 import {Message} from '../../../models/Message';
 
 export type ChatDeleteMessageDialogProps = {
@@ -27,7 +27,7 @@ const ChatDeleteMessageDialog = ({message, show, close, onSuccess = () => null}:
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(ChatThunks.deleteMessage(message))
+    dispatch(ChatActions.deleteMessageThunk(message))
       .unwrap()
       .then(() => {
         onSuccess();

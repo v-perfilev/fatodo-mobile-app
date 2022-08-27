@@ -11,7 +11,7 @@ import {
   MessageStatus,
 } from '../../models/Message';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
-import {ChatThunks} from './chatActions';
+import {ChatActions} from './chatActions';
 import {UserAccount} from '../../models/User';
 import {MessageUtils} from '../../shared/utils/MessageUtils';
 import {Chat} from '../../models/Chat';
@@ -145,27 +145,27 @@ const chatSlice = createSlice({
     /*
     fetchChat
     */
-    builder.addCase(ChatThunks.fetchChat.pending, () => {
+    builder.addCase(ChatActions.fetchChatThunk.pending, () => {
       const loading = true;
       return {...initialState, loading};
     });
-    builder.addCase(ChatThunks.fetchChat.fulfilled, (state: ChatState, action) => {
+    builder.addCase(ChatActions.fetchChatThunk.fulfilled, (state: ChatState, action) => {
       state.chat = action.payload;
       state.loading = false;
     });
-    builder.addCase(ChatThunks.fetchChat.rejected, (state: ChatState) => {
+    builder.addCase(ChatActions.fetchChatThunk.rejected, (state: ChatState) => {
       state.loading = false;
     });
 
     /*
     fetchMessages
     */
-    builder.addCase(ChatThunks.fetchMessages.pending, (state: ChatState, action) => {
+    builder.addCase(ChatActions.fetchMessagesThunk.pending, (state: ChatState, action) => {
       const initialLoading = action.meta.arg.offset === 0;
       state.loading = initialLoading;
       state.moreLoading = !initialLoading;
     });
-    builder.addCase(ChatThunks.fetchMessages.fulfilled, (state: ChatState, action) => {
+    builder.addCase(ChatActions.fetchMessagesThunk.fulfilled, (state: ChatState, action) => {
       const newMessages = action.payload.data;
       const count = action.payload.count;
       state.messages = MessageUtils.filterMessages([...state.messages, ...newMessages]);
@@ -173,7 +173,7 @@ const chatSlice = createSlice({
       state.moreLoading = false;
       state.allLoaded = state.messages.length === count;
     });
-    builder.addCase(ChatThunks.fetchMessages.rejected, (state: ChatState) => {
+    builder.addCase(ChatActions.fetchMessagesThunk.rejected, (state: ChatState) => {
       state.loading = false;
       state.moreLoading = false;
     });
@@ -181,7 +181,7 @@ const chatSlice = createSlice({
     /*
     refreshMessages
     */
-    builder.addCase(ChatThunks.refreshMessages.pending, (state: ChatState) => {
+    builder.addCase(ChatActions.refreshMessagesThunk.pending, (state: ChatState) => {
       state.messages = [] as Message[];
       state.loading = true;
       state.moreLoading = false;

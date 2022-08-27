@@ -9,7 +9,7 @@ import {useTranslation} from 'react-i18next';
 import * as Yup from 'yup';
 import {passwordValidator} from '../../../shared/validators';
 import i18n from '../../../shared/i18n';
-import {AuthThunks} from '../../../store/auth/authActions';
+import {AuthActions} from '../../../store/auth/authActions';
 import {ChangePasswordDTO} from '../../../models/dto/ChangePasswordDTO';
 import {Text} from 'native-base';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
@@ -39,7 +39,7 @@ const AccountChangePasswordForm = () => {
       newPassword: values.newPassword,
     };
 
-    dispatch(AuthThunks.changePassword(dto)).then(() => helpers.setSubmitting(false));
+    dispatch(AuthActions.changePasswordThunk(dto)).then(() => helpers.setSubmitting(false));
   };
 
   return (

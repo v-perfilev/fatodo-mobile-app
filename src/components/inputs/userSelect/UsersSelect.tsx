@@ -9,7 +9,7 @@ import FVStack from '../../boxes/FVStack';
 import FCenter from '../../boxes/FCenter';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
-import {InfoActions, InfoThunks} from '../../../store/info/infoActions';
+import {InfoActions} from '../../../store/info/infoActions';
 import UserService from '../../../services/UserService';
 import {MapUtils} from '../../../shared/utils/MapUtils';
 
@@ -59,7 +59,7 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
   };
 
   useEffect(() => {
-    dispatch(InfoThunks.handleUserIds(allowedIds));
+    dispatch(InfoActions.handleUserIdsThunk(allowedIds));
   }, [allowedIds]);
 
   useEffect(() => {

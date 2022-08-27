@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../store/store';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Comment} from '../../../models/Comment';
-import {CommentsThunks} from '../../../store/comments/commentsActions';
+import {CommentsActions} from '../../../store/comments/commentsActions';
 
 export type CommentDeleteDialogProps = {
   comment: Comment;
@@ -27,7 +27,7 @@ const CommentDeleteDialog = ({comment, show, close, onSuccess = () => null}: Com
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(CommentsThunks.deleteComment(comment))
+    dispatch(CommentsActions.deleteCommentThunk(comment))
       .unwrap()
       .then(() => {
         onSuccess();

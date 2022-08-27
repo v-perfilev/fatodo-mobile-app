@@ -5,7 +5,7 @@ import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {Dimensions, NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 import FlatList, {FlatListType} from '../../../components/scrollable/FlatList';
 import {useAppDispatch} from '../../../store/store';
-import {CalendarThunks} from '../../../store/calendar/calendarActions';
+import {CalendarActions} from '../../../store/calendar/calendarActions';
 import CalendarViewContainer from './CalendarViewContainer';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -22,7 +22,7 @@ const CalendarView = () => {
   const listRef = useRef<FlatListType>();
 
   const loadReminders = (): void => {
-    dispatch(CalendarThunks.handleMonth(activeMonth));
+    dispatch(CalendarActions.handleMonthThunk(activeMonth));
   };
 
   const scrollToItem = (index: number, animated = true): void => {

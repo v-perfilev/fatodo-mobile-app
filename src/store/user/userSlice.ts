@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {User} from '../../models/User';
 import {UserState} from './userType';
-import {UserThunks} from './userActions';
+import {UserActions} from './userActions';
 
 const initialState: UserState = {
   user: undefined,
@@ -22,30 +22,30 @@ const userSlice = createSlice({
     /*
     fetchUser
     */
-    builder.addCase(UserThunks.fetchUser.pending, () => {
+    builder.addCase(UserActions.fetchUserThunk.pending, () => {
       const loading = true;
       return {...initialState, loading};
     });
-    builder.addCase(UserThunks.fetchUser.fulfilled, (state: UserState, action) => {
+    builder.addCase(UserActions.fetchUserThunk.fulfilled, (state: UserState, action) => {
       state.user = action.payload;
       state.loading = false;
     });
-    builder.addCase(UserThunks.fetchUser.rejected, (state: UserState) => {
+    builder.addCase(UserActions.fetchUserThunk.rejected, (state: UserState) => {
       state.loading = false;
     });
 
     /*
     fetchCommonGroups
     */
-    builder.addCase(UserThunks.fetchCommonGroups.pending, (state: UserState) => {
+    builder.addCase(UserActions.fetchCommonGroupsThunk.pending, (state: UserState) => {
       state.groups = [];
       state.loading = true;
     });
-    builder.addCase(UserThunks.fetchCommonGroups.fulfilled, (state: UserState, action) => {
+    builder.addCase(UserActions.fetchCommonGroupsThunk.fulfilled, (state: UserState, action) => {
       state.groups = action.payload;
       state.loading = false;
     });
-    builder.addCase(UserThunks.fetchCommonGroups.rejected, (state: UserState) => {
+    builder.addCase(UserActions.fetchCommonGroupsThunk.rejected, (state: UserState) => {
       state.groups = [];
       state.loading = false;
     });
@@ -53,15 +53,15 @@ const userSlice = createSlice({
     /*
     fetchCommonRelations
     */
-    builder.addCase(UserThunks.fetchCommonRelations.pending, (state: UserState) => {
+    builder.addCase(UserActions.fetchCommonRelationsThunk.pending, (state: UserState) => {
       state.relations = [];
       state.loading = true;
     });
-    builder.addCase(UserThunks.fetchCommonRelations.fulfilled, (state: UserState, action) => {
+    builder.addCase(UserActions.fetchCommonRelationsThunk.fulfilled, (state: UserState, action) => {
       state.relations = action.payload;
       state.loading = false;
     });
-    builder.addCase(UserThunks.fetchCommonRelations.rejected, (state: UserState) => {
+    builder.addCase(UserActions.fetchCommonRelationsThunk.rejected, (state: UserState) => {
       state.relations = [];
       state.loading = false;
     });

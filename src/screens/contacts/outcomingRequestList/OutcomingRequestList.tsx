@@ -2,7 +2,7 @@ import React, {ReactElement, useCallback, useEffect} from 'react';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
-import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {ContactsActions} from '../../../store/contacts/contactsActions';
 import OutcomingRequestListStub from './OutcomingRequestListStub';
 import {Box, useTheme} from 'native-base';
 import {ContactRequest} from '../../../models/Contact';
@@ -20,7 +20,7 @@ const OutcomingRequestList = () => {
   const [loading, setLoading] = useDelayedState();
 
   const refresh = async (): Promise<void> => {
-    await dispatch(ContactsThunks.fetchOutcomingRequests());
+    await dispatch(ContactsActions.fetchOutcomingRequestsThunk());
   };
 
   const keyExtractor = useCallback((relation: ContactRequest): string => relation.id, []);

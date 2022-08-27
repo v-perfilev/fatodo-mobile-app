@@ -14,7 +14,7 @@ import {useItemDialogContext} from '../../../../shared/contexts/dialogContexts/I
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import GroupSelectors from '../../../../store/group/groupSelectors';
 import IconButton from '../../../../components/controls/IconButton';
-import {GroupThunks} from '../../../../store/group/groupActions';
+import {GroupActions} from '../../../../store/group/groupActions';
 
 type GroupViewItemMenuProps = {
   item: Item;
@@ -33,12 +33,12 @@ const GroupViewItemMenuButton = ({item, canEdit}: GroupViewItemMenuProps) => {
   const goToItemEdit = (): void => navigation.navigate('ItemEdit', {group, item});
 
   const deleteItem = (item: Item): void => {
-    dispatch(GroupThunks.deleteItem(item));
+    dispatch(GroupActions.deleteItemThunk(item));
   };
 
   const toggleArchived = useCallback((): void => {
     setArchivedLoading(true);
-    dispatch(GroupThunks.updateItemArchived(item))
+    dispatch(GroupActions.updateItemArchivedThunk(item))
       .unwrap()
       .catch(() => setArchivedLoading(false));
   }, [item, setArchivedLoading]);

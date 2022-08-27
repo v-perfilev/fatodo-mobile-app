@@ -9,7 +9,7 @@ import {ScrollView, Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
-import {ItemThunks} from '../../../store/item/itemActions';
+import {ItemActions} from '../../../store/item/itemActions';
 import {Item} from '../../../models/Item';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import {DEFAULT_SPACE} from '../../../constants';
@@ -25,7 +25,7 @@ const ItemCreate = ({group, loading}: ItemCreateProps) => {
   const goToItemView = (item: Item): void => navigation.replace('ItemView', {group, item});
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
-    dispatch(ItemThunks.createItem(dto))
+    dispatch(ItemActions.createItemThunk(dto))
       .unwrap()
       .then((item) => goToItemView(item))
       .catch(() => stopSubmitting());

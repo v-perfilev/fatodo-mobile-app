@@ -6,8 +6,8 @@ import GhostButton from '../../../components/controls/GhostButton';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import {Chat} from '../../../models/Chat';
-import {ChatThunks} from '../../../store/chat/chatActions';
-import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {ChatActions} from '../../../store/chat/chatActions';
+import {ContactsActions} from '../../../store/contacts/contactsActions';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
 
 export type ChatAddMembersDialogProps = {
@@ -32,7 +32,7 @@ const ChatAddMembersDialog = ({chat, show, close}: ChatAddMembersDialogProps) =>
 
   const addUsers = (): void => {
     setIsSubmitting(true);
-    dispatch(ChatThunks.addChatMembers({chat, userIds}))
+    dispatch(ChatActions.addChatMembersThunk({chat, userIds}))
       .unwrap()
       .then(() => close())
       .finally(() => setIsSubmitting(false));
@@ -40,7 +40,7 @@ const ChatAddMembersDialog = ({chat, show, close}: ChatAddMembersDialogProps) =>
 
   useEffect(() => {
     if (show) {
-      dispatch(ContactsThunks.fetchRelations());
+      dispatch(ContactsActions.fetchRelationsThunk());
     }
   }, [show]);
 

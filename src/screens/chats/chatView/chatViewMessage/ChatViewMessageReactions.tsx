@@ -7,7 +7,7 @@ import ReactionView from '../../../../components/views/ReactionView';
 import PressableButton from '../../../../components/controls/PressableButton';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
-import {ChatThunks} from '../../../../store/chat/chatActions';
+import {ChatActions} from '../../../../store/chat/chatActions';
 
 const buildReactionMap = (message: Message, isOutcoming: boolean): Map<MessageReactionType, number> => {
   const map = new Map();
@@ -46,11 +46,11 @@ const ChatViewMessageReactions = ({message, isOutcoming}: ChatViewMessageReactio
   const handlePress = useCallback(
     (r: MessageReactionType) => (): void => {
       if (r === activeReaction) {
-        dispatch(ChatThunks.noReaction({message, account}));
+        dispatch(ChatActions.noReactionThunk({message, account}));
       } else if (r === 'LIKE') {
-        dispatch(ChatThunks.likeReaction({message, account}));
+        dispatch(ChatActions.likeReactionThunk({message, account}));
       } else if (r === 'DISLIKE') {
-        dispatch(ChatThunks.dislikeReaction({message, account}));
+        dispatch(ChatActions.dislikeReactionThunk({message, account}));
       }
     },
     [message, activeReaction],

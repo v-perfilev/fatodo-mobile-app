@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ChatsState} from './chatsType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {buildDirectChat, Chat, ChatMember} from '../../models/Chat';
-import {ChatsThunks} from './chatsActions';
+import {ChatsActions} from './chatsActions';
 import {buildEventMessage, EventMessageType, Message} from '../../models/Message';
 import {ChatUtils} from '../../shared/utils/ChatUtils';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
@@ -130,12 +130,12 @@ const chatsSlice = createSlice({
     /*
     fetchChats
     */
-    builder.addCase(ChatsThunks.fetchChats.pending, (state: ChatsState, action) => {
+    builder.addCase(ChatsActions.fetchChatsThunk.pending, (state: ChatsState, action) => {
       const initialLoading = action.meta.arg === 0;
       state.loading = initialLoading;
       state.moreLoading = !initialLoading;
     });
-    builder.addCase(ChatsThunks.fetchChats.fulfilled, (state: ChatsState, action) => {
+    builder.addCase(ChatsActions.fetchChatsThunk.fulfilled, (state: ChatsState, action) => {
       const newChats = action.payload.data;
       const count = action.payload.count;
       state.chats = ChatUtils.filterChats([...state.chats, ...newChats]);
@@ -143,7 +143,7 @@ const chatsSlice = createSlice({
       state.moreLoading = false;
       state.allLoaded = state.chats.length === count;
     });
-    builder.addCase(ChatsThunks.fetchChats.rejected, (state: ChatsState) => {
+    builder.addCase(ChatsActions.fetchChatsThunk.rejected, (state: ChatsState) => {
       state.loading = false;
       state.moreLoading = false;
     });
@@ -151,7 +151,7 @@ const chatsSlice = createSlice({
     /*
     refreshChats
     */
-    builder.addCase(ChatsThunks.refreshChats.pending, (state: ChatsState) => {
+    builder.addCase(ChatsActions.refreshChatsThunk.pending, (state: ChatsState) => {
       state.chats = [];
       state.loading = true;
       state.moreLoading = false;
@@ -160,21 +160,21 @@ const chatsSlice = createSlice({
     /*
     fetchFilteredChats
     */
-    builder.addCase(ChatsThunks.fetchFilteredChats.pending, (state: ChatsState) => {
+    builder.addCase(ChatsActions.fetchFilteredChatsThunk.pending, (state: ChatsState) => {
       state.filteredChats = [];
     });
-    builder.addCase(ChatsThunks.fetchFilteredChats.fulfilled, (state: ChatsState, action) => {
+    builder.addCase(ChatsActions.fetchFilteredChatsThunk.fulfilled, (state: ChatsState, action) => {
       const chats = action.payload;
       state.filteredChats = ChatUtils.filterChats(chats);
     });
-    builder.addCase(ChatsThunks.fetchFilteredChats.rejected, (state: ChatsState) => {
+    builder.addCase(ChatsActions.fetchFilteredChatsThunk.rejected, (state: ChatsState) => {
       state.filteredChats = [];
     });
 
     /*
     fetchUnreadMessagesMap
     */
-    builder.addCase(ChatsThunks.fetchUnreadMessagesMap.fulfilled, (state: ChatsState, action) => {
+    builder.addCase(ChatsActions.fetchUnreadMessagesMapThunk.fulfilled, (state: ChatsState, action) => {
       const unreadMessagesMap = action.payload;
       state.unreadMap = [...unreadMessagesMap];
       state.unreadCount = ChatUtils.calcUnreadCount(state.unreadMap);

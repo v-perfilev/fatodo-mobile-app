@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../../store/store';
 import ChatRenameForm from './ChatRenameForm';
 import {Chat} from '../../../../models/Chat';
-import {ChatThunks} from '../../../../store/chat/chatActions';
+import {ChatActions} from '../../../../store/chat/chatActions';
 
 export type ChatRenameDialogProps = {
   chat: Chat;
@@ -23,7 +23,7 @@ const ChatRenameDialog = ({chat, show, close}: ChatRenameDialogProps) => {
   const {t} = useTranslation();
 
   const request = (title: string, stopSubmitting: () => void): void => {
-    dispatch(ChatThunks.renameChat({chat, title}))
+    dispatch(ChatActions.renameChatThunk({chat, title}))
       .unwrap()
       .then(() => close())
       .catch(() => stopSubmitting());

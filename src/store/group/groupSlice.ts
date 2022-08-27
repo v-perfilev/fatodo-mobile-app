@@ -3,7 +3,7 @@ import {GroupState} from './groupType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Item} from '../../models/Item';
 import {Group} from '../../models/Group';
-import {GroupThunks} from './groupActions';
+import {GroupActions} from './groupActions';
 import {GroupUtils} from '../../shared/utils/GroupUtils';
 
 const initialState: GroupState = {
@@ -89,75 +89,75 @@ const groupSlice = createSlice({
     /*
     fetchGroup
     */
-    builder.addCase(GroupThunks.fetchGroup.pending, () => {
+    builder.addCase(GroupActions.fetchGroupThunk.pending, () => {
       const loading = true;
       return {...initialState, loading};
     });
-    builder.addCase(GroupThunks.fetchGroup.fulfilled, (state: GroupState, action) => {
+    builder.addCase(GroupActions.fetchGroupThunk.fulfilled, (state: GroupState, action) => {
       state.group = action.payload;
       state.loading = false;
     });
-    builder.addCase(GroupThunks.fetchGroup.rejected, () => {
+    builder.addCase(GroupActions.fetchGroupThunk.rejected, () => {
       return {...initialState};
     });
 
     /*
     fetchActiveItems
     */
-    builder.addCase(GroupThunks.fetchActiveItems.pending, (state: GroupState) => {
+    builder.addCase(GroupActions.fetchActiveItemsThunk.pending, (state: GroupState) => {
       state.activeItemsLoading = true;
     });
-    builder.addCase(GroupThunks.fetchActiveItems.fulfilled, (state: GroupState, action) => {
+    builder.addCase(GroupActions.fetchActiveItemsThunk.fulfilled, (state: GroupState, action) => {
       state.activeItems = GroupUtils.filterItems([...state.activeItems, ...action.payload.data]);
       state.activeItemsCount = action.payload.count;
       state.activeItemsLoading = false;
       state.allActiveItemsLoaded = state.activeItems.length === action.payload.count;
     });
-    builder.addCase(GroupThunks.fetchActiveItems.rejected, (state: GroupState) => {
+    builder.addCase(GroupActions.fetchActiveItemsThunk.rejected, (state: GroupState) => {
       state.activeItemsLoading = false;
     });
 
     /*
     fetchArchivedItems
     */
-    builder.addCase(GroupThunks.fetchArchivedItems.pending, (state: GroupState) => {
+    builder.addCase(GroupActions.fetchArchivedItemsThunk.pending, (state: GroupState) => {
       state.archivedItemsLoading = true;
     });
-    builder.addCase(GroupThunks.fetchArchivedItems.fulfilled, (state: GroupState, action) => {
+    builder.addCase(GroupActions.fetchArchivedItemsThunk.fulfilled, (state: GroupState, action) => {
       state.archivedItems = GroupUtils.filterItems([...state.archivedItems, ...action.payload.data]);
       state.archivedItemsCount = action.payload.count;
       state.archivedItemsLoading = false;
       state.allArchivedItemsLoaded = state.archivedItems.length === action.payload.count;
     });
-    builder.addCase(GroupThunks.fetchArchivedItems.rejected, (state: GroupState) => {
+    builder.addCase(GroupActions.fetchArchivedItemsThunk.rejected, (state: GroupState) => {
       state.archivedItemsLoading = false;
     });
 
     /*
     createGroup
     */
-    builder.addCase(GroupThunks.createGroup.pending, (state: GroupState) => {
+    builder.addCase(GroupActions.createGroupThunk.pending, (state: GroupState) => {
       state.loading = true;
     });
-    builder.addCase(GroupThunks.createGroup.fulfilled, (state: GroupState, action) => {
+    builder.addCase(GroupActions.createGroupThunk.fulfilled, (state: GroupState, action) => {
       state.group = action.payload;
       state.loading = false;
     });
-    builder.addCase(GroupThunks.createGroup.rejected, () => {
+    builder.addCase(GroupActions.createGroupThunk.rejected, () => {
       return {...initialState};
     });
 
     /*
     updateGroup
     */
-    builder.addCase(GroupThunks.updateGroup.pending, (state: GroupState) => {
+    builder.addCase(GroupActions.updateGroupThunk.pending, (state: GroupState) => {
       state.loading = true;
     });
-    builder.addCase(GroupThunks.updateGroup.fulfilled, (state: GroupState, action) => {
+    builder.addCase(GroupActions.updateGroupThunk.fulfilled, (state: GroupState, action) => {
       state.group = action.payload;
       state.loading = false;
     });
-    builder.addCase(GroupThunks.updateGroup.rejected, () => {
+    builder.addCase(GroupActions.updateGroupThunk.rejected, () => {
       return {...initialState};
     });
   },

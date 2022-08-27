@@ -5,7 +5,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {MenuElement} from '../../../models/MenuElement';
 import UserMinusIcon from '../../../components/icons/UserMinusIcon';
 import ControlMenu from '../../../components/layouts/ControlMenu';
-import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {ContactsActions} from '../../../store/contacts/contactsActions';
 import {IBoxProps} from 'native-base';
 import {User} from '../../../models/User';
 import InfoSelectors from '../../../store/info/infoSelectors';
@@ -24,7 +24,7 @@ const OutcomingRequestListItem = ({request, ...props}: OutcomingRequestListItemP
 
   const removeRequest = (): void => {
     setDisabled(true);
-    dispatch(ContactsThunks.removeOutcomingRequest(request.recipientId))
+    dispatch(ContactsActions.removeOutcomingRequestThunk(request.recipientId))
       .unwrap()
       .catch(() => setDisabled(false));
   };

@@ -3,7 +3,7 @@ import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import ContactListControl from './ContactListControl';
-import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {ContactsActions} from '../../../store/contacts/contactsActions';
 import ContactListStub from './ContactListStub';
 import {Box, useTheme} from 'native-base';
 import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
@@ -34,7 +34,7 @@ const ContactList = () => {
   };
 
   const refresh = async (): Promise<void> => {
-    await dispatch(ContactsThunks.fetchRelations());
+    await dispatch(ContactsActions.fetchRelationsThunk());
   };
 
   /*

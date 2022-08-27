@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import {Group} from '../../../models/Group';
-import {ItemActions, ItemThunks} from '../../../store/item/itemActions';
+import {ItemActions} from '../../../store/item/itemActions';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import {Item} from '../../../models/Item';
 
@@ -33,7 +33,7 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
   };
 
   const loadItem = (): void => {
-    dispatch(ItemThunks.fetchItem(routeItemId))
+    dispatch(ItemActions.fetchItemThunk(routeItemId))
       .unwrap()
       .catch(() => goBack())
       .finally(() => setLoading(false));

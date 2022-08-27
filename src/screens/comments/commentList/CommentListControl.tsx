@@ -7,7 +7,7 @@ import IconButton from '../../../components/controls/IconButton';
 import {useTranslation} from 'react-i18next';
 import {CommentDTO} from '../../../models/dto/CommentDTO';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
-import {CommentsThunks} from '../../../store/comments/commentsActions';
+import {CommentsActions} from '../../../store/comments/commentsActions';
 import {Comment} from '../../../models/Comment';
 import FVStack from '../../../components/boxes/FVStack';
 import CommentListControlReference from './CommentListControlReference';
@@ -43,7 +43,7 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
   const handleSend = (): void => {
     setMessageBody('');
     setUpdater('');
-    dispatch(CommentsThunks.sendComment({targetId, dto}));
+    dispatch(CommentsActions.sendCommentThunk({targetId, dto}));
   };
 
   return (

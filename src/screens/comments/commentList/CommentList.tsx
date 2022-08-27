@@ -10,7 +10,7 @@ import {FlatListType} from '../../../components/scrollable/FlatList';
 import CommentListStub from './CommentListStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
-import {CommentsThunks} from '../../../store/comments/commentsActions';
+import {CommentsActions} from '../../../store/comments/commentsActions';
 import {LayoutChangeEvent} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import CommentListItem from './commentListItem/CommentListItem';
@@ -45,11 +45,11 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
    */
 
   const load = async (): Promise<void> => {
-    await dispatch(CommentsThunks.fetchComments({targetId, offset: comments.length}));
+    await dispatch(CommentsActions.fetchCommentsThunk({targetId, offset: comments.length}));
   };
 
   const refresh = async (): Promise<void> => {
-    await dispatch(CommentsThunks.refreshComments(targetId));
+    await dispatch(CommentsActions.refreshCommentsThunk(targetId));
   };
 
   /*

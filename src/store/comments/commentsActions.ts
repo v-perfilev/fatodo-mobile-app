@@ -9,7 +9,9 @@ import {AppDispatch, RootState} from '../store';
 import {AxiosResponse} from 'axios';
 import {CommentUtils} from '../../shared/utils/CommentUtils';
 import {PageableList} from '../../models/PageableList';
-import {InfoThunks} from '../info/infoActions';
+import {InfoActions} from '../info/infoActions';
+
+const PREFIX = 'comments/';
 
 export class CommentsActions {
   static init = (targetId: string) => async (dispatch: AppDispatch) => {
@@ -23,42 +25,26 @@ export class CommentsActions {
   static updateCommentReactions = (commentReaction: CommentReaction) => async (dispatch: AppDispatch) => {
     dispatch(commentsSlice.actions.updateCommentReactions(commentReaction));
   };
-}
 
-enum TYPES {
-  FETCH_COMMENTS = 'comments/fetchComments',
-  REFRESH_COMMENTS = 'comments/refreshComments',
-  SEND_COMMENT = 'comments/sendComment',
-  EDIT_COMMENT = 'comments/editComment',
-  DELETE_COMMENT = 'comments/deleteComment',
-  NO_REACTION = 'comments/noReaction',
-  LIKE_REACTION = 'comments/likeReaction',
-  DISLIKE_REACTION = 'comments/dislikeReaction',
-  FETCH_THREAD_INFO = 'comments/fetchThreadInfo',
-  REFRESH_THREAD = 'comments/refreshThread',
-  ADD_COMMENT = 'comments/addComment',
-}
-
-export class CommentsThunks {
-  static fetchComments = createAsyncThunk(
-    TYPES.FETCH_COMMENTS,
+  static fetchCommentsThunk = createAsyncThunk(
+    PREFIX + 'fetchComments',
     async ({targetId, offset}: {targetId: string; offset: number}, thunkAPI) => {
       return await CommentService.getAllPageable(targetId, offset)
         .then((response: AxiosResponse<PageableList<Comment>>) => {
           const commentUserIds = CommentUtils.extractUserIds(response.data.data);
-          thunkAPI.dispatch(InfoThunks.handleUserIds(commentUserIds));
+          thunkAPI.dispatch(InfoActions.handleUserIdsThunk(commentUserIds));
           return response.data;
         })
         .catch((response: AxiosResponse) => thunkAPI.rejectWithValue(response.status));
     },
   );
 
-  static refreshComments = createAsyncThunk(TYPES.REFRESH_COMMENTS, async (targetId: string, thunkAPI) => {
-    thunkAPI.dispatch(CommentsThunks.fetchComments({targetId, offset: 0}));
+  static refreshCommentsThunk = createAsyncThunk(PREFIX + 'refreshComments', async (targetId: string, thunkAPI) => {
+    thunkAPI.dispatch(CommentsActions.fetchCommentsThunk({targetId, offset: 0}));
   });
 
-  static sendComment = createAsyncThunk(
-    TYPES.SEND_COMMENT,
+  static sendCommentThunk = createAsyncThunk(
+    PREFIX + 'sendComment',
     async ({targetId, dto}: {targetId: string; dto: CommentDTO}, thunkAPI) => {
       const state = thunkAPI.getState() as RootState;
       const userId = state.auth.account.id;
@@ -68,8 +54,8 @@ export class CommentsThunks {
     },
   );
 
-  static editComment = createAsyncThunk(
-    TYPES.EDIT_COMMENT,
+  static editCommentThunk = createAsyncThunk(
+    PREFIX + 'editComment',
     async ({comment, dto}: {comment: Comment; dto: CommentDTO}, thunkAPI) => {
       const result = await CommentService.editComment(comment.id, dto);
       thunkAPI.dispatch(commentsSlice.actions.editComment(result.data));
@@ -77,53 +63,46 @@ export class CommentsThunks {
     },
   );
 
-  static deleteComment = createAsyncThunk(TYPES.DELETE_COMMENT, async (comment: Comment, thunkAPI) => {
+  static deleteCommentThunk = createAsyncThunk(PREFIX + 'deleteComment', async (comment: Comment, thunkAPI) => {
     CommentService.deleteComment(comment.id);
     thunkAPI.dispatch(commentsSlice.actions.editComment({...comment, isDeleted: true}));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'comment.commentDeleted', variant: 'info'}));
   });
 
-  static noReaction = createAsyncThunk(
-    TYPES.NO_REACTION,
+  static noReactionThunk = createAsyncThunk(
+    PREFIX + 'noReaction',
     async ({comment, account}: {comment: Comment; account: UserAccount}, thunkAPI) => {
       CommentService.noneCommentReaction(comment.id);
       thunkAPI.dispatch(commentsSlice.actions.deleteCommentReaction({comment, account}));
     },
   );
 
-  static likeReaction = createAsyncThunk(
-    TYPES.LIKE_REACTION,
+  static likeReactionThunk = createAsyncThunk(
+    PREFIX + 'likeReaction',
     async ({comment, account}: {comment: Comment; account: UserAccount}, thunkAPI) => {
       CommentService.likeCommentReaction(comment.id);
       thunkAPI.dispatch(commentsSlice.actions.setCommentReaction({comment, reactionType: 'LIKE', account}));
     },
   );
 
-  static dislikeReaction = createAsyncThunk(
-    TYPES.DISLIKE_REACTION,
+  static dislikeReactionThunk = createAsyncThunk(
+    PREFIX + 'dislikeReaction',
     async ({comment, account}: {comment: Comment; account: UserAccount}, thunkAPI) => {
       CommentService.dislikeCommentReaction(comment.id);
       thunkAPI.dispatch(commentsSlice.actions.setCommentReaction({comment, reactionType: 'DISLIKE', account}));
     },
   );
 
-  /*
-  ThreadInfo
-  */
-  static fetchThreadInfo = createAsyncThunk(TYPES.FETCH_THREAD_INFO, async (targetIds: string[]) => {
+  static fetchThreadInfoThunk = createAsyncThunk(PREFIX + 'fetchThreadInfo', async (targetIds: string[]) => {
     const response = await CommentService.getThreadInfoByTargetIds(targetIds);
     return response.data;
   });
 
-  static refreshThread = createAsyncThunk(TYPES.REFRESH_THREAD, async (targetId: string) => {
+  static refreshThreadThunk = createAsyncThunk(PREFIX + 'refreshThread', async (targetId: string) => {
     await CommentService.refreshThread(targetId);
   });
 
-  /*
-  Actions
-  */
-
-  static addComment = createAsyncThunk(TYPES.ADD_COMMENT, async (comment: Comment, thunkAPI) => {
+  static addCommentAction = createAsyncThunk(PREFIX + 'addCommentAction', async (comment: Comment, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
     const account = state.auth.account;
     const targetId = comment.targetId;

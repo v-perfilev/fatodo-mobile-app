@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {Group} from '../../../models/Group';
 import {useAppDispatch} from '../../../store/store';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
-import {GroupsThunks} from '../../../store/groups/groupsActions';
+import {GroupsActions} from '../../../store/groups/groupsActions';
 
 export type GroupDeleteDialogProps = {
   group: Group;
@@ -27,7 +27,7 @@ const GroupDeleteDialog = ({group, show, close, onSuccess = () => null}: GroupDe
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(GroupsThunks.deleteGroup(group))
+    dispatch(GroupsActions.deleteGroupThunk(group))
       .unwrap()
       .then(() => {
         onSuccess();

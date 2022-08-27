@@ -8,7 +8,7 @@ import {ScrollView, Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
-import {GroupThunks} from '../../../store/group/groupActions';
+import {GroupActions} from '../../../store/group/groupActions';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import {DEFAULT_SPACE} from '../../../constants';
 import {ListUtils} from '../../../shared/utils/ListUtils';
@@ -24,7 +24,7 @@ const GroupEdit = ({group, loading}: GroupEditProps) => {
     navigation.getParent().getId() === 'GroupView' ? navigation.goBack() : navigation.replace('GroupView', {group});
 
   const request = (formData: FormData, stopSubmitting: () => void): void => {
-    dispatch(GroupThunks.updateGroup(formData))
+    dispatch(GroupActions.updateGroupThunk(formData))
       .unwrap()
       .then(() => goToGroupView())
       .catch(() => stopSubmitting());

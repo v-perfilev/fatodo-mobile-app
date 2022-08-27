@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 import ContactRequestDialogForm from './ContactRequestDialogForm';
 import {ContactRequestDTO} from '../../../../models/dto/ContactRequestDTO';
 import {useAppDispatch} from '../../../../store/store';
-import {ContactsThunks} from '../../../../store/contacts/contactsActions';
+import {ContactsActions} from '../../../../store/contacts/contactsActions';
 
 export type ContactRequestDialogProps = {
   show: boolean;
@@ -21,7 +21,7 @@ const ContactRequestDialog = ({show, close}: ContactRequestDialogProps) => {
   const {t} = useTranslation();
 
   const request = (dto: ContactRequestDTO, stopSubmitting: () => void): void => {
-    dispatch(ContactsThunks.sendRequest(dto))
+    dispatch(ContactsActions.sendRequestThunk(dto))
       .unwrap()
       .then(() => close())
       .catch(() => stopSubmitting());

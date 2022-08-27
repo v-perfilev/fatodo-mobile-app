@@ -3,7 +3,7 @@ import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/Chat
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import {User} from '../../../models/User';
-import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {ContactsActions} from '../../../store/contacts/contactsActions';
 import {ContactRequestDTO} from '../../../models/dto/ContactRequestDTO';
 import FVStack from '../../../components/boxes/FVStack';
 import {ContactUtils} from '../../../shared/utils/ContactUtils';
@@ -37,27 +37,27 @@ const UserViewControl = ({user}: UserViewControlProps) => {
   const sendContactRequest = (): void => {
     const dto: ContactRequestDTO = {recipientId: user.id};
     setLoading(true);
-    dispatch(ContactsThunks.sendRequest(dto)).then(() => setLoading(false));
+    dispatch(ContactsActions.sendRequestThunk(dto)).then(() => setLoading(false));
   };
 
   const removeContactRequest = (): void => {
     setLoading(true);
-    dispatch(ContactsThunks.removeOutcomingRequest(user.id)).then(() => setLoading(false));
+    dispatch(ContactsActions.removeOutcomingRequestThunk(user.id)).then(() => setLoading(false));
   };
 
   const acceptContactRequest = (): void => {
     setLoading(true);
-    dispatch(ContactsThunks.acceptIncomingRequest(user.id)).then(() => setLoading(false));
+    dispatch(ContactsActions.acceptIncomingRequestThunk(user.id)).then(() => setLoading(false));
   };
 
   const declineContactRequest = (): void => {
     setLoading(true);
-    dispatch(ContactsThunks.declineIncomingRequest(user.id)).then(() => setLoading(false));
+    dispatch(ContactsActions.declineIncomingRequestThunk(user.id)).then(() => setLoading(false));
   };
 
   const removeContact = (): void => {
     setLoading(true);
-    dispatch(ContactsThunks.removeRelation(user.id)).then(() => setLoading(false));
+    dispatch(ContactsActions.removeRelationThunk(user.id)).then(() => setLoading(false));
   };
 
   const openDirectMessageDialog = (): void => {

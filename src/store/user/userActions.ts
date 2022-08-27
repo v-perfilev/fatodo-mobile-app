@@ -4,46 +4,44 @@ import ItemService from '../../services/ItemService';
 import userSlice from './userSlice';
 import UserService from '../../services/UserService';
 import ContactService from '../../services/ContactService';
-import {InfoThunks} from '../info/infoActions';
+import {InfoActions} from '../info/infoActions';
 
-enum TYPES {
-  SELECT_USER = 'user/selectUser',
-  FETCH_USER = 'user/fetchUser',
-  FETCH_COMMON_GROUPS = 'user/fetchCommonGroups',
-  FETCH_COMMON_RELATIONS = 'user/fetchCommonRelations',
-}
+const PREFIX = 'user/';
 
-export class UserThunks {
-  static selectUser = createAsyncThunk(TYPES.SELECT_USER, async (user: User, thunkAPI) => {
+export class UserActions {
+  static selectUserThunk = createAsyncThunk(PREFIX + 'selectUser', async (user: User, thunkAPI) => {
     await thunkAPI.dispatch(userSlice.actions.setUser(user));
     await Promise.all([
-      thunkAPI.dispatch(UserThunks.fetchCommonGroups(user.id)),
-      thunkAPI.dispatch(UserThunks.fetchCommonRelations(user.id)),
+      thunkAPI.dispatch(UserActions.fetchCommonGroupsThunk(user.id)),
+      thunkAPI.dispatch(UserActions.fetchCommonRelationsThunk(user.id)),
     ]);
   });
 
-  static fetchUser = createAsyncThunk(TYPES.FETCH_USER, async (userId: string, thunkAPI) => {
+  static fetchUserThunk = createAsyncThunk(PREFIX + 'fetchUser', async (userId: string, thunkAPI) => {
     const result = await UserService.getAllByIds([userId]);
     if (result.data.length !== 1) {
       thunkAPI.rejectWithValue(undefined);
     } else {
       await Promise.all([
-        thunkAPI.dispatch(UserThunks.fetchCommonGroups(userId)),
-        thunkAPI.dispatch(UserThunks.fetchCommonRelations(userId)),
+        thunkAPI.dispatch(UserActions.fetchCommonGroupsThunk(userId)),
+        thunkAPI.dispatch(UserActions.fetchCommonRelationsThunk(userId)),
       ]);
       return result.data[0];
     }
   });
 
-  static fetchCommonGroups = createAsyncThunk(TYPES.FETCH_COMMON_GROUPS, async (userId: string) => {
+  static fetchCommonGroupsThunk = createAsyncThunk(PREFIX + 'fetchCommonGroups', async (userId: string) => {
     const result = await ItemService.getAllCommonGroups(userId);
     return result.data;
   });
 
-  static fetchCommonRelations = createAsyncThunk(TYPES.FETCH_COMMON_RELATIONS, async (userId: string, thunkAPI) => {
-    const result = await ContactService.getCommonRelations(userId);
-    const relationUserIds = result.data.map((r) => r.secondUserId);
-    thunkAPI.dispatch(InfoThunks.handleUserIds(relationUserIds));
-    return result.data;
-  });
+  static fetchCommonRelationsThunk = createAsyncThunk(
+    PREFIX + 'fetchCommonRelations',
+    async (userId: string, thunkAPI) => {
+      const result = await ContactService.getCommonRelations(userId);
+      const relationUserIds = result.data.map((r) => r.secondUserId);
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(relationUserIds));
+      return result.data;
+    },
+  );
 }

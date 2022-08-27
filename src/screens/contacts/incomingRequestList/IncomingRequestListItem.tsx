@@ -6,7 +6,7 @@ import {MenuElement} from '../../../models/MenuElement';
 import CheckIcon from '../../../components/icons/CheckIcon';
 import CloseIcon from '../../../components/icons/CloseIcon';
 import ControlMenu from '../../../components/layouts/ControlMenu';
-import {ContactsThunks} from '../../../store/contacts/contactsActions';
+import {ContactsActions} from '../../../store/contacts/contactsActions';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {User} from '../../../models/User';
 import {ContactRequest} from '../../../models/Contact';
@@ -24,14 +24,14 @@ const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
 
   const acceptRequest = (): void => {
     setDisabled(true);
-    dispatch(ContactsThunks.acceptIncomingRequest(request.requesterId))
+    dispatch(ContactsActions.acceptIncomingRequestThunk(request.requesterId))
       .unwrap()
       .catch(() => setDisabled(false));
   };
 
   const declineRequest = (): void => {
     setDisabled(true);
-    dispatch(ContactsThunks.declineIncomingRequest(request.requesterId))
+    dispatch(ContactsActions.declineIncomingRequestThunk(request.requesterId))
       .unwrap()
       .catch(() => setDisabled(false));
   };

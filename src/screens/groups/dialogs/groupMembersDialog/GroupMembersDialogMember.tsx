@@ -12,7 +12,7 @@ import ControlMenu from '../../../../components/layouts/ControlMenu';
 import FHStack from '../../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
-import {GroupThunks} from '../../../../store/group/groupActions';
+import {GroupActions} from '../../../../store/group/groupActions';
 
 type Props = {
   group: Group;
@@ -41,7 +41,7 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: P
 
   const removeUserFromChat = (): void => {
     setRemovingLoading(true);
-    dispatch(GroupThunks.removeGroupMembers({group, userIds: [user.userId]}))
+    dispatch(GroupActions.removeGroupMembersThunk({group, userIds: [user.userId]}))
       .unwrap()
       .then(() => {
         onDelete(user.userId);

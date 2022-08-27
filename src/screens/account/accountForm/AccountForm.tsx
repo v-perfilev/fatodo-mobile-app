@@ -2,7 +2,7 @@ import React from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import Header from '../../../components/layouts/Header';
-import {AuthThunks} from '../../../store/auth/authActions';
+import {AuthActions} from '../../../store/auth/authActions';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {useTranslation} from 'react-i18next';
 import {Formik, FormikHelpers} from 'formik';
@@ -84,7 +84,7 @@ const AccountForm = () => {
     addValueToForm(formData, 'imageFilename', values.imageFilename, !values.imageContent);
     addValueToForm(formData, 'imageContent', values.imageContent);
 
-    dispatch(AuthThunks.updateAccount(formData))
+    dispatch(AuthActions.updateAccountThunk(formData))
       .unwrap()
       .then(() => navigation.goBack())
       .finally(() => helpers.setSubmitting(false));
