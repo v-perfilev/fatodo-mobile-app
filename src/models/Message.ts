@@ -5,7 +5,7 @@ import {MessageDTO} from './dto/MessageDTO';
 export const messageReactionTypes = ['LIKE', 'DISLIKE'];
 
 export type MessageStatusType = 'READ';
-export type MessageReactionType = 'LIKE' | 'DISLIKE';
+export type MessageReactionType = 'LIKE' | 'DISLIKE' | 'NONE';
 
 export type ChatItemType = 'event' | 'outcoming' | 'incoming' | null;
 
@@ -34,29 +34,19 @@ export interface Message extends AbstractAuditing {
 }
 
 export interface MessageStatus {
+  chatId: string;
   messageId: string;
   userId: string;
   type: MessageStatusType;
-  timestamp: number;
+  date: number;
 }
 
 export interface MessageReaction {
+  chatId: string;
   messageId: string;
   userId: string;
   type: MessageReactionType;
-  timestamp: number;
-}
-
-export interface MessageStatuses {
-  chatId: string;
-  messageId: string;
-  statuses: MessageStatus[];
-}
-
-export interface MessageReactions {
-  chatId: string;
-  messageId: string;
-  reactions: MessageReaction[];
+  date: number;
 }
 
 export interface EventMessageParams {
@@ -92,21 +82,29 @@ export const buildEventMessage = (userId: string, type: EventMessageType, ids: s
 };
 
 export const buildMessageReaction = (
+  chatId: string,
   messageId: string,
   userId: string,
   type: MessageReactionType,
 ): MessageReaction => ({
+  chatId,
   messageId,
   userId,
   type,
-  timestamp: new Date().getTime(),
+  date: new Date().getTime(),
 });
 
-export const buildMessageStatus = (messageId: string, userId: string, type: MessageStatusType): MessageStatus => ({
+export const buildMessageStatus = (
+  chatId: string,
+  messageId: string,
+  userId: string,
+  type: MessageStatusType,
+): MessageStatus => ({
+  chatId,
   messageId,
   userId,
   type,
-  timestamp: new Date().getTime(),
+  date: new Date().getTime(),
 });
 
 export const buildMessageFromDTO = (dto: MessageDTO, chatId: string, userId: string): Message => ({

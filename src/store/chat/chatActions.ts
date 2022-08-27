@@ -5,7 +5,7 @@ import ChatService from '../../services/ChatService';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {MessageDTO} from '../../models/dto/MessageDTO';
 import {UserAccount} from '../../models/User';
-import {buildMessageFromDTO, Message, MessageReactions, MessageStatuses} from '../../models/Message';
+import {buildMessageFromDTO, Message, MessageReaction, MessageStatus} from '../../models/Message';
 import snackSlice from '../snack/snackSlice';
 import chatsSlice from '../chats/chatsSlice';
 import {AppDispatch, RootState} from '../store';
@@ -28,12 +28,12 @@ export class ChatActions {
     dispatch(chatSlice.actions.updateMessage(message));
   };
 
-  static updateMessageReactions = (messageReactions: MessageReactions) => async (dispatch: AppDispatch) => {
-    dispatch(chatSlice.actions.updateMessageReactions(messageReactions));
+  static updateMessageReactions = (messageReaction: MessageReaction) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.updateMessageReactions(messageReaction));
   };
 
-  static updateMessageStatuses = (messageStatuses: MessageStatuses) => async (dispatch: AppDispatch) => {
-    dispatch(chatSlice.actions.updateMessageStatuses(messageStatuses));
+  static updateMessageStatuses = (messageStatus: MessageStatus) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.updateMessageStatuses(messageStatus));
   };
 }
 
@@ -150,7 +150,8 @@ export class ChatThunks {
   static addChatMembers = createAsyncThunk(
     TYPES.ADD_CHAT_MEMBERS,
     async ({chat, userIds}: {chat: Chat; userIds: string[]}, thunkAPI) => {
-      const updatedMembers = [...chat.members, ...userIds];
+      const newMembers = userIds.map((userId) => ({chatId: chat.id, userId}));
+      const updatedMembers = [...chat.members, ...newMembers];
       const updatedChat = {...chat, members: updatedMembers};
       await ChatService.addUsersToChat(chat.id, userIds);
       thunkAPI.dispatch(chatsSlice.actions.updateChat(updatedChat));

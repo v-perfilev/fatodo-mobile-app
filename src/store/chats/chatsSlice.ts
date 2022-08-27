@@ -1,10 +1,11 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ChatsState} from './chatsType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
-import {buildDirectChat, Chat} from '../../models/Chat';
+import {buildDirectChat, Chat, ChatMember} from '../../models/Chat';
 import {ChatsThunks} from './chatsActions';
 import {buildEventMessage, EventMessageType, Message} from '../../models/Message';
 import {ChatUtils} from '../../shared/utils/ChatUtils';
+import {FilterUtils} from '../../shared/utils/FilterUtils';
 
 interface ChatDirectMessagePayload {
   message: Message;
@@ -104,6 +105,25 @@ const chatsSlice = createSlice({
       const messageId = action.payload.messageId;
       state.unreadMap = ChatUtils.removeMessageFromUnread(state.unreadMap, chatId, messageId);
       state.unreadCount = ChatUtils.calcUnreadCount(state.unreadMap);
+    },
+
+    addMembers: (state: ChatsState, action: PayloadAction<ChatMember[]>) => {
+      const members = action.payload;
+      const chatId = members[0].chatId;
+      const chat = state.chats.find((chat) => chat.id === chatId);
+      chat.members.push(...members);
+      chat.members.filter(FilterUtils.uniqueByUserIdFilter);
+      state.chats = ArrayUtils.updateValueWithId(state.chats, chat);
+    },
+
+    deleteMembers: (state: ChatsState, action: PayloadAction<ChatMember[]>) => {
+      const members = action.payload;
+      const chatId = members[0].chatId;
+      const chat = state.chats.find((chat) => chat.id === chatId);
+      let updatedMembers = chat.members;
+      members.forEach((m) => (updatedMembers = ArrayUtils.deleteValueWithUserId(updatedMembers, m)));
+      chat.members = updatedMembers;
+      state.chats = ArrayUtils.updateValueWithId(state.chats, chat);
     },
   },
   extraReducers: (builder) => {

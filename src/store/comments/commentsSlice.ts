@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {CommentsState} from './commentsType';
 import {CommentsThunks} from './commentsActions';
 import {CommentUtils} from '../../shared/utils/CommentUtils';
-import {buildCommentReaction, Comment, CommentReactions, CommentReactionType} from '../../models/Comment';
+import {buildCommentReaction, Comment, CommentReaction, CommentReactionType} from '../../models/Comment';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {UserAccount} from '../../models/User';
 
@@ -58,14 +58,18 @@ const commentsSlice = createSlice({
       }
     },
 
-    updateCommentReactions: (state: CommentsState, action: PayloadAction<CommentReactions>) => {
-      const targetId = action.payload.targetId;
-      const commentId = action.payload.targetId;
-      const reactions = action.payload.reactions;
-      if (state.targetId === targetId) {
-        const commentInList = ArrayUtils.findValueById(state.comments, commentId);
-        const updatedComment = {...commentInList, reactions};
-        state.comments = ArrayUtils.updateValueWithId(state.comments, updatedComment);
+    updateCommentReactions: (state: CommentsState, action: PayloadAction<CommentReaction>) => {
+      const reaction = action.payload;
+      if (state.targetId === reaction.targetId) {
+        const commentInList: Comment = ArrayUtils.findValueById(state.comments, reaction.commentId);
+        if (commentInList) {
+          let reactions = commentInList.reactions.filter((r) => r.userId !== reaction.userId);
+          if (reaction.type !== 'NONE') {
+            reactions.push(reaction);
+          }
+          const updatedComment = {...commentInList, reactions};
+          state.comments = ArrayUtils.updateValueWithId(state.comments, updatedComment);
+        }
       }
     },
 
@@ -86,7 +90,7 @@ const commentsSlice = createSlice({
       const account = action.payload.account;
       const reaction = comment.reactions.find((s) => s.userId === account.id);
       let oldReactions = reaction ? ArrayUtils.deleteValue(comment.reactions, reaction) : comment.reactions;
-      const newReaction = buildCommentReaction(comment.id, account.id, newReactionType);
+      const newReaction = buildCommentReaction(comment.targetId, comment.id, account.id, newReactionType);
       const updatedComment = {...comment, reactions: [...oldReactions, newReaction]};
       state.comments = ArrayUtils.updateValueWithId(state.comments, updatedComment);
     },

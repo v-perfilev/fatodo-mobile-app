@@ -63,6 +63,16 @@ export class ArrayUtils {
     return arrayCopy;
   };
 
+  public static deleteValueWithUserId = (array: WithUserId[], value: WithUserId): any[] => {
+    const arrayCopy = [...array];
+    const itemInList = arrayCopy.find((i) => i.userId === value.userId);
+    if (itemInList) {
+      const index = arrayCopy.indexOf(itemInList);
+      arrayCopy.splice(index, 1);
+    }
+    return arrayCopy;
+  };
+
   public static deleteValueByIndex = (array: any[], index: number): any[] => {
     const arrayCopy = [...array];
     if (index >= 0) {

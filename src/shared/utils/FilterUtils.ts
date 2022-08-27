@@ -7,6 +7,10 @@ export class FilterUtils {
     return arr.findIndex((t) => t.id === value.id) === i;
   };
 
+  public static uniqueByUserIdFilter = (value: any, i: number, arr: any[]): boolean => {
+    return arr.findIndex((t) => t.userId === value.userId) === i;
+  };
+
   public static notUndefinedFilter = (value: any): boolean => {
     return value !== undefined;
   };

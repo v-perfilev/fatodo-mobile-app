@@ -5,7 +5,8 @@ import {ContactRequestDTO} from '../../models/dto/ContactRequestDTO';
 import {ContactUtils} from '../../shared/utils/ContactUtils';
 import snackSlice from '../snack/snackSlice';
 import {InfoThunks} from '../info/infoActions';
-import {AppDispatch} from '../store';
+import {AppDispatch, RootState} from '../store';
+import {ContactRelation} from '../../models/Contact';
 
 export class ContactsActions {
   static addIncomingRequest = (requesterId: string) => async (dispatch: AppDispatch) => {
@@ -57,6 +58,7 @@ enum TYPES {
   ACCEPT_INCOMING_REQUEST = 'contacts/acceptIncomingRequest',
   DECLINE_INCOMING_REQUEST = 'contacts/declineIncomingRequest',
   REMOVE_OUTCOMING_REQUEST = 'contacts/removeOutcomingRequest',
+  REMOVE_RELATION_FROM_LIST = 'contacts/removeRelationFromList',
 }
 
 export class ContactsThunks {
@@ -118,4 +120,16 @@ export class ContactsThunks {
     thunkAPI.dispatch(contactsSlice.actions.removeOutcomingRequest(userId));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'contact.requestRemoved', variant: 'info'}));
   });
+
+  static removeRelationFromList = createAsyncThunk(
+    TYPES.REMOVE_RELATION_FROM_LIST,
+    async (relation: ContactRelation, thunkAPI) => {
+      const state = thunkAPI.getState() as RootState;
+      const account = state.auth.account;
+      const userIdToDelete = [relation.firstUserId, relation.secondUserId].find((userId) => userId !== account.id);
+      if (userIdToDelete) {
+        thunkAPI.dispatch(contactsSlice.actions.removeRelation(userIdToDelete));
+      }
+    },
+  );
 }

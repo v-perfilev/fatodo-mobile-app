@@ -6,9 +6,9 @@ import {
   buildMessageStatus,
   EventMessageType,
   Message,
-  MessageReactions,
+  MessageReaction,
   MessageReactionType,
-  MessageStatuses,
+  MessageStatus,
 } from '../../models/Message';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {ChatThunks} from './chatActions';
@@ -69,15 +69,16 @@ const chatSlice = createSlice({
       }
     },
 
-    updateMessageStatuses: (state: ChatState, action: PayloadAction<MessageStatuses>) => {
-      const chatId = action.payload.chatId;
-      const messageId = action.payload.messageId;
-      const statuses = action.payload.statuses;
-      if (state.chat.id === chatId) {
-        const messageInList = ArrayUtils.findValueById(state.messages, messageId);
-        const updatedMessage = {...messageInList, statuses};
-        state.messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
-        state.chatItems = MessageUtils.convertMessagesToChatItems(state.messages);
+    updateMessageStatuses: (state: ChatState, action: PayloadAction<MessageStatus>) => {
+      const status = action.payload;
+      if (state.chat.id === status.chatId) {
+        const messageInList = ArrayUtils.findValueById(state.messages, status.messageId);
+        if (messageInList) {
+          const statuses = [...messageInList.statuses, status];
+          const updatedMessage = {...messageInList, statuses};
+          state.messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
+          state.chatItems = MessageUtils.convertMessagesToChatItems(state.messages);
+        }
       }
     },
 
@@ -87,22 +88,26 @@ const chatSlice = createSlice({
       const message = state.messages.find((m) => m.id === messageId);
       const status = message?.statuses.find((s) => s.userId === account.id);
       if (!status) {
-        const newStatus = buildMessageStatus(messageId, account.id, 'READ');
+        const newStatus = buildMessageStatus(message.chatId, messageId, account.id, 'READ');
         const updatedMessage = {...message, statuses: [...message.statuses, newStatus]};
         state.messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
         state.chatItems = MessageUtils.convertMessagesToChatItems(state.messages);
       }
     },
 
-    updateMessageReactions: (state: ChatState, action: PayloadAction<MessageReactions>) => {
-      const chatId = action.payload.chatId;
-      const messageId = action.payload.messageId;
-      const reactions = action.payload.reactions;
-      if (state.chat.id === chatId) {
-        const messageInList = ArrayUtils.findValueById(state.messages, messageId);
-        const updatedMessage = {...messageInList, reactions};
-        state.messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
-        state.chatItems = MessageUtils.convertMessagesToChatItems(state.messages);
+    updateMessageReactions: (state: ChatState, action: PayloadAction<MessageReaction>) => {
+      const reaction = action.payload;
+      if (state.chat.id === reaction.chatId) {
+        const messageInList: Message = ArrayUtils.findValueById(state.messages, reaction.messageId);
+        if (messageInList) {
+          let reactions = messageInList.reactions.filter((r) => r.userId !== reaction.userId);
+          if (reaction.type !== 'NONE') {
+            reactions.push(reaction);
+          }
+          const updatedMessage = {...messageInList, reactions};
+          state.messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
+          state.chatItems = MessageUtils.convertMessagesToChatItems(state.messages);
+        }
       }
     },
 
@@ -124,7 +129,7 @@ const chatSlice = createSlice({
       const account = action.payload.account;
       const reaction = message.reactions.find((s) => s.userId === account.id);
       let oldReactions = reaction ? ArrayUtils.deleteValue(message.reactions, reaction) : message.reactions;
-      const newReaction = buildMessageReaction(message.id, account.id, newReactionType);
+      const newReaction = buildMessageReaction(message.chatId, message.id, account.id, newReactionType);
       const updatedMessage = {...message, reactions: [...oldReactions, newReaction]};
       state.messages = ArrayUtils.updateValueWithId(state.messages, updatedMessage);
       state.chatItems = MessageUtils.convertMessagesToChatItems(state.messages);

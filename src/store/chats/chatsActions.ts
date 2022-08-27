@@ -3,11 +3,12 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import ChatService from '../../services/ChatService';
 import {MessageDTO} from '../../models/dto/MessageDTO';
 import snackSlice from '../snack/snackSlice';
-import {AppDispatch} from '../store';
-import {Chat} from '../../models/Chat';
+import {AppDispatch, RootState} from '../store';
+import {Chat, ChatMember} from '../../models/Chat';
 import {ChatUtils} from '../../shared/utils/ChatUtils';
 import {InfoThunks} from '../info/infoActions';
 import {UserAccount} from '../../models/User';
+import {Message} from '../../models/Message';
 
 export class ChatsActions {
   static addChat = (chat: Chat) => async (dispatch: AppDispatch) => {
@@ -29,6 +30,14 @@ export class ChatsActions {
   static removeChat = (chatId: string) => async (dispatch: AppDispatch) => {
     dispatch(chatsSlice.actions.removeChat(chatId));
   };
+
+  static addMembers = (members: ChatMember[]) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.addMembers(members));
+  };
+
+  static deleteMembers = (members: ChatMember[]) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.deleteMembers(members));
+  };
 }
 
 enum TYPES {
@@ -39,6 +48,9 @@ enum TYPES {
   CREATE_INDIRECT_CHAT = 'chats/createIndirectChat',
   SEND_DIRECT_MESSAGE = 'chats/sendDirectMessage',
   FETCH_UNREAD_MESSAGES_MAP = 'chats/fetchUnreadMessagesMap',
+  ADD_LAST_MESSAGE = 'chats/addLastMessage',
+  UPDATE_LAST_MESSAGE = 'chats/updateLastMessage',
+  INCREASE_MESSAGE_COUNTER = 'chats/increaseMessageCounter',
 }
 
 export class ChatsThunks {
@@ -81,8 +93,40 @@ export class ChatsThunks {
     },
   );
 
-  static fetchUnreadMessagesMap = createAsyncThunk(TYPES.FETCH_UNREAD_MESSAGES_MAP, async (_) => {
+  static fetchUnreadMessagesMap = createAsyncThunk(TYPES.FETCH_UNREAD_MESSAGES_MAP, async () => {
     const response = await ChatService.getUnreadMessagesMap();
     return response.data;
   });
+
+  static addChatLastMessage = createAsyncThunk(TYPES.ADD_LAST_MESSAGE, async (message: Message, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    let chat = state.chats.chats.find((chat) => chat.id === message.chatId);
+    if (chat) {
+      chat.lastMessage = message;
+    } else {
+      const response = await ChatService.getChatById(message.chatId);
+      chat = response.data;
+    }
+    thunkAPI.dispatch(chatsSlice.actions.addChat(chat));
+  });
+
+  static updateChatLastMessage = createAsyncThunk(TYPES.UPDATE_LAST_MESSAGE, async (message: Message, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    let chat = state.chats.chats.find((chat) => chat.id === message.chatId);
+    if (chat && chat.lastMessage.id === message.id) {
+      chat.lastMessage = message;
+      thunkAPI.dispatch(chatsSlice.actions.addChat(chat));
+    }
+  });
+
+  static increaseMessageCounter = createAsyncThunk(
+    TYPES.INCREASE_MESSAGE_COUNTER,
+    async (message: Message, thunkAPI) => {
+      const state = thunkAPI.getState() as RootState;
+      const account = state.auth.account;
+      if (!message?.isEvent && message?.userId === account.id) {
+        thunkAPI.dispatch(chatsSlice.actions.addUnread(message));
+      }
+    },
+  );
 }

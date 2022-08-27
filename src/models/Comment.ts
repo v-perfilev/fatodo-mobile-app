@@ -3,7 +3,7 @@ import {CommentDTO} from './dto/CommentDTO';
 
 export const commentReactionTypes = ['LIKE', 'DISLIKE'];
 
-export type CommentReactionType = 'LIKE' | 'DISLIKE';
+export type CommentReactionType = 'LIKE' | 'DISLIKE' | 'NONE';
 
 export interface CommentThreadInfo {
   parentId: string;
@@ -36,27 +36,24 @@ export interface ReferenceComment extends AbstractAuditing {
 }
 
 export interface CommentReaction {
+  targetId: string;
   commentId: string;
   userId: string;
   type: CommentReactionType;
-  timestamp: number;
-}
-
-export interface CommentReactions {
-  targetId: string;
-  commentId: string;
-  reactions: CommentReaction[];
+  date: number;
 }
 
 export const buildCommentReaction = (
+  targetId: string,
   commentId: string,
   userId: string,
   type: CommentReactionType,
 ): CommentReaction => ({
+  targetId,
   commentId,
   userId,
   type,
-  timestamp: new Date().getTime(),
+  date: new Date().getTime(),
 });
 
 export const buildCommentFromDTO = (dto: CommentDTO, targetId: string, userId: string): Comment => ({

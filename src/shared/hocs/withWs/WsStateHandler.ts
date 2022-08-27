@@ -1,10 +1,18 @@
 import {AppDispatch} from '../../../store/store';
 import {WsEvent, WsEventType} from '../../../models/Ws';
+import {Chat, ChatMember} from '../../../models/Chat';
+import {Message, MessageReaction, MessageStatus} from '../../../models/Message';
+import {ContactRelation, ContactRequest} from '../../../models/Contact';
+import {Comment, CommentReaction} from '../../../models/Comment';
+import {ChatsActions, ChatsThunks} from '../../../store/chats/chatsActions';
+import {ChatActions} from '../../../store/chat/chatActions';
+import {ContactsActions, ContactsThunks} from '../../../store/contacts/contactsActions';
+import {CommentsActions, CommentsThunks} from '../../../store/comments/commentsActions';
 
 type HandlerFunc = (msg: WsEvent<any>) => void;
 
 export class WsStateHandler {
-  private dispatch: AppDispatch;
+  private readonly dispatch: AppDispatch;
 
   constructor(dispatch: AppDispatch) {
     this.dispatch = dispatch;
@@ -68,49 +76,90 @@ export class WsStateHandler {
   CHAT
    */
 
-  private handleChatCreateEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleChatCreateEvent = (msg: WsEvent<Chat>): void => {
+    this.dispatch(ChatsActions.addChat(msg.payload));
+  };
 
-  private handleChatUpdateEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleChatUpdateEvent = (msg: WsEvent<Chat>): void => {
+    this.dispatch(ChatsActions.updateChat(msg.payload));
+  };
 
-  private handleChatMemberAddEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleChatMemberAddEvent = (msg: WsEvent<ChatMember[]>): void => {
+    this.dispatch(ChatsActions.addMembers(msg.payload));
+  };
 
-  private handleChatMemberDeleteEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleChatMemberDeleteEvent = (msg: WsEvent<ChatMember[]>): void => {
+    this.dispatch(ChatsActions.deleteMembers(msg.payload));
+  };
 
-  private handleChatMemberLeaveEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleChatMemberLeaveEvent = (msg: WsEvent<ChatMember>): void => {
+    this.dispatch(ChatsActions.deleteMembers([msg.payload]));
+  };
 
-  private handleChatMessageCreateEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleChatMessageCreateEvent = (msg: WsEvent<Message>): void => {
+    this.dispatch(ChatsThunks.addChatLastMessage(msg.payload));
+    this.dispatch(ChatsThunks.increaseMessageCounter(msg.payload));
+    this.dispatch(ChatActions.addMessage(msg.payload));
+  };
 
-  private handleChatMessageUpdateEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleChatMessageUpdateEvent = (msg: WsEvent<Message>): void => {
+    this.dispatch(ChatsThunks.updateChatLastMessage(msg.payload));
+    this.dispatch(ChatActions.updateMessage(msg.payload));
+  };
 
-  private handleChatReactionEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleChatReactionEvent = (msg: WsEvent<MessageReaction>): void => {
+    this.dispatch(ChatActions.updateMessageReactions(msg.payload));
+  };
 
-  private handleChatStatusEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleChatStatusEvent = (msg: WsEvent<MessageStatus>): void => {
+    this.dispatch(ChatActions.updateMessageStatuses(msg.payload));
+  };
 
   /*
   CONTACT
    */
 
-  private handleContactRequestIncomingEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleContactRequestIncomingEvent = (msg: WsEvent<ContactRequest>): void => {
+    this.dispatch(ContactsActions.addIncomingRequest(msg.payload.requesterId));
+  };
 
-  private handleContactRequestOutcomingEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleContactRequestOutcomingEvent = (msg: WsEvent<ContactRequest>): void => {
+    this.dispatch(ContactsActions.addOutcomingRequest(msg.payload.recipientId));
+  };
 
-  private handleContactAcceptIncomingEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleContactAcceptIncomingEvent = (msg: WsEvent<ContactRequest>): void => {
+    this.dispatch(ContactsActions.acceptIncomingRequest(msg.payload.requesterId));
+  };
 
-  private handleContactAcceptOutcomingEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleContactAcceptOutcomingEvent = (msg: WsEvent<ContactRequest>): void => {
+    this.dispatch(ContactsActions.acceptOutcomingRequest(msg.payload.recipientId));
+  };
 
-  private handleContactDeleteIncomingEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleContactDeleteIncomingEvent = (msg: WsEvent<ContactRequest>): void => {
+    this.dispatch(ContactsActions.removeIncomingRequest(msg.payload.requesterId));
+  };
 
-  private handleContactDeleteOutcomingEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleContactDeleteOutcomingEvent = (msg: WsEvent<ContactRequest>): void => {
+    this.dispatch(ContactsActions.removeOutcomingRequest(msg.payload.recipientId));
+  };
 
-  private handleContactDeleteEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleContactDeleteEvent = (msg: WsEvent<ContactRelation>): void => {
+    this.dispatch(ContactsThunks.removeRelationFromList(msg.payload));
+  };
 
   /*
   COMMENT
    */
 
-  private handleCommentCreateEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleCommentCreateEvent = (msg: WsEvent<Comment>): void => {
+    this.dispatch(CommentsThunks.addComment(msg.payload));
+  };
 
-  private handleCommentUpdateEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleCommentUpdateEvent = (msg: WsEvent<Comment>): void => {
+    this.dispatch(CommentsActions.updateComment(msg.payload));
+  };
 
-  private handleCommentReactionEvent = (msg: WsEvent<unknown>): void => console.log(msg);
+  private handleCommentReactionEvent = (msg: WsEvent<CommentReaction>): void => {
+    this.dispatch(CommentsActions.updateCommentReactions(msg.payload));
+  };
 }

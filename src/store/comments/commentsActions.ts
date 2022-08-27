@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import CommentService from '../../services/CommentService';
 import {UserAccount} from '../../models/User';
-import {buildCommentFromDTO, Comment, CommentReactions} from '../../models/Comment';
+import {buildCommentFromDTO, Comment, CommentReaction} from '../../models/Comment';
 import {CommentDTO} from '../../models/dto/CommentDTO';
 import commentsSlice from './commentsSlice';
 import snackSlice from '../snack/snackSlice';
@@ -16,19 +16,12 @@ export class CommentsActions {
     dispatch(commentsSlice.actions.init(targetId));
   };
 
-  static addComment = (comment: Comment, account: UserAccount) => async (dispatch: AppDispatch) => {
-    const targetId = comment.targetId;
-    const isOwnComment = CommentUtils.isOwnComment(comment, account);
-    dispatch(commentsSlice.actions.addComment(comment));
-    dispatch(commentsSlice.actions.increaseCounter({targetId, isOwnComment}));
-  };
-
   static updateComment = (comment: Comment) => async (dispatch: AppDispatch) => {
     dispatch(commentsSlice.actions.editComment(comment));
   };
 
-  static updateCommentReactions = (commentReactions: CommentReactions) => async (dispatch: AppDispatch) => {
-    dispatch(commentsSlice.actions.updateCommentReactions(commentReactions));
+  static updateCommentReactions = (commentReaction: CommentReaction) => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.updateCommentReactions(commentReaction));
   };
 }
 
@@ -43,6 +36,7 @@ enum TYPES {
   DISLIKE_REACTION = 'comments/dislikeReaction',
   FETCH_THREAD_INFO = 'comments/fetchThreadInfo',
   REFRESH_THREAD = 'comments/refreshThread',
+  ADD_COMMENT = 'comments/addComment',
 }
 
 export class CommentsThunks {
@@ -123,5 +117,18 @@ export class CommentsThunks {
 
   static refreshThread = createAsyncThunk(TYPES.REFRESH_THREAD, async (targetId: string) => {
     await CommentService.refreshThread(targetId);
+  });
+
+  /*
+  Actions
+  */
+
+  static addComment = createAsyncThunk(TYPES.ADD_COMMENT, async (comment: Comment, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const account = state.auth.account;
+    const targetId = comment.targetId;
+    const isOwnComment = CommentUtils.isOwnComment(comment, account);
+    thunkAPI.dispatch(commentsSlice.actions.addComment(comment));
+    thunkAPI.dispatch(commentsSlice.actions.increaseCounter({targetId, isOwnComment}));
   });
 }
