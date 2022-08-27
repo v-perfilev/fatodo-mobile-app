@@ -7,6 +7,7 @@ import snackSlice from '../snack/snackSlice';
 import {InfoActions} from '../info/infoActions';
 import {AppDispatch, RootState} from '../store';
 import {ContactRelation} from '../../models/Contact';
+import eventsSlice from '../events/eventsSlice';
 
 const PREFIX = 'contacts/';
 
@@ -25,6 +26,7 @@ export class ContactsActions {
 
   static acceptIncomingRequest = (requesterId: string) => async (dispatch: AppDispatch) => {
     const relation = ContactUtils.createStubRelation(requesterId);
+    dispatch(eventsSlice.actions.removeContactEvents(requesterId));
     dispatch(contactsSlice.actions.removeIncomingRequest(requesterId));
     dispatch(contactsSlice.actions.addRelation(relation));
     dispatch(InfoActions.handleUserIdsThunk([requesterId]));
@@ -32,20 +34,24 @@ export class ContactsActions {
 
   static acceptOutcomingRequest = (recipientId: string) => async (dispatch: AppDispatch) => {
     const relation = ContactUtils.createStubRelation(recipientId);
+    dispatch(eventsSlice.actions.removeContactEvents(recipientId));
     dispatch(contactsSlice.actions.removeOutcomingRequest(recipientId));
     dispatch(contactsSlice.actions.addRelation(relation));
     dispatch(InfoActions.handleUserIdsThunk([recipientId]));
   };
 
   static removeRelation = (secondUserId: string) => async (dispatch: AppDispatch) => {
+    dispatch(eventsSlice.actions.removeContactEvents(secondUserId));
     dispatch(contactsSlice.actions.removeRelation(secondUserId));
   };
 
   static removeIncomingRequest = (requesterId: string) => async (dispatch: AppDispatch) => {
+    dispatch(eventsSlice.actions.removeContactEvents(requesterId));
     dispatch(contactsSlice.actions.removeIncomingRequest(requesterId));
   };
 
   static removeOutcomingRequest = (recipientId: string) => async (dispatch: AppDispatch) => {
+    dispatch(eventsSlice.actions.removeContactEvents(recipientId));
     dispatch(contactsSlice.actions.removeOutcomingRequest(recipientId));
   };
 
@@ -77,6 +83,7 @@ export class ContactsActions {
 
   static removeRelationThunk = createAsyncThunk(PREFIX + 'removeRelation', async (userId: string, thunkAPI) => {
     await ContactService.removeRelation(userId);
+    thunkAPI.dispatch(eventsSlice.actions.removeContactEvents(userId));
     thunkAPI.dispatch(contactsSlice.actions.removeRelation(userId));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'contact.relationRemoved', variant: 'info'}));
   });
@@ -93,6 +100,7 @@ export class ContactsActions {
     async (userId: string, thunkAPI) => {
       await ContactService.acceptRequest(userId);
       const relation = ContactUtils.createStubRelation(userId);
+      thunkAPI.dispatch(eventsSlice.actions.removeContactEvents(userId));
       thunkAPI.dispatch(contactsSlice.actions.addRelation(relation));
       thunkAPI.dispatch(contactsSlice.actions.removeIncomingRequest(userId));
       thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'contact.requestAccepted', variant: 'info'}));
@@ -103,6 +111,7 @@ export class ContactsActions {
     PREFIX + 'declineIncomingRequest',
     async (userId: string, thunkAPI) => {
       await ContactService.declineRequest(userId);
+      thunkAPI.dispatch(eventsSlice.actions.removeContactEvents(userId));
       thunkAPI.dispatch(contactsSlice.actions.removeIncomingRequest(userId));
       thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'contact.requestDeclined', variant: 'info'}));
     },
@@ -112,6 +121,7 @@ export class ContactsActions {
     PREFIX + 'removeOutcomingRequest',
     async (userId: string, thunkAPI) => {
       await ContactService.removeRequest(userId);
+      thunkAPI.dispatch(eventsSlice.actions.removeContactEvents(userId));
       thunkAPI.dispatch(contactsSlice.actions.removeOutcomingRequest(userId));
       thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'contact.requestRemoved', variant: 'info'}));
     },
@@ -124,6 +134,7 @@ export class ContactsActions {
       const account = state.auth.account;
       const userIdToDelete = [relation.firstUserId, relation.secondUserId].find((userId) => userId !== account.id);
       if (userIdToDelete) {
+        thunkAPI.dispatch(eventsSlice.actions.removeContactEvents(userIdToDelete));
         thunkAPI.dispatch(contactsSlice.actions.removeRelation(userIdToDelete));
       }
     },

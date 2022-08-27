@@ -14,6 +14,26 @@ export class EventsThunks {
     dispatch(eventsSlice.actions.addEvent(event));
   };
 
+  static removeChatEvents = (chatId: string) => async (dispatch: AppDispatch) => {
+    dispatch(eventsSlice.actions.removeChatEvents(chatId));
+  };
+
+  static removeItemEvents = (itemId: string) => async (dispatch: AppDispatch) => {
+    dispatch(eventsSlice.actions.removeItemEvents(itemId));
+    dispatch(eventsSlice.actions.removeCommentEvents(itemId));
+    dispatch(eventsSlice.actions.removeReminderEventsByItemId(itemId));
+  };
+
+  static removeGroupEvents = (groupId: string) => async (dispatch: AppDispatch) => {
+    dispatch(eventsSlice.actions.removeGroupEvents(groupId));
+    dispatch(eventsSlice.actions.removeCommentEvents(groupId));
+    dispatch(eventsSlice.actions.removeReminderEventsByGroupId(groupId));
+  };
+
+  static removeContactEvents = (userId: string) => async (dispatch: AppDispatch) => {
+    dispatch(eventsSlice.actions.removeContactEvents(userId));
+  };
+
   static fetchEventsThunk = createAsyncThunk(PREFIX + 'fetchEvents', async (offset: number, thunkAPI) => {
     const response = await EventService.getEventsPageable(offset);
     thunkAPI.dispatch(EventsThunks.loadDependenciesThunk(response.data.data));

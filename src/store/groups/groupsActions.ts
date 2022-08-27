@@ -5,6 +5,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import ItemService from '../../services/ItemService';
 import snackSlice from '../snack/snackSlice';
 import {InfoActions} from '../info/infoActions';
+import eventsSlice from '../events/eventsSlice';
 
 const PREFIX = 'groups/';
 
@@ -51,12 +52,18 @@ export class GroupsActions {
   static deleteGroupThunk = createAsyncThunk(PREFIX + 'deleteGroup', async (group: Group, thunkAPI) => {
     await ItemService.deleteGroup(group.id);
     thunkAPI.dispatch(groupsSlice.actions.removeGroup(group.id));
+    thunkAPI.dispatch(eventsSlice.actions.removeGroupEvents(group.id));
+    thunkAPI.dispatch(eventsSlice.actions.removeCommentEvents(group.id));
+    thunkAPI.dispatch(eventsSlice.actions.removeReminderEventsByGroupId(group.id));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.deleted', variant: 'info'}));
   });
 
   static leaveGroupThunk = createAsyncThunk(PREFIX + 'leaveGroup', async (group: Group, thunkAPI) => {
     await ItemService.leaveGroup(group.id);
     thunkAPI.dispatch(groupsSlice.actions.removeGroup(group.id));
+    thunkAPI.dispatch(eventsSlice.actions.removeGroupEvents(group.id));
+    thunkAPI.dispatch(eventsSlice.actions.removeCommentEvents(group.id));
+    thunkAPI.dispatch(eventsSlice.actions.removeReminderEventsByGroupId(group.id));
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.left', variant: 'info'}));
   });
 

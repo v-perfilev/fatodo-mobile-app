@@ -22,6 +22,43 @@ const eventsSlice = createSlice({
       state.count = state.count + 1;
       state.unreadCount = state.unreadCount + 1;
     },
+
+    removeChatEvents: (state: EventsState, action: PayloadAction<string>) => {
+      const chatId = action.payload;
+      state.events = state.events.filter((event) => event.chatEvent?.chatId === chatId);
+    },
+
+    removeItemEvents: (state: EventsState, action: PayloadAction<string>) => {
+      const itemId = action.payload;
+      state.events = state.events.filter((event) => event.itemEvent?.itemId === itemId);
+    },
+
+    removeGroupEvents: (state: EventsState, action: PayloadAction<string>) => {
+      const groupId = action.payload;
+      state.events = state.events.filter((event) => event.itemEvent?.groupId === groupId);
+    },
+
+    removeCommentEvents: (state: EventsState, action: PayloadAction<string>) => {
+      const targetId = action.payload;
+      state.events = state.events.filter((event) => event.commentEvent?.targetId === targetId);
+    },
+
+    removeContactEvents: (state: EventsState, action: PayloadAction<string>) => {
+      const userId = action.payload;
+      state.events = state.events.filter(
+        (event) => event.contactEvent?.firstUserId === userId || event.contactEvent?.secondUserId === userId,
+      );
+    },
+
+    removeReminderEventsByItemId: (state: EventsState, action: PayloadAction<string>) => {
+      const itemId = action.payload;
+      state.events = state.events.filter((event) => event.reminderEvent?.itemId === itemId);
+    },
+
+    removeReminderEventsByGroupId: (state: EventsState, action: PayloadAction<string>) => {
+      const groupId = action.payload;
+      state.events = state.events.filter((event) => event.reminderEvent?.groupId === groupId);
+    },
   },
   extraReducers: (builder) => {
     /*

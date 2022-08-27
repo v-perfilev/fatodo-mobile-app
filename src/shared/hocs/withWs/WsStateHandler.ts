@@ -89,11 +89,11 @@ export class WsStateHandler {
   };
 
   private handleChatMemberDeleteEvent = (msg: WsEvent<ChatMember[]>): void => {
-    this.dispatch(ChatsActions.deleteMembers(msg.payload));
+    this.dispatch(ChatsActions.deleteMembersAction(msg.payload));
   };
 
   private handleChatMemberLeaveEvent = (msg: WsEvent<ChatMember>): void => {
-    this.dispatch(ChatsActions.deleteMembers([msg.payload]));
+    this.dispatch(ChatsActions.deleteMembersAction([msg.payload]));
   };
 
   private handleChatMessageCreateEvent = (msg: WsEvent<Message>): void => {
