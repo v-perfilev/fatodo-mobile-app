@@ -4,7 +4,8 @@ import {AuthActions} from './authActions';
 import {UserAccount} from '../../models/User';
 
 const initialState: AuthState = {
-  isActive: false,
+  isActive: true,
+  isSleepMode: false,
   isAuthenticated: false,
   account: undefined,
   loading: false,
@@ -14,8 +15,12 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAppStatus: (state: AuthState, action: PayloadAction<boolean>) => {
+    setIsActive: (state: AuthState, action: PayloadAction<boolean>) => {
       state.isActive = action.payload;
+    },
+
+    setIsSleepMode: (state: AuthState, action: PayloadAction<boolean>) => {
+      state.isSleepMode = action.payload;
     },
 
     authenticated: (state: AuthState) => {

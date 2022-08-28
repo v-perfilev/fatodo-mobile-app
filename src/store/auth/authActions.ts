@@ -15,8 +15,12 @@ import NotificationsRemote from '../../shared/push/notificationsRemote';
 const PREFIX = 'auth/';
 
 export class AuthActions {
-  static setAppStatus = (isActive: boolean) => (dispatch: AppDispatch) => {
-    dispatch(authSlice.actions.setAppStatus(isActive));
+  static setIsActive = (isActive: boolean) => (dispatch: AppDispatch) => {
+    dispatch(authSlice.actions.setIsActive(isActive));
+  };
+
+  static setIsSleepMode = (isSleepMode: boolean) => (dispatch: AppDispatch) => {
+    dispatch(authSlice.actions.setIsSleepMode(isSleepMode));
   };
 
   static login = () => (dispatch: AppDispatch) => {

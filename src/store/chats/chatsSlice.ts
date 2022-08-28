@@ -36,6 +36,8 @@ const chatsSlice = createSlice({
   name: 'chats',
   initialState,
   reducers: {
+    reset: () => initialState,
+
     addChat: (state: ChatsState, action: PayloadAction<Chat>) => {
       const chat = action.payload;
       state.chats = ChatUtils.filterChats([chat, ...state.chats]);

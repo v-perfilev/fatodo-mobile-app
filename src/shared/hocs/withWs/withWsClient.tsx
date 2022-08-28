@@ -14,6 +14,7 @@ const withWsClient = (Component: ComponentType) => (props: any) => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.account);
   const isActive = useAppSelector(AuthSelectors.isActive);
+  const isSleepMode = useAppSelector(AuthSelectors.isSleepMode);
   const {t} = useTranslation();
   const wsStateHandler = useRef<WsStateHandler>();
   const wsEventHandler = useRef<WsEventHandler>();
@@ -35,7 +36,7 @@ const withWsClient = (Component: ComponentType) => (props: any) => {
   return (
     <>
       <Component {...props} />
-      <WsClient active={isActive} url={WS_URL} topics={[WS_ROOT_TOPIC]} onMessage={onMessage} />
+      <WsClient active={!isSleepMode} url={WS_URL} topics={[WS_ROOT_TOPIC]} onMessage={onMessage} />
     </>
   );
 };

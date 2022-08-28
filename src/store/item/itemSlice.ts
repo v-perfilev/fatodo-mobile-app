@@ -15,6 +15,8 @@ const itemSlice = createSlice({
   name: 'item',
   initialState,
   reducers: {
+    reset: () => initialState,
+
     setGroup: (state: ItemState, action: PayloadAction<Group>) => {
       const group = action.payload;
       return {...initialState, group};

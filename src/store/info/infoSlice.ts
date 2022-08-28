@@ -23,6 +23,8 @@ const infoSlice = createSlice({
   name: 'info',
   initialState,
   reducers: {
+    reset: () => initialState,
+
     handleUsers: (state: InfoState, action: PayloadAction<User[]>) => {
       state.users = InfoUtils.prepareFulfilledContent(state.users, action.payload);
     },

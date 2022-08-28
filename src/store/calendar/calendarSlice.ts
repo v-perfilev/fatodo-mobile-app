@@ -12,7 +12,9 @@ const initialState: CalendarState = {
 const calendarSlice = createSlice({
   name: 'calendar',
   initialState,
-  reducers: {},
+  reducers: {
+    reset: () => initialState,
+  },
   extraReducers: (builder) => {
     /*
     fetchReminders

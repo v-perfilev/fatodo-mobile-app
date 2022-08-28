@@ -10,6 +10,7 @@ import {useTranslation} from 'react-i18next';
 import AccountViewHeader from './AccountViewHeader';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
+import {RootActions} from '../../../store/rootActions';
 
 const AccountView = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +19,7 @@ const AccountView = () => {
 
   const logout = useCallback((): void => {
     dispatch(AuthActions.logout());
+    dispatch(RootActions.resetState());
   }, [dispatch]);
 
   return (
