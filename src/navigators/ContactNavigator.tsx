@@ -14,6 +14,7 @@ import {useAppSelector} from '../store/store';
 import {ContactInfo} from '../store/contacts/contactsType';
 import FBox from '../components/boxes/FBox';
 import {HEADER_HEIGHT} from '../constants';
+import PressableButton from '../components/controls/PressableButton';
 
 type TabBarProps = SceneRendererProps & {navigationState: NavigationState<ContactRoute>};
 
@@ -65,14 +66,16 @@ const ContactNavigator = () => {
 
   const renderTabBarItem = (props: TabBarItemProps<ContactRoute>): ReactElement => {
     return (
-      <FBox flexGrow="1" alignItems="center" key={props.route.key}>
-        <FHStack smallSpace>
-          <Text color="white" fontWeight="bold">
-            {t(`contact:${props.route.key}.title`)}
-          </Text>
-          {renderBadge(props.route)}
-        </FHStack>
-      </FBox>
+      <PressableButton flex="1" h={HEADER_HEIGHT} onPress={props.onPress}>
+        <FBox flexGrow="1" justifyContent="center" alignItems="center" key={props.route.key}>
+          <FHStack smallSpace>
+            <Text color="white" fontWeight="bold">
+              {t(`contact:${props.route.key}.title`)}
+            </Text>
+            {renderBadge(props.route)}
+          </FHStack>
+        </FBox>
+      </PressableButton>
     );
   };
 
