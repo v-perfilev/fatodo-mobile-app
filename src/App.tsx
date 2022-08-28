@@ -3,7 +3,7 @@ import './shared/axios';
 import 'text-encoding';
 
 import React, {useEffect, useState} from 'react';
-import {LogBox} from 'react-native';
+import {AppState, LogBox} from 'react-native';
 import {flowRight} from 'lodash';
 import {bindActionCreators} from 'redux';
 import {setupAxiosInterceptors} from './shared/axios';
@@ -67,6 +67,14 @@ const App = () => {
       setReady(true);
     });
   }, []);
+
+  useEffect(() => {
+    const stateSubscription = AppState.addEventListener('change', (state) => {
+      const isActive = state === 'active';
+      dispatch(AuthActions.setAppStatus(isActive));
+    });
+    return () => stateSubscription.remove();
+  });
 
   useEffect(() => {
     // splash screen (timeout needed for initial navigation event)

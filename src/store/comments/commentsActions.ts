@@ -14,8 +14,8 @@ import {InfoActions} from '../info/infoActions';
 const PREFIX = 'comments/';
 
 export class CommentsActions {
-  static init = (parentId: string, targetId: string) => async (dispatch: AppDispatch) => {
-    dispatch(commentsSlice.actions.init([parentId, targetId]));
+  static init = (targetId: string) => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.init(targetId));
   };
 
   static updateComment = (comment: Comment) => async (dispatch: AppDispatch) => {
@@ -45,10 +45,10 @@ export class CommentsActions {
 
   static sendCommentThunk = createAsyncThunk(
     PREFIX + 'sendComment',
-    async ({parentId, targetId, dto}: {parentId: string; targetId: string; dto: CommentDTO}, thunkAPI) => {
+    async ({targetId, dto}: {targetId: string; dto: CommentDTO}, thunkAPI) => {
       const state = thunkAPI.getState() as RootState;
       const userId = state.auth.account.id;
-      const comment = buildCommentFromDTO(dto, parentId, targetId, userId);
+      const comment = buildCommentFromDTO(dto, targetId, userId);
       thunkAPI.dispatch(commentsSlice.actions.addComment(comment));
       CommentService.addComment(targetId, dto);
     },

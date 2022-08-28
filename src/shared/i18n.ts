@@ -1,9 +1,5 @@
 import i18next from 'i18next';
 import {initReactI18next} from 'react-i18next';
-
-require('moment/locale/en-gb.js');
-require('moment/locale/ru.js');
-
 // translation
 import translationEN from '../../assets/locales/en/translation.json';
 import translationRU from '../../assets/locales/ru/translation.json';
@@ -43,6 +39,12 @@ import eventRU from '../../assets/locales/ru/event.json';
 // calendar
 import calendarEN from '../../assets/locales/en/calendar.json';
 import calendarRU from '../../assets/locales/ru/calendar.json';
+// push
+import pushEN from '../../assets/locales/en/push.json';
+import pushRU from '../../assets/locales/ru/push.json';
+
+require('moment/locale/en-gb.js');
+require('moment/locale/ru.js');
 
 export const languages = [
   {
@@ -70,6 +72,7 @@ const resources = {
     user: userEN,
     event: eventEN,
     calendar: calendarEN,
+    push: pushEN,
   },
   ru: {
     translation: translationRU,
@@ -85,6 +88,7 @@ const resources = {
     user: userRU,
     event: eventRU,
     calendar: calendarRU,
+    push: pushRU,
   },
 };
 

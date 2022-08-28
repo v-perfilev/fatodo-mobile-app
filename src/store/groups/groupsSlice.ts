@@ -6,7 +6,6 @@ import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Group} from '../../models/Group';
 import {GroupsActions} from './groupsActions';
 import {GroupUtils} from '../../shared/utils/GroupUtils';
-import {FilterUtils} from '../../shared/utils/FilterUtils';
 import {ComparatorUtils} from '../../shared/utils/ComparatorUtils';
 
 interface GroupsCollapsedPayload {

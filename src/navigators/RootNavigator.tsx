@@ -19,7 +19,6 @@ type ChatRouteProps = {
 };
 
 type CommentsRouteProps = {
-  parentId: string;
   targetId: string;
   colorScheme?: ColorScheme;
 };

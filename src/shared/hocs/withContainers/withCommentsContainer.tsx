@@ -8,7 +8,6 @@ import {CommentsActions} from '../../../store/comments/commentsActions';
 import {ColorScheme} from '../../themes/ThemeFactory';
 
 export type WithCommentsProps = {
-  parentId: string;
   targetId: string;
   loading: boolean;
   colorScheme: ColorScheme;
@@ -19,7 +18,6 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
   const navigation = useNavigation<RootNavigationProp>();
   const [loading, setLoading] = useDelayedState();
   const route = useRoute<RouteProp<RootParamList, 'withComments'>>();
-  const routeParentId = route.params.parentId;
   const routeTargetId = route.params.targetId;
   const routeColorScheme = route.params.colorScheme;
   const targetId = useAppSelector(CommentsSelectors.targetId);
@@ -27,7 +25,7 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
   const goBack = (): void => navigation.goBack();
 
   const loadComments = (): void => {
-    dispatch(CommentsActions.init(routeParentId, routeTargetId));
+    dispatch(CommentsActions.init(routeTargetId));
     dispatch(CommentsActions.fetchCommentsThunk({targetId: routeTargetId, offset: 0}))
       .unwrap()
       .catch((status) => (status !== 404 ? goBack() : null))

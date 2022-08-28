@@ -54,10 +54,10 @@ export const buildCommentReaction = (comment: Comment, userId: string, type: Com
   date: new Date().getTime(),
 });
 
-export const buildCommentFromDTO = (dto: CommentDTO, parentId: string, targetId: string, userId: string): Comment => ({
+export const buildCommentFromDTO = (dto: CommentDTO, targetId: string, userId: string): Comment => ({
   ...dto,
   id: '',
-  parentId,
+  parentId: undefined,
   targetId,
   userId,
   isDeleted: false,

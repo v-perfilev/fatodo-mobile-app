@@ -8,10 +8,13 @@ import {WsEventHandler} from './WsEventHandler';
 import {WsStateHandler} from './WsStateHandler';
 import {WsPushHandler} from './WsPushHandler';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import {useTranslation} from 'react-i18next';
 
 const withWsClient = (Component: ComponentType) => (props: any) => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.account);
+  const isActive = useAppSelector(AuthSelectors.isActive);
+  const {t} = useTranslation();
   const wsStateHandler = useRef<WsStateHandler>();
   const wsEventHandler = useRef<WsEventHandler>();
   const wsPushHandler = useRef<WsPushHandler>();
@@ -20,19 +23,19 @@ const withWsClient = (Component: ComponentType) => (props: any) => {
     msg.payload = JSON.parse(msg.payload);
     wsStateHandler.current.handleMessage(msg);
     wsEventHandler.current.handleMessage(msg);
-    // wsPushHandler.current.handleMessage(msg);
+    !isActive && wsPushHandler.current.handleMessage(msg);
   };
 
   useEffect(() => {
     wsStateHandler.current = new WsStateHandler(dispatch, account);
     wsEventHandler.current = new WsEventHandler(dispatch, account);
-    wsPushHandler.current = new WsPushHandler(dispatch);
+    wsPushHandler.current = new WsPushHandler(dispatch, t);
   }, [account]);
 
   return (
     <>
       <Component {...props} />
-      <WsClient url={WS_URL} topics={[WS_ROOT_TOPIC]} onMessage={onMessage} />
+      <WsClient active={isActive} url={WS_URL} topics={[WS_ROOT_TOPIC]} onMessage={onMessage} />
     </>
   );
 };

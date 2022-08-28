@@ -38,12 +38,7 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
     return group ? ThemeFactory.getTheme(group?.color) : ThemeFactory.getDefaultTheme();
   }, [group]);
 
-  const goToComments = (): void =>
-    navigation.navigate('CommentList', {
-      parentId: item.groupId,
-      targetId: item.id,
-      colorScheme: group.color,
-    });
+  const goToComments = (): void => navigation.navigate('CommentList', {targetId: item.id, colorScheme: group.color});
 
   const buttons: CornerButton[] = [{icon: <CommentsIcon />, action: goToComments}];
 

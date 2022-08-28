@@ -23,7 +23,6 @@ interface CommentCounterPayload {
 }
 
 const initialState: CommentsState = {
-  parentId: undefined,
   targetId: undefined,
   comments: [],
   threadsInfo: [],
@@ -36,9 +35,8 @@ const commentsSlice = createSlice({
   name: 'comments',
   initialState,
   reducers: {
-    init: (state: CommentsState, action: PayloadAction<[string, string]>) => {
-      const [parentId, targetId] = action.payload;
-      state.parentId = parentId;
+    init: (state: CommentsState, action: PayloadAction<string>) => {
+      const targetId = action.payload;
       state.targetId = targetId;
       state.comments = [];
       state.allLoaded = false;

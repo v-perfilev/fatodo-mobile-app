@@ -20,7 +20,6 @@ type CommentsViewControlProps = {
 const CommentListControl = ({reference, clearReference}: CommentsViewControlProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const parentId = useAppSelector(CommentsSelectors.parentId);
   const targetId = useAppSelector(CommentsSelectors.targetId);
   const [messageBody, setMessageBody] = useState<string>('');
   const [updater, setUpdater] = useState<string>(undefined);
@@ -44,7 +43,7 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
   const handleSend = (): void => {
     setMessageBody('');
     setUpdater('');
-    dispatch(CommentsActions.sendCommentThunk({parentId, targetId, dto}));
+    dispatch(CommentsActions.sendCommentThunk({targetId, dto}));
   };
 
   return (

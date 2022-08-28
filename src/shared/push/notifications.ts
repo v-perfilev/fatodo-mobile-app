@@ -8,7 +8,14 @@ type Channel = {
   channelName: string;
 };
 
-const channels: Channel[] = [{channelId: 'test', channelName: 'test'}];
+const channels: Channel[] = [
+  {channelId: 'item', channelName: 'Item'},
+  {channelId: 'chat', channelName: 'Chat'},
+  {channelId: 'contact', channelName: 'Contact'},
+  {channelId: 'comment', channelName: 'Comment'},
+  {channelId: 'reminder', channelName: 'Reminder'},
+  {channelId: 'default', channelName: 'Default'},
+];
 
 class Notifications {
   public static init() {
@@ -16,7 +23,12 @@ class Notifications {
     Notifications.createChannels();
   }
 
-  public static showLocal = (channelId: string, title: string, message: string, data?: PushNotificationData): void => {
+  public static showLocal = (
+    title: string,
+    message: string,
+    data?: PushNotificationData,
+    channelId = 'default',
+  ): void => {
     PushNotification.localNotification({channelId, title, message, userInfo: data, largeIcon: ''});
   };
 

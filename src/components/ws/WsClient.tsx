@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {memo, useEffect, useRef, useState} from 'react';
 import {AUTHORIZATION_HEADER, AUTHORIZATION_PREFIX} from '../../constants';
 import {SecurityUtils} from '../../shared/utils/SecurityUtils';
 import {useAppSelector} from '../../store/store';
@@ -8,13 +8,14 @@ import {Box} from 'native-base';
 import SockJS from 'sockjs-client';
 
 type WsClientProps = {
+  active: boolean;
   url: string;
   topics: string[];
   onMessage: (msg: any, topic: string) => void;
   debug?: boolean;
 };
 
-const WsClient = ({url, topics, onMessage, debug}: WsClientProps) => {
+const WsClient = ({active, url, topics, onMessage, debug}: WsClientProps) => {
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
   const [token, setToken] = useState<string>();
   const [connected, setConnected] = useState<boolean>(false);
@@ -57,8 +58,8 @@ const WsClient = ({url, topics, onMessage, debug}: WsClientProps) => {
 
   const subscribe = (topic: string): void => {
     const onStompClientMessage = (message: IMessage): void => onMessage(JSON.parse(message.body), topic);
-    const subscription = stompClient.current.subscribe(topic, onStompClientMessage, headers);
-    subscriptionMap.current.set(topic, subscription);
+    const subscription = stompClient.current?.subscribe(topic, onStompClientMessage, headers);
+    subscription && subscriptionMap.current.set(topic, subscription);
   };
 
   const unsubscribe = (topic: string): void => {
@@ -79,8 +80,8 @@ const WsClient = ({url, topics, onMessage, debug}: WsClientProps) => {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    token ? connect() : disconnect();
-  }, [token]);
+    active && token ? connect() : disconnect();
+  }, [active, token]);
 
   useEffect(() => {
     connected && updateSubscriptions();
@@ -89,4 +90,4 @@ const WsClient = ({url, topics, onMessage, debug}: WsClientProps) => {
   return <Box />;
 };
 
-export default WsClient;
+export default memo(WsClient);

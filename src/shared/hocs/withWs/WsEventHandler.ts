@@ -30,9 +30,6 @@ export class WsEventHandler {
 
   private getHandler = (type: WsEventType): HandlerFunc | undefined => {
     switch (type) {
-      // DEFAULT
-      case 'WELCOME':
-        return this.handleDefaultWelcomeEvent;
       // ITEM
       case 'ITEM_CREATE':
         return this.handleItemCreateEvent;
@@ -95,15 +92,6 @@ export class WsEventHandler {
       default:
         return undefined;
     }
-  };
-
-  /*
-  DEFAULT
-   */
-
-  private handleDefaultWelcomeEvent = (msg: WsEvent<unknown>): void => {
-    const event: Event = {type: EventType.WELCOME, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
   };
 
   /*
