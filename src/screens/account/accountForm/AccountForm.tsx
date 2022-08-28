@@ -13,15 +13,14 @@ import {UserAccount} from '../../../models/User';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import FormikSelect from '../../../components/inputs/FormikSelect';
 import {languages} from '../../../shared/i18n';
-import {ScrollView, Text} from 'native-base';
+import {Text} from 'native-base';
 import {timezones} from '../../../shared/timezone';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import ImageUpload from '../../../components/inputs/imageUpload/ImageUpload';
 import {useNavigation} from '@react-navigation/native';
 import {AccountNavigationProp} from '../../../navigators/AccountNavigator';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
-import {DEFAULT_SPACE} from '../../../constants';
-import {ListUtils} from '../../../shared/utils/ListUtils';
+import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 
 export interface AccountFormValues {
   username: string;
@@ -93,7 +92,7 @@ const AccountForm = () => {
   return (
     <>
       <Header hideLogo />
-      <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
+      <SimpleScrollView>
         <Formik
           initialValues={initialValues(account)}
           validationSchema={validationSchema(account)}
@@ -159,7 +158,7 @@ const AccountForm = () => {
             </FVStack>
           )}
         </Formik>
-      </ScrollView>
+      </SimpleScrollView>
     </>
   );
 };

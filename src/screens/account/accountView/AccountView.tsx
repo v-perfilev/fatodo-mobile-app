@@ -4,13 +4,12 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {AuthActions} from '../../../store/auth/authActions';
 import UserFullView from '../../../components/views/UserFullView';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import {Divider, ScrollView} from 'native-base';
+import {Divider} from 'native-base';
 import AccountChangePasswordForm from './AccountChangePasswordForm';
 import {useTranslation} from 'react-i18next';
 import AccountViewHeader from './AccountViewHeader';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
-import {DEFAULT_SPACE} from '../../../constants';
-import {ListUtils} from '../../../shared/utils/ListUtils';
+import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 
 const AccountView = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +23,7 @@ const AccountView = () => {
   return (
     <>
       <AccountViewHeader />
-      <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
+      <SimpleScrollView>
         <FVStack defaultSpace>
           <UserFullView user={account} account={account} />
           <Divider bg="secondary.500" />
@@ -38,7 +37,7 @@ const AccountView = () => {
             {t('account:actions.logout')}
           </OutlinedButton>
         </FVStack>
-      </ScrollView>
+      </SimpleScrollView>
     </>
   );
 };

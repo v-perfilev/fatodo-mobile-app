@@ -26,6 +26,7 @@ import {ChatsActions} from './store/chats/chatsActions';
 import SplashScreen from 'react-native-splash-screen';
 import Notifications from './shared/push/notifications';
 import NotificationsRemote from './shared/push/notificationsRemote';
+import {EventsActions} from './store/events/eventsActions';
 
 // ignore some warnings
 const ignoredLogPatterns = ['Require cycle', 'Possible Unhandled Promise Rejection', 'NativeBase:'];
@@ -76,6 +77,7 @@ const App = () => {
     if (isAuthenticated) {
       dispatch(ContactsActions.fetchInfoThunk());
       dispatch(ChatsActions.fetchUnreadMessagesMapThunk());
+      dispatch(EventsActions.fetchUnreadCountThunk());
       account?.id && NotificationsRemote.subscribeToFirebase(account.id);
     }
   }, [isAuthenticated]);

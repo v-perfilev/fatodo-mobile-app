@@ -19,7 +19,7 @@ const GroupViewItemChanges = ({item}: GroupViewItemChangesProps) => {
   }, [users]);
 
   const formattedDate = useMemo<string>(() => {
-    const timestampToDate = (timestamp: number): Date => new Date(timestamp * 1000);
+    const timestampToDate = (timestamp: number): Date => new Date(timestamp);
     return DateFormatters.formatDependsOnDay(timestampToDate(item.createdAt));
   }, [item]);
 

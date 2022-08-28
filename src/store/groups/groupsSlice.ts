@@ -6,6 +6,8 @@ import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Group} from '../../models/Group';
 import {GroupsActions} from './groupsActions';
 import {GroupUtils} from '../../shared/utils/GroupUtils';
+import {FilterUtils} from '../../shared/utils/FilterUtils';
+import {ComparatorUtils} from '../../shared/utils/ComparatorUtils';
 
 interface GroupsCollapsedPayload {
   groupId: string;
@@ -131,7 +133,8 @@ const groupsSlice = createSlice({
     builder.addCase(GroupsActions.fetchItemsThunk.fulfilled, (state: GroupsState, action) => {
       const groupIds = action.meta.arg;
       const pageableListMap = new Map(Object.entries(action.payload));
-      const itemFunc = (id: string): Item[] => (pageableListMap.has(id) ? pageableListMap.get(id).data : []);
+      const itemFunc = (id: string): Item[] =>
+        pageableListMap.has(id) ? pageableListMap.get(id).data.sort(ComparatorUtils.createdAtDescComparator) : [];
       const countFunc = (id: string): number => (pageableListMap.has(id) ? pageableListMap.get(id).count : 0);
       state.items = MapUtils.setValuesFunc(state.items, groupIds, itemFunc);
       state.itemsCount = MapUtils.setValuesFunc(state.itemsCount, groupIds, countFunc);

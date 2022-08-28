@@ -45,7 +45,7 @@ const WsClient = ({url, topics, onMessage, debug}: WsClientProps) => {
     stompClient.current.heartbeatOutgoing = 1000;
     stompClient.current.reconnectDelay = 5000;
     if (!debug) {
-      stompClient.current.debug = null;
+      stompClient.current.debug = () => {};
     }
     stompClient.current.connect(headers, onConnect, onError, onClose);
   };

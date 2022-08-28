@@ -6,14 +6,13 @@ import {ItemDTO} from '../../../models/dto/ItemDTO';
 import ItemForm from '../itemForm/ItemForm';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
-import {ScrollView, Theme} from 'native-base';
+import {Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
 import {ItemActions} from '../../../store/item/itemActions';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
-import {DEFAULT_SPACE} from '../../../constants';
-import {ListUtils} from '../../../shared/utils/ListUtils';
+import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 
 type ItemEditProps = WithItemProps;
 
@@ -46,9 +45,9 @@ const ItemEdit = ({group, item, loading}: ItemEditProps) => {
     <ThemeProvider theme={theme}>
       <Header />
       <ConditionalSpinner loading={loading}>
-        <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
+        <SimpleScrollView>
           <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goBack} />
-        </ScrollView>
+        </SimpleScrollView>
       </ConditionalSpinner>
     </ThemeProvider>
   );

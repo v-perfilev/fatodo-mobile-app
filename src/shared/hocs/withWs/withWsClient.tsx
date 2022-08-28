@@ -17,9 +17,10 @@ const withWsClient = (Component: ComponentType) => (props: any) => {
   const wsPushHandler = useRef<WsPushHandler>();
 
   const onMessage = (msg: WsEvent<any>): void => {
+    msg.payload = JSON.parse(msg.payload);
     wsStateHandler.current.handleMessage(msg);
     wsEventHandler.current.handleMessage(msg);
-    wsPushHandler.current.handleMessage(msg);
+    // wsPushHandler.current.handleMessage(msg);
   };
 
   useEffect(() => {

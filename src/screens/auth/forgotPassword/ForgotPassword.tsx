@@ -8,9 +8,7 @@ import ForgotPasswordForm from './ForgotPasswordForm';
 import LanguageMenu from '../../../components/controls/LanguageMenu';
 import FCenter from '../../../components/boxes/FCenter';
 import FVStack from '../../../components/boxes/FVStack';
-import {DEFAULT_SPACE} from '../../../constants';
-import {ScrollView} from 'native-base';
-import {ListUtils} from '../../../shared/utils/ListUtils';
+import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 
 const ForgotPassword = () => {
   const navigation = useNavigation<AuthNavigationProp>();
@@ -19,7 +17,7 @@ const ForgotPassword = () => {
   const goToSignIn = (): void => navigation.navigate('SignIn');
 
   return (
-    <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)} keyboardShouldPersistTaps="handled">
+    <SimpleScrollView>
       <FCenter grow pt="10" pb="5">
         <FVStack space="5" w="90%" maxW="300">
           <FCenter grow>
@@ -34,7 +32,7 @@ const ForgotPassword = () => {
       <FCenter pt="5" pb="10">
         <LanguageMenu />
       </FCenter>
-    </ScrollView>
+    </SimpleScrollView>
   );
 };
 

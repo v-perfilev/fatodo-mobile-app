@@ -25,6 +25,7 @@ const EventList = () => {
   const theme = useTheme();
   const isFocused = useIsFocused();
   const events = useAppSelector(EventsSelectors.events);
+  const unreadCount = useAppSelector(EventsSelectors.unreadCount);
   const allLoaded = useAppSelector(EventsSelectors.allLoaded);
   const [loading, setLoading] = useDelayedState();
   const listRef = useRef<FlatListType>();
@@ -45,7 +46,7 @@ const EventList = () => {
   keyExtractor and renderItem
    */
 
-  const keyExtractor = (event: Event): string => event.id;
+  const keyExtractor = (event: Event): string => event.id + event.date;
 
   const renderItem = (event: Event, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
     <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
@@ -67,7 +68,7 @@ const EventList = () => {
 
   useEffect(() => {
     isFocused && loading && dispatch(EventsActions.fetchEventsThunk(0)).finally(() => setLoading(false));
-    isFocused && dispatch(EventsActions.refreshUnreadCountThunk());
+    isFocused && unreadCount > 0 && dispatch(EventsActions.refreshUnreadCountThunk());
   }, [isFocused]);
 
   const buttons: CornerButton[] = [{icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true}];

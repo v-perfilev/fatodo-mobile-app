@@ -6,9 +6,7 @@ import {useAppDispatch} from '../../../store/store';
 import {Group} from '../../../models/Group';
 import Header from '../../../components/layouts/Header';
 import {GroupActions} from '../../../store/group/groupActions';
-import {ScrollView} from 'native-base';
-import {DEFAULT_SPACE} from '../../../constants';
-import {ListUtils} from '../../../shared/utils/ListUtils';
+import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 
 const GroupCreate = () => {
   const dispatch = useAppDispatch();
@@ -26,9 +24,9 @@ const GroupCreate = () => {
   return (
     <>
       <Header />
-      <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
+      <SimpleScrollView>
         <GroupForm request={request} cancel={goBack} />
-      </ScrollView>
+      </SimpleScrollView>
     </>
   );
 };

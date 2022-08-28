@@ -15,9 +15,8 @@ const ItemViewChanges = () => {
   const [creator, setCreator] = useState<string>();
   const [updater, setUpdater] = useState<string>();
 
-  const getDate = (timestamp: number): string => {
-    const timestampNumber = timestamp * 1000;
-    return DateFormatters.formatTimeWithDate(new Date(timestampNumber));
+  const formatDate = (timestamp: number): string => {
+    return DateFormatters.formatTimeWithDate(new Date(timestamp));
   };
 
   useEffect(() => {
@@ -44,13 +43,13 @@ const ItemViewChanges = () => {
       {creator && (
         <FHStack defaultSpace>
           {labeledBox(t('item:labels.createdBy'), creator)}
-          {labeledBox(t('item:labels.createdAt'), getDate(item.createdAt))}
+          {labeledBox(t('item:labels.createdAt'), formatDate(item.createdAt))}
         </FHStack>
       )}
       {updater && item.createdAt !== item.lastModifiedAt && (
         <FHStack defaultSpace>
           {labeledBox(t('item:labels.updatedBy'), updater)}
-          {labeledBox(t('item:labels.createdAt'), getDate(item.lastModifiedAt))}
+          {labeledBox(t('item:labels.createdAt'), formatDate(item.lastModifiedAt))}
         </FHStack>
       )}
     </FVStack>

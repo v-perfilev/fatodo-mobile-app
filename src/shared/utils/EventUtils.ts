@@ -4,7 +4,7 @@ import {ComparatorUtils} from './ComparatorUtils';
 
 export class EventUtils {
   public static filterEvents = (events: Event[]): Event[] => {
-    return events.filter(FilterUtils.uniqueByIdFilter).sort(ComparatorUtils.createdAtComparator).reverse();
+    return events.filter(FilterUtils.uniqueByIdOrTypeAndDateFilter).sort(ComparatorUtils.dateComparator).reverse();
   };
 
   public static extractEventsUserIds = (events: Event[]): string[] => {
@@ -33,6 +33,7 @@ export class EventUtils {
 
   private static extractEventUserIds = (event: Event): string[] => {
     let userIds: string[] = [];
+
     if (event.contactEvent) {
       userIds = EventUtils.extractContactEventUserIds(event.contactEvent);
     } else if (event.itemEvent) {
@@ -42,6 +43,7 @@ export class EventUtils {
     } else if (event.chatEvent) {
       userIds = EventUtils.extractChatEventUserIds(event.chatEvent);
     }
+
     return userIds;
   };
 

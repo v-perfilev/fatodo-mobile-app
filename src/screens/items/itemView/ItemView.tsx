@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {Divider, ScrollView, Theme} from 'native-base';
+import {Divider, Theme} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
@@ -18,13 +18,12 @@ import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
-import {DEFAULT_SPACE} from '../../../constants';
-import {ListUtils} from '../../../shared/utils/ListUtils';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '../../../navigators/RootNavigator';
 import {CornerButton} from '../../../models/CornerButton';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
+import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 
 type ItemViewProps = WithItemProps;
 
@@ -52,7 +51,7 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
     <ThemeProvider theme={theme}>
       <ItemViewHeader account={account} />
       <ConditionalSpinner loading={loading}>
-        <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
+        <SimpleScrollView>
           <FVStack defaultSpace>
             <ItemViewName />
             <ItemViewGroup />
@@ -68,7 +67,7 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
             <Divider bg="secondary.500" />
             <ItemViewChanges />
           </FVStack>
-        </ScrollView>
+        </SimpleScrollView>
       </ConditionalSpinner>
       <CornerManagement buttons={buttons} />
     </ThemeProvider>

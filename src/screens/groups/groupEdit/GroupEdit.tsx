@@ -4,14 +4,13 @@ import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupForm from '../groupForm/GroupForm';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {useAppDispatch} from '../../../store/store';
-import {ScrollView, Theme} from 'native-base';
+import {Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
 import {GroupActions} from '../../../store/group/groupActions';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
-import {DEFAULT_SPACE} from '../../../constants';
-import {ListUtils} from '../../../shared/utils/ListUtils';
+import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 
 type GroupEditProps = WithGroupProps;
 
@@ -38,9 +37,9 @@ const GroupEdit = ({group, loading}: GroupEditProps) => {
     <ThemeProvider theme={theme}>
       <Header />
       <ConditionalSpinner loading={loading}>
-        <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
+        <SimpleScrollView>
           <GroupForm group={group} request={request} cancel={goBack} />
-        </ScrollView>
+        </SimpleScrollView>
       </ConditionalSpinner>
     </ThemeProvider>
   );

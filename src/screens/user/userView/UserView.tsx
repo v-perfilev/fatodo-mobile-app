@@ -5,11 +5,10 @@ import Header from '../../../components/layouts/Header';
 import UserFullView from '../../../components/views/UserFullView';
 import FVStack from '../../../components/boxes/FVStack';
 import UserViewGroups from './UserViewGroups';
-import {Divider, ScrollView} from 'native-base';
+import {Divider} from 'native-base';
 import UserViewControl from './UserViewControl';
 import UserViewRelations from './UserViewRelations';
-import {DEFAULT_SPACE} from '../../../constants';
-import {ListUtils} from '../../../shared/utils/ListUtils';
+import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 
 type UserViewProps = WithUserProps;
 
@@ -18,7 +17,7 @@ const UserView = ({user, loading}: UserViewProps) => {
     <>
       <Header hideLogo />
       <ConditionalSpinner loading={loading}>
-        <ScrollView contentContainerStyle={ListUtils.containerStyle(DEFAULT_SPACE)}>
+        <SimpleScrollView>
           <FVStack defaultSpace>
             <UserFullView user={user} />
             <Divider bg="secondary.500" />
@@ -28,7 +27,7 @@ const UserView = ({user, loading}: UserViewProps) => {
             <Divider bg="secondary.500" />
             <UserViewRelations />
           </FVStack>
-        </ScrollView>
+        </SimpleScrollView>
       </ConditionalSpinner>
     </>
   );
