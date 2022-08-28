@@ -42,6 +42,8 @@ const EventListItem = ({event}: EventListItemProps) => {
       case EventType.ITEM_CREATE:
         return <EventItemCreate event={event} />;
       case EventType.ITEM_UPDATE:
+      case EventType.ITEM_UPDATE_STATUS:
+      case EventType.ITEM_UPDATE_ARCHIVED:
         return <EventItemUpdate event={event} />;
       case EventType.ITEM_GROUP_CREATE:
         return <EventItemGroupCreate event={event} />;
