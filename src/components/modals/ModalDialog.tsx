@@ -17,8 +17,8 @@ const theme = ThemeFactory.getDefaultTheme();
 
 const ModalDialog = ({open, close, title, content, actions, size}: ModalDialogProps) => (
   <ThemeProvider theme={theme}>
-    <Modal isOpen={open} onClose={close} _backdrop={{bg: 'gray.300'}} size={size}>
-      <Modal.Content>
+    <Modal isOpen={open} onClose={close} _backdrop={{bg: 'gray.400'}} size={size}>
+      <Modal.Content borderRadius="0">
         <Modal.CloseButton bgColor={null} _pressed={{bgColor: 'none'}} _icon={{color: 'white'}} />
         <Modal.Header bg={LINEAR_GRADIENT} borderBottomWidth="0" _text={{color: 'white'}}>
           {title}

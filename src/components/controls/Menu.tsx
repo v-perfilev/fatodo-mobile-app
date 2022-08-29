@@ -20,7 +20,7 @@ export type MenuItemProps = PropsWithChildren<{
 export const MenuItem = ({action, icon, text, children, loading, disabled, hidden = false}: MenuItemProps) => {
   return (
     !hidden && (
-      <NbMenu.Item onPress={action} disabled={disabled}>
+      <NbMenu.Item onPress={action} disabled={disabled} _pressed={{bg: 'primary.800:alpha.20'}}>
         <FHStack smallSpace alignItems="center">
           {loading && <CentredSpinner size="sm" />}
           {!loading && icon}
@@ -34,7 +34,7 @@ export const MenuItem = ({action, icon, text, children, loading, disabled, hidde
 
 const Menu = ({trigger, children}: MenuProps) => {
   return (
-    <NbMenu defaultIsOpen={false} trigger={trigger}>
+    <NbMenu defaultIsOpen={false} trigger={trigger} borderRadius="0">
       {children}
     </NbMenu>
   );
