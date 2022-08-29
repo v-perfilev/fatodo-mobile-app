@@ -66,8 +66,8 @@ const ContactNavigator = () => {
 
   const renderTabBarItem = (props: TabBarItemProps<ContactRoute>): ReactElement => {
     return (
-      <PressableButton flex="1" h={HEADER_HEIGHT} onPress={props.onPress}>
-        <FBox flexGrow="1" justifyContent="center" alignItems="center" key={props.route.key}>
+      <PressableButton flex="1" h={HEADER_HEIGHT} onPress={props.onPress} key={props.route.key}>
+        <FBox flexGrow="1" justifyContent="center" alignItems="center">
           <FHStack smallSpace>
             <Text color="white" fontWeight="bold">
               {t(`contact:${props.route.key}.title`)}
