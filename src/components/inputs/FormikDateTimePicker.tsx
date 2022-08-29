@@ -63,7 +63,7 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
         mode={mode}
         locale={locale}
         is24hourSource="locale"
-        textColor={theme.colors.primary['700']}
+        textColor={theme.colors.primary['500']}
         fadeToColor="none"
       />
     </Flex>

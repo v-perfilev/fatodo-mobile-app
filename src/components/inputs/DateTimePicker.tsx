@@ -1,4 +1,4 @@
-import {Box, theme} from 'native-base';
+import {Box, theme, useTheme} from 'native-base';
 import DatePicker from 'react-native-date-picker';
 import React, {useEffect} from 'react';
 import {DateUtils} from '../../shared/utils/DateUtils';
@@ -53,6 +53,7 @@ const calcLocale = (mode: PickMode, locale: string) => {
 };
 
 const DateTimePicker = ({value, setValue, mode, locale, minDate, maxDate}: DateTimePickerProps) => {
+  const theme = useTheme();
   const initialValue = value || minDate || DateUtils.addMinutes(new Date(), 20);
 
   const pickerMode = calcMode(mode);
@@ -74,7 +75,7 @@ const DateTimePicker = ({value, setValue, mode, locale, minDate, maxDate}: DateT
           mode={pickerMode}
           locale={localeMode}
           is24hourSource="locale"
-          textColor={theme.colors.primary['700']}
+          textColor={theme.colors.primary['500']}
           fadeToColor="none"
           minimumDate={minDate}
           maximumDate={maxDate}

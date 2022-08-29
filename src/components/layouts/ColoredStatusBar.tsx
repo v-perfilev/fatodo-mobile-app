@@ -20,7 +20,7 @@ const ColoredStatusBar = ({bgColor, barStyle}: ColoredStatusBarProps) => {
     }
   }, [isFocused, theme]);
 
-  const backgroundColor = bgColor || theme.colors.primary[800];
+  const backgroundColor = bgColor || theme.colors.primary['800'];
   const style = barStyle || 'light-content';
 
   return (
