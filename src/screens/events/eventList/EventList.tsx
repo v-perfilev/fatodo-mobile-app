@@ -62,8 +62,6 @@ const EventList = () => {
     listRef.current.scrollToOffset({offset: 0});
   };
 
-  console.log(events);
-
   /*
   effects
    */

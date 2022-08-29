@@ -110,7 +110,7 @@ const GroupView = ({group, loading}: GroupViewProps) => {
 
   const _data = showArchived ? archivedItems : activeItems;
   const _onArchivedEndReached = !allArchivedItemsLoaded ? loadArchived : undefined;
-  const _onActiveEndReached = !allActiveItemsLoaded ? loadArchived : undefined;
+  const _onActiveEndReached = !allActiveItemsLoaded ? loadActive : undefined;
   const _onEndReacted = showArchived ? _onArchivedEndReached : _onActiveEndReached;
   const _refresh = showArchived ? refreshArchived : refreshActive;
 
