@@ -42,6 +42,10 @@ const EventList = () => {
     await dispatch(EventsActions.fetchEventsThunk(0));
   }, []);
 
+  const refreshUnread = useCallback(async (): Promise<void> => {
+    await dispatch(EventsActions.refreshUnreadCountThunk());
+  }, []);
+
   /*
   keyExtractor and renderItem
    */
@@ -70,8 +74,8 @@ const EventList = () => {
    */
 
   useEffect(() => {
-    isFocused && loading && dispatch(EventsActions.fetchEventsThunk(0)).finally(() => setLoading(false));
-    isFocused && unreadCount > 0 && dispatch(EventsActions.refreshUnreadCountThunk());
+    isFocused && loading && load().finally(() => setLoading(false));
+    isFocused && unreadCount > 0 && refreshUnread();
   }, [isFocused]);
 
   const header = useMemo<ReactElement>(() => <Header hideGoBack />, []);

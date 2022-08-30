@@ -15,6 +15,7 @@ const DraggableList = React.forwardRef((props: DraggableListProps<any>, ref: For
 
   return (
     <AnimatedDraggableList
+      onEndReachedThreshold={0.5}
       {...props}
       data={data}
       renderItem={renderItem}
@@ -23,10 +24,6 @@ const DraggableList = React.forwardRef((props: DraggableListProps<any>, ref: For
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={Platform.OS === 'android'}
       style={ListUtils.draggableStyle}
-      initialNumToRender={props.initialNumToRender || 15}
-      maxToRenderPerBatch={props.maxToRenderPerBatch || 15}
-      onEndReachedThreshold={props.onEndReachedThreshold || 10}
-      windowSize={props.windowSize || 15}
       ref={ref}
     />
   );

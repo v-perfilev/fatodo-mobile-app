@@ -74,6 +74,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
 
   return (
     <Animated.FlatList
+      onEndReachedThreshold={0.5}
       {...props}
       data={data}
       renderItem={_renderItem}
@@ -82,10 +83,6 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={Platform.OS === 'android'}
-      initialNumToRender={props.initialNumToRender || 15}
-      maxToRenderPerBatch={props.maxToRenderPerBatch || 15}
-      onEndReachedThreshold={props.onEndReachedThreshold || 10}
-      windowSize={props.windowSize || 15}
       ref={ref}
     />
   );
