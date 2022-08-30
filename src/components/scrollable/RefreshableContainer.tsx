@@ -81,7 +81,9 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
         closeLoader();
       } else {
         setRefreshing(true);
-        refresh().finally(() => setRefreshing(false));
+        requestAnimationFrame(() => {
+          refresh().finally(() => setRefreshing(false));
+        });
       }
       overscrollInitValue.value = undefined;
       shouldRefresh.value = false;
