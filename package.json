@@ -11,7 +11,8 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write ."
+    "prettier:fix": "prettier --write .",
+    "dev-menu": "adb shell input keyevent 82"
   },
   "dependencies": {
     "@react-native-community/push-notification-ios": "^1.10.1",
@@ -75,6 +76,7 @@
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "babel-jest": "^27.5.1",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "^7.32.0",
     "jest": "^27.5.1",
     "metro-react-native-babel-preset": "^0.71.0",
