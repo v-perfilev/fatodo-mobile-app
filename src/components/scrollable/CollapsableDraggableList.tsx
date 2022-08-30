@@ -1,7 +1,7 @@
 import CollapsableHeaderContainer, {CollapsableHeaderChildrenProps} from './CollapsableHeaderContainer';
 import ConditionalSpinner from '../surfaces/ConditionalSpinner';
 import {ListUtils} from '../../shared/utils/ListUtils';
-import React, {ReactElement, ReactNode} from 'react';
+import React, {memo, ReactElement, ReactNode} from 'react';
 import DraggableList, {DraggableListProps} from './DraggableList';
 import {RefUtils} from '../../shared/utils/RefUtils';
 
@@ -33,4 +33,4 @@ const CollapsableDraggableList = React.forwardRef((props: CollapsableDraggableLi
   );
 });
 
-export default CollapsableDraggableList;
+export default memo(CollapsableDraggableList);

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {ColorScheme, LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
 import ThemeProvider from '../layouts/ThemeProvider';
 import FBox from '../boxes/FBox';
@@ -8,7 +8,7 @@ type ThemeViewProps = {
 };
 
 export const ThemeView = ({color}: ThemeViewProps) => {
-  const theme = useMemo(() => ThemeFactory.getTheme(color), [color]);
+  const theme = ThemeFactory.getTheme(color);
 
   return (
     <ThemeProvider theme={theme}>

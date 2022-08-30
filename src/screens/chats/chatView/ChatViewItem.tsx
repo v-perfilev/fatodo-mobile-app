@@ -1,5 +1,5 @@
-import React, {useMemo} from 'react';
-import {ChatItem, Message} from '../../../models/Message';
+import React, {memo} from 'react';
+import {ChatItem} from '../../../models/Message';
 import ChatViewMessage from './chatViewMessage/ChatViewMessage';
 import ChatViewDate from './ChatViewDate';
 
@@ -8,15 +8,12 @@ type ChatViewItemProps = {
 };
 
 const ChatViewItem = ({item}: ChatViewItemProps) => {
-  const message = useMemo<Message>(() => item.message, [item]);
-  const date = useMemo<string>(() => item.date, [item]);
-
   return (
     <>
-      {date && <ChatViewDate date={date} />}
-      {message && <ChatViewMessage message={message} />}
+      {item.date && <ChatViewDate date={item.date} />}
+      {item.message && <ChatViewMessage message={item.message} />}
     </>
   );
 };
 
-export default ChatViewItem;
+export default memo(ChatViewItem);

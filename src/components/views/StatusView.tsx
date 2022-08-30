@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactElement, useMemo} from 'react';
+import {ReactElement} from 'react';
 import {IIconProps} from 'native-base';
 import {ItemStatusType} from '../../models/Item';
 import StatusCreatedIcon from '../icons/StatusCreatedIcon';
@@ -13,7 +13,7 @@ type StatusViewProps = IIconProps & {
 };
 
 const StatusView = ({statusType, ...props}: StatusViewProps) => {
-  const iconElement = useMemo<ReactElement>(() => {
+  const getIcon = (): ReactElement => {
     switch (statusType) {
       case 'CREATED':
         return <StatusCreatedIcon />;
@@ -23,15 +23,10 @@ const StatusView = ({statusType, ...props}: StatusViewProps) => {
         return <StatusCompletedIcon />;
       case 'CLOSED':
         return <StatusClosedIcon />;
-      default:
-        return <StatusCreatedIcon />;
     }
-  }, [statusType]);
+  };
 
-  const icon = useMemo<ReactElement>(
-    () => React.cloneElement(iconElement, {color: 'primary.500', ...props}),
-    [iconElement],
-  );
+  const icon = React.cloneElement(getIcon(), {color: 'primary.500', ...props});
 
   return <FCenter>{icon}</FCenter>;
 };

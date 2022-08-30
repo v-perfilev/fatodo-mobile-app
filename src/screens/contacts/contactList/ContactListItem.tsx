@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import UserView from '../../../components/views/UserView';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -6,7 +6,6 @@ import {MenuElement} from '../../../models/MenuElement';
 import ControlMenu from '../../../components/layouts/ControlMenu';
 import UserMinusIcon from '../../../components/icons/UserMinusIcon';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
-import {User} from '../../../models/User';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {ContactRelation} from '../../../models/Contact';
 
@@ -19,7 +18,7 @@ const ContactListItem = ({relation}: ContactListItemProps) => {
   const users = useAppSelector(InfoSelectors.users);
   const [disabled, setDisabled] = useState(false);
 
-  const user = useMemo<User>(() => users.get(relation.secondUserId), [users]);
+  const user = users.get(relation.secondUserId);
 
   const removeRelation = (): void => {
     setDisabled(true);

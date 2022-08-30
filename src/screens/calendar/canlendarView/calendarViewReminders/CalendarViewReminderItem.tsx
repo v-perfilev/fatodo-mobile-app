@@ -1,11 +1,9 @@
-import React, {ReactElement, useMemo} from 'react';
+import React from 'react';
 import {CalendarReminder} from '../../../../models/Reminder';
 import GroupLink from '../../../../components/links/GroupLink';
 import ItemLink from '../../../../components/links/ItemLink';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
-import {GroupInfo} from '../../../../models/Group';
-import {ItemInfo} from '../../../../models/Item';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Box, Text} from 'native-base';
@@ -21,11 +19,12 @@ const CalendarViewReminderItem = ({reminder}: CalendarViewReminderItemProps) => 
   const groups = useAppSelector(InfoSelectors.groups);
   const items = useAppSelector(InfoSelectors.items);
 
-  const group = useMemo<GroupInfo>(() => reminder.parentId && groups.get(reminder.parentId), [groups]);
-  const item = useMemo<ItemInfo>(() => reminder.targetId && items.get(reminder.targetId), [items]);
+  const group = reminder.parentId && groups.get(reminder.parentId);
+  const item = reminder.targetId && items.get(reminder.targetId);
 
-  const Group = (): ReactElement => (group ? <GroupLink group={group} color="gray.400" /> : null);
-  const Item = (): ReactElement => (item ? <ItemLink item={item} /> : null);
+  const bulletView = <Bullet color={group?.color} size="15px" />;
+  const groupView = group ? <GroupLink group={group} color="gray.400" /> : null;
+  const itemView = item ? <ItemLink item={item} /> : null;
 
   const date = DateFormatters.formatTime(new Date(reminder.date));
 
@@ -33,15 +32,15 @@ const CalendarViewReminderItem = ({reminder}: CalendarViewReminderItemProps) => 
     <FHStack grow defaultSpace alignItems="center">
       <Box>
         <FCenter justifyContent="center" alignItems="center">
-          <Bullet color={group?.color} size="15px" />
+          {bulletView}
         </FCenter>
       </Box>
       <FVStack grow>
         <Text fontSize="16" fontWeight="bold" isTruncated>
-          <Item />
+          {itemView}
         </Text>
         <Text fontSize="14" fontWeight="bold" isTruncated>
-          <Group />
+          {groupView}
         </Text>
       </FVStack>
       <Box>

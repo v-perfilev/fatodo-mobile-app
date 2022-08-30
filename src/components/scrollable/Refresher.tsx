@@ -1,5 +1,5 @@
 import {Animated, StyleProp} from 'react-native';
-import React from 'react';
+import React, {memo} from 'react';
 import {Spinner} from 'native-base';
 import {MAX_REFRESH_HEIGHT} from '../../constants';
 import FCenter from '../boxes/FCenter';
@@ -32,4 +32,4 @@ const Refresher = ({extraScrollY, refreshing, inverted}: RefresherProps) => {
   );
 };
 
-export default Refresher;
+export default memo(Refresher);

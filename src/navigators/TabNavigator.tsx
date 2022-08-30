@@ -7,7 +7,6 @@ import GroupsIcon from '../components/icons/GroupsIcon';
 import ContactsIcon from '../components/icons/ContactsIcon';
 import ChatsIcon from '../components/icons/ChatsIcon';
 import {useTabBarContext} from '../shared/contexts/TabBarContext';
-import {flowRight} from 'lodash';
 import withTabBar from '../shared/hocs/withTabBar';
 import ChatList from '../screens/chats/chatList/ChatList';
 import AccountIcon from '../components/icons/AccountIcon';
@@ -83,4 +82,4 @@ const TabNavigator = () => {
   );
 };
 
-export default flowRight([withTabBar])(TabNavigator);
+export default withTabBar(TabNavigator);

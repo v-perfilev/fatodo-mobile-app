@@ -13,16 +13,8 @@ type GroupListCardItemChangesProps = {
 const GroupListCardItemChanges = ({item}: GroupListCardItemChangesProps) => {
   const users = useAppSelector(InfoSelectors.users);
 
-  const name = useMemo<string>(() => {
-    const user = users.get(item.createdBy);
-    return user?.username;
-  }, [users]);
-
-  const formattedDate = useMemo<string>(() => {
-    const timestampToDate = (timestamp: number): Date => new Date(timestamp);
-    return DateFormatters.formatDependsOnDay(timestampToDate(item.createdAt));
-  }, [item]);
-
+  const name = useMemo<string>(() => users.get(item.createdBy)?.username, [users.get(item.createdBy)]);
+  const formattedDate = useMemo<string>(() => DateFormatters.formatDependsOnDay(new Date(item.createdAt)), []);
   const textProps = {color: 'gray.400', fontSize: '11'};
 
   return (

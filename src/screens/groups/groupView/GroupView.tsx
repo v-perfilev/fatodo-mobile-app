@@ -1,5 +1,5 @@
 import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Box, Theme} from 'native-base';
+import {Box} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
@@ -39,12 +39,9 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   const [initialItemsLoading, setInitialItemsLoading] = useState<boolean>(false);
   const [showArchived, setShowArchived] = useState<boolean>(false);
   const listRef = useRef<FlatListType>();
+  const theme = ThemeFactory.getTheme(group?.color);
 
-  const theme = useMemo<Theme>(() => {
-    return group ? ThemeFactory.getTheme(group?.color) : ThemeFactory.getDefaultTheme();
-  }, [group]);
-
-  const canEdit = useMemo<boolean>(() => group && GroupUtils.canEdit(account, group), [group, account]);
+  const canEdit = group && GroupUtils.canEdit(account, group);
 
   const goToComments = (): void => navigation.navigate('CommentList', {targetId: group.id, colorScheme: group.color});
 
@@ -72,23 +69,18 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   stub, keyExtractor and renderItem
    */
 
-  const keyExtractor = useCallback((item: Item): string => item.id, []);
-  const renderItem = useCallback(
-    (item: Item, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-        <GroupViewItem item={item} canEdit={canEdit} />
-      </Box>
-    ),
-    [],
+  const keyExtractor = (item: Item): string => item.id;
+  const renderItem = (item: Item, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+      <GroupViewItem item={item} canEdit={canEdit} />
+    </Box>
   );
 
   /*
   scroll down button
    */
 
-  const scrollUp = useCallback((): void => {
-    listRef.current.scrollToOffset({offset: 0});
-  }, [listRef.current]);
+  const scrollUp = (): void => listRef.current.scrollToOffset({offset: 0});
 
   /*
   Effects
@@ -114,18 +106,29 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   const _onEndReacted = showArchived ? _onArchivedEndReached : _onActiveEndReached;
   const _refresh = showArchived ? refreshArchived : refreshActive;
 
+  const header = useMemo<ReactElement>(
+    () => <GroupViewHeader showArchived={showArchived} setShowArchived={setShowArchived} />,
+    [showArchived],
+  );
+
+  const stub = useMemo<ReactElement>(() => <GroupViewStub />, []);
+
   const buttons: CornerButton[] = [
     {icon: <CommentsIcon />, action: goToComments},
     {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true},
   ];
+  const cornerManagement = useCallback(
+    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    [],
+  );
 
   return (
     <ThemeProvider theme={theme}>
       <CollapsableRefreshableFlatList
-        header={<GroupViewHeader showArchived={showArchived} setShowArchived={setShowArchived} />}
+        header={header}
         headerHeight={HEADER_HEIGHT}
         loading={loading || initialItemsLoading}
-        ListEmptyComponent={<GroupViewStub />}
+        ListEmptyComponent={stub}
         data={_data}
         render={renderItem}
         keyExtractor={keyExtractor}
@@ -133,7 +136,7 @@ const GroupView = ({group, loading}: GroupViewProps) => {
         refresh={_refresh}
         ref={listRef}
       >
-        {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
+        {cornerManagement}
       </CollapsableRefreshableFlatList>
     </ThemeProvider>
   );

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import FHStack from '../../../components/boxes/FHStack';
 import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
@@ -24,15 +24,12 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
   const [messageBody, setMessageBody] = useState<string>('');
   const [updater, setUpdater] = useState<string>(undefined);
 
-  const isValid = useMemo<boolean>(() => messageBody.length > 0, [messageBody]);
+  const isValid = messageBody.length > 0;
 
-  const dto = useMemo<CommentDTO>(
-    () => ({
-      text: messageBody,
-      referenceId: reference?.id,
-    }),
-    [messageBody, reference],
-  );
+  const dto: CommentDTO = {
+    text: messageBody,
+    referenceId: reference?.id,
+  };
 
   const handleTextChange = (text: string): void => {
     const trimmedText = text?.trim() || '';

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import UserView from '../../../components/views/UserView';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -8,7 +8,6 @@ import CloseIcon from '../../../components/icons/CloseIcon';
 import ControlMenu from '../../../components/layouts/ControlMenu';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
 import InfoSelectors from '../../../store/info/infoSelectors';
-import {User} from '../../../models/User';
 import {ContactRequest} from '../../../models/Contact';
 
 type IncomingRequestListItemProps = {
@@ -20,7 +19,7 @@ const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
   const users = useAppSelector(InfoSelectors.users);
   const [disabled, setDisabled] = useState(false);
 
-  const user = useMemo<User>(() => users.get(request.requesterId), [users]);
+  const user = users.get(request.requesterId);
 
   const acceptRequest = (): void => {
     setDisabled(true);

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {Center, ICenterProps} from 'native-base';
 
 type FCenterProps = ICenterProps & {
@@ -6,7 +6,7 @@ type FCenterProps = ICenterProps & {
 };
 
 const FCenter = React.forwardRef(({grow, children, ...props}: FCenterProps, ref: any) => {
-  const flexGrow = useMemo<number>(() => (grow ? 1 : 0), []);
+  const flexGrow = grow ? 1 : 0;
 
   return (
     <Center flexGrow={flexGrow} ref={ref} {...props}>

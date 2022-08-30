@@ -1,4 +1,4 @@
-import React, {ReactElement, useMemo} from 'react';
+import React, {ReactElement} from 'react';
 
 import FCenter from '../boxes/FCenter';
 import {MessageReactionType} from '../../models/Message';
@@ -12,7 +12,7 @@ type ReactionViewProps = IIconProps & {
 };
 
 const ReactionView = ({reactionType, ...props}: ReactionViewProps) => {
-  const iconElement = useMemo<ReactElement>(() => {
+  const getIcon = (): ReactElement => {
     switch (reactionType) {
       case 'LIKE':
         return <LikeIcon />;
@@ -21,9 +21,9 @@ const ReactionView = ({reactionType, ...props}: ReactionViewProps) => {
       default:
         return <LikeIcon />;
     }
-  }, [reactionType]);
+  };
 
-  const icon = useMemo<ReactElement>(() => React.cloneElement(iconElement, {...props}), [iconElement]);
+  const icon = React.cloneElement(getIcon(), {...props});
 
   return <FCenter>{icon}</FCenter>;
 };

@@ -1,5 +1,5 @@
-import React, {useMemo} from 'react';
-import {Divider, Theme} from 'native-base';
+import React from 'react';
+import {Divider} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
@@ -31,12 +31,9 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
   const navigation = useNavigation<RootNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const reminders = useAppSelector(ItemSelectors.reminders);
+  const theme = ThemeFactory.getTheme(group?.color);
 
   const showReminders = reminders?.length > 0;
-
-  const theme = useMemo<Theme>(() => {
-    return group ? ThemeFactory.getTheme(group?.color) : ThemeFactory.getDefaultTheme();
-  }, [group]);
 
   const goToComments = (): void => navigation.navigate('CommentList', {targetId: item.id, colorScheme: group.color});
 

@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {memo, useState} from 'react';
 import {Item} from '../../../../models/Item';
 import EyeIcon from '../../../../components/icons/EyeIcon';
 import {useNavigation} from '@react-navigation/native';
@@ -36,12 +36,12 @@ const GroupViewItemMenuButton = ({item, canEdit}: GroupViewItemMenuProps) => {
     dispatch(GroupActions.deleteItemThunk(item));
   };
 
-  const toggleArchived = useCallback((): void => {
+  const toggleArchived = (): void => {
     setArchivedLoading(true);
     dispatch(GroupActions.updateItemArchivedThunk(item))
       .unwrap()
       .catch(() => setArchivedLoading(false));
-  }, [item, setArchivedLoading]);
+  };
 
   const openItemDeleteDialog = (): void => {
     const onSuccess = (): void => deleteItem(item);
@@ -75,4 +75,4 @@ const GroupViewItemMenuButton = ({item, canEdit}: GroupViewItemMenuProps) => {
   );
 };
 
-export default GroupViewItemMenuButton;
+export default memo(GroupViewItemMenuButton);

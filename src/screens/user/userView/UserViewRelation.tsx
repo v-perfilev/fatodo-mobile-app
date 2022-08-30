@@ -3,10 +3,10 @@ import PressableButton from '../../../components/controls/PressableButton';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '../../../navigators/RootNavigator';
 import UserView from '../../../components/views/UserView';
-import {User} from '../../../models/User';
 import {useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {ContactRelation} from '../../../models/Contact';
+import {User} from '../../../models/User';
 
 type UserViewRelationProps = {
   relation: ContactRelation;

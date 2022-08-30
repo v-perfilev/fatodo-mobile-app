@@ -4,7 +4,7 @@ import RefreshableContainer, {RefreshableChildrenProps} from './RefreshableConta
 import FlatList, {FlatListProps} from './FlatList';
 import {ListUtils} from '../../shared/utils/ListUtils';
 import {RefUtils} from '../../shared/utils/RefUtils';
-import React, {ReactElement, ReactNode} from 'react';
+import React, {memo, ReactElement, ReactNode, useCallback} from 'react';
 import Refresher from './Refresher';
 import {Animated} from 'react-native';
 
@@ -27,6 +27,13 @@ type CollapsableRefreshableFlatListProps = FlatListProps<any> & {
 const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefreshableFlatListProps, ref: any) => {
   const {header, headerHeight, refresh, loading, previousNode, nextNode, inverted, children} = props;
 
+  const refresher = useCallback(
+    (extraScrollY: Animated.Value, refreshing: boolean) => (
+      <Refresher extraScrollY={extraScrollY} refreshing={refreshing} inverted={inverted} />
+    ),
+    [],
+  );
+
   return (
     <CollapsableHeaderContainer header={header}>
       {({handleEventScroll, handleEventSnap, collapsableRef, scrollY}: CollapsableHeaderChildrenProps) => (
@@ -36,9 +43,7 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
             <RefreshableContainer refresh={refresh} parentScrollY={scrollY} inverted={inverted}>
               {({extraScrollY, refreshing, refreshableRef}: RefreshableChildrenProps) => (
                 <FlatList
-                  ListHeaderComponent={
-                    <Refresher extraScrollY={extraScrollY} refreshing={refreshing} inverted={inverted} />
-                  }
+                  ListHeaderComponent={refresher(extraScrollY, refreshing)}
                   contentContainerStyle={ListUtils.containerStyle(
                     0,
                     !inverted ? headerHeight : undefined,
@@ -61,4 +66,4 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
   );
 });
 
-export default CollapsableRefreshableFlatList;
+export default memo(CollapsableRefreshableFlatList);

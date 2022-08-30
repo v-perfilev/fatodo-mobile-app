@@ -1,4 +1,4 @@
-import React, {ForwardedRef} from 'react';
+import React, {ForwardedRef, memo} from 'react';
 import {ListUtils} from '../../shared/utils/ListUtils';
 import DraggableFlatList, {DragEndParams, DraggableFlatListProps} from 'react-native-draggable-flatlist';
 import {Animated, Platform} from 'react-native';
@@ -32,4 +32,4 @@ const DraggableList = React.forwardRef((props: DraggableListProps<any>, ref: For
   );
 });
 
-export default DraggableList;
+export default memo(DraggableList);

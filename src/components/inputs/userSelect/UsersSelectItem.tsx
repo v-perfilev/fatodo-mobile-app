@@ -15,7 +15,7 @@ const UsersSelectItem = ({user, isSelected, toggleSelected}: UsersSelectInputPro
   return (
     <FHStack grow alignItems="center">
       <FHStack grow smallSpace alignItems="center">
-        <UrlPic alt={user.username} url={user.imageFilename} size="sm" border={1} />
+        <UrlPic file={user.imageFilename} size="sm" border={1} />
         <Text isTruncated>{user.username}</Text>
       </FHStack>
       <CheckboxInput onPress={toggleSelected} isSelected={isSelected} />

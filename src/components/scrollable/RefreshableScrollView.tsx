@@ -1,6 +1,6 @@
 import RefreshableContainer, {RefreshableChildrenProps} from './RefreshableContainer';
 import {RefUtils} from '../../shared/utils/RefUtils';
-import React, {ReactNode} from 'react';
+import React, {memo, ReactNode} from 'react';
 import Refresher from './Refresher';
 import {Animated, ScrollViewProps} from 'react-native';
 import {ListUtils} from '../../shared/utils/ListUtils';
@@ -36,4 +36,4 @@ const RefreshableScrollView = React.forwardRef((props: RefreshableScrollViewProp
   );
 });
 
-export default RefreshableScrollView;
+export default memo(RefreshableScrollView);

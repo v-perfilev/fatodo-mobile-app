@@ -1,6 +1,5 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {Box} from 'native-base';
-import {Theme} from 'native-base/src/theme';
 import {ColorScheme, LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
 import ThemeProvider from '../layouts/ThemeProvider';
 
@@ -11,7 +10,7 @@ type BulletProps = {
 };
 
 const Bullet = ({color, size = '10px', fullWidth}: BulletProps) => {
-  const theme = useMemo<Theme>(() => ThemeFactory.getTheme(color), [color]);
+  const theme = ThemeFactory.getTheme(color);
   const bgColor = color ? LINEAR_GRADIENT : 'gray.500';
   const width = fullWidth ? '100%' : size;
 

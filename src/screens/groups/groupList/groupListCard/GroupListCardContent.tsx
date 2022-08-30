@@ -1,4 +1,4 @@
-import React, {ReactElement, useMemo} from 'react';
+import React from 'react';
 import {Item} from '../../../../models/Item';
 import GroupListCardSkeleton from '../skeletons/GroupListCardSkeleton';
 import GroupListCardInfo from './GroupListCardInfo';
@@ -14,7 +14,7 @@ type GroupListCardContentProps = {
 };
 
 const GroupListCardContent = ({group, items, count, loading}: GroupListCardContentProps) => {
-  const skeleton = useMemo<ReactElement>(() => <GroupListCardSkeleton />, []);
+  const skeleton = <GroupListCardSkeleton />;
 
   const itemsView = (
     <FVStack mt="2" space="2">

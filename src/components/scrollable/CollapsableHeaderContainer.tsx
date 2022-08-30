@@ -1,5 +1,5 @@
 import {Animated, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleProp, View} from 'react-native';
-import React, {MutableRefObject, ReactElement, useRef} from 'react';
+import React, {memo, MutableRefObject, ReactElement, useCallback, useEffect, useRef} from 'react';
 import {FlatListType} from './FlatList';
 import {HEADER_HEIGHT} from '../../constants';
 
@@ -38,27 +38,37 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
     outputRange: [0, -HEADER_HEIGHT],
   });
 
-  translateY.addListener(({value}) => {
-    translateYNumber.current = value;
-  });
+  const handleEventSnap = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
+      if (!(translateYNumber.current === 0 || translateYNumber.current === -HEADER_HEIGHT)) {
+        const shouldRemoveOffset = getCloser(translateYNumber.current, -HEADER_HEIGHT, 0) === -HEADER_HEIGHT;
+        const offsetY = event.nativeEvent.contentOffset.y;
+        const offset = shouldRemoveOffset ? offsetY - translateYNumber.current : offsetY + translateYNumber.current;
+        collapsableRef.current?.scrollTo && collapsableRef.current.scrollTo({y: offset});
+        collapsableRef.current?.scrollToOffset && collapsableRef.current.scrollToOffset({offset});
+      }
+    },
+    [translateYNumber.current, collapsableRef.current],
+  );
 
-  const handleEventSnap = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
-    if (!(translateYNumber.current === 0 || translateYNumber.current === -HEADER_HEIGHT)) {
-      const shouldRemoveOffset = getCloser(translateYNumber.current, -HEADER_HEIGHT, 0) === -HEADER_HEIGHT;
-      const offsetY = event.nativeEvent.contentOffset.y;
-      const offset = shouldRemoveOffset ? offsetY - translateYNumber.current : offsetY + translateYNumber.current;
-      collapsableRef.current?.scrollTo && collapsableRef.current.scrollTo({y: offset});
-      collapsableRef.current?.scrollToOffset && collapsableRef.current.scrollToOffset({offset});
-    }
-  };
+  const handleEventScroll = useCallback(
+    Animated.event([{nativeEvent: {contentOffset: {y: scrollY.current}}}], {
+      useNativeDriver: true,
+    }),
+    [scrollY.current],
+  );
 
-  const handleEventScroll = Animated.event([{nativeEvent: {contentOffset: {y: scrollY.current}}}], {
-    useNativeDriver: true,
-  });
+  const handleOffsetScroll = useCallback(
+    (offset: number): void => {
+      scrollY.current.setValue(Math.max(0, offset));
+    },
+    [scrollY.current],
+  );
 
-  const handleOffsetScroll = (offset: number): void => {
-    scrollY.current.setValue(Math.max(0, offset));
-  };
+  useEffect(() => {
+    translateY.addListener(({value}) => (translateYNumber.current = value));
+    return () => translateY.removeAllListeners();
+  }, [translateY]);
 
   const safeAreaStyle = {flex: 1};
   const headerStyle: StyleProp<any> = {zIndex: 1, position: 'absolute', width: '100%'};
@@ -80,4 +90,4 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
   );
 };
 
-export default CollapsableHeaderContainer;
+export default memo(CollapsableHeaderContainer);

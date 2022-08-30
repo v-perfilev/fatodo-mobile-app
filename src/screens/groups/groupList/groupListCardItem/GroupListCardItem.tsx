@@ -1,10 +1,9 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {Item} from '../../../../models/Item';
 import {Text} from 'native-base';
 import GroupListCardItemIcons from './GroupListCardItemIcons';
 import GroupListCardItemChanges from './GroupListCardItemChanges';
 import GroupListCardItemMenu from './GroupListCardItemMenu';
-import {flowRight} from 'lodash';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Group} from '../../../../models/Group';
@@ -29,4 +28,4 @@ const GroupListCardItem = ({group, item}: GroupListCardItemProps) => {
   );
 };
 
-export default flowRight([memo])(GroupListCardItem);
+export default GroupListCardItem;

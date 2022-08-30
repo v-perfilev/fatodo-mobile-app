@@ -1,5 +1,5 @@
 import {Animated, Easing, NativeScrollEvent, NativeSyntheticEvent, ScrollView} from 'react-native';
-import React, {MutableRefObject, ReactElement, useEffect, useRef} from 'react';
+import React, {memo, MutableRefObject, ReactElement, useEffect, useRef} from 'react';
 import {FlatListType} from './FlatList';
 import {NativeViewGestureHandler, PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlerCommon';
@@ -38,14 +38,8 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   scrollY handlers
    */
 
-  parentScrollY && parentScrollY.addListener(({value}) => scrollY.current.setValue(value));
-
   const handleEventScroll = Animated.event([{nativeEvent: {contentOffset: {y: scrollY.current}}}], {
     useNativeDriver: true,
-  });
-
-  scrollY.current.addListener(({value}) => {
-    scrollYValue.value = value;
   });
 
   /*
@@ -95,6 +89,16 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   };
 
   useEffect(() => {
+    parentScrollY?.addListener(({value}) => scrollY.current.setValue(value));
+    return () => parentScrollY?.removeAllListeners();
+  }, [parentScrollY]);
+
+  useEffect(() => {
+    scrollY.current?.addListener(({value}) => (scrollYValue.value = value));
+    return () => scrollY.current?.removeAllListeners();
+  }, [scrollY.current]);
+
+  useEffect(() => {
     !refreshing && closeLoader();
   }, [refreshing]);
 
@@ -122,4 +126,4 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   );
 };
 
-export default RefreshableContainer;
+export default memo(RefreshableContainer);

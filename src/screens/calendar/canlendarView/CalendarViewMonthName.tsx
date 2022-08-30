@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import FHStack from '../../../components/boxes/FHStack';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import {Text} from 'native-base';
@@ -40,4 +40,4 @@ const CalendarViewMonthName = ({month, selectMonth}: CalendarViewMonthNameProps)
   );
 };
 
-export default CalendarViewMonthName;
+export default memo(CalendarViewMonthName);

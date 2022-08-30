@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
@@ -19,9 +19,9 @@ const IncomingRequestList = () => {
   const incomingRequests = useAppSelector(ContactsSelectors.incomingRequests);
   const [loading, setLoading] = useDelayedState();
 
-  const refresh = async (): Promise<void> => {
+  const refresh = useCallback(async (): Promise<void> => {
     await dispatch(ContactsActions.fetchIncomingRequestsThunk());
-  };
+  }, []);
 
   /*
   Key extractor and render item
@@ -45,12 +45,14 @@ const IncomingRequestList = () => {
     isFocused && loading && refresh().finally(() => setLoading(false));
   }, [isFocused]);
 
+  const stub = useMemo<ReactElement>(() => <IncomingRequestListStub />, []);
+
   return (
     <CollapsableRefreshableFlatList
       header={undefined}
       headerHeight={0}
       loading={loading}
-      ListEmptyComponent={<IncomingRequestListStub />}
+      ListEmptyComponent={stub}
       data={incomingRequests}
       render={renderItem}
       keyExtractor={keyExtractor}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import FHStack from '../../../components/boxes/FHStack';
 import FBox from '../../../components/boxes/FBox';
 import {DateUtils} from '../../../shared/utils/DateUtils';
@@ -20,4 +20,4 @@ const CalendarViewWeekDays = () => {
   );
 };
 
-export default CalendarViewWeekDays;
+export default memo(CalendarViewWeekDays);

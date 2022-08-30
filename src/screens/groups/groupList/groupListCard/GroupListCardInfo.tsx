@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import {Item} from '../../../../models/Item';
@@ -23,8 +23,8 @@ const GroupListCardInfo = ({group, items, count}: GroupListCardHeaderProps) => {
   const goToGroupView = (): void => navigation.navigate('GroupView', {group});
   const goToItemCreate = (): void => navigation.navigate('ItemCreate', {group});
 
-  const showButtonToGroupView = useMemo<boolean>(() => count !== items.length, [items, count]);
-  const showButtonToCreateItem = useMemo<boolean>(() => count === 0, [count]);
+  const showButtonToGroupView = count !== items.length;
+  const showButtonToCreateItem = count === 0;
 
   return (
     <FHStack smallSpace h="45px" mx="0.5" alignItems="center">

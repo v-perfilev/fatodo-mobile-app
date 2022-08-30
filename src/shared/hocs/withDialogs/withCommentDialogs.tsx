@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ComponentType, useCallback, useEffect} from 'react';
+import {ComponentType, useEffect} from 'react';
 import {useDialogContext} from '../../contexts/dialogContexts/DialogContext';
 import {Comment} from '../../../models/Comment';
 import CommentEditDialog, {
@@ -25,35 +25,26 @@ enum CommentDialogs {
 const withCommentDialogs = (Component: ComponentType) => (props: any) => {
   const {handleDialog, setDialogProps, updateDialogProps, clearDialogProps} = useDialogContext();
 
-  const showCommentReactionsDialog = useCallback(
-    (comment: Comment): void => {
-      const show = true;
-      const close = (): void => updateDialogProps(CommentDialogs.REACTIONS, {show: false});
-      const props: CommentReactionsDialogProps = {comment, show, close};
-      setDialogProps(CommentDialogs.REACTIONS, props);
-    },
-    [setDialogProps, updateDialogProps],
-  );
+  const showCommentReactionsDialog = (comment: Comment): void => {
+    const show = true;
+    const close = (): void => updateDialogProps(CommentDialogs.REACTIONS, {show: false});
+    const props: CommentReactionsDialogProps = {comment, show, close};
+    setDialogProps(CommentDialogs.REACTIONS, props);
+  };
 
-  const showCommentEditDialog = useCallback(
-    (comment: Comment): void => {
-      const show = true;
-      const close = (): void => updateDialogProps(CommentDialogs.EDIT, {show: false});
-      const props: CommentEditDialogProps = {comment, show, close};
-      setDialogProps(CommentDialogs.EDIT, props);
-    },
-    [setDialogProps, updateDialogProps],
-  );
+  const showCommentEditDialog = (comment: Comment): void => {
+    const show = true;
+    const close = (): void => updateDialogProps(CommentDialogs.EDIT, {show: false});
+    const props: CommentEditDialogProps = {comment, show, close};
+    setDialogProps(CommentDialogs.EDIT, props);
+  };
 
-  const showCommentDeleteDialog = useCallback(
-    (comment: Comment, onSuccess?: () => void): void => {
-      const show = true;
-      const close = (): void => clearDialogProps(CommentDialogs.DELETE);
-      const props: CommentDeleteDialogProps = {comment, show, close, onSuccess};
-      setDialogProps(CommentDialogs.DELETE, props);
-    },
-    [setDialogProps, clearDialogProps],
-  );
+  const showCommentDeleteDialog = (comment: Comment, onSuccess?: () => void): void => {
+    const show = true;
+    const close = (): void => clearDialogProps(CommentDialogs.DELETE);
+    const props: CommentDeleteDialogProps = {comment, show, close, onSuccess};
+    setDialogProps(CommentDialogs.DELETE, props);
+  };
 
   const initDialogs = (): void => {
     handleDialog(CommentDialogs.REACTIONS, CommentReactionsDialog, defaultCommentReactionsDialogProps);

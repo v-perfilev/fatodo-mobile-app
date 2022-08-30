@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {AuthActions} from '../../../store/auth/authActions';
@@ -17,12 +17,12 @@ const AccountView = () => {
   const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
 
-  const logout = useCallback((): void => {
+  const logout = (): void => {
     dispatch(AuthActions.logout());
     requestAnimationFrame(() => {
       dispatch(RootActions.resetState());
     });
-  }, [dispatch]);
+  };
 
   return (
     <>

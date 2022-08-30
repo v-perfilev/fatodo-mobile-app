@@ -50,14 +50,4 @@ const CalendarViewContent = ({
   );
 };
 
-const propsAreEqual = (prevProps: CalendarViewContentProps, nextProps: CalendarViewContentProps): boolean => {
-  const isActiveDateEqual = prevProps.activeDate?.date === nextProps.activeDate?.date;
-
-  const prevPropsReminderMapJson = JSON.stringify([...prevProps.reminderMap]);
-  const nextPropsReminderMapJson = JSON.stringify([...nextProps.reminderMap]);
-  const isReminderMapEqual = prevPropsReminderMapJson === nextPropsReminderMapJson;
-
-  return isActiveDateEqual && isReminderMapEqual;
-};
-
-export default memo(CalendarViewContent, propsAreEqual);
+export default memo(CalendarViewContent);

@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useCallback, useEffect, useState} from 'react';
+import React, {ReactElement, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import FVStack from '../../../../components/boxes/FVStack';
@@ -43,18 +43,15 @@ const CommentListItemReactions = ({comment, isOwnComment}: CommentListItemReacti
     setActiveReaction(reaction?.type);
   };
 
-  const handlePress = useCallback(
-    (r: CommentReactionType) => (): void => {
-      if (r === activeReaction) {
-        dispatch(CommentsActions.noReactionThunk({comment, account}));
-      } else if (r === 'LIKE') {
-        dispatch(CommentsActions.likeReactionThunk({comment, account}));
-      } else if (r === 'DISLIKE') {
-        dispatch(CommentsActions.dislikeReactionThunk({comment, account}));
-      }
-    },
-    [comment, activeReaction],
-  );
+  const handlePress = (r: CommentReactionType) => (): void => {
+    if (r === activeReaction) {
+      dispatch(CommentsActions.noReactionThunk({comment, account}));
+    } else if (r === 'LIKE') {
+      dispatch(CommentsActions.likeReactionThunk({comment, account}));
+    } else if (r === 'DISLIKE') {
+      dispatch(CommentsActions.dislikeReactionThunk({comment, account}));
+    }
+  };
 
   useEffect(() => {
     updateReactionsMap();
@@ -86,4 +83,4 @@ const CommentListItemReactions = ({comment, isOwnComment}: CommentListItemReacti
   );
 };
 
-export default memo(CommentListItemReactions);
+export default CommentListItemReactions;

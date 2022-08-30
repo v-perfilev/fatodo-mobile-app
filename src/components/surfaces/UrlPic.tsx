@@ -1,4 +1,4 @@
-import React, {memo, useMemo} from 'react';
+import React, {memo} from 'react';
 import {ImageUtils} from '../../shared/utils/imageUtils';
 import {Avatar, Image} from 'native-base';
 import {ISizes} from 'native-base/lib/typescript/theme/base/sizes';
@@ -14,11 +14,7 @@ type UrlPicProps = {
 
 const UrlPic = ({file, size, border = 0, invertedBorder}: UrlPicProps) => {
   const isBigImage = size === 'lg' || size === 'xl' || size === '2xl';
-
-  const source = useMemo<string>(() => {
-    return !file || ImageUtils.isUrl(file) ? file : ImageUtils.buildImageUri(file, !isBigImage);
-  }, [file, isBigImage]);
-
+  const source = !file || ImageUtils.isUrl(file) ? file : ImageUtils.buildImageUri(file, !isBigImage);
   const borderColor = invertedBorder ? 'white' : 'tertiary.500';
 
   return (

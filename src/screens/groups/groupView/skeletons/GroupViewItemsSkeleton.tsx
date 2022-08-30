@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {GROUP_ITEMS_COUNT} from '../../../../constants';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
@@ -24,7 +24,7 @@ const GroupViewItemSkeleton = () => {
 };
 
 const GroupViewItemsSkeleton = () => {
-  const indexArray = useMemo(() => Array.from(Array(GROUP_ITEMS_COUNT).keys()), []);
+  const indexArray = Array.from(Array(GROUP_ITEMS_COUNT).keys());
 
   return (
     <FVStack space="3" my="1.5">

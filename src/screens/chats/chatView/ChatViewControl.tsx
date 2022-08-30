@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {memo, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import FHStack from '../../../components/boxes/FHStack';
 import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
@@ -17,15 +17,7 @@ const ChatViewControl = () => {
   const [messageBody, setMessageBody] = useState<string>('');
   const [updater, setUpdater] = useState<string>(undefined);
 
-  const isValid = useMemo<boolean>(() => messageBody.length > 0, [messageBody]);
-
-  const dto = useMemo<MessageDTO>(
-    () => ({
-      text: messageBody,
-      forwardedMessageId: null,
-    }),
-    [messageBody],
-  );
+  const isValid = messageBody.length > 0;
 
   const handleTextChange = (text: string): void => {
     const trimmedText = text?.trim() || '';
@@ -34,9 +26,10 @@ const ChatViewControl = () => {
   };
 
   const handleSend = (): void => {
+    const dto: MessageDTO = {text: messageBody, referenceId: null};
+    dispatch(ChatActions.sendMessageThunk({chatId: chat.id, dto}));
     setMessageBody('');
     setUpdater('');
-    dispatch(ChatActions.sendMessageThunk({chatId: chat.id, dto}));
   };
 
   return (
@@ -56,4 +49,4 @@ const ChatViewControl = () => {
   );
 };
 
-export default ChatViewControl;
+export default memo(ChatViewControl);

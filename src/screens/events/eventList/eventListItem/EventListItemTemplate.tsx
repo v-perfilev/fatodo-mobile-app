@@ -1,4 +1,4 @@
-import React, {memo, ReactElement} from 'react';
+import React, {ReactElement} from 'react';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
@@ -40,4 +40,4 @@ const EventListItemTemplate = ({image, title, content, message, date}: EventList
   );
 };
 
-export default memo(EventListItemTemplate);
+export default EventListItemTemplate;

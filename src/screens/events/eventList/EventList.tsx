@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {EventsActions} from '../../../store/events/eventsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
@@ -11,14 +11,14 @@ import {Box, useTheme} from 'native-base';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import EventListItem from './eventListItem/EventListItem';
 import EventListSeparator from './EventListSeparator';
-import Header from '../../../components/layouts/Header';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {HEADER_HEIGHT} from '../../../constants';
-import CornerManagement from '../../../components/controls/CornerManagement';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
+import Header from '../../../components/layouts/Header';
+import CornerManagement from '../../../components/controls/CornerManagement';
 
 const EventList = () => {
   const dispatch = useAppDispatch();
@@ -34,24 +34,27 @@ const EventList = () => {
   loaders
    */
 
-  const load = async (): Promise<void> => {
+  const load = useCallback(async (): Promise<void> => {
     await dispatch(EventsActions.fetchEventsThunk(events.length));
-  };
+  }, [events.length]);
 
-  const refresh = async (): Promise<void> => {
+  const refresh = useCallback(async (): Promise<void> => {
     await dispatch(EventsActions.fetchEventsThunk(0));
-  };
+  }, []);
 
   /*
   keyExtractor and renderItem
    */
 
-  const keyExtractor = (event: Event): string => event.id + event.date;
+  const keyExtractor = useCallback((event: Event): string => event.id + event.date, []);
 
-  const renderItem = (event: Event, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-    <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-      <EventListItem event={event} />
-    </Box>
+  const renderItem = useCallback(
+    (event: Event, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+        <EventListItem event={event} />
+      </Box>
+    ),
+    [],
   );
 
   /*
@@ -71,11 +74,17 @@ const EventList = () => {
     isFocused && unreadCount > 0 && dispatch(EventsActions.refreshUnreadCountThunk());
   }, [isFocused]);
 
+  const header = useMemo<ReactElement>(() => <Header hideGoBack />, []);
+
   const buttons: CornerButton[] = [{icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true}];
+  const cornerManagement = useCallback(
+    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    [],
+  );
 
   return (
     <CollapsableRefreshableFlatList
-      header={<Header hideGoBack />}
+      header={header}
       headerHeight={HEADER_HEIGHT}
       refresh={refresh}
       loading={loading}
@@ -86,7 +95,7 @@ const EventList = () => {
       onEndReached={!allLoaded ? load : undefined}
       ref={listRef}
     >
-      {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
+      {cornerManagement}
     </CollapsableRefreshableFlatList>
   );
 };

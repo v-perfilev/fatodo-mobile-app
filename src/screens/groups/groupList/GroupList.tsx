@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import GroupListHeader from './GroupListHeader';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {GroupsActions} from '../../../store/groups/groupsActions';
@@ -38,37 +38,42 @@ const GroupList = () => {
   loaders
    */
 
-  const refresh = async (): Promise<void> => {
+  const refresh = useCallback(async (): Promise<void> => {
     await dispatch(GroupsActions.fetchGroupsThunk());
-  };
+  }, []);
 
   /*
   keyExtractor and renderItem
    */
 
-  const keyExtractor = (group: Group): string => group.id;
-
-  const renderDraggableItem = (props: RenderItemParams<Group>) => (
-    <ScaleDecorator activeScale={1.03}>
-      <Box style={ListUtils.themedItemStyle(theme)}>
-        <GroupListItem sorting={sorting} {...props} />
-      </Box>
-    </ScaleDecorator>
+  const keyExtractor = useCallback((group: Group): string => group.id, []);
+  const renderDraggableItem = useCallback(
+    (props: RenderItemParams<Group>) => (
+      <ScaleDecorator activeScale={1.03}>
+        <Box style={ListUtils.themedItemStyle(theme)}>
+          <GroupListItem sorting={sorting} {...props} />
+        </Box>
+      </ScaleDecorator>
+    ),
+    [sorting],
   );
 
-  const renderFlatItem = (group: Group, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-    <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-      <GroupListItem item={group} sorting={false} isActive={false} drag={undefined} />
-    </Box>
+  const renderFlatItem = useCallback(
+    (group: Group, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+        <GroupListItem item={group} sorting={false} isActive={false} drag={undefined} />
+      </Box>
+    ),
+    [],
   );
 
   /*
   dragHandler
    */
 
-  const handleDragEnd = ({data}: DragEndParams<Group>): void => {
+  const handleDragEnd = useCallback(({data}: DragEndParams<Group>): void => {
     dispatch(GroupsActions.setGroups(data));
-  };
+  }, []);
 
   /*
   scroll up button
@@ -84,12 +89,16 @@ const GroupList = () => {
     dispatch(GroupsActions.fetchGroupsThunk()).finally(() => setLoading(false));
   }, []);
 
-  const header = <GroupListHeader sorting={sorting} setSorting={setSorting} />;
+  const header = useMemo<ReactElement>(() => <GroupListHeader sorting={sorting} setSorting={setSorting} />, [sorting]);
 
   const buttons: CornerButton[] = [
     {icon: <PlusIcon />, action: goToGroupCreate},
     {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true},
   ];
+  const cornerManagement = useCallback(
+    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    [],
+  );
 
   const draggableList = (
     <CollapsableDraggableList
@@ -114,7 +123,7 @@ const GroupList = () => {
       keyExtractor={keyExtractor}
       ref={listRef}
     >
-      {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
+      {cornerManagement}
     </CollapsableRefreshableFlatList>
   );
 

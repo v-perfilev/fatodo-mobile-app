@@ -1,11 +1,10 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import ItemForm from '../itemForm/ItemForm';
 import {useAppDispatch} from '../../../store/store';
-import {Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
@@ -19,6 +18,7 @@ type ItemCreateProps = WithGroupProps;
 const ItemCreate = ({group, loading}: ItemCreateProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
+  const theme = ThemeFactory.getTheme(group?.color);
 
   const goBack = (): void => navigation.goBack();
   const goToItemView = (item: Item): void => navigation.replace('ItemView', {group, item});
@@ -29,10 +29,6 @@ const ItemCreate = ({group, loading}: ItemCreateProps) => {
       .then((item) => goToItemView(item))
       .catch(() => stopSubmitting());
   };
-
-  const theme = useMemo<Theme>(() => {
-    return group ? ThemeFactory.getTheme(group?.color) : ThemeFactory.getDefaultTheme();
-  }, [group]);
 
   return (
     <ThemeProvider theme={theme}>

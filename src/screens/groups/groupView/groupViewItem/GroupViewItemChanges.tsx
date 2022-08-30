@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {Item} from '../../../../models/Item';
 import {Text} from 'native-base';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
@@ -13,15 +13,9 @@ type GroupViewItemChangesProps = {
 const GroupViewItemChanges = ({item}: GroupViewItemChangesProps) => {
   const users = useAppSelector(InfoSelectors.users);
 
-  const name = useMemo<string>(() => {
-    const user = users.get(item.createdBy);
-    return user?.username;
-  }, [users]);
+  const name = users.get(item.createdBy)?.username;
 
-  const formattedDate = useMemo<string>(() => {
-    const timestampToDate = (timestamp: number): Date => new Date(timestamp);
-    return DateFormatters.formatDependsOnDay(timestampToDate(item.createdAt));
-  }, [item]);
+  const formattedDate = DateFormatters.formatDependsOnDay(new Date(item.createdAt));
 
   const textProps = {color: 'gray.400', fontSize: '11'};
 

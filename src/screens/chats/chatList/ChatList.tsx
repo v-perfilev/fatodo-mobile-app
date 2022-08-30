@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {HEADER_HEIGHT} from '../../../constants';
 import ChatListControl from './ChatListControl';
 import Header from '../../../components/layouts/Header';
@@ -47,17 +47,17 @@ const ChatList = () => {
   loaders
    */
 
-  const load = async (): Promise<void> => {
+  const load = useCallback(async (): Promise<void> => {
     await dispatch(ChatsActions.fetchChatsThunk(chats.length));
-  };
+  }, [chats.length]);
 
-  const refresh = async (): Promise<void> => {
+  const refresh = useCallback(async (): Promise<void> => {
     await dispatch(ChatsActions.refreshChatsThunk());
-  };
+  }, []);
 
-  const loadFiltered = async (): Promise<void> => {
+  const loadFiltered = useCallback(async (): Promise<void> => {
     await dispatch(ChatsActions.fetchFilteredChatsThunk(filter));
-  };
+  }, [filter]);
 
   /*
   keyExtractor and renderItem
@@ -77,9 +77,7 @@ const ChatList = () => {
   scroll down button
    */
 
-  const scrollUp = useCallback((): void => {
-    listRef.current.scrollToOffset({offset: 0});
-  }, [listRef.current]);
+  const scrollUp = (): void => listRef.current.scrollToOffset({offset: 0});
 
   /*
   Effects
@@ -102,27 +100,40 @@ const ChatList = () => {
     setFilterLoading(filterLoadCounter > 0);
   }, [filterLoadCounter]);
 
+  const header = useMemo<ReactElement>(() => <Header hideGoBack />, []);
+
+  const previousNode = useMemo<ReactElement>(
+    () => <ChatListControl setFilter={setFilter} marginTop={HEADER_HEIGHT} />,
+    [],
+  );
+
+  const stub = useMemo(() => <ChatListStub />, []);
+
   const buttons: CornerButton[] = [
     {icon: <PlusIcon />, action: openCreateChatDialog},
     {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true},
   ];
+  const cornerManagement = useCallback(
+    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    [],
+  );
 
   return (
     <CollapsableRefreshableFlatList
-      header={<Header hideGoBack />}
+      header={header}
       headerHeight={HEADER_HEIGHT}
       refresh={type === 'regular' ? refresh : undefined}
-      previousNode={<ChatListControl setFilter={setFilter} marginTop={HEADER_HEIGHT} />}
+      previousNode={previousNode}
       loading={loading || filterLoading}
       contentContainerStyle={ListUtils.containerStyle()}
-      ListEmptyComponent={<ChatListStub />}
+      ListEmptyComponent={stub}
       data={type === 'regular' ? chats : filteredChats}
       render={renderItem}
       keyExtractor={keyExtractor}
       onEndReached={type === 'regular' ? load : loadFiltered}
       ref={listRef}
     >
-      {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
+      {cornerManagement}
     </CollapsableRefreshableFlatList>
   );
 };

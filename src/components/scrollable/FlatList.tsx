@@ -1,4 +1,4 @@
-import React, {ForwardedRef, ReactElement, useCallback, useRef} from 'react';
+import React, {ForwardedRef, memo, ReactElement, useCallback, useRef} from 'react';
 import {IFlatListProps} from 'native-base/lib/typescript/components/basic/FlatList';
 import {Animated, FlatList as RNFlatList, LayoutChangeEvent, ListRenderItemInfo, Platform} from 'react-native';
 
@@ -12,7 +12,6 @@ export type FlatListProps<T> = Partial<IFlatListProps<T>> & {
 
 const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<any>) => {
   const {data, render, keyExtractor, fixedLength} = props;
-
   const lengthMap = useRef<Map<string, number>>(new Map());
 
   const getItemLength = useCallback(
@@ -27,7 +26,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
       }
       return length;
     },
-    [data, keyExtractor],
+    [fixedLength, data, keyExtractor, lengthMap],
   );
 
   const getItemOffset = useCallback(
@@ -42,15 +41,18 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
       }
       return offset;
     },
-    [getItemLength],
+    [fixedLength, getItemLength],
   );
 
-  const _onLayout = useCallback((key: string, event: LayoutChangeEvent): void => {
-    if (!fixedLength) {
-      const height = event.nativeEvent.layout.height;
-      lengthMap.current.set(key, height);
-    }
-  }, []);
+  const _onLayout = useCallback(
+    (key: string, event: LayoutChangeEvent): void => {
+      if (!fixedLength) {
+        const height = event.nativeEvent.layout.height;
+        lengthMap.current.set(key, height);
+      }
+    },
+    [fixedLength, lengthMap.current],
+  );
 
   const _renderItem = useCallback(
     (info: ListRenderItemInfo<any>): ReactElement => {
@@ -58,7 +60,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
       const onLayout = (event: LayoutChangeEvent): void => _onLayout(key, event);
       return render(info.item, onLayout);
     },
-    [render, keyExtractor],
+    [keyExtractor, _onLayout, render],
   );
 
   const _getItemLayout = useCallback(
@@ -89,4 +91,4 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
   );
 });
 
-export default FlatList;
+export default memo(FlatList);

@@ -2,7 +2,7 @@ import {Box, IIconButtonProps} from 'native-base';
 import {Animated, StyleProp, ViewStyle} from 'react-native';
 import {CornerButton} from '../../models/CornerButton';
 import IconButton from './IconButton';
-import React, {RefObject, useEffect, useRef, useState} from 'react';
+import React, {memo, RefObject, useEffect, useRef, useState} from 'react';
 import CompositeAnimation = Animated.CompositeAnimation;
 
 type CornerManagementProps = {
@@ -48,7 +48,6 @@ const CornerManagementButton = ({button, ...props}: IIconButtonProps & {button: 
 const CornerManagement = ({buttons, scrollY}: CornerManagementProps) => {
   const [positions, setPositions] = useState<number[]>(calculatePositions(buttons, true));
   const positionValues = createAnimatedValues(positions);
-
   const [onTop, setOnTop] = useState<boolean>(true);
   const onTopRef = useRef<boolean>(true);
 
@@ -69,7 +68,10 @@ const CornerManagement = ({buttons, scrollY}: CornerManagementProps) => {
     Animated.parallel(compositeAnimations).start();
   };
 
-  scrollY && scrollY.addListener(handleScrollY);
+  useEffect(() => {
+    scrollY?.addListener(handleScrollY);
+    return () => scrollY?.removeAllListeners();
+  }, []);
 
   useEffect(() => {
     const positions = calculatePositions(buttons, onTop);
@@ -93,4 +95,4 @@ const CornerManagement = ({buttons, scrollY}: CornerManagementProps) => {
   );
 };
 
-export default CornerManagement;
+export default memo(CornerManagement);

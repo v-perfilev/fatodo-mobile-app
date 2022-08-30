@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useMemo} from 'react';
+import React, {Dispatch, SetStateAction, useCallback, useMemo} from 'react';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarDate, CalendarMonth} from '../../../models/Calendar';
 import FHStack from '../../../components/boxes/FHStack';
@@ -17,8 +17,11 @@ type CalendarViewMonthProps = {
 const CalendarViewMonth = ({month, activeDate, selectDate, reminderMap, width}: CalendarViewMonthProps) => {
   const pageDates = useMemo<CalendarDate[]>(() => CalendarUtils.getOnePageDates(month.year, month.month), [month]);
 
-  const isActiveDate = (date: CalendarDate) => date.date === activeDate?.date;
-  const getDateReminders = (date: CalendarDate) => (date.isCurrentMonth ? reminderMap.get(date.date) : []);
+  const isActiveDate = useCallback((date: CalendarDate) => date.date === activeDate?.date, [activeDate]);
+  const getDateReminders = useCallback(
+    (date: CalendarDate) => (date.isCurrentMonth ? reminderMap.get(date.date) : []),
+    [reminderMap],
+  );
 
   const dateWidth = (width - 6) / 7;
 

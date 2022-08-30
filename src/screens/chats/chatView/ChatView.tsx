@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useRef} from 'react';
+import React, {ReactElement, useCallback, useMemo, useRef} from 'react';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
@@ -38,13 +38,13 @@ const ChatView = ({loading}: ChatViewProps) => {
   loaders
    */
 
-  const load = async (): Promise<void> => {
+  const load = useCallback(async (): Promise<void> => {
     await dispatch(ChatActions.fetchMessagesThunk({chatId: chat.id, offset: chatItems.length}));
-  };
+  }, [chat.id, chatItems.length]);
 
-  const refresh = async (): Promise<void> => {
+  const refresh = useCallback(async (): Promise<void> => {
     await dispatch(ChatActions.refreshMessagesThunk(chat.id));
-  };
+  }, [chat.id]);
 
   /*
   keyExtractor and renderItem
@@ -64,48 +64,65 @@ const ChatView = ({loading}: ChatViewProps) => {
   mark as read
    */
 
-  const addTimer = useCallback((messageId: string): void => {
-    const timerId = setTimeout(() => {
-      dispatch(ChatActions.markMessageAsReadThunk({chatId: chat.id, messageId, account}));
+  const addTimer = useCallback(
+    (messageId: string): void => {
+      const timerId = setTimeout(() => {
+        dispatch(ChatActions.markMessageAsReadThunk({chatId: chat.id, messageId, account}));
+        unreadTimersRef.current.delete(messageId);
+      }, TIMEOUT_BEFORE_MARK_AS_READ);
+      unreadTimersRef.current.set(messageId, timerId);
+    },
+    [chat.id, account, unreadTimersRef.current],
+  );
+
+  const deleteTimer = useCallback(
+    (messageId: string): void => {
+      const timerId = unreadTimersRef.current.get(messageId);
+      clearInterval(timerId);
       unreadTimersRef.current.delete(messageId);
-    }, TIMEOUT_BEFORE_MARK_AS_READ);
-    unreadTimersRef.current.set(messageId, timerId);
-  }, []);
+    },
+    [unreadTimersRef.current],
+  );
 
-  const deleteTimer = useCallback((messageId: string): void => {
-    const timerId = unreadTimersRef.current.get(messageId);
-    clearInterval(timerId);
-    unreadTimersRef.current.delete(messageId);
-  }, []);
-
-  const onViewableItemsChanged = useCallback((info: {viewableItems: ViewToken[]; changed: ViewToken[]}): void => {
-    const unreadIds = ChatUtils.getUnreadIds(info, account);
-    const timerIds = Array.from(unreadTimersRef.current.keys());
-    const idsToAdd = unreadIds.filter((id) => !timerIds.includes(id));
-    const idsToDelete = timerIds.filter((id) => !unreadIds.includes(id));
-    idsToAdd.forEach((id) => addTimer(id));
-    idsToDelete.forEach((id) => deleteTimer(id));
-  }, []);
+  const onViewableItemsChanged = useCallback(
+    (info: {viewableItems: ViewToken[]; changed: ViewToken[]}): void => {
+      const unreadIds = ChatUtils.getUnreadIds(info, account);
+      const timerIds = Array.from(unreadTimersRef.current.keys());
+      const idsToAdd = unreadIds.filter((id) => !timerIds.includes(id));
+      const idsToDelete = timerIds.filter((id) => !unreadIds.includes(id));
+      idsToAdd.forEach((id) => addTimer(id));
+      idsToDelete.forEach((id) => deleteTimer(id));
+    },
+    [account, unreadTimersRef.current, addTimer, deleteTimer],
+  );
 
   /*
   scroll down button
    */
 
-  const scrollDown = useCallback((): void => {
-    listRef.current.scrollToOffset({offset: 0});
-  }, [listRef.current]);
+  const scrollDown = (): void => listRef.current.scrollToOffset({offset: 0});
+
+  const header = useMemo<ReactElement>(() => <ChatViewHeader />, []);
+
+  const chatViewControl = useMemo<ReactElement>(() => <ChatViewControl />, []);
+
+  const stub = useMemo(() => <ChatViewStub />, []);
 
   const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
+  const cornerManagement = useCallback(
+    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    [],
+  );
 
   return (
     <CollapsableRefreshableFlatList
-      header={<ChatViewHeader />}
+      header={header}
       headerHeight={HEADER_HEIGHT}
-      nextNode={<ChatViewControl />}
+      nextNode={chatViewControl}
       refresh={refresh}
       loading={loading}
       inverted
-      ListEmptyComponent={<ChatViewStub />}
+      ListEmptyComponent={stub}
       data={chatItems}
       render={renderItem}
       keyExtractor={keyExtractor}
@@ -113,7 +130,7 @@ const ChatView = ({loading}: ChatViewProps) => {
       onViewableItemsChanged={onViewableItemsChanged}
       ref={listRef}
     >
-      {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
+      {cornerManagement}
     </CollapsableRefreshableFlatList>
   );
 };

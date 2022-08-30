@@ -1,4 +1,4 @@
-import React, {ReactElement, useMemo} from 'react';
+import React, {ReactElement} from 'react';
 import {ItemType} from '../../models/Item';
 import {useTranslation} from 'react-i18next';
 import {IIconProps, Text} from 'native-base';
@@ -15,34 +15,33 @@ type TypeViewProps = IIconProps & {
 };
 
 export const TypeView = ({type, withoutText, ...props}: TypeViewProps) => {
-  const {t, i18n} = useTranslation();
+  const {t} = useTranslation();
 
-  const icon = useMemo<ReactElement>(() => {
-    let result;
-    if (type === 'TASK') {
-      result = <TaskIcon color="primary.500" {...props} />;
-    } else if (type === 'EVENT') {
-      result = <EventIcon color="primary.500" {...props} />;
-    } else if (type === 'REPETITION') {
-      result = <RepetitionIcon color="primary.500" {...props} />;
-    } else {
-      result = <NoteIcon color="primary.500" {...props} />;
+  const getIcon = (): ReactElement => {
+    switch (type) {
+      case 'TASK':
+        return <TaskIcon />;
+      case 'EVENT':
+        return <EventIcon />;
+      case 'REPETITION':
+        return <RepetitionIcon />;
+      case 'NOTE':
+        return <NoteIcon />;
     }
-    return result;
-  }, [type]);
+  };
 
-  const text = useMemo<string>(() => {
-    return t('common:types.' + type);
-  }, [type, i18n.language]);
+  const icon = React.cloneElement(getIcon(), {...props, color: 'primary:500', mt: !withoutText ? 1 : undefined});
+  const text = t('common:types.' + type);
 
-  return withoutText ? (
-    <FCenter>{icon}</FCenter>
-  ) : (
+  const onlyIcon = <FCenter>{icon}</FCenter>;
+  const iconWithText = (
     <FHStack smallSpace alignItems="center">
-      {React.cloneElement(icon, {...props, mt: 1})}
+      {icon}
       <Text>{text}</Text>
     </FHStack>
   );
+
+  return withoutText ? onlyIcon : iconWithText;
 };
 
 export default TypeView;

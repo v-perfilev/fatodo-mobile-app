@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ComponentType, useMemo, useState} from 'react';
+import {ComponentType, useState} from 'react';
 import {flowRight} from 'lodash';
 import {DialogContext} from '../../contexts/dialogContexts/DialogContext';
 import withGroupDialogs from './withGroupDialogs';
@@ -56,15 +56,11 @@ const withDialogs = (Component: ComponentType) => (props: any) => {
     setPropsMap(new Map());
   };
 
-  const dialogs = useMemo(
-    () =>
-      Array.from(dialogMap.keys()).map((name, index) => {
-        const DialogComponent = dialogMap.get(name).component;
-        const props = propsMap.has(name) ? propsMap.get(name) : dialogMap.get(name).defaultProps;
-        return <DialogComponent {...props} key={index} />;
-      }),
-    [dialogMap, propsMap],
-  );
+  const dialogs = Array.from(dialogMap.keys()).map((name, index) => {
+    const DialogComponent = dialogMap.get(name).component;
+    const props = propsMap.has(name) ? propsMap.get(name) : dialogMap.get(name).defaultProps;
+    return <DialogComponent {...props} key={index} />;
+  });
 
   const context = {
     handleDialog,

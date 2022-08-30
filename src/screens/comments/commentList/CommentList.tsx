@@ -2,7 +2,7 @@ import React, {ReactElement, useCallback, useMemo, useRef, useState} from 'react
 import withCommentsContainer, {WithCommentsProps} from '../../../shared/hocs/withContainers/withCommentsContainer';
 import {Comment} from '../../../models/Comment';
 import Header from '../../../components/layouts/Header';
-import {Box, Theme} from 'native-base';
+import {Box} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import CommentListControl from './CommentListControl';
@@ -31,36 +31,33 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
   const comments = useAppSelector(CommentsSelectors.comments);
   const allLoaded = useAppSelector(CommentsSelectors.allLoaded);
   const [reference, setReference] = useState<Comment>();
+  const theme = ThemeFactory.getTheme(colorScheme);
 
   const clearReference = (): void => {
     setReference(null);
   };
 
-  const theme = useMemo<Theme>(() => {
-    return colorScheme ? ThemeFactory.getTheme(colorScheme) : ThemeFactory.getDefaultTheme();
-  }, [colorScheme]);
-
   /*
   loaders
    */
 
-  const load = async (): Promise<void> => {
+  const load = useCallback(async (): Promise<void> => {
     await dispatch(CommentsActions.fetchCommentsThunk({targetId, offset: comments.length}));
-  };
+  }, [targetId, comments.length]);
 
-  const refresh = async (): Promise<void> => {
+  const refresh = useCallback(async (): Promise<void> => {
     await dispatch(CommentsActions.refreshCommentsThunk(targetId));
-  };
+  }, [targetId]);
 
   /*
   keyExtractor and renderItem
    */
 
-  const keyExtractor = useCallback((item: Comment): string => item.id, []);
+  const keyExtractor = useCallback((comment: Comment): string => comment.id, []);
   const renderItem = useCallback(
-    (item: Comment, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    (comment: Comment, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-        <CommentListItem comment={item} setReference={setReference} />
+        <CommentListItem comment={comment} setReference={setReference} />
       </Box>
     ),
     [],
@@ -70,29 +67,40 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
   scroll down button
    */
 
-  const scrollDown = useCallback((): void => {
-    listRef.current.scrollToOffset({offset: 0});
-  }, [listRef.current]);
+  const scrollDown = (): void => listRef.current.scrollToOffset({offset: 0});
+
+  const header = useMemo<ReactElement>(() => <Header />, []);
+
+  const nextNode = useMemo<ReactElement>(
+    () => <CommentListControl reference={reference} clearReference={clearReference} />,
+    [reference],
+  );
+
+  const stub = useMemo<ReactElement>(() => <CommentListStub />, []);
 
   const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
+  const cornerManagement = useCallback(
+    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    [],
+  );
 
   return (
     <ThemeProvider theme={theme}>
       <CollapsableRefreshableFlatList
-        header={<Header />}
+        header={header}
         headerHeight={HEADER_HEIGHT}
-        nextNode={<CommentListControl reference={reference} clearReference={clearReference} />}
+        nextNode={nextNode}
         refresh={refresh}
         loading={loading}
         inverted
-        ListEmptyComponent={<CommentListStub />}
+        ListEmptyComponent={stub}
         data={comments}
         render={renderItem}
         keyExtractor={keyExtractor}
         onEndReached={!allLoaded ? load : undefined}
         ref={listRef}
       >
-        {({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />}
+        {cornerManagement}
       </CollapsableRefreshableFlatList>
     </ThemeProvider>
   );

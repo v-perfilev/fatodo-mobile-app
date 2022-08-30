@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import FBox from '../../../../components/boxes/FBox';
 import CalendarViewRemindersNotSelectedStub from './CalendarViewRemindersNotSelectedStub';
 import CalendarViewRemindersEmptyStub from './CalendarViewRemindersEmptyStub';
@@ -30,4 +30,4 @@ const CalendarViewReminders = ({reminders}: CalendarViewRemindersProps) => {
   );
 };
 
-export default CalendarViewReminders;
+export default memo(CalendarViewReminders);

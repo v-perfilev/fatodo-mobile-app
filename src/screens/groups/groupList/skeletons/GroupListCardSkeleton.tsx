@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {CARD_ITEMS_COUNT} from '../../../../constants';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
@@ -36,7 +36,7 @@ const GroupListCardInfoSkeleton = () => {
 };
 
 const GroupListCardSkeleton = () => {
-  const indexArray = useMemo(() => Array.from(Array(CARD_ITEMS_COUNT).keys()), []);
+  const indexArray = Array.from(Array(CARD_ITEMS_COUNT).keys());
 
   return (
     <FVStack>

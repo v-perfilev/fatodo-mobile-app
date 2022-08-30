@@ -4,7 +4,6 @@ import {Image} from '../../../models/Image';
 import {FormControl, IFormControlProps} from 'native-base';
 import ImageUploadPreview from './ImageUploadPreview';
 import ImageUploadButtons from './ImageUploadButtons';
-import {flowRight} from 'lodash';
 import FVStack from '../../boxes/FVStack';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
@@ -52,4 +51,4 @@ const ImageUpload = (props: ImageUploadProps) => {
   );
 };
 
-export default flowRight([memo])(ImageUpload);
+export default memo(ImageUpload);

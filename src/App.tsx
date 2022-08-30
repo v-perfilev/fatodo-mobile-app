@@ -2,7 +2,7 @@ import './shared/i18n';
 import './shared/axios';
 import 'text-encoding';
 
-import React, {memo, useEffect} from 'react';
+import React, {memo} from 'react';
 import {LogBox} from 'react-native';
 import {flowRight} from 'lodash';
 import {bindActionCreators} from 'redux';
@@ -20,7 +20,6 @@ import AuthNavigator from './navigators/AuthNavigator';
 import {SnackActions} from './store/snack/snackActions';
 import {AuthActions} from './store/auth/authActions';
 import withWsClient from './shared/hocs/withWs/withWsClient';
-import SplashScreen from 'react-native-splash-screen';
 import Notifications from './shared/push/notifications';
 import NotificationsRemote from './shared/push/notificationsRemote';
 import withRootContainer from './shared/hocs/withContainers/withRootContainer';
@@ -55,11 +54,6 @@ type AppProps = {
 const App = ({ready}: AppProps) => {
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
   const isSleepMode = useAppSelector(AuthSelectors.isSleepMode);
-
-  useEffect(() => {
-    // splash screen (timeout needed for initial navigation event)
-    ready && setTimeout(() => SplashScreen.hide(), 500);
-  }, [ready]);
 
   return (
     <>

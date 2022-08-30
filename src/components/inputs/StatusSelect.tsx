@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback} from 'react';
+import React, {ReactElement, useMemo} from 'react';
 import {ItemStatusType} from '../../models/Item';
 import StatusCreatedIcon from '../icons/StatusCreatedIcon';
 import StatusWipIcon from '../icons/StatusWipIcon';
@@ -14,23 +14,23 @@ type StatusSelectProps = {
 };
 
 export const StatusSelect = ({statusType, setStatusType, loading}: StatusSelectProps) => {
-  const iconByStatusType = useCallback(
-    (statusType: ItemStatusType): ReactElement => {
-      switch (statusType) {
-        case 'CREATED':
-          return <StatusCreatedIcon color="white" size="md" />;
-        case 'WORK_IN_PROGRESS':
-          return <StatusWipIcon color="white" size="md" />;
-        case 'COMPLETED':
-          return <StatusCompletedIcon color="white" size="md" />;
-        case 'CLOSED':
-          return <StatusClosedIcon color="white" size="md" />;
-        default:
-          return <StatusCreatedIcon color="white" size="md" />;
-      }
-    },
-    [statusType, loading],
-  );
+  const getIconByStatusType = (statusType: ItemStatusType): ReactElement => {
+    switch (statusType) {
+      case 'CREATED':
+        return <StatusCreatedIcon />;
+      case 'WORK_IN_PROGRESS':
+        return <StatusWipIcon />;
+      case 'COMPLETED':
+        return <StatusCompletedIcon />;
+      case 'CLOSED':
+        return <StatusClosedIcon />;
+    }
+  };
+
+  const getMenuIcon = (statusType: ItemStatusType) => {
+    const icon = getIconByStatusType(statusType);
+    return React.cloneElement(icon, {color: 'primary.500', size: 'md'});
+  };
 
   const setStatusToCreated = (): void => {
     if (statusType !== 'CREATED') {
@@ -59,26 +59,31 @@ export const StatusSelect = ({statusType, setStatusType, loading}: StatusSelectP
   const menuItems: MenuItemProps[] = [
     {
       action: setStatusToCreated,
-      icon: <StatusCreatedIcon color="primary.500" size="md" />,
+      icon: getMenuIcon('CREATED'),
     },
     {
       action: setStatusToWip,
-      icon: <StatusWipIcon color="primary.500" size="md" />,
+      icon: getMenuIcon('WORK_IN_PROGRESS'),
     },
     {
       action: setStatusToCompleted,
-      icon: <StatusCompletedIcon color="primary.500" size="md" />,
+      icon: getMenuIcon('COMPLETED'),
     },
     {
       action: setStatusToClosed,
-      icon: <StatusClosedIcon color="primary.500" size="md" />,
+      icon: getMenuIcon('CLOSED'),
     },
   ];
+
+  const activeIcon = useMemo<ReactElement>(() => {
+    const icon = getIconByStatusType(statusType);
+    return React.cloneElement(icon, {color: 'white', size: 'md'});
+  }, [statusType]);
 
   return (
     <Menu
       trigger={(triggerProps) => (
-        <SolidButton w="30px" h="30px" isLoading={loading} leftIcon={iconByStatusType(statusType)} {...triggerProps} />
+        <SolidButton w="30px" h="30px" isLoading={loading} leftIcon={activeIcon} {...triggerProps} />
       )}
     >
       {menuItems.map((itemProps, index) => (

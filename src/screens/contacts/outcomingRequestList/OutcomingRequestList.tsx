@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect} from 'react';
+import React, {ReactElement, useEffect} from 'react';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
@@ -23,14 +23,11 @@ const OutcomingRequestList = () => {
     await dispatch(ContactsActions.fetchOutcomingRequestsThunk());
   };
 
-  const keyExtractor = useCallback((relation: ContactRequest): string => relation.id, []);
-  const renderItem = useCallback(
-    (request: ContactRequest, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-        <OutcomingRequestListItem request={request} />
-      </Box>
-    ),
-    [],
+  const keyExtractor = (relation: ContactRequest): string => relation.id;
+  const renderItem = (request: ContactRequest, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+      <OutcomingRequestListItem request={request} />
+    </Box>
   );
 
   useEffect(() => {

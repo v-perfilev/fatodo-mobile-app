@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ComponentType, useCallback, useEffect} from 'react';
+import {ComponentType, useEffect} from 'react';
 import {useDialogContext} from '../../contexts/dialogContexts/DialogContext';
 import ContactRequestDialog, {
   ContactRequestDialogProps,
@@ -14,14 +14,14 @@ enum ContactDialogs {
 const withContactDialogs = (Component: ComponentType) => (props: any) => {
   const {handleDialog, setDialogProps, clearDialogProps} = useDialogContext();
 
-  const showContactRequestDialog = useCallback((): void => {
+  const showContactRequestDialog = (): void => {
     const show = true;
     const close = (): void => {
       clearDialogProps(ContactDialogs.REQUEST);
     };
     const props: ContactRequestDialogProps = {show, close};
     setDialogProps(ContactDialogs.REQUEST, props);
-  }, [setDialogProps, clearDialogProps]);
+  };
 
   const initDialogs = (): void => {
     handleDialog(ContactDialogs.REQUEST, ContactRequestDialog, defaultContactRequestDialogProps);

@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
 import Header from '../../../components/layouts/Header';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
@@ -20,35 +20,53 @@ const CalendarView = () => {
   const isFocused = useIsFocused();
   const [activeMonth, setActiveMonth] = useState<CalendarMonth>(getInitialMonth());
   const listRef = useRef<FlatListType>();
+  const initialIndex = useRef<number>(getInitialIndex(activeMonth));
+  const canMomentum = useRef<boolean>(false);
 
-  const loadReminders = (): void => {
+  const loadReminders = useCallback((): void => {
     dispatch(CalendarActions.handleMonthThunk(activeMonth));
-  };
+  }, [activeMonth]);
 
-  const scrollToItem = (index: number, animated = true): void => {
-    listRef.current?.scrollToIndex({index, animated});
-  };
+  const scrollToItem = useCallback(
+    (index: number, animated = true): void => {
+      listRef.current?.scrollToIndex({index, animated});
+    },
+    [listRef.current],
+  );
 
-  const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
-    const offset = event.nativeEvent.contentOffset.x;
-    const index = Math.round(offset / width);
-    if (index < months.length) {
-      setActiveMonth(months[index]);
+  const handleScrollBegin = useCallback((): void => {
+    canMomentum.current = true;
+  }, []);
+
+  const handleScrollEnd = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>): void => {
+    if (canMomentum.current) {
+      const offset = event.nativeEvent.contentOffset.x;
+      const index = Math.round(offset / width);
+      if (index < months.length) {
+        setActiveMonth(months[index]);
+      }
     }
-  };
+    canMomentum.current = false;
+  }, []);
 
-  const selectMonth = (month: CalendarItem): void => {
+  const selectMonth = useCallback((month: CalendarItem): void => {
     const key = CalendarUtils.buildMonthKey(month.year, month.month);
     const index = monthKeys.indexOf(key);
     if (index && index >= 0 && index < months.length) {
       scrollToItem(index, false);
       setActiveMonth(months[index]);
     }
-  };
+  }, []);
 
-  const keyExtractor = (month: CalendarMonth): string => month.key;
-  const renderItem = (month: CalendarMonth): ReactElement => (
-    <CalendarViewContainer month={month} selectMonth={selectMonth} activeMonth={activeMonth} width={width} />
+  const keyExtractor = useCallback((month: CalendarMonth): string => month.key, []);
+  const renderItem = useCallback(
+    (month: CalendarMonth): ReactElement => {
+      const isActiveMonth = activeMonth?.key === month.key;
+      return (
+        <CalendarViewContainer month={month} selectMonth={selectMonth} isActiveMonth={isActiveMonth} width={width} />
+      );
+    },
+    [activeMonth],
   );
 
   useEffect(() => {
@@ -67,7 +85,8 @@ const CalendarView = () => {
         pagingEnabled
         decelerationRate="fast"
         fixedLength={width}
-        initialScrollIndex={getInitialIndex(activeMonth)}
+        initialScrollIndex={initialIndex.current}
+        onMomentumScrollBegin={handleScrollBegin}
         onMomentumScrollEnd={handleScrollEnd}
         initialNumToRender={1}
         maxToRenderPerBatch={3}

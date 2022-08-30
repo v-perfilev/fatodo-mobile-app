@@ -10,6 +10,7 @@ import {SecurityUtils} from '../../utils/SecurityUtils';
 import {AppState, NativeEventSubscription} from 'react-native';
 import {SLEEP_MODE_TIMEOUT} from '../../../constants';
 import {RootActions} from '../../../store/rootActions';
+import SplashScreen from 'react-native-splash-screen';
 
 export type WithRootProps = {
   ready: boolean;
@@ -81,6 +82,11 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   useEffect(() => {
     isAuthenticated && refresh();
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    // splash screen (timeout needed for initial navigation event)
+    ready && setTimeout(() => SplashScreen.hide(), 500);
+  }, [ready]);
 
   return <Component ready={ready} {...props} />;
 };

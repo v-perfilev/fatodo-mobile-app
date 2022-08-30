@@ -41,12 +41,4 @@ const CalendarViewDate = ({date, selectDate, isActiveDate, reminders}: CalendarV
   );
 };
 
-const arePropsEqual = (prevProps: CalendarViewDateProps, nextProps: CalendarViewDateProps): boolean => {
-  const isDateEqual = prevProps.date === nextProps.date;
-  const isIsActiveEqual = prevProps.isActiveDate === nextProps.isActiveDate;
-  const areRemindersEqual = JSON.stringify(prevProps.reminders) === JSON.stringify(nextProps.reminders);
-
-  return isDateEqual && isIsActiveEqual && areRemindersEqual;
-};
-
-export default memo(CalendarViewDate, arePropsEqual);
+export default memo(CalendarViewDate);

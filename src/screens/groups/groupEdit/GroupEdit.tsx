@@ -1,10 +1,9 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupForm from '../groupForm/GroupForm';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {useAppDispatch} from '../../../store/store';
-import {Theme} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import Header from '../../../components/layouts/Header';
@@ -17,6 +16,7 @@ type GroupEditProps = WithGroupProps;
 const GroupEdit = ({group, loading}: GroupEditProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
+  const theme = ThemeFactory.getTheme(group?.color);
 
   const goBack = (): void => navigation.goBack();
   const goToGroupView = (): void =>
@@ -28,10 +28,6 @@ const GroupEdit = ({group, loading}: GroupEditProps) => {
       .then(() => goToGroupView())
       .catch(() => stopSubmitting());
   };
-
-  const theme = useMemo<Theme>(() => {
-    return group ? ThemeFactory.getTheme(group?.color) : ThemeFactory.getDefaultTheme();
-  }, [group]);
 
   return (
     <ThemeProvider theme={theme}>

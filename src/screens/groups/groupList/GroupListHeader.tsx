@@ -4,7 +4,6 @@ import CheckIcon from '../../../components/icons/CheckIcon';
 import CloseIcon from '../../../components/icons/CloseIcon';
 import ReorderIcon from '../../../components/icons/ReorderIcon';
 import CollapsedIcon from '../../../components/icons/CollapsedIcon';
-import {flowRight} from 'lodash';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import IconButton from '../../../components/controls/IconButton';
@@ -85,4 +84,4 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
   );
 };
 
-export default flowRight([memo])(GroupListHeader);
+export default memo(GroupListHeader);

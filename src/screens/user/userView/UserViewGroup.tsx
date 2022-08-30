@@ -1,7 +1,6 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {Box, Text} from 'native-base';
 import {Group} from '../../../models/Group';
-import {Theme} from 'native-base/src/theme';
 import {LINEAR_GRADIENT, ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import PressableButton from '../../../components/controls/PressableButton';
@@ -16,10 +15,9 @@ type UserViewGroupProps = {
 
 const UserViewGroup = ({group}: UserViewGroupProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
+  const theme = ThemeFactory.getTheme(group.color);
 
   const goToGroupView = (): void => navigation.navigate('GroupView', {group});
-
-  const theme = useMemo<Theme>(() => ThemeFactory.getTheme(group.color), [group]);
 
   return (
     <ThemeProvider theme={theme}>
