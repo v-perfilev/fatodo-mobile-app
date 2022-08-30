@@ -47,8 +47,10 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
 
   const handleClickOnSubmit = (values: SignUpFormValues): void => {
     dispatch(AuthActions.loading(true));
-    setFormValues(values);
-    requestCaptchaToken();
+    requestAnimationFrame(() => {
+      setFormValues(values);
+      requestCaptchaToken();
+    });
   };
 
   const handleSubmit = (): void => {

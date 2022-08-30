@@ -19,7 +19,9 @@ const AccountView = () => {
 
   const logout = useCallback((): void => {
     dispatch(AuthActions.logout());
-    dispatch(RootActions.resetState());
+    requestAnimationFrame(() => {
+      dispatch(RootActions.resetState());
+    });
   }, [dispatch]);
 
   return (

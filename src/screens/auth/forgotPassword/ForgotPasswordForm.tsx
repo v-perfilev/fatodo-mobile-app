@@ -37,8 +37,10 @@ const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: Forg
 
   const handleClickOnSubmit = (values: ForgotPasswordFormValues): void => {
     dispatch(AuthActions.loading(true));
-    setFormValues(values);
-    requestCaptchaToken();
+    requestAnimationFrame(() => {
+      setFormValues(values);
+      requestCaptchaToken();
+    });
   };
 
   const handleSubmit = (): void => {

@@ -12,10 +12,10 @@ type LogoProps = {
 
 const Logo = ({size = 50, withText, centerText}: LogoProps) => {
   return (
-    <FHStack defaultSpace alignItems="center">
+    <FHStack alignItems="center">
       <Image source={img} width={size} height={size} alt="Fatodo logo" />
       {withText && (
-        <Heading size="3xl" color="primary.500" mr={centerText ? size : 0}>
+        <Heading size="3xl" color="primary.500" px={2} mr={centerText ? size : 0}>
           Fatodo
         </Heading>
       )}

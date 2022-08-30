@@ -41,8 +41,10 @@ const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
 
   const handleClickOnSubmit = (values: SignInFormValues): void => {
     dispatch(AuthActions.loading(true));
-    setFormValues(values);
-    requestCaptchaToken();
+    requestAnimationFrame(() => {
+      setFormValues(values);
+      requestCaptchaToken();
+    });
   };
 
   const handleSubmit = (): void => {
