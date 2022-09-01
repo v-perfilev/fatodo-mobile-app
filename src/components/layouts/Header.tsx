@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useEffect, useState} from 'react';
+import React, {memo, PropsWithChildren, useEffect, useState} from 'react';
 import {Text} from 'native-base';
 import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
@@ -27,7 +27,7 @@ const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle
 
   const label = title || t('routes.' + route.name);
 
-  const goBack = (): void => navigation.goBack();
+  const goBack = () => navigation.goBack();
 
   useEffect(() => {
     isFocused && setCanGoBack(navigation.canGoBack());
@@ -55,4 +55,4 @@ const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle
   );
 };
 
-export default Header;
+export default memo(Header);

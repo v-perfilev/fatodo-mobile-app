@@ -11,16 +11,14 @@ type ColoredStatusBarProps = {
 
 const ColoredStatusBar = ({bgColor, barStyle}: ColoredStatusBarProps) => {
   const isFocused = useIsFocused();
-  const theme = useTheme();
-  const {setTheme} = useTabBarContext();
+  const contextTheme = useTheme();
+  const {theme, setTheme} = useTabBarContext();
 
   useEffect(() => {
-    if (setTheme && theme && isFocused) {
-      setTheme(theme);
-    }
-  }, [isFocused, theme]);
+    setTheme && contextTheme && isFocused && setTheme(contextTheme);
+  }, [isFocused, contextTheme]);
 
-  const backgroundColor = bgColor || theme.colors.primary['800'];
+  const backgroundColor = bgColor || theme?.colors.primary['800'] || contextTheme?.colors.primary['800'];
   const style = barStyle || 'light-content';
 
   return (
