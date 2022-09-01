@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {AUTHORIZATION_HEADER, AUTHORIZATION_PREFIX} from '../../constants';
 import {SecurityUtils} from '../../shared/utils/SecurityUtils';
 import {useAppSelector} from '../../store/store';
@@ -90,4 +90,4 @@ const WsClient = ({active, url, topics, onMessage, debug}: WsClientProps) => {
   return <Box />;
 };
 
-export default memo(WsClient);
+export default WsClient;

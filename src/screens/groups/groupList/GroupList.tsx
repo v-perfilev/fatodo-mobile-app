@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import GroupListHeader from './GroupListHeader';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {GroupsActions} from '../../../store/groups/groupsActions';
@@ -130,4 +130,4 @@ const GroupList = () => {
   return sorting ? draggableList : flatList;
 };
 
-export default GroupList;
+export default memo(GroupList);

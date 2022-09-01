@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Divider} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
@@ -24,6 +24,7 @@ import {RootNavigationProp} from '../../../navigators/RootNavigator';
 import {CornerButton} from '../../../models/CornerButton';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
+import {flowRight} from 'lodash';
 
 type ItemViewProps = WithItemProps;
 
@@ -66,4 +67,4 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
   );
 };
 
-export default withItemContainer(ItemView);
+export default flowRight([memo, withItemContainer])(ItemView);

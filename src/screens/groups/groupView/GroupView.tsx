@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Box} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
@@ -25,6 +25,7 @@ import CornerManagement from '../../../components/controls/CornerManagement';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '../../../navigators/RootNavigator';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
+import {flowRight} from 'lodash';
 
 type GroupViewProps = WithGroupProps;
 
@@ -142,4 +143,4 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   );
 };
 
-export default withGroupContainer(GroupView);
+export default flowRight([memo, withGroupContainer])(GroupView);

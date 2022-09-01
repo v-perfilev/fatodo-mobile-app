@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
+import React, {memo, ReactElement, useCallback, useEffect, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
@@ -61,4 +61,4 @@ const IncomingRequestList = () => {
   );
 };
 
-export default IncomingRequestList;
+export default memo(IncomingRequestList);

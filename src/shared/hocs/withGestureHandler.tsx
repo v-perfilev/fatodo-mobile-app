@@ -1,6 +1,7 @@
-import React, {ComponentType} from 'react';
+import React, {ComponentType, memo} from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {StyleProp} from 'react-native';
+import {flowRight} from 'lodash';
 
 const withGestureHandler = (Component: ComponentType) => (props: any) => {
   const style: StyleProp<any> = {flex: 1};
@@ -12,4 +13,4 @@ const withGestureHandler = (Component: ComponentType) => (props: any) => {
   );
 };
 
-export default withGestureHandler;
+export default flowRight([memo, withGestureHandler]);

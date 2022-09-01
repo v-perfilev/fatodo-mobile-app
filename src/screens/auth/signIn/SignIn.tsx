@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import SignInForm from './SignInForm';
 import Logo from '../../../components/layouts/Logo';
 import LinkButton from '../../../components/controls/LinkButton';
@@ -38,4 +38,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default memo(SignIn);

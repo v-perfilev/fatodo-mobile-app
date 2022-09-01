@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction, useCallback, useMemo} from 'react';
+import React, {Dispatch, memo, SetStateAction, useCallback, useMemo} from 'react';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarDate, CalendarMonth} from '../../../models/Calendar';
 import FHStack from '../../../components/boxes/FHStack';
@@ -41,4 +41,4 @@ const CalendarViewMonth = ({month, activeDate, selectDate, reminderMap, width}: 
   );
 };
 
-export default CalendarViewMonth;
+export default memo(CalendarViewMonth);

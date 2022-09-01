@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {ComponentType} from 'react';
+import {ComponentType, memo} from 'react';
 import {Provider} from 'react-redux';
 import {store} from '../../store/store';
+import {flowRight} from 'lodash';
 
 const withStore = (Component: ComponentType) => (props: any) => {
   return (
@@ -11,4 +12,4 @@ const withStore = (Component: ComponentType) => (props: any) => {
   );
 };
 
-export default withStore;
+export default flowRight([memo, withStore]);

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ComponentType, useEffect, useRef} from 'react';
+import {ComponentType, memo, useEffect, useRef} from 'react';
 import WsClient from '../../../components/ws/WsClient';
 import {WS_ROOT_TOPIC, WS_URL} from '../../../constants';
 import {WsEvent} from '../../../models/Ws';
@@ -9,6 +9,7 @@ import {WsStateHandler} from './WsStateHandler';
 import {WsPushHandler} from './WsPushHandler';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {useTranslation} from 'react-i18next';
+import {flowRight} from 'lodash';
 
 const withWsClient = (Component: ComponentType) => (props: any) => {
   const dispatch = useAppDispatch();
@@ -41,4 +42,4 @@ const withWsClient = (Component: ComponentType) => (props: any) => {
   );
 };
 
-export default withWsClient;
+export default flowRight([memo, withWsClient]);

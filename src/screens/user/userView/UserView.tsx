@@ -1,6 +1,6 @@
 import withUserContainer, {WithUserProps} from '../../../shared/hocs/withContainers/withUserContainer';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import React from 'react';
+import React, {memo} from 'react';
 import Header from '../../../components/layouts/Header';
 import UserFullView from '../../../components/views/UserFullView';
 import FVStack from '../../../components/boxes/FVStack';
@@ -9,6 +9,7 @@ import {Divider} from 'native-base';
 import UserViewControl from './UserViewControl';
 import UserViewRelations from './UserViewRelations';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
+import {flowRight} from 'lodash';
 
 type UserViewProps = WithUserProps;
 
@@ -33,4 +34,4 @@ const UserView = ({user, loading}: UserViewProps) => {
   );
 };
 
-export default withUserContainer(UserView);
+export default flowRight([memo, withUserContainer])(UserView);

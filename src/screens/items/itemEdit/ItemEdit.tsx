@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
@@ -12,6 +12,7 @@ import Header from '../../../components/layouts/Header';
 import {ItemActions} from '../../../store/item/itemActions';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
+import {flowRight} from 'lodash';
 
 type ItemEditProps = WithItemProps;
 
@@ -49,4 +50,4 @@ const ItemEdit = ({group, item, loading}: ItemEditProps) => {
   );
 };
 
-export default withItemContainer(ItemEdit);
+export default flowRight([memo, withItemContainer])(ItemEdit);

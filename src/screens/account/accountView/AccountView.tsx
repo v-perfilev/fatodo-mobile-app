@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {AuthActions} from '../../../store/auth/authActions';
@@ -46,4 +46,4 @@ const AccountView = () => {
   );
 };
 
-export default AccountView;
+export default memo(AccountView);

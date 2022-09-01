@@ -1,5 +1,6 @@
-import React, {ComponentType} from 'react';
+import React, {ComponentType, memo} from 'react';
 import ThemeProvider from '../../components/layouts/ThemeProvider';
+import {flowRight} from 'lodash';
 
 const withNativeBase = (Component: ComponentType) => (props: any) => {
   return (
@@ -9,4 +10,4 @@ const withNativeBase = (Component: ComponentType) => (props: any) => {
   );
 };
 
-export default withNativeBase;
+export default flowRight([memo, withNativeBase]);

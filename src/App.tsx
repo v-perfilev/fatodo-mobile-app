@@ -2,7 +2,7 @@ import './shared/i18n';
 import './shared/axios';
 import 'text-encoding';
 
-import React, {memo} from 'react';
+import React from 'react';
 import {LogBox} from 'react-native';
 import {flowRight} from 'lodash';
 import {bindActionCreators} from 'redux';
@@ -72,5 +72,4 @@ export default flowRight([
   withWsClient,
   withDialogs,
   withRootContainer,
-  memo,
 ])(App);

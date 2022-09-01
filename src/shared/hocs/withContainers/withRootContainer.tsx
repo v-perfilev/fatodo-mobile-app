@@ -1,4 +1,4 @@
-import React, {ComponentType, useEffect, useRef, useState} from 'react';
+import React, {ComponentType, memo, useEffect, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
@@ -11,6 +11,7 @@ import {AppState, NativeEventSubscription} from 'react-native';
 import {SLEEP_MODE_TIMEOUT} from '../../../constants';
 import {RootActions} from '../../../store/rootActions';
 import SplashScreen from 'react-native-splash-screen';
+import {flowRight} from 'lodash';
 
 export type WithRootProps = {
   ready: boolean;
@@ -91,4 +92,4 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   return <Component ready={ready} {...props} />;
 };
 
-export default withRootContainer;
+export default flowRight([memo, withRootContainer]);

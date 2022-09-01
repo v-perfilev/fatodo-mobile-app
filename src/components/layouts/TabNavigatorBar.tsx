@@ -29,7 +29,9 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
   const badge = options.tabBarBadge;
   const opacity = isFocused ? 1 : 0.7;
 
-  const onPress = () => navigation.navigate(routeName);
+  const onPress = () => {
+    requestAnimationFrame(() => navigation.navigate(routeName));
+  };
 
   const showBadgeNode = badge !== undefined && badge !== 0;
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupForm from '../groupForm/GroupForm';
@@ -10,6 +10,7 @@ import Header from '../../../components/layouts/Header';
 import {GroupActions} from '../../../store/group/groupActions';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
+import {flowRight} from 'lodash';
 
 type GroupEditProps = WithGroupProps;
 
@@ -41,4 +42,4 @@ const GroupEdit = ({group, loading}: GroupEditProps) => {
   );
 };
 
-export default withGroupContainer(GroupEdit);
+export default flowRight([memo, withGroupContainer])(GroupEdit);
