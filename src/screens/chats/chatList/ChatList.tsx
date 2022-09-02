@@ -111,7 +111,7 @@ const ChatList = () => {
 
   const buttons: CornerButton[] = [
     {icon: <PlusIcon />, action: openCreateChatDialog},
-    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true},
+    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
   ];
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,

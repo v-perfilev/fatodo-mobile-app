@@ -26,12 +26,15 @@ import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '../../../navigators/RootNavigator';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
 import {flowRight} from 'lodash';
+import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
+import PlusIcon from '../../../components/icons/PlusIcon';
 
 type GroupViewProps = WithGroupProps;
 
 const GroupView = ({group, loading}: GroupViewProps) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<RootNavigationProp>();
+  const rootNavigation = useNavigation<RootNavigationProp>();
+  const groupNavigation = useNavigation<GroupNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const activeItems = useAppSelector(GroupSelectors.activeItems);
   const archivedItems = useAppSelector(GroupSelectors.archivedItems);
@@ -44,7 +47,12 @@ const GroupView = ({group, loading}: GroupViewProps) => {
 
   const canEdit = group && GroupUtils.canEdit(account, group);
 
-  const goToComments = (): void => navigation.navigate('CommentList', {targetId: group.id, colorScheme: group.color});
+  const goToItemCreate = (): void => groupNavigation.navigate('ItemCreate', {group});
+  const goToComments = (): void =>
+    rootNavigation.navigate('CommentList', {
+      targetId: group.id,
+      colorScheme: group.color,
+    });
 
   /*
   loaders
@@ -115,8 +123,9 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   const stub = useMemo<ReactElement>(() => <GroupViewStub />, []);
 
   const buttons: CornerButton[] = [
+    {icon: <PlusIcon />, action: goToItemCreate, hidden: !canEdit},
     {icon: <CommentsIcon />, action: goToComments},
-    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true},
+    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
   ];
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,

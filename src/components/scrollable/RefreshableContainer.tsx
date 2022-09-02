@@ -3,7 +3,6 @@ import React, {memo, MutableRefObject, ReactElement, useEffect, useRef} from 're
 import {FlatListType} from './FlatList';
 import {NativeViewGestureHandler, PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlerCommon';
-import {useSharedValue} from 'react-native-reanimated';
 import {MAX_REFRESH_HEIGHT} from '../../constants';
 import {useDelayedState} from '../../shared/hooks/useDelayedState';
 
@@ -30,9 +29,10 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   const scrollY = useRef<Animated.Value>(new Animated.Value(0));
   const extraScrollY = useRef<Animated.Value>(new Animated.Value(0));
 
-  const shouldRefresh = useSharedValue<boolean>(false);
-  const scrollYValue = useSharedValue<number>(0);
-  const overscrollInitValue = useSharedValue<number>(undefined);
+  const shouldRefresh = useRef<boolean>(false);
+  const scrollYValue = useRef<number>(0);
+  const overscrollEnabled = useRef<boolean>(true);
+  const overscrollInitValue = useRef<number>(undefined);
 
   /*
   scrollY handlers
@@ -55,38 +55,49 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
     }).start();
   };
 
+  const handleGestureBegan = (): void => {
+    if (scrollYValue.current <= 0) {
+      overscrollEnabled.current = true;
+    }
+  };
+
   const handleGestureEvent = (event: GestureEvent<any>) => {
     const translationY = inverted ? -event.nativeEvent.translationY : event.nativeEvent.translationY;
-    if (!overscrollInitValue.value && scrollYValue.value === 0) {
-      overscrollInitValue.value = translationY;
-    } else if (!!overscrollInitValue.value && scrollYValue.value !== 0) {
-      overscrollInitValue.value = undefined;
+
+    if (overscrollEnabled.current && !overscrollInitValue.current && scrollYValue.current === 0) {
+      overscrollInitValue.current = translationY;
+    } else if (!!overscrollInitValue.current && scrollYValue.current !== 0) {
+      overscrollInitValue.current = undefined;
       extraScrollY.current.setValue(0);
-    } else if (overscrollInitValue.value > 0) {
-      const extraScroll = translationY - overscrollInitValue.value;
+    } else if (overscrollInitValue.current > 0) {
+      const extraScroll = translationY - overscrollInitValue.current;
       if (extraScroll > MAX_REFRESH_HEIGHT) {
         extraScrollY.current.setValue(MAX_REFRESH_HEIGHT);
-        overscrollInitValue.value = translationY - MAX_REFRESH_HEIGHT;
-        shouldRefresh.value = true;
+        overscrollInitValue.current = translationY - MAX_REFRESH_HEIGHT;
+        shouldRefresh.current = true;
       } else {
         extraScrollY.current.setValue(extraScroll);
-        shouldRefresh.value = false;
+        shouldRefresh.current = false;
       }
+    }
+
+    if (scrollYValue.current > 0) {
+      overscrollEnabled.current = false;
     }
   };
 
   const handleGestureEnded = (): void => {
-    if (overscrollInitValue.value) {
-      if (!shouldRefresh.value) {
+    overscrollEnabled.current = false;
+
+    if (overscrollInitValue.current) {
+      if (!shouldRefresh.current) {
         closeLoader();
       } else {
         setRefreshing(true);
-        requestAnimationFrame(() => {
-          refresh().finally(() => setRefreshing(false));
-        });
+        refresh().finally(() => setRefreshing(false));
       }
-      overscrollInitValue.value = undefined;
-      shouldRefresh.value = false;
+      overscrollInitValue.current = undefined;
+      shouldRefresh.current = false;
     }
   };
 
@@ -96,7 +107,7 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   }, [parentScrollY]);
 
   useEffect(() => {
-    scrollY.current?.addListener(({value}) => (scrollYValue.value = value));
+    scrollY.current?.addListener(({value}) => (scrollYValue.current = value));
     return () => scrollY.current?.removeAllListeners();
   }, [scrollY.current]);
 
@@ -115,11 +126,12 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
 
   return (
     <PanGestureHandler
+      onBegan={refreshGesturesAllowed ? handleGestureBegan : undefined}
       onGestureEvent={refreshGesturesAllowed ? handleGestureEvent : undefined}
       onEnded={refreshGesturesAllowed ? handleGestureEnded : undefined}
       ref={panRef}
       simultaneousHandlers={nativeRef}
-      activeOffsetY={[-10, 10]}
+      activeOffsetY={[-15, 15]}
     >
       <NativeViewGestureHandler ref={nativeRef} simultaneousHandlers={panRef}>
         {children(childrenProps)}

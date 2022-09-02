@@ -1,7 +1,6 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import DeleteIcon from '../../../components/icons/DeleteIcon';
 import EditIcon from '../../../components/icons/EditIcon';
-import PlusIcon from '../../../components/icons/PlusIcon';
 import {useTranslation} from 'react-i18next';
 import LeaveIcon from '../../../components/icons/LeaveIcon';
 import UserPlusIcon from '../../../components/icons/UserPlusIcon';
@@ -36,7 +35,7 @@ const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) 
   const toggleShowArchived = (): void => setShowArchived((prevState) => !prevState);
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
-  const goToItemCreate = (): void => navigation.navigate('ItemCreate', {group});
+
   const goToGroupEdit = (): void => navigation.navigate('GroupEdit', {group});
 
   const openGroupMembersDialog = (): void => {
@@ -58,7 +57,6 @@ const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) 
   };
 
   const canAdmin = group && GroupUtils.canAdmin(account, group);
-  const canEdit = group && GroupUtils.canEdit(account, group);
   const canLeave = group && GroupUtils.canLeave(account, group);
 
   const menuElements: MenuItemProps[] = [
@@ -88,7 +86,6 @@ const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) 
 
   return (
     <Header title={group?.title} imageFilename={group?.imageFilename} hideLogo>
-      {canEdit && <IconButton colorScheme="white" size="xl" p="1.5" icon={<PlusIcon />} onPress={goToItemCreate} />}
       <IconButton colorScheme="white" size="xl" p="1.5" icon={switchArchivedIcon} onPress={toggleShowArchived} />
       <Menu
         trigger={(triggerProps) => (

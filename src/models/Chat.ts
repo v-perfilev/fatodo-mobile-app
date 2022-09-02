@@ -4,7 +4,7 @@ import {Message} from './Message';
 export interface ChatInfo {
   id: string;
   title: string;
-  members: string[];
+  members: ChatMember[];
 }
 
 export interface Chat extends AbstractAuditing {

@@ -19,7 +19,7 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref: any) => {
   const color = prepareColor(colorScheme);
   const bgColor = bgColorScheme !== null ? prepareBgColor(bgColorScheme || colorScheme) : undefined;
 
-  const iconElement = React.cloneElement(icon, {color, size});
+  const iconElement = React.cloneElement(icon, {size, color});
 
   return (
     <PressableButton {...other} ref={ref} rounded="full" overflow="hidden">

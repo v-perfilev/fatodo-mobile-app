@@ -15,7 +15,7 @@ export class ChatUtils {
   };
 
   public static getDirectChatUser = (chat: Chat, users: Map<string, User>, account: User): User => {
-    const memberId = chat.members.find((id) => id !== account.id);
+    const memberId = chat.members.map((m) => m.userId).find((id) => id !== account.id);
     return chat.isDirect && memberId ? users.get(memberId) : null;
   };
 
@@ -23,6 +23,7 @@ export class ChatUtils {
     return chat.title
       ? chat.title
       : chat.members
+          .map((m) => m.userId)
           .filter((id) => id !== account.id)
           .map((id) => users.get(id))
           .map((user) => user.username)
@@ -30,7 +31,7 @@ export class ChatUtils {
   };
 
   public static extractUserIds = (chats: Chat[]): string[] => {
-    const chatUserIds = chats.flatMap((c) => c.members);
+    const chatUserIds = chats.flatMap((c) => c.members).map((m) => m.userId);
     const lastMessageUserIds = chats.map((c) => c.lastMessage.userId);
     const eventUserIds = chats
       .map((c) => c.lastMessage)

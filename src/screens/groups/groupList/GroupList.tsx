@@ -93,7 +93,7 @@ const GroupList = () => {
 
   const buttons: CornerButton[] = [
     {icon: <PlusIcon />, action: goToGroupCreate},
-    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true},
+    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
   ];
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
