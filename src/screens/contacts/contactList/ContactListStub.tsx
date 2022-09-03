@@ -5,7 +5,7 @@ import StubBox from '../../../components/surfaces/StubBox';
 const ContactListStub = () => {
   const {t} = useTranslation();
 
-  return <StubBox mb="60px">{t('contact:relations.relationsNotFound')}</StubBox>;
+  return <StubBox mb="55px">{t('contact:relations.relationsNotFound')}</StubBox>;
 };
 
 export default ContactListStub;

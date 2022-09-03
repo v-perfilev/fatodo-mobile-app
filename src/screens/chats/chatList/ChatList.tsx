@@ -121,7 +121,7 @@ const ChatList = () => {
   return (
     <CollapsableRefreshableFlatList
       header={header}
-      headerHeight={HEADER_HEIGHT}
+      headerHeight={0}
       refresh={type === 'regular' ? refresh : undefined}
       previousNode={previousNode}
       previousNodeHeight={50}

@@ -339,7 +339,7 @@ export class WsEventHandler {
     const targetId = msg.payload.targetId;
     const commentId = msg.payload.id;
     const commentEvent: CommentEvent = {userId, parentId, targetId, commentId};
-    const event: Event = {type: EventType.COMMENT_ADD, commentEvent, date: msg.date};
+    const event: Event = {type: EventType.COMMENT_CREATE, commentEvent, date: msg.date};
     this.dispatch(EventsActions.addEvent(event));
   };
 

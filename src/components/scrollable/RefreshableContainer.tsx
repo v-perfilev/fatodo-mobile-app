@@ -33,8 +33,8 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
 
   const translateY = extraScrollY.current.interpolate({
     inputRange: [0, MAX_REFRESH_HEIGHT],
-    outputRange: [-REFRESH_HEIGHT, 0],
-    extrapolateLeft: 'clamp',
+    outputRange: [inverted ? REFRESH_HEIGHT : -REFRESH_HEIGHT, 0],
+    extrapolate: 'clamp',
   });
 
   /*
@@ -84,30 +84,22 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   }, []);
 
   const handleGestureEvent = useCallback((event: GestureEvent<any>) => {
-    const translationY = inverted ? -event.nativeEvent.translationY : event.nativeEvent.translationY;
-
-    if (overscrollEnabled.current && !overscrollInitValue.current && scrollYValue.current === 0) {
-      overscrollInitValue.current = translationY;
-    } else if (!!overscrollInitValue.current && scrollYValue.current !== 0) {
+    if (scrollYValue.current > 0) {
       overscrollInitValue.current = undefined;
-      extraScrollY.current.setValue(0);
-    } else if (overscrollInitValue.current > 0) {
+      overscrollEnabled.current = false;
+      return;
+    }
+    const translationY = inverted ? -event.nativeEvent.translationY : event.nativeEvent.translationY;
+    if (overscrollInitValue.current) {
       const extraScroll = translationY - overscrollInitValue.current;
-      if (extraScroll > REFRESH_HEIGHT) {
-        extraScrollY.current.setValue(extraScroll);
-        shouldRefresh.current = true;
-      } else {
-        extraScrollY.current.setValue(extraScroll);
-        shouldRefresh.current = false;
-      }
       if (extraScroll > MAX_REFRESH_HEIGHT) {
-        extraScrollY.current.setValue(MAX_REFRESH_HEIGHT);
         overscrollInitValue.current = translationY - MAX_REFRESH_HEIGHT;
       }
+      extraScrollY.current.setValue(Math.min(extraScroll, MAX_REFRESH_HEIGHT));
+      shouldRefresh.current = extraScroll > REFRESH_HEIGHT;
     }
-
-    if (scrollYValue.current > 0) {
-      overscrollEnabled.current = false;
+    if (overscrollEnabled.current && !overscrollInitValue.current) {
+      overscrollInitValue.current = translationY;
     }
   }, []);
 
@@ -156,17 +148,17 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
     [],
   );
 
-  const childrenProps: RefreshableChildrenProps = {
-    refresher,
-    handleEventScroll,
-  };
-
   const childrenWithProps = useMemo<ReactElement>(
-    () => children(childrenProps),
+    () => children({refresher, handleEventScroll}),
     [children, refresher, handleEventScroll],
   );
 
-  const containerStyle: StyleProp<any> = {display: 'flex', flexGrow: 1, marginBottom: -REFRESH_HEIGHT};
+  const containerStyle: StyleProp<any> = {
+    display: 'flex',
+    flexGrow: 1,
+    marginTop: inverted ? -REFRESH_HEIGHT : undefined,
+    marginBottom: !inverted ? -REFRESH_HEIGHT : undefined,
+  };
   const animatedContainerStyle = {transform: [{translateY}]};
 
   return (

@@ -1,5 +1,5 @@
 import {Animated, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleProp, View} from 'react-native';
-import React, {memo, MutableRefObject, ReactElement, useCallback, useEffect, useRef} from 'react';
+import React, {memo, MutableRefObject, ReactElement, useCallback, useEffect, useMemo, useRef} from 'react';
 import {FlatListType} from './FlatList';
 import {HEADER_HEIGHT} from '../../constants';
 
@@ -82,10 +82,15 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
     scrollY: scrollY.current,
   };
 
+  const childWithProps = useMemo<ReactElement>(
+    () => children(childrenProps),
+    [children, handleEventSnap, handleEventScroll, handleOffsetScroll],
+  );
+
   return (
     <View style={safeAreaStyle}>
       <Animated.View style={[headerStyle, animatedHeaderStyle]}>{header}</Animated.View>
-      {children(childrenProps)}
+      {childWithProps}
     </View>
   );
 };

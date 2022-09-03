@@ -59,7 +59,7 @@ const EventListItem = ({event}: EventListItemProps) => {
         return <EventItemMemberRole event={event} />;
 
       // COMMENT
-      case EventType.COMMENT_ADD:
+      case EventType.COMMENT_CREATE:
         return <EventCommentAdd event={event} />;
       case EventType.COMMENT_REACTION:
         return <EventCommentReaction event={event} />;

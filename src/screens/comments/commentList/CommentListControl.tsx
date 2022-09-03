@@ -45,11 +45,13 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
 
   return (
     <FHStack
+      zIndex="1"
       h="50px"
       space="2"
       px="2"
       py={reference ? 1 : 2}
       alignItems="center"
+      bgColor="white"
       borderTopWidth="1"
       borderTopColor="gray.200"
     >

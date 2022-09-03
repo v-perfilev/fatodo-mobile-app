@@ -17,7 +17,6 @@ import CommentListItem from './commentListItem/CommentListItem';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
-import {HEADER_HEIGHT} from '../../../constants';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
@@ -89,7 +88,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
     <ThemeProvider theme={theme}>
       <CollapsableRefreshableFlatList
         header={header}
-        headerHeight={HEADER_HEIGHT}
+        headerHeight={0}
         nextNode={nextNode}
         nextNodeHeight={50}
         refresh={refresh}
