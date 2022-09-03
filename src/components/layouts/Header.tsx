@@ -1,6 +1,6 @@
-import React, {memo, PropsWithChildren, useEffect, useState} from 'react';
+import React, {PropsWithChildren} from 'react';
 import {Text} from 'native-base';
-import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import ColoredStatusBar from './ColoredStatusBar';
 import UrlPic from '../surfaces/UrlPic';
@@ -20,18 +20,13 @@ type HeaderProps = PropsWithChildren<{
 
 const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle}: HeaderProps) => {
   const navigation = useNavigation();
-  const isFocused = useIsFocused();
   const route = useRoute();
   const {t} = useTranslation();
-  const [canGoBack, setCanGoBack] = useState<boolean>(false);
 
   const label = title || t('routes.' + route.name);
 
   const goBack = () => navigation.goBack();
-
-  useEffect(() => {
-    isFocused && setCanGoBack(navigation.canGoBack());
-  }, [isFocused]);
+  const canGoBack = navigation.canGoBack();
 
   return (
     <>
@@ -55,4 +50,4 @@ const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle
   );
 };
 
-export default memo(Header);
+export default Header;

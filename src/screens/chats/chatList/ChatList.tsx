@@ -124,6 +124,7 @@ const ChatList = () => {
       headerHeight={HEADER_HEIGHT}
       refresh={type === 'regular' ? refresh : undefined}
       previousNode={previousNode}
+      previousNodeHeight={50}
       loading={loading || filterLoading}
       contentContainerStyle={ListUtils.containerStyle()}
       ListEmptyComponent={stub}

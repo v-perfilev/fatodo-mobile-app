@@ -44,7 +44,15 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
   };
 
   return (
-    <FHStack space="2" px="2" py={reference ? 1 : 2} alignItems="center" borderTopWidth="1" borderTopColor="gray.200">
+    <FHStack
+      h="50px"
+      space="2"
+      px="2"
+      py={reference ? 1 : 2}
+      alignItems="center"
+      borderTopWidth="1"
+      borderTopColor="gray.200"
+    >
       <FVStack grow px="2" pb={reference ? 1 : 0}>
         {reference && <CommentListControlReference reference={reference} clearReference={clearReference} />}
         <ClearableTextInput

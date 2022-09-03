@@ -120,6 +120,7 @@ const ChatView = ({loading}: ChatViewProps) => {
       header={header}
       headerHeight={HEADER_HEIGHT}
       nextNode={chatViewControl}
+      nextNodeHeight={50}
       refresh={refresh}
       loading={loading}
       inverted

@@ -79,6 +79,7 @@ const ContactList = () => {
       header={undefined}
       headerHeight={0}
       previousNode={previousNode}
+      previousNodeHeight={50}
       loading={loading}
       ListEmptyComponent={stub}
       data={relationsToShow}

@@ -91,6 +91,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
         header={header}
         headerHeight={HEADER_HEIGHT}
         nextNode={nextNode}
+        nextNodeHeight={50}
         refresh={refresh}
         loading={loading}
         inverted
