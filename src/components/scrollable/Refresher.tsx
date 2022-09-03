@@ -1,34 +1,30 @@
-import {Animated, StyleProp} from 'react-native';
 import React, {memo} from 'react';
-import {Spinner} from 'native-base';
-import {MAX_REFRESH_HEIGHT} from '../../constants';
+import {IBoxProps} from 'native-base';
+import {REFRESH_HEIGHT} from '../../constants';
 import FCenter from '../boxes/FCenter';
+import {Animated} from 'react-native';
+import FSpinner from '../layouts/FSpinner';
 
-type RefresherProps = {
+type RefresherProps = IBoxProps & {
+  refreshing: Animated.Value;
   extraScrollY: Animated.Value;
-  refreshing: boolean;
-  inverted?: boolean;
 };
 
-const Refresher = ({extraScrollY, refreshing, inverted}: RefresherProps) => {
-  const animatedStyle: StyleProp<any> = {
-    paddingTop: !inverted ? extraScrollY : undefined,
-    paddingBottom: inverted ? extraScrollY : undefined,
-  };
+const Refresher = ({refreshing, extraScrollY, ...props}: RefresherProps) => {
+  const refresherAnimation = extraScrollY.interpolate({
+    inputRange: [0, 0.25, REFRESH_HEIGHT],
+    outputRange: [0, 0, 1],
+    extrapolate: 'clamp',
+  });
+
+  const animatedRefresherStyle = {transform: [{scale: refresherAnimation}]};
 
   return (
-    <Animated.View style={animatedStyle}>
-      <FCenter
-        position="absolute"
-        left="0"
-        right="0"
-        top={inverted ? 0 : undefined}
-        bottom={!inverted ? 0 : undefined}
-        height={MAX_REFRESH_HEIGHT}
-      >
-        <Spinner size="lg" color={!refreshing ? 'gray.200' : undefined} />
-      </FCenter>
-    </Animated.View>
+    <FCenter height={REFRESH_HEIGHT} {...props}>
+      <Animated.View style={animatedRefresherStyle}>
+        <FSpinner grayscale={refreshing} />
+      </Animated.View>
+    </FCenter>
   );
 };
 

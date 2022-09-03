@@ -1,6 +1,6 @@
 import React, {memo, PropsWithChildren} from 'react';
-import CentredSpinner from './CentredSpinner';
 import {IBoxProps} from 'native-base';
+import CentredFSpinner from './CentredFSpinner';
 
 type ConditionalSpinnerProps = IBoxProps &
   PropsWithChildren<{
@@ -8,7 +8,7 @@ type ConditionalSpinnerProps = IBoxProps &
   }>;
 
 const ConditionalSpinner = ({loading, children, ...props}: ConditionalSpinnerProps) => {
-  return loading ? <CentredSpinner {...props} /> : <>{children}</>;
+  return loading ? <CentredFSpinner {...props} /> : <>{children}</>;
 };
 
 export default memo(ConditionalSpinner);

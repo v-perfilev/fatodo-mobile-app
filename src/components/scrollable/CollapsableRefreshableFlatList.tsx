@@ -4,8 +4,7 @@ import RefreshableContainer, {RefreshableChildrenProps} from './RefreshableConta
 import FlatList, {FlatListProps} from './FlatList';
 import {ListUtils} from '../../shared/utils/ListUtils';
 import {RefUtils} from '../../shared/utils/RefUtils';
-import React, {memo, ReactElement, ReactNode, useCallback} from 'react';
-import Refresher from './Refresher';
+import React, {memo, ReactElement, ReactNode} from 'react';
 import {Animated} from 'react-native';
 
 export type CollapsableRefreshableChildrenProps = {
@@ -27,23 +26,16 @@ type CollapsableRefreshableFlatListProps = FlatListProps<any> & {
 const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefreshableFlatListProps, ref: any) => {
   const {header, headerHeight, refresh, loading, previousNode, nextNode, inverted, children} = props;
 
-  const refresher = useCallback(
-    (extraScrollY: Animated.Value, refreshing: boolean) => (
-      <Refresher extraScrollY={extraScrollY} refreshing={refreshing} inverted={inverted} />
-    ),
-    [],
-  );
-
   return (
     <CollapsableHeaderContainer header={header}>
       {({handleEventScroll, handleEventSnap, collapsableRef, scrollY}: CollapsableHeaderChildrenProps) => (
         <>
           {previousNode}
-          <ConditionalSpinner loading={loading} paddingTop={headerHeight}>
+          <ConditionalSpinner loading={loading}>
             <RefreshableContainer refresh={refresh} parentScrollY={scrollY} inverted={inverted}>
-              {({extraScrollY, refreshing, refreshableRef}: RefreshableChildrenProps) => (
+              {({refresher}: RefreshableChildrenProps) => (
                 <FlatList
-                  ListHeaderComponent={refresher(extraScrollY, refreshing)}
+                  ListHeaderComponent={refresher}
                   contentContainerStyle={ListUtils.containerStyle(
                     0,
                     !inverted ? headerHeight : undefined,
@@ -51,7 +43,7 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
                   )}
                   onScroll={handleEventScroll}
                   onMomentumScrollEnd={handleEventSnap}
-                  ref={RefUtils.merge(ref, collapsableRef, refreshableRef)}
+                  ref={RefUtils.merge(ref, collapsableRef)}
                   inverted={inverted}
                   {...props}
                 />

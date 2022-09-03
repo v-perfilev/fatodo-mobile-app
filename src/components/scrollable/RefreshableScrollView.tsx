@@ -1,7 +1,5 @@
 import RefreshableContainer, {RefreshableChildrenProps} from './RefreshableContainer';
-import {RefUtils} from '../../shared/utils/RefUtils';
 import React, {memo, ReactNode} from 'react';
-import Refresher from './Refresher';
 import {Animated, ScrollViewProps} from 'react-native';
 import {ListUtils} from '../../shared/utils/ListUtils';
 import ConditionalSpinner from '../surfaces/ConditionalSpinner';
@@ -18,16 +16,16 @@ const RefreshableScrollView = React.forwardRef((props: RefreshableScrollViewProp
   return (
     <ConditionalSpinner loading={loading}>
       <RefreshableContainer refresh={refresh}>
-        {({handleEventScroll, extraScrollY, refreshing, refreshableRef}: RefreshableChildrenProps) => (
+        {({refresher, handleEventScroll}: RefreshableChildrenProps) => (
           <Animated.ScrollView
             contentContainerStyle={ListUtils.containerStyle()}
             onScroll={handleEventScroll}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
-            ref={RefUtils.merge(ref, refreshableRef)}
+            ref={ref}
             {...props}
           >
-            <Refresher extraScrollY={extraScrollY} refreshing={refreshing} />
+            {refresher}
             {children}
           </Animated.ScrollView>
         )}
