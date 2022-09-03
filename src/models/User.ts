@@ -1,3 +1,5 @@
+type Gender = 'MALE' | 'FEMALE' | 'DIVERSE';
+
 export interface UserAccount {
   id: string;
   username: string;
@@ -12,6 +14,7 @@ export interface User {
   username: string;
   firstname?: string;
   lastname?: string;
+  gender?: Gender;
   imageFilename?: string;
 }
 
@@ -19,16 +22,7 @@ export interface UserInfo {
   firstname?: string;
   lastname?: string;
   imageFilename?: string;
+  gender?: Gender;
   language: string;
   timezone: string;
 }
-
-export const convertAccountToUser = (account: UserAccount): User => {
-  return {
-    id: account?.username,
-    username: account?.username,
-    firstname: account?.info?.firstname,
-    lastname: account?.info?.lastname,
-    imageFilename: account?.info?.imageFilename,
-  };
-};

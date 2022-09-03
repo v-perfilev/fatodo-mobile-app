@@ -7,7 +7,7 @@ export default class UserService {
   private static baseUrl = '/api/user';
 
   public static getAllByIds = (ids: string[]): AxiosPromise<User[]> => {
-    const url = UserService.baseUrl + '/info/user';
+    const url = UserService.baseUrl + '/user-data/summary';
     const params = {ids};
     return axios.get(url, {params});
   };
