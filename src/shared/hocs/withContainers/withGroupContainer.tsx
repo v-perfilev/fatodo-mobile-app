@@ -46,7 +46,7 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
     }
   }, []);
 
-  return <Component loading={loading} group={group || routeGroup} {...props} />;
+  return <Component loading={loading} group={routeGroup || group} {...props} />;
 };
 
 export default withGroupContainer;
