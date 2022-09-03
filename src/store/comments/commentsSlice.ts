@@ -126,15 +126,6 @@ const commentsSlice = createSlice({
     });
 
     /*
-    refreshComments
-    */
-    builder.addCase(CommentsActions.refreshCommentsThunk.pending, (state: CommentsState) => {
-      state.comments = [];
-      state.loading = true;
-      state.moreLoading = false;
-    });
-
-    /*
     fetchThreadInfo
     */
     builder.addCase(CommentsActions.fetchThreadInfoThunk.fulfilled, (state: CommentsState, action) => {

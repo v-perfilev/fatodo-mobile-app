@@ -1,4 +1,4 @@
-import {Button, Modal} from 'native-base';
+import {Button, Center, KeyboardAvoidingView, Modal} from 'native-base';
 import React, {ReactElement} from 'react';
 import {LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
 import ThemeProvider from '../layouts/ThemeProvider';
@@ -18,18 +18,22 @@ const theme = ThemeFactory.getDefaultTheme();
 const ModalDialog = ({open, close, title, content, actions, size}: ModalDialogProps) => (
   <ThemeProvider theme={theme}>
     <Modal isOpen={open} onClose={close} _backdrop={{bg: 'gray.400'}} size={size}>
-      <Modal.Content borderRadius="0">
-        <Modal.CloseButton bgColor={null} _pressed={{bgColor: 'none'}} _icon={{color: 'white'}} />
-        <Modal.Header bg={LINEAR_GRADIENT} borderBottomWidth="0" _text={{color: 'white'}}>
-          {title}
-        </Modal.Header>
-        <Modal.Body>{content}</Modal.Body>
-        {actions && (
-          <Modal.Footer pt="0" borderTopWidth="0">
-            <Button.Group space="2">{actions}</Button.Group>
-          </Modal.Footer>
-        )}
-      </Modal.Content>
+      <KeyboardAvoidingView w="100%" behavior="position">
+        <Center>
+          <Modal.Content borderRadius="0">
+            <Modal.CloseButton bgColor={null} _pressed={{bgColor: 'none'}} _icon={{color: 'white'}} />
+            <Modal.Header bg={LINEAR_GRADIENT} borderBottomWidth="0" _text={{color: 'white'}}>
+              {title}
+            </Modal.Header>
+            <Modal.Body>{content}</Modal.Body>
+            {actions && (
+              <Modal.Footer pt="0" borderTopWidth="0">
+                <Button.Group space="2">{actions}</Button.Group>
+              </Modal.Footer>
+            )}
+          </Modal.Content>
+        </Center>
+      </KeyboardAvoidingView>
     </Modal>
   </ThemeProvider>
 );
