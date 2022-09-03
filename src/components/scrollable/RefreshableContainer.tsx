@@ -149,7 +149,8 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
       <Refresher
         refreshing={refreshing.current}
         extraScrollY={extraScrollY.current}
-        pt={MAX_REFRESH_HEIGHT - REFRESH_HEIGHT}
+        pt={!inverted ? MAX_REFRESH_HEIGHT - REFRESH_HEIGHT : undefined}
+        pb={inverted ? MAX_REFRESH_HEIGHT - REFRESH_HEIGHT : undefined}
       />
     ),
     [],
@@ -165,7 +166,7 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
     [children, refresher, handleEventScroll],
   );
 
-  const containerStyle: StyleProp<any> = {display: 'flex', flexGrow: 1, marginBottom: -MAX_REFRESH_HEIGHT};
+  const containerStyle: StyleProp<any> = {display: 'flex', flexGrow: 1, marginBottom: -REFRESH_HEIGHT};
   const animatedContainerStyle = {transform: [{translateY}]};
 
   return (

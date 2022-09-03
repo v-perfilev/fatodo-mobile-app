@@ -12,7 +12,17 @@ const ContactListControl = ({setFilter}: ContactListHeaderProps) => {
   const {t} = useTranslation();
 
   return (
-    <FHStack h="50px" space="2" px="2" py="2" alignItems="center" borderBottomWidth="1" borderBottomColor="gray.200">
+    <FHStack
+      zIndex="1"
+      h="50px"
+      space="2"
+      px="2"
+      py="2"
+      alignItems="center"
+      bgColor="white"
+      borderBottomWidth="1"
+      borderBottomColor="gray.200"
+    >
       <FBox>
         <ClearableTextInput
           h="36px"

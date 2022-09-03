@@ -14,12 +14,14 @@ const ChatListControl = ({setFilter, marginTop}: ChatListControlProps) => {
 
   return (
     <FHStack
+      zIndex="1"
       h="50px"
       space="2"
       px="2"
       marginTop={marginTop}
       py="1"
       alignItems="center"
+      bgColor="white"
       borderBottomWidth="1"
       borderBottomColor="gray.200"
     >
