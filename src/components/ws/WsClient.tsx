@@ -43,8 +43,6 @@ const WsClient = ({active, url, topics, onMessage, debug}: WsClientProps) => {
     const onClose = onDisconnected('WebSocket connection closed');
     const sockjsFactory = () => new SockJS(url);
     stompClient.current = Stomp.over(sockjsFactory);
-    stompClient.current.heartbeatOutgoing = 1000;
-    stompClient.current.reconnectDelay = 5000;
     if (!debug) {
       stompClient.current.debug = () => {};
     }

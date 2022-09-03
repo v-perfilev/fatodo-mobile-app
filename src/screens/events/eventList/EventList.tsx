@@ -75,8 +75,11 @@ const EventList = () => {
 
   useEffect(() => {
     isFocused && loading && load().finally(() => setLoading(false));
-    isFocused && unreadCount > 0 && refreshUnread();
   }, [isFocused]);
+
+  useEffect(() => {
+    isFocused && unreadCount > 0 && refreshUnread();
+  }, [isFocused, unreadCount]);
 
   const header = useMemo<ReactElement>(() => <Header hideGoBack />, []);
 
