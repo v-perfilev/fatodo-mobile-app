@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-export const useDelayedState = (initialValue = true, timeout = 500): [boolean, (value: boolean) => void] => {
+export const useDelayedState = (initialValue = true, timeout = 100): [boolean, (value: boolean) => void] => {
   const [value, setValue] = useState<boolean>(initialValue);
   let timer: number;
   let timerId: NodeJS.Timeout;

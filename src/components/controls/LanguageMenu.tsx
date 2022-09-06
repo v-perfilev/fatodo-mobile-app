@@ -4,7 +4,6 @@ import LanguageIcon from '../icons/LanguageIcon';
 import {LanguageUtils} from '../../shared/utils/LanguageUtils';
 import Menu, {MenuItem} from './Menu';
 import LinkButton from './LinkButton';
-import {Language} from '../../models/User';
 
 type LanguageMenuProps = {
   onChange?: (code: string) => void;

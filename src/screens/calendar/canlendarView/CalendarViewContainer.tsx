@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {memo, MutableRefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {CalendarDate, CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {ScrollView} from 'react-native';
@@ -13,11 +13,11 @@ import {CalendarReminder} from '../../../models/Reminder';
 type CalendarViewContainerProps = {
   month: CalendarMonth;
   selectMonth: (month: CalendarItem) => void;
-  isActiveMonth: boolean;
+  childRefMap: Map<string, MutableRefObject<ScrollView>>;
   width: number;
 };
 
-const CalendarViewContainer = ({month, selectMonth, isActiveMonth, width}: CalendarViewContainerProps) => {
+const CalendarViewContainer = ({month, selectMonth, childRefMap, width}: CalendarViewContainerProps) => {
   const dispatch = useAppDispatch();
   const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, month.key));
   const [activeDate, setActiveDate] = useState<CalendarDate>();
@@ -52,8 +52,13 @@ const CalendarViewContainer = ({month, selectMonth, isActiveMonth, width}: Calen
 
   useEffect(() => {
     (activeDate !== undefined || isCurrentMonth) && initDate();
-    isActiveMonth && scrollToTop();
-  }, [isActiveMonth]);
+    childRefMap.set(month.key, scrollViewRef);
+    return (): void => {
+      childRefMap.delete(month.key);
+    };
+  }, []);
+
+  scrollToTop();
 
   return (
     <FBox width={width}>

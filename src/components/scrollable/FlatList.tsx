@@ -6,7 +6,7 @@ export type FlatListType = RNFlatList;
 
 export type FlatListProps<T> = Partial<IFlatListProps<T>> & {
   render: (item: T, onLayout?: (event: LayoutChangeEvent) => void) => ReactElement;
-  keyExtractor?: (item: T) => string;
+  keyExtractor: (item: T) => string;
   fixedLength?: number;
 };
 
@@ -16,45 +16,53 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
 
   const getItemLength = useCallback(
     (index: number): number => {
-      let length;
+      if (index < 0) {
+        return 0;
+      }
       if (fixedLength) {
-        length = fixedLength;
+        return fixedLength;
       } else {
         const item = data[index];
         const key = keyExtractor(item);
-        length = lengthMap.current.get(key) || 0;
+        return lengthMap.current.get(key) || 0;
       }
-      return length;
     },
     [fixedLength, data, keyExtractor, lengthMap],
   );
 
   const getItemOffset = useCallback(
     (index: number): number => {
-      return index < 0
-        ? 0
-        : Array.from(Array(index).keys())
-            .map((i) => getItemLength(i))
-            .reduce((a, c) => a + c, 0);
+      if (index < 0) {
+        return 0;
+      }
+      if (fixedLength) {
+        return index * fixedLength;
+      } else {
+        return Array.from(Array(index).keys())
+          .map((i) => getItemLength(i))
+          .reduce((a, c) => a + c, 0);
+      }
     },
     [getItemLength],
   );
 
   const _onLayout = useCallback(
     (key: string, event: LayoutChangeEvent): void => {
-      if (!fixedLength) {
-        const height = event.nativeEvent.layout.height;
-        lengthMap.current.set(key, height);
-      }
+      const height = event.nativeEvent.layout.height;
+      lengthMap.current.set(key, height);
     },
-    [fixedLength, lengthMap.current],
+    [lengthMap.current],
   );
 
   const _renderItem = useCallback(
     (info: ListRenderItemInfo<any>): ReactElement => {
-      const key = keyExtractor ? keyExtractor(info.item) : String(info.index);
-      const onLayout = (event: LayoutChangeEvent): void => _onLayout(key, event);
-      return render(info.item, onLayout);
+      if (fixedLength) {
+        return render(info.item);
+      } else {
+        const key = keyExtractor(info.item);
+        const onLayout = (event: LayoutChangeEvent): void => _onLayout(key, event);
+        return render(info.item, onLayout);
+      }
     },
     [keyExtractor, _onLayout, render],
   );
