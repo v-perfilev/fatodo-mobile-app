@@ -83,6 +83,7 @@ const CalendarView = () => {
           data={months}
           render={renderItem}
           keyExtractor={keyExtractor}
+          scrollEventThrottle={200}
           horizontal
           pagingEnabled
           decelerationRate="fast"
@@ -91,6 +92,8 @@ const CalendarView = () => {
           onMomentumScrollEnd={handleScrollEnd}
           initialScrollIndex={initialIndex.current}
           initialNumToRender={1}
+          maxToRenderPerBatch={3}
+          updateCellsBatchingPeriod={10}
           windowSize={3}
           ref={listRef}
         />
