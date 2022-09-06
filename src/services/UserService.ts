@@ -2,6 +2,7 @@ import {AxiosPromise} from 'axios';
 import {ChangePasswordDTO} from '../models/dto/ChangePasswordDTO';
 import {User, UserAccount} from '../models/User';
 import axios from '../shared/axios';
+import {ChangeLanguageDTO} from '../models/dto/ChangeLanguageDTO';
 
 export default class UserService {
   private static baseUrl = '/api/user';
@@ -28,19 +29,24 @@ export default class UserService {
   };
 
   public static getCurrent = (): AxiosPromise<UserAccount> => {
-    const url = UserService.baseUrl + '/account/current';
+    const url = UserService.baseUrl + '/account';
     return axios.get(url);
   };
 
   public static updateAccount = (formData: FormData): AxiosPromise<void> => {
-    const url = UserService.baseUrl + '/account/update';
+    const url = UserService.baseUrl + '/account';
     const config = {headers: {'content-type': 'multipart/form-data'}};
-    return axios.post(url, formData, config);
+    return axios.put(url, formData, config);
   };
 
   public static changePassword = (dto: ChangePasswordDTO): AxiosPromise<void> => {
-    const url = UserService.baseUrl + '/account/change-password';
-    return axios.post(url, dto);
+    const url = UserService.baseUrl + '/account/password';
+    return axios.put(url, dto);
+  };
+
+  public static changeLanguage = (dto: ChangeLanguageDTO): AxiosPromise<void> => {
+    const url = UserService.baseUrl + '/account/language';
+    return axios.put(url, dto);
   };
 
   public static doesEmailExist = (value: string): AxiosPromise<boolean> => {

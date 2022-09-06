@@ -34,7 +34,7 @@ const DaysSelect = ({label, days, setDays}: DaysSelectProps) => {
     const handleClick = (): void => handleClickOnDay(dayNumber);
 
     return (
-      <RoundButton size="10" bg={active ? 'grey.50' : undefined} onPress={handleClick} key={index}>
+      <RoundButton size={10} bg={active ? 'grey.50' : undefined} onPress={handleClick} key={index}>
         {weekday}
       </RoundButton>
     );

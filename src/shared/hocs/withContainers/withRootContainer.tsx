@@ -86,7 +86,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
 
   useEffect(() => {
     // splash screen (timeout needed for initial navigation event)
-    ready && setTimeout(() => SplashScreen.hide(), 500);
+    ready && SplashScreen.hide();
   }, [ready]);
 
   return <Component ready={ready} {...props} />;

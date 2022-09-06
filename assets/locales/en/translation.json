@@ -20,8 +20,8 @@
     "ChatList": "Chats",
     "ChatView": "Chat",
     "CommentList": "Comments",
-    "AccountView": "Account",
     "AccountForm": "Edit account",
+    "AccountChangePasswordForm": "Change password",
     "UserView": "User",
     "EventList": "Events",
     "CalendarView": "Calendar"

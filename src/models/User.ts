@@ -1,4 +1,7 @@
+export const genders = ['MALE', 'FEMALE', 'DIVERSE'];
+
 type Gender = 'MALE' | 'FEMALE' | 'DIVERSE';
+type Language = 'en' | 'ru';
 
 export interface UserAccount {
   id: string;
@@ -23,6 +26,6 @@ export interface UserInfo {
   lastname?: string;
   imageFilename?: string;
   gender?: Gender;
-  language: string;
+  language: Language;
   timezone: string;
 }

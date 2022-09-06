@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import {IFormControlProps} from 'native-base';
 import {FormikProps} from 'formik';
 import FormikSelect from './FormikSelect';
-import {ItemPriorityType, itemPriorityTypes} from '../../models/Item';
+import {itemPriorityTypes} from '../../models/Item';
 import PriorityView from '../views/PriorityView';
 
 type FormikTypeInputProps = IFormControlProps &
@@ -11,9 +11,11 @@ type FormikTypeInputProps = IFormControlProps &
     label?: string;
   };
 
+const prioritySelectMap = new Map<string, ReactElement>();
+itemPriorityTypes.forEach((p) => prioritySelectMap.set(p, <PriorityView priority={p} />));
+
 const FormikTypeInput = (props: FormikTypeInputProps) => {
-  const view = (current: ItemPriorityType) => <PriorityView priority={current} />;
-  return <FormikSelect options={itemPriorityTypes} view={view} {...props} />;
+  return <FormikSelect options={prioritySelectMap} {...props} />;
 };
 
 export default FormikTypeInput;

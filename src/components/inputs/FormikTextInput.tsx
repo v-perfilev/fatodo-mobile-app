@@ -1,37 +1,29 @@
-import React from 'react';
-import {FormControl, IFormControlProps, Input} from 'native-base';
-import {FormikProps} from 'formik';
+import React, {memo} from 'react';
+import {FormControl, Input} from 'native-base';
 import {INPUT_FONT_SIZE} from '../../constants';
+import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
+import {flowRight} from 'lodash';
 
-type FormikTextInputProps = IFormControlProps &
-  FormikProps<any> & {
-    name: string;
-    label?: string;
-    placeholder?: string;
-  };
+type FormikTextInputProps = FormikInputProps;
 
 const FormikTextInput = (props: FormikTextInputProps) => {
-  const {name, label, placeholder} = props;
-  const {values, errors, touched, handleChange, handleBlur} = props;
-
-  const isTouched = name in touched;
-  const isError = name in errors;
+  const {label, placeholder, value, error, isTouched, isError, isDisabled, onChange, onBlur} = props;
 
   return (
-    <FormControl isInvalid={isTouched && isError} {...props}>
+    <FormControl isInvalid={isTouched && isError} isDisabled={isDisabled}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <Input
         type="text"
         autoCapitalize="none"
         fontSize={INPUT_FONT_SIZE}
         placeholder={placeholder}
-        onChangeText={handleChange(name)}
-        onBlur={handleBlur(name)}
-        value={values[name]}
+        onChangeText={onChange}
+        onBlur={onBlur}
+        value={value}
       />
-      {isTouched && <FormControl.ErrorMessage>{errors[name]}</FormControl.ErrorMessage>}
+      {isTouched && <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>}
     </FormControl>
   );
 };
 
-export default FormikTextInput;
+export default flowRight([withFormikWrapper, memo])(FormikTextInput);

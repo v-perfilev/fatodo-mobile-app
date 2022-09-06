@@ -1,52 +1,71 @@
-import React, {ReactElement, useEffect, useState} from 'react';
-import {Box, FormControl, IFormControlProps} from 'native-base';
-import {FormikProps} from 'formik';
+import React, {memo, ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
+import {FormControl, ScrollView, Text} from 'native-base';
 import Menu, {MenuItem} from '../controls/Menu';
 import PressableButton from '../controls/PressableButton';
 import PaperBox from '../surfaces/PaperBox';
+import {Dimensions} from 'react-native';
+import FlatList from '../scrollable/FlatList';
+import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
+import {flowRight} from 'lodash';
 
-type FormikSelectProps<T> = IFormControlProps &
-  FormikProps<any> & {
-    name: string;
-    label?: string;
-    options: T[];
-    view: (current: T) => ReactElement;
-  };
+type FormikSelectProps = FormikInputProps;
 
-const FormikSelect = (props: FormikSelectProps<any>) => {
-  const {name, label, options, view} = props;
-  const {values, errors, touched, setFieldValue} = props;
-  const [current, setCurrent] = useState<any>(values[name]);
+type FormikSelectItemProps = {
+  option: string;
+  options: Map<string, string | ReactElement>;
+  setCurrent: (current: string) => void;
+};
 
-  const isTouched = name in touched;
-  const isError = name in errors;
+const FormikSelectItem = ({option, options, setCurrent}: FormikSelectItemProps) => {
+  const select = (): void => setCurrent(option);
+  const content = options.get(option);
+  const wrappedContent = typeof content === 'string' ? <Text>{content}</Text> : content;
+  return <MenuItem action={select}>{wrappedContent}</MenuItem>;
+};
+
+const FormikSelect = (props: FormikSelectProps) => {
+  const {label, options, value, error, isTouched, isError, setValue, isDisabled} = props;
+  const [current, setCurrent] = useState<any>(value);
+
+  const listHeight = useMemo<number>(() => Math.floor(Dimensions.get('window').height / 2), []);
+  const data = useMemo<string[]>(() => Array.from(options.keys()), [options]);
+  const renderItem = useCallback(
+    (option: string): ReactElement => <FormikSelectItem {...{options, option, setCurrent}} />,
+    [],
+  );
+
+  const flatList = useMemo<ReactElement>(
+    () => (
+      <ScrollView maxHeight={listHeight} horizontal={true}>
+        <FlatList fixedLength={40} data={data} render={renderItem} />
+      </ScrollView>
+    ),
+    [data],
+  );
 
   useEffect(() => {
-    setFieldValue(name, current);
+    setValue(current);
   }, [current]);
 
+  const filterPropsIfDisabled = (props: any): any => (!isDisabled ? props : undefined);
+
   return (
-    <FormControl isInvalid={isTouched && isError} {...props}>
+    <FormControl isInvalid={isTouched && isError} isDisabled={isDisabled}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <Menu
         trigger={(triggerProps) => (
-          <PressableButton {...triggerProps}>
-            <PaperBox h="45px" justifyContent="center" px="3">
-              {view(current)}
+          <PressableButton {...filterPropsIfDisabled(triggerProps)}>
+            <PaperBox h="45px" justifyContent="center" px="3" opacity={isDisabled ? 0.5 : undefined}>
+              {options.get(current)}
             </PaperBox>
           </PressableButton>
         )}
       >
-        {Object.values(options).map((option, index) => (
-          <MenuItem action={() => setCurrent(option)} key={index}>
-            <Box alignItems="center">{view(option)}</Box>
-          </MenuItem>
-        ))}
+        {flatList}
       </Menu>
-
-      {isTouched && <FormControl.ErrorMessage>{errors[name]}</FormControl.ErrorMessage>}
+      {isTouched && <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>}
     </FormControl>
   );
 };
 
-export default FormikSelect;
+export default flowRight([withFormikWrapper, memo])(FormikSelect);

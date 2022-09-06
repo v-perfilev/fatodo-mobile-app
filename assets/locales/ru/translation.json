@@ -20,8 +20,8 @@
     "ChatList": "Чаты",
     "ChatView": "Чат",
     "CommentList": "Комментарии",
-    "AccountView": "Аккаунт",
     "AccountForm": "Редактировать аккаунт",
+    "AccountChangePasswordForm": "Изменить пароль",
     "UserView": "Пользователь",
     "EventList": "События",
     "CalendarView": "Календарь"

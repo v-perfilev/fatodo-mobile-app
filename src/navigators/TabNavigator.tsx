@@ -9,8 +9,6 @@ import ChatsIcon from '../components/icons/ChatsIcon';
 import {useTabBarContext} from '../shared/contexts/TabBarContext';
 import withTabBar from '../shared/hocs/withTabBar';
 import ChatList from '../screens/chats/chatList/ChatList';
-import AccountIcon from '../components/icons/AccountIcon';
-import AccountNavigator from './AccountNavigator';
 import AlarmIcon from '../components/icons/AlarmIcon';
 import EventList from '../screens/events/eventList/EventList';
 import {useAppSelector} from '../store/store';
@@ -45,7 +43,6 @@ const calendarIcon = ({color, size}: TabIconProps): ReactNode => <CalendarIcon c
 const eventsIcon = ({color, size}: TabIconProps): ReactNode => <AlarmIcon color={color} size={size} />;
 const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={color} size={size} />;
 const contactsIcon = ({color, size}: TabIconProps): ReactNode => <ContactsIcon color={color} size={size} />;
-const accountIcon = ({color, size}: TabIconProps): ReactNode => <AccountIcon color={color} size={size} />;
 
 const TabNavigator = () => {
   const {theme} = useTabBarContext();
@@ -77,7 +74,6 @@ const TabNavigator = () => {
         component={ContactNavigator}
         options={{tabBarIcon: contactsIcon, tabBarBadge: incomingRequestCount}}
       />
-      <Tab.Screen name="Account" component={AccountNavigator} options={{tabBarIcon: accountIcon}} />
     </Tab.Navigator>
   );
 };

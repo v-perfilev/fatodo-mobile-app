@@ -1,38 +1,30 @@
-import React from 'react';
-import {FormControl, IFormControlProps, TextArea} from 'native-base';
-import {FormikProps} from 'formik';
+import React, {memo} from 'react';
+import {FormControl, TextArea} from 'native-base';
 import {INPUT_FONT_SIZE} from '../../constants';
+import {flowRight} from 'lodash';
+import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
 
-type FormikMultilineInputProps = IFormControlProps &
-  FormikProps<any> & {
-    name: string;
-    label?: string;
-    placeholder?: string;
-  };
+type FormikMultilineInputProps = FormikInputProps;
 
 const FormikMultilineInput = (props: FormikMultilineInputProps) => {
-  const {name, label, placeholder} = props;
-  const {values, errors, touched, handleChange, handleBlur} = props;
-
-  const isTouched = name in touched;
-  const isError = name in errors;
+  const {label, placeholder, value, error, isTouched, isError, isDisabled, onChange, onBlur} = props;
 
   return (
-    <FormControl isInvalid={isTouched && isError} {...props}>
+    <FormControl isInvalid={isTouched && isError} isDisabled={isDisabled}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <TextArea
         placeholder={placeholder}
         fontSize={INPUT_FONT_SIZE}
-        onChangeText={handleChange(name)}
-        onBlur={handleBlur(name)}
-        value={values[name]}
+        onChangeText={onChange}
+        onBlur={onBlur}
+        value={value}
         h={120}
         totalLines={20}
         autoCompleteType={undefined}
       />
-      {isTouched && <FormControl.ErrorMessage>{errors[name]}</FormControl.ErrorMessage>}
+      {isTouched && <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>}
     </FormControl>
   );
 };
 
-export default FormikMultilineInput;
+export default flowRight(withFormikWrapper, memo)(FormikMultilineInput);

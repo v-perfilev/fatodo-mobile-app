@@ -9,6 +9,8 @@ import FHStack from '../boxes/FHStack';
 import Logo from './Logo';
 import IconButton from '../controls/IconButton';
 import {HEADER_HEIGHT} from '../../constants';
+import PressableButton from '../controls/PressableButton';
+import {useDrawerContext} from '../../shared/contexts/DrawerContext';
 
 type HeaderProps = PropsWithChildren<{
   title?: string;
@@ -20,6 +22,7 @@ type HeaderProps = PropsWithChildren<{
 
 const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle}: HeaderProps) => {
   const navigation = useNavigation();
+  const {toggleDrawer} = useDrawerContext();
   const route = useRoute();
   const {t} = useTranslation();
 
@@ -35,7 +38,11 @@ const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle
         {!hideGoBack && canGoBack && (
           <IconButton colorScheme="white" size="2xl" p="1" icon={<ArrowBackIcon />} onPress={goBack} />
         )}
-        {!hideLogo && <Logo size="40px" />}
+        {!hideLogo && (
+          <PressableButton onPress={toggleDrawer}>
+            <Logo size="40px" />
+          </PressableButton>
+        )}
         {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="9" border="1" invertedBorder />}
         {!hideTitle && (
           <Text fontWeight="800" fontSize="xl" lineHeight="xl" color="white" isTruncated>

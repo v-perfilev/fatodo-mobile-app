@@ -5,8 +5,8 @@ import {Animated, FlatList as RNFlatList, LayoutChangeEvent, ListRenderItemInfo,
 export type FlatListType = RNFlatList;
 
 export type FlatListProps<T> = Partial<IFlatListProps<T>> & {
-  render: (item: T, onLayout: (event: LayoutChangeEvent) => void) => ReactElement;
-  keyExtractor: (item: T) => string;
+  render: (item: T, onLayout?: (event: LayoutChangeEvent) => void) => ReactElement;
+  keyExtractor?: (item: T) => string;
   fixedLength?: number;
 };
 
@@ -31,17 +31,13 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
 
   const getItemOffset = useCallback(
     (index: number): number => {
-      let offset;
-      if (fixedLength) {
-        offset = index * fixedLength;
-      } else {
-        offset = Array.from(Array(index).keys())
-          .map((i) => getItemLength(i))
-          .reduce((a, c) => a + c, 0);
-      }
-      return offset;
+      return index < 0
+        ? 0
+        : Array.from(Array(index).keys())
+            .map((i) => getItemLength(i))
+            .reduce((a, c) => a + c, 0);
     },
-    [fixedLength, getItemLength],
+    [getItemLength],
   );
 
   const _onLayout = useCallback(
@@ -56,7 +52,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
 
   const _renderItem = useCallback(
     (info: ListRenderItemInfo<any>): ReactElement => {
-      const key = keyExtractor(info.item);
+      const key = keyExtractor ? keyExtractor(info.item) : String(info.index);
       const onLayout = (event: LayoutChangeEvent): void => _onLayout(key, event);
       return render(info.item, onLayout);
     },

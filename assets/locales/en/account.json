@@ -67,6 +67,14 @@
       "label": "Language",
       "required": "Required"
     },
+    "gender": {
+      "label": "Gender",
+      "options": {
+        "MALE": "Male",
+        "FEMALE": "Female",
+        "DIVERSE": "Diverse"
+      }
+    },
     "timezone": {
       "label": "Timezone",
       "required": "Required"
@@ -76,6 +84,7 @@
     }
   },
   "actions": {
+    "save": "Save",
     "logout": "Log Out"
   }
 }

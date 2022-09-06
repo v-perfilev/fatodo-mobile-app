@@ -15,7 +15,6 @@ import withDialogs from './shared/hocs/withDialogs/withDialogs';
 import withSnackDisplay from './shared/hocs/withSnackDisplay';
 import {store, useAppSelector} from './store/store';
 import AuthSelectors from './store/auth/authSelectors';
-import RootNavigator from './navigators/RootNavigator';
 import AuthNavigator from './navigators/AuthNavigator';
 import {SnackActions} from './store/snack/snackActions';
 import {AuthActions} from './store/auth/authActions';
@@ -23,6 +22,7 @@ import withWsClient from './shared/hocs/withWs/withWsClient';
 import Notifications from './shared/push/notifications';
 import NotificationsRemote from './shared/push/notificationsRemote';
 import withRootContainer from './shared/hocs/withContainers/withRootContainer';
+import DrawerNavigator from './navigators/DrawerNavigator';
 
 // ignore some warnings
 const ignoredLogPatterns = ['Require cycle', 'Possible Unhandled Promise Rejection', 'NativeBase:'];
@@ -57,7 +57,7 @@ const App = ({ready}: AppProps) => {
 
   return (
     <>
-      {ready && isAuthenticated && !isSleepMode && <RootNavigator />}
+      {ready && isAuthenticated && !isSleepMode && <DrawerNavigator />}
       {ready && !isAuthenticated && <AuthNavigator />}
     </>
   );

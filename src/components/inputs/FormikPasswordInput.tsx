@@ -1,25 +1,17 @@
-import React, {useState} from 'react';
-import {FormControl, IFormControlProps, Input} from 'native-base';
-import {FormikProps} from 'formik';
+import React, {memo, useState} from 'react';
+import {FormControl, Input} from 'native-base';
 import VisibleOffIcon from '../icons/VisibleOffIcon';
 import {GestureResponderEvent} from 'react-native';
 import VisibleOnIcon from '../icons/VisibleOnIcon';
 import {INPUT_FONT_SIZE} from '../../constants';
+import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
+import {flowRight} from 'lodash';
 
-type FormikPasswordInputProps = IFormControlProps &
-  FormikProps<any> & {
-    name: string;
-    label?: string;
-    placeholder?: string;
-  };
+type FormikPasswordInputProps = FormikInputProps;
 
 const FormikPasswordInput = (props: FormikPasswordInputProps) => {
-  const {name, label, placeholder} = props;
-  const {values, errors, touched, handleChange, handleBlur} = props;
+  const {label, placeholder, value, error, isTouched, isError, isDisabled, onChange, onBlur} = props;
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
-  const isTouched = name in touched;
-  const isError = name in errors;
 
   const toggleShowPassword = (e: GestureResponderEvent): void => {
     e.preventDefault();
@@ -33,21 +25,21 @@ const FormikPasswordInput = (props: FormikPasswordInputProps) => {
   );
 
   return (
-    <FormControl isInvalid={isTouched && isError} {...props}>
+    <FormControl isInvalid={isTouched && isError} isDisabled={isDisabled}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <Input
         type={showPassword ? 'text' : 'password'}
         autoCapitalize="none"
         placeholder={placeholder}
         fontSize={INPUT_FONT_SIZE}
-        onChangeText={handleChange(name)}
-        onBlur={handleBlur(name)}
-        value={values[name]}
+        onChangeText={onChange}
+        onBlur={onBlur}
+        value={value}
         InputRightElement={InputRightElement}
       />
-      {isTouched && <FormControl.ErrorMessage>{errors[name]}</FormControl.ErrorMessage>}
+      {isTouched && <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>}
     </FormControl>
   );
 };
 
-export default FormikPasswordInput;
+export default flowRight(withFormikWrapper, memo)(FormikPasswordInput);

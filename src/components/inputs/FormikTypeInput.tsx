@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import {IFormControlProps} from 'native-base';
 import {FormikProps} from 'formik';
 import FormikSelect from './FormikSelect';
-import {ItemType, itemTypes} from '../../models/Item';
+import {itemTypes} from '../../models/Item';
 import TypeView from '../views/TypeView';
 
 type FormikTypeInputProps = IFormControlProps &
@@ -11,9 +11,11 @@ type FormikTypeInputProps = IFormControlProps &
     label?: string;
   };
 
+const typeSelectMap = new Map<string, ReactElement>();
+itemTypes.forEach((t) => typeSelectMap.set(t, <TypeView type={t} />));
+
 const FormikTypeInput = (props: FormikTypeInputProps) => {
-  const view = (current: ItemType) => <TypeView type={current} />;
-  return <FormikSelect options={itemTypes} view={view} {...props} />;
+  return <FormikSelect options={typeSelectMap} {...props} />;
 };
 
 export default FormikTypeInput;

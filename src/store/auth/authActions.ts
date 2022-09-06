@@ -11,6 +11,7 @@ import {ForgotPasswordDTO} from '../../models/dto/ForgotPasswordDTO';
 import snackSlice from '../snack/snackSlice';
 import {ChangePasswordDTO} from '../../models/dto/ChangePasswordDTO';
 import NotificationsRemote from '../../shared/push/notificationsRemote';
+import {ChangeLanguageDTO} from '../../models/dto/ChangeLanguageDTO';
 
 const PREFIX = 'auth/';
 
@@ -64,6 +65,10 @@ export class AuthActions {
   static changePasswordThunk = createAsyncThunk(PREFIX + 'changePassword', async (dto: ChangePasswordDTO, thunkAPI) => {
     await UserService.changePassword(dto);
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'auth.afterChangePassword', variant: 'info'}));
+  });
+
+  static changeLanguageThunk = createAsyncThunk(PREFIX + 'changeLanguage', async (dto: ChangeLanguageDTO) => {
+    await UserService.changeLanguage(dto);
   });
 
   static updateAccountThunk = createAsyncThunk(PREFIX + 'updateAccount', async (formData: FormData, thunkAPI) => {
