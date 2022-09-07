@@ -1,5 +1,6 @@
 import {
   bluePalette,
+  components,
   fontConfig,
   fonts,
   greenPalette,
@@ -27,6 +28,7 @@ export class ThemeFactory {
     colors: yellowPalette,
     fontConfig: fontConfig,
     fonts: fonts,
+    components: components,
     config: lightConfig,
   });
 
@@ -34,6 +36,7 @@ export class ThemeFactory {
     colors: turquoisePalette,
     fontConfig: fontConfig,
     fonts: fonts,
+    components: components,
     config: lightConfig,
   });
 
@@ -41,6 +44,7 @@ export class ThemeFactory {
     colors: purplePalette,
     fontConfig: fontConfig,
     fonts: fonts,
+    components: components,
     config: lightConfig,
   });
 
@@ -48,6 +52,7 @@ export class ThemeFactory {
     colors: greenPalette,
     fontConfig: fontConfig,
     fonts: fonts,
+    components: components,
     config: lightConfig,
   });
 
@@ -55,6 +60,7 @@ export class ThemeFactory {
     colors: bluePalette,
     fontConfig: fontConfig,
     fonts: fonts,
+    components: components,
     config: lightConfig,
   });
 

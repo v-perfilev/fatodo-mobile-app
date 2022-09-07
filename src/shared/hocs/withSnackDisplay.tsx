@@ -35,7 +35,15 @@ const withSnackDisplay = (Component: ComponentType) => (props: any) => {
         dispatch(SnackActions.removeSnack(key));
       } else if (!displayedKeys.includes(key)) {
         const onCloseComplete = (): void => dispatch(SnackActions.removeSnack(key));
-        show({title: message, bgColor: color, id: key, onCloseComplete});
+        show({
+          title: message,
+          borderColor: color,
+          borderWidth: 2,
+          bgColor: 'gray.100',
+          _title: {color},
+          id: key,
+          onCloseComplete,
+        });
         addDisplayed(key, message);
       }
     });

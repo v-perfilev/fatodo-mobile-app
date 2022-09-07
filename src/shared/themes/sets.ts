@@ -112,3 +112,7 @@ export const lightConfig = {
 export const darkConfig = {
   initialColorMode: 'dark',
 };
+
+// COMPONENTS
+
+export const components = {};
