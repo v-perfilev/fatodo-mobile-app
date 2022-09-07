@@ -47,6 +47,12 @@ const FormikSelect = (props: FormikSelectProps) => {
     setValue(current);
   }, [current]);
 
+  useEffect(() => {
+    if (value !== current) {
+      setCurrent(value);
+    }
+  }, [value]);
+
   const filterPropsIfDisabled = (props: any): any => (!isDisabled ? props : undefined);
 
   return (

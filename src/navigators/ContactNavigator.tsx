@@ -56,10 +56,11 @@ const ContactNavigator = () => {
 
   const tabBarColor = theme.colors.primary['500'];
   const indicatorColor = theme.colors.secondary['500'];
-  const indicatorStyle = {backgroundColor: indicatorColor, height: 3};
+  const indicatorStyle = {backgroundColor: indicatorColor, height: 4};
   const tabBarStyle: StyleProp<ViewStyle> = {
     height: HEADER_HEIGHT,
     flexGrow: 1,
+    shadowOffset: {width: 0, height: 0},
     justifyContent: 'center',
     backgroundColor: tabBarColor,
   };
@@ -81,10 +82,10 @@ const ContactNavigator = () => {
 
   const renderTabBar = (props: TabBarProps): ReactElement => {
     return (
-      <Header hideLogo hideGoBack hideTitle>
-        <FHStack mx="-2">
+      <Header showAvatar hideGoBack hideTitle>
+        <FBox ml="-1" mr="-2" overflow="hidden">
           <TabBar style={tabBarStyle} indicatorStyle={indicatorStyle} renderTabBarItem={renderTabBarItem} {...props} />
-        </FHStack>
+        </FBox>
       </Header>
     );
   };

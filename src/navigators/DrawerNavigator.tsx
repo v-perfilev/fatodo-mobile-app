@@ -43,8 +43,10 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
   };
 
   const changeLanguage = (code: string): void => {
-    const dto: ChangeLanguageDTO = {language: code};
-    dispatch(AuthActions.changeLanguageThunk(dto));
+    requestAnimationFrame(() => {
+      const dto: ChangeLanguageDTO = {language: code};
+      dispatch(AuthActions.changeLanguageThunk(dto));
+    });
   };
 
   useEffect(() => {
@@ -78,7 +80,7 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator screenOptions={{headerShown: false, drawerType: 'back'}} drawerContent={Sidebar}>
+    <Drawer.Navigator screenOptions={{headerShown: false, drawerType: 'back', lazy: false}} drawerContent={Sidebar}>
       <Drawer.Screen name="Default" component={RootNavigator} />
       <Drawer.Screen name="AccountForm" component={AccountForm} />
       <Drawer.Screen name="AccountChangePasswordForm" component={AccountChangePasswordForm} />

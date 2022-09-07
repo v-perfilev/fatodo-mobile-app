@@ -85,7 +85,7 @@ const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) 
   const switchArchivedIcon = showArchived ? <ArchiveIcon /> : <PlayIcon />;
 
   return (
-    <Header title={group?.title} imageFilename={group?.imageFilename} hideLogo>
+    <Header title={group?.title} imageFilename={group?.imageFilename}>
       <IconButton colorScheme="white" size="xl" p="1.5" icon={switchArchivedIcon} onPress={toggleShowArchived} />
       <Menu
         trigger={(triggerProps) => (

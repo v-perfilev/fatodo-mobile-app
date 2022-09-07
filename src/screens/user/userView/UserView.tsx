@@ -16,7 +16,7 @@ type UserViewProps = WithUserProps;
 const UserView = ({user, loading}: UserViewProps) => {
   return (
     <>
-      <Header hideLogo />
+      <Header />
       <ConditionalSpinner loading={loading}>
         <SimpleScrollView>
           <FVStack defaultSpace>

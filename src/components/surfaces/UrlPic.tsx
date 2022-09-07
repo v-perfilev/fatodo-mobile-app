@@ -7,13 +7,13 @@ const img = require('../../../assets/images/fallback.jpg');
 
 type UrlPicProps = {
   file: string;
-  size: ISizes;
+  size: ISizes | number | string;
   border?: string | number;
   invertedBorder?: boolean;
 };
 
 const UrlPic = ({file, size, border = 0, invertedBorder}: UrlPicProps) => {
-  const isBigImage = size === 'lg' || size === 'xl' || size === '2xl';
+  const isBigImage = size === 'lg' || size === 'xl' || size === '2xl' || size > 60;
   const source = !file || ImageUtils.isUrl(file) ? file : ImageUtils.buildImageUri(file, !isBigImage);
   const borderColor = invertedBorder ? 'white' : 'tertiary.500';
 

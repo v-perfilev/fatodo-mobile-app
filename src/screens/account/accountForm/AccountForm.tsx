@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import Header from '../../../components/layouts/Header';
@@ -66,6 +66,9 @@ const AccountForm = () => {
   const navigation = useNavigation();
   const {t} = useTranslation();
 
+  const values = useMemo(() => initialValues(account), [account]);
+  const valSchema = useMemo(() => validationSchema(account), [account]);
+
   const addValueToForm = (formData: FormData, name: string, value: any, condition = true): void => {
     if (condition && value) {
       formData.append(name, value);
@@ -94,13 +97,9 @@ const AccountForm = () => {
 
   return (
     <>
-      <Header hideLogo />
+      <Header />
       <SimpleScrollView>
-        <Formik
-          initialValues={initialValues(account)}
-          validationSchema={validationSchema(account)}
-          onSubmit={handleSubmit}
-        >
+        <Formik initialValues={values} validationSchema={valSchema} onSubmit={handleSubmit} enableReinitialize>
           {(formikProps) => (
             <FVStack defaultSpace>
               <FormikTextInput

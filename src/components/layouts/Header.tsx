@@ -1,6 +1,6 @@
-import React, {PropsWithChildren} from 'react';
+import React, {PropsWithChildren, useCallback, useMemo} from 'react';
 import {Text} from 'native-base';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import ColoredStatusBar from './ColoredStatusBar';
 import UrlPic from '../surfaces/UrlPic';
@@ -11,25 +11,31 @@ import IconButton from '../controls/IconButton';
 import {HEADER_HEIGHT} from '../../constants';
 import PressableButton from '../controls/PressableButton';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
+import {useAppSelector} from '../../store/store';
+import AuthSelectors from '../../store/auth/authSelectors';
+import UserView from '../views/UserView';
 
 type HeaderProps = PropsWithChildren<{
   title?: string;
   imageFilename?: string;
+  showAvatar?: boolean;
+  showLogo?: boolean;
   hideGoBack?: boolean;
-  hideLogo?: boolean;
   hideTitle?: boolean;
 }>;
 
-const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle}: HeaderProps) => {
+const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBack, hideTitle}: HeaderProps) => {
+  const account = useAppSelector(AuthSelectors.account);
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const {toggleDrawer} = useDrawerContext();
   const route = useRoute();
   const {t} = useTranslation();
 
   const label = title || t('routes.' + route.name);
 
-  const goBack = () => navigation.goBack();
-  const canGoBack = navigation.canGoBack();
+  const goBack = useCallback(() => navigation.goBack(), [isFocused]);
+  const canGoBack = useMemo(() => navigation.canGoBack(), [isFocused]);
 
   return (
     <>
@@ -38,14 +44,15 @@ const Header = ({children, title, imageFilename, hideGoBack, hideLogo, hideTitle
         {!hideGoBack && canGoBack && (
           <IconButton colorScheme="white" size="2xl" p="1" icon={<ArrowBackIcon />} onPress={goBack} />
         )}
-        {!hideLogo && (
+        {showAvatar && (
           <PressableButton onPress={toggleDrawer}>
-            <Logo size="40px" />
+            <UserView user={account} withUserPic picSize="43px" />
           </PressableButton>
         )}
-        {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="9" border="1" invertedBorder />}
+        {showLogo && <Logo size={10} />}
+        {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="43px" border="1" invertedBorder />}
         {!hideTitle && (
-          <Text fontWeight="800" fontSize="xl" lineHeight="xl" color="white" isTruncated>
+          <Text fontWeight="600" fontSize="xl" lineHeight="xl" color="white" isTruncated>
             {label}
           </Text>
         )}

@@ -13,7 +13,7 @@ import PressableButton from '../controls/PressableButton';
 
 type UserViewProps = {
   user: User;
-  picSize?: ISizes;
+  picSize?: ISizes | number | string;
   withUserPic?: boolean;
   withUsername?: boolean;
   withPaperBox?: boolean;

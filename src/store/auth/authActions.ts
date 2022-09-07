@@ -67,8 +67,9 @@ export class AuthActions {
     thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'auth.afterChangePassword', variant: 'info'}));
   });
 
-  static changeLanguageThunk = createAsyncThunk(PREFIX + 'changeLanguage', async (dto: ChangeLanguageDTO) => {
+  static changeLanguageThunk = createAsyncThunk(PREFIX + 'changeLanguage', async (dto: ChangeLanguageDTO, thunkAPI) => {
     await UserService.changeLanguage(dto);
+    await thunkAPI.dispatch(AuthActions.fetchAccountThunk());
   });
 
   static updateAccountThunk = createAsyncThunk(PREFIX + 'updateAccount', async (formData: FormData, thunkAPI) => {

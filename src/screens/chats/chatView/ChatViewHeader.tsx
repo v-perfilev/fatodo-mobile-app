@@ -93,7 +93,7 @@ const ChatViewHeader = () => {
   ];
 
   return (
-    <Header title={title} hideLogo>
+    <Header title={title}>
       <Menu
         trigger={(triggerProps) => (
           <IconButton {...triggerProps} colorScheme="white" size="xl" p="1.5" icon={<DotsVerticalIcon />} />

@@ -100,7 +100,7 @@ const ChatList = () => {
     setFilterLoading(filterLoadCounter > 0);
   }, [filterLoadCounter]);
 
-  const header = useMemo<ReactElement>(() => <Header hideGoBack />, []);
+  const header = useMemo<ReactElement>(() => <Header showAvatar hideGoBack />, []);
 
   const previousNode = useMemo<ReactElement>(
     () => <ChatListControl setFilter={setFilter} marginTop={HEADER_HEIGHT} />,

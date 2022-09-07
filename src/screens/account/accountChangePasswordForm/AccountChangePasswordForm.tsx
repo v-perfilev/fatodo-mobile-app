@@ -49,7 +49,7 @@ const AccountChangePasswordForm = () => {
 
   return (
     <>
-      <Header hideLogo />
+      <Header />
       <SimpleScrollView>
         <Formik
           initialValues={defaultChangePasswordFormValues}

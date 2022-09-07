@@ -6,7 +6,7 @@ export type FlatListType = RNFlatList;
 
 export type FlatListProps<T> = Partial<IFlatListProps<T>> & {
   render: (item: T, onLayout?: (event: LayoutChangeEvent) => void) => ReactElement;
-  keyExtractor: (item: T) => string;
+  keyExtractor?: (item: T) => string;
   fixedLength?: number;
 };
 

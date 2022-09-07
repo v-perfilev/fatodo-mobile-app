@@ -81,7 +81,7 @@ const EventList = () => {
     isFocused && unreadCount > 0 && refreshUnread();
   }, [isFocused, unreadCount]);
 
-  const header = useMemo<ReactElement>(() => <Header hideGoBack />, []);
+  const header = useMemo<ReactElement>(() => <Header showAvatar hideGoBack />, []);
 
   const buttons: CornerButton[] = [{icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true}];
   const cornerManagement = useCallback(
