@@ -76,7 +76,6 @@ const CalendarView = () => {
   useEffect(() => {
     if (isFocused) {
       loadReminders(initialMonth.current);
-      scrollToItem(initialIndex.current);
     }
   }, [isFocused]);
 

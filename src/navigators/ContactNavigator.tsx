@@ -54,9 +54,9 @@ const ContactNavigator = () => {
     ) : null;
   };
 
-  const tabBarColor = theme.colors.primary['500'];
+  const tabBarColor = theme.colors.white;
   const indicatorColor = theme.colors.secondary['500'];
-  const indicatorStyle = {backgroundColor: indicatorColor, height: 4};
+  const indicatorStyle = {backgroundColor: indicatorColor, height: 3};
   const tabBarStyle: StyleProp<ViewStyle> = {
     height: HEADER_HEIGHT,
     flexGrow: 1,
@@ -70,7 +70,7 @@ const ContactNavigator = () => {
       <PressableButton flex="1" h={HEADER_HEIGHT} onPress={props.onPress} key={props.route.key}>
         <FBox flexGrow="1" justifyContent="center" alignItems="center">
           <FHStack smallSpace>
-            <Text color="white" fontWeight="bold">
+            <Text color="primary.500" fontWeight="bold">
               {t(`contact:${props.route.key}.title`)}
             </Text>
             {renderBadge(props.route)}

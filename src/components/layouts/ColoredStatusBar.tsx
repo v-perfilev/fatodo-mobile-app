@@ -18,8 +18,8 @@ const ColoredStatusBar = ({bgColor, barStyle}: ColoredStatusBarProps) => {
     isFocused && setTheme && contextTheme && contextTheme !== theme && setTheme(contextTheme);
   }, [isFocused, contextTheme]);
 
-  const backgroundColor = bgColor || theme?.colors.primary['800'] || contextTheme?.colors.primary['800'];
-  const style = barStyle || 'light-content';
+  const backgroundColor = bgColor || 'white';
+  const style = barStyle || 'dark-content';
 
   return (
     <Box bgColor={backgroundColor}>

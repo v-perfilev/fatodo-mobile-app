@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useMemo} from 'react';
 import FHStack from '../../../components/boxes/FHStack';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import {Text} from 'native-base';
@@ -8,6 +8,7 @@ import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import PressableButton from '../../../components/controls/PressableButton';
 import {useCalendarDialogContext} from '../../../shared/contexts/dialogContexts/CalendarDialogContext';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
+import {useTranslation} from 'react-i18next';
 
 type CalendarViewMonthNameProps = {
   month: CalendarMonth;
@@ -16,9 +17,13 @@ type CalendarViewMonthNameProps = {
 
 const CalendarViewMonthName = ({month, selectMonth}: CalendarViewMonthNameProps) => {
   const {showSelectMonthDialog} = useCalendarDialogContext();
+  const {i18n} = useTranslation();
 
-  const monthMoment = CalendarUtils.getMonthMoment(month.year, month.month);
-  const monthWithYear = DateFormatters.formatMonthWithYear(monthMoment.toDate());
+  const monthWithYear = useMemo(() => {
+    const monthMoment = CalendarUtils.getMonthMoment(month.year, month.month);
+    const monthWithYear = DateFormatters.formatMonthWithYear(monthMoment.toDate());
+    return monthWithYear.toUpperCase();
+  }, [i18n.language]);
 
   const handleMonthClick = (): void => {
     showSelectMonthDialog(month, selectMonth);
@@ -29,8 +34,8 @@ const CalendarViewMonthName = ({month, selectMonth}: CalendarViewMonthNameProps)
       <FBox alignItems="center">
         <PressableButton onPress={handleMonthClick}>
           <FHStack smallSpace alignItems="center">
-            <Text fontSize="18" fontWeight="extrabold" color="gray.400">
-              {monthWithYear.toUpperCase()}
+            <Text fontSize="18" fontWeight="bold" color="gray.400">
+              {monthWithYear}
             </Text>
             <ArrowDownIcon color="primary.500" size="xl" />
           </FHStack>

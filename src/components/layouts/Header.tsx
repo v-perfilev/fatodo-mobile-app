@@ -40,19 +40,17 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
   return (
     <>
       <ColoredStatusBar />
-      <FHStack h={HEADER_HEIGHT} defaultSpace px="2" bg="primary.500" alignItems="center">
-        {!hideGoBack && canGoBack && (
-          <IconButton colorScheme="white" size="2xl" p="1" icon={<ArrowBackIcon />} onPress={goBack} />
-        )}
+      <FHStack h={HEADER_HEIGHT} defaultSpace bg="white" px="2" alignItems="center">
+        {!hideGoBack && canGoBack && <IconButton size="2xl" p="1" icon={<ArrowBackIcon />} onPress={goBack} />}
         {showAvatar && (
           <PressableButton onPress={toggleDrawer}>
             <UserView user={account} withUserPic picSize="43px" />
           </PressableButton>
         )}
         {showLogo && <Logo size={10} />}
-        {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="43px" border="1" invertedBorder />}
+        {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="43px" border="1" />}
         {!hideTitle && (
-          <Text fontWeight="600" fontSize="xl" lineHeight="xl" color="white" isTruncated>
+          <Text fontWeight="400" fontSize="xl" lineHeight="xl" color="primary.500" isTruncated>
             {label}
           </Text>
         )}

@@ -209,8 +209,8 @@ export class DateConverters {
 }
 
 export class DateUtils {
-  static resetLocale = (): void => {
-    moment.locale(i18n.language);
+  static resetLocale = (lang?: string): void => {
+    moment.locale(lang || i18n.language);
   };
 
   static getTimezone = (): string => tz.guess();

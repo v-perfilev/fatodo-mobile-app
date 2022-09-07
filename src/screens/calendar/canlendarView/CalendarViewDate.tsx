@@ -20,17 +20,16 @@ const CalendarViewDate = ({date, selectDate, isActiveDate, reminders}: CalendarV
     date.isCurrentMonth && selectDate(date);
   };
 
-  let bg = date.isCurrentMonth ? undefined : 'gray.100';
-  bg = isActiveDate && date.isCurrentMonth ? 'primary.100:alpha.30' : bg;
-  const borderColor = isActiveDate && date.isCurrentMonth ? 'primary.500' : 'gray.200';
-  const dateColor = date.isCurrentMonth ? 'gray.500' : 'gray.400';
+  let bg = date.isCurrentMonth ? 'gray.100:alpha.50' : 'gray.300:alpha.50';
+  bg = isActiveDate && date.isCurrentMonth ? 'primary.500:alpha.40' : bg;
+  const dateColor = 'gray.500';
 
   return (
     <PressableButton m="1" flexGrow="1" flexBasis="1" onPress={handlePress}>
-      <PaperBox height="70px" bg={bg} borderColor={borderColor}>
+      <PaperBox height="60px" bg={bg} borderWidth="1" borderColor="gray.200:alpha.70">
         <FVStack>
           <FHStack justifyContent="flex-end">
-            <Text fontSize="18" fontWeight="extrabold" color={dateColor}>
+            <Text fontSize="18" fontWeight="bold" color={dateColor}>
               {date.date}
             </Text>
           </FHStack>

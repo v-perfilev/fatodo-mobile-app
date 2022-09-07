@@ -65,19 +65,13 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
     <Header showAvatar hideGoBack>
       {sorting ? (
         <>
-          <IconButton colorScheme="white" size="xl" p="1.5" icon={<CheckIcon />} onPress={saveSorting} />
-          <IconButton colorScheme="white" size="xl" p="1.5" icon={<CloseIcon />} onPress={cancelSorting} />
+          <IconButton size="xl" p="1.5" icon={<CheckIcon />} onPress={saveSorting} />
+          <IconButton size="xl" p="1.5" icon={<CloseIcon />} onPress={cancelSorting} />
         </>
       ) : (
         <>
-          <IconButton colorScheme="white" size="xl" p="1.5" icon={<ReorderIcon />} onPress={enableSorting} />
-          <IconButton
-            colorScheme="white"
-            size="2xl"
-            p="1"
-            icon={<CollapsedIcon hidden={!allCollapsed} />}
-            onPress={switchCollapsed}
-          />
+          <IconButton size="xl" p="1.5" icon={<ReorderIcon />} onPress={enableSorting} />
+          <IconButton size="2xl" p="1" icon={<CollapsedIcon hidden={!allCollapsed} />} onPress={switchCollapsed} />
         </>
       )}
     </Header>

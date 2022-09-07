@@ -1,6 +1,6 @@
 import {Theme} from 'native-base';
 import {StyleProp, ViewStyle} from 'react-native';
-import {DEFAULT_SPACE, HALF_DEFAULT_SPACE} from '../../constants';
+import {SMALL_SPACE} from '../../constants';
 
 export class ListUtils {
   public static draggableStyle: StyleProp<ViewStyle> = {
@@ -23,8 +23,7 @@ export class ListUtils {
   });
 
   public static themedItemStyle = (theme: Theme): StyleProp<ViewStyle> => ({
-    margin: theme.sizes[DEFAULT_SPACE],
-    marginTop: theme.sizes[HALF_DEFAULT_SPACE],
-    marginBottom: theme.sizes[HALF_DEFAULT_SPACE],
+    marginTop: theme.sizes[SMALL_SPACE],
+    marginBottom: theme.sizes[SMALL_SPACE],
   });
 }

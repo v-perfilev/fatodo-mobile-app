@@ -86,12 +86,8 @@ const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) 
 
   return (
     <Header title={group?.title} imageFilename={group?.imageFilename}>
-      <IconButton colorScheme="white" size="xl" p="1.5" icon={switchArchivedIcon} onPress={toggleShowArchived} />
-      <Menu
-        trigger={(triggerProps) => (
-          <IconButton {...triggerProps} colorScheme="white" size="xl" p="1.5" icon={<DotsVerticalIcon />} />
-        )}
-      >
+      <IconButton size="xl" p="1.5" icon={switchArchivedIcon} onPress={toggleShowArchived} />
+      <Menu trigger={(triggerProps) => <IconButton {...triggerProps} size="xl" p="1.5" icon={<DotsVerticalIcon />} />}>
         {menuElements.map((itemProps, index) => (
           <MenuItem {...itemProps} key={index} />
         ))}

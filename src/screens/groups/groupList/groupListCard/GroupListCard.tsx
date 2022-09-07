@@ -35,14 +35,10 @@ const GroupListCard = ({group, items, count, loading, collapsed, sorting, drag, 
   return (
     <ThemeProvider theme={theme}>
       <Box {...props}>
-        <Box borderRadius="4" overflow="hidden">
-          <GroupListCardHeader group={group} collapsed={collapsed} sorting={sorting} drag={drag} />
-          <Box bg="white" borderWidth="1" borderTopWidth="0" borderColor="gray.200" borderBottomRadius="3">
-            <Collapsible collapsed={collapsed}>
-              <GroupListCardContent group={group} items={items} count={count} loading={initialLoading} />
-            </Collapsible>
-          </Box>
-        </Box>
+        <GroupListCardHeader group={group} collapsed={collapsed} sorting={sorting} drag={drag} />
+        <Collapsible collapsed={collapsed}>
+          <GroupListCardContent group={group} items={items} count={count} loading={initialLoading} />
+        </Collapsible>
       </Box>
     </ThemeProvider>
   );

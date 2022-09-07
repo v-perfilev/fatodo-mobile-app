@@ -1,4 +1,4 @@
-import {Button, Center, KeyboardAvoidingView, Modal} from 'native-base';
+import {Box, Button, Center, KeyboardAvoidingView, Modal} from 'native-base';
 import React, {ReactElement} from 'react';
 import {LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
 import ThemeProvider from '../layouts/ThemeProvider';
@@ -21,10 +21,11 @@ const ModalDialog = ({open, close, title, content, actions, size}: ModalDialogPr
       <KeyboardAvoidingView w="100%" behavior="position">
         <Center>
           <Modal.Content borderRadius="0">
-            <Modal.CloseButton bgColor={null} _pressed={{bgColor: 'none'}} _icon={{color: 'white'}} />
-            <Modal.Header bg={LINEAR_GRADIENT} borderBottomWidth="0" _text={{color: 'white'}}>
+            <Modal.CloseButton bgColor={null} _pressed={{bgColor: 'none'}} _icon={{color: 'primary.500'}} />
+            <Modal.Header borderBottomWidth="0" _text={{color: 'primary.500'}}>
               {title}
             </Modal.Header>
+            <Box w="100%" h="1" bg={LINEAR_GRADIENT} />
             <Modal.Body>{content}</Modal.Body>
             {actions && (
               <Modal.Footer pt="0" borderTopWidth="0">

@@ -16,9 +16,9 @@ export type ColorScheme = 'yellow' | 'turquoise' | 'purple' | 'green' | 'blue';
 
 export const LINEAR_GRADIENT = {
   linearGradient: {
-    colors: ['tertiary.500', 'tertiary.300'],
-    start: [0, 0],
-    end: [1, 1],
+    colors: ['tertiary.400', 'tertiary.300'],
+    start: [0, 1],
+    end: [1, 0],
   },
 };
 

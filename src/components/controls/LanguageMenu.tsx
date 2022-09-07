@@ -4,6 +4,7 @@ import LanguageIcon from '../icons/LanguageIcon';
 import {LanguageUtils} from '../../shared/utils/LanguageUtils';
 import Menu, {MenuItem} from './Menu';
 import LinkButton from './LinkButton';
+import {DateUtils} from '../../shared/utils/DateUtils';
 
 type LanguageMenuProps = {
   onChange?: (code: string) => void;
@@ -17,6 +18,7 @@ type LanguageMenuItemProps = {
 
 const LanguageMenuItem = ({name, code, onChange}: LanguageMenuItemProps) => {
   const changeLanguage = (): void => {
+    DateUtils.resetLocale(code);
     LanguageUtils.setLanguage(code);
     onChange && onChange(code);
   };
