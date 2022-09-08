@@ -32,7 +32,7 @@ const TabNavigatorItem = ({
   const isFocused = state.index === index;
   const icon = options.tabBarIcon;
   const badge = options.tabBarBadge;
-  const opacity = isFocused ? 1 : 0.5;
+  const iconColor = isFocused ? color : 'gray.400';
 
   const onPress = () => {
     requestAnimationFrame(() => navigation.navigate(routeName));
@@ -51,7 +51,7 @@ const TabNavigatorItem = ({
       <FCenter>
         <Box>
           {showBadgeNode && badgeNode}
-          <Box opacity={opacity}>{icon({focused: isFocused, color, size: 8})}</Box>
+          {icon({focused: isFocused, color: iconColor, size: 8})}
         </Box>
       </FCenter>
     </Pressable>

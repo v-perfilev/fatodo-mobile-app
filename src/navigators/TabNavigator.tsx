@@ -49,14 +49,11 @@ const TabNavigator = () => {
   const unreadEventCount = useAppSelector(EventsSelectors.unreadCount);
   const unreadMessageCount = useAppSelector(ChatsSelectors.unreadCount);
   const incomingRequestCount = useAppSelector(ContactsSelectors.incomingRequestCount);
+
   const color = theme?.colors.primary['500'] || 'primary.500';
 
   return (
-    <Tab.Navigator
-      screenOptions={{headerShown: false, lazy: false}}
-      initialRouteName="Groups"
-      tabBar={TabNavigatorBar(color)}
-    >
+    <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Groups" tabBar={TabNavigatorBar(color)}>
       <Tab.Screen name="Calendar" component={CalendarView} options={{tabBarIcon: calendarIcon}} />
       <Tab.Screen
         name="Events"

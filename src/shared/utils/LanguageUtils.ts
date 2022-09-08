@@ -12,14 +12,14 @@ export class LanguageUtils {
   public static getLanguage = (): string => i18n.language;
 
   public static setLanguage = (code: string): void => {
-    i18n.changeLanguage(code).then();
+    i18n.changeLanguage(code).finally();
   };
 
   public static setLanguageFromUser = (account: UserAccount): void => {
     const code = account?.info?.language;
-    if (code && LanguageUtils.getLanguage() !== code) {
-      LanguageUtils.setLanguage(code);
+    if (code) {
       DateUtils.resetLocale(code);
+      LanguageUtils.setLanguage(code);
     }
   };
 }
