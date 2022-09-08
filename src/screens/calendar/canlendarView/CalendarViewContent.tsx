@@ -33,7 +33,7 @@ const CalendarViewContent = ({
   return (
     <FVStack flex="1" flexGrow="1" space="2" py="2">
       <CalendarViewMonthName month={month} selectMonth={selectMonth} />
-      <Divider />
+      <Divider bg="gray.200" />
       <FVStack space="2">
         <CalendarViewWeekDays />
         <CalendarViewMonth
@@ -44,7 +44,7 @@ const CalendarViewContent = ({
           width={width}
         />
       </FVStack>
-      <Divider />
+      <Divider bg="gray.200" />
       <CalendarViewReminders reminders={activeDateReminders} />
     </FVStack>
   );

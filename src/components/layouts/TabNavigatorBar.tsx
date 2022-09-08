@@ -62,7 +62,7 @@ const TabNavigatorBar =
   (color: string) =>
   ({state, descriptors, navigation}: TabNavigatorBarProps) => {
     return (
-      <FHStack borderTopColor={color} borderTopWidth="0.5" safeAreaBottom>
+      <FHStack borderTopColor="gray.200" borderTopWidth="1" safeAreaBottom>
         {state.routes.map((route, index) => (
           <TabNavigatorItem
             routeKey={route.key}
