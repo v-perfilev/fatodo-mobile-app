@@ -1,5 +1,6 @@
 import i18n from '../i18n';
 import {UserAccount} from '../../models/User';
+import {DateUtils} from './DateUtils';
 
 export class LanguageUtils {
   public static getFallbackLanguage = (): string =>
@@ -18,6 +19,7 @@ export class LanguageUtils {
     const code = account?.info?.language;
     if (code && LanguageUtils.getLanguage() !== code) {
       LanguageUtils.setLanguage(code);
+      DateUtils.resetLocale(code);
     }
   };
 }
