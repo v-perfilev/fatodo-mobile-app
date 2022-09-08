@@ -21,8 +21,12 @@ const ModalDialog = ({open, close, title, content, actions, size}: ModalDialogPr
       <KeyboardAvoidingView w="100%" behavior="position">
         <Center>
           <Modal.Content borderRadius="0">
-            <Modal.CloseButton bgColor={null} _pressed={{bgColor: 'none'}} _icon={{color: 'primary.500'}} />
-            <Modal.Header borderBottomWidth="0" _text={{color: 'primary.500'}}>
+            <Modal.CloseButton
+              rounded="3xl"
+              _pressed={{bgColor: 'primary.100:alpha.30'}}
+              _icon={{color: 'primary.500'}}
+            />
+            <Modal.Header bg="gray.50" borderBottomWidth="0" _text={{color: 'primary.500'}}>
               {title}
             </Modal.Header>
             <Box w="100%" h="1" bg={LINEAR_GRADIENT} />

@@ -2,17 +2,18 @@ import React from 'react';
 import {ColorScheme, LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
 import ThemeProvider from '../layouts/ThemeProvider';
 import FBox from '../boxes/FBox';
+import {IBoxProps} from 'native-base';
 
-type ThemeViewProps = {
+type ThemeViewProps = IBoxProps & {
   color: ColorScheme;
 };
 
-export const ThemeView = ({color}: ThemeViewProps) => {
+export const ThemeView = ({color, ...props}: ThemeViewProps) => {
   const theme = ThemeFactory.getTheme(color);
 
   return (
     <ThemeProvider theme={theme}>
-      <FBox minW="200" bg={LINEAR_GRADIENT} />
+      <FBox {...props} bg={LINEAR_GRADIENT} />
     </ThemeProvider>
   );
 };

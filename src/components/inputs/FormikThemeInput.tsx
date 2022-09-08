@@ -1,5 +1,5 @@
 import React, {ReactElement, useMemo} from 'react';
-import {IFormControlProps} from 'native-base';
+import {Box, IFormControlProps} from 'native-base';
 import {FormikProps} from 'formik';
 import ThemeView from '../views/ThemeView';
 import {colorSchemes} from '../../shared/themes/ThemeFactory';
@@ -13,8 +13,15 @@ type FormikThemeInputProps = IFormControlProps &
 
 const FormikThemeInput = (props: FormikThemeInputProps) => {
   const themeSelectMap = useMemo<Map<string, ReactElement>>(() => {
-    const map = new Map<string, ReactElement>();
-    colorSchemes.forEach((s) => map.set(s, <ThemeView color={s} />));
+    const map = new Map<string, any>();
+    colorSchemes.forEach((s) =>
+      map.set(
+        s,
+        <Box minW="200px" h="35px">
+          <ThemeView color={s} />
+        </Box>,
+      ),
+    );
     return map;
   }, []);
 

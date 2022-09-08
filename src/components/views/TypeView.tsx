@@ -30,7 +30,7 @@ export const TypeView = ({type, withoutText, ...props}: TypeViewProps) => {
     }
   };
 
-  const icon = React.cloneElement(getIcon(), {...props, color: 'primary:500', mt: !withoutText ? 1 : undefined});
+  const icon = React.cloneElement(getIcon(), {...props, color: 'primary.500', mt: !withoutText ? 1 : undefined});
   const text = t('common:types.' + type);
 
   const onlyIcon = <FCenter>{icon}</FCenter>;

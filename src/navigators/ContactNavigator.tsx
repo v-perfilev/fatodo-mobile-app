@@ -69,10 +69,8 @@ const ContactNavigator = () => {
     return (
       <PressableButton flex="1" h={HEADER_HEIGHT} onPress={props.onPress} key={props.route.key}>
         <FBox flexGrow="1" justifyContent="center" alignItems="center">
-          <FHStack smallSpace>
-            <Text color="primary.500" fontWeight="bold">
-              {t(`contact:${props.route.key}.title`)}
-            </Text>
+          <FHStack smallSpace mt="3px">
+            <Text color="primary.500">{t(`contact:${props.route.key}.title`)}</Text>
             {renderBadge(props.route)}
           </FHStack>
         </FBox>
