@@ -5,7 +5,7 @@ import {Animated, FlatList as RNFlatList, LayoutChangeEvent, ListRenderItemInfo,
 export type FlatListType = RNFlatList;
 
 export type FlatListProps<T> = Partial<IFlatListProps<T>> & {
-  render: (item: T, onLayout?: (event: LayoutChangeEvent) => void) => ReactElement;
+  render: (info: ListRenderItemInfo<T>, onLayout?: (event: LayoutChangeEvent) => void) => ReactElement;
   keyExtractor?: (item: T) => string;
   fixedLength?: number;
 };
@@ -57,11 +57,11 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
   const _renderItem = useCallback(
     (info: ListRenderItemInfo<any>): ReactElement => {
       if (fixedLength) {
-        return render(info.item);
+        return render(info);
       } else {
         const key = keyExtractor(info.item);
         const onLayout = (event: LayoutChangeEvent): void => _onLayout(key, event);
-        return render(info.item, onLayout);
+        return render(info, onLayout);
       }
     },
     [keyExtractor, _onLayout, render],
@@ -78,7 +78,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
 
   return (
     <Animated.FlatList
-      onEndReachedThreshold={0.5}
+      onEndReachedThreshold={2}
       {...props}
       data={data}
       renderItem={_renderItem}

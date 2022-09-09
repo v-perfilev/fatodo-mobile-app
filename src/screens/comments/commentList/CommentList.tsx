@@ -11,7 +11,7 @@ import CommentListStub from './CommentListStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {CommentsActions} from '../../../store/comments/commentsActions';
-import {LayoutChangeEvent} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import CommentListItem from './commentListItem/CommentListItem';
 import CollapsableRefreshableFlatList, {
@@ -55,9 +55,9 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
 
   const keyExtractor = useCallback((comment: Comment): string => comment.id, []);
   const renderItem = useCallback(
-    (comment: Comment, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    (info: ListRenderItemInfo<Comment>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-        <CommentListItem comment={comment} setReference={setReference} />
+        <CommentListItem comment={info.item} setReference={setReference} />
       </Box>
     ),
     [],

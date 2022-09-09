@@ -3,7 +3,7 @@ import {FormControl, ScrollView, Text} from 'native-base';
 import Menu, {MenuItem} from '../controls/Menu';
 import PressableButton from '../controls/PressableButton';
 import PaperBox from '../surfaces/PaperBox';
-import {Dimensions} from 'react-native';
+import {Dimensions, ListRenderItemInfo} from 'react-native';
 import FlatList from '../scrollable/FlatList';
 import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
 import {flowRight} from 'lodash';
@@ -30,7 +30,9 @@ const FormikSelect = (props: FormikSelectProps) => {
   const listHeight = useMemo<number>(() => Math.floor(Dimensions.get('window').height / 2), []);
   const data = useMemo<string[]>(() => Array.from(options.keys()), [options]);
   const renderItem = useCallback(
-    (option: string): ReactElement => <FormikSelectItem {...{options, option, setCurrent}} />,
+    (info: ListRenderItemInfo<string>): ReactElement => (
+      <FormikSelectItem options={options} option={info.item} setCurrent={setCurrent} />
+    ),
     [],
   );
 

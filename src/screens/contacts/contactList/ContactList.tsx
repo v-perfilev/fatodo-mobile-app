@@ -9,7 +9,7 @@ import {Box, useTheme} from 'native-base';
 import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {ContactRelation} from '../../../models/Contact';
-import {LayoutChangeEvent} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import ContactListItem from './ContactListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
@@ -43,9 +43,9 @@ const ContactList = () => {
 
   const keyExtractor = useCallback((relation: ContactRelation): string => relation.id, []);
   const renderItem = useCallback(
-    (relation: ContactRelation, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    (info: ListRenderItemInfo<ContactRelation>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-        <ContactListItem relation={relation} />
+        <ContactListItem relation={info.item} />
       </Box>
     ),
     [],

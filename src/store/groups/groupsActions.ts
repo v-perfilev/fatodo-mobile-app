@@ -31,11 +31,11 @@ export class GroupsActions {
 
   static fetchGroupsThunk = createAsyncThunk(PREFIX + 'fetchGroups', async (_, thunkAPI) => {
     const response = await ItemService.getAllGroups();
-    const groupIds = response.data.map((g) => g.id);
+    const groupIds = response.data.data.map((g) => g.id);
     groupIds.length > 0 && thunkAPI.dispatch(GroupsActions.fetchItemsThunk(groupIds));
-    const groupUserIds = response.data.flatMap((g) => g.members).map((m) => m.userId);
+    const groupUserIds = response.data.data.flatMap((g) => g.members).map((m) => m.userId);
     thunkAPI.dispatch(InfoActions.handleUserIdsThunk(groupUserIds));
-    return response.data;
+    return response.data.data;
   });
 
   static fetchItemsThunk = createAsyncThunk(PREFIX + 'fetchItems', async (groupIds: string[], thunkAPI) => {

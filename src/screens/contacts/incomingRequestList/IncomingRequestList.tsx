@@ -6,7 +6,7 @@ import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import IncomingRequestListStub from './IncomingRequestListStub';
 import {Box, useTheme} from 'native-base';
 import {ContactRequest} from '../../../models/Contact';
-import {LayoutChangeEvent} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import IncomingRequestListItem from './IncomingRequestListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
@@ -29,9 +29,9 @@ const IncomingRequestList = () => {
 
   const keyExtractor = useCallback((relation: ContactRequest): string => relation.id, []);
   const renderItem = useCallback(
-    (request: ContactRequest, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    (info: ListRenderItemInfo<ContactRequest>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-        <IncomingRequestListItem request={request} />
+        <IncomingRequestListItem request={info.item} />
       </Box>
     ),
     [],

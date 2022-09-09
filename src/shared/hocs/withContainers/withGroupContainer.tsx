@@ -15,7 +15,7 @@ export type WithGroupProps = {
 const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props: any) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
-  const [loading, setLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState(true, 0);
   const route = useRoute<RouteProp<GroupParamList, 'withGroup'>>();
   const routeGroupId = route.params.groupId;
   const routeGroup = route.params.group;

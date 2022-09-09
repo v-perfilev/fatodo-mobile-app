@@ -7,7 +7,7 @@ import {ListUtils} from '../../../shared/utils/ListUtils';
 import ChatListStub from './ChatListStub';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Chat} from '../../../models/Chat';
-import {LayoutChangeEvent} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
 import {Box, useTheme} from 'native-base';
 import ChatListItem from './ChatListItem';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -65,9 +65,9 @@ const ChatList = () => {
 
   const keyExtractor = useCallback((chat: Chat): string => chat.id, []);
   const renderItem = useCallback(
-    (chat: Chat, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    (info: ListRenderItemInfo<Chat>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-        <ChatListItem chat={chat} />
+        <ChatListItem chat={info.item} />
       </Box>
     ),
     [],

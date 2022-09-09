@@ -12,7 +12,7 @@ import ChatSelectors from '../../../store/chat/chatSelectors';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {ChatActions} from '../../../store/chat/chatActions';
 import {ChatItem} from '../../../models/Message';
-import {LayoutChangeEvent, ViewToken} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo, ViewToken} from 'react-native';
 import ChatViewItem from './ChatViewItem';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import CollapsableRefreshableFlatList, {
@@ -53,9 +53,9 @@ const ChatView = ({loading}: ChatViewProps) => {
 
   const keyExtractor = useCallback((item: ChatItem): string => item.message?.id || item.date, []);
   const renderItem = useCallback(
-    (item: ChatItem, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    (info: ListRenderItemInfo<ChatItem>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-        <ChatViewItem item={item} />
+        <ChatViewItem item={info.item} />
       </Box>
     ),
     [],

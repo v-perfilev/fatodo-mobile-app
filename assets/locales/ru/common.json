@@ -29,6 +29,12 @@
     "MONTHLY": "в {{time}} {{monthDates}} каждого месяца",
     "YEARLY": "в {{time}} {{date}}"
   },
+  "statuses": {
+    "CREATED": "создана",
+    "WORK_IN_PROGRESS": "в процессе",
+    "COMPLETED": "завершена",
+    "CLOSED": "закрыта"
+  },
   "types": {
     "TASK": "задача",
     "EVENT": "событие",

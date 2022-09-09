@@ -7,13 +7,15 @@ import NormalPriorityIcon from '../icons/NormalPriorityIcon';
 import HighPriorityIcon from '../icons/HighPriorityIcon';
 import FCenter from '../boxes/FCenter';
 import FHStack from '../boxes/FHStack';
+import {IColors} from 'native-base/lib/typescript/theme/base/colors';
 
 type PriorityViewProps = IIconProps & {
   priority: ItemPriorityType;
+  fontColor?: IColors;
   withoutText?: boolean;
 };
 
-export const PriorityView = ({priority, withoutText, ...props}: PriorityViewProps) => {
+export const PriorityView = ({priority, fontColor, withoutText, ...props}: PriorityViewProps) => {
   const {t} = useTranslation();
 
   const getIcon = (priority: ItemPriorityType): ReactElement => {
@@ -35,7 +37,7 @@ export const PriorityView = ({priority, withoutText, ...props}: PriorityViewProp
   const iconWithText = (
     <FHStack smallSpace alignItems="center">
       {icon}
-      <Text>{text}</Text>
+      <Text color={fontColor}>{text}</Text>
     </FHStack>
   );
 

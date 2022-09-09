@@ -18,6 +18,7 @@ type CollapsableRefreshableFlatListProps = FlatListProps<any> & {
   headerHeight: number;
   refresh?: () => Promise<void>;
   loading?: boolean;
+  loadingPlaceholder?: ReactElement;
   previousNode?: ReactNode;
   previousNodeHeight?: number;
   nextNode?: ReactNode;
@@ -31,6 +32,7 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
     headerHeight,
     refresh,
     loading,
+    loadingPlaceholder,
     previousNode,
     previousNodeHeight,
     nextNode,
@@ -44,7 +46,13 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
       {({handleEventScroll, handleEventSnap, collapsableRef, scrollY}: CollapsableHeaderChildrenProps) => (
         <>
           {previousNode}
-          <ConditionalSpinner loading={loading} pt={headerHeight} mt={nextNodeHeight} mb={previousNodeHeight}>
+          <ConditionalSpinner
+            loading={loading}
+            loadingPlaceholder={loadingPlaceholder}
+            pt={headerHeight}
+            mt={nextNodeHeight}
+            mb={previousNodeHeight}
+          >
             <RefreshableContainer refresh={refresh} parentScrollY={scrollY} inverted={inverted}>
               {({refresher}: RefreshableChildrenProps) => (
                 <FlatList

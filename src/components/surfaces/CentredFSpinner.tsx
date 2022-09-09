@@ -7,7 +7,7 @@ type CentredFSpinnerProps = IBoxProps;
 
 const CentredFSpinner = ({...props}: CentredFSpinnerProps) => {
   return (
-    <FCenter grow {...props}>
+    <FCenter grow m="5" {...props}>
       <FSpinner />
     </FCenter>
   );

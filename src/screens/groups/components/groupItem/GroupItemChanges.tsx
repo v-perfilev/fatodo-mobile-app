@@ -6,11 +6,11 @@ import FHStack from '../../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
 
-type GroupListCardItemChangesProps = {
+type GroupItemChangesProps = {
   item: Item;
 };
 
-const GroupListCardItemChanges = ({item}: GroupListCardItemChangesProps) => {
+const GroupItemChanges = ({item}: GroupItemChangesProps) => {
   const users = useAppSelector(InfoSelectors.users);
 
   const name = useMemo<string>(() => users.get(item.createdBy)?.username, [users.get(item.createdBy)]);
@@ -26,4 +26,4 @@ const GroupListCardItemChanges = ({item}: GroupListCardItemChangesProps) => {
   );
 };
 
-export default GroupListCardItemChanges;
+export default GroupItemChanges;

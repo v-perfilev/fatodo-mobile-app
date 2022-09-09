@@ -6,11 +6,11 @@ import TypeView from '../../../../components/views/TypeView';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 
-type GroupListCardItemIconsProps = {
+type GroupItemIconsProps = {
   item: Item;
 };
 
-const GroupListCardItemIcons = ({item}: GroupListCardItemIconsProps) => {
+const GroupItemIcons = ({item}: GroupItemIconsProps) => {
   return (
     <FHStack smallSpace alignItems="center">
       <StatusView statusType={item.status} size="lg" />
@@ -22,4 +22,4 @@ const GroupListCardItemIcons = ({item}: GroupListCardItemIconsProps) => {
   );
 };
 
-export default GroupListCardItemIcons;
+export default GroupItemIcons;

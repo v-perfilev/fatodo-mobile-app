@@ -12,7 +12,7 @@ export default class ItemService {
   GroupController
    */
 
-  public static getAllGroups = (): AxiosPromise<Group[]> => {
+  public static getAllGroups = (): AxiosPromise<PageableList<Group>> => {
     const url = ItemService.baseUrl + '/group';
     return axios.get(url);
   };

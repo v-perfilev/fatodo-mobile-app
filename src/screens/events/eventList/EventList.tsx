@@ -5,7 +5,7 @@ import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useIsFocused} from '@react-navigation/native';
 import EventsSelectors from '../../../store/events/eventsSelectors';
 import {FlatListType} from '../../../components/scrollable/FlatList';
-import {LayoutChangeEvent} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
 import {Event} from '../../../models/Event';
 import {Box, useTheme} from 'native-base';
 import {ListUtils} from '../../../shared/utils/ListUtils';
@@ -53,9 +53,9 @@ const EventList = () => {
   const keyExtractor = useCallback((event: Event): string => event.id + event.date, []);
 
   const renderItem = useCallback(
-    (event: Event, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    (info: ListRenderItemInfo<Event>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-        <EventListItem event={event} />
+        <EventListItem event={info.item} />
       </Box>
     ),
     [],

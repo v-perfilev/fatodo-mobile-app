@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import {Item} from '../../../../models/Item';
-import GroupListCardSkeleton from '../skeletons/GroupListCardSkeleton';
+import GroupListCardSkeleton from '../../components/skeletons/GroupListCardSkeleton';
 import GroupListCardInfo from './GroupListCardInfo';
-import GroupListCardItem from '../groupListCardItem/GroupListCardItem';
+import GroupItem from '../../components/groupItem/GroupItem';
 import {Group} from '../../../../models/Group';
 import FVStack from '../../../../components/boxes/FVStack';
+import {Box, Divider} from 'native-base';
+import {GroupUtils} from '../../../../shared/utils/GroupUtils';
+import {useAppSelector} from '../../../../store/store';
+import AuthSelectors from '../../../../store/auth/authSelectors';
 
 type GroupListCardContentProps = {
   group: Group;
@@ -13,21 +17,30 @@ type GroupListCardContentProps = {
   loading: boolean;
 };
 
+const GroupListCardSeparator = (): ReactElement => <Divider bg="gray.200" />;
+
 const GroupListCardContent = ({group, items, count, loading}: GroupListCardContentProps) => {
+  const account = useAppSelector(AuthSelectors.account);
+
   const skeleton = <GroupListCardSkeleton />;
 
-  const itemsView = (
-    <FVStack mt="2" space="2">
-      {items.map((item) => (
-        <GroupListCardItem group={group} item={item} key={item.id} />
-      ))}
-    </FVStack>
-  );
+  const canEdit = group && GroupUtils.canEdit(account, group);
 
   const groupInfo = <GroupListCardInfo group={group} items={items} count={count} />;
 
+  const itemsView = (
+    <>
+      {items.slice(0, 5).map((item, index) => (
+        <Box key={index}>
+          {index !== 0 && <GroupListCardSeparator />}
+          <GroupItem item={item} group={group} canEdit={canEdit} />
+        </Box>
+      ))}
+    </>
+  );
+
   return (
-    <FVStack mx="2">
+    <FVStack>
       {loading && skeleton}
       {!loading && count > 0 && itemsView}
       {!loading && groupInfo}

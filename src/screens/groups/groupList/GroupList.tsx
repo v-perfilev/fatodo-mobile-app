@@ -18,7 +18,7 @@ import CollapsableRefreshableFlatList, {
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import CollapsableDraggableList from '../../../components/scrollable/CollapsableDraggableList';
-import {LayoutChangeEvent} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
@@ -59,9 +59,9 @@ const GroupList = () => {
   );
 
   const renderFlatItem = useCallback(
-    (group: Group, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+    (info: ListRenderItemInfo<Group>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-        <GroupListItem item={group} sorting={false} isActive={false} drag={undefined} />
+        <GroupListItem item={info.item} sorting={false} isActive={false} drag={undefined} />
       </Box>
     ),
     [],

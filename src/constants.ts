@@ -36,7 +36,6 @@ export const INPUT_FONT_SIZE = 13;
 
 // SPACES
 export const DEFAULT_SPACE = 3;
-export const HALF_DEFAULT_SPACE = 1.5;
 export const SMALL_SPACE = 1;
 
 // CHATS

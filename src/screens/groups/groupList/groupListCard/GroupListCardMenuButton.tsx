@@ -67,7 +67,7 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
       trigger={(triggerProps) => (
         <IconButton
           {...triggerProps}
-          colorScheme="white"
+          colorScheme="primary"
           bgTransparency="10"
           size="lg"
           p="1"

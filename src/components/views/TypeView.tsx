@@ -8,13 +8,15 @@ import RepetitionIcon from '../icons/RepetitionIcon';
 import NoteIcon from '../icons/NoteIcon';
 import FCenter from '../boxes/FCenter';
 import FHStack from '../boxes/FHStack';
+import {IColors} from 'native-base/lib/typescript/theme/base/colors';
 
 type TypeViewProps = IIconProps & {
   type: ItemType;
+  fontColor?: IColors;
   withoutText?: boolean;
 };
 
-export const TypeView = ({type, withoutText, ...props}: TypeViewProps) => {
+export const TypeView = ({type, fontColor, withoutText, ...props}: TypeViewProps) => {
   const {t} = useTranslation();
 
   const getIcon = (): ReactElement => {
@@ -37,7 +39,7 @@ export const TypeView = ({type, withoutText, ...props}: TypeViewProps) => {
   const iconWithText = (
     <FHStack smallSpace alignItems="center">
       {icon}
-      <Text>{text}</Text>
+      <Text color={fontColor}>{text}</Text>
     </FHStack>
   );
 

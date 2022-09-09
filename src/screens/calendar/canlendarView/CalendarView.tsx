@@ -2,7 +2,7 @@ import React, {memo, MutableRefObject, ReactElement, useCallback, useEffect, use
 import Header from '../../../components/layouts/Header';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
-import {Dimensions, NativeScrollEvent, NativeSyntheticEvent, ScrollView} from 'react-native';
+import {Dimensions, ListRenderItemInfo, NativeScrollEvent, NativeSyntheticEvent, ScrollView} from 'react-native';
 import FlatList, {FlatListType} from '../../../components/scrollable/FlatList';
 import {useAppDispatch} from '../../../store/store';
 import CalendarViewContainer from './CalendarViewContainer';
@@ -67,8 +67,13 @@ const CalendarView = () => {
 
   const keyExtractor = useCallback((month: CalendarMonth): string => month.key, []);
   const renderItem = useCallback(
-    (month: CalendarMonth): ReactElement => (
-      <CalendarViewContainer month={month} selectMonth={selectMonth} childRefMap={childRefMap.current} width={width} />
+    (info: ListRenderItemInfo<CalendarMonth>): ReactElement => (
+      <CalendarViewContainer
+        month={info.item}
+        selectMonth={selectMonth}
+        childRefMap={childRefMap.current}
+        width={width}
+      />
     ),
     [],
   );

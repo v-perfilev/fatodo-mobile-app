@@ -29,6 +29,12 @@
     "MONTHLY": "at {{time}} on {{monthDates}} of every month",
     "YEARLY": "at {{time}} on {{date}}"
   },
+  "statuses": {
+    "CREATED": "created",
+    "WORK_IN_PROGRESS": "in progress",
+    "COMPLETED": "completed",
+    "CLOSED": "closed"
+  },
   "types": {
     "TASK": "task",
     "EVENT": "event",

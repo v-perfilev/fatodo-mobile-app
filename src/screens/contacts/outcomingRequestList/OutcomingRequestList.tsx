@@ -6,7 +6,7 @@ import {ContactsActions} from '../../../store/contacts/contactsActions';
 import OutcomingRequestListStub from './OutcomingRequestListStub';
 import {Box, useTheme} from 'native-base';
 import {ContactRequest} from '../../../models/Contact';
-import {LayoutChangeEvent} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
 import {ListUtils} from '../../../shared/utils/ListUtils';
 import OutcomingRequestListItem from './OutcomingRequestListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
@@ -24,9 +24,12 @@ const OutcomingRequestList = () => {
   };
 
   const keyExtractor = (relation: ContactRequest): string => relation.id;
-  const renderItem = (request: ContactRequest, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
+  const renderItem = (
+    info: ListRenderItemInfo<ContactRequest>,
+    onLayout: (event: LayoutChangeEvent) => void,
+  ): ReactElement => (
     <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
-      <OutcomingRequestListItem request={request} />
+      <OutcomingRequestListItem request={info.item} />
     </Box>
   );
 
