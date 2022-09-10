@@ -12,31 +12,20 @@ type TabNavigatorBarProps = BottomTabBarProps;
 type TabNavigatorItemProps = {
   routeName: string;
   routeKey: string;
-  color: string;
   state: TabNavigationState<ParamListBase>;
   descriptors: BottomTabDescriptorMap;
   navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>;
   index: number;
 };
 
-const TabNavigatorItem = ({
-  routeName,
-  routeKey,
-  color,
-  state,
-  descriptors,
-  navigation,
-  index,
-}: TabNavigatorItemProps) => {
+const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, index}: TabNavigatorItemProps) => {
   const {options} = descriptors[routeKey];
   const isFocused = state.index === index;
   const icon = options.tabBarIcon;
   const badge = options.tabBarBadge;
-  const iconColor = isFocused ? color : 'gray.400';
+  const iconColor = isFocused ? 'primary.500' : 'gray.400';
 
-  const onPress = () => {
-    requestAnimationFrame(() => navigation.navigate(routeName));
-  };
+  const onPress = (): void => navigation.navigate(routeName);
 
   const showBadgeNode = badge !== undefined && badge !== 0;
 
@@ -58,25 +47,22 @@ const TabNavigatorItem = ({
   );
 };
 
-const TabNavigatorBar =
-  (color: string) =>
-  ({state, descriptors, navigation}: TabNavigatorBarProps) => {
-    return (
-      <FHStack borderTopColor="gray.200" borderTopWidth="1" safeAreaBottom>
-        {state.routes.map((route, index) => (
-          <TabNavigatorItem
-            routeKey={route.key}
-            routeName={route.name}
-            color={color}
-            state={state}
-            descriptors={descriptors}
-            navigation={navigation}
-            index={index}
-            key={index}
-          />
-        ))}
-      </FHStack>
-    );
-  };
+const TabNavigatorBar = ({state, descriptors, navigation}: TabNavigatorBarProps) => {
+  return (
+    <FHStack borderTopColor="gray.200" borderTopWidth="1" safeAreaBottom>
+      {state.routes.map((route, index) => (
+        <TabNavigatorItem
+          routeKey={route.key}
+          routeName={route.name}
+          state={state}
+          descriptors={descriptors}
+          navigation={navigation}
+          index={index}
+          key={index}
+        />
+      ))}
+    </FHStack>
+  );
+};
 
 export default TabNavigatorBar;

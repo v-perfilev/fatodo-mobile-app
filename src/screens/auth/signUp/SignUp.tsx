@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React from 'react';
 import Logo from '../../../components/layouts/Logo';
 import LinkButton from '../../../components/controls/LinkButton';
 import {useTranslation} from 'react-i18next';
@@ -36,4 +36,4 @@ const SignUp = () => {
   );
 };
 
-export default memo(SignUp);
+export default SignUp;

@@ -6,8 +6,6 @@ import ContactNavigator from './ContactNavigator';
 import GroupsIcon from '../components/icons/GroupsIcon';
 import ContactsIcon from '../components/icons/ContactsIcon';
 import ChatsIcon from '../components/icons/ChatsIcon';
-import {useTabBarContext} from '../shared/contexts/TabBarContext';
-import withTabBar from '../shared/hocs/withTabBar';
 import ChatList from '../screens/chats/chatList/ChatList';
 import AlarmIcon from '../components/icons/AlarmIcon';
 import EventList from '../screens/events/eventList/EventList';
@@ -45,15 +43,12 @@ const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={
 const contactsIcon = ({color, size}: TabIconProps): ReactNode => <ContactsIcon color={color} size={size} />;
 
 const TabNavigator = () => {
-  const {theme} = useTabBarContext();
   const unreadEventCount = useAppSelector(EventsSelectors.unreadCount);
   const unreadMessageCount = useAppSelector(ChatsSelectors.unreadCount);
   const incomingRequestCount = useAppSelector(ContactsSelectors.incomingRequestCount);
 
-  const color = theme?.colors.primary['500'] || 'primary.500';
-
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Groups" tabBar={TabNavigatorBar(color)}>
+    <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Groups" tabBar={TabNavigatorBar}>
       <Tab.Screen name="Calendar" component={CalendarView} options={{tabBarIcon: calendarIcon}} />
       <Tab.Screen
         name="Events"
@@ -75,4 +70,4 @@ const TabNavigator = () => {
   );
 };
 
-export default withTabBar(TabNavigator);
+export default TabNavigator;

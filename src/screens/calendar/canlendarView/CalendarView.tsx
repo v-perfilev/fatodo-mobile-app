@@ -1,4 +1,4 @@
-import React, {memo, MutableRefObject, ReactElement, useCallback, useEffect, useRef} from 'react';
+import React, {MutableRefObject, ReactElement, useCallback, useEffect, useRef} from 'react';
 import Header from '../../../components/layouts/Header';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
@@ -110,4 +110,4 @@ const CalendarView = () => {
     </>
   );
 };
-export default memo(CalendarView);
+export default CalendarView;

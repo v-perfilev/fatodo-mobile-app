@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {EventsActions} from '../../../store/events/eventsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
@@ -107,4 +107,4 @@ const EventList = () => {
   );
 };
 
-export default memo(EventList);
+export default EventList;

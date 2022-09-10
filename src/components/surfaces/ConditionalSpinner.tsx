@@ -10,7 +10,7 @@ type ConditionalSpinnerProps = IBoxProps &
   }>;
 
 const ConditionalSpinner = ({loading, loadingPlaceholder, children, ...props}: ConditionalSpinnerProps) => {
-  const loader = <FBox {...props}>{loadingPlaceholder}</FBox> || <CentredFSpinner {...props} />;
+  const loader = loadingPlaceholder ? <FBox {...props}>{loadingPlaceholder}</FBox> : <CentredFSpinner {...props} />;
   return loading ? <>{loader}</> : <>{children}</>;
 };
 

@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useCallback, useMemo, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useMemo, useRef, useState} from 'react';
 import withCommentsContainer, {WithCommentsProps} from '../../../shared/hocs/withContainers/withCommentsContainer';
 import {Comment} from '../../../models/Comment';
 import Header from '../../../components/layouts/Header';
@@ -20,7 +20,6 @@ import CollapsableRefreshableFlatList, {
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
-import {flowRight} from 'lodash';
 
 type CommentListProps = WithCommentsProps;
 
@@ -107,4 +106,4 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
   );
 };
 
-export default flowRight([memo, withCommentsContainer])(CommentList);
+export default withCommentsContainer(CommentList);

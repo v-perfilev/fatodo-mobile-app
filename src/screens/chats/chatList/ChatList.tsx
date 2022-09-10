@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {HEADER_HEIGHT} from '../../../constants';
 import ChatListControl from './ChatListControl';
 import Header from '../../../components/layouts/Header';
@@ -139,4 +139,4 @@ const ChatList = () => {
   );
 };
 
-export default memo(ChatList);
+export default ChatList;
