@@ -5,7 +5,7 @@ import {RefUtils} from '../../shared/utils/RefUtils';
 import {StyleProp, ViewStyle} from 'react-native';
 
 type CollapsableDraggableListProps = DraggableListProps<any> & {
-  header: ReactElement;
+  header?: ReactElement;
   containerStyle?: StyleProp<ViewStyle>;
 };
 

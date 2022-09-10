@@ -1,7 +1,6 @@
 import React from 'react';
 import {Item} from '../../../../models/Item';
-import {Text} from 'native-base';
-import GroupItemChanges from './GroupItemChanges';
+import {Box, Text} from 'native-base';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Group} from '../../../../models/Group';
@@ -10,7 +9,7 @@ import PriorityView from '../../../../components/views/PriorityView';
 import TypeView from '../../../../components/views/TypeView';
 import CommentsIcon from '../../../../components/icons/CommentsIcon';
 import GroupItemMenu from './GroupItemMenu';
-import FBox from '../../../../components/boxes/FBox';
+import GroupItemChanges from './GroupItemChanges';
 
 type GroupItemProps = {
   item: Item;
@@ -21,32 +20,28 @@ type GroupItemProps = {
 const GroupItem = ({item, group, canEdit}: GroupItemProps) => {
   return (
     <FVStack p="4" defaultSpace>
-      <FHStack defaultSpace>
-        <FBox flex="1" flexGrow="1">
-          <FVStack defaultSpace>
-            <Text fontSize="16" numberOfLines={2} isTruncated>
-              {item.title}
-            </Text>
-            <GroupItemChanges item={item} />
-          </FVStack>
-        </FBox>
-        <FBox flex="0">
+      <FHStack>
+        <FVStack grow defaultSpace>
+          <Text fontSize="16" numberOfLines={2} isTruncated>
+            {item.title}
+          </Text>
+          <GroupItemChanges item={item} />
+        </FVStack>
+        <Box>
           <GroupItemMenu group={group} item={item} canEdit={canEdit} />
-        </FBox>
+        </Box>
       </FHStack>
-      <FVStack grow defaultSpace alignItems="center">
-        <FHStack grow defaultSpace justifyContent="space-between" alignItems="center">
-          <FHStack grow defaultSpace>
-            <TypeView type={item.type} fontColor="gray.500" />
-            <PriorityView priority={item.priority} fontColor="gray.500" />
-            <StatusView statusType={item.status} fontColor="gray.500" />
-          </FHStack>
-          <FHStack smallSpace alignItems="center">
-            <CommentsIcon size="md" color="primary.500" />
-            <Text>100</Text>
-          </FHStack>
+      <Box flexDirection="row">
+        <FHStack grow defaultSpace>
+          <TypeView type={item.type} fontColor="gray.500" />
+          <PriorityView priority={item.priority} fontColor="gray.500" />
+          <StatusView statusType={item.status} fontColor="gray.500" />
         </FHStack>
-      </FVStack>
+        <FHStack smallSpace>
+          <CommentsIcon size="md" color="primary.500" />
+          <Text>100</Text>
+        </FHStack>
+      </Box>
     </FVStack>
   );
 };

@@ -6,7 +6,6 @@ import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Group} from '../../../models/Group';
 import {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
 import {Box} from 'native-base';
-import GroupListItem from './GroupListItem';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
@@ -21,6 +20,7 @@ import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
+import GroupListCard from './groupListCard/GroupListCard';
 
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
@@ -51,7 +51,7 @@ const GroupList = () => {
   const renderDraggableItem = useCallback(
     (props: RenderItemParams<Group>) => (
       <ScaleDecorator activeScale={1.03}>
-        <GroupListItem sorting={sorting} {...props} />
+        <GroupListCard group={props.item} sorting={sorting} {...props} />
       </ScaleDecorator>
     ),
     [sorting],
@@ -60,7 +60,7 @@ const GroupList = () => {
   const renderFlatItem = useCallback(
     (info: ListRenderItemInfo<Group>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout}>
-        <GroupListItem item={info.item} sorting={false} isActive={false} drag={undefined} />
+        <GroupListCard group={info.item} sorting={false} drag={undefined} />
       </Box>
     ),
     [],

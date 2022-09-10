@@ -21,28 +21,19 @@ type GroupListCardContentProps = {
 const GroupListCardContent = ({group, items, count, loading}: GroupListCardContentProps) => {
   const account = useAppSelector(AuthSelectors.account);
 
-  const skeleton = <GroupListCardSkeleton />;
-
   const canEdit = group && GroupUtils.canEdit(account, group);
-
-  const groupInfo = <GroupListCardInfo group={group} items={items} count={count} />;
-
-  const itemsView = (
-    <>
-      {items.slice(0, 5).map((item, index) => (
-        <Box key={index}>
-          {index !== 0 && <Separator />}
-          <GroupItem item={item} group={group} canEdit={canEdit} />
-        </Box>
-      ))}
-    </>
-  );
 
   return (
     <FVStack>
-      {loading && skeleton}
-      {!loading && count > 0 && itemsView}
-      {!loading && groupInfo}
+      {loading && <GroupListCardSkeleton />}
+      {!loading &&
+        items.slice(0, 5).map((item, index) => (
+          <Box key={index}>
+            {index !== 0 && <Separator />}
+            <GroupItem item={item} group={group} canEdit={canEdit} />
+          </Box>
+        ))}
+      {!loading && <GroupListCardInfo group={group} items={items} count={count} />}
     </FVStack>
   );
 };

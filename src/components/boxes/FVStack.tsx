@@ -14,13 +14,22 @@ type FlexVStackProps = IVStackProps & {
 const FVStack = React.forwardRef((props: FlexVStackProps, ref: any) => {
   const {grow, basis, shrink, defaultSpace, smallSpace, children, ...otherProps} = props;
 
+  const flex = grow ? 1 : undefined;
   const flexGrow = grow ? 1 : 0;
   const flexBasis = basis ? 1 : undefined;
   const flexShrink = shrink ? 1 : undefined;
   const space = defaultSpace ? DEFAULT_SPACE : smallSpace ? SMALL_SPACE : undefined;
 
   return (
-    <VStack flexGrow={flexGrow} flexBasis={flexBasis} flexShrink={flexShrink} space={space} ref={ref} {...otherProps}>
+    <VStack
+      flex={flex}
+      flexGrow={flexGrow}
+      flexBasis={flexBasis}
+      flexShrink={flexShrink}
+      space={space}
+      ref={ref}
+      {...otherProps}
+    >
       {children}
     </VStack>
   );
