@@ -1,33 +1,29 @@
 import CollapsableHeaderContainer, {CollapsableHeaderChildrenProps} from './CollapsableHeaderContainer';
-import ConditionalSpinner from '../surfaces/ConditionalSpinner';
-import {ListUtils} from '../../shared/utils/ListUtils';
-import React, {memo, ReactElement, ReactNode} from 'react';
+import React, {memo, ReactElement} from 'react';
 import DraggableList, {DraggableListProps} from './DraggableList';
 import {RefUtils} from '../../shared/utils/RefUtils';
+import {StyleProp, ViewStyle} from 'react-native';
 
 type CollapsableDraggableListProps = DraggableListProps<any> & {
   header: ReactElement;
-  headerHeight: number;
-  loading?: boolean;
-  children?: ReactNode;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
+const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
+
 const CollapsableDraggableList = React.forwardRef((props: CollapsableDraggableListProps, ref: any) => {
-  const {header, headerHeight, loading, children} = props;
+  const {header, containerStyle} = props;
 
   return (
     <CollapsableHeaderContainer header={header}>
       {({handleOffsetScroll, handleEventSnap, collapsableRef}: CollapsableHeaderChildrenProps) => (
-        <ConditionalSpinner loading={loading} paddingTop={headerHeight}>
-          <DraggableList
-            contentContainerStyle={ListUtils.containerStyle(0, headerHeight)}
-            onScrollOffsetChange={handleOffsetScroll}
-            onMomentumScrollEnd={handleEventSnap}
-            ref={RefUtils.merge(ref, collapsableRef)}
-            {...props}
-          />
-          {children}
-        </ConditionalSpinner>
+        <DraggableList
+          onScrollOffsetChange={handleOffsetScroll}
+          onMomentumScrollEnd={handleEventSnap}
+          ref={RefUtils.merge(ref, collapsableRef)}
+          contentContainerStyle={[flexStyle, containerStyle]}
+          {...props}
+        />
       )}
     </CollapsableHeaderContainer>
   );

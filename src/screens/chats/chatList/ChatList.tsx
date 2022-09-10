@@ -3,12 +3,11 @@ import {HEADER_HEIGHT} from '../../../constants';
 import ChatListControl from './ChatListControl';
 import Header from '../../../components/layouts/Header';
 import {FlatListType} from '../../../components/scrollable/FlatList';
-import {ListUtils} from '../../../shared/utils/ListUtils';
 import ChatListStub from './ChatListStub';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Chat} from '../../../models/Chat';
-import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
-import {Box, useTheme} from 'native-base';
+import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import {Box} from 'native-base';
 import ChatListItem from './ChatListItem';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
@@ -25,10 +24,12 @@ import {useIsFocused} from '@react-navigation/native';
 
 type ControlType = 'regular' | 'filtered';
 
+const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: 50};
+
 const ChatList = () => {
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
-  const theme = useTheme();
   const {showChatCreateDialog} = useChatDialogContext();
   const chats = useAppSelector(ChatsSelectors.chats);
   const filteredChats = useAppSelector(ChatsSelectors.filteredChats);
@@ -66,7 +67,7 @@ const ChatList = () => {
   const keyExtractor = useCallback((chat: Chat): string => chat.id, []);
   const renderItem = useCallback(
     (info: ListRenderItemInfo<Chat>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+      <Box onLayout={onLayout}>
         <ChatListItem chat={info.item} />
       </Box>
     ),
@@ -100,14 +101,10 @@ const ChatList = () => {
     setFilterLoading(filterLoadCounter > 0);
   }, [filterLoadCounter]);
 
-  const header = useMemo<ReactElement>(() => <Header showAvatar hideGoBack />, []);
-
   const previousNode = useMemo<ReactElement>(
     () => <ChatListControl setFilter={setFilter} marginTop={HEADER_HEIGHT} />,
     [],
   );
-
-  const stub = useMemo(() => <ChatListStub />, []);
 
   const buttons: CornerButton[] = [
     {icon: <PlusIcon />, action: openCreateChatDialog},
@@ -120,14 +117,13 @@ const ChatList = () => {
 
   return (
     <CollapsableRefreshableFlatList
-      header={header}
-      headerHeight={0}
+      containerStyle={containerStyle}
+      loaderStyle={loaderStyle}
+      header={<Header showAvatar hideGoBack />}
       refresh={type === 'regular' ? refresh : undefined}
       previousNode={previousNode}
-      previousNodeHeight={50}
       loading={loading || filterLoading}
-      contentContainerStyle={ListUtils.containerStyle()}
-      ListEmptyComponent={stub}
+      ListEmptyComponent={<ChatListStub />}
       data={type === 'regular' ? chats : filteredChats}
       render={renderItem}
       keyExtractor={keyExtractor}

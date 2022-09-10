@@ -5,10 +5,10 @@ import Header from '../../../components/layouts/Header';
 import UserFullView from '../../../components/views/UserFullView';
 import FVStack from '../../../components/boxes/FVStack';
 import UserViewGroups from './UserViewGroups';
-import {Divider} from 'native-base';
 import UserViewControl from './UserViewControl';
 import UserViewRelations from './UserViewRelations';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
+import Separator from '../../../components/layouts/Separator';
 
 type UserViewProps = WithUserProps;
 
@@ -20,11 +20,11 @@ const UserView = ({user, loading}: UserViewProps) => {
         <SimpleScrollView>
           <FVStack defaultSpace>
             <UserFullView user={user} />
-            <Divider bg="secondary.500" />
+            <Separator bg="secondary.500" />
             <UserViewControl user={user} />
-            <Divider bg="secondary.500" />
+            <Separator bg="secondary.500" />
             <UserViewGroups />
-            <Divider bg="secondary.500" />
+            <Separator bg="secondary.500" />
             <UserViewRelations />
           </FVStack>
         </SimpleScrollView>

@@ -1,11 +1,10 @@
 import CollapsableHeaderContainer, {CollapsableHeaderChildrenProps} from './CollapsableHeaderContainer';
-import ConditionalSpinner from '../surfaces/ConditionalSpinner';
 import RefreshableContainer, {RefreshableChildrenProps} from './RefreshableContainer';
 import FlatList, {FlatListProps} from './FlatList';
-import {ListUtils} from '../../shared/utils/ListUtils';
 import {RefUtils} from '../../shared/utils/RefUtils';
 import React, {memo, ReactElement, ReactNode} from 'react';
-import {Animated} from 'react-native';
+import {Animated, StyleProp, ViewStyle} from 'react-native';
+import ConditionalSpinner from '../surfaces/ConditionalSpinner';
 
 export type CollapsableRefreshableChildrenProps = {
   scrollY: Animated.Value;
@@ -14,30 +13,30 @@ export type CollapsableRefreshableChildrenProps = {
 type ChildrenFuncType = (props: CollapsableRefreshableChildrenProps) => ReactNode;
 
 type CollapsableRefreshableFlatListProps = FlatListProps<any> & {
-  header: ReactElement;
-  headerHeight: number;
-  refresh?: () => Promise<void>;
+  header?: ReactElement;
   loading?: boolean;
-  loadingPlaceholder?: ReactElement;
+  refresh?: () => Promise<void>;
   previousNode?: ReactNode;
-  previousNodeHeight?: number;
   nextNode?: ReactNode;
-  nextNodeHeight?: number;
+  loadingPlaceholder?: ReactElement;
+  containerStyle?: StyleProp<ViewStyle>;
+  loaderStyle?: StyleProp<ViewStyle>;
   children?: ReactNode | ChildrenFuncType;
 };
+
+const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
 
 const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefreshableFlatListProps, ref: any) => {
   const {
     header,
-    headerHeight,
-    refresh,
     loading,
-    loadingPlaceholder,
+    refresh,
     previousNode,
-    previousNodeHeight,
     nextNode,
-    nextNodeHeight,
+    loadingPlaceholder,
     inverted,
+    containerStyle,
+    loaderStyle,
     children,
   } = props;
 
@@ -46,32 +45,22 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
       {({handleEventScroll, handleEventSnap, collapsableRef, scrollY}: CollapsableHeaderChildrenProps) => (
         <>
           {previousNode}
-          <ConditionalSpinner
-            loading={loading}
-            loadingPlaceholder={loadingPlaceholder}
-            pt={headerHeight}
-            mt={nextNodeHeight}
-            mb={previousNodeHeight}
-          >
+          <ConditionalSpinner loading={loading} loadingPlaceholder={loadingPlaceholder} style={loaderStyle}>
             <RefreshableContainer refresh={refresh} parentScrollY={scrollY} inverted={inverted}>
               {({refresher}: RefreshableChildrenProps) => (
                 <FlatList
                   ListHeaderComponent={refresher}
-                  contentContainerStyle={ListUtils.containerStyle(
-                    0,
-                    !inverted ? headerHeight : undefined,
-                    inverted ? headerHeight : undefined,
-                  )}
                   onScroll={handleEventScroll}
                   onMomentumScrollEnd={handleEventSnap}
                   ref={RefUtils.merge(ref, collapsableRef)}
                   inverted={inverted}
+                  contentContainerStyle={[flexStyle, containerStyle]}
                   {...props}
                 />
               )}
             </RefreshableContainer>
-            {typeof children === 'function' ? children({scrollY}) : children}
           </ConditionalSpinner>
+          {typeof children === 'function' ? children({scrollY}) : children}
           {nextNode}
         </>
       )}

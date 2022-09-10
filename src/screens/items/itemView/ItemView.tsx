@@ -1,5 +1,4 @@
 import React from 'react';
-import {Divider} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
@@ -24,6 +23,7 @@ import {RootNavigationProp} from '../../../navigators/RootNavigator';
 import {CornerButton} from '../../../models/CornerButton';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
+import Separator from '../../../components/layouts/Separator';
 
 type ItemViewProps = WithItemProps;
 
@@ -52,11 +52,11 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
               <ItemViewPriority />
             </FHStack>
             <ItemViewDate />
-            <Divider bg="secondary.500" />
+            <Separator bg="secondary.500" />
             <ItemViewDescription />
-            {showReminders && <Divider bg="secondary.500" />}
+            {showReminders && <Separator bg="secondary.500" />}
             {showReminders && <ItemReminders />}
-            <Divider bg="secondary.500" />
+            <Separator bg="secondary.500" />
             <ItemViewChanges />
           </FVStack>
         </SimpleScrollView>

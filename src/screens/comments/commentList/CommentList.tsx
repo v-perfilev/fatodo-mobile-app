@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useMemo, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useRef, useState} from 'react';
 import withCommentsContainer, {WithCommentsProps} from '../../../shared/hocs/withContainers/withCommentsContainer';
 import {Comment} from '../../../models/Comment';
 import Header from '../../../components/layouts/Header';
@@ -11,8 +11,7 @@ import CommentListStub from './CommentListStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {CommentsActions} from '../../../store/comments/commentsActions';
-import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
-import {ListUtils} from '../../../shared/utils/ListUtils';
+import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import CommentListItem from './commentListItem/CommentListItem';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
@@ -20,8 +19,12 @@ import CollapsableRefreshableFlatList, {
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
+import {HEADER_HEIGHT} from '../../../constants';
 
 type CommentListProps = WithCommentsProps;
+
+const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT + 50};
 
 const CommentList = ({loading, colorScheme}: CommentListProps) => {
   const dispatch = useAppDispatch();
@@ -55,7 +58,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
   const keyExtractor = useCallback((comment: Comment): string => comment.id, []);
   const renderItem = useCallback(
     (info: ListRenderItemInfo<Comment>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+      <Box onLayout={onLayout}>
         <CommentListItem comment={info.item} setReference={setReference} />
       </Box>
     ),
@@ -68,15 +71,6 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
 
   const scrollDown = (): void => listRef.current.scrollToOffset({offset: 0});
 
-  const header = useMemo<ReactElement>(() => <Header />, []);
-
-  const nextNode = useMemo<ReactElement>(
-    () => <CommentListControl reference={reference} clearReference={clearReference} />,
-    [reference],
-  );
-
-  const stub = useMemo<ReactElement>(() => <CommentListStub />, []);
-
   const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
@@ -86,14 +80,14 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
   return (
     <ThemeProvider theme={theme}>
       <CollapsableRefreshableFlatList
-        header={header}
-        headerHeight={0}
-        nextNode={nextNode}
-        nextNodeHeight={50}
+        containerStyle={containerStyle}
+        loaderStyle={loaderStyle}
+        header={<Header />}
+        nextNode={<CommentListControl reference={reference} clearReference={clearReference} />}
         refresh={refresh}
         loading={loading}
         inverted
-        ListEmptyComponent={stub}
+        ListEmptyComponent={<CommentListStub />}
         data={comments}
         render={renderItem}
         keyExtractor={keyExtractor}

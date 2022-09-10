@@ -6,6 +6,7 @@ import {NavigationHelpers, ParamListBase, TabNavigationState} from '@react-navig
 import {BottomTabNavigationEventMap} from '@react-navigation/bottom-tabs/src/types';
 import FHStack from '../boxes/FHStack';
 import FCenter from '../boxes/FCenter';
+import Separator from './Separator';
 
 type TabNavigatorBarProps = BottomTabBarProps;
 
@@ -49,19 +50,22 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
 
 const TabNavigatorBar = ({state, descriptors, navigation}: TabNavigatorBarProps) => {
   return (
-    <FHStack borderTopColor="gray.200" borderTopWidth="1" safeAreaBottom>
-      {state.routes.map((route, index) => (
-        <TabNavigatorItem
-          routeKey={route.key}
-          routeName={route.name}
-          state={state}
-          descriptors={descriptors}
-          navigation={navigation}
-          index={index}
-          key={index}
-        />
-      ))}
-    </FHStack>
+    <>
+      <Separator />
+      <FHStack safeAreaBottom>
+        {state.routes.map((route, index) => (
+          <TabNavigatorItem
+            routeKey={route.key}
+            routeName={route.name}
+            state={state}
+            descriptors={descriptors}
+            navigation={navigation}
+            index={index}
+            key={index}
+          />
+        ))}
+      </FHStack>
+    </>
   );
 };
 

@@ -4,10 +4,9 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
 import OutcomingRequestListStub from './OutcomingRequestListStub';
-import {Box, useTheme} from 'native-base';
+import {Box} from 'native-base';
 import {ContactRequest} from '../../../models/Contact';
 import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
-import {ListUtils} from '../../../shared/utils/ListUtils';
 import OutcomingRequestListItem from './OutcomingRequestListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {useIsFocused} from '@react-navigation/native';
@@ -15,7 +14,6 @@ import {useIsFocused} from '@react-navigation/native';
 const OutcomingRequestList = () => {
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
-  const theme = useTheme();
   const outcomingRequests = useAppSelector(ContactsSelectors.outcomingRequests);
   const [loading, setLoading] = useDelayedState();
 
@@ -28,7 +26,7 @@ const OutcomingRequestList = () => {
     info: ListRenderItemInfo<ContactRequest>,
     onLayout: (event: LayoutChangeEvent) => void,
   ): ReactElement => (
-    <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+    <Box onLayout={onLayout}>
       <OutcomingRequestListItem request={info.item} />
     </Box>
   );
@@ -39,8 +37,6 @@ const OutcomingRequestList = () => {
 
   return (
     <CollapsableRefreshableFlatList
-      header={undefined}
-      headerHeight={0}
       loading={loading}
       ListEmptyComponent={<OutcomingRequestListStub />}
       data={outcomingRequests}

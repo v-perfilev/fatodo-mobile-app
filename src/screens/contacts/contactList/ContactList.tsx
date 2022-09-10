@@ -5,12 +5,11 @@ import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import ContactListControl from './ContactListControl';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
 import ContactListStub from './ContactListStub';
-import {Box, useTheme} from 'native-base';
+import {Box} from 'native-base';
 import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {ContactRelation} from '../../../models/Contact';
-import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
-import {ListUtils} from '../../../shared/utils/ListUtils';
+import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import ContactListItem from './ContactListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import CornerManagement from '../../../components/controls/CornerManagement';
@@ -18,10 +17,11 @@ import {CornerButton} from '../../../models/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import {useIsFocused} from '@react-navigation/native';
 
+const loaderStyle: StyleProp<ViewStyle> = {paddingBottom: 50};
+
 const ContactList = () => {
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
-  const theme = useTheme();
   const {showContactRequestDialog} = useContactDialogContext();
   const relations = useAppSelector(ContactsSelectors.relations);
   const userIds = relations.map((r) => r.secondUserId);
@@ -45,7 +45,7 @@ const ContactList = () => {
   const keyExtractor = useCallback((relation: ContactRelation): string => relation.id, []);
   const renderItem = useCallback(
     (info: ListRenderItemInfo<ContactRelation>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+      <Box onLayout={onLayout}>
         <ContactListItem relation={info.item} />
       </Box>
     ),
@@ -77,10 +77,8 @@ const ContactList = () => {
 
   return (
     <CollapsableRefreshableFlatList
-      header={undefined}
-      headerHeight={0}
+      loaderStyle={loaderStyle}
       previousNode={previousNode}
-      previousNodeHeight={50}
       loading={loading}
       ListEmptyComponent={stub}
       data={relationsToShow}

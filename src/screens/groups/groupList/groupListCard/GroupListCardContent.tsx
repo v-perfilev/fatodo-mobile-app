@@ -1,14 +1,15 @@
-import React, {ReactElement} from 'react';
+import React from 'react';
 import {Item} from '../../../../models/Item';
 import GroupListCardSkeleton from '../../components/skeletons/GroupListCardSkeleton';
 import GroupListCardInfo from './GroupListCardInfo';
 import GroupItem from '../../components/groupItem/GroupItem';
 import {Group} from '../../../../models/Group';
 import FVStack from '../../../../components/boxes/FVStack';
-import {Box, Divider} from 'native-base';
+import {Box} from 'native-base';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
+import Separator from '../../../../components/layouts/Separator';
 
 type GroupListCardContentProps = {
   group: Group;
@@ -16,8 +17,6 @@ type GroupListCardContentProps = {
   count: number;
   loading: boolean;
 };
-
-const GroupListCardSeparator = (): ReactElement => <Divider bg="gray.200" />;
 
 const GroupListCardContent = ({group, items, count, loading}: GroupListCardContentProps) => {
   const account = useAppSelector(AuthSelectors.account);
@@ -32,7 +31,7 @@ const GroupListCardContent = ({group, items, count, loading}: GroupListCardConte
     <>
       {items.slice(0, 5).map((item, index) => (
         <Box key={index}>
-          {index !== 0 && <GroupListCardSeparator />}
+          {index !== 0 && <Separator />}
           <GroupItem item={item} group={group} canEdit={canEdit} />
         </Box>
       ))}

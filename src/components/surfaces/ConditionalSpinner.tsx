@@ -9,9 +9,9 @@ type ConditionalSpinnerProps = IBoxProps &
     loadingPlaceholder?: ReactElement;
   }>;
 
-const ConditionalSpinner = ({loading, loadingPlaceholder, children, ...props}: ConditionalSpinnerProps) => {
+const ConditionalLoader = ({loading, loadingPlaceholder, children, ...props}: ConditionalSpinnerProps) => {
   const loader = loadingPlaceholder ? <FBox {...props}>{loadingPlaceholder}</FBox> : <CentredFSpinner {...props} />;
   return loading ? <>{loader}</> : <>{children}</>;
 };
 
-export default memo(ConditionalSpinner);
+export default memo(ConditionalLoader);

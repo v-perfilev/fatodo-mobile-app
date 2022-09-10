@@ -6,7 +6,7 @@ import {HEADER_HEIGHT} from '../../../constants';
 const ChatListStub = () => {
   const {t} = useTranslation();
 
-  return <StubBox paddingBottom={HEADER_HEIGHT}>{t('chat:list.chatsNotFound')}</StubBox>;
+  return <StubBox paddingBottom={HEADER_HEIGHT + 50}>{t('chat:list.chatsNotFound')}</StubBox>;
 };
 
 export default ChatListStub;

@@ -7,13 +7,15 @@ import AuthSelectors from '../../store/auth/authSelectors';
 import {AuthActions} from '../../store/auth/authActions';
 import {RootActions} from '../../store/rootActions';
 import {ChangeLanguageDTO} from '../../models/dto/ChangeLanguageDTO';
-import {ListUtils} from '../../shared/utils/ListUtils';
 import FVStack from '../boxes/FVStack';
 import UserFullView from '../views/UserFullView';
-import {Divider} from 'native-base';
 import GhostButton from '../controls/GhostButton';
 import LanguageMenu from '../controls/LanguageMenu';
 import OutlinedButton from '../controls/OutlinedButton';
+import Separator from './Separator';
+import {StyleProp, ViewStyle} from 'react-native';
+
+const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
 
 const Sidebar = ({navigation}: DrawerContentComponentProps) => {
   const dispatch = useAppDispatch();
@@ -48,11 +50,11 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
   }, []);
 
   return (
-    <DrawerContentScrollView contentContainerStyle={ListUtils.containerStyle()}>
+    <DrawerContentScrollView contentContainerStyle={flexStyle}>
       <FVStack grow mx="3" my="4" space="6" defaultSpace>
         <UserFullView user={account} account={account} />
 
-        <Divider bg="secondary.500" />
+        <Separator bg="secondary.500" />
 
         <FVStack flex="1" flexGrow="1" defaultSpace flexShrink="1">
           <GhostButton justifyContent="flex-start" onPress={goToAccountForm}>

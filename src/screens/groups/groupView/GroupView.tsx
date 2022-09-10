@@ -1,5 +1,5 @@
 import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
-import {Box, Divider} from 'native-base';
+import {Box} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
@@ -12,7 +12,7 @@ import GroupSelectors from '../../../store/group/groupSelectors';
 import {GroupActions} from '../../../store/group/groupActions';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {Item} from '../../../models/Item';
-import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
@@ -28,10 +28,12 @@ import PlusIcon from '../../../components/icons/PlusIcon';
 import GroupItem from '../components/groupItem/GroupItem';
 import GroupViewListSkeleton from '../components/skeletons/GroupViewListSkeleton';
 import CentredFSpinner from '../../../components/surfaces/CentredFSpinner';
+import Separator from '../../../components/layouts/Separator';
 
 type GroupViewProps = WithGroupProps;
 
-const GroupViewSeparator = (): ReactElement => <Divider bg="gray.200" />;
+const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 
 const GroupView = ({group, loading}: GroupViewProps) => {
   const dispatch = useAppDispatch();
@@ -121,13 +123,14 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   return (
     <ThemeProvider theme={theme}>
       <CollapsableRefreshableFlatList
+        containerStyle={containerStyle}
+        loaderStyle={loaderStyle}
         header={<GroupViewHeader showArchived={showArchived} setShowArchived={setShowArchived} />}
-        headerHeight={HEADER_HEIGHT}
         loading={initialItemsLoading || loading}
         loadingPlaceholder={<GroupViewListSkeleton />}
         ListEmptyComponent={<GroupViewStub />}
         ListFooterComponent={!allItemsLoaded ? <CentredFSpinner /> : undefined}
-        ItemSeparatorComponent={GroupViewSeparator}
+        ItemSeparatorComponent={Separator}
         data={items}
         render={renderItem}
         keyExtractor={keyExtractor}

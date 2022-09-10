@@ -1,24 +1,26 @@
 import RefreshableContainer, {RefreshableChildrenProps} from './RefreshableContainer';
 import React, {memo, ReactNode} from 'react';
-import {Animated, ScrollViewProps} from 'react-native';
-import {ListUtils} from '../../shared/utils/ListUtils';
+import {Animated, ScrollViewProps, StyleProp, ViewStyle} from 'react-native';
 import ConditionalSpinner from '../surfaces/ConditionalSpinner';
 
 type RefreshableScrollViewProps = ScrollViewProps & {
   refresh?: () => Promise<void>;
   loading?: boolean;
+  containerStyle?: StyleProp<ViewStyle>;
   children?: ReactNode;
 };
 
+const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
+
 const RefreshableScrollView = React.forwardRef((props: RefreshableScrollViewProps, ref: any) => {
-  const {refresh, loading, children} = props;
+  const {refresh, loading, containerStyle, children} = props;
 
   return (
     <ConditionalSpinner loading={loading}>
       <RefreshableContainer refresh={refresh}>
         {({refresher, handleEventScroll}: RefreshableChildrenProps) => (
           <Animated.ScrollView
-            contentContainerStyle={ListUtils.containerStyle()}
+            contentContainerStyle={[flexStyle, containerStyle]}
             onScroll={handleEventScroll}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}

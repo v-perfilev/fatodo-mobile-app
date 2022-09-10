@@ -1,5 +1,4 @@
 import React, {Dispatch, memo, SetStateAction, useMemo} from 'react';
-import {Divider} from 'native-base';
 import FVStack from '../../../components/boxes/FVStack';
 import CalendarViewMonthName from './CalendarViewMonthName';
 import CalendarViewWeekDays from './CalendarViewWeekDays';
@@ -7,6 +6,7 @@ import CalendarViewMonth from './CalendarViewMonth';
 import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
 import {CalendarDate, CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {CalendarReminder} from '../../../models/Reminder';
+import Separator from '../../../components/layouts/Separator';
 
 type CalendarViewContentProps = {
   month: CalendarMonth;
@@ -33,7 +33,7 @@ const CalendarViewContent = ({
   return (
     <FVStack flex="1" flexGrow="1" space="2" py="2">
       <CalendarViewMonthName month={month} selectMonth={selectMonth} />
-      <Divider bg="gray.200" />
+      <Separator />
       <FVStack space="2">
         <CalendarViewWeekDays />
         <CalendarViewMonth
@@ -44,7 +44,7 @@ const CalendarViewContent = ({
           width={width}
         />
       </FVStack>
-      <Divider bg="gray.200" />
+      <Separator />
       <CalendarViewReminders reminders={activeDateReminders} />
     </FVStack>
   );

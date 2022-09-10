@@ -1,16 +1,14 @@
-import React, {ReactElement, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {ReactElement, useCallback, useEffect, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {EventsActions} from '../../../store/events/eventsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useIsFocused} from '@react-navigation/native';
 import EventsSelectors from '../../../store/events/eventsSelectors';
 import {FlatListType} from '../../../components/scrollable/FlatList';
-import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import {Event} from '../../../models/Event';
-import {Box, useTheme} from 'native-base';
-import {ListUtils} from '../../../shared/utils/ListUtils';
+import {Box} from 'native-base';
 import EventListItem from './eventListItem/EventListItem';
-import EventListSeparator from './EventListSeparator';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
@@ -19,10 +17,13 @@ import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import Header from '../../../components/layouts/Header';
 import CornerManagement from '../../../components/controls/CornerManagement';
+import Separator from '../../../components/layouts/Separator';
+
+const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 
 const EventList = () => {
   const dispatch = useAppDispatch();
-  const theme = useTheme();
   const isFocused = useIsFocused();
   const events = useAppSelector(EventsSelectors.events);
   const unreadCount = useAppSelector(EventsSelectors.unreadCount);
@@ -54,7 +55,7 @@ const EventList = () => {
 
   const renderItem = useCallback(
     (info: ListRenderItemInfo<Event>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+      <Box onLayout={onLayout}>
         <EventListItem event={info.item} />
       </Box>
     ),
@@ -81,8 +82,6 @@ const EventList = () => {
     isFocused && unreadCount > 0 && refreshUnread();
   }, [isFocused, unreadCount]);
 
-  const header = useMemo<ReactElement>(() => <Header showAvatar hideGoBack />, []);
-
   const buttons: CornerButton[] = [{icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true}];
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
@@ -91,11 +90,12 @@ const EventList = () => {
 
   return (
     <CollapsableRefreshableFlatList
-      header={header}
-      headerHeight={HEADER_HEIGHT}
+      containerStyle={containerStyle}
+      loaderStyle={loaderStyle}
+      header={<Header showAvatar hideGoBack />}
       refresh={refresh}
       loading={loading}
-      ItemSeparatorComponent={EventListSeparator}
+      ItemSeparatorComponent={Separator}
       data={events}
       render={renderItem}
       keyExtractor={keyExtractor}

@@ -1,18 +1,17 @@
-import React, {ReactElement, useCallback, useMemo, useRef} from 'react';
+import React, {ReactElement, useCallback, useRef} from 'react';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
 import {HEADER_HEIGHT, TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import {FlatListType} from '../../../components/scrollable/FlatList';
-import {ListUtils} from '../../../shared/utils/ListUtils';
 import ChatViewStub from './ChatViewStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {Box, useTheme} from 'native-base';
+import {Box} from 'native-base';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {ChatActions} from '../../../store/chat/chatActions';
 import {ChatItem} from '../../../models/Message';
-import {LayoutChangeEvent, ListRenderItemInfo, ViewToken} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle, ViewToken} from 'react-native';
 import ChatViewItem from './ChatViewItem';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import CollapsableRefreshableFlatList, {
@@ -24,9 +23,11 @@ import CornerManagement from '../../../components/controls/CornerManagement';
 
 type ChatViewProps = WithChatProps;
 
+const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT + 50};
+
 const ChatView = ({loading}: ChatViewProps) => {
   const dispatch = useAppDispatch();
-  const theme = useTheme();
   const unreadTimersRef = useRef<Map<string, any>>(new Map());
   const listRef = useRef<FlatListType>();
   const chat = useAppSelector(ChatSelectors.chat);
@@ -53,7 +54,7 @@ const ChatView = ({loading}: ChatViewProps) => {
   const keyExtractor = useCallback((item: ChatItem): string => item.message?.id || item.date, []);
   const renderItem = useCallback(
     (info: ListRenderItemInfo<ChatItem>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+      <Box onLayout={onLayout}>
         <ChatViewItem item={info.item} />
       </Box>
     ),
@@ -102,12 +103,6 @@ const ChatView = ({loading}: ChatViewProps) => {
 
   const scrollDown = (): void => listRef.current.scrollToOffset({offset: 0});
 
-  const header = useMemo<ReactElement>(() => <ChatViewHeader />, []);
-
-  const chatViewControl = useMemo<ReactElement>(() => <ChatViewControl />, []);
-
-  const stub = useMemo(() => <ChatViewStub />, []);
-
   const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
@@ -116,14 +111,14 @@ const ChatView = ({loading}: ChatViewProps) => {
 
   return (
     <CollapsableRefreshableFlatList
-      header={header}
-      headerHeight={HEADER_HEIGHT}
-      nextNode={chatViewControl}
-      nextNodeHeight={50}
+      containerStyle={containerStyle}
+      loaderStyle={loaderStyle}
+      header={<ChatViewHeader />}
+      nextNode={<ChatViewControl />}
       refresh={refresh}
       loading={loading}
       inverted
-      ListEmptyComponent={stub}
+      ListEmptyComponent={<ChatViewStub />}
       data={chatItems}
       render={renderItem}
       keyExtractor={keyExtractor}
