@@ -12,10 +12,11 @@ type ChatListMessageEventProps = {
 
 const ChatListMessageEvent = ({message}: ChatListMessageEventProps) => {
   const {t} = useTranslation();
-  const users = useAppSelector(InfoSelectors.users);
-
   const params = MessageUtils.parseEventMessage(message);
-  const text = MessageUtils.buildEventMessageText(message, params, users, t);
+  const messageUsers = useAppSelector((state) => InfoSelectors.user(state, message.userId));
+  const paramUsers = useAppSelector((state) => InfoSelectors.users(state, params.ids || []));
+
+  const text = MessageUtils.buildEventMessageText(params, messageUsers, paramUsers, t);
 
   return (
     <Text isTruncated color="gray.400" fontSize="xs">

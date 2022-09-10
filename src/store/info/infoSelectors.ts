@@ -1,26 +1,55 @@
 import {RootState} from '../store';
 import {createSelector} from '@reduxjs/toolkit';
+import {StoreUtils} from '../../shared/utils/StoreUtils';
 import {User} from '../../models/User';
-import {ChatInfo} from '../../models/Chat';
-import {MessageInfo} from '../../models/Message';
-import {CommentInfo} from '../../models/Comment';
-import {GroupInfo} from '../../models/Group';
-import {ItemInfo} from '../../models/Item';
+import {Group} from '../../models/Group';
+import {Item} from '../../models/Item';
+import {Chat} from '../../models/Chat';
+import {Message} from '../../models/Message';
+import {Comment} from '../../models/Comment';
 
 const getInfoState = (state: RootState) => state.info;
 
 class InfoSelectors {
-  static users = createSelector(getInfoState, (state) => new Map<string, User>(state.users));
+  static user = createSelector(
+    [getInfoState, (state, key: string) => key],
+    (state, key) => StoreUtils.getValue(state.users, key, undefined) as User,
+  );
 
-  static groups = createSelector(getInfoState, (state) => new Map<string, GroupInfo>(state.groups));
+  static users = createSelector(
+    [getInfoState, (state, keys: string[]) => keys],
+    (state, keys) => StoreUtils.getMultipleValues(state.users, keys) as User[],
+  );
 
-  static items = createSelector(getInfoState, (state) => new Map<string, ItemInfo>(state.items));
+  static group = createSelector(
+    [getInfoState, (state, key: string) => key],
+    (state, key) => StoreUtils.getValue(state.groups, key, undefined) as Group,
+  );
 
-  static chats = createSelector(getInfoState, (state) => new Map<string, ChatInfo>(state.chats));
+  static groups = createSelector(
+    [getInfoState, (state, keys: string[]) => keys],
+    (state, keys) => StoreUtils.getMultipleValues(state.groups, keys) as Group[],
+  );
 
-  static messages = createSelector(getInfoState, (state) => new Map<string, MessageInfo>(state.messages));
+  static item = createSelector(
+    [getInfoState, (state, key: string) => key],
+    (state, key) => StoreUtils.getValue(state.items, key, undefined) as Item,
+  );
 
-  static comments = createSelector(getInfoState, (state) => new Map<string, CommentInfo>(state.comments));
+  static chat = createSelector(
+    [getInfoState, (state, key: string) => key],
+    (state, key) => StoreUtils.getValue(state.chats, key, undefined) as Chat,
+  );
+
+  static message = createSelector(
+    [getInfoState, (state, key: string) => key],
+    (state, key) => StoreUtils.getValue(state.messages, key, undefined) as Message,
+  );
+
+  static comment = createSelector(
+    [getInfoState, (state, key: string) => key],
+    (state, key) => StoreUtils.getValue(state.comments, key, undefined) as Comment,
+  );
 }
 
 export default InfoSelectors;

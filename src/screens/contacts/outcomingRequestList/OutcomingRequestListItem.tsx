@@ -16,10 +16,8 @@ type OutcomingRequestListItemProps = IBoxProps & {
 
 const OutcomingRequestListItem = ({request, ...props}: OutcomingRequestListItemProps) => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(InfoSelectors.users);
+  const user = useAppSelector((state) => InfoSelectors.user(state, request.recipientId));
   const [disabled, setDisabled] = useState(false);
-
-  const user = users.get(request.recipientId);
 
   const removeRequest = (): void => {
     setDisabled(true);

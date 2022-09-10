@@ -1,10 +1,9 @@
-import React, {ComponentType, memo, useMemo} from 'react';
+import React, {ComponentType} from 'react';
 import {useAppSelector} from '../../../store/store';
 import {Event} from '../../../models/Event';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {GroupInfo} from '../../../models/Group';
 import {ItemInfo} from '../../../models/Item';
-import {flowRight} from 'lodash';
 
 export type WithEventReminderProps = {
   group?: GroupInfo;
@@ -19,15 +18,13 @@ type ContainerProps = {
 const withEventReminder =
   (Component: ComponentType<WithEventReminderProps>) =>
   ({event}: ContainerProps) => {
-    const groups = useAppSelector(InfoSelectors.groups);
-    const items = useAppSelector(InfoSelectors.items);
     const reminderEvent = event.reminderEvent;
     const date = event.date;
 
-    const eventGroup = useMemo<GroupInfo>(() => groups.get(reminderEvent?.groupId), [groups]);
-    const eventItem = useMemo<ItemInfo>(() => items.get(reminderEvent?.itemId), [items]);
+    const group = useAppSelector((state) => InfoSelectors.group(state, reminderEvent.groupId));
+    const item = useAppSelector((state) => InfoSelectors.item(state, reminderEvent.itemId));
 
-    return <Component group={eventGroup} item={eventItem} date={date} />;
+    return <Component group={group} item={item} date={date} />;
   };
 
-export default flowRight(withEventReminder, memo);
+export default withEventReminder;

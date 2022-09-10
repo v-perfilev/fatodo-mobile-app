@@ -60,7 +60,7 @@ const GroupList = () => {
 
   const renderFlatItem = useCallback(
     (info: ListRenderItemInfo<Group>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout} style={ListUtils.themedItemStyle(theme)}>
+      <Box onLayout={onLayout}>
         <GroupListItem item={info.item} sorting={false} isActive={false} drag={undefined} />
       </Box>
     ),

@@ -1,18 +1,17 @@
 import {createSelector} from '@reduxjs/toolkit';
 import {RootState} from '../store';
+import {Comment} from '../../models/Comment';
 
 const getCommentsState = (state: RootState) => state.comments;
 
 class CommentsSelectors {
-  static parentId = createSelector(getCommentsState, (state) => state.parentId);
+  static targetId = createSelector(getCommentsState, (state) => state.targetId as string);
 
-  static targetId = createSelector(getCommentsState, (state) => state.targetId);
+  static comments = createSelector(getCommentsState, (state) => state.comments as Comment[]);
 
-  static comments = createSelector(getCommentsState, (state) => state.comments);
+  static loading = createSelector(getCommentsState, (state) => state.loading as boolean);
 
-  static loading = createSelector(getCommentsState, (state) => state.loading);
-
-  static allLoaded = createSelector(getCommentsState, (state) => state.allLoaded);
+  static allLoaded = createSelector(getCommentsState, (state) => state.allLoaded as boolean);
 }
 
 export default CommentsSelectors;

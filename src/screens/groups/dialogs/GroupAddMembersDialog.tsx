@@ -46,13 +46,14 @@ const GroupAddMembersDialog = ({group, show, close}: GroupAddMembersDialogProps)
 
   useEffect(() => {
     const relationUserIds = relations.map((relation) => relation.secondUserId);
-    setContactIds(relationUserIds);
+    const ignoredIds = group?.members.map((m) => m.userId);
+    const contactIds = relationUserIds.filter((id) => !ignoredIds.includes(id));
+    setContactIds(contactIds);
   }, [show, relations]);
 
   const isUserIdListEmpty = userIds.length === 0;
-  const ignoredIds = group?.members.map((m) => m.userId);
 
-  const content = group && <UsersSelect allowedIds={contactIds} ignoredIds={ignoredIds} setUserIds={setUserIds} />;
+  const content = group && <UsersSelect allowedIds={contactIds} setUserIds={setUserIds} />;
 
   const actions = (
     <>

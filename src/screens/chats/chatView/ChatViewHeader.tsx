@@ -30,7 +30,8 @@ const ChatViewHeader = () => {
     showChatDeleteDialog,
   } = useChatDialogContext();
   const chat = useAppSelector(ChatSelectors.chat);
-  const users = useAppSelector(InfoSelectors.users);
+  const memberIds = chat.members.map((m) => m.userId);
+  const users = useAppSelector((state) => InfoSelectors.users(state, memberIds));
   const account = useAppSelector(AuthSelectors.account);
 
   const title = useMemo<string>(() => {

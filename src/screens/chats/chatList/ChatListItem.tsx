@@ -24,13 +24,14 @@ type ChatListItemProps = {
 const ChatListItem = ({chat}: ChatListItemProps) => {
   const navigation = useNavigation<RootNavigationProp>();
   const {t} = useTranslation();
-  const unreadMap = useAppSelector(ChatsSelectors.unreadMap);
-  const users = useAppSelector(InfoSelectors.users);
+  const memberIds = chat.members.map((m) => m.userId);
+  const unreadMessageIds = useAppSelector((state) => ChatsSelectors.unreadMessageIds(state, chat.id));
+  const users = useAppSelector((state) => InfoSelectors.users(state, memberIds));
   const account = useAppSelector(AuthSelectors.account);
 
   const goToChat = (): void => navigation.navigate('ChatView', {chat});
 
-  const unreadCount = unreadMap.get(chat.id)?.length || 0;
+  const unreadCount = unreadMessageIds.length;
   const directUser = ChatUtils.getDirectChatUser(chat, users, account);
   const title = ChatUtils.getTitle(chat, users, account);
   const date = chat.lastMessage?.createdAt ? new Date(chat.lastMessage.createdAt) : null;

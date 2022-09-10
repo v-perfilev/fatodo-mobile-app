@@ -1,9 +1,10 @@
-import {Comment, CommentThreadInfo, ReferenceComment} from '../../models/Comment';
+import {Comment, CommentThreadInfo} from '../../models/Comment';
 import {User} from '../../models/User';
 import {FilterUtils} from './FilterUtils';
 import {ComparatorUtils} from './ComparatorUtils';
 import {Message} from '../../models/Message';
 import {ArrayUtils} from './ArrayUtils';
+import {StoreUtils} from './StoreUtils';
 
 export class CommentUtils {
   public static filterComments = (comments: Comment[]): Comment[] => {
@@ -18,10 +19,6 @@ export class CommentUtils {
     return comment && account && comment.userId === account.id;
   };
 
-  public static extractUserFromComment = (users: Map<string, User>, comment: Comment | ReferenceComment): User => {
-    return users.get(comment.userId);
-  };
-
   public static extractUserIds = (comments: Comment[]): string[] => {
     const commentUserIds = comments.map((c) => c.userId);
     const referenceUserIds = comments.filter((c) => c.reference).map((r) => r.userId);
@@ -33,9 +30,10 @@ export class CommentUtils {
     threadsInfo: [string, CommentThreadInfo][],
     newInfo: CommentThreadInfo[],
   ): [string, CommentThreadInfo][] => {
-    const infoMap = new Map(threadsInfo);
-    newInfo.forEach((i) => infoMap.set(i.targetId, i));
-    return [...infoMap];
+    newInfo.forEach((info) => {
+      threadsInfo = StoreUtils.setValue(threadsInfo, info.targetId, info);
+    });
+    return threadsInfo;
   };
 
   public static increaseInfo = (
@@ -43,25 +41,24 @@ export class CommentUtils {
     targetId: string,
     isOwnComment: boolean,
   ): [string, CommentThreadInfo][] => {
-    const infoMap = new Map(threadsInfo);
-    if (infoMap.has(targetId)) {
-      const threadInfo = infoMap.get(targetId);
-      threadInfo.count = threadInfo.count + 1;
-      threadInfo.unread = isOwnComment ? threadInfo.unread : threadInfo.unread + 1;
+    const info = StoreUtils.getValue(threadsInfo, targetId, undefined);
+    if (info) {
+      info.count = info.count + 1;
+      info.unread = isOwnComment ? info.unread : info.unread + 1;
+      threadsInfo = StoreUtils.setValue(threadsInfo, targetId, info);
     }
-    return [...infoMap];
+    return threadsInfo;
   };
 
   public static refreshInfo = (
     threadsInfo: [string, CommentThreadInfo][],
     targetId: string,
   ): [string, CommentThreadInfo][] => {
-    const infoMap = new Map(threadsInfo);
-    const info = infoMap.get(targetId);
+    const info = StoreUtils.getValue(threadsInfo, targetId, undefined);
     if (info) {
       info.unread = 0;
-      infoMap.set(targetId, info);
+      threadsInfo = StoreUtils.setValue(threadsInfo, targetId, info);
     }
-    return [...infoMap];
+    return threadsInfo;
   };
 }

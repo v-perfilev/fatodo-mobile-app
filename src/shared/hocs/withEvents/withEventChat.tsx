@@ -1,12 +1,10 @@
-import React, {ComponentType, memo, useMemo} from 'react';
+import React, {ComponentType} from 'react';
 import {useAppSelector} from '../../../store/store';
 import {ChatInfo} from '../../../models/Chat';
 import {Event} from '../../../models/Event';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {User} from '../../../models/User';
-import {MapUtils} from '../../utils/MapUtils';
 import {MessageInfo, MessageReactionType} from '../../../models/Message';
-import {flowRight} from 'lodash';
 
 export type WithEventChatProps = {
   user?: User;
@@ -24,28 +22,16 @@ type ContainerProps = {
 const withEventChat =
   (Component: ComponentType<WithEventChatProps>) =>
   ({event}: ContainerProps) => {
-    const users = useAppSelector(InfoSelectors.users);
-    const chats = useAppSelector(InfoSelectors.chats);
-    const messages = useAppSelector(InfoSelectors.messages);
     const chatEvent = event.chatEvent;
     const reaction = chatEvent.reaction;
     const date = event.date;
 
-    const eventUser = useMemo<User>(() => users.get(chatEvent?.userId), [users]);
-    const eventUsers = useMemo<User[]>(() => MapUtils.get(users, chatEvent?.userIds), [users]);
-    const eventChat = useMemo<ChatInfo>(() => chats.get(chatEvent?.chatId), [chats]);
-    const eventMessage = useMemo<MessageInfo>(() => messages.get(chatEvent?.messageId), [messages]);
+    const user = useAppSelector((state) => InfoSelectors.user(state, chatEvent.userId));
+    const users = useAppSelector((state) => InfoSelectors.users(state, chatEvent.userIds));
+    const chat = useAppSelector((state) => InfoSelectors.chat(state, chatEvent.chatId));
+    const message = useAppSelector((state) => InfoSelectors.message(state, chatEvent.messageId));
 
-    return (
-      <Component
-        user={eventUser}
-        users={eventUsers}
-        chat={eventChat}
-        message={eventMessage}
-        reaction={reaction}
-        date={date}
-      />
-    );
+    return <Component user={user} users={users} chat={chat} message={message} reaction={reaction} date={date} />;
   };
 
-export default flowRight(withEventChat, memo);
+export default withEventChat;

@@ -20,9 +20,8 @@ type ChatViewMessageIncomingProps = {
 const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
   const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
-  const users = useAppSelector(InfoSelectors.users);
+  const user = useAppSelector((state) => InfoSelectors.user(state, message.userId));
 
-  const user = MessageUtils.extractUserFromMessage(users, message);
   const date = DateFormatters.formatTime(new Date(message.createdAt));
   const isRead = MessageUtils.isReadMessage(message, account);
 

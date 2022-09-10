@@ -23,9 +23,8 @@ type CommentListItemProps = {
 const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
   const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
-  const users = useAppSelector(InfoSelectors.users);
+  const user = useAppSelector((state) => InfoSelectors.user(state, comment.userId));
 
-  const user = CommentUtils.extractUserFromComment(users, comment);
   const date = DateFormatters.formatDependsOnDay(new Date(comment.createdAt));
   const isOwnComment = CommentUtils.isOwnComment(comment, account);
 

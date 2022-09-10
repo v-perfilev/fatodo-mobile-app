@@ -24,7 +24,8 @@ const ContactList = () => {
   const theme = useTheme();
   const {showContactRequestDialog} = useContactDialogContext();
   const relations = useAppSelector(ContactsSelectors.relations);
-  const users = useAppSelector(InfoSelectors.users);
+  const userIds = relations.map((r) => r.secondUserId);
+  const users = useAppSelector((state) => InfoSelectors.users(state, userIds));
   const [loading, setLoading] = useDelayedState();
   const [filter, setFilter] = useState<string>('');
   const [relationsToShow, setRelationsToShow] = useState<ContactRelation[]>([]);
@@ -61,7 +62,7 @@ const ContactList = () => {
 
   useEffect(() => {
     const filteredRelations = relations.filter((r) => {
-      const user = users.get(r.secondUserId);
+      const user = users.find((u) => u.id === r.secondUserId);
       const str = user?.username + user?.firstname + user?.lastname;
       return str.includes(filter);
     });

@@ -60,13 +60,14 @@ const ChatCreateDialog = ({show, close}: ChatCreateDialogProps) => {
 
   useEffect(() => {
     const relationUserIds = relations.map((relation) => relation.secondUserId);
-    setContactIds(relationUserIds);
+    const ignoredIds = [account?.id];
+    const contactIds = relationUserIds.filter((id) => !ignoredIds.includes(id));
+    setContactIds(contactIds);
   }, [show, relations]);
 
   const isUserIdListEmpty = userIds.length === 0;
-  const ignoredIds = [account?.id];
 
-  const content = <UsersSelect allowedIds={contactIds} ignoredIds={ignoredIds} setUserIds={setUserIds} />;
+  const content = <UsersSelect allowedIds={contactIds} setUserIds={setUserIds} />;
 
   const actions = (
     <>

@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../store/store';
@@ -12,10 +12,11 @@ type CalendarViewDateRemindersProps = {
 };
 
 const CalendarViewDateReminders = ({reminders}: CalendarViewDateRemindersProps) => {
-  const groups = useAppSelector(InfoSelectors.groups);
+  const groupIds = reminders.map((r) => r.parentId).filter(FilterUtils.uniqueFilter);
+  const groups = useAppSelector((state) => InfoSelectors.groups(state, groupIds));
 
   const reminderColors = reminders
-    .map((reminder) => groups.get(reminder.parentId))
+    .map((reminder) => groups.find((g) => g.id === reminder.parentId))
     .filter(FilterUtils.notUndefinedFilter)
     .map((g) => g.color);
 
@@ -38,4 +39,4 @@ const CalendarViewDateReminders = ({reminders}: CalendarViewDateRemindersProps) 
   );
 };
 
-export default memo(CalendarViewDateReminders);
+export default CalendarViewDateReminders;

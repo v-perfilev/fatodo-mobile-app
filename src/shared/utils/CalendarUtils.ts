@@ -2,7 +2,7 @@ import moment from 'moment';
 import {CalendarReminder} from '../../models/Reminder';
 import {ComparatorUtils} from './ComparatorUtils';
 import {CalendarDate, CalendarItem, CalendarMonth} from '../../models/Calendar';
-import {MapUtils} from './MapUtils';
+import {StoreUtils} from './StoreUtils';
 
 export class CalendarUtils {
   public static generateCurrentCalendarMonth = (): CalendarMonth => {
@@ -101,16 +101,15 @@ export class CalendarUtils {
   };
 
   public static updateRemindersMap = (
-    stateMap: [string, CalendarReminder[]][],
-    newMap: [string, CalendarReminder[]][],
+    oldState: [string, CalendarReminder[]][],
+    newState: [string, CalendarReminder[]][],
     keys: string[],
   ): [string, any][] => {
-    const map = new Map(newMap);
     keys.forEach((key) => {
-      const value = map.get(key) || [];
-      stateMap = MapUtils.setValue(stateMap, key, value);
+      const newValue = StoreUtils.getValue(newState, key, []);
+      newState = StoreUtils.setValue(newState, key, newValue);
     });
-    return stateMap;
+    return newState;
   };
 
   public static preparePendingLoadingKeys = (loadingKeys: string[], newKeys: string[]): string[] => {

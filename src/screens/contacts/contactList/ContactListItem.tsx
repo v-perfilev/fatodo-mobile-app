@@ -15,10 +15,8 @@ type ContactListItemProps = {
 
 const ContactListItem = ({relation}: ContactListItemProps) => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(InfoSelectors.users);
+  const user = useAppSelector((state) => InfoSelectors.user(state, relation.secondUserId));
   const [disabled, setDisabled] = useState(false);
-
-  const user = users.get(relation.secondUserId);
 
   const removeRelation = (): void => {
     setDisabled(true);

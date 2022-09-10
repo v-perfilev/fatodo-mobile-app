@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {User} from '../../../../models/User';
 import ClearableTextInput from '../../../../components/inputs/ClearableTextInput';
 import UserPlusIcon from '../../../../components/icons/UserPlusIcon';
 import ModalDialog from '../../../../components/modals/ModalDialog';
@@ -11,8 +10,8 @@ import {Chat} from '../../../../models/Chat';
 import ChatMembersDialogMember from './ChatMembersDialogMember';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
-import {MapUtils} from '../../../../shared/utils/MapUtils';
 import OutlinedButton from '../../../../components/controls/OutlinedButton';
+import {User} from '../../../../models/User';
 
 export type ChatMembersDialogProps = {
   chat: Chat;
@@ -30,20 +29,18 @@ export const defaultChatMembersDialogProps: Readonly<ChatMembersDialogProps> = {
 
 const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersDialogProps) => {
   const {t} = useTranslation();
+  const memberIds = chat?.members.map((m) => m.userId);
+  const users = useAppSelector((state) => InfoSelectors.users(state, memberIds));
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
-  const users = useAppSelector(InfoSelectors.users);
 
   const filterUsersToShow = (text: string): void => {
-    const memberIds = chat.members;
-    const updatedUsersToShow = MapUtils.get(users, memberIds).filter((u) => u.username.includes(text));
+    const updatedUsersToShow = users.filter((u) => u.username.includes(text));
     setUsersToShow(updatedUsersToShow);
   };
 
   useEffect(() => {
     if (chat) {
-      const memberIds = chat.members;
-      const updatedUsersToShow = MapUtils.get(users, memberIds);
-      setUsersToShow(updatedUsersToShow);
+      setUsersToShow(users);
     }
   }, [chat, users]);
 

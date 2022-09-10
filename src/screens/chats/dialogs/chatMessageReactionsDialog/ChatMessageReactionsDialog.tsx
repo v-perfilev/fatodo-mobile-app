@@ -30,7 +30,8 @@ export const defaultChatMessageReactionsDialogProps: Readonly<ChatMessageReactio
 
 const ChatMessageReactionsDialog = ({message, show, close}: ChatMessageReactionsDialogProps) => {
   const {t} = useTranslation();
-  const users = useAppSelector(InfoSelectors.users);
+  const reactionUserIds = message?.reactions.map((r) => r.userId);
+  const users = useAppSelector((state) => InfoSelectors.users(state, reactionUserIds));
   const [reactions, setReactions] = useState<MessageReactionWithUser[]>([]);
   const [reactionsToShow, setReactionsToShow] = useState<MessageReactionWithUser[]>([]);
 
@@ -42,7 +43,7 @@ const ChatMessageReactionsDialog = ({message, show, close}: ChatMessageReactions
   const combineUsersWithReactions = (): void => {
     const updatedList = message.reactions.map((reaction) => ({
       reaction,
-      user: users.get(reaction.userId),
+      user: users.find((u) => u.id === reaction.userId),
     }));
     setReactions(updatedList);
     setReactionsToShow(updatedList);

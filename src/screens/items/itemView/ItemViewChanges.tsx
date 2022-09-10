@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from 'react';
+import React, {ReactElement} from 'react';
 import {useTranslation} from 'react-i18next';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
@@ -11,26 +11,12 @@ import InfoSelectors from '../../../store/info/infoSelectors';
 const ItemViewChanges = () => {
   const {t} = useTranslation();
   const item = useAppSelector(ItemSelectors.item);
-  const users = useAppSelector(InfoSelectors.users);
-  const [creator, setCreator] = useState<string>();
-  const [updater, setUpdater] = useState<string>();
+  const creator = useAppSelector((state) => InfoSelectors.user(state, item.createdBy));
+  const updater = useAppSelector((state) => InfoSelectors.user(state, item.lastModifiedBy));
 
   const formatDate = (timestamp: number): string => {
     return DateFormatters.formatTimeWithDate(new Date(timestamp));
   };
-
-  useEffect(() => {
-    if (item?.createdBy) {
-      const user = users.get(item.createdBy);
-      const username = user?.username || item.createdBy;
-      setCreator(username);
-    }
-    if (item?.lastModifiedBy) {
-      const user = users.get(item.lastModifiedBy);
-      const username = user?.username || item.lastModifiedBy;
-      setUpdater(username);
-    }
-  }, [item, users]);
 
   const labeledBox = (label: string, text: string): ReactElement => (
     <LabeledBox label={label} isText color="gray.500" fontSize="xs">
@@ -42,13 +28,13 @@ const ItemViewChanges = () => {
     <FVStack defaultSpace>
       {creator && (
         <FHStack defaultSpace>
-          {labeledBox(t('item:labels.createdBy'), creator)}
+          {labeledBox(t('item:labels.createdBy'), creator.username)}
           {labeledBox(t('item:labels.createdAt'), formatDate(item.createdAt))}
         </FHStack>
       )}
       {updater && item.createdAt !== item.lastModifiedAt && (
         <FHStack defaultSpace>
-          {labeledBox(t('item:labels.updatedBy'), updater)}
+          {labeledBox(t('item:labels.updatedBy'), updater.username)}
           {labeledBox(t('item:labels.createdAt'), formatDate(item.lastModifiedAt))}
         </FHStack>
       )}

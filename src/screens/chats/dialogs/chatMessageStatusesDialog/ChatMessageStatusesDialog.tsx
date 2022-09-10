@@ -30,7 +30,8 @@ export const defaultChatMessageStatusesDialogProps: Readonly<ChatMessageStatuses
 
 const ChatMessageStatusesDialog = ({message, show, close}: ChatMessageStatusesDialogProps) => {
   const {t} = useTranslation();
-  const users = useAppSelector(InfoSelectors.users);
+  const statusUserIds = message?.statuses.map((s) => s.userId);
+  const users = useAppSelector((state) => InfoSelectors.users(state, statusUserIds));
   const [statuses, setStatuses] = useState<ReadStatusWithUser[]>([]);
   const [statusesToShow, setStatusesToShow] = useState<ReadStatusWithUser[]>([]);
 
@@ -44,16 +45,14 @@ const ChatMessageStatusesDialog = ({message, show, close}: ChatMessageStatusesDi
       .filter((status) => status.type === 'READ')
       .map((status) => ({
         status,
-        user: users.get(status.userId),
+        user: users.find((u) => u.id === status.userId),
       }));
     setStatuses(updatedList);
     setStatusesToShow(updatedList);
   };
 
   useEffect(() => {
-    if (message && users) {
-      combineUsersWithStatuses();
-    }
+    message && combineUsersWithStatuses();
   }, [message?.statuses, users]);
 
   const content = (

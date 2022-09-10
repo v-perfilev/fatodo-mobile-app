@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import PressableButton from '../../../components/controls/PressableButton';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '../../../navigators/RootNavigator';
@@ -6,7 +6,6 @@ import UserView from '../../../components/views/UserView';
 import {useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {ContactRelation} from '../../../models/Contact';
-import {User} from '../../../models/User';
 
 type UserViewRelationProps = {
   relation: ContactRelation;
@@ -14,9 +13,7 @@ type UserViewRelationProps = {
 
 const UserViewRelation = ({relation}: UserViewRelationProps) => {
   const navigation = useNavigation<RootNavigationProp>();
-  const users = useAppSelector(InfoSelectors.users);
-
-  const user = useMemo<User>(() => users.get(relation.secondUserId), [users]);
+  const user = useAppSelector((state) => InfoSelectors.user(state, relation.secondUserId));
 
   const goToUserView = (): void => navigation.navigate('UserView', {user});
 

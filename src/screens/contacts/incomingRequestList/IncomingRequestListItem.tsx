@@ -16,10 +16,8 @@ type IncomingRequestListItemProps = {
 
 const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(InfoSelectors.users);
+  const user = useAppSelector((state) => InfoSelectors.user(state, request.requesterId));
   const [disabled, setDisabled] = useState(false);
-
-  const user = users.get(request.requesterId);
 
   const acceptRequest = (): void => {
     setDisabled(true);

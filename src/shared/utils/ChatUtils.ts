@@ -14,18 +14,19 @@ export class ChatUtils {
       .sort((a, b) => ComparatorUtils.createdAtComparator(a.lastMessage, b.lastMessage));
   };
 
-  public static getDirectChatUser = (chat: Chat, users: Map<string, User>, account: User): User => {
+  public static getDirectChatUser = (chat: Chat, users: User[], account: User): User => {
     const memberId = chat.members.map((m) => m.userId).find((id) => id !== account.id);
-    return chat.isDirect && memberId ? users.get(memberId) : null;
+    return chat.isDirect && memberId ? users.find((u) => u.id === memberId) : undefined;
   };
 
-  public static getTitle = (chat: Chat | ChatInfo, users: Map<string, User>, account: User): string => {
+  public static getTitle = (chat: Chat | ChatInfo, users: User[], account: User): string => {
     return chat.title
       ? chat.title
       : chat.members
           .map((m) => m.userId)
           .filter((id) => id !== account.id)
-          .map((id) => users.get(id))
+          .map((id) => users.find((u) => u.id === id))
+          .filter(FilterUtils.notUndefinedFilter)
           .map((user) => user.username)
           .join(', ');
   };

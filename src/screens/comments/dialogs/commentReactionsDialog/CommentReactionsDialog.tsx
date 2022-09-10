@@ -30,7 +30,8 @@ export const defaultCommentReactionsDialogProps: Readonly<CommentReactionsDialog
 
 const CommentReactionsDialog = ({comment, show, close}: CommentReactionsDialogProps) => {
   const {t} = useTranslation();
-  const users = useAppSelector(InfoSelectors.users);
+  const reactionUserIds = comment?.reactions.map((r) => r.userId);
+  const users: User[] = useAppSelector((state) => InfoSelectors.users(state, reactionUserIds));
   const [reactions, setReactions] = useState<CommentReactionWithUser[]>([]);
   const [reactionsToShow, setReactionsToShow] = useState<CommentReactionWithUser[]>([]);
 
@@ -42,7 +43,7 @@ const CommentReactionsDialog = ({comment, show, close}: CommentReactionsDialogPr
   const combineUsersWithReactions = (): void => {
     const updatedList = comment.reactions.map((reaction) => ({
       reaction,
-      user: users.get(reaction.userId),
+      user: users.find((u) => u.id === reaction.userId),
     }));
     setReactions(updatedList);
     setReactionsToShow(updatedList);

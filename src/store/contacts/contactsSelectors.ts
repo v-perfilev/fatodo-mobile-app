@@ -1,24 +1,29 @@
 import {RootState} from '../store';
 import {createSelector} from '@reduxjs/toolkit';
+import {ContactInfo, ContactRelation, ContactRequest} from '../../models/Contact';
 
 const getContactsState = (state: RootState) => state.contacts;
 
 class ContactsSelectors {
-  static info = createSelector(getContactsState, (state) => ({
-    relationCount: state.relationCount,
-    outcomingRequestCount: state.outcomingRequestCount,
-    incomingRequestCount: state.incomingRequestCount,
-  }));
+  static info = createSelector(
+    getContactsState,
+    (state) =>
+      ({
+        relationCount: state.relationCount,
+        outcomingRequestCount: state.outcomingRequestCount,
+        incomingRequestCount: state.incomingRequestCount,
+      } as ContactInfo),
+  );
 
-  static incomingRequestCount = createSelector(getContactsState, (state) => state.incomingRequestCount);
+  static incomingRequestCount = createSelector(getContactsState, (state) => state.incomingRequestCount as number);
 
-  static relations = createSelector(getContactsState, (state) => state.relations);
+  static relations = createSelector(getContactsState, (state) => state.relations as ContactRelation[]);
 
-  static outcomingRequests = createSelector(getContactsState, (state) => state.outcomingRequests);
+  static outcomingRequests = createSelector(getContactsState, (state) => state.outcomingRequests as ContactRequest[]);
 
-  static incomingRequests = createSelector(getContactsState, (state) => state.incomingRequests);
+  static incomingRequests = createSelector(getContactsState, (state) => state.incomingRequests as ContactRequest[]);
 
-  static loading = createSelector(getContactsState, (state) => state.loading);
+  static loading = createSelector(getContactsState, (state) => state.loading as boolean);
 }
 
 export default ContactsSelectors;

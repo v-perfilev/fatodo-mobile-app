@@ -25,7 +25,7 @@ export class InfoActions {
   });
 
   static fetchUsersThunk = createAsyncThunk(PREFIX + 'fetchUsers', async (ids: string[]) => {
-    return await InfoUtils.fetchIds(ids, UserService.getAllByIds);
+    return await InfoUtils.fetchByIds(ids, UserService.getAllByIds);
   });
 
   /*
@@ -38,7 +38,7 @@ export class InfoActions {
   });
 
   static fetchGroupsThunk = createAsyncThunk(PREFIX + 'fetchGroups', async (ids: string[]) => {
-    return await InfoUtils.fetchIds(ids, ItemService.getGroupInfoByIds);
+    return await InfoUtils.fetchByIds(ids, ItemService.getGroupInfoByIds);
   });
 
   /*
@@ -51,7 +51,7 @@ export class InfoActions {
   });
 
   static fetchItemsThunk = createAsyncThunk(PREFIX + 'fetchItems', async (ids: string[]) => {
-    return await InfoUtils.fetchIds(ids, ItemService.getItemInfoByIds);
+    return await InfoUtils.fetchByIds(ids, ItemService.getItemInfoByIds);
   });
 
   /*
@@ -64,7 +64,7 @@ export class InfoActions {
   });
 
   static fetchChatsThunk = createAsyncThunk(PREFIX + 'fetchChats', async (ids: string[]) => {
-    return await InfoUtils.fetchIds(ids, ChatService.getChatInfoByIds);
+    return await InfoUtils.fetchByIds(ids, ChatService.getChatInfoByIds);
   });
 
   /*
@@ -77,7 +77,7 @@ export class InfoActions {
   });
 
   static fetchMessagesThunk = createAsyncThunk(PREFIX + 'fetchMessages', async (ids: string[]) => {
-    return await InfoUtils.fetchIds(ids, ChatService.getMessageInfoByIds);
+    return await InfoUtils.fetchByIds(ids, ChatService.getMessageInfoByIds);
   });
 
   /*
@@ -90,6 +90,6 @@ export class InfoActions {
   });
 
   static fetchCommentsThunk = createAsyncThunk(PREFIX + 'fetchComments', async (ids: string[]) => {
-    return await InfoUtils.fetchIds(ids, CommentService.getCommentInfoByIds);
+    return await InfoUtils.fetchByIds(ids, CommentService.getCommentInfoByIds);
   });
 }

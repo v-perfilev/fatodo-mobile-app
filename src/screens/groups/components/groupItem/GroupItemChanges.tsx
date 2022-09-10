@@ -11,15 +11,14 @@ type GroupItemChangesProps = {
 };
 
 const GroupItemChanges = ({item}: GroupItemChangesProps) => {
-  const users = useAppSelector(InfoSelectors.users);
+  const user = useAppSelector((state) => InfoSelectors.user(state, item.createdBy));
 
-  const name = useMemo<string>(() => users.get(item.createdBy)?.username, [users.get(item.createdBy)]);
   const formattedDate = useMemo<string>(() => DateFormatters.formatDependsOnDay(new Date(item.createdAt)), []);
   const textProps = {color: 'gray.400', fontSize: '11'};
 
   return (
     <FHStack smallSpace>
-      <Text {...textProps}>{name}</Text>
+      <Text {...textProps}>{user?.username}</Text>
       <Text {...textProps}>/</Text>
       <Text {...textProps}>{formattedDate}</Text>
     </FHStack>

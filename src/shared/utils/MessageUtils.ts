@@ -3,7 +3,6 @@ import {ChatItem, EventMessageParams, EventMessageType, Message} from '../../mod
 import {User} from '../../models/User';
 import {DateFormatters} from './DateUtils';
 import {ArrayUtils} from './ArrayUtils';
-import {MapUtils} from './MapUtils';
 import {FilterUtils} from './FilterUtils';
 import {ComparatorUtils} from './ComparatorUtils';
 
@@ -21,13 +20,13 @@ export class MessageUtils {
   };
 
   public static buildEventMessageText = (
-    message: Message,
     params: EventMessageParams,
-    users: Map<string, User>,
+    messageUser: User,
+    paramUsers: User[],
     t: TFunction,
   ): string => {
-    const username = MessageUtils.extractUsernameFromMessage(users, message);
-    const usernames = MessageUtils.extractUsernamesFromParams(users, params);
+    const username = messageUser.username;
+    const usernames = paramUsers.map((u) => u.username).join(', ');
     const title = MessageUtils.extractTextFromParams(params);
     let text = '';
     if (
@@ -69,22 +68,6 @@ export class MessageUtils {
       .map((m) => MessageUtils.parseEventMessage(m))
       .flatMap((p) => p.ids);
     return [...messageUserIds, ...reactionUserIds, ...statusUserIds, ...eventUserIds];
-  };
-
-  public static extractUserFromMessage = (users: Map<string, User>, message: Message): User => {
-    return users.get(message.userId);
-  };
-
-  public static extractUsernameFromMessage = (users: Map<string, User>, message: Message): string => {
-    const user = users.get(message.userId);
-    return user?.username || '';
-  };
-
-  public static extractUsernamesFromParams = (users: Map<string, User>, params: EventMessageParams): string => {
-    const userIds = params?.ids || [];
-    const eventUsers = MapUtils.get(users, userIds);
-    const eventUsernames = eventUsers.map((user) => user.username);
-    return eventUsernames.length > 0 ? eventUsernames.join(', ') : '';
   };
 
   public static extractTextFromParams = (params: EventMessageParams): string => {

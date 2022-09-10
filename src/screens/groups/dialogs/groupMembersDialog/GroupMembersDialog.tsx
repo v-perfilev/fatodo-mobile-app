@@ -12,7 +12,6 @@ import FCenter from '../../../../components/boxes/FCenter';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import InfoSelectors from '../../../../store/info/infoSelectors';
-import {MapUtils} from '../../../../shared/utils/MapUtils';
 import OutlinedButton from '../../../../components/controls/OutlinedButton';
 
 export type GroupMembersDialogProps = {
@@ -33,8 +32,9 @@ export const defaultGroupMembersDialogProps: Readonly<GroupMembersDialogProps> =
 
 const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEditMember}: GroupMembersDialogProps) => {
   const {t} = useTranslation();
+  const memberIds = group?.members.map((m) => m.userId);
   const account = useAppSelector(AuthSelectors.account);
-  const users = useAppSelector(InfoSelectors.users);
+  const users = useAppSelector((state) => InfoSelectors.users(state, memberIds));
   const [usersToShow, setUsersToShow] = useState<GroupUser[]>([]);
   const [deletedMemberIds, setDeletedMemberIds] = useState<string[]>([]);
 
@@ -49,8 +49,7 @@ const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEdi
 
   const updateUsersToShow = (filter?: string): void => {
     const memberMap = new Map(group.members.map((member) => [member.userId, member]));
-    const userIds = Array.from(memberMap.keys()).filter((id) => !deletedMemberIds.includes(id));
-    const updatedUsersToShow = MapUtils.get(users, userIds)
+    const updatedUsersToShow = users
       .filter((user) => filter === undefined || user.username.includes(filter))
       .map((user) => ({...user, ...memberMap.get(user.id)}));
     setUsersToShow(updatedUsersToShow);

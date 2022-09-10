@@ -5,7 +5,6 @@ import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
-import {MessageUtils} from '../../../../shared/utils/MessageUtils';
 import FBox from '../../../../components/boxes/FBox';
 
 type ChatListMessageIncomingProps = {
@@ -14,9 +13,7 @@ type ChatListMessageIncomingProps = {
 
 const ChatListMessageIncoming = ({message}: ChatListMessageIncomingProps) => {
   const {t} = useTranslation();
-  const users = useAppSelector(InfoSelectors.users);
-
-  const user = MessageUtils.extractUserFromMessage(users, message);
+  const user = useAppSelector((state) => InfoSelectors.user(state, message.userId));
 
   return (
     <FHStack smallSpace>

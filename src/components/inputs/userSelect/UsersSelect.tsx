@@ -11,17 +11,15 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {InfoActions} from '../../../store/info/infoActions';
 import UserService from '../../../services/UserService';
-import {MapUtils} from '../../../shared/utils/MapUtils';
 
 type Props = {
   allowedIds: string[];
-  ignoredIds: string[];
   setUserIds: (ids: string[]) => void;
 };
 
-const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => {
+const UsersSelect: FC<Props> = ({allowedIds, setUserIds}: Props) => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(InfoSelectors.users);
+  const users = useAppSelector((state) => InfoSelectors.users(state, allowedIds));
   const {t} = useTranslation();
   const [filter, setFilter] = useState<string>('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -41,9 +39,9 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
   };
 
   const handleUsersToShow = (): void => {
-    const idsToShow = allowedIds.filter((id) => !selectedIds.includes(id)).filter((id) => !ignoredIds.includes(id));
-    const updatedUsersToShow = MapUtils.get(users, idsToShow);
-    const selectedUsers = MapUtils.get(users, selectedIds);
+    const idsToShow = allowedIds.filter((id) => !selectedIds.includes(id));
+    const updatedUsersToShow = users.filter((u) => idsToShow.includes(u.id));
+    const selectedUsers = users.filter((u) => selectedIds.includes(u.id));
     updatedUsersToShow.push(...selectedUsers);
     setUsersToShow(updatedUsersToShow);
   };
@@ -72,7 +70,7 @@ const UsersSelect: FC<Props> = ({allowedIds, ignoredIds, setUserIds}: Props) => 
 
   useEffect(() => {
     handleUsersToShow();
-  }, [users, selectedIds, ignoredIds, filter]);
+  }, [users, selectedIds, filter]);
 
   return (
     <FVStack defaultSpace>

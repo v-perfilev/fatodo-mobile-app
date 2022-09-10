@@ -1,9 +1,8 @@
-import React, {ComponentType, memo, useMemo} from 'react';
+import React, {ComponentType} from 'react';
 import {useAppSelector} from '../../../store/store';
 import {Event} from '../../../models/Event';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {User} from '../../../models/User';
-import {flowRight} from 'lodash';
 
 export type WithEventContactProps = {
   firstUser: User;
@@ -18,14 +17,13 @@ type ContainerProps = {
 const withEventContact =
   (Component: ComponentType<WithEventContactProps>) =>
   ({event}: ContainerProps) => {
-    const users = useAppSelector(InfoSelectors.users);
     const contactEvent = event.contactEvent;
     const date = event.date;
 
-    const eventFirstUser = useMemo<User>(() => users.get(contactEvent?.firstUserId), [users]);
-    const eventSecondUser = useMemo<User>(() => users.get(contactEvent?.secondUserId), [users]);
+    const firstUser = useAppSelector((state) => InfoSelectors.user(state, contactEvent.firstUserId));
+    const secondUser = useAppSelector((state) => InfoSelectors.user(state, contactEvent.secondUserId));
 
-    return <Component firstUser={eventFirstUser} secondUser={eventSecondUser} date={date} />;
+    return <Component firstUser={firstUser} secondUser={secondUser} date={date} />;
   };
 
-export default flowRight(withEventContact, memo);
+export default withEventContact;

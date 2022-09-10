@@ -4,9 +4,8 @@ import {FilterUtils} from './FilterUtils';
 type WithId = {id: string};
 
 export class InfoUtils {
-  public static extractIdsToLoad = <T>(ids: string[], entries: [string, T][], loadingIds: string[]): string[] => {
-    const map = new Map(entries);
-    const existingIds = Array.from(map.keys());
+  public static extractIdsToLoad = (ids: string[], entries: [string, any][], loadingIds: string[]): string[] => {
+    const existingIds = entries.map(([key, _]) => key);
     const notAllowedIds = [...existingIds, ...loadingIds];
     return ids
       .filter(FilterUtils.notUndefinedFilter)
@@ -15,11 +14,11 @@ export class InfoUtils {
       .filter((id) => !notAllowedIds.includes(id));
   };
 
-  public static fetchIds = async <T>(
+  public static fetchByIds = async (
     ids: string[],
-    loadingFunc: (ids: string[]) => AxiosPromise<T[]>,
-  ): Promise<T[]> => {
-    let result: T[] = [];
+    loadingFunc: (ids: string[]) => AxiosPromise<any[]>,
+  ): Promise<any[]> => {
+    let result: any[] = [];
     if (ids.length > 0) {
       const response = await loadingFunc(ids);
       result = response.data;
@@ -35,11 +34,10 @@ export class InfoUtils {
     stateValues: [string, T][],
     newValues: T[],
   ): [string, T][] => {
-    const stateMap = new Map(stateValues);
-    const newMap = new Map(newValues.map((v) => [v.id, v]));
-    let newKeys = Array.from(newMap.keys()).filter((k) => !stateMap.has(k));
-    newKeys.map((k) => stateMap.set(k, newMap.get(k)));
-    return [...stateMap];
+    const newIds = newValues.map((value) => value.id);
+    const updatedValues = stateValues.filter(([key, _]) => newIds.includes(key));
+    newValues.forEach((value) => updatedValues.push([value.id, value]));
+    return updatedValues;
   };
 
   public static prepareFinishedLoadingIds = (loadingIds: string[], newIds: string[]): string[] => {

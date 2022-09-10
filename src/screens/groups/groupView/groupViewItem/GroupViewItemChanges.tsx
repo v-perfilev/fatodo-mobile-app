@@ -11,9 +11,7 @@ type GroupViewItemChangesProps = {
 };
 
 const GroupViewItemChanges = ({item}: GroupViewItemChangesProps) => {
-  const users = useAppSelector(InfoSelectors.users);
-
-  const name = users.get(item.createdBy)?.username;
+  const user = useAppSelector((state) => InfoSelectors.user(state, item.createdBy));
 
   const formattedDate = DateFormatters.formatDependsOnDay(new Date(item.createdAt));
 
@@ -21,7 +19,7 @@ const GroupViewItemChanges = ({item}: GroupViewItemChangesProps) => {
 
   return (
     <FHStack smallSpace>
-      <Text {...textProps}>{name}</Text>
+      <Text {...textProps}>{user?.username}</Text>
       <Text {...textProps}>/</Text>
       <Text {...textProps}>{formattedDate}</Text>
     </FHStack>

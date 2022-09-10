@@ -1,12 +1,10 @@
-import React, {ComponentType, memo, useMemo} from 'react';
+import React, {ComponentType} from 'react';
 import {useAppSelector} from '../../../store/store';
 import {Event} from '../../../models/Event';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {User} from '../../../models/User';
 import {GroupInfo} from '../../../models/Group';
 import {ItemInfo} from '../../../models/Item';
-import {MapUtils} from '../../utils/MapUtils';
-import {flowRight} from 'lodash';
 
 export type WithEventItemProps = {
   user?: User;
@@ -23,18 +21,15 @@ type ContainerProps = {
 const withEventItem =
   (Component: ComponentType<WithEventItemProps>) =>
   ({event}: ContainerProps) => {
-    const users = useAppSelector(InfoSelectors.users);
-    const groups = useAppSelector(InfoSelectors.groups);
-    const items = useAppSelector(InfoSelectors.items);
     const itemEvent = event.itemEvent;
     const date = event.date;
 
-    const eventUser = useMemo<User>(() => users.get(itemEvent?.userId), [users]);
-    const eventUsers = useMemo<User[]>(() => MapUtils.get(users, itemEvent?.userIds), [users]);
-    const eventGroup = useMemo<GroupInfo>(() => groups.get(itemEvent?.groupId), [groups]);
-    const eventItem = useMemo<ItemInfo>(() => items.get(itemEvent?.itemId), [items]);
+    const user = useAppSelector((state) => InfoSelectors.user(state, itemEvent.userId));
+    const users = useAppSelector((state) => InfoSelectors.users(state, itemEvent.userIds));
+    const group = useAppSelector((state) => InfoSelectors.group(state, itemEvent.groupId));
+    const item = useAppSelector((state) => InfoSelectors.item(state, itemEvent.itemId));
 
-    return <Component user={eventUser} users={eventUsers} group={eventGroup} item={eventItem} date={date} />;
+    return <Component user={user} users={users} group={group} item={item} date={date} />;
   };
 
-export default flowRight(withEventItem, memo);
+export default withEventItem;

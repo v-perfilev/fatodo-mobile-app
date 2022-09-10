@@ -15,8 +15,9 @@ type ChatLinkProps = PropsWithChildren<{
 
 export const ChatLink = ({chat, color = 'primary.500', children}: ChatLinkProps) => {
   const navigation = useNavigation<RootNavigationProp>();
+  const memberIds = chat.members.map((m) => m.userId);
   const account = useAppSelector(AuthSelectors.account);
-  const users = useAppSelector(InfoSelectors.users);
+  const users = useAppSelector((state) => InfoSelectors.users(state, memberIds));
   const title = children || ChatUtils.getTitle(chat, users, account);
 
   const goToChat = (): void => navigation.navigate('ChatView', {chatId: chat.id});
