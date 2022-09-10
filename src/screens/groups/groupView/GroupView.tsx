@@ -1,5 +1,4 @@
 import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
-import {Box} from 'native-base';
 import ThemeProvider from '../../../components/layouts/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
@@ -35,19 +34,19 @@ type GroupViewProps = WithGroupProps;
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 
-const GroupView = ({group, loading}: GroupViewProps) => {
+const GroupView = ({groupId, group, loading}: GroupViewProps) => {
   const dispatch = useAppDispatch();
   const rootNavigation = useNavigation<RootNavigationProp>();
   const groupNavigation = useNavigation<GroupNavigationProp>();
   const [showArchived, setShowArchived] = useState<boolean>(false);
   const account = useAppSelector(AuthSelectors.account);
   const items = useAppSelector((state) => GroupSelectors.items(state, showArchived));
+  const itemsLoading = useAppSelector((state) => GroupSelectors.itemsLoading(state, showArchived));
   const allItemsLoaded = useAppSelector((state) => GroupSelectors.allItemsLoaded(state, showArchived));
-  const [initialItemsLoading, setInitialItemsLoading] = useState<boolean>(false);
 
   const listRef = useRef<FlatListType>();
-  const theme = ThemeFactory.getTheme(group?.color);
 
+  const theme = ThemeFactory.getTheme(group?.color);
   const canEdit = group && GroupUtils.canEdit(account, group);
 
   const goToItemCreate = (): void => groupNavigation.navigate('ItemCreate', {group});
@@ -61,17 +60,23 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   loaders
    */
 
+  const initialLoad = useCallback(async (): Promise<void> => {
+    showArchived
+      ? dispatch(GroupActions.fetchArchivedItemsThunk({groupId, offset: 0}))
+      : dispatch(GroupActions.fetchActiveItemsThunk({groupId, offset: 0}));
+  }, [items, showArchived]);
+
   const load = useCallback(async (): Promise<void> => {
     const offset = items.length;
     showArchived
-      ? await dispatch(GroupActions.fetchArchivedItemsThunk({groupId: group.id, offset}))
-      : await dispatch(GroupActions.fetchActiveItemsThunk({groupId: group.id, offset}));
+      ? dispatch(GroupActions.fetchArchivedItemsThunk({groupId, offset}))
+      : dispatch(GroupActions.fetchActiveItemsThunk({groupId, offset}));
   }, [items, showArchived]);
 
   const refresh = useCallback(async (): Promise<void> => {
     showArchived
-      ? await dispatch(GroupActions.refreshArchivedItemsThunk(group.id))
-      : await dispatch(GroupActions.refreshActiveItemsThunk(group.id));
+      ? dispatch(GroupActions.refreshArchivedItemsThunk(groupId))
+      : dispatch(GroupActions.refreshActiveItemsThunk(groupId));
   }, [showArchived]);
 
   /*
@@ -81,9 +86,7 @@ const GroupView = ({group, loading}: GroupViewProps) => {
   const keyExtractor = useCallback((item: Item): string => item.id, []);
   const renderItem = useCallback(
     (info: ListRenderItemInfo<Item>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout}>
-        <GroupItem item={info.item} group={group} canEdit={canEdit} />
-      </Box>
+      <GroupItem item={info.item} group={group} canEdit={canEdit} onLayout={onLayout} />
     ),
     [],
   );
@@ -99,14 +102,8 @@ const GroupView = ({group, loading}: GroupViewProps) => {
    */
 
   useEffect(() => {
-    setInitialItemsLoading(true);
-    load().finally(() => setInitialItemsLoading(false));
-  }, [group]);
-
-  useEffect(() => {
-    if (items.length === 0) {
-      setInitialItemsLoading(true);
-      load().finally(() => setInitialItemsLoading(false));
+    if (loading || (items.length === 0 && !allItemsLoaded)) {
+      initialLoad().finally();
     }
   }, [showArchived]);
 
@@ -125,11 +122,11 @@ const GroupView = ({group, loading}: GroupViewProps) => {
       <CollapsableRefreshableFlatList
         containerStyle={containerStyle}
         loaderStyle={loaderStyle}
-        header={<GroupViewHeader showArchived={showArchived} setShowArchived={setShowArchived} />}
-        loading={initialItemsLoading || loading}
+        header={<GroupViewHeader setShowArchived={setShowArchived} />}
+        loading={loading || (items.length === 0 && itemsLoading)}
         loadingPlaceholder={<GroupViewListSkeleton />}
         ListEmptyComponent={<GroupViewStub />}
-        ListFooterComponent={!allItemsLoaded ? <CentredFSpinner /> : undefined}
+        ListFooterComponent={items.length > 0 && !allItemsLoaded ? <CentredFSpinner /> : undefined}
         ItemSeparatorComponent={Separator}
         data={items}
         render={renderItem}

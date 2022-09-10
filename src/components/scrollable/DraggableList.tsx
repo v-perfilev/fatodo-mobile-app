@@ -1,6 +1,6 @@
 import React, {ForwardedRef, memo} from 'react';
 import DraggableFlatList, {DragEndParams, DraggableFlatListProps} from 'react-native-draggable-flatlist';
-import {Animated, Platform} from 'react-native';
+import {Animated, Platform, StyleProp, ViewStyle} from 'react-native';
 
 export type DraggableListProps<T> = Partial<DraggableFlatListProps<T>> & {
   keyExtractor: (item: T) => string;
@@ -9,12 +9,13 @@ export type DraggableListProps<T> = Partial<DraggableFlatListProps<T>> & {
 
 const AnimatedDraggableList = Animated.createAnimatedComponent(DraggableFlatList);
 
+const draggableListStyle: StyleProp<ViewStyle> = {height: '100%'};
+
 const DraggableList = React.forwardRef((props: DraggableListProps<any>, ref: ForwardedRef<any>) => {
   const {data, renderItem, keyExtractor, handleDragEnd} = props;
 
   return (
     <AnimatedDraggableList
-      onEndReachedThreshold={0.5}
       {...props}
       data={data}
       renderItem={renderItem}
@@ -22,6 +23,7 @@ const DraggableList = React.forwardRef((props: DraggableListProps<any>, ref: For
       onDragEnd={handleDragEnd}
       showsVerticalScrollIndicator={false}
       removeClippedSubviews={Platform.OS === 'android'}
+      style={draggableListStyle}
       ref={ref}
     />
   );

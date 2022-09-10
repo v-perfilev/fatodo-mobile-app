@@ -3,11 +3,11 @@ import {GroupActions} from '../../../store/group/groupActions';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
-import {useDelayedState} from '../../hooks/useDelayedState';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import {Group} from '../../../models/Group';
 
 export type WithGroupProps = {
+  groupId: string;
   group?: Group;
   loading: boolean;
 };
@@ -15,38 +15,46 @@ export type WithGroupProps = {
 const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props: any) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
-  const [loading, setLoading] = useDelayedState(true, 0);
   const route = useRoute<RouteProp<GroupParamList, 'withGroup'>>();
   const routeGroupId = route.params.groupId;
   const routeGroup = route.params.group;
   const group = useAppSelector(GroupSelectors.group);
 
+  const canSetGroup = routeGroup && routeGroup.id !== group?.id;
+  const canLoadGroup = routeGroupId && routeGroupId !== group?.id;
+  const wrongRoute = !routeGroup && !routeGroupId;
+  const loadingFinished = (routeGroup && routeGroup.id === group?.id) || (routeGroupId && routeGroupId === group?.id);
+
   const goBack = (): void => navigation.goBack();
 
   const setGroup = (): void => {
-    dispatch(GroupActions.setGroup(routeGroup)).then(() => setLoading(false));
+    dispatch(GroupActions.setGroup(routeGroup));
   };
 
   const loadGroup = (): void => {
     dispatch(GroupActions.fetchGroupThunk(routeGroupId))
       .unwrap()
-      .catch(() => goBack())
-      .finally(() => setLoading(false));
+      .catch(() => goBack());
   };
 
   useEffect(() => {
-    if (routeGroup && routeGroup.id !== group?.id) {
+    if (canSetGroup) {
       setGroup();
-    } else if (routeGroupId && routeGroupId !== group?.id) {
+    } else if (canLoadGroup) {
       loadGroup();
-    } else if (!routeGroup && !routeGroupId) {
+    } else if (wrongRoute) {
       goBack();
-    } else {
-      setLoading(false);
     }
   }, []);
 
-  return <Component loading={loading} group={routeGroup || group} {...props} />;
+  return (
+    <Component
+      loading={!loadingFinished}
+      groupId={routeGroup?.id || routeGroupId}
+      group={routeGroup || group}
+      {...props}
+    />
+  );
 };
 
 export default withGroupContainer;

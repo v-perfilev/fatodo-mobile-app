@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Item} from '../../../../models/Item';
-import {Box, Text} from 'native-base';
+import {Box, IBoxProps, Text} from 'native-base';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Group} from '../../../../models/Group';
@@ -11,15 +11,15 @@ import CommentsIcon from '../../../../components/icons/CommentsIcon';
 import GroupItemMenu from './GroupItemMenu';
 import GroupItemChanges from './GroupItemChanges';
 
-type GroupItemProps = {
+type GroupItemProps = IBoxProps & {
   item: Item;
   group: Group;
   canEdit: boolean;
 };
 
-const GroupItem = ({item, group, canEdit}: GroupItemProps) => {
+const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
   return (
-    <FVStack p="4" defaultSpace>
+    <FVStack p="4" defaultSpace {...props}>
       <FHStack>
         <FVStack grow defaultSpace>
           <Text fontSize="16" numberOfLines={2} isTruncated>
@@ -46,4 +46,4 @@ const GroupItem = ({item, group, canEdit}: GroupItemProps) => {
   );
 };
 
-export default GroupItem;
+export default memo(GroupItem);

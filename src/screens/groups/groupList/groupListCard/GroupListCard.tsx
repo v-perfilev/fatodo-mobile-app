@@ -1,11 +1,10 @@
-import React, {memo, useEffect} from 'react';
+import React, {memo} from 'react';
 import {Box, IBoxProps} from 'native-base';
 import GroupListCardHeader from './GroupListCardHeader';
 import Collapsible from 'react-native-collapsible';
 import ThemeProvider from '../../../../components/layouts/ThemeProvider';
 import GroupListCardContent from './GroupListCardContent';
 import {Group} from '../../../../models/Group';
-import {useDelayedState} from '../../../../shared/hooks/useDelayedState';
 import {ThemeFactory} from '../../../../shared/themes/ThemeFactory';
 import {useAppSelector} from '../../../../store/store';
 import GroupsSelectors from '../../../../store/groups/groupsSelectors';
@@ -21,27 +20,18 @@ const GroupListCard = ({group, sorting, drag, ...props}: GroupListCardProps) => 
   const count = useAppSelector((state) => GroupsSelectors.itemsCount(state, group.id));
   const collapsed = useAppSelector((state) => GroupsSelectors.itemsCollapsed(state, group.id));
   const loading = useAppSelector((state) => GroupsSelectors.itemsLoading(state, group.id));
-  const [initialLoading, setInitialLoading] = useDelayedState();
 
   const theme = ThemeFactory.getTheme(group.color);
 
-  useEffect(() => {
-    setInitialLoading(true);
-  }, []);
-
-  useEffect(() => {
-    setInitialLoading(loading);
-  }, [loading]);
-
   return (
-    <ThemeProvider theme={theme}>
-      <Box my="1" {...props}>
+    <Box py="1" {...props}>
+      <ThemeProvider theme={theme}>
         <GroupListCardHeader group={group} collapsed={collapsed} sorting={sorting} drag={drag} />
         <Collapsible collapsed={collapsed}>
-          <GroupListCardContent group={group} items={items} count={count} loading={initialLoading} />
+          <GroupListCardContent group={group} items={items} count={count} loading={loading} />
         </Collapsible>
-      </Box>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Box>
   );
 };
 

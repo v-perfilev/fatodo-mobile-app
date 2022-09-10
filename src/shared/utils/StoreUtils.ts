@@ -21,7 +21,7 @@ export class StoreUtils {
   static setValue(store: [string, any][], requestedKey: string, value: any): [string, any][] {
     const entry: [string, any] = [requestedKey, value];
     const index = store.findIndex(([key, _]) => key === requestedKey);
-    index > 0 ? (store[index] = entry) : store.push(entry);
+    index >= 0 ? (store[index] = entry) : store.push(entry);
     return store;
   }
 

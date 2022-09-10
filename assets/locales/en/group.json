@@ -21,7 +21,8 @@
   },
   "actions": {
     "showAll": "Show all items",
-    "showArchived": "Show archived",
+    "active": "Active",
+    "archived": "Archived",
     "createItem": "Create item",
     "groups": "Groups",
     "view": "Open",

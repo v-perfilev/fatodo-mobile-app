@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, memo, SetStateAction} from 'react';
 import DeleteIcon from '../../../components/icons/DeleteIcon';
 import EditIcon from '../../../components/icons/EditIcon';
 import {useTranslation} from 'react-i18next';
@@ -16,23 +16,19 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import Menu, {MenuItem, MenuItemProps} from '../../../components/controls/Menu';
 import IconButton from '../../../components/controls/IconButton';
 import DotsVerticalIcon from '../../../components/icons/DotsVerticalIcon';
-import ArchiveIcon from '../../../components/icons/ArchiveIcon';
-import PlayIcon from '../../../components/icons/PlayIcon';
+import GroupViewHeaderArchivedToggler from './GroupViewHeaderArchivedToggler';
 
 type GroupViewHeaderProps = {
-  showArchived: boolean;
   setShowArchived: Dispatch<SetStateAction<boolean>>;
 };
 
-const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) => {
+const GroupViewHeader = ({setShowArchived}: GroupViewHeaderProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {showGroupMembersDialog, showGroupAddMembersDialog, showGroupLeaveDialog, showGroupDeleteDialog} =
     useGroupDialogContext();
   const {t} = useTranslation();
   const group = useAppSelector(GroupSelectors.group);
   const account = useAppSelector(AuthSelectors.account);
-
-  const toggleShowArchived = (): void => setShowArchived((prevState) => !prevState);
 
   const goToGroupList = (): void => navigation.navigate('GroupList');
 
@@ -82,11 +78,9 @@ const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) 
     },
   ];
 
-  const switchArchivedIcon = showArchived ? <ArchiveIcon /> : <PlayIcon />;
-
   return (
     <Header title={group?.title} imageFilename={group?.imageFilename}>
-      <IconButton size="xl" p="1.5" icon={switchArchivedIcon} onPress={toggleShowArchived} />
+      <GroupViewHeaderArchivedToggler setShowArchived={setShowArchived} />
       <Menu trigger={(triggerProps) => <IconButton {...triggerProps} size="xl" p="1.5" icon={<DotsVerticalIcon />} />}>
         {menuElements.map((itemProps, index) => (
           <MenuItem {...itemProps} key={index} />
@@ -96,4 +90,4 @@ const GroupViewHeader = ({showArchived, setShowArchived}: GroupViewHeaderProps) 
   );
 };
 
-export default GroupViewHeader;
+export default memo(GroupViewHeader);

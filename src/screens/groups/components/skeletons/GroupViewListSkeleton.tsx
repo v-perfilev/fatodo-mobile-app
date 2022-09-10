@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {GROUP_ITEMS_COUNT} from '../../../../constants';
 import FVStack from '../../../../components/boxes/FVStack';
 import GroupItemSkeleton from './GroupItemSkeleton';
@@ -20,4 +20,4 @@ const GroupListCardSkeleton = () => {
   );
 };
 
-export default GroupListCardSkeleton;
+export default memo(GroupListCardSkeleton);

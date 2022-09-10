@@ -21,7 +21,8 @@
   },
   "actions": {
     "showAll": "Показать все записи",
-    "showArchived": "Показать архив",
+    "active": "Активные",
+    "archived": "Архив",
     "createItem": "Добавить запись",
     "groups": "Группы",
     "view": "Открыть",

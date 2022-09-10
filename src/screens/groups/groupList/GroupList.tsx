@@ -5,7 +5,6 @@ import {GroupsActions} from '../../../store/groups/groupsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Group} from '../../../models/Group';
 import {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
-import {Box} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
@@ -59,9 +58,7 @@ const GroupList = () => {
 
   const renderFlatItem = useCallback(
     (info: ListRenderItemInfo<Group>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <Box onLayout={onLayout}>
-        <GroupListCard group={info.item} sorting={false} drag={undefined} />
-      </Box>
+      <GroupListCard group={info.item} sorting={false} drag={undefined} onLayout={onLayout} />
     ),
     [],
   );

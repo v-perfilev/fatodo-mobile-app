@@ -21,11 +21,11 @@ type GroupListCardHeaderProps = {
 const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHeaderProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
 
-  const goToGroupView = (): void => navigation.navigate('GroupView', {group});
+  const goToGroupView = (): void => !sorting && navigation.navigate('GroupView', {group});
 
   return (
     <PressableButton bg="white" onPress={goToGroupView}>
-      <Box h="1px" bg={LINEAR_GRADIENT} opacity={0.4} />
+      <Box h="1px" bg="tertiary.100" />
       <Box position="relative" h="50px" px="4" justifyContent="center">
         <Box position="absolute" left="0" right="0" top="0" bottom="0" bg={LINEAR_GRADIENT} opacity="0.1" />
         <FHStack defaultSpace alignItems="center">
@@ -45,7 +45,7 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
           </FHStack>
         </FHStack>
       </Box>
-      <Box h="1px" bg={LINEAR_GRADIENT} opacity={0.4} />
+      <Box h="1px" bg="tertiary.100" />
     </PressableButton>
   );
 };

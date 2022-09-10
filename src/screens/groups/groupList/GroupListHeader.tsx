@@ -39,26 +39,21 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
   const switchCollapsed = (): void => setAllCollapsed(!allCollapsed);
 
   const enableSorting = (): void => {
-    cacheOrder();
     setAllCollapsed(true);
-    setTimeout(
-      () => {
-        setSorting(true);
-      },
-      allCollapsed ? 0 : 300,
-    );
+    cacheOrder();
+    setTimeout(() => setSorting(true), allCollapsed ? 0 : 400);
   };
 
   const saveSorting = (): void => {
-    saveOrder();
     setAllCollapsed(false);
-    setSorting(false);
+    saveOrder();
+    setTimeout(() => setSorting(false), !allCollapsed ? 0 : 400);
   };
 
   const cancelSorting = (): void => {
-    resetOrder();
     setAllCollapsed(false);
-    setSorting(false);
+    resetOrder();
+    setTimeout(() => setSorting(false), !allCollapsed ? 0 : 400);
   };
 
   return (

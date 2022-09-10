@@ -13,8 +13,8 @@ const initialState: GroupState = {
   activeItems: [],
   archivedItems: [],
   loading: false,
-  activeItemsLoading: false,
-  archivedItemsLoading: false,
+  activeItemsLoading: true,
+  archivedItemsLoading: true,
   allActiveItemsLoaded: false,
   allArchivedItemsLoaded: false,
 };

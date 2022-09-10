@@ -12,7 +12,7 @@ type CollapsableDraggableListProps = DraggableListProps<any> & {
 const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
 
 const CollapsableDraggableList = React.forwardRef((props: CollapsableDraggableListProps, ref: any) => {
-  const {header, containerStyle} = props;
+  const {header, containerStyle, ...otherProps} = props;
 
   return (
     <CollapsableHeaderContainer header={header}>
@@ -22,7 +22,7 @@ const CollapsableDraggableList = React.forwardRef((props: CollapsableDraggableLi
           onMomentumScrollEnd={handleEventSnap}
           ref={RefUtils.merge(ref, collapsableRef)}
           contentContainerStyle={[flexStyle, containerStyle]}
-          {...props}
+          {...otherProps}
         />
       )}
     </CollapsableHeaderContainer>

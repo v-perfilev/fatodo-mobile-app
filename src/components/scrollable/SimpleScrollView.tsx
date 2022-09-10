@@ -1,5 +1,4 @@
 import {IScrollViewProps, ScrollView} from 'native-base';
-import {DEFAULT_SPACE} from '../../constants';
 import React from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 
@@ -7,7 +6,7 @@ type SimpleScrollViewProps = IScrollViewProps & {
   containerStyle?: StyleProp<ViewStyle>;
 };
 
-const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1, padding: DEFAULT_SPACE};
+const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1, padding: 12};
 
 const SimpleScrollView = ({containerStyle, children, ...props}: SimpleScrollViewProps) => {
   return (

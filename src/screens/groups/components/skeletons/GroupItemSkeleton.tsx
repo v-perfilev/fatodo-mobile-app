@@ -6,7 +6,7 @@ import FBox from '../../../../components/boxes/FBox';
 
 const GroupItemSkeleton = () => {
   return (
-    <FVStack p="4" py="5" space="4">
+    <FVStack h="118" p="4" py="5" space="4">
       <FHStack space="4">
         <FBox flex="1" flexGrow="1">
           <FVStack space="4">
