@@ -102,7 +102,6 @@ const CalendarView = () => {
           initialScrollIndex={initialIndex.current}
           initialNumToRender={1}
           maxToRenderPerBatch={3}
-          updateCellsBatchingPeriod={10}
           windowSize={3}
           ref={listRef}
         />

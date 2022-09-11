@@ -47,6 +47,7 @@ const GroupList = () => {
    */
 
   const keyExtractor = useCallback((group: Group): string => group.id, []);
+
   const renderDraggableItem = useCallback(
     (props: RenderItemParams<Group>) => (
       <ScaleDecorator activeScale={1.03}>
