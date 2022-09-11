@@ -37,7 +37,10 @@ export class GroupActions {
   static refreshActiveItemsThunk = createAsyncThunk(
     PREFIX + 'refreshActiveItems',
     async (groupId: string, thunkAPI) => {
-      thunkAPI.dispatch(GroupActions.fetchActiveItemsThunk({groupId}));
+      const response = await ItemService.getItemsByGroupId(groupId);
+      const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+      return response.data;
     },
   );
 
@@ -54,7 +57,10 @@ export class GroupActions {
   static refreshArchivedItemsThunk = createAsyncThunk(
     PREFIX + 'refreshArchivedItems',
     async (groupId: string, thunkAPI) => {
-      thunkAPI.dispatch(GroupActions.fetchArchivedItemsThunk({groupId}));
+      const response = await ItemService.getArchivedItemsByGroupId(groupId);
+      const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+      return response.data;
     },
   );
 

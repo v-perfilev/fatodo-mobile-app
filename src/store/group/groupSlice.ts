@@ -120,6 +120,22 @@ const groupSlice = createSlice({
     });
 
     /*
+    refreshActiveItems
+    */
+    builder.addCase(GroupActions.refreshActiveItemsThunk.pending, (state: GroupState) => {
+      state.activeItemsLoading = true;
+    });
+    builder.addCase(GroupActions.refreshActiveItemsThunk.fulfilled, (state: GroupState, action) => {
+      state.activeItems = GroupUtils.filterItems(action.payload.data);
+      state.activeItemsCount = action.payload.count;
+      state.activeItemsLoading = false;
+      state.allActiveItemsLoaded = state.activeItems.length === action.payload.count;
+    });
+    builder.addCase(GroupActions.refreshActiveItemsThunk.rejected, (state: GroupState) => {
+      state.activeItemsLoading = false;
+    });
+
+    /*
     fetchArchivedItems
     */
     builder.addCase(GroupActions.fetchArchivedItemsThunk.pending, (state: GroupState) => {
@@ -132,6 +148,22 @@ const groupSlice = createSlice({
       state.allArchivedItemsLoaded = state.archivedItems.length === action.payload.count;
     });
     builder.addCase(GroupActions.fetchArchivedItemsThunk.rejected, (state: GroupState) => {
+      state.archivedItemsLoading = false;
+    });
+
+    /*
+    refreshArchivedItems
+    */
+    builder.addCase(GroupActions.refreshArchivedItemsThunk.pending, (state: GroupState) => {
+      state.archivedItemsLoading = true;
+    });
+    builder.addCase(GroupActions.refreshArchivedItemsThunk.fulfilled, (state: GroupState, action) => {
+      state.archivedItems = GroupUtils.filterItems(action.payload.data);
+      state.archivedItemsCount = action.payload.count;
+      state.archivedItemsLoading = false;
+      state.allArchivedItemsLoaded = state.archivedItems.length === action.payload.count;
+    });
+    builder.addCase(GroupActions.refreshArchivedItemsThunk.rejected, (state: GroupState) => {
       state.archivedItemsLoading = false;
     });
 

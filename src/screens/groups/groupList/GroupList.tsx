@@ -39,7 +39,7 @@ const GroupList = () => {
    */
 
   const refresh = useCallback(async (): Promise<void> => {
-    await dispatch(GroupsActions.fetchGroupsThunk());
+    await dispatch(GroupsActions.refreshGroupsThunk());
   }, []);
 
   /*

@@ -127,6 +127,20 @@ const groupsSlice = createSlice({
     });
 
     /*
+    refreshGroups
+    */
+    builder.addCase(GroupsActions.refreshGroupsThunk.pending, (state: GroupsState) => {
+      state.loading = true;
+    });
+    builder.addCase(GroupsActions.refreshGroupsThunk.fulfilled, (state: GroupsState, action) => {
+      state = initialState;
+      state.groups = action.payload;
+    });
+    builder.addCase(GroupsActions.refreshGroupsThunk.rejected, (state: GroupsState) => {
+      state.loading = false;
+    });
+
+    /*
     fetchItems
     */
     builder.addCase(GroupsActions.fetchItemsThunk.pending, (state: GroupsState, action) => {

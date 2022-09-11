@@ -38,6 +38,15 @@ export class GroupsActions {
     return response.data.data;
   });
 
+  static refreshGroupsThunk = createAsyncThunk(PREFIX + 'refreshGroups', async (_, thunkAPI) => {
+    const response = await ItemService.getAllGroups();
+    const groupIds = response.data.data.map((g) => g.id);
+    groupIds.length > 0 && thunkAPI.dispatch(GroupsActions.fetchItemsThunk(groupIds));
+    const groupUserIds = response.data.data.flatMap((g) => g.members).map((m) => m.userId);
+    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(groupUserIds));
+    return response.data.data;
+  });
+
   static fetchItemsThunk = createAsyncThunk(PREFIX + 'fetchItems', async (groupIds: string[], thunkAPI) => {
     const response = await ItemService.getPreviewItemsByGroupIds(groupIds);
     const pageableListMap = new Map(Object.entries(response.data));
