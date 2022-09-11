@@ -3,7 +3,7 @@ import {IBoxProps} from 'native-base';
 import {REFRESH_HEIGHT} from '../../constants';
 import FCenter from '../boxes/FCenter';
 import {Animated} from 'react-native';
-import FSpinner from '../layouts/FSpinner';
+import Loader from '../layouts/Loader';
 
 type RefresherProps = IBoxProps & {
   refreshing: Animated.Value;
@@ -22,7 +22,7 @@ const Refresher = ({refreshing, extraScrollY, ...props}: RefresherProps) => {
   return (
     <FCenter height={REFRESH_HEIGHT} {...props}>
       <Animated.View style={animatedRefresherStyle}>
-        <FSpinner grayscale={refreshing} />
+        <Loader size={45} grayscale={refreshing} />
       </Animated.View>
     </FCenter>
   );

@@ -1,6 +1,6 @@
 import React, {memo, PropsWithChildren, ReactElement} from 'react';
 import {IBoxProps} from 'native-base';
-import CentredFSpinner from './CentredFSpinner';
+import CentredLoader from './CentredLoader';
 import FBox from '../boxes/FBox';
 
 type ConditionalSpinnerProps = IBoxProps &
@@ -10,7 +10,11 @@ type ConditionalSpinnerProps = IBoxProps &
   }>;
 
 const ConditionalLoader = ({loading, loadingPlaceholder, children, ...props}: ConditionalSpinnerProps) => {
-  const loader = loadingPlaceholder ? <FBox {...props}>{loadingPlaceholder}</FBox> : <CentredFSpinner {...props} />;
+  const loader = loadingPlaceholder ? (
+    <FBox {...props}>{loadingPlaceholder}</FBox>
+  ) : (
+    <CentredLoader {...props} size={50} />
+  );
   return loading ? <>{loader}</> : <>{children}</>;
 };
 

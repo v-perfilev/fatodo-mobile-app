@@ -5,12 +5,12 @@ import {Animated, Easing, StyleProp} from 'react-native';
 const img = require('../../../assets/images/logo.png');
 const imgGrayscale = require('../../../assets/images/logo-grayscale.png');
 
-type FSpinnerProps = {
+type LoaderProps = {
   size?: number;
   grayscale?: Animated.Value;
 };
 
-const FSpinner = ({size = 50, grayscale}: FSpinnerProps) => {
+const Loader = ({size = 35, grayscale}: LoaderProps) => {
   const spinValue = new Animated.Value(0);
 
   Animated.loop(
@@ -50,4 +50,4 @@ const FSpinner = ({size = 50, grayscale}: FSpinnerProps) => {
   );
 };
 
-export default memo(FSpinner);
+export default memo(Loader);

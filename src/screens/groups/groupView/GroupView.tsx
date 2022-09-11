@@ -26,7 +26,7 @@ import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import GroupItem from '../components/groupItem/GroupItem';
 import GroupViewListSkeleton from '../components/skeletons/GroupViewListSkeleton';
-import CentredFSpinner from '../../../components/surfaces/CentredFSpinner';
+import CentredLoader from '../../../components/surfaces/CentredLoader';
 import Separator from '../../../components/layouts/Separator';
 
 type GroupViewProps = WithGroupProps;
@@ -126,7 +126,7 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
         loading={loading || (items.length === 0 && itemsLoading)}
         loadingPlaceholder={<GroupViewListSkeleton />}
         ListEmptyComponent={<GroupViewStub />}
-        ListFooterComponent={items.length > 0 && !allItemsLoaded ? <CentredFSpinner /> : undefined}
+        ListFooterComponent={items.length > 0 && !allItemsLoaded ? <CentredLoader my="5" /> : undefined}
         ItemSeparatorComponent={Separator}
         data={items}
         render={renderItem}
