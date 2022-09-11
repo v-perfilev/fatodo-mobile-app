@@ -18,6 +18,8 @@ import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import Header from '../../../components/layouts/Header';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import Separator from '../../../components/layouts/Separator';
+import EventListSkeleton from '../components/skeletons/GroupListCardSkeleton';
+import CentredLoader from '../../../components/surfaces/CentredLoader';
 
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
@@ -40,7 +42,7 @@ const EventList = () => {
   }, [events.length]);
 
   const refresh = useCallback(async (): Promise<void> => {
-    await dispatch(EventsActions.fetchEventsThunk(0));
+    await dispatch(EventsActions.refreshEventsThunk());
   }, []);
 
   const refreshUnread = useCallback(async (): Promise<void> => {
@@ -95,6 +97,8 @@ const EventList = () => {
       header={<Header showAvatar hideGoBack />}
       refresh={refresh}
       loading={loading}
+      loadingPlaceholder={<EventListSkeleton />}
+      ListFooterComponent={events.length > 0 && !allLoaded ? <CentredLoader my="5" /> : undefined}
       ItemSeparatorComponent={Separator}
       data={events}
       render={renderItem}

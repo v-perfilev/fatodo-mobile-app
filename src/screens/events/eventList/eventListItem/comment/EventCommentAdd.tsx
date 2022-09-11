@@ -28,7 +28,18 @@ const EventCommentAdd = ({user, group, item, comment, date}: WithEventCommentPro
     content = <Trans i18nKey="event:comment.add.contentWithItem" components={{user: <User />, item: <Item />}} />;
   }
 
-  return <EventListItemTemplate image={image} title={title} content={content} message={comment?.text} date={date} />;
+  const loading = !user || !(!!group || !!item) || !comment;
+
+  return (
+    <EventListItemTemplate
+      image={image}
+      title={title}
+      content={content}
+      message={comment?.text}
+      date={date}
+      loading={loading}
+    />
+  );
 };
 
 export default withEventComment(EventCommentAdd);

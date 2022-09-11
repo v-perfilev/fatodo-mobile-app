@@ -18,7 +18,18 @@ const EventChatReaction = ({user, chat, message, reaction, date}: WithEventChatP
 
   const content = <Trans i18nKey="event:chat.reaction.content" components={{user: <User />, chat: <Chat />}} />;
 
-  return <EventListItemTemplate image={image} title={title} content={content} message={message?.text} date={date} />;
+  const loading = !user || !chat || !message;
+
+  return (
+    <EventListItemTemplate
+      image={image}
+      title={title}
+      content={content}
+      message={message?.text}
+      date={date}
+      loading={loading}
+    />
+  );
 };
 
 export default withEventChat(EventChatReaction);

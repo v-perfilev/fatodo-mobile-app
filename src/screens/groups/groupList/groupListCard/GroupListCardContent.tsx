@@ -29,8 +29,8 @@ const GroupListCardContent = ({group, items, count, loading}: GroupListCardConte
       {!loading &&
         items.slice(0, 5).map((item, index) => (
           <Box key={index}>
-            {index !== 0 && <Separator />}
             <GroupItem item={item} group={group} canEdit={canEdit} />
+            <Separator />
           </Box>
         ))}
       {!loading && <GroupListCardInfo group={group} items={items} count={count} />}

@@ -18,7 +18,9 @@ const EventChatMemberLeave = ({user, chat, date}: WithEventChatProps) => {
 
   const content = <Trans i18nKey="event:chat.memberLeave.content" components={{user: <User />, chat: <Chat />}} />;
 
-  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
+  const loading = !user || !chat;
+
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} loading={loading} />;
 };
 
 export default withEventChat(EventChatMemberLeave);

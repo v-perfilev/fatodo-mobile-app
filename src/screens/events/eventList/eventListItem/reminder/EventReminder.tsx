@@ -19,7 +19,9 @@ const EventReminder = ({group, item, date}: WithEventReminderProps) => {
 
   let content = <Trans i18nKey="event:reminder.content" components={{group: <Group />, item: <Item />}} />;
 
-  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
+  const loading = !group || !item;
+
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} loading={loading} />;
 };
 
 export default withEventReminder(EventReminder);

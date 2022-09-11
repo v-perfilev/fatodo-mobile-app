@@ -35,7 +35,7 @@ export class InfoUtils {
     newValues: T[],
   ): [string, T][] => {
     const newIds = newValues.map((value) => value.id);
-    const updatedValues = stateValues.filter(([key, _]) => newIds.includes(key));
+    const updatedValues = stateValues.filter(([key, _]) => !newIds.includes(key));
     newValues.forEach((value) => updatedValues.push([value.id, value]));
     return updatedValues;
   };

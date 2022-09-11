@@ -100,6 +100,23 @@ const eventsSlice = createSlice({
     });
 
     /*
+    refreshEvents
+    */
+    builder.addCase(EventsActions.refreshEventsThunk.pending, (state: EventsState) => {
+      state.loading = true;
+    });
+    builder.addCase(EventsActions.refreshEventsThunk.fulfilled, (state: EventsState, action) => {
+      state.events = action.payload.data;
+      state.count = action.payload.count;
+      state.unreadCount = action.payload.unread;
+      state.allLoaded = state.events.length === state.count;
+      state.loading = false;
+    });
+    builder.addCase(EventsActions.refreshEventsThunk.rejected, (state: EventsState) => {
+      state.loading = false;
+    });
+
+    /*
     fetchUnreadCount
      */
     builder.addCase(EventsActions.fetchUnreadCountThunk.fulfilled, (state: EventsState, action) => {

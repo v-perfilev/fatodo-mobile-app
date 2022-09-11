@@ -22,7 +22,9 @@ const EventItemMemberRole = ({user, group, users, date}: WithEventItemProps) => 
     <Trans i18nKey="event:item.memberRole.content" components={{user: <User />, group: <Group />, users: <Users />}} />
   );
 
-  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
+  const loading = !user || !group || !users.length;
+
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} loading={loading} />;
 };
 
 export default withEventItem(EventItemMemberRole);

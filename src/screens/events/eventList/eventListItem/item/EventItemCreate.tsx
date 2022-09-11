@@ -22,7 +22,9 @@ const EventItemCreate = ({user, group, item, date}: WithEventItemProps) => {
     <Trans i18nKey="event:item.create.content" components={{user: <User />, group: <Group />, item: <Item />}} />
   );
 
-  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
+  const loading = !user || !group || !item;
+
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} loading={loading} />;
 };
 
 export default withEventItem(EventItemCreate);

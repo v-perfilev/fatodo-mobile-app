@@ -22,7 +22,9 @@ const EventChatMemberDelete = ({user, chat, users, date}: WithEventChatProps) =>
     <Trans i18nKey="event:chat.memberDelete.content" components={{user: <User />, chat: <Chat />, users: <Users />}} />
   );
 
-  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
+  const loading = !user || !chat || !users.length;
+
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} loading={loading} />;
 };
 
 export default withEventChat(EventChatMemberDelete);

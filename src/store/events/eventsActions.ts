@@ -48,6 +48,12 @@ export class EventsActions {
     return response.data;
   });
 
+  static refreshEventsThunk = createAsyncThunk(PREFIX + 'refreshEvents', async (_, thunkAPI) => {
+    const response = await EventService.getEventsPageable(0);
+    thunkAPI.dispatch(EventsActions.loadDependenciesThunk(response.data.data));
+    return response.data;
+  });
+
   static loadDependenciesThunk = createAsyncThunk(PREFIX + 'loadDependencies', async (events: Event[], thunkAPI) => {
     // handle userIds
     const userIds = EventUtils.extractEventsUserIds(events);

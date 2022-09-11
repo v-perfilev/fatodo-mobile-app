@@ -25,7 +25,9 @@ const EventItemMemberDelete = ({user, group, users, date}: WithEventItemProps) =
     />
   );
 
-  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
+  const loading = !user || !group || !users.length;
+
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} loading={loading} />;
 };
 
 export default withEventItem(EventItemMemberDelete);

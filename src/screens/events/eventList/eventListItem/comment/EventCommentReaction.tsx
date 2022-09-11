@@ -30,7 +30,18 @@ const EventCommentReaction = ({user, group, item, comment, reaction, date}: With
     content = <Trans i18nKey="event:comment.reaction.contentWithItem" components={{user: <User />, item: <Item />}} />;
   }
 
-  return <EventListItemTemplate image={image} title={title} content={content} message={comment?.text} date={date} />;
+  const loading = !user || !(!!group || !!item) || !comment;
+
+  return (
+    <EventListItemTemplate
+      image={image}
+      title={title}
+      content={content}
+      message={comment?.text}
+      date={date}
+      loading={loading}
+    />
+  );
 };
 
 export default withEventComment(EventCommentReaction);

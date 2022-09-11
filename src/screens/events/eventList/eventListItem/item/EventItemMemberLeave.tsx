@@ -18,7 +18,9 @@ const EventItemMemberLeave = ({user, group, date}: WithEventItemProps) => {
 
   const content = <Trans i18nKey="event:item.memberLeave.content" components={{user: <User />, group: <Group />}} />;
 
-  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
+  const loading = !user || !group;
+
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} loading={loading} />;
 };
 
 export default withEventItem(EventItemMemberLeave);

@@ -19,7 +19,9 @@ const EventContactSend = ({firstUser, secondUser, date}: WithEventContactProps) 
     <Trans i18nKey="event:contact.send.content" components={{firstUser: <FirstUser />, secondUser: <SecondUser />}} />
   );
 
-  return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
+  const loading = !firstUser || !secondUser;
+
+  return <EventListItemTemplate image={image} title={title} content={content} date={date} loading={loading} />;
 };
 
 export default withEventContact(EventContactSend);
