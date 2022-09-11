@@ -1,4 +1,4 @@
-import React, {MutableRefObject, ReactElement, useCallback, useEffect, useRef} from 'react';
+import React, {MutableRefObject, ReactElement, RefObject, useCallback, useEffect, useRef} from 'react';
 import Header from '../../../components/layouts/Header';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
@@ -26,7 +26,8 @@ const CalendarView = () => {
   const canMomentum = useRef<boolean>(false);
 
   const scrollAllToTop = useCallback((): void => {
-    Array.from(childRefMap.current.values()).forEach((scrollView) => scrollView.current?.scrollTo({y: 0}));
+    const scrollToTop = (scrollView: RefObject<ScrollView>) => scrollView.current?.scrollTo({y: 0});
+    Array.from(childRefMap.current.values()).forEach(scrollToTop);
   }, []);
 
   const loadReminders = useCallback((month: CalendarMonth): void => {
@@ -85,28 +86,26 @@ const CalendarView = () => {
   }, [isFocused]);
 
   return (
-    <>
-      <FBox width={width}>
-        <Header showAvatar hideGoBack />
-        <FlatList
-          data={months}
-          render={renderItem}
-          keyExtractor={keyExtractor}
-          scrollEventThrottle={200}
-          horizontal
-          pagingEnabled
-          decelerationRate="fast"
-          fixedLength={width}
-          onMomentumScrollBegin={handleScrollBegin}
-          onMomentumScrollEnd={handleScrollEnd}
-          initialScrollIndex={initialIndex.current}
-          initialNumToRender={1}
-          maxToRenderPerBatch={3}
-          windowSize={3}
-          ref={listRef}
-        />
-      </FBox>
-    </>
+    <FBox width={width}>
+      <Header showAvatar hideGoBack />
+      <FlatList
+        data={months}
+        render={renderItem}
+        keyExtractor={keyExtractor}
+        scrollEventThrottle={200}
+        horizontal
+        pagingEnabled
+        decelerationRate="fast"
+        fixedLength={width}
+        onMomentumScrollBegin={handleScrollBegin}
+        onMomentumScrollEnd={handleScrollEnd}
+        initialScrollIndex={initialIndex.current}
+        initialNumToRender={1}
+        maxToRenderPerBatch={3}
+        windowSize={3}
+        ref={listRef}
+      />
+    </FBox>
   );
 };
 export default CalendarView;

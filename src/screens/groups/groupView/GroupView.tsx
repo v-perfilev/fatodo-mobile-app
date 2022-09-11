@@ -92,7 +92,7 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
   );
 
   /*
-  scroll down button
+  scroll up button
    */
 
   const scrollUp = (): void => listRef.current.scrollToOffset({offset: 0});

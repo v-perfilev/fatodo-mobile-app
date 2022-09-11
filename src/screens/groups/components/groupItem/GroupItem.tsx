@@ -11,6 +11,7 @@ import CommentsIcon from '../../../../components/icons/CommentsIcon';
 import GroupItemMenu from './GroupItemMenu';
 import GroupItemChanges from './GroupItemChanges';
 import BoxWithIcon from '../../../../components/surfaces/BoxWithIcon';
+import AlarmIcon from '../../../../components/icons/AlarmIcon';
 
 type GroupItemProps = IBoxProps & {
   item: Item;
@@ -38,7 +39,12 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
           <PriorityView priority={item.priority} fontColor="gray.500" />
           <StatusView statusType={item.status} fontColor="gray.500" />
         </FHStack>
-        <BoxWithIcon icon={<CommentsIcon color="primary.500" size="md" />}>0</BoxWithIcon>
+        <FHStack defaultSpace>
+          {item.remindersCount && (
+            <BoxWithIcon icon={<AlarmIcon color="primary.500" size="md" />}>{item.remindersCount}</BoxWithIcon>
+          )}
+          <BoxWithIcon icon={<CommentsIcon color="primary.500" size="md" />}>0</BoxWithIcon>
+        </FHStack>
       </Box>
     </FVStack>
   );

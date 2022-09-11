@@ -4,18 +4,21 @@ import PaperBox from '../../../components/surfaces/PaperBox';
 import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
 import PressableButton from '../../../components/controls/PressableButton';
-import {CalendarDate} from '../../../models/Calendar';
-import {CalendarReminder} from '../../../models/Reminder';
+import {CalendarDate, CalendarMonth} from '../../../models/Calendar';
 import CalendarViewDateReminders from './CalendarViewDateReminders';
+import {useAppSelector} from '../../../store/store';
+import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 
 type CalendarViewDateProps = {
+  month: CalendarMonth;
   date: CalendarDate;
   selectDate: Dispatch<SetStateAction<CalendarDate>>;
   isActiveDate: boolean;
-  reminders: CalendarReminder[];
 };
 
-const CalendarViewDate = ({date, selectDate, isActiveDate, reminders}: CalendarViewDateProps) => {
+const CalendarViewDate = ({month, date, selectDate, isActiveDate}: CalendarViewDateProps) => {
+  const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, month.key, date.date));
+
   const handlePress = (): void => {
     date.isCurrentMonth && selectDate(date);
   };

@@ -18,12 +18,13 @@ export interface ItemInfo {
 export interface Item extends AbstractAuditing {
   id: string;
   title: string;
+  status: ItemStatusType;
   type: ItemType;
   priority: ItemPriorityType;
   date?: DateParams;
   description?: string;
   reminders?: Reminder[];
-  status: ItemStatusType;
+  remindersCount: number;
   archived: boolean;
   groupId: string;
 }

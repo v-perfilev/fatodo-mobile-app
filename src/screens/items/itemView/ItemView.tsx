@@ -12,7 +12,6 @@ import ItemViewGroup from './itemViewGroup';
 import ItemReminders from './ItemReminders';
 import ItemViewName from './itemViewName';
 import FVStack from '../../../components/boxes/FVStack';
-import FHStack from '../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import ItemSelectors from '../../../store/item/itemSelectors';

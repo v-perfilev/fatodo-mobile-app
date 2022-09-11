@@ -1,11 +1,10 @@
-import React, {Dispatch, memo, SetStateAction, useMemo} from 'react';
+import React, {Dispatch, memo, SetStateAction} from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import CalendarViewMonthName from './CalendarViewMonthName';
 import CalendarViewWeekDays from './CalendarViewWeekDays';
 import CalendarViewMonth from './CalendarViewMonth';
 import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
 import {CalendarDate, CalendarItem, CalendarMonth} from '../../../models/Calendar';
-import {CalendarReminder} from '../../../models/Reminder';
 import Separator from '../../../components/layouts/Separator';
 
 type CalendarViewContentProps = {
@@ -13,39 +12,20 @@ type CalendarViewContentProps = {
   selectMonth: (month: CalendarItem) => void;
   activeDate: CalendarDate;
   setActiveDate: Dispatch<SetStateAction<CalendarDate>>;
-  reminderMap: Map<number, CalendarReminder[]>;
   width: number;
 };
 
-const CalendarViewContent = ({
-  month,
-  selectMonth,
-  activeDate,
-  setActiveDate,
-  reminderMap,
-  width,
-}: CalendarViewContentProps) => {
-  const activeDateReminders = useMemo<CalendarReminder[]>(
-    () => (activeDate ? reminderMap.get(new Date(activeDate.date).getDate()) : undefined),
-    [activeDate, reminderMap],
-  );
-
+const CalendarViewContent = ({month, selectMonth, activeDate, setActiveDate, width}: CalendarViewContentProps) => {
   return (
     <FVStack flex="1" flexGrow="1" space="2" py="2">
       <CalendarViewMonthName month={month} selectMonth={selectMonth} />
       <Separator />
       <FVStack space="2">
         <CalendarViewWeekDays />
-        <CalendarViewMonth
-          month={month}
-          activeDate={activeDate}
-          selectDate={setActiveDate}
-          reminderMap={reminderMap}
-          width={width}
-        />
+        <CalendarViewMonth month={month} activeDate={activeDate} selectDate={setActiveDate} width={width} />
       </FVStack>
       <Separator />
-      <CalendarViewReminders reminders={activeDateReminders} />
+      <CalendarViewReminders month={month} date={activeDate} />
     </FVStack>
   );
 };

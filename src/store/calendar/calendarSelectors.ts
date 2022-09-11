@@ -7,8 +7,14 @@ const getCalendarState = (state: RootState) => state.calendar;
 
 class CalendarSelectors {
   static reminders = createSelector(
-    [getCalendarState, (state, key: string) => key],
-    (state, key) => StoreUtils.getValue(state.reminders, key, []) as CalendarReminder[],
+    [getCalendarState, (state, monthKey: string, date: number) => ({monthKey, date})],
+    (state, {monthKey, date}) => {
+      if (!date) {
+        return undefined;
+      }
+      const reminders = StoreUtils.getValue(state.reminders, monthKey, []) as CalendarReminder[];
+      return reminders.filter((r) => new Date(r.date).getDate() === date);
+    },
   );
 
   static loading = createSelector(getCalendarState, (state) => state.loading as boolean);

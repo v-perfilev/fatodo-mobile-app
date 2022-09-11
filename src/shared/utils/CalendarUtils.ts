@@ -101,15 +101,16 @@ export class CalendarUtils {
   };
 
   public static updateRemindersMap = (
-    oldState: [string, CalendarReminder[]][],
-    newState: [string, CalendarReminder[]][],
+    store: [string, CalendarReminder[]][],
+    newValues: [string, CalendarReminder[]][],
     keys: string[],
   ): [string, any][] => {
+    let updatedStore = [...store];
     keys.forEach((key) => {
-      const newValue = StoreUtils.getValue(newState, key, []);
-      newState = StoreUtils.setValue(newState, key, newValue);
+      const newValue = StoreUtils.getValue(newValues, key, []);
+      updatedStore = StoreUtils.setValue(updatedStore, key, newValue);
     });
-    return newState;
+    return updatedStore;
   };
 
   public static preparePendingLoadingKeys = (loadingKeys: string[], newKeys: string[]): string[] => {

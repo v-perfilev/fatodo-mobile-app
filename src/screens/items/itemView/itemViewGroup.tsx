@@ -8,8 +8,6 @@ const ItemViewGroup = () => {
   const {t} = useTranslation();
   const group = useAppSelector(ItemSelectors.group);
 
-  console.log(group);
-
   return (
     <LabeledBox label={t('item:labels.group')} isText>
       {group?.title}

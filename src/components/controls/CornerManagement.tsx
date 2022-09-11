@@ -43,7 +43,7 @@ const CornerManagementButton = ({button, ...props}: IIconButtonProps & {button: 
   return (
     <IconButton
       icon={button.icon}
-      onPress={button.action}
+      onPressIn={button.action}
       bgColorScheme={button.color || 'primary'}
       colorScheme="white"
       bgTransparency="100"
