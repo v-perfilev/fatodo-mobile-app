@@ -98,7 +98,7 @@ export class WsEventHandler {
   ITEM
    */
 
-  private handleItemCreateEvent = (msg: WsEvent<any>): void => {
+  private handleItemCreateEvent = (msg: WsEvent<Item>): void => {
     const userId = msg.userId;
     const groupId = msg.payload.groupId;
     const itemId = msg.payload.id;

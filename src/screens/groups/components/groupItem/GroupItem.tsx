@@ -40,7 +40,7 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
           <StatusView statusType={item.status} fontColor="gray.500" />
         </FHStack>
         <FHStack defaultSpace>
-          {item.remindersCount && (
+          {item.remindersCount > 0 && (
             <BoxWithIcon icon={<AlarmIcon color="primary.500" size="md" />}>{item.remindersCount}</BoxWithIcon>
           )}
           <BoxWithIcon icon={<CommentsIcon color="primary.500" size="md" />}>0</BoxWithIcon>

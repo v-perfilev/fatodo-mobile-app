@@ -23,12 +23,7 @@ const ItemEdit = ({group, item, loading}: ItemEditProps) => {
 
   const goBack = (): void => navigation.goBack();
   const goToItemView = (): void =>
-    navigation.getParent().getId() === 'ItemView'
-      ? navigation.goBack()
-      : navigation.navigate('ItemView', {
-          group,
-          item,
-        });
+    navigation.getParent().getId() === 'ItemView' ? navigation.goBack() : navigation.replace('ItemView', {group, item});
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
     dispatch(ItemActions.updateItemThunk(dto))

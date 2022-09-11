@@ -53,7 +53,7 @@ const EventList = () => {
   keyExtractor and renderItem
    */
 
-  const keyExtractor = useCallback((event: Event): string => event.id + event.date, []);
+  const keyExtractor = useCallback((event: Event): string => event.id || `${event.type}${event.date}`, []);
 
   const renderItem = useCallback(
     (info: ListRenderItemInfo<Event>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
