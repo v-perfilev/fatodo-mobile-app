@@ -5,7 +5,15 @@ import * as Yup from 'yup';
 import i18n from '../../../shared/i18n';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import {useTranslation} from 'react-i18next';
-import {Item, ItemPriorityType, itemPriorityTypes, ItemType, itemTypes} from '../../../models/Item';
+import {
+  Item,
+  ItemPriorityType,
+  itemPriorityTypes,
+  ItemStatusType,
+  itemStatusTypes,
+  ItemType,
+  itemTypes,
+} from '../../../models/Item';
 import {Reminder} from '../../../models/Reminder';
 import {DateConverters} from '../../../shared/utils/DateUtils';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
@@ -21,9 +29,11 @@ import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import GhostButton from '../../../components/controls/GhostButton';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
+import FormikStatusInput from '../../../components/inputs/FormikStatusInput';
 
 export interface ItemFormValues {
   title: string;
+  status: ItemStatusType;
   type: ItemType;
   priority: ItemPriorityType;
   time?: Date;
@@ -34,6 +44,7 @@ export interface ItemFormValues {
 
 const defaultItemFormValues: Readonly<ItemFormValues> = {
   title: '',
+  status: itemStatusTypes[0],
   type: itemTypes[0],
   priority: itemPriorityTypes[1],
   time: null,
@@ -46,6 +57,7 @@ const initialValues = (item: Item, reminders: Reminder[], account: UserAccount):
   item
     ? {
         title: item.title,
+        status: item.status,
         type: item.type,
         priority: item.priority,
         time: DateConverters.getTimeFromParamDate(item.date, account.info.timezone),
@@ -57,6 +69,7 @@ const initialValues = (item: Item, reminders: Reminder[], account: UserAccount):
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required(() => i18n.t('item:fields.title.required')),
+  status: Yup.string().required(() => i18n.t('item:fields.type.required')),
   type: Yup.string().required(() => i18n.t('item:fields.type.required')),
   priority: Yup.string().required(() => i18n.t('item:fields.priority.required')),
 });
@@ -80,6 +93,7 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
     const dto: ItemDTO = {
       id: item ? item.id : null,
       title: values.title,
+      status: values.status,
       type: values.type,
       priority: values.priority,
       date: DateConverters.getParamDateFromTimeAndDate(values.time, values.date, account.info.timezone),
@@ -103,6 +117,12 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
           <FormikTextInput
             name="title"
             label={t('item:fields.title.label')}
+            isDisabled={formikProps.isSubmitting}
+            {...formikProps}
+          />
+          <FormikStatusInput
+            name="status"
+            label={t('item:fields.status.label')}
             isDisabled={formikProps.isSubmitting}
             {...formikProps}
           />

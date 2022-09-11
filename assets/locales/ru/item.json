@@ -7,6 +7,7 @@
     "noDescription": "Без описания"
   },
   "labels": {
+    "status": "Статус",
     "type": "Тип",
     "date": "Дата",
     "priority": "Приоритет",
@@ -23,6 +24,10 @@
   "fields": {
     "title": {
       "label": "Название",
+      "required": "Обязательное поле"
+    },
+    "status": {
+      "label": "Статус",
       "required": "Обязательное поле"
     },
     "type": {

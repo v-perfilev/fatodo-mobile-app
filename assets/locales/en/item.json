@@ -7,6 +7,7 @@
     "noDescription": "No description"
   },
   "labels": {
+    "status": "Status",
     "type": "Type",
     "date": "Date",
     "priority": "Priority",
@@ -23,6 +24,10 @@
   "fields": {
     "title": {
       "label": "Title",
+      "required": "Required"
+    },
+    "status": {
+      "label": "Status",
       "required": "Required"
     },
     "type": {

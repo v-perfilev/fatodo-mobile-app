@@ -4,6 +4,7 @@ import {Reminder} from '../Reminder';
 export interface ItemDTO {
   id: string;
   title: string;
+  status: string;
   type: string;
   priority: string;
   date: DateParams;

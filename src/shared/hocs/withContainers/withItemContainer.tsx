@@ -27,9 +27,11 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
   const goBack = (): void => navigation.goBack();
 
   const setGroupAndItem = (): void => {
-    Promise.all([dispatch(ItemActions.setGroup(routeGroup)), dispatch(ItemActions.setItem(routeItem))]).finally(() =>
-      setLoading(false),
-    );
+    Promise.all([
+      dispatch(ItemActions.reset()),
+      dispatch(ItemActions.setGroup(routeGroup)),
+      dispatch(ItemActions.setItem(routeItem)),
+    ]).finally(() => setLoading(false));
   };
 
   const loadItem = (): void => {

@@ -24,6 +24,7 @@ import {CornerButton} from '../../../models/CornerButton';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import Separator from '../../../components/layouts/Separator';
+import ItemViewStatus from './itemViewStatus';
 
 type ItemViewProps = WithItemProps;
 
@@ -47,10 +48,9 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
           <FVStack defaultSpace>
             <ItemViewName />
             <ItemViewGroup />
-            <FHStack defaultSpace>
-              <ItemViewType />
-              <ItemViewPriority />
-            </FHStack>
+            <ItemViewStatus />
+            <ItemViewType />
+            <ItemViewPriority />
             <ItemViewDate />
             <Separator bg="secondary.500" />
             <ItemViewDescription />

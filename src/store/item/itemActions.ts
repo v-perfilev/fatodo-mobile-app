@@ -14,6 +14,10 @@ import {Group} from '../../models/Group';
 const PREFIX = 'item/';
 
 export class ItemActions {
+  static reset = () => async (dispatch: AppDispatch) => {
+    dispatch(itemSlice.actions.reset());
+  };
+
   static setGroup = (group: Group) => async (dispatch: AppDispatch) => {
     dispatch(itemSlice.actions.setGroup(group));
   };
@@ -24,6 +28,7 @@ export class ItemActions {
   };
 
   static fetchItemThunk = createAsyncThunk(PREFIX + 'fetchItem', async (itemId: string, thunkAPI) => {
+    thunkAPI.dispatch(itemSlice.actions.reset());
     const response = await ItemService.getItem(itemId);
     const itemUserIds = [response.data.createdBy, response.data.lastModifiedBy];
     thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));

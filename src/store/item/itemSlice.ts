@@ -18,13 +18,11 @@ const itemSlice = createSlice({
     reset: () => initialState,
 
     setGroup: (state: ItemState, action: PayloadAction<Group>) => {
-      const group = action.payload;
-      return {...initialState, group};
+      state.group = action.payload;
     },
 
     setItem: (state: ItemState, action: PayloadAction<Item>) => {
-      const item = action.payload;
-      return {...initialState, item};
+      state.item = action.payload;
     },
   },
   extraReducers: (builder) => {
