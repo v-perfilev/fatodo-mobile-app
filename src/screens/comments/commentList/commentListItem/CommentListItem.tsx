@@ -1,5 +1,5 @@
 import {Comment} from '../../../../models/Comment';
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, SetStateAction, useCallback} from 'react';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import {useTranslation} from 'react-i18next';
@@ -21,9 +21,10 @@ type CommentListItemProps = {
 };
 
 const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
+  const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
   const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
-  const user = useAppSelector((state) => InfoSelectors.user(state, comment.userId));
+  const user = useAppSelector((state) => userSelector(state, comment.userId));
 
   const date = DateFormatters.formatDependsOnDay(new Date(comment.createdAt));
   const isOwnComment = CommentUtils.isOwnComment(comment, account);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import AvatarGroup from '../../../../components/surfaces/AvatarGroup';
 import {Group} from '../../../../models/Group';
 import {useAppSelector} from '../../../../store/store';
@@ -9,8 +9,9 @@ type GroupListCardAvatarsProps = {
 };
 
 const GroupListCardAvatars = ({group}: GroupListCardAvatarsProps) => {
+  const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const userIds = group.members.map((user) => user.userId);
-  const users = useAppSelector((state) => InfoSelectors.users(state, userIds));
+  const users = useAppSelector((state) => usersSelector(state, userIds));
 
   return <AvatarGroup users={users} />;
 };

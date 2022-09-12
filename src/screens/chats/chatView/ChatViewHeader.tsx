@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
 import Header from '../../../components/layouts/Header';
 import IconButton from '../../../components/controls/IconButton';
@@ -19,6 +19,7 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 
 const ChatViewHeader = () => {
+  const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const navigation = useNavigation();
   const {t} = useTranslation();
   const {
@@ -31,7 +32,7 @@ const ChatViewHeader = () => {
   } = useChatDialogContext();
   const chat = useAppSelector(ChatSelectors.chat);
   const memberIds = chat.members.map((m) => m.userId);
-  const users = useAppSelector((state) => InfoSelectors.users(state, memberIds));
+  const users = useAppSelector((state) => usersSelector(state, memberIds));
   const account = useAppSelector(AuthSelectors.account);
 
   const title = useMemo<string>(() => {

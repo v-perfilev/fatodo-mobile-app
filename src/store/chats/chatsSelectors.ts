@@ -4,6 +4,7 @@ import {Chat} from '../../models/Chat';
 import {StoreUtils} from '../../shared/utils/StoreUtils';
 
 const getChatsState = (state: RootState) => state.chats;
+const getChatId = (_: any, chatId: string) => chatId;
 
 class ChatsSelectors {
   static chats = createSelector(getChatsState, (state) => state.chats as Chat[]);
@@ -12,14 +13,15 @@ class ChatsSelectors {
 
   static unreadCount = createSelector(getChatsState, (state) => state.unreadCount as number);
 
-  static unreadMessageIds = createSelector(
-    [getChatsState, (state, key: string) => key],
-    (state, key) => StoreUtils.getValue(state.unreadMap, key, []) as string[],
-  );
-
   static loading = createSelector(getChatsState, (state) => state.loading as boolean);
 
   static allLoaded = createSelector(getChatsState, (state) => state.allLoaded as boolean);
+
+  static makeUnreadMessageIdsSelector = () =>
+    createSelector(
+      [getChatsState, getChatId],
+      (state, chatId) => StoreUtils.getValue(state.unreadMap, chatId, []) as string[],
+    );
 }
 
 export default ChatsSelectors;

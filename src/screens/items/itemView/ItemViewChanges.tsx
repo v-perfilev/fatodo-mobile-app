@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
@@ -9,10 +9,11 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 import InfoSelectors from '../../../store/info/infoSelectors';
 
 const ItemViewChanges = () => {
+  const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
   const {t} = useTranslation();
   const item = useAppSelector(ItemSelectors.item);
-  const creator = useAppSelector((state) => InfoSelectors.user(state, item.createdBy));
-  const updater = useAppSelector((state) => InfoSelectors.user(state, item.lastModifiedBy));
+  const creator = useAppSelector((state) => userSelector(state, item.createdBy));
+  const updater = useAppSelector((state) => userSelector(state, item.lastModifiedBy));
 
   const formatDate = (timestamp: number): string => {
     return DateFormatters.formatTimeWithDate(new Date(timestamp));

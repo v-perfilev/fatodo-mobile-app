@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Text} from 'native-base';
 import {useTranslation} from 'react-i18next';
 import {ReferenceComment} from '../../../models/Comment';
@@ -15,8 +15,9 @@ type CommentListControlReferenceProps = {
 };
 
 const CommentListControlReference = ({reference, clearReference}: CommentListControlReferenceProps) => {
+  const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
   const {t} = useTranslation();
-  const user = useAppSelector((state) => InfoSelectors.user(state, reference.userId));
+  const user = useAppSelector((state) => userSelector(state, reference.userId));
 
   const date = DateFormatters.formatDependsOnDay(new Date(reference.createdAt));
 

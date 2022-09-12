@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import UserView from '../../../components/views/UserView';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -14,8 +14,9 @@ type ContactListItemProps = {
 };
 
 const ContactListItem = ({relation}: ContactListItemProps) => {
+  const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => InfoSelectors.user(state, relation.secondUserId));
+  const user = useAppSelector((state) => userSelector(state, relation.secondUserId));
   const [disabled, setDisabled] = useState(false);
 
   const removeRelation = (): void => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Message} from '../../../../models/Message';
 import {useTranslation} from 'react-i18next';
 import FHStack from '../../../../components/boxes/FHStack';
@@ -15,8 +15,9 @@ type ChatViewMessageOutcomingProps = {
 };
 
 const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
+  const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
   const {t} = useTranslation();
-  const user = useAppSelector((state) => InfoSelectors.user(state, message.userId));
+  const user = useAppSelector((state) => userSelector(state, message.userId));
 
   const date = DateFormatters.formatTime(new Date(message.createdAt));
 

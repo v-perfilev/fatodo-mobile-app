@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {ReferenceComment} from '../../../../models/Comment';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
@@ -12,8 +12,9 @@ type CommentListItemReferenceProps = {
 };
 
 const CommentListItemReference = ({reference}: CommentListItemReferenceProps) => {
+  const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
   const {t} = useTranslation();
-  const user = useAppSelector((state) => InfoSelectors.user(state, reference.userId));
+  const user = useAppSelector((state) => userSelector(state, reference.userId));
 
   const date = DateFormatters.formatDependsOnDay(new Date(reference.createdAt));
 

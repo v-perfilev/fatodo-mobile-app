@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {CalendarReminder} from '../../../../models/Reminder';
 import GroupLink from '../../../../components/links/GroupLink';
 import ItemLink from '../../../../components/links/ItemLink';
@@ -16,8 +16,10 @@ type CalendarViewReminderItemProps = {
 };
 
 const CalendarViewReminderItem = ({reminder}: CalendarViewReminderItemProps) => {
-  const group = useAppSelector((state) => InfoSelectors.group(state, reminder.parentId));
-  const item = useAppSelector((state) => InfoSelectors.item(state, reminder.targetId));
+  const groupSelector = useCallback(InfoSelectors.makeGroupSelector(), []);
+  const itemSelector = useCallback(InfoSelectors.makeItemSelector(), []);
+  const group = useAppSelector((state) => groupSelector(state, reminder.parentId));
+  const item = useAppSelector((state) => itemSelector(state, reminder.targetId));
 
   const bulletView = <Bullet color={group?.color} size="15px" />;
   const groupView = group ? <GroupLink group={group} color="gray.400" /> : null;

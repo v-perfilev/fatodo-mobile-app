@@ -9,47 +9,42 @@ import {Message} from '../../models/Message';
 import {Comment} from '../../models/Comment';
 
 const getInfoState = (state: RootState) => state.info;
+const getKey = (_: any, key: string) => key;
+const getKeys = (_: any, keys: string[]) => keys;
 
 class InfoSelectors {
-  static user = createSelector(
-    [getInfoState, (state, key: string) => key],
-    (state, key) => StoreUtils.getValue(state.users, key, undefined) as User,
-  );
+  static makeUserSelector = () =>
+    createSelector([getInfoState, getKey], (state, key) => StoreUtils.getValue(state.users, key, undefined) as User);
 
-  static users = createSelector(
-    [getInfoState, (state, keys: string[]) => keys],
-    (state, keys) => StoreUtils.getMultipleValues(state.users, keys) as User[],
-  );
+  static makeUsersSelector = () =>
+    createSelector([getInfoState, getKeys], (state, keys) => StoreUtils.getMultipleValues(state.users, keys) as User[]);
 
-  static group = createSelector(
-    [getInfoState, (state, key: string) => key],
-    (state, key) => StoreUtils.getValue(state.groups, key, undefined) as Group,
-  );
+  static makeGroupSelector = () =>
+    createSelector([getInfoState, getKey], (state, key) => StoreUtils.getValue(state.groups, key, undefined) as Group);
 
-  static groups = createSelector(
-    [getInfoState, (state, keys: string[]) => keys],
-    (state, keys) => StoreUtils.getMultipleValues(state.groups, keys) as Group[],
-  );
+  static makeGroupsSelector = () =>
+    createSelector(
+      [getInfoState, getKeys],
+      (state, keys) => StoreUtils.getMultipleValues(state.groups, keys) as Group[],
+    );
 
-  static item = createSelector(
-    [getInfoState, (state, key: string) => key],
-    (state, key) => StoreUtils.getValue(state.items, key, undefined) as Item,
-  );
+  static makeItemSelector = () =>
+    createSelector([getInfoState, getKey], (state, key) => StoreUtils.getValue(state.items, key, undefined) as Item);
 
-  static chat = createSelector(
-    [getInfoState, (state, key: string) => key],
-    (state, key) => StoreUtils.getValue(state.chats, key, undefined) as Chat,
-  );
+  static makeChatSelector = () =>
+    createSelector([getInfoState, getKey], (state, key) => StoreUtils.getValue(state.chats, key, undefined) as Chat);
 
-  static message = createSelector(
-    [getInfoState, (state, key: string) => key],
-    (state, key) => StoreUtils.getValue(state.messages, key, undefined) as Message,
-  );
+  static makeMessageSelector = () =>
+    createSelector(
+      [getInfoState, getKey],
+      (state, key) => StoreUtils.getValue(state.messages, key, undefined) as Message,
+    );
 
-  static comment = createSelector(
-    [getInfoState, (state, key: string) => key],
-    (state, key) => StoreUtils.getValue(state.comments, key, undefined) as Comment,
-  );
+  static makeCommentSelector = () =>
+    createSelector(
+      [getInfoState, getKey],
+      (state, key) => StoreUtils.getValue(state.comments, key, undefined) as Comment,
+    );
 }
 
 export default InfoSelectors;

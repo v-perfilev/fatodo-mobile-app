@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {User} from '../../../../models/User';
 import ClearableTextInput from '../../../../components/inputs/ClearableTextInput';
@@ -29,9 +29,10 @@ export const defaultCommentReactionsDialogProps: Readonly<CommentReactionsDialog
 };
 
 const CommentReactionsDialog = ({comment, show, close}: CommentReactionsDialogProps) => {
+  const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const {t} = useTranslation();
   const reactionUserIds = comment?.reactions.map((r) => r.userId);
-  const users: User[] = useAppSelector((state) => InfoSelectors.users(state, reactionUserIds));
+  const users: User[] = useAppSelector((state) => usersSelector(state, reactionUserIds));
   const [reactions, setReactions] = useState<CommentReactionWithUser[]>([]);
   const [reactionsToShow, setReactionsToShow] = useState<CommentReactionWithUser[]>([]);
 

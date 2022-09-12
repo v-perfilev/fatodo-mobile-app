@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import FHStack from '../../../components/boxes/FHStack';
 import UserView from '../../../components/views/UserView';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -15,8 +15,9 @@ type OutcomingRequestListItemProps = IBoxProps & {
 };
 
 const OutcomingRequestListItem = ({request, ...props}: OutcomingRequestListItemProps) => {
+  const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => InfoSelectors.user(state, request.recipientId));
+  const user = useAppSelector((state) => userSelector(state, request.recipientId));
   const [disabled, setDisabled] = useState(false);
 
   const removeRequest = (): void => {

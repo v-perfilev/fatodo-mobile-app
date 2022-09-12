@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PressableButton from '../../../components/controls/PressableButton';
 import {useNavigation} from '@react-navigation/native';
 import {RootNavigationProp} from '../../../navigators/RootNavigator';
@@ -12,8 +12,9 @@ type UserViewRelationProps = {
 };
 
 const UserViewRelation = ({relation}: UserViewRelationProps) => {
+  const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
   const navigation = useNavigation<RootNavigationProp>();
-  const user = useAppSelector((state) => InfoSelectors.user(state, relation.secondUserId));
+  const user = useAppSelector((state) => userSelector(state, relation.secondUserId));
 
   const goToUserView = (): void => navigation.navigate('UserView', {user});
 

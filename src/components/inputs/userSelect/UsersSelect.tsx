@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {User} from '../../../models/User';
 import {Text} from 'native-base';
@@ -18,8 +18,9 @@ type Props = {
 };
 
 const UsersSelect: FC<Props> = ({allowedIds, setUserIds}: Props) => {
+  const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const dispatch = useAppDispatch();
-  const users = useAppSelector((state) => InfoSelectors.users(state, allowedIds));
+  const users = useAppSelector((state) => usersSelector(state, allowedIds));
   const {t} = useTranslation();
   const [filter, setFilter] = useState<string>('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);

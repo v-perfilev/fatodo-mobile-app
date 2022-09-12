@@ -1,4 +1,4 @@
-import React, {ComponentType} from 'react';
+import React, {ComponentType, useCallback} from 'react';
 import {useAppSelector} from '../../../store/store';
 import {ChatInfo} from '../../../models/Chat';
 import {Event} from '../../../models/Event';
@@ -22,14 +22,18 @@ type ContainerProps = {
 const withEventChat =
   (Component: ComponentType<WithEventChatProps>) =>
   ({event}: ContainerProps) => {
+    const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
+    const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
+    const chatSelector = useCallback(InfoSelectors.makeChatSelector(), []);
+    const messageSelector = useCallback(InfoSelectors.makeMessageSelector(), []);
     const chatEvent = event.chatEvent;
     const reaction = chatEvent.reaction;
     const date = event.date;
 
-    const user = useAppSelector((state) => InfoSelectors.user(state, chatEvent.userId));
-    const users = useAppSelector((state) => InfoSelectors.users(state, chatEvent.userIds));
-    const chat = useAppSelector((state) => InfoSelectors.chat(state, chatEvent.chatId));
-    const message = useAppSelector((state) => InfoSelectors.message(state, chatEvent.messageId));
+    const user = useAppSelector((state) => userSelector(state, chatEvent.userId));
+    const users = useAppSelector((state) => usersSelector(state, chatEvent.userIds));
+    const chat = useAppSelector((state) => chatSelector(state, chatEvent.chatId));
+    const message = useAppSelector((state) => messageSelector(state, chatEvent.messageId));
 
     return <Component user={user} users={users} chat={chat} message={message} reaction={reaction} date={date} />;
   };

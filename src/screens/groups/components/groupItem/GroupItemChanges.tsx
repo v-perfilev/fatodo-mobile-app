@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {Item} from '../../../../models/Item';
 import {Text} from 'native-base';
 import {DateFormatters} from '../../../../shared/utils/DateUtils';
@@ -10,7 +10,8 @@ type GroupItemChangesProps = {
 };
 
 const GroupItemChanges = ({item}: GroupItemChangesProps) => {
-  const user = useAppSelector((state) => InfoSelectors.user(state, item.createdBy));
+  const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
+  const user = useAppSelector((state) => userSelector(state, item.createdBy));
 
   const formattedDate = useMemo<string>(() => DateFormatters.formatDependsOnDay(new Date(item.createdAt)), []);
 

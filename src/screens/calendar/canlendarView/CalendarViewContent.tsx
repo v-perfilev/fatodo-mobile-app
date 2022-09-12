@@ -3,9 +3,9 @@ import FVStack from '../../../components/boxes/FVStack';
 import CalendarViewMonthName from './CalendarViewMonthName';
 import CalendarViewWeekDays from './CalendarViewWeekDays';
 import CalendarViewMonth from './CalendarViewMonth';
-import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
 import {CalendarDate, CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import Separator from '../../../components/layouts/Separator';
+import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
 
 type CalendarViewContentProps = {
   month: CalendarMonth;

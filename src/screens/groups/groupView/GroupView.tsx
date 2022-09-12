@@ -35,14 +35,17 @@ const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 
 const GroupView = ({groupId, group, loading}: GroupViewProps) => {
+  const itemsSelector = useCallback(GroupSelectors.makeItemsSelector(), []);
+  const itemsLoadingSelector = useCallback(GroupSelectors.makeItemsLoadingSelector(), []);
+  const allItemsLoadedSelector = useCallback(GroupSelectors.makeAllItemsLoadedSelector(), []);
   const dispatch = useAppDispatch();
   const rootNavigation = useNavigation<RootNavigationProp>();
   const groupNavigation = useNavigation<GroupNavigationProp>();
   const [showArchived, setShowArchived] = useState<boolean>(false);
   const account = useAppSelector(AuthSelectors.account);
-  const items = useAppSelector((state) => GroupSelectors.items(state, showArchived));
-  const itemsLoading = useAppSelector((state) => GroupSelectors.itemsLoading(state, showArchived));
-  const allItemsLoaded = useAppSelector((state) => GroupSelectors.allItemsLoaded(state, showArchived));
+  const items = useAppSelector((state) => itemsSelector(state, showArchived));
+  const itemsLoading = useAppSelector((state) => itemsLoadingSelector(state, showArchived));
+  const allItemsLoaded = useAppSelector((state) => allItemsLoadedSelector(state, showArchived));
 
   const listRef = useRef<FlatListType>();
 

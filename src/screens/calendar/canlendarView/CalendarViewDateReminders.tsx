@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../store/store';
@@ -12,8 +12,9 @@ type CalendarViewDateRemindersProps = {
 };
 
 const CalendarViewDateReminders = ({reminders}: CalendarViewDateRemindersProps) => {
+  const groupsSelector = useCallback(InfoSelectors.makeGroupsSelector(), []);
   const groupIds = reminders.map((r) => r.parentId).filter(FilterUtils.uniqueFilter);
-  const groups = useAppSelector((state) => InfoSelectors.groups(state, groupIds));
+  const groups = useAppSelector((state) => groupsSelector(state, groupIds));
 
   const reminderColors = reminders
     .map((reminder) => groups.find((g) => g.id === reminder.parentId))

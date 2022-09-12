@@ -1,4 +1,4 @@
-import React, {Dispatch, memo, SetStateAction} from 'react';
+import React, {Dispatch, memo, SetStateAction, useCallback} from 'react';
 import {Text} from 'native-base';
 import PaperBox from '../../../components/surfaces/PaperBox';
 import FVStack from '../../../components/boxes/FVStack';
@@ -17,7 +17,8 @@ type CalendarViewDateProps = {
 };
 
 const CalendarViewDate = ({month, date, selectDate, isActiveDate}: CalendarViewDateProps) => {
-  const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, month.key, date.date));
+  const remindersSelector = useCallback(CalendarSelectors.makeRemindersSelector(), []);
+  const reminders = useAppSelector((state) => remindersSelector(state, month.key, date.date));
 
   const handlePress = (): void => {
     date.isCurrentMonth && selectDate(date);

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import UserView from '../../../components/views/UserView';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -15,8 +15,9 @@ type IncomingRequestListItemProps = {
 };
 
 const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
+  const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => InfoSelectors.user(state, request.requesterId));
+  const user = useAppSelector((state) => userSelector(state, request.requesterId));
   const [disabled, setDisabled] = useState(false);
 
   const acceptRequest = (): void => {

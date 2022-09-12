@@ -20,12 +20,13 @@ import {useIsFocused} from '@react-navigation/native';
 const loaderStyle: StyleProp<ViewStyle> = {paddingBottom: 50};
 
 const ContactList = () => {
+  const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
   const {showContactRequestDialog} = useContactDialogContext();
   const relations = useAppSelector(ContactsSelectors.relations);
   const userIds = relations.map((r) => r.secondUserId);
-  const users = useAppSelector((state) => InfoSelectors.users(state, userIds));
+  const users = useAppSelector((state) => usersSelector(state, userIds));
   const [loading, setLoading] = useDelayedState();
   const [filter, setFilter] = useState<string>('');
   const [relationsToShow, setRelationsToShow] = useState<ContactRelation[]>([]);

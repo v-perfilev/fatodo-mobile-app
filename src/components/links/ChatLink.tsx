@@ -1,4 +1,4 @@
-import React, {PropsWithChildren} from 'react';
+import React, {PropsWithChildren, useCallback} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Text} from 'native-base';
 import {ChatInfo} from '../../models/Chat';
@@ -14,10 +14,11 @@ type ChatLinkProps = PropsWithChildren<{
 }>;
 
 export const ChatLink = ({chat, color = 'primary.500', children}: ChatLinkProps) => {
+  const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const navigation = useNavigation<RootNavigationProp>();
   const memberIds = chat.members.map((m) => m.userId);
   const account = useAppSelector(AuthSelectors.account);
-  const users = useAppSelector((state) => InfoSelectors.users(state, memberIds));
+  const users = useAppSelector((state) => usersSelector(state, memberIds));
   const title = children || ChatUtils.getTitle(chat, users, account);
 
   const goToChat = (): void => navigation.navigate('ChatView', {chatId: chat.id});

@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import FBox from '../../../../components/boxes/FBox';
 import CalendarViewRemindersNotSelectedStub from './CalendarViewRemindersNotSelectedStub';
 import CalendarViewRemindersEmptyStub from './CalendarViewRemindersEmptyStub';
@@ -14,7 +14,8 @@ type CalendarViewRemindersProps = {
 };
 
 const CalendarViewReminders = ({month, date}: CalendarViewRemindersProps) => {
-  const reminders = useAppSelector((state) => CalendarSelectors.reminders(state, month.key, date?.date));
+  const remindersSelector = useCallback(CalendarSelectors.makeRemindersSelector(), []);
+  const reminders = useAppSelector((state) => remindersSelector(state, month.key, date?.date));
   const showNotSelectedStub = date === undefined;
   const showEmptyStub = reminders?.length === 0;
   const showReminders = reminders?.length > 0;

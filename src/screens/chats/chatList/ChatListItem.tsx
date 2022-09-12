@@ -2,7 +2,7 @@ import {Chat} from '../../../models/Chat';
 import FHStack from '../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
-import React from 'react';
+import React, {useCallback} from 'react';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {DateFormatters} from '../../../shared/utils/DateUtils';
 import UrlPic from '../../../components/surfaces/UrlPic';
@@ -22,11 +22,13 @@ type ChatListItemProps = {
 };
 
 const ChatListItem = ({chat}: ChatListItemProps) => {
+  const unreadMessageIdsSelector = useCallback(ChatsSelectors.makeUnreadMessageIdsSelector(), []);
+  const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const navigation = useNavigation<RootNavigationProp>();
   const {t} = useTranslation();
   const memberIds = chat.members.map((m) => m.userId);
-  const unreadMessageIds = useAppSelector((state) => ChatsSelectors.unreadMessageIds(state, chat.id));
-  const users = useAppSelector((state) => InfoSelectors.users(state, memberIds));
+  const unreadMessageIds = useAppSelector((state) => unreadMessageIdsSelector(state, chat.id));
+  const users = useAppSelector((state) => usersSelector(state, memberIds));
   const account = useAppSelector(AuthSelectors.account);
 
   const goToChat = (): void => navigation.navigate('ChatView', {chat});

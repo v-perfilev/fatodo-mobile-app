@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import {Box, IBoxProps} from 'native-base';
 import GroupListCardHeader from './GroupListCardHeader';
 import Collapsible from 'react-native-collapsible';
@@ -16,10 +16,14 @@ type GroupListCardProps = IBoxProps & {
 };
 
 const GroupListCard = ({group, sorting, drag, ...props}: GroupListCardProps) => {
-  const items = useAppSelector((state) => GroupsSelectors.items(state, group.id));
-  const count = useAppSelector((state) => GroupsSelectors.itemsCount(state, group.id));
-  const collapsed = useAppSelector((state) => GroupsSelectors.itemsCollapsed(state, group.id));
-  const loading = useAppSelector((state) => GroupsSelectors.itemsLoading(state, group.id));
+  const itemsSelector = useCallback(GroupsSelectors.makeItemsSelector(), []);
+  const itemsCountSelector = useCallback(GroupsSelectors.makeItemsCountSelector(), []);
+  const itemsCollapsedSelector = useCallback(GroupsSelectors.makeItemsCollapsedSelector(), []);
+  const itemsLoadingSelector = useCallback(GroupsSelectors.makeItemsLoadingSelector(), []);
+  const items = useAppSelector((state) => itemsSelector(state, group.id));
+  const count = useAppSelector((state) => itemsCountSelector(state, group.id));
+  const collapsed = useAppSelector((state) => itemsCollapsedSelector(state, group.id));
+  const loading = useAppSelector((state) => itemsLoadingSelector(state, group.id));
 
   const theme = ThemeFactory.getTheme(group.color);
 
