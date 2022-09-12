@@ -17,6 +17,18 @@ export class GroupActions {
     dispatch(groupSlice.actions.setGroup(group));
   };
 
+  static addItem = (item: Item) => (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.addItem(item));
+  };
+
+  static updateItem = (item: Item) => (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.updateItem(item));
+  };
+
+  static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.removeItem(itemId));
+  };
+
   static fetchGroupThunk = createAsyncThunk(PREFIX + 'fetchGroup', async (groupId: string, thunkAPI) => {
     const response = await ItemService.getGroup(groupId);
     const groupUserIds = response.data.members.map((m) => m.userId);

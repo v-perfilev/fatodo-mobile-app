@@ -9,6 +9,10 @@ import {ChatActions} from '../../../store/chat/chatActions';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
 import {CommentsActions} from '../../../store/comments/commentsActions';
 import {UserAccount} from '../../../models/User';
+import {Item} from '../../../models/Item';
+import {Group, GroupMember} from '../../../models/Group';
+import {GroupsActions} from '../../../store/groups/groupsActions';
+import {GroupActions} from '../../../store/group/groupActions';
 
 type HandlerFunc = (msg: WsEvent<any>) => void;
 
@@ -28,6 +32,29 @@ export class WsStateHandler {
 
   private getHandler = (type: WsEventType): HandlerFunc | undefined => {
     switch (type) {
+      // ITEM
+      case 'ITEM_CREATE':
+        return this.handleItemCreateEvent;
+      case 'ITEM_UPDATE':
+      case 'ITEM_UPDATE_STATUS':
+      case 'ITEM_UPDATE_ARCHIVED':
+        return this.handleItemUpdateEvent;
+      case 'ITEM_DELETE':
+        return this.handleItemDeleteEvent;
+      case 'ITEM_GROUP_CREATE':
+        return this.handleItemGroupCreateEvent;
+      case 'ITEM_GROUP_UPDATE':
+        return this.handleItemGroupUpdateEvent;
+      case 'ITEM_GROUP_DELETE':
+        return this.handleItemGroupDeleteEvent;
+      case 'ITEM_MEMBER_ADD':
+        return this.handleItemMemberAddEvent;
+      case 'ITEM_MEMBER_DELETE':
+        return this.handleItemMemberDeleteEvent;
+      case 'ITEM_MEMBER_LEAVE':
+        return this.handleItemMemberLeaveEvent;
+      case 'ITEM_MEMBER_ROLE':
+        return this.handleItemMemberRoleEvent;
       // CHAT
       case 'CHAT_CREATE':
         return this.handleChatCreateEvent;
@@ -73,6 +100,76 @@ export class WsStateHandler {
       default:
         return undefined;
     }
+  };
+
+  /*
+ ITEM
+  */
+
+  private handleItemCreateEvent = (msg: WsEvent<Item>): void => {
+    const item = msg.payload;
+    this.dispatch(GroupsActions.addItem(item));
+    this.dispatch(GroupActions.addItem(item));
+  };
+
+  private handleItemUpdateEvent = (msg: WsEvent<Item>): void => {
+    const item = msg.payload;
+    this.dispatch(GroupsActions.updateItem(item));
+    this.dispatch(GroupActions.updateItem(item));
+  };
+
+  private handleItemDeleteEvent = (msg: WsEvent<Item>): void => {
+    const itemId = msg.payload.id;
+    this.dispatch(GroupsActions.removeItem(itemId));
+    this.dispatch(GroupActions.removeItem(itemId));
+  };
+
+  private handleItemGroupCreateEvent = (msg: WsEvent<Group>): void => {
+    const group = msg.payload;
+    this.dispatch(GroupsActions.addGroup(group));
+  };
+
+  private handleItemGroupUpdateEvent = (msg: WsEvent<Group>): void => {
+    const group = msg.payload;
+    this.dispatch(GroupsActions.updateGroup(group));
+  };
+
+  private handleItemGroupDeleteEvent = (msg: WsEvent<Group>): void => {
+    const groupId = msg.payload.id;
+    this.dispatch(GroupsActions.removeGroup(groupId));
+  };
+
+  private handleItemMemberAddEvent = (msg: WsEvent<GroupMember[]>): void => {
+    const groupId = msg.payload[0].groupId;
+    const members = msg.payload;
+    this.dispatch(GroupsActions.addMembers(groupId, members));
+  };
+
+  private handleItemMemberDeleteEvent = (msg: WsEvent<GroupMember[]>): void => {
+    const groupId = msg.payload[0].groupId;
+    const members = msg.payload;
+    const memberIds = members.map((m) => m.userId);
+    if (memberIds.includes(this.account.id)) {
+      this.dispatch(GroupsActions.removeGroup(groupId));
+    } else {
+      this.dispatch(GroupsActions.removeMembers(groupId, members));
+    }
+  };
+
+  private handleItemMemberLeaveEvent = (msg: WsEvent<GroupMember>): void => {
+    const groupId = msg.payload.groupId;
+    const member = msg.payload;
+    if (member.userId === this.account.id) {
+      this.dispatch(GroupsActions.removeGroup(groupId));
+    } else {
+      this.dispatch(GroupsActions.removeMembers(groupId, [member]));
+    }
+  };
+
+  private handleItemMemberRoleEvent = (msg: WsEvent<GroupMember>): void => {
+    const groupId = msg.payload.groupId;
+    const member = msg.payload;
+    this.dispatch(GroupsActions.updateMembers(groupId, [member]));
   };
 
   /*

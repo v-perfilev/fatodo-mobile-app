@@ -2,15 +2,21 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {GroupsState} from './groupsType';
 import {Item} from '../../models/Item';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
-import {Group} from '../../models/Group';
+import {Group, GroupMember} from '../../models/Group';
 import {GroupsActions} from './groupsActions';
 import {GroupUtils} from '../../shared/utils/GroupUtils';
 import {ComparatorUtils} from '../../shared/utils/ComparatorUtils';
 import {StoreUtils} from '../../shared/utils/StoreUtils';
+import {FilterUtils} from '../../shared/utils/FilterUtils';
 
 interface GroupsCollapsedPayload {
   groupId: string;
   value: boolean;
+}
+
+interface GroupsWithMembersPayload {
+  groupId: string;
+  members: GroupMember[];
 }
 
 const initialState: GroupsState = {
@@ -77,6 +83,39 @@ const groupsSlice = createSlice({
       }
     },
 
+    addMembers: (state: GroupsState, action: PayloadAction<GroupsWithMembersPayload>) => {
+      const groupId = action.payload.groupId;
+      const members = action.payload.members;
+      const group = ArrayUtils.findValueById(state.groups, groupId) as Group;
+      if (group) {
+        group.members = [...group.members, ...members].filter(FilterUtils.uniqueByUserIdFilter);
+        state.groups = ArrayUtils.updateValueWithId(state.groups, group);
+      }
+    },
+
+    updateMembers: (state: GroupsState, action: PayloadAction<GroupsWithMembersPayload>) => {
+      const groupId = action.payload.groupId;
+      const members = action.payload.members;
+      const group = ArrayUtils.findValueById(state.groups, groupId) as Group;
+      if (group) {
+        members.forEach((member) => {
+          group.members = ArrayUtils.updateValueWithUserId(group.members, member);
+        });
+        state.groups = ArrayUtils.updateValueWithId(state.groups, group);
+      }
+    },
+
+    removeMembers: (state: GroupsState, action: PayloadAction<GroupsWithMembersPayload>) => {
+      const groupId = action.payload.groupId;
+      const members = action.payload.members;
+      const group = ArrayUtils.findValueById(state.groups, groupId) as Group;
+      if (group) {
+        const memberIds = members.map((m) => m.userId);
+        group.members = group.members.filter((m) => !memberIds.includes(m.userId));
+        state.groups = ArrayUtils.updateValueWithId(state.groups, group);
+      }
+    },
+
     addItem: (state: GroupsState, action: PayloadAction<Item>) => {
       const item = action.payload;
       const oldItems = StoreUtils.getValue(state.items, item.groupId, []);
@@ -92,6 +131,10 @@ const groupsSlice = createSlice({
       if (!item.archived) {
         const oldItems = StoreUtils.getValue(state.items, item.groupId, []);
         const newItems = ArrayUtils.updateValueWithId(oldItems, item);
+        state.items = StoreUtils.setValue(state.items, item.groupId, newItems);
+      } else {
+        const oldItems = StoreUtils.getValue(state.items, item.groupId, []);
+        const newItems = ArrayUtils.deleteValueWithId(oldItems, item);
         state.items = StoreUtils.setValue(state.items, item.groupId, newItems);
       }
     },

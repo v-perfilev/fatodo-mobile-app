@@ -34,11 +34,9 @@ export class WsEventHandler {
       case 'ITEM_CREATE':
         return this.handleItemCreateEvent;
       case 'ITEM_UPDATE':
-        return this.handleItemUpdateEvent;
       case 'ITEM_UPDATE_STATUS':
-        return this.handleItemUpdateStatusEvent;
       case 'ITEM_UPDATE_ARCHIVED':
-        return this.handleItemUpdateArchivedEvent;
+        return this.handleItemUpdateEvent;
       case 'ITEM_DELETE':
         return this.handleItemDeleteEvent;
       case 'ITEM_GROUP_CREATE':
@@ -109,26 +107,6 @@ export class WsEventHandler {
   };
 
   private handleItemUpdateEvent = (msg: WsEvent<Item>): void => {
-    const userId = msg.userId;
-    const groupId = msg.payload.groupId;
-    const itemId = msg.payload.id;
-    const userIds = [] as string[];
-    const itemEvent: ItemEvent = {userId, groupId, itemId, userIds};
-    const event: Event = {type: EventType.ITEM_UPDATE, itemEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
-  };
-
-  private handleItemUpdateStatusEvent = (msg: WsEvent<Item>): void => {
-    const userId = msg.userId;
-    const groupId = msg.payload.groupId;
-    const itemId = msg.payload.id;
-    const userIds = [] as string[];
-    const itemEvent: ItemEvent = {userId, groupId, itemId, userIds};
-    const event: Event = {type: EventType.ITEM_UPDATE, itemEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
-  };
-
-  private handleItemUpdateArchivedEvent = (msg: WsEvent<Item>): void => {
     const userId = msg.userId;
     const groupId = msg.payload.groupId;
     const itemId = msg.payload.id;

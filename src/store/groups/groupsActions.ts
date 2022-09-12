@@ -1,10 +1,11 @@
 import {AppDispatch} from '../store';
 import groupsSlice from './groupsSlice';
-import {Group} from '../../models/Group';
+import {Group, GroupMember} from '../../models/Group';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ItemService from '../../services/ItemService';
 import snackSlice from '../snack/snackSlice';
 import {InfoActions} from '../info/infoActions';
+import {Item} from '../../models/Item';
 
 const PREFIX = 'groups/';
 
@@ -27,6 +28,42 @@ export class GroupsActions {
 
   static setAllCollapsed = (value: boolean) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.setAllCollapsed(value));
+  };
+
+  static addGroup = (group: Group) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.addGroup(group));
+  };
+
+  static updateGroup = (group: Group) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.updateGroup(group));
+  };
+
+  static removeGroup = (groupId: string) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.removeGroup(groupId));
+  };
+
+  static addMembers = (groupId: string, members: GroupMember[]) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.addMembers({groupId, members}));
+  };
+
+  static updateMembers = (groupId: string, members: GroupMember[]) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.updateMembers({groupId, members}));
+  };
+
+  static removeMembers = (groupId: string, members: GroupMember[]) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.removeMembers({groupId, members}));
+  };
+
+  static addItem = (item: Item) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.addItem(item));
+  };
+
+  static updateItem = (item: Item) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.updateItem(item));
+  };
+
+  static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.removeItem(itemId));
   };
 
   static fetchGroupsThunk = createAsyncThunk(PREFIX + 'fetchGroups', async (_, thunkAPI) => {
