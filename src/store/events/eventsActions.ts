@@ -9,9 +9,10 @@ import eventsSlice from './eventsSlice';
 const PREFIX = 'events/';
 
 export class EventsActions {
-  static addEvent = (event: Event) => async (dispatch: AppDispatch) => {
+  static addEvent = (event: Event, isOwnEvent?: boolean) => async (dispatch: AppDispatch) => {
     dispatch(EventsActions.loadDependenciesThunk([event]));
     dispatch(eventsSlice.actions.addEvent(event));
+    !isOwnEvent && dispatch(eventsSlice.actions.increaseUnreadCounter());
   };
 
   static removeChatEvents = (chatId: string) => async (dispatch: AppDispatch) => {

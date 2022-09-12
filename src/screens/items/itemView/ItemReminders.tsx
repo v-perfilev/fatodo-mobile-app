@@ -14,8 +14,8 @@ const ItemReminders: FC = () => {
   return (
     <LabeledBox label={t('item:labels.reminders')}>
       <FHStack space="2">
-        {reminders.map((reminder) => (
-          <ChipBox key={reminder.id}>
+        {reminders.map((reminder, index) => (
+          <ChipBox key={index}>
             <ReminderView reminder={reminder} />
           </ChipBox>
         ))}

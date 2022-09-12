@@ -22,6 +22,9 @@ const eventsSlice = createSlice({
       const event = action.payload;
       state.events = EventUtils.filterEvents([...state.events, event]);
       state.count = state.count + 1;
+    },
+
+    increaseUnreadCounter: (state: EventsState) => {
       state.unreadCount = state.unreadCount + 1;
     },
 

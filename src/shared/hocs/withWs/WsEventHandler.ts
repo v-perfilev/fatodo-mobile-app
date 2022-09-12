@@ -103,7 +103,8 @@ export class WsEventHandler {
     const userIds = [] as string[];
     const itemEvent: ItemEvent = {userId, groupId, itemId, userIds};
     const event: Event = {type: EventType.ITEM_CREATE, itemEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
+    const isOwnEvent = this.account.id === userId;
+    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   private handleItemUpdateEvent = (msg: WsEvent<Item>): void => {
@@ -113,7 +114,8 @@ export class WsEventHandler {
     const userIds = [] as string[];
     const itemEvent: ItemEvent = {userId, groupId, itemId, userIds};
     const event: Event = {type: EventType.ITEM_UPDATE, itemEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
+    const isOwnEvent = this.account.id === userId;
+    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   private handleItemDeleteEvent = (msg: WsEvent<Item>): void => {
@@ -127,7 +129,8 @@ export class WsEventHandler {
     const userIds = [] as string[];
     const itemEvent: ItemEvent = {userId, groupId, userIds};
     const event: Event = {type: EventType.ITEM_GROUP_CREATE, itemEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
+    const isOwnEvent = this.account.id === userId;
+    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   private handleItemGroupUpdateEvent = (msg: WsEvent<Group>): void => {
@@ -136,7 +139,8 @@ export class WsEventHandler {
     const userIds = [] as string[];
     const itemEvent: ItemEvent = {userId, groupId, userIds};
     const event: Event = {type: EventType.ITEM_GROUP_UPDATE, itemEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
+    const isOwnEvent = this.account.id === userId;
+    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   private handleItemGroupDeleteEvent = (msg: WsEvent<Group>): void => {
@@ -152,7 +156,8 @@ export class WsEventHandler {
     const userIds = msg.payload.map((m) => m.userId);
     const itemEvent: ItemEvent = {userId, groupId, userIds};
     const event: Event = {type: EventType.ITEM_MEMBER_ADD, itemEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
+    const isOwnEvent = this.account.id === userId;
+    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   private handleItemMemberDeleteEvent = (msg: WsEvent<GroupMember[]>): void => {
@@ -166,7 +171,8 @@ export class WsEventHandler {
       const userIds = msg.payload.map((m) => m.userId);
       const itemEvent: ItemEvent = {userId, groupId, userIds};
       const event: Event = {type: EventType.ITEM_MEMBER_DELETE, itemEvent, date: msg.date};
-      this.dispatch(EventsActions.addEvent(event));
+      const isOwnEvent = this.account.id === userId;
+      this.dispatch(EventsActions.addEvent(event, isOwnEvent));
     }
   };
 
@@ -180,7 +186,8 @@ export class WsEventHandler {
       const userIds = [msg.payload.userId];
       const itemEvent: ItemEvent = {userId, groupId, userIds};
       const event: Event = {type: EventType.ITEM_MEMBER_LEAVE, itemEvent, date: msg.date};
-      this.dispatch(EventsActions.addEvent(event));
+      const isOwnEvent = this.account.id === userId;
+      this.dispatch(EventsActions.addEvent(event, isOwnEvent));
     }
   };
 
@@ -191,7 +198,8 @@ export class WsEventHandler {
     const role = msg.payload.permission;
     const itemEvent: ItemEvent = {userId, groupId, userIds, role};
     const event: Event = {type: EventType.ITEM_MEMBER_ROLE, itemEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
+    const isOwnEvent = this.account.id === userId;
+    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   /*
@@ -204,7 +212,8 @@ export class WsEventHandler {
     const userIds = msg.payload.members.map((m) => m.userId);
     const chatEvent: ChatEvent = {userId, chatId, userIds};
     const event: Event = {type: EventType.CHAT_CREATE, chatEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
+    const isOwnEvent = this.account.id === userId;
+    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   private handleChatUpdateEvent = (msg: WsEvent<Chat>): void => {
@@ -213,7 +222,8 @@ export class WsEventHandler {
     const userIds = [] as string[];
     const chatEvent: ChatEvent = {userId, chatId, userIds};
     const event: Event = {type: EventType.CHAT_UPDATE, chatEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
+    const isOwnEvent = this.account.id === userId;
+    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   private handleChatMemberAddEvent = (msg: WsEvent<ChatMember[]>): void => {
@@ -227,7 +237,8 @@ export class WsEventHandler {
       const userIds = msg.payload.map((m) => m.userId);
       const chatEvent: ChatEvent = {userId, chatId, userIds};
       const event: Event = {type: EventType.CHAT_MEMBER_ADD, chatEvent, date: msg.date};
-      this.dispatch(EventsActions.addEvent(event));
+      const isOwnEvent = this.account.id === userId;
+      this.dispatch(EventsActions.addEvent(event, isOwnEvent));
     }
   };
 
@@ -242,7 +253,8 @@ export class WsEventHandler {
       const userIds = msg.payload.map((m) => m.userId);
       const chatEvent: ChatEvent = {userId, chatId, userIds};
       const event: Event = {type: EventType.CHAT_MEMBER_DELETE, chatEvent, date: msg.date};
-      this.dispatch(EventsActions.addEvent(event));
+      const isOwnEvent = this.account.id === userId;
+      this.dispatch(EventsActions.addEvent(event, isOwnEvent));
     }
   };
 
@@ -256,7 +268,8 @@ export class WsEventHandler {
       const userIds = [msg.payload.userId];
       const chatEvent: ChatEvent = {userId, chatId, userIds};
       const event: Event = {type: EventType.CHAT_MEMBER_LEAVE, chatEvent, date: msg.date};
-      this.dispatch(EventsActions.addEvent(event));
+      const isOwnEvent = this.account.id === userId;
+      this.dispatch(EventsActions.addEvent(event, isOwnEvent));
     }
   };
 
@@ -284,7 +297,8 @@ export class WsEventHandler {
     const event: Event = {type: EventType.CONTACT_SEND, contactEvent, date: msg.date};
     this.dispatch(EventsActions.removeContactEvents(msg.payload.requesterId));
     this.dispatch(EventsActions.removeContactEvents(msg.payload.recipientId));
-    this.dispatch(EventsActions.addEvent(event));
+    const isOwnEvent = this.account.id === firstUserId;
+    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   private handleContactAcceptEvent = (msg: WsEvent<ContactRequest>): void => {
@@ -294,7 +308,8 @@ export class WsEventHandler {
     const event: Event = {type: EventType.CONTACT_ACCEPT, contactEvent, date: msg.date};
     this.dispatch(EventsActions.removeContactEvents(msg.payload.requesterId));
     this.dispatch(EventsActions.removeContactEvents(msg.payload.recipientId));
-    this.dispatch(EventsActions.addEvent(event));
+    const isOwnEvent = this.account.id === firstUserId;
+    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   private handleContactRequestRemoveEvent = (msg: WsEvent<ContactRequest>): void => {
@@ -318,7 +333,8 @@ export class WsEventHandler {
     const commentId = msg.payload.id;
     const commentEvent: CommentEvent = {userId, parentId, targetId, commentId};
     const event: Event = {type: EventType.COMMENT_CREATE, commentEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
+    const isOwnEvent = this.account.id === userId;
+    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   private handleCommentReactionIncomingEvent = (msg: WsEvent<CommentReaction>): void => {

@@ -39,7 +39,7 @@ const withSnackDisplay = (Component: ComponentType) => (props: any) => {
           title: message,
           borderColor: color,
           borderWidth: 2,
-          bgColor: 'gray.100',
+          bgColor: 'white',
           _title: {color},
           id: key,
           onCloseComplete,
