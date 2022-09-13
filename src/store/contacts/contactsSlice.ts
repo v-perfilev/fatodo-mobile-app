@@ -17,7 +17,9 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state: ContactsState) => {
+      Object.assign(state, initialState);
+    },
 
     addRelation: (state: ContactsState, action: PayloadAction<ContactRelation>) => {
       const relation = action.payload;

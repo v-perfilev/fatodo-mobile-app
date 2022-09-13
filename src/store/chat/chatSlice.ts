@@ -45,11 +45,13 @@ const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state: ChatState) => {
+      Object.assign(state, initialState);
+    },
 
     selectChat: (state: ChatState, action: PayloadAction<Chat>) => {
-      const chat = action.payload;
-      return {...initialState, chat};
+      Object.assign(state, initialState);
+      state.chat = action.payload;
     },
 
     addMessage: (state: ChatState, action: PayloadAction<Message>) => {
@@ -147,9 +149,9 @@ const chatSlice = createSlice({
     /*
     fetchChat
     */
-    builder.addCase(ChatActions.fetchChatThunk.pending, () => {
-      const loading = true;
-      return {...initialState, loading};
+    builder.addCase(ChatActions.fetchChatThunk.pending, (state: ChatState) => {
+      Object.assign(state, initialState);
+      state.loading = true;
     });
     builder.addCase(ChatActions.fetchChatThunk.fulfilled, (state: ChatState, action) => {
       state.chat = action.payload;

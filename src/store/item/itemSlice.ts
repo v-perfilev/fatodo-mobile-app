@@ -15,7 +15,9 @@ const itemSlice = createSlice({
   name: 'item',
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state: ItemState) => {
+      Object.assign(state, initialState);
+    },
 
     setGroup: (state: ItemState, action: PayloadAction<Group>) => {
       state.group = action.payload;
@@ -29,16 +31,16 @@ const itemSlice = createSlice({
     /*
     fetchItem
     */
-    builder.addCase(ItemActions.fetchItemThunk.pending, () => {
-      const loading = true;
-      return {...initialState, loading};
+    builder.addCase(ItemActions.fetchItemThunk.pending, (state: ItemState) => {
+      Object.assign(state, initialState);
+      state.loading = true;
     });
     builder.addCase(ItemActions.fetchItemThunk.fulfilled, (state: ItemState, action) => {
       state.item = action.payload;
       state.loading = false;
     });
-    builder.addCase(ItemActions.fetchItemThunk.rejected, () => {
-      return {...initialState};
+    builder.addCase(ItemActions.fetchItemThunk.rejected, (state: ItemState) => {
+      Object.assign(state, initialState);
     });
 
     /*
@@ -66,8 +68,8 @@ const itemSlice = createSlice({
       state.reminders = action.meta.arg.reminders;
       state.loading = false;
     });
-    builder.addCase(ItemActions.createItemThunk.rejected, () => {
-      return {...initialState};
+    builder.addCase(ItemActions.createItemThunk.rejected, (state: ItemState) => {
+      Object.assign(state, initialState);
     });
 
     /*

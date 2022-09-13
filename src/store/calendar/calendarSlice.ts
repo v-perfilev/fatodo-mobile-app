@@ -13,7 +13,9 @@ const calendarSlice = createSlice({
   name: 'calendar',
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state: CalendarState) => {
+      Object.assign(state, initialState);
+    },
   },
   extraReducers: (builder) => {
     /*

@@ -33,7 +33,9 @@ const groupsSlice = createSlice({
   name: 'groups',
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state: GroupsState) => {
+      Object.assign(state, initialState);
+    },
 
     setGroups: (state: GroupsState, action: PayloadAction<Group[]>) => {
       state.groups = action.payload;
@@ -176,7 +178,7 @@ const groupsSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(GroupsActions.refreshGroupsThunk.fulfilled, (state: GroupsState, action) => {
-      state = initialState;
+      Object.assign(state, initialState);
       state.groups = action.payload;
     });
     builder.addCase(GroupsActions.refreshGroupsThunk.rejected, (state: GroupsState) => {

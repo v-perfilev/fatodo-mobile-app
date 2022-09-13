@@ -36,7 +36,9 @@ const chatsSlice = createSlice({
   name: 'chats',
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state: ChatsState) => {
+      Object.assign(state, initialState);
+    },
 
     addChat: (state: ChatsState, action: PayloadAction<Chat>) => {
       const chat = action.payload;

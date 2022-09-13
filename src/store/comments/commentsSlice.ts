@@ -35,7 +35,9 @@ const commentsSlice = createSlice({
   name: 'comments',
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state: CommentsState) => {
+      Object.assign(state, initialState);
+    },
 
     init: (state: CommentsState, action: PayloadAction<string>) => {
       state.targetId = action.payload;

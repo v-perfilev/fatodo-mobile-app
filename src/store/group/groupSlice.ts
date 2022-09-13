@@ -23,11 +23,13 @@ const groupSlice = createSlice({
   name: 'group',
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state: GroupState) => {
+      Object.assign(state, initialState);
+    },
 
     setGroup: (state: GroupState, action: PayloadAction<Group>) => {
-      const group = action.payload;
-      return {...initialState, group};
+      Object.assign(state, initialState);
+      state.group = action.payload;
     },
 
     updateGroup: (state: GroupState, action: PayloadAction<Group>) => {
@@ -99,16 +101,16 @@ const groupSlice = createSlice({
     /*
     fetchGroup
     */
-    builder.addCase(GroupActions.fetchGroupThunk.pending, () => {
-      const loading = true;
-      return {...initialState, loading};
+    builder.addCase(GroupActions.fetchGroupThunk.pending, (state: GroupState) => {
+      Object.assign(state, initialState);
+      state.loading = true;
     });
     builder.addCase(GroupActions.fetchGroupThunk.fulfilled, (state: GroupState, action) => {
       state.group = action.payload;
       state.loading = false;
     });
-    builder.addCase(GroupActions.fetchGroupThunk.rejected, () => {
-      return {...initialState};
+    builder.addCase(GroupActions.fetchGroupThunk.rejected, (state: GroupState) => {
+      Object.assign(state, initialState);
     });
 
     /*
@@ -199,8 +201,8 @@ const groupSlice = createSlice({
       state.group = action.payload;
       state.loading = false;
     });
-    builder.addCase(GroupActions.updateGroupThunk.rejected, () => {
-      return {...initialState};
+    builder.addCase(GroupActions.updateGroupThunk.rejected, (state: GroupState) => {
+      Object.assign(state, initialState);
     });
   },
 });

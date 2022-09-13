@@ -35,7 +35,7 @@ export class AuthActions {
   static logout = () => (dispatch: AppDispatch) => {
     SecurityUtils.clearAuthToken();
     NotificationsRemote.unregisterDeviceFromFirebase();
-    dispatch(authSlice.actions.clearAuth());
+    dispatch(authSlice.actions.reset());
   };
 
   static registerThunk = createAsyncThunk(PREFIX + 'register', async (dto: RegistrationDTO, thunkAPI) => {

@@ -16,7 +16,9 @@ const eventsSlice = createSlice({
   name: 'events',
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state: EventsState) => {
+      Object.assign(state, initialState);
+    },
 
     addEvent: (state: EventsState, action: PayloadAction<Event>) => {
       const event = action.payload;

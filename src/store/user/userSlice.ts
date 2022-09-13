@@ -14,7 +14,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state: UserState) => {
+      Object.assign(state, initialState);
+    },
 
     setUser: (state: UserState, action: PayloadAction<User>) => {
       state.user = action.payload;
@@ -24,9 +26,9 @@ const userSlice = createSlice({
     /*
     fetchUser
     */
-    builder.addCase(UserActions.fetchUserThunk.pending, () => {
-      const loading = true;
-      return {...initialState, loading};
+    builder.addCase(UserActions.fetchUserThunk.pending, (state: UserState) => {
+      Object.assign(state, initialState);
+      state.loading = true;
     });
     builder.addCase(UserActions.fetchUserThunk.fulfilled, (state: UserState, action) => {
       state.user = action.payload;
