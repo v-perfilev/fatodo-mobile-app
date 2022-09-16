@@ -46,7 +46,7 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
   const [formValues, setFormValues] = useState<SignUpFormValues>();
 
   const handleClickOnSubmit = (values: SignUpFormValues): void => {
-    dispatch(AuthActions.loading(true));
+    dispatch(AuthActions.setLoading(true));
     requestAnimationFrame(() => {
       setFormValues(values);
       requestCaptchaToken();
@@ -73,7 +73,7 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
 
   useEffect(() => {
     if (captchaToken === 'error' && loading) {
-      dispatch(AuthActions.loading(false));
+      dispatch(AuthActions.setLoading(false));
     } else if (captchaToken && loading) {
       handleSubmit();
     }

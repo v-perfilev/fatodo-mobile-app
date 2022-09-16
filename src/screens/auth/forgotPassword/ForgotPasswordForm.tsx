@@ -36,7 +36,7 @@ const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: Forg
   const [formValues, setFormValues] = useState<ForgotPasswordFormValues>();
 
   const handleClickOnSubmit = (values: ForgotPasswordFormValues): void => {
-    dispatch(AuthActions.loading(true));
+    dispatch(AuthActions.setLoading(true));
     requestAnimationFrame(() => {
       setFormValues(values);
       requestCaptchaToken();
@@ -56,7 +56,7 @@ const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: Forg
 
   useEffect(() => {
     if (captchaToken === 'error' && loading) {
-      dispatch(AuthActions.loading(false));
+      dispatch(AuthActions.setLoading(false));
     } else if (captchaToken && formValues && loading) {
       handleSubmit();
     }

@@ -28,7 +28,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
 
   const login = (): void => {
     const tryToLogin = async (token: string): Promise<void> => {
-      token && (await dispatch(AuthActions.login()));
+      token && (await dispatch(AuthActions.setIsAuthenticated()));
       token && (await dispatch(AuthActions.fetchAccountThunk()));
     };
     SecurityUtils.getAuthToken().then((token) => tryToLogin(token).finally(() => setReady(true)));

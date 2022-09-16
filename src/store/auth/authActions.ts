@@ -1,17 +1,18 @@
 import {SecurityUtils} from '../../shared/utils/SecurityUtils';
 import authSlice from './authSlice';
-import {AppDispatch} from '../store';
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import {AppDispatch, AsyncThunkConfig} from '../store';
 import {RegistrationDTO} from '../../models/dto/RegistrationDTO';
 import AuthService from '../../services/AuthService';
 import {LoginDTO} from '../../models/dto/LoginDTO';
 import UserService from '../../services/UserService';
 import {LanguageUtils} from '../../shared/utils/LanguageUtils';
 import {ForgotPasswordDTO} from '../../models/dto/ForgotPasswordDTO';
-import snackSlice from '../snack/snackSlice';
 import {ChangePasswordDTO} from '../../models/dto/ChangePasswordDTO';
 import NotificationsRemote from '../../shared/push/notificationsRemote';
 import {ChangeLanguageDTO} from '../../models/dto/ChangeLanguageDTO';
+import {SnackActions} from '../snack/snackActions';
+import {createAsyncThunk} from '@reduxjs/toolkit';
+import {UserAccount} from '../../models/User';
 
 const PREFIX = 'auth/';
 
@@ -24,12 +25,12 @@ export class AuthActions {
     dispatch(authSlice.actions.setIsSleepMode(isSleepMode));
   };
 
-  static login = () => (dispatch: AppDispatch) => {
-    dispatch(authSlice.actions.authenticated());
+  static setIsAuthenticated = () => (dispatch: AppDispatch) => {
+    dispatch(authSlice.actions.setIsAuthenticated(true));
   };
 
-  static loading = (value: boolean) => (dispatch: AppDispatch) => {
-    dispatch(authSlice.actions.loading(value));
+  static setLoading = (value: boolean) => (dispatch: AppDispatch) => {
+    dispatch(authSlice.actions.setLoading(value));
   };
 
   static logout = () => (dispatch: AppDispatch) => {
@@ -38,43 +39,64 @@ export class AuthActions {
     dispatch(authSlice.actions.reset());
   };
 
-  static registerThunk = createAsyncThunk(PREFIX + 'register', async (dto: RegistrationDTO, thunkAPI) => {
-    await AuthService.register(dto);
-    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'auth.registered', variant: 'info'}));
-  });
+  static registerThunk = createAsyncThunk<void, RegistrationDTO, AsyncThunkConfig>(
+    PREFIX + 'register',
+    async (dto, thunkAPI) => {
+      await AuthService.register(dto);
+      thunkAPI.dispatch(SnackActions.handleCode('auth.registered', 'info'));
+    },
+  );
 
-  static authenticateThunk = createAsyncThunk(PREFIX + 'authenticate', async (dto: LoginDTO, thunkAPI) => {
-    const response = await AuthService.authenticate(dto);
-    const token = SecurityUtils.parseTokenFromResponse(response);
-    await SecurityUtils.saveAuthToken(dto.user, token);
-    await thunkAPI.dispatch(AuthActions.fetchAccountThunk());
-  });
+  static authenticateThunk = createAsyncThunk<void, LoginDTO, AsyncThunkConfig>(
+    PREFIX + 'authenticate',
+    async (dto, thunkAPI) => {
+      const response = await AuthService.authenticate(dto);
+      const token = SecurityUtils.parseTokenFromResponse(response);
+      await SecurityUtils.saveAuthToken(dto.user, token);
+      await thunkAPI.dispatch(AuthActions.fetchAccountThunk());
+    },
+  );
 
-  static fetchAccountThunk = createAsyncThunk(PREFIX + 'fetchAccount', async () => {
-    const response = await UserService.getCurrent();
-    const account = response.data;
-    LanguageUtils.setLanguageFromUser(account);
-    return account;
-  });
+  static fetchAccountThunk = createAsyncThunk<UserAccount, void, AsyncThunkConfig>(
+    PREFIX + 'fetchAccount',
+    async () => {
+      const response = await UserService.getCurrent();
+      const account = response.data;
+      LanguageUtils.setLanguageFromUser(account);
+      return account;
+    },
+  );
 
-  static forgotPasswordThunk = createAsyncThunk(PREFIX + 'forgotPassword', async (dto: ForgotPasswordDTO, thunkAPI) => {
-    await AuthService.requestResetPasswordCode(dto);
-    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'auth.afterForgotPassword', variant: 'info'}));
-  });
+  static forgotPasswordThunk = createAsyncThunk<void, ForgotPasswordDTO, AsyncThunkConfig>(
+    PREFIX + 'forgotPassword',
+    async (dto, thunkAPI) => {
+      await AuthService.requestResetPasswordCode(dto);
+      thunkAPI.dispatch(SnackActions.handleCode('auth.afterForgotPassword', 'info'));
+    },
+  );
 
-  static changePasswordThunk = createAsyncThunk(PREFIX + 'changePassword', async (dto: ChangePasswordDTO, thunkAPI) => {
-    await UserService.changePassword(dto);
-    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'auth.afterChangePassword', variant: 'info'}));
-  });
+  static changePasswordThunk = createAsyncThunk<void, ChangePasswordDTO, AsyncThunkConfig>(
+    PREFIX + 'changePassword',
+    async (dto, thunkAPI) => {
+      await UserService.changePassword(dto);
+      thunkAPI.dispatch(SnackActions.handleCode('auth.afterChangePassword', 'info'));
+    },
+  );
 
-  static changeLanguageThunk = createAsyncThunk(PREFIX + 'changeLanguage', async (dto: ChangeLanguageDTO, thunkAPI) => {
-    await UserService.changeLanguage(dto);
-    await thunkAPI.dispatch(AuthActions.fetchAccountThunk());
-  });
+  static changeLanguageThunk = createAsyncThunk<void, ChangeLanguageDTO, AsyncThunkConfig>(
+    PREFIX + 'changeLanguage',
+    async (dto, thunkAPI) => {
+      await UserService.changeLanguage(dto);
+      await thunkAPI.dispatch(AuthActions.fetchAccountThunk());
+    },
+  );
 
-  static updateAccountThunk = createAsyncThunk(PREFIX + 'updateAccount', async (formData: FormData, thunkAPI) => {
-    await UserService.updateAccount(formData);
-    await thunkAPI.dispatch(AuthActions.fetchAccountThunk());
-    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'auth.afterUpdateAccount', variant: 'info'}));
-  });
+  static updateAccountThunk = createAsyncThunk<void, FormData, AsyncThunkConfig>(
+    PREFIX + 'updateAccount',
+    async (formData, thunkAPI) => {
+      await UserService.updateAccount(formData);
+      await thunkAPI.dispatch(AuthActions.fetchAccountThunk());
+      thunkAPI.dispatch(SnackActions.handleCode('auth.afterUpdateAccount', 'info'));
+    },
+  );
 }

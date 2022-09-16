@@ -40,7 +40,7 @@ const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
   const [formValues, setFormValues] = useState<SignInFormValues>();
 
   const handleClickOnSubmit = (values: SignInFormValues): void => {
-    dispatch(AuthActions.loading(true));
+    dispatch(AuthActions.setLoading(true));
     requestAnimationFrame(() => {
       setFormValues(values);
       requestCaptchaToken();
@@ -59,7 +59,7 @@ const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
 
   useEffect(() => {
     if (captchaToken === 'error' && loading) {
-      dispatch(AuthActions.loading(false));
+      dispatch(AuthActions.setLoading(false));
     } else if (captchaToken && formValues && loading) {
       handleSubmit();
     }

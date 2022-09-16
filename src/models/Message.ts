@@ -65,11 +65,11 @@ export enum EventMessageType {
   DELETE_MEMBERS = 'DELETE_MEMBERS',
 }
 
-export const buildEventMessage = (userId: string, type: EventMessageType, ids: string[]): Message => {
+export const buildEventMessage = (chatId: string, userId: string, type: EventMessageType, ids: string[]): Message => {
   const params: EventMessageParams = {type, ids};
   return {
     id: ID_STUB,
-    chatId: undefined,
+    chatId,
     userId,
     text: JSON.stringify(params),
     reference: undefined,

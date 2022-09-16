@@ -27,15 +27,15 @@ const authSlice = createSlice({
       state.isSleepMode = action.payload;
     },
 
-    authenticated: (state: AuthState) => {
-      state.isAuthenticated = true;
+    setIsAuthenticated: (state: AuthState, action: PayloadAction<boolean>) => {
+      state.isAuthenticated = action.payload;
     },
 
-    account: (state: AuthState, action: PayloadAction<UserAccount>) => {
+    setAccount: (state: AuthState, action: PayloadAction<UserAccount>) => {
       state.account = action.payload;
     },
 
-    loading: (state: AuthState, action: PayloadAction<boolean>) => {
+    setLoading: (state: AuthState, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
   },
@@ -43,57 +43,57 @@ const authSlice = createSlice({
     /*
     register
     */
-    builder.addCase(AuthActions.registerThunk.pending, (state: AuthState) => {
-      Object.assign(state, initialState);
-      state.loading = true;
+    builder.addCase(AuthActions.registerThunk.pending, (state, action) => {
+      authSlice.caseReducers.reset(state);
+      authSlice.caseReducers.setLoading(state, {...action, payload: true});
     });
-    builder.addCase(AuthActions.registerThunk.fulfilled, (state: AuthState) => {
-      Object.assign(state, initialState);
+    builder.addCase(AuthActions.registerThunk.fulfilled, (state) => {
+      authSlice.caseReducers.reset(state);
     });
-    builder.addCase(AuthActions.registerThunk.rejected, (state: AuthState) => {
-      Object.assign(state, initialState);
+    builder.addCase(AuthActions.registerThunk.rejected, (state) => {
+      authSlice.caseReducers.reset(state);
     });
 
     /*
     authenticate
      */
-    builder.addCase(AuthActions.authenticateThunk.pending, (state: AuthState) => {
-      Object.assign(state, initialState);
-      state.loading = true;
+    builder.addCase(AuthActions.authenticateThunk.pending, (state, action) => {
+      authSlice.caseReducers.reset(state);
+      authSlice.caseReducers.setLoading(state, {...action, payload: true});
     });
-    builder.addCase(AuthActions.authenticateThunk.fulfilled, (state: AuthState) => {
-      state.isAuthenticated = true;
+    builder.addCase(AuthActions.authenticateThunk.fulfilled, (state, action) => {
+      authSlice.caseReducers.setIsAuthenticated(state, {...action, payload: true});
     });
-    builder.addCase(AuthActions.authenticateThunk.rejected, (state: AuthState) => {
-      Object.assign(state, initialState);
+    builder.addCase(AuthActions.authenticateThunk.rejected, (state) => {
+      authSlice.caseReducers.reset(state);
     });
 
     /*
     fetchAccount
      */
-    builder.addCase(AuthActions.fetchAccountThunk.pending, (state: AuthState) => {
-      state.loading = true;
+    builder.addCase(AuthActions.fetchAccountThunk.pending, (state, action) => {
+      authSlice.caseReducers.setLoading(state, {...action, payload: true});
     });
-    builder.addCase(AuthActions.fetchAccountThunk.fulfilled, (state: AuthState, action) => {
-      state.account = action.payload;
-      state.loading = false;
+    builder.addCase(AuthActions.fetchAccountThunk.fulfilled, (state, action) => {
+      authSlice.caseReducers.setAccount(state, action);
+      authSlice.caseReducers.setLoading(state, {...action, payload: false});
     });
-    builder.addCase(AuthActions.fetchAccountThunk.rejected, (state: AuthState) => {
-      Object.assign(state, initialState);
+    builder.addCase(AuthActions.fetchAccountThunk.rejected, (state) => {
+      authSlice.caseReducers.reset(state);
     });
 
     /*
     forgotPassword
     */
-    builder.addCase(AuthActions.forgotPasswordThunk.pending, (state: AuthState) => {
-      Object.assign(state, initialState);
-      state.loading = true;
+    builder.addCase(AuthActions.forgotPasswordThunk.pending, (state, action) => {
+      authSlice.caseReducers.reset(state);
+      authSlice.caseReducers.setLoading(state, {...action, payload: true});
     });
-    builder.addCase(AuthActions.forgotPasswordThunk.fulfilled, (state: AuthState) => {
-      Object.assign(state, initialState);
+    builder.addCase(AuthActions.forgotPasswordThunk.fulfilled, (state) => {
+      authSlice.caseReducers.reset(state);
     });
-    builder.addCase(AuthActions.forgotPasswordThunk.rejected, (state: AuthState) => {
-      Object.assign(state, initialState);
+    builder.addCase(AuthActions.forgotPasswordThunk.rejected, (state) => {
+      authSlice.caseReducers.reset(state);
     });
   },
 });
