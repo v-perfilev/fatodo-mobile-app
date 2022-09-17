@@ -10,7 +10,6 @@ const initialState: ContactsState = {
   relations: [],
   outcomingRequests: [],
   incomingRequests: [],
-  loading: false,
 };
 
 const contactsSlice = createSlice({
@@ -21,99 +20,155 @@ const contactsSlice = createSlice({
       Object.assign(state, initialState);
     },
 
+    setRelations: (state: ContactsState, action: PayloadAction<ContactRelation[]>) => {
+      state.relations = action.payload;
+    },
+
     addRelation: (state: ContactsState, action: PayloadAction<ContactRelation>) => {
-      const relation = action.payload;
-      state.relations = [...state.relations, relation];
-      state.relationCount = state.relationCount + 1;
+      state.relations = [action.payload, ...state.relations];
     },
 
     removeRelation: (state: ContactsState, action: PayloadAction<string>) => {
-      const userId = action.payload;
-      state.relations = state.relations.filter((relation) => relation.secondUserId !== userId);
+      state.relations = state.relations.filter((relation) => relation.secondUserId !== action.payload);
+    },
+
+    setRelationCounter: (state: ContactsState, action: PayloadAction<number>) => {
+      state.relationCount = action.payload;
+    },
+
+    incrementRelationCounter: (state: ContactsState) => {
+      state.relationCount = state.relationCount + 1;
+    },
+
+    decrementRelationCounter: (state: ContactsState) => {
       state.relationCount = state.relationCount - 1;
     },
 
+    setIncomingRequests: (state: ContactsState, action: PayloadAction<ContactRequest[]>) => {
+      state.incomingRequests = action.payload;
+    },
+
     addIncomingRequest: (state: ContactsState, action: PayloadAction<ContactRequest>) => {
-      const request = action.payload;
-      state.incomingRequests = [...state.incomingRequests, request];
-      state.incomingRequestCount = state.incomingRequestCount + 1;
+      state.incomingRequests = [action.payload, ...state.incomingRequests];
     },
 
     removeIncomingRequest: (state: ContactsState, action: PayloadAction<string>) => {
-      const userId = action.payload;
-      state.incomingRequests = state.incomingRequests.filter((request) => request.requesterId !== userId);
+      state.incomingRequests = state.incomingRequests.filter((request) => request.requesterId !== action.payload);
+    },
+
+    setIncomingRequestCounter: (state: ContactsState, action: PayloadAction<number>) => {
+      state.incomingRequestCount = action.payload;
+    },
+
+    incrementIncomingRequestCounter: (state: ContactsState) => {
+      state.incomingRequestCount = state.incomingRequestCount + 1;
+    },
+
+    decrementIncomingRequestCounter: (state: ContactsState) => {
       state.incomingRequestCount = state.incomingRequestCount - 1;
     },
 
+    setOutcomingRequests: (state: ContactsState, action: PayloadAction<ContactRequest[]>) => {
+      state.outcomingRequests = action.payload;
+    },
+
     addOutcomingRequest: (state: ContactsState, action: PayloadAction<ContactRequest>) => {
-      const request = action.payload;
-      state.incomingRequests = [...state.outcomingRequests, request];
-      state.incomingRequestCount = state.outcomingRequestCount + 1;
+      state.outcomingRequests = [action.payload, ...state.outcomingRequests];
     },
 
     removeOutcomingRequest: (state: ContactsState, action: PayloadAction<string>) => {
-      const userId = action.payload;
-      state.incomingRequests = state.outcomingRequests.filter((request) => request.recipientId !== userId);
-      state.incomingRequestCount = state.outcomingRequestCount - 1;
+      state.outcomingRequests = state.outcomingRequests.filter((request) => request.recipientId !== action.payload);
+    },
+
+    setOutcomingRequestCounter: (state: ContactsState, action: PayloadAction<number>) => {
+      state.outcomingRequestCount = action.payload;
+    },
+
+    incrementOutcomingRequestCounter: (state: ContactsState) => {
+      state.outcomingRequestCount = state.outcomingRequestCount + 1;
+    },
+
+    decrementOutcomingRequestCounter: (state: ContactsState) => {
+      state.outcomingRequestCount = state.outcomingRequestCount - 1;
     },
   },
   extraReducers: (builder) => {
     /*
     fetchInfo
     */
-    builder.addCase(ContactsActions.fetchInfoThunk.pending, (state: ContactsState) => {
-      state.loading = true;
-    });
-    builder.addCase(ContactsActions.fetchInfoThunk.fulfilled, (state: ContactsState, action) => {
-      state.relationCount = action.payload.relationCount;
-      state.outcomingRequestCount = action.payload.outcomingRequestCount;
-      state.incomingRequestCount = action.payload.incomingRequestCount;
-      state.loading = false;
-    });
-    builder.addCase(ContactsActions.fetchInfoThunk.rejected, (state: ContactsState) => {
-      state.loading = false;
+    builder.addCase(ContactsActions.fetchInfoThunk.fulfilled, (state, action) => {
+      contactsSlice.caseReducers.setRelationCounter(state, {...action, payload: action.payload.relationCount});
+      contactsSlice.caseReducers.setIncomingRequestCounter(state, {
+        ...action,
+        payload: action.payload.incomingRequestCount,
+      });
+      contactsSlice.caseReducers.setOutcomingRequestCounter(state, {
+        ...action,
+        payload: action.payload.outcomingRequestCount,
+      });
     });
 
     /*
     fetchRelations
     */
-    builder.addCase(ContactsActions.fetchRelationsThunk.pending, (state: ContactsState) => {
-      state.loading = true;
-    });
-    builder.addCase(ContactsActions.fetchRelationsThunk.fulfilled, (state: ContactsState, action) => {
-      state.relations = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(ContactsActions.fetchRelationsThunk.rejected, (state: ContactsState) => {
-      state.loading = false;
-    });
-
-    /*
-    fetchOutcomingRequests
-    */
-    builder.addCase(ContactsActions.fetchOutcomingRequestsThunk.pending, (state: ContactsState) => {
-      state.loading = true;
-    });
-    builder.addCase(ContactsActions.fetchOutcomingRequestsThunk.fulfilled, (state: ContactsState, action) => {
-      state.outcomingRequests = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(ContactsActions.fetchOutcomingRequestsThunk.rejected, (state: ContactsState) => {
-      state.loading = false;
+    builder.addCase(ContactsActions.fetchRelationsThunk.fulfilled, (state, action) => {
+      contactsSlice.caseReducers.setRelations(state, action);
     });
 
     /*
     fetchIncomingRequests
     */
-    builder.addCase(ContactsActions.fetchIncomingRequestsThunk.pending, (state: ContactsState) => {
-      state.loading = true;
+    builder.addCase(ContactsActions.fetchIncomingRequestsThunk.fulfilled, (state, action) => {
+      contactsSlice.caseReducers.setIncomingRequests(state, action);
     });
-    builder.addCase(ContactsActions.fetchIncomingRequestsThunk.fulfilled, (state: ContactsState, action) => {
-      state.incomingRequests = action.payload;
-      state.loading = false;
+
+    /*
+    fetchOutcomingRequests
+    */
+    builder.addCase(ContactsActions.fetchOutcomingRequestsThunk.fulfilled, (state, action) => {
+      contactsSlice.caseReducers.setOutcomingRequests(state, action);
     });
-    builder.addCase(ContactsActions.fetchIncomingRequestsThunk.rejected, (state: ContactsState) => {
-      state.loading = false;
+
+    /*
+    removeRelation
+    */
+    builder.addCase(ContactsActions.removeRelationThunk.fulfilled, (state, action) => {
+      contactsSlice.caseReducers.removeRelation(state, action);
+      contactsSlice.caseReducers.decrementRelationCounter(state);
+    });
+
+    /*
+    sendRequest
+    */
+    builder.addCase(ContactsActions.sendRequestThunk.fulfilled, (state, action) => {
+      contactsSlice.caseReducers.addOutcomingRequest(state, action);
+      contactsSlice.caseReducers.incrementOutcomingRequestCounter(state);
+    });
+
+    /*
+    acceptIncomingRequest
+    */
+    builder.addCase(ContactsActions.acceptIncomingRequestThunk.fulfilled, (state, action) => {
+      contactsSlice.caseReducers.removeIncomingRequest(state, {...action, payload: action.payload.secondUserId});
+      contactsSlice.caseReducers.decrementIncomingRequestCounter(state);
+      contactsSlice.caseReducers.addRelation(state, action);
+      contactsSlice.caseReducers.incrementRelationCounter(state);
+    });
+
+    /*
+    declineIncomingRequest
+    */
+    builder.addCase(ContactsActions.declineIncomingRequestThunk.fulfilled, (state, action) => {
+      contactsSlice.caseReducers.removeIncomingRequest(state, action);
+      contactsSlice.caseReducers.decrementIncomingRequestCounter(state);
+    });
+
+    /*
+    removeOutcomingRequest
+    */
+    builder.addCase(ContactsActions.removeOutcomingRequestThunk.fulfilled, (state, action) => {
+      contactsSlice.caseReducers.removeOutcomingRequest(state, action);
+      contactsSlice.caseReducers.decrementIncomingRequestCounter(state);
     });
   },
 });

@@ -255,7 +255,8 @@ export class WsStateHandler {
   };
 
   private handleContactDeleteEvent = (msg: WsEvent<ContactRelation>): void => {
-    this.dispatch(ContactsActions.removeRelationAction(msg.payload));
+    const userId = [msg.payload.firstUserId, msg.payload.secondUserId].find((userId) => userId !== this.account.id);
+    userId && this.dispatch(ContactsActions.removeRelation(userId));
   };
 
   /*

@@ -11,10 +11,10 @@ import {Badge, Text, useTheme} from 'native-base';
 import Header from '../components/layouts/Header';
 import ContactsSelectors from '../store/contacts/contactsSelectors';
 import {useAppSelector} from '../store/store';
-import {ContactInfo} from '../store/contacts/contactsType';
 import FBox from '../components/boxes/FBox';
 import {HEADER_HEIGHT} from '../constants';
 import PressableButton from '../components/controls/PressableButton';
+import {ContactInfo} from '../models/Contact';
 
 type TabBarProps = SceneRendererProps & {navigationState: NavigationState<ContactRoute>};
 
