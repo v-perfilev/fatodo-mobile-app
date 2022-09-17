@@ -27,7 +27,7 @@ const ItemDeleteDialog = ({item, close, onSuccess = () => null}: ItemDeleteDialo
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(GroupActions.deleteItemThunk(item))
+    dispatch(GroupActions.removeItemThunk(item))
       .unwrap()
       .then(() => {
         onSuccess();

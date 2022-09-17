@@ -1,54 +1,59 @@
-import {AppDispatch} from '../store';
-import {Item, ItemStatusType} from '../../models/Item';
+import {AppDispatch, AsyncThunkConfig} from '../store';
+import {Item} from '../../models/Item';
 import groupSlice from './groupSlice';
 import {Group, GroupMember} from '../../models/Group';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ItemService from '../../services/ItemService';
-import {GroupsActions} from '../groups/groupsActions';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
-import snackSlice from '../snack/snackSlice';
 import groupsSlice from '../groups/groupsSlice';
 import {InfoActions} from '../info/infoActions';
+import {SnackActions} from '../snack/snackActions';
+import {PageableList} from '../../models/PageableList';
 
 const PREFIX = 'group/';
 
 export class GroupActions {
   static setGroup = (group: Group) => async (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.reset());
     dispatch(groupSlice.actions.setGroup(group));
   };
 
   static addItem = (item: Item) => (dispatch: AppDispatch) => {
-    dispatch(groupSlice.actions.addItem(item));
+    dispatch(groupSlice.actions.setItem(item));
   };
 
   static updateItem = (item: Item) => (dispatch: AppDispatch) => {
-    dispatch(groupSlice.actions.updateItem(item));
+    dispatch(groupSlice.actions.setItem(item));
   };
 
   static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
     dispatch(groupSlice.actions.removeItem(itemId));
   };
 
-  static fetchGroupThunk = createAsyncThunk(PREFIX + 'fetchGroup', async (groupId: string, thunkAPI) => {
-    const response = await ItemService.getGroup(groupId);
-    const groupUserIds = response.data.members.map((m) => m.userId);
-    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(groupUserIds));
-    return response.data;
-  });
-
-  static fetchActiveItemsThunk = createAsyncThunk(
-    PREFIX + 'fetchActiveItems',
-    async ({groupId, offset, size}: {groupId: string; offset?: number; size?: number}, thunkAPI) => {
-      const response = await ItemService.getItemsByGroupId(groupId, offset, size);
-      const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
-      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+  static fetchGroupThunk = createAsyncThunk<Group, string, AsyncThunkConfig>(
+    PREFIX + 'fetchGroup',
+    async (groupId, thunkAPI) => {
+      const response = await ItemService.getGroup(groupId);
+      const groupUserIds = response.data.members.map((m) => m.userId);
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(groupUserIds));
       return response.data;
     },
   );
 
-  static refreshActiveItemsThunk = createAsyncThunk(
+  static fetchActiveItemsThunk = createAsyncThunk<
+    PageableList<Item>,
+    {groupId: string; offset?: number},
+    AsyncThunkConfig
+  >(PREFIX + 'fetchActiveItems', async ({groupId, offset}, thunkAPI) => {
+    const response = await ItemService.getItemsByGroupId(groupId, offset);
+    const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
+    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+    return response.data;
+  });
+
+  static refreshActiveItemsThunk = createAsyncThunk<PageableList<Item>, string, AsyncThunkConfig>(
     PREFIX + 'refreshActiveItems',
-    async (groupId: string, thunkAPI) => {
+    async (groupId, thunkAPI) => {
       const response = await ItemService.getItemsByGroupId(groupId);
       const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
       thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
@@ -56,19 +61,20 @@ export class GroupActions {
     },
   );
 
-  static fetchArchivedItemsThunk = createAsyncThunk(
-    PREFIX + 'fetchArchivedItems',
-    async ({groupId, offset, size}: {groupId: string; offset?: number; size?: number}, thunkAPI) => {
-      const response = await ItemService.getArchivedItemsByGroupId(groupId, offset, size);
-      const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
-      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
-      return response.data;
-    },
-  );
+  static fetchArchivedItemsThunk = createAsyncThunk<
+    PageableList<Item>,
+    {groupId: string; offset?: number},
+    AsyncThunkConfig
+  >(PREFIX + 'fetchArchivedItems', async ({groupId, offset}, thunkAPI) => {
+    const response = await ItemService.getArchivedItemsByGroupId(groupId, offset);
+    const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
+    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+    return response.data;
+  });
 
-  static refreshArchivedItemsThunk = createAsyncThunk(
+  static refreshArchivedItemsThunk = createAsyncThunk<PageableList<Item>, string, AsyncThunkConfig>(
     PREFIX + 'refreshArchivedItems',
-    async (groupId: string, thunkAPI) => {
+    async (groupId, thunkAPI) => {
       const response = await ItemService.getArchivedItemsByGroupId(groupId);
       const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
       thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
@@ -76,79 +82,80 @@ export class GroupActions {
     },
   );
 
-  static updateItemArchivedThunk = createAsyncThunk(PREFIX + 'updateItemArchived', async (item: Item, thunkAPI) => {
-    const response = await ItemService.updateItemArchived(item.id, !item.archived);
-    thunkAPI.dispatch(groupsSlice.actions.updateItem(response.data));
-    thunkAPI.dispatch(groupSlice.actions.updateItemArchived(response.data));
-    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'item.edited', variant: 'info'}));
-  });
-
-  static updateItemStatusThunk = createAsyncThunk(
-    PREFIX + 'updateItemStatus',
-    async ({item, status}: {item: Item; status: ItemStatusType}, thunkAPI) => {
-      const response = await ItemService.updateItemStatus(item.id, status);
+  static updateItemArchivedThunk = createAsyncThunk<Item, Item, AsyncThunkConfig>(
+    PREFIX + 'updateItemArchived',
+    async (item, thunkAPI) => {
+      const response = await ItemService.updateItemArchived(item.id, !item.archived);
       thunkAPI.dispatch(groupsSlice.actions.updateItem(response.data));
-      thunkAPI.dispatch(groupSlice.actions.updateItemStatus(response.data));
-      thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'item.edited', variant: 'info'}));
+      thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
+      return response.data;
     },
   );
 
-  static deleteItemThunk = createAsyncThunk(PREFIX + 'deleteItem', async (item: Item, thunkAPI) => {
-    await ItemService.deleteItem(item.id);
-    thunkAPI.dispatch(groupsSlice.actions.removeItem(item.id));
-    thunkAPI.dispatch(groupSlice.actions.removeItem(item.id));
-    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'item.deleted', variant: 'info'}));
-  });
+  static removeItemThunk = createAsyncThunk<string, Item, AsyncThunkConfig>(
+    PREFIX + 'deleteItem',
+    async (item, thunkAPI) => {
+      await ItemService.deleteItem(item.id);
+      thunkAPI.dispatch(groupsSlice.actions.removeItem(item.id));
+      thunkAPI.dispatch(SnackActions.handleCode('item.deleted', 'info'));
+      return item.id;
+    },
+  );
 
-  static createGroupThunk = createAsyncThunk(PREFIX + 'createGroup', async (formData: FormData, thunkAPI) => {
-    const response = await ItemService.createGroup(formData);
-    thunkAPI.dispatch(groupsSlice.actions.addGroup(response.data));
-    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.created', variant: 'info'}));
-    thunkAPI.dispatch(GroupsActions.fetchItemsThunk([response.data.id]));
-    return response.data;
-  });
+  static createGroupThunk = createAsyncThunk<Group, FormData, AsyncThunkConfig>(
+    PREFIX + 'createGroup',
+    async (formData, thunkAPI) => {
+      const response = await ItemService.createGroup(formData);
+      thunkAPI.dispatch(groupsSlice.actions.addGroup(response.data));
+      thunkAPI.dispatch(SnackActions.handleCode('group.created', 'info'));
+      return response.data;
+    },
+  );
 
-  static updateGroupThunk = createAsyncThunk(PREFIX + 'updateGroup', async (formData: FormData, thunkAPI) => {
-    const response = await ItemService.updateGroup(formData);
-    thunkAPI.dispatch(groupsSlice.actions.updateGroup(response.data));
-    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.edited', variant: 'info'}));
-    return response.data;
-  });
+  static updateGroupThunk = createAsyncThunk<Group, FormData, AsyncThunkConfig>(
+    PREFIX + 'updateGroup',
+    async (formData, thunkAPI) => {
+      const response = await ItemService.updateGroup(formData);
+      thunkAPI.dispatch(groupsSlice.actions.updateGroup(response.data));
+      thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
+      return response.data;
+    },
+  );
 
-  static addGroupMembersThunk = createAsyncThunk(
+  static addGroupMembersThunk = createAsyncThunk<Group, {group: Group; userIds: string[]}, AsyncThunkConfig>(
     PREFIX + 'addGroupMembers',
-    async ({group, userIds}: {group: Group; userIds: string[]}, thunkAPI) => {
+    async ({group, userIds}, thunkAPI) => {
       const newMembers = userIds.map((userId) => ({userId: userId, permission: 'READ'} as GroupMember));
       const updatedMembers = [...group.members, ...newMembers];
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.addMembersToGroup(group.id, userIds);
       thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
-      thunkAPI.dispatch(groupSlice.actions.setGroup(updatedGroup));
-      thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.edited', variant: 'info'}));
+      thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
+      return updatedGroup;
     },
   );
 
-  static editGroupMemberThunk = createAsyncThunk(
+  static editGroupMemberThunk = createAsyncThunk<Group, {group: Group; member: GroupMember}, AsyncThunkConfig>(
     PREFIX + 'editGroupMember',
-    async ({group, member}: {group: Group; member: GroupMember}, thunkAPI) => {
+    async ({group, member}, thunkAPI) => {
       const updatedMembers = ArrayUtils.updateValueWithUserId(group.members, member);
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.editGroupMember(group.id, member);
       thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
-      thunkAPI.dispatch(groupSlice.actions.setGroup(updatedGroup));
-      thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.edited', variant: 'info'}));
+      thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
+      return updatedGroup;
     },
   );
 
-  static removeGroupMembersThunk = createAsyncThunk(
+  static removeGroupMembersThunk = createAsyncThunk<Group, {group: Group; userIds: string[]}, AsyncThunkConfig>(
     PREFIX + 'removeGroupMembers',
-    async ({group, userIds}: {group: Group; userIds: string[]}, thunkAPI) => {
+    async ({group, userIds}, thunkAPI) => {
       const updatedMembers = group.members.filter((m) => !userIds.includes(m.userId));
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.removeMembersFromGroup(group.id, userIds);
       thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
-      thunkAPI.dispatch(groupSlice.actions.setGroup(updatedGroup));
-      thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.edited', variant: 'info'}));
+      thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
+      return updatedGroup;
     },
   );
 }

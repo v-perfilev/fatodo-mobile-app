@@ -33,7 +33,7 @@ const GroupItemMenu = ({group, item, canEdit}: GroupItemMenuProps) => {
   const goToItemEdit = (): void => navigation.navigate('ItemEdit', {group, item});
 
   const deleteItem = (item: Item): void => {
-    dispatch(GroupActions.deleteItemThunk(item));
+    dispatch(GroupActions.removeItemThunk(item));
   };
 
   const toggleArchived = (): void => {

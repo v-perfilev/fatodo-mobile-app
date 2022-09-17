@@ -36,7 +36,6 @@ const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 
 const GroupView = ({groupId, group, loading}: GroupViewProps) => {
   const itemsSelector = useCallback(GroupSelectors.makeItemsSelector(), []);
-  const itemsLoadingSelector = useCallback(GroupSelectors.makeItemsLoadingSelector(), []);
   const allItemsLoadedSelector = useCallback(GroupSelectors.makeAllItemsLoadedSelector(), []);
   const dispatch = useAppDispatch();
   const rootNavigation = useNavigation<RootNavigationProp>();
@@ -44,7 +43,6 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
   const [showArchived, setShowArchived] = useState<boolean>(false);
   const account = useAppSelector(AuthSelectors.account);
   const items = useAppSelector((state) => itemsSelector(state, showArchived));
-  const itemsLoading = useAppSelector((state) => itemsLoadingSelector(state, showArchived));
   const allItemsLoaded = useAppSelector((state) => allItemsLoadedSelector(state, showArchived));
 
   const listRef = useRef<FlatListType>();
@@ -126,7 +124,7 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
         containerStyle={containerStyle}
         loaderStyle={loaderStyle}
         header={<GroupViewHeader setShowArchived={setShowArchived} />}
-        loading={loading || (items.length === 0 && itemsLoading)}
+        loading={loading || (items.length === 0 && !allItemsLoaded)}
         loadingPlaceholder={<GroupViewListSkeleton />}
         ListEmptyComponent={<GroupViewStub />}
         ListFooterComponent={items.length > 0 && !allItemsLoaded ? <CentredLoader my="5" /> : undefined}

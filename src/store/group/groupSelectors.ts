@@ -9,24 +9,10 @@ const getShowArchived = (_: any, showArchived: boolean) => showArchived;
 class GroupSelectors {
   static group = createSelector(getGroupState, (state) => state.group as Group);
 
-  static loading = createSelector(getGroupState, (state) => state.loading as boolean);
-
-  static makeItemsCountSelector = () =>
-    createSelector(
-      [getGroupState, getShowArchived],
-      (state, showArchived) => (showArchived ? state.archivedItemsCount : state.activeItemsCount) as number,
-    );
-
   static makeItemsSelector = () =>
     createSelector(
       [getGroupState, getShowArchived],
       (state, showArchived) => (showArchived ? state.archivedItems : state.activeItems) as Item[],
-    );
-
-  static makeItemsLoadingSelector = () =>
-    createSelector(
-      [getGroupState, getShowArchived],
-      (state, showArchived) => (showArchived ? state.archivedItemsLoading : state.activeItemsLoading) as boolean,
     );
 
   static makeAllItemsLoadedSelector = () =>
