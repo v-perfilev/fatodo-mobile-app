@@ -1,33 +1,14 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {CommentsState} from './commentsType';
 import {CommentsActions} from './commentsActions';
-import {CommentUtils} from '../../shared/utils/CommentUtils';
-import {buildCommentReaction, Comment, CommentReaction, CommentReactionType} from '../../models/Comment';
+import {Comment, CommentReaction} from '../../models/Comment';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
-import {UserAccount} from '../../models/User';
-
-interface CommentAccountPayload {
-  comment: Comment;
-  account: UserAccount;
-}
-
-interface CommentReactionAccountPayload {
-  comment: Comment;
-  reactionType: CommentReactionType;
-  account: UserAccount;
-}
-
-interface CommentCounterPayload {
-  targetId: string;
-  isOwnComment: boolean;
-}
+import {FilterUtils} from '../../shared/utils/FilterUtils';
+import {ComparatorUtils} from '../../shared/utils/ComparatorUtils';
 
 const initialState: CommentsState = {
   targetId: undefined,
   comments: [],
-  threadsInfo: [],
-  loading: false,
-  moreLoading: false,
   allLoaded: false,
 };
 
@@ -39,107 +20,65 @@ const commentsSlice = createSlice({
       Object.assign(state, initialState);
     },
 
-    init: (state: CommentsState, action: PayloadAction<string>) => {
+    setTargetId: (state: CommentsState, action: PayloadAction<string>) => {
       state.targetId = action.payload;
+    },
+
+    resetComments: (state: CommentsState) => {
       state.comments = [];
-      state.allLoaded = false;
     },
 
-    addComment: (state: CommentsState, action: PayloadAction<Comment>) => {
-      const comment = action.payload;
-      if (state.targetId === comment.targetId) {
-        const commentInList = CommentUtils.findComment(state.comments, comment);
-        state.comments = commentInList
-          ? ArrayUtils.replaceValue(state.comments, commentInList, comment)
-          : CommentUtils.filterComments([comment, ...state.comments]);
+    setComments: (state: CommentsState, action: PayloadAction<Comment[]>) => {
+      const comments = action.payload;
+      if (state.targetId === comments[0].targetId) {
+        state.comments = filterComments([...comments, ...state.comments]);
       }
     },
 
-    editComment: (state: CommentsState, action: PayloadAction<Comment>) => {
-      const comment = action.payload;
-      if (state.targetId === comment.targetId) {
-        state.comments = ArrayUtils.updateValueWithId(state.comments, comment);
-      }
-    },
-
-    updateCommentReactions: (state: CommentsState, action: PayloadAction<CommentReaction>) => {
+    setCommentReaction: (state: CommentsState, action: PayloadAction<CommentReaction>) => {
       const reaction = action.payload;
       if (state.targetId === reaction.targetId) {
-        const commentInList: Comment = ArrayUtils.findValueById(state.comments, reaction.commentId);
-        if (commentInList) {
-          let reactions = commentInList.reactions.filter((r) => r.userId !== reaction.userId);
-          if (reaction.type !== 'NONE') {
-            reactions.push(reaction);
-          }
-          const updatedComment = {...commentInList, reactions};
-          state.comments = ArrayUtils.updateValueWithId(state.comments, updatedComment);
+        const comment: Comment = ArrayUtils.findValueById(state.comments, reaction.commentId);
+        if (comment) {
+          comment.reactions =
+            reaction.type === 'NONE'
+              ? ArrayUtils.deleteValueWithUserId(comment.reactions, reaction)
+              : filterReactions([reaction, ...comment.reactions]);
+          state.comments = filterComments([comment, ...state.comments]);
         }
       }
     },
 
-    deleteCommentReaction: (state: CommentsState, action: PayloadAction<CommentAccountPayload>) => {
-      const comment = action.payload.comment;
-      const account = action.payload.account;
-      const reaction = comment.reactions.find((s) => s.userId === account.id);
-      if (reaction) {
-        const updatedReactions = ArrayUtils.deleteValue(comment.reactions, reaction);
-        const updatedComment = {...comment, reactions: updatedReactions};
-        state.comments = ArrayUtils.updateValueWithId(state.comments, updatedComment);
-      }
-    },
-
-    setCommentReaction: (state: CommentsState, action: PayloadAction<CommentReactionAccountPayload>) => {
-      const comment = action.payload.comment;
-      const newReactionType = action.payload.reactionType;
-      const account = action.payload.account;
-      const reaction = comment.reactions.find((s) => s.userId === account.id);
-      let oldReactions = reaction ? ArrayUtils.deleteValue(comment.reactions, reaction) : comment.reactions;
-      const newReaction = buildCommentReaction(comment, account.id, newReactionType);
-      const updatedComment = {...comment, reactions: [...oldReactions, newReaction]};
-      state.comments = ArrayUtils.updateValueWithId(state.comments, updatedComment);
-    },
-
-    increaseCounter: (state: CommentsState, action: PayloadAction<CommentCounterPayload>) => {
-      const targetId = action.payload.targetId;
-      const isOwnComment = action.payload.isOwnComment;
-      state.threadsInfo = CommentUtils.increaseInfo(state.threadsInfo, targetId, isOwnComment);
+    calculateAllLoaded: (state: CommentsState, action: PayloadAction<number>) => {
+      state.allLoaded = state.comments.length === action.payload;
     },
   },
   extraReducers: (builder) => {
     /*
     fetchComments
     */
-    builder.addCase(CommentsActions.fetchCommentsThunk.pending, (state: CommentsState, action) => {
-      const initialLoading = action.meta.arg.offset === 0;
-      state.loading = initialLoading;
-      state.moreLoading = !initialLoading;
-    });
-    builder.addCase(CommentsActions.fetchCommentsThunk.fulfilled, (state: CommentsState, action) => {
-      const newComments = action.payload.data;
-      const count = action.payload.count;
-      state.comments = CommentUtils.filterComments([...state.comments, ...newComments]);
-      state.loading = false;
-      state.moreLoading = false;
-      state.allLoaded = state.comments.length === count;
-    });
-    builder.addCase(CommentsActions.fetchCommentsThunk.rejected, (state: CommentsState) => {
-      state.loading = false;
-      state.moreLoading = false;
+    builder.addCase(CommentsActions.fetchCommentsThunk.fulfilled, (state, action) => {
+      commentsSlice.caseReducers.setComments(state, {...action, payload: action.payload.data});
+      commentsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
     });
 
     /*
-    fetchThreadInfo
+    refreshComments
     */
-    builder.addCase(CommentsActions.fetchThreadInfoThunk.fulfilled, (state: CommentsState, action) => {
-      const newInfo = action.payload;
-      state.threadsInfo = CommentUtils.addInfo(state.threadsInfo, newInfo);
-    });
-
-    builder.addCase(CommentsActions.refreshThreadThunk.fulfilled, (state: CommentsState, action) => {
-      const targetId = action.meta.arg;
-      state.threadsInfo = CommentUtils.refreshInfo(state.threadsInfo, targetId);
+    builder.addCase(CommentsActions.refreshCommentsThunk.fulfilled, (state, action) => {
+      commentsSlice.caseReducers.resetComments(state);
+      commentsSlice.caseReducers.setComments(state, {...action, payload: action.payload.data});
+      commentsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
     });
   },
 });
+
+const filterComments = (comments: Comment[]): Comment[] => {
+  return comments.filter(FilterUtils.uniqueByIdFilter).sort(ComparatorUtils.createdAtComparator).reverse();
+};
+
+const filterReactions = (reactions: CommentReaction[]): CommentReaction[] => {
+  return reactions.filter(FilterUtils.uniqueByUserIdFilter).sort(ComparatorUtils.createdAtComparator);
+};
 
 export default commentsSlice;

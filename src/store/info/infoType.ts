@@ -3,7 +3,7 @@ import {GroupInfo} from '../../models/Group';
 import {ItemInfo} from '../../models/Item';
 import {ChatInfo} from '../../models/Chat';
 import {MessageInfo} from '../../models/Message';
-import {CommentInfo} from '../../models/Comment';
+import {CommentInfo, CommentThreadInfo} from '../../models/Comment';
 
 export type InfoState = {
   users: [string, User][];
@@ -12,6 +12,7 @@ export type InfoState = {
   chats: [string, ChatInfo][];
   messages: [string, MessageInfo][];
   comments: [string, CommentInfo][];
+  commentThreadsInfo: [string, CommentThreadInfo][];
 
   // loading
   loadingUserIds: string[];

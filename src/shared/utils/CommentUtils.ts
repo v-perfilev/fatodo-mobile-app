@@ -39,12 +39,11 @@ export class CommentUtils {
   public static increaseInfo = (
     threadsInfo: [string, CommentThreadInfo][],
     targetId: string,
-    isOwnComment: boolean,
   ): [string, CommentThreadInfo][] => {
     const info = StoreUtils.getValue(threadsInfo, targetId, undefined);
     if (info) {
       info.count = info.count + 1;
-      info.unread = isOwnComment ? info.unread : info.unread + 1;
+      info.unread = info.unread + 1;
       threadsInfo = StoreUtils.setValue(threadsInfo, targetId, info);
     }
     return threadsInfo;

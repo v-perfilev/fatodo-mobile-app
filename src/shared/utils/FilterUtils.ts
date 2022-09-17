@@ -1,10 +1,14 @@
 export class FilterUtils {
   public static uniqueFilter = (value: any, i: number, arr: any[]): boolean => {
-    return arr.findIndex((t) => t === value) === i;
+    return arr.findIndex((v) => v === value) === i;
   };
 
   public static uniqueByIdFilter = (value: any, i: number, arr: any[]): boolean => {
-    return arr.findIndex((t) => t.id === value.id) === i;
+    return arr.findIndex((v) => v.id === value.id) === i;
+  };
+
+  public static uniqueByUserIdAndTextFilter = (value: any, i: number, arr: any[]): boolean => {
+    return arr.findIndex((v) => v.userId === value.userId && v.text === value.text) === i;
   };
 
   public static uniqueByIdOrTypeAndDateFilter = (value: any, i: number, arr: any[]): boolean => {

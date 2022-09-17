@@ -9,8 +9,6 @@ class CommentsSelectors {
 
   static comments = createSelector(getCommentsState, (state) => state.comments as Comment[]);
 
-  static loading = createSelector(getCommentsState, (state) => state.loading as boolean);
-
   static allLoaded = createSelector(getCommentsState, (state) => state.allLoaded as boolean);
 }
 

@@ -13,8 +13,6 @@ class ChatsSelectors {
 
   static unreadCount = createSelector(getChatsState, (state) => state.unreadCount as number);
 
-  static loading = createSelector(getChatsState, (state) => state.loading as boolean);
-
   static allLoaded = createSelector(getChatsState, (state) => state.allLoaded as boolean);
 
   static makeUnreadMessageIdsSelector = () =>

@@ -1,20 +1,8 @@
 import {TFunction} from 'i18next';
-import {ChatItem, EventMessageParams, EventMessageType, Message} from '../../models/Message';
+import {EventMessageParams, EventMessageType, Message} from '../../models/Message';
 import {User} from '../../models/User';
-import {DateFormatters} from './DateUtils';
-import {ArrayUtils} from './ArrayUtils';
-import {FilterUtils} from './FilterUtils';
-import {ComparatorUtils} from './ComparatorUtils';
 
 export class MessageUtils {
-  public static filterMessages = (messages: Message[]): Message[] => {
-    return messages.filter(FilterUtils.uniqueByIdFilter).sort(ComparatorUtils.createdAtComparator);
-  };
-
-  public static findMessage = (messages: Message[], m: Message): Message => {
-    return ArrayUtils.findValueWithId(messages, m) || ArrayUtils.findValueWithUserIdAndText(messages, m);
-  };
-
   public static parseEventMessage = (message: Message): EventMessageParams => {
     return message.isEvent ? (JSON.parse(message.text) as EventMessageParams) : null;
   };
@@ -72,19 +60,5 @@ export class MessageUtils {
 
   public static extractTextFromParams = (params: EventMessageParams): string => {
     return params?.text || '';
-  };
-
-  public static convertMessagesToChatItems = (messagesToConvert: Message[]): ChatItem[] => {
-    const handledDates: string[] = [];
-    const handledItems: ChatItem[] = [];
-    messagesToConvert.forEach((message) => {
-      const date = DateFormatters.formatDateWithYear(new Date(message.createdAt));
-      if (!handledDates.includes(date)) {
-        handledDates.push(date);
-        handledItems.push({date});
-      }
-      handledItems.push({message});
-    });
-    return handledItems.reverse();
   };
 }

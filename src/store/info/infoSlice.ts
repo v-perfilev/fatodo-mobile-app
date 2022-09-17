@@ -3,6 +3,7 @@ import {User} from '../../models/User';
 import {InfoState} from './infoType';
 import {InfoActions} from './infoActions';
 import {InfoUtils} from '../../shared/utils/InfoUtils';
+import {CommentUtils} from '../../shared/utils/CommentUtils';
 
 const initialState: InfoState = {
   users: [],
@@ -11,6 +12,7 @@ const initialState: InfoState = {
   chats: [],
   messages: [],
   comments: [],
+  commentThreadsInfo: [],
   loadingUserIds: [],
   loadingGroupIds: [],
   loadingItemIds: [],
@@ -29,6 +31,10 @@ const infoSlice = createSlice({
 
     handleUsers: (state: InfoState, action: PayloadAction<User[]>) => {
       state.users = InfoUtils.prepareFulfilledContent(state.users, action.payload);
+    },
+
+    increaseCommentCounter: (state: InfoState, action: PayloadAction<string>) => {
+      state.commentThreadsInfo = CommentUtils.increaseInfo(state.commentThreadsInfo, action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -114,6 +120,22 @@ const infoSlice = createSlice({
     });
     builder.addCase(InfoActions.fetchCommentsThunk.rejected, (state: InfoState, action) => {
       state.loadingCommentIds = InfoUtils.prepareFinishedLoadingIds(state.loadingCommentIds, action.meta.arg);
+    });
+
+    /*
+    fetchCommentThreads
+    */
+    builder.addCase(InfoActions.fetchCommentThreadsThunk.fulfilled, (state: InfoState, action) => {
+      const newInfo = action.payload;
+      state.commentThreadsInfo = CommentUtils.addInfo(state.commentThreadsInfo, newInfo);
+    });
+
+    /*
+    refreshCommentThreads
+    */
+    builder.addCase(InfoActions.refreshCommentThreadsThunk.fulfilled, (state: InfoState, action) => {
+      const targetId = action.meta.arg;
+      state.commentThreadsInfo = CommentUtils.refreshInfo(state.commentThreadsInfo, targetId);
     });
   },
 });

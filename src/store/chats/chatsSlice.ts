@@ -1,34 +1,18 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ChatsState} from './chatsType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
-import {buildDirectChat, Chat, ChatMember} from '../../models/Chat';
+import {Chat, ChatMember} from '../../models/Chat';
 import {ChatsActions} from './chatsActions';
-import {buildEventMessage, EventMessageType, Message} from '../../models/Message';
-import {ChatUtils} from '../../shared/utils/ChatUtils';
+import {Message} from '../../models/Message';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
-
-interface ChatDirectMessagePayload {
-  message: Message;
-  secondUserId: string;
-}
-
-interface ChatCreatePayload {
-  chat: Chat;
-  userIds: string[];
-}
-
-interface ChatMessageReadPayload {
-  chatId: string;
-  messageId: string;
-}
+import {ComparatorUtils} from '../../shared/utils/ComparatorUtils';
+import {StoreUtils} from '../../shared/utils/StoreUtils';
 
 const initialState: ChatsState = {
   chats: [],
   filteredChats: [],
   unreadCount: 0,
   unreadMap: [],
-  loading: false,
-  moreLoading: false,
   allLoaded: false,
 };
 
@@ -40,150 +24,137 @@ const chatsSlice = createSlice({
       Object.assign(state, initialState);
     },
 
-    addChat: (state: ChatsState, action: PayloadAction<Chat>) => {
-      const chat = action.payload;
-      state.chats = ChatUtils.filterChats([chat, ...state.chats]);
+    resetChats: (state: ChatsState) => {
+      state.chats = [];
     },
 
-    createChat: (state: ChatsState, action: PayloadAction<ChatCreatePayload>) => {
-      const chat = action.payload.chat;
-      const userIds = action.payload.userIds;
-      const eventType = chat.isDirect ? EventMessageType.CREATE_DIRECT_CHAT : EventMessageType.CREATE_CHAT;
-      const lastMessage = buildEventMessage(chat.createdBy, eventType, userIds);
-      const newChat = {...chat, lastMessage} as Chat;
-      state.chats = ChatUtils.filterChats([newChat, ...state.chats]);
+    setChats: (state: ChatsState, action: PayloadAction<Chat[]>) => {
+      state.chats = filterChats([...action.payload, ...state.chats]);
     },
 
-    updateChat: (state: ChatsState, action: PayloadAction<Chat>) => {
-      const chat = action.payload;
-      state.chats = ArrayUtils.updateValueWithId(state.chats, chat);
+    setFilteredChats: (state: ChatsState, action: PayloadAction<Chat[]>) => {
+      state.filteredChats = filterChats(action.payload);
     },
 
     removeChat: (state: ChatsState, action: PayloadAction<string>) => {
-      const chatId = action.payload;
-      const chatInList = ArrayUtils.findValueById(state.chats, chatId);
-      if (chatInList) {
-        state.chats = ArrayUtils.deleteValueWithId(state.chats, chatInList);
-      }
-      state.unreadMap = ChatUtils.removeChatFromUnread(state.unreadMap, chatId);
-      state.unreadCount = ChatUtils.calcUnreadCount(state.unreadMap);
+      state.chats = ArrayUtils.deleteValueById(state.chats, action.payload);
     },
 
-    updateLastMessage: (state: ChatsState, action: PayloadAction<Message>) => {
+    setLastMessage: (state: ChatsState, action: PayloadAction<Message>) => {
       const message = action.payload;
-      const chatInList = state.chats.find((chat) => chat.id === message.chatId);
-      if (chatInList) {
-        state.chats = ArrayUtils.updateValueWithId(state.chats, {...chatInList, lastMessage: message} as Chat);
+      const chat = state.chats.find((chat) => chat.id === message.chatId);
+      if (chat) {
+        chat.lastMessage = message;
+        state.chats = filterChats([chat, ...state.chats]);
       }
-    },
-
-    updateLastDirectMessage: (state: ChatsState, action: PayloadAction<ChatDirectMessagePayload>) => {
-      const message = action.payload.message;
-      const secondUserId = action.payload.secondUserId;
-      const chatInList = state.chats.find((chat) => chat.id === message.chatId);
-      state.chats = chatInList
-        ? ArrayUtils.updateValueWithId(state.chats, {...chatInList, lastMessage: message} as Chat)
-        : ChatUtils.filterChats([buildDirectChat(message, secondUserId), ...state.chats]);
-    },
-
-    clearChat: (state: ChatsState, action: PayloadAction<string>) => {
-      const chatId = action.payload;
-      const chatInList = state.chats.find((chat) => chat.id === chatId);
-      if (chatInList) {
-        const message = buildEventMessage(undefined, EventMessageType.CLEAR_CHAT, undefined);
-        const updatedChat = {...chatInList, lastMessage: message};
-        state.chats = ArrayUtils.updateValueWithId(state.chats, updatedChat);
-      }
-      state.unreadMap = ChatUtils.removeChatFromUnread(state.unreadMap, chatId);
-      state.unreadCount = ChatUtils.calcUnreadCount(state.unreadMap);
-    },
-
-    addUnread: (state: ChatsState, action: PayloadAction<Message>) => {
-      const message = action.payload;
-      state.unreadMap = ChatUtils.addMessageToUnread(state.unreadMap, message);
-      state.unreadCount = ChatUtils.calcUnreadCount(state.unreadMap);
-    },
-
-    removeUnread: (state: ChatsState, action: PayloadAction<ChatMessageReadPayload>) => {
-      const chatId = action.payload.chatId;
-      const messageId = action.payload.messageId;
-      state.unreadMap = ChatUtils.removeMessageFromUnread(state.unreadMap, chatId, messageId);
-      state.unreadCount = ChatUtils.calcUnreadCount(state.unreadMap);
     },
 
     addMembers: (state: ChatsState, action: PayloadAction<ChatMember[]>) => {
       const members = action.payload;
-      const chatId = members[0].chatId;
-      const chat = state.chats.find((chat) => chat.id === chatId);
-      chat.members.push(...members);
-      chat.members.filter(FilterUtils.uniqueByUserIdFilter);
-      state.chats = ArrayUtils.updateValueWithId(state.chats, chat);
+      const chat: Chat = ArrayUtils.findValueById(state.chats, members[0].chatId);
+      if (chat) {
+        chat.members = filterMembers([...members, ...chat.members]);
+        state.chats = filterChats([chat, ...state.chats]);
+      }
     },
 
     deleteMembers: (state: ChatsState, action: PayloadAction<ChatMember[]>) => {
       const members = action.payload;
-      const chatId = members[0].chatId;
-      const chat = state.chats.find((chat) => chat.id === chatId);
-      let updatedMembers = chat.members;
-      members.forEach((m) => (updatedMembers = ArrayUtils.deleteValueWithUserId(updatedMembers, m)));
-      chat.members = updatedMembers;
-      state.chats = ArrayUtils.updateValueWithId(state.chats, chat);
+      const memberIds = members.map((m) => m.userId);
+      const chat: Chat = ArrayUtils.findValueById(state.chats, members[0].chatId);
+      if (chat) {
+        chat.members = chat.members.filter((m) => !memberIds.includes(m.userId));
+        state.chats = filterChats([chat, ...state.chats]);
+      }
+    },
+
+    setUnreadMessageMap: (state: ChatsState, action: PayloadAction<[string, string[]][]>) => {
+      state.unreadMap = action.payload;
+      state.unreadCount = calculateUnreadCount(state.unreadMap);
+    },
+
+    addUnreadMessage: (state: ChatsState, action: PayloadAction<Message>) => {
+      state.unreadMap = addUnreadMessage(state.unreadMap, action.payload);
+      state.unreadCount = calculateUnreadCount(state.unreadMap);
+    },
+
+    removeUnreadMessage: (state: ChatsState, action: PayloadAction<Message>) => {
+      state.unreadMap = removeUnreadMessage(state.unreadMap, action.payload);
+      state.unreadCount = calculateUnreadCount(state.unreadMap);
+    },
+
+    removeUnreadChat: (state: ChatsState, action: PayloadAction<string>) => {
+      state.unreadMap = removeUnreadChat(state.unreadMap, action.payload);
+      state.unreadCount = calculateUnreadCount(state.unreadMap);
+    },
+
+    calculateAllLoaded: (state: ChatsState, action: PayloadAction<number>) => {
+      state.allLoaded = state.chats.length === action.payload;
     },
   },
   extraReducers: (builder) => {
     /*
     fetchChats
     */
-    builder.addCase(ChatsActions.fetchChatsThunk.pending, (state: ChatsState, action) => {
-      const initialLoading = action.meta.arg === 0;
-      state.loading = initialLoading;
-      state.moreLoading = !initialLoading;
-    });
-    builder.addCase(ChatsActions.fetchChatsThunk.fulfilled, (state: ChatsState, action) => {
-      const newChats = action.payload.data;
-      const count = action.payload.count;
-      state.chats = ChatUtils.filterChats([...state.chats, ...newChats]);
-      state.loading = false;
-      state.moreLoading = false;
-      state.allLoaded = state.chats.length === count;
-    });
-    builder.addCase(ChatsActions.fetchChatsThunk.rejected, (state: ChatsState) => {
-      state.loading = false;
-      state.moreLoading = false;
+    builder.addCase(ChatsActions.fetchChatsThunk.fulfilled, (state, action) => {
+      chatsSlice.caseReducers.setChats(state, {...action, payload: action.payload.data});
+      chatsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
     });
 
     /*
     refreshChats
     */
-    builder.addCase(ChatsActions.refreshChatsThunk.pending, (state: ChatsState) => {
-      state.chats = [];
-      state.loading = true;
-      state.moreLoading = false;
+    builder.addCase(ChatsActions.fetchChatsThunk.fulfilled, (state, action) => {
+      chatsSlice.caseReducers.resetChats(state);
+      chatsSlice.caseReducers.setChats(state, {...action, payload: action.payload.data});
+      chatsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
     });
 
     /*
     fetchFilteredChats
     */
-    builder.addCase(ChatsActions.fetchFilteredChatsThunk.pending, (state: ChatsState) => {
-      state.filteredChats = [];
-    });
-    builder.addCase(ChatsActions.fetchFilteredChatsThunk.fulfilled, (state: ChatsState, action) => {
-      const chats = action.payload;
-      state.filteredChats = ChatUtils.filterChats(chats);
-    });
-    builder.addCase(ChatsActions.fetchFilteredChatsThunk.rejected, (state: ChatsState) => {
-      state.filteredChats = [];
+    builder.addCase(ChatsActions.fetchFilteredChatsThunk.fulfilled, (state, action) => {
+      chatsSlice.caseReducers.setFilteredChats(state, action);
     });
 
     /*
     fetchUnreadMessagesMap
     */
-    builder.addCase(ChatsActions.fetchUnreadMessagesMapThunk.fulfilled, (state: ChatsState, action) => {
-      const unreadMessagesMap = action.payload;
-      state.unreadMap = [...unreadMessagesMap];
-      state.unreadCount = ChatUtils.calcUnreadCount(state.unreadMap);
+    builder.addCase(ChatsActions.fetchUnreadMessagesMapThunk.fulfilled, (state, action) => {
+      chatsSlice.caseReducers.setUnreadMessageMap(state, action);
     });
   },
 });
+
+// TODO possibly add filter for chats without id
+const filterChats = (chats: Chat[]): Chat[] => {
+  return chats
+    .filter(FilterUtils.uniqueByIdFilter)
+    .sort((a, b) => ComparatorUtils.createdAtComparator(a.lastMessage, b.lastMessage));
+};
+
+const filterMembers = (members: ChatMember[]): ChatMember[] => {
+  return members.filter(FilterUtils.uniqueByUserIdFilter);
+};
+
+const addUnreadMessage = (unreadMap: [string, string[]][], message: Message): [string, string[]][] => {
+  let messageIds: string[] = StoreUtils.getValue(unreadMap, message.chatId, []);
+  messageIds = [message.id, ...messageIds].filter(FilterUtils.uniqueFilter);
+  return StoreUtils.setValue(unreadMap, message.chatId, messageIds);
+};
+
+const removeUnreadMessage = (unreadMap: [string, string[]][], message: Message): [string, string[]][] => {
+  let messageIds: string[] = StoreUtils.getValue(unreadMap, message.chatId, []);
+  messageIds = messageIds.filter((m) => m !== message.id);
+  return StoreUtils.setValue(unreadMap, message.chatId, messageIds);
+};
+
+const removeUnreadChat = (unreadMap: [string, string[]][], chatId: string): [string, string[]][] => {
+  return StoreUtils.deleteValue(unreadMap, chatId);
+};
+
+const calculateUnreadCount = (unreadMap: [string, string[]][]): number => {
+  return unreadMap.map((u) => u[1]).reduce((a, b) => a + b.length, 0);
+};
 
 export default chatsSlice;

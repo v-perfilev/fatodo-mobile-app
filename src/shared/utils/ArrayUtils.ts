@@ -15,6 +15,8 @@ export class ArrayUtils {
     return array.find((m) => !m.id && m.userId === value.userId && m.text === value.text);
   };
 
+  public static addValues = (array: any[], values: any[]): any[] => [...array, ...values];
+
   public static addValueToEnd = (array: any[], value: any): any[] => [...array, value];
 
   public static replaceValue = (array: any[], value: any, newValue: any): any[] => {
@@ -56,6 +58,16 @@ export class ArrayUtils {
   public static deleteValueWithId = (array: WithId[], value: WithId): any[] => {
     const arrayCopy = [...array];
     const itemInList = arrayCopy.find((i) => i.id === value.id);
+    if (itemInList) {
+      const index = arrayCopy.indexOf(itemInList);
+      arrayCopy.splice(index, 1);
+    }
+    return arrayCopy;
+  };
+
+  public static deleteValueById = (array: WithId[], id: string): any[] => {
+    const arrayCopy = [...array];
+    const itemInList = arrayCopy.find((i) => i.id === id);
     if (itemInList) {
       const index = arrayCopy.indexOf(itemInList);
       arrayCopy.splice(index, 1);

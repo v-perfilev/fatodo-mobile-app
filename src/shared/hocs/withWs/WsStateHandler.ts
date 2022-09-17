@@ -208,7 +208,7 @@ export class WsStateHandler {
   };
 
   private handleChatMessageCreateEvent = (msg: WsEvent<Message>): void => {
-    this.dispatch(ChatsActions.addChatLastMessageAction(msg.payload));
+    this.dispatch(ChatsActions.setChatLastMessageAction(msg.payload));
     this.dispatch(ChatsActions.increaseMessageCounterAction(msg.payload));
     this.dispatch(ChatActions.addMessage(msg.payload));
   };
@@ -219,11 +219,11 @@ export class WsStateHandler {
   };
 
   private handleChatReactionEvent = (msg: WsEvent<MessageReaction>): void => {
-    this.dispatch(ChatActions.updateMessageReactions(msg.payload));
+    this.dispatch(ChatActions.setMessageReaction(msg.payload));
   };
 
   private handleChatStatusEvent = (msg: WsEvent<MessageStatus>): void => {
-    this.dispatch(ChatActions.updateMessageStatuses(msg.payload));
+    this.dispatch(ChatActions.setMessageStatus(msg.payload));
   };
 
   /*
@@ -271,6 +271,6 @@ export class WsStateHandler {
   };
 
   private handleCommentReactionEvent = (msg: WsEvent<CommentReaction>): void => {
-    this.dispatch(CommentsActions.updateCommentReactions(msg.payload));
+    this.dispatch(CommentsActions.updateCommentReaction(msg.payload));
   };
 }

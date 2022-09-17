@@ -92,4 +92,16 @@ export class InfoActions {
   static fetchCommentsThunk = createAsyncThunk(PREFIX + 'fetchComments', async (ids: string[]) => {
     return await InfoUtils.fetchByIds(ids, CommentService.getCommentInfoByIds);
   });
+
+  /*
+  Comment Thread Info
+  */
+  static fetchCommentThreadsThunk = createAsyncThunk(PREFIX + 'fetchCommentThreads', async (targetIds: string[]) => {
+    const response = await CommentService.getThreadInfoByTargetIds(targetIds);
+    return response.data;
+  });
+
+  static refreshCommentThreadsThunk = createAsyncThunk(PREFIX + 'refreshCommentThreads', async (targetId: string) => {
+    await CommentService.refreshThread(targetId);
+  });
 }

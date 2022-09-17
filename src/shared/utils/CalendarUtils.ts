@@ -1,8 +1,6 @@
 import moment from 'moment';
 import {CalendarReminder} from '../../models/Reminder';
-import {ComparatorUtils} from './ComparatorUtils';
 import {CalendarDate, CalendarItem, CalendarMonth} from '../../models/Calendar';
-import {StoreUtils} from './StoreUtils';
 
 export class CalendarUtils {
   public static generateCurrentCalendarMonth = (): CalendarMonth => {
@@ -74,12 +72,6 @@ export class CalendarUtils {
     return dates;
   };
 
-  public static filterRemindersByDate = (reminders: CalendarReminder[], date: CalendarDate): CalendarReminder[] => {
-    return reminders
-      ? reminders.filter((r) => new Date(r.date).getDate() === date.date).sort(ComparatorUtils.dateComparator)
-      : [];
-  };
-
   public static extractRemindersGroupIds = (reminders: CalendarReminder[]): string[] => {
     return reminders.map((r) => r.parentId);
   };
@@ -98,26 +90,5 @@ export class CalendarUtils {
 
   public static buildMonthKey = (year: number, month: number): string => {
     return year + '_' + month;
-  };
-
-  public static updateRemindersMap = (
-    store: [string, CalendarReminder[]][],
-    newValues: [string, CalendarReminder[]][],
-    keys: string[],
-  ): [string, any][] => {
-    let updatedStore = [...store];
-    keys.forEach((key) => {
-      const newValue = StoreUtils.getValue(newValues, key, []);
-      updatedStore = StoreUtils.setValue(updatedStore, key, newValue);
-    });
-    return updatedStore;
-  };
-
-  public static preparePendingLoadingKeys = (loadingKeys: string[], newKeys: string[]): string[] => {
-    return [...loadingKeys, ...newKeys];
-  };
-
-  public static prepareFinishedLoadingKeys = (loadingKeys: string[], newKeys: string[]): string[] => {
-    return loadingKeys.filter((key) => !newKeys.includes(key));
   };
 }

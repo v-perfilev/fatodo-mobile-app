@@ -60,7 +60,7 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
           <GhostButton justifyContent="flex-start" onPress={goToAccountForm}>
             {t('routes.AccountForm')}
           </GhostButton>
-          {account?.provider === 'LOCAL' && (
+          {account.provider === 'LOCAL' && (
             <GhostButton justifyContent="flex-start" onPress={goToAccountChangePasswordForm}>
               {t('routes.AccountChangePasswordForm')}
             </GhostButton>

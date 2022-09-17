@@ -10,8 +10,6 @@ class ChatSelectors {
 
   static chatItems = createSelector(getChatState, (state) => state.chatItems as ChatItem[]);
 
-  static loading = createSelector(getChatState, (state) => state.loading as boolean);
-
   static allLoaded = createSelector(getChatState, (state) => state.allLoaded as boolean);
 }
 

@@ -5,7 +5,5 @@ export type ChatsState = {
   filteredChats: Chat[];
   unreadCount: number;
   unreadMap: [string, string[]][];
-  loading: boolean;
-  moreLoading: boolean;
   allLoaded: boolean;
 };
