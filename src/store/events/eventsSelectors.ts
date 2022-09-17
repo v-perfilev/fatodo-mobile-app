@@ -9,8 +9,6 @@ class EventsSelectors {
 
   static unreadCount = createSelector(getEventsState, (state) => state.unreadCount as number);
 
-  static loading = createSelector(getEventsState, (state) => state.loading as boolean);
-
   static allLoaded = createSelector(getEventsState, (state) => state.allLoaded as boolean);
 }
 

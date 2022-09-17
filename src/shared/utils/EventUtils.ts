@@ -3,10 +3,6 @@ import {FilterUtils} from './FilterUtils';
 import {ComparatorUtils} from './ComparatorUtils';
 
 export class EventUtils {
-  public static filterEvents = (events: Event[]): Event[] => {
-    return events.filter(FilterUtils.uniqueByIdOrTypeAndDateFilter).sort(ComparatorUtils.dateComparator).reverse();
-  };
-
   public static extractEventsUserIds = (events: Event[]): string[] => {
     return events.flatMap(EventUtils.extractEventUserIds);
   };

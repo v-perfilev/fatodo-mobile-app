@@ -9,10 +9,9 @@ import eventsSlice from './eventsSlice';
 const PREFIX = 'events/';
 
 export class EventsActions {
-  static addEvent = (event: Event, isOwnEvent?: boolean) => async (dispatch: AppDispatch) => {
+  static addEvent = (event: Event) => async (dispatch: AppDispatch) => {
     dispatch(EventsActions.loadDependenciesThunk([event]));
-    dispatch(eventsSlice.actions.addEvent(event));
-    !isOwnEvent && dispatch(eventsSlice.actions.increaseUnreadCounter());
+    dispatch(eventsSlice.actions.setEvents([event]));
   };
 
   static removeChatEvents = (chatId: string) => async (dispatch: AppDispatch) => {
@@ -55,6 +54,15 @@ export class EventsActions {
     return response.data;
   });
 
+  static fetchUnreadCountThunk = createAsyncThunk(PREFIX + 'fetchUnreadCount', async () => {
+    const response = await EventService.getUnreadCount();
+    return response.data;
+  });
+
+  static refreshUnreadCountThunk = createAsyncThunk(PREFIX + 'refreshUnreadCount', async () => {
+    await EventService.refresh();
+  });
+
   static loadDependenciesThunk = createAsyncThunk(PREFIX + 'loadDependencies', async (events: Event[], thunkAPI) => {
     // handle userIds
     const userIds = EventUtils.extractEventsUserIds(events);
@@ -74,14 +82,5 @@ export class EventsActions {
     // handle commentIds
     const commentIds = EventUtils.extractEventsCommentIds(events);
     thunkAPI.dispatch(InfoActions.handleCommentIdsThunk(commentIds));
-  });
-
-  static fetchUnreadCountThunk = createAsyncThunk(PREFIX + 'fetchUnreadCount', async () => {
-    const response = await EventService.getUnreadCount();
-    return response.data;
-  });
-
-  static refreshUnreadCountThunk = createAsyncThunk(PREFIX + 'refreshUnreadCount', async () => {
-    await EventService.refresh();
   });
 }
