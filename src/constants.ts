@@ -42,5 +42,8 @@ export const SMALL_SPACE = 1;
 // CHATS
 export const TIMEOUT_BEFORE_MARK_AS_READ = 1000;
 
+// CALENDAR
+export const CALENDAR_LOAD_INDENT = 5;
+
 // BUILDERS
 export const ID_STUB = 'ID_STUB';

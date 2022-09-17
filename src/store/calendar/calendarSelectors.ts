@@ -8,7 +8,7 @@ const getMonthKey = (_: any, monthKey: string) => monthKey;
 const getDate = (_: any, __: any, date: number) => date;
 
 class CalendarSelectors {
-  static loading = createSelector(getCalendarState, (state) => state.loading as boolean);
+  static loading = createSelector(getCalendarState, (state) => (state.loadingKeys.length > 0) as boolean);
 
   static makeRemindersSelector = () =>
     createSelector([getCalendarState, getMonthKey, getDate], (state, monthKey, date) => {
