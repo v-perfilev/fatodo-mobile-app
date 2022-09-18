@@ -37,8 +37,9 @@ export class WsStateHandler {
         return this.handleItemCreateEvent;
       case 'ITEM_UPDATE':
       case 'ITEM_UPDATE_STATUS':
-      case 'ITEM_UPDATE_ARCHIVED':
         return this.handleItemUpdateEvent;
+      case 'ITEM_UPDATE_ARCHIVED':
+        return this.handleItemUpdateArchivedEvent;
       case 'ITEM_DELETE':
         return this.handleItemDeleteEvent;
       case 'ITEM_GROUP_CREATE':
@@ -118,10 +119,16 @@ export class WsStateHandler {
     this.dispatch(GroupActions.updateItem(item));
   };
 
+  private handleItemUpdateArchivedEvent = (msg: WsEvent<Item>): void => {
+    const item = msg.payload;
+    this.dispatch(GroupsActions.updateItemArchived(item));
+    this.dispatch(GroupActions.updateItem(item));
+  };
+
   private handleItemDeleteEvent = (msg: WsEvent<Item>): void => {
-    const itemId = msg.payload.id;
-    this.dispatch(GroupsActions.removeItem(itemId));
-    this.dispatch(GroupActions.removeItem(itemId));
+    const item = msg.payload;
+    this.dispatch(GroupsActions.removeItem(item));
+    this.dispatch(GroupActions.removeItem(item.id));
   };
 
   private handleItemGroupCreateEvent = (msg: WsEvent<Group>): void => {
@@ -140,9 +147,8 @@ export class WsStateHandler {
   };
 
   private handleItemMemberAddEvent = (msg: WsEvent<GroupMember[]>): void => {
-    const groupId = msg.payload[0].groupId;
     const members = msg.payload;
-    this.dispatch(GroupsActions.addMembers(groupId, members));
+    this.dispatch(GroupsActions.addMembers(members));
   };
 
   private handleItemMemberDeleteEvent = (msg: WsEvent<GroupMember[]>): void => {
@@ -152,7 +158,7 @@ export class WsStateHandler {
     if (memberIds.includes(this.account.id)) {
       this.dispatch(GroupsActions.removeGroup(groupId));
     } else {
-      this.dispatch(GroupsActions.removeMembers(groupId, members));
+      this.dispatch(GroupsActions.removeMembers(members));
     }
   };
 
@@ -162,14 +168,13 @@ export class WsStateHandler {
     if (member.userId === this.account.id) {
       this.dispatch(GroupsActions.removeGroup(groupId));
     } else {
-      this.dispatch(GroupsActions.removeMembers(groupId, [member]));
+      this.dispatch(GroupsActions.removeMembers([member]));
     }
   };
 
   private handleItemMemberRoleEvent = (msg: WsEvent<GroupMember>): void => {
-    const groupId = msg.payload.groupId;
     const member = msg.payload;
-    this.dispatch(GroupsActions.updateMembers(groupId, [member]));
+    this.dispatch(GroupsActions.updateMembers([member]));
   };
 
   /*
@@ -194,7 +199,7 @@ export class WsStateHandler {
       const chatId = msg.payload[0].chatId;
       this.dispatch(ChatsActions.removeChat(chatId));
     } else {
-      this.dispatch(ChatsActions.deleteMembers(msg.payload));
+      this.dispatch(ChatsActions.removeMembers(msg.payload));
     }
   };
 
@@ -203,7 +208,7 @@ export class WsStateHandler {
       const chatId = msg.payload.chatId;
       this.dispatch(ChatsActions.removeChat(chatId));
     } else {
-      this.dispatch(ChatsActions.deleteMembers([msg.payload]));
+      this.dispatch(ChatsActions.removeMembers([msg.payload]));
     }
   };
 

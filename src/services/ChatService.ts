@@ -44,7 +44,8 @@ export default class ChatService {
 
   public static getUnreadMessagesMap = (): AxiosPromise<[string, string[]][]> => {
     const url = ChatService.baseUrl + '/chat/unread';
-    return axios.get(url);
+    const transformResponse = (data: string) => Object.entries(JSON.parse(data));
+    return axios.get(url, {transformResponse});
   };
 
   /*

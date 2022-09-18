@@ -28,14 +28,13 @@ export class CalendarActions {
 
   static fetchRemindersThunk = createAsyncThunk<[string, CalendarReminder[]][], string[], AsyncThunkConfig>(
     PREFIX + 'fetchReminders',
-    async (keys: string[], thunkAPI) => {
+    async (keys, thunkAPI) => {
       const timezone = thunkAPI.getState().auth.account.info.timezone;
       const [yearFrom, monthFrom, yearTo, monthTo] = CalendarUtils.extractDatesToLoad(keys);
       const response = await NotificationService.getAllByMonths(yearFrom, monthFrom, yearTo, monthTo, timezone);
-      const responseEntries = Object.entries(response.data);
-      const responseValues = responseEntries.flatMap((v) => v[1]);
+      const responseValues = response.data.flatMap((v) => v[1]);
       thunkAPI.dispatch(CalendarActions.loadDependenciesThunk(responseValues));
-      return responseEntries;
+      return response.data;
     },
   );
 

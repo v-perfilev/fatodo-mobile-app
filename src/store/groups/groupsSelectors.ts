@@ -10,8 +10,6 @@ const getGroupId = (_: any, groupId: string) => groupId;
 class GroupsSelectors {
   static groups = createSelector(getGroupsState, (state) => state.groups as Group[]);
 
-  static loading = createSelector(getGroupsState, (state) => state.loading as boolean);
-
   static itemsAllCollapsed = createSelector(
     getGroupsState,
     (state) => StoreUtils.reduceBoolean(state.itemsCollapsed) as boolean,

@@ -22,11 +22,11 @@ export class ChatsActions {
   };
 
   static addMembers = (members: ChatMember[]) => async (dispatch: AppDispatch) => {
-    dispatch(chatsSlice.actions.addMembers(members));
+    dispatch(chatsSlice.actions.setMembers(members));
   };
 
-  static deleteMembers = (members: ChatMember[]) => async (dispatch: AppDispatch) => {
-    dispatch(chatsSlice.actions.deleteMembers(members));
+  static removeMembers = (members: ChatMember[]) => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.removeMembers(members));
   };
 
   static removeChat = (chatId: string) => async (dispatch: AppDispatch) => {
@@ -52,10 +52,14 @@ export class ChatsActions {
     },
   );
 
-  static refreshChatsThunk = createAsyncThunk<void, void, AsyncThunkConfig>(
+  static refreshChatsThunk = createAsyncThunk<PageableList<Chat>, void, AsyncThunkConfig>(
     PREFIX + 'refreshChats',
     async (_, thunkAPI) => {
-      thunkAPI.dispatch(ChatsActions.fetchChatsThunk(0));
+      const result = await ChatService.getAllChatsPageable();
+      const chats = result.data.data;
+      const chatUserIds = ChatUtils.extractUserIds(chats);
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(chatUserIds));
+      return result.data;
     },
   );
 

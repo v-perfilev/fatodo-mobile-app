@@ -4,29 +4,17 @@ import {Item} from '../../models/Item';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Group, GroupMember} from '../../models/Group';
 import {GroupsActions} from './groupsActions';
-import {GroupUtils} from '../../shared/utils/GroupUtils';
 import {ComparatorUtils} from '../../shared/utils/ComparatorUtils';
 import {StoreUtils} from '../../shared/utils/StoreUtils';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
 
-interface GroupsCollapsedPayload {
-  groupId: string;
-  value: boolean;
-}
-
-interface GroupsWithMembersPayload {
-  groupId: string;
-  members: GroupMember[];
-}
-
 const initialState: GroupsState = {
   groups: [],
   cachedGroups: [],
-  loading: false,
   items: [],
-  itemsCollapsed: [],
   itemsCount: [],
   itemsLoading: [],
+  itemsCollapsed: [],
 };
 
 const groupsSlice = createSlice({
@@ -37,30 +25,17 @@ const groupsSlice = createSlice({
       Object.assign(state, initialState);
     },
 
-    setGroups: (state: GroupsState, action: PayloadAction<Group[]>) => {
-      state.groups = action.payload;
-    },
-
     cacheGroups: (state: GroupsState) => {
       state.cachedGroups = state.groups;
     },
 
     resetGroupsFromCache: (state: GroupsState) => {
-      const cachedGroupIds = state.cachedGroups.map((g) => g.id);
-      const newGroups = state.groups.filter((g) => !cachedGroupIds.includes(g.id));
-      state.groups = [...newGroups, ...state.cachedGroups];
+      state.groups = state.cachedGroups;
       state.cachedGroups = [];
     },
 
-    setCollapsed: (state: GroupsState, action: PayloadAction<GroupsCollapsedPayload>) => {
-      const groupId = action.payload.groupId;
-      const value = action.payload.value;
-      state.itemsCollapsed = StoreUtils.setValue(state.itemsCollapsed, groupId, value);
-    },
-
-    setAllCollapsed: (state: GroupsState, action: PayloadAction<boolean>) => {
-      const value = action.payload;
-      state.itemsCollapsed = StoreUtils.setAllValues(state.itemsCollapsed, value);
+    setGroups: (state: GroupsState, action: PayloadAction<Group[]>) => {
+      state.groups = action.payload;
     },
 
     addGroup: (state: GroupsState, action: PayloadAction<Group>) => {
@@ -76,43 +51,23 @@ const groupsSlice = createSlice({
     removeGroup: (state: GroupsState, action: PayloadAction<string>) => {
       const groupId = action.payload;
       const group = ArrayUtils.findValueById(state.groups, groupId);
-      if (group) {
-        state.groups = ArrayUtils.deleteValueWithId(state.groups, group);
-        state.items = StoreUtils.deleteValue(state.items, group.id);
-        state.itemsCount = StoreUtils.deleteValue(state.itemsCount, group.id);
-        state.itemsCollapsed = StoreUtils.deleteValue(state.itemsCollapsed, group.id);
-        state.itemsLoading = StoreUtils.deleteValue(state.itemsLoading, group.id);
-      }
+      state.groups = ArrayUtils.deleteValueWithId(state.groups, group);
     },
 
-    addMembers: (state: GroupsState, action: PayloadAction<GroupsWithMembersPayload>) => {
-      const groupId = action.payload.groupId;
-      const members = action.payload.members;
+    setMembers: (state: GroupsState, action: PayloadAction<GroupMember[]>) => {
+      const groupId = action.payload[0].groupId;
       const group = ArrayUtils.findValueById(state.groups, groupId) as Group;
       if (group) {
-        group.members = [...group.members, ...members].filter(FilterUtils.uniqueByUserIdFilter);
+        group.members = filterMembers([...action.payload, ...group.members]);
         state.groups = ArrayUtils.updateValueWithId(state.groups, group);
       }
     },
 
-    updateMembers: (state: GroupsState, action: PayloadAction<GroupsWithMembersPayload>) => {
-      const groupId = action.payload.groupId;
-      const members = action.payload.members;
+    removeMembers: (state: GroupsState, action: PayloadAction<GroupMember[]>) => {
+      const groupId = action.payload[0].groupId;
       const group = ArrayUtils.findValueById(state.groups, groupId) as Group;
       if (group) {
-        members.forEach((member) => {
-          group.members = ArrayUtils.updateValueWithUserId(group.members, member);
-        });
-        state.groups = ArrayUtils.updateValueWithId(state.groups, group);
-      }
-    },
-
-    removeMembers: (state: GroupsState, action: PayloadAction<GroupsWithMembersPayload>) => {
-      const groupId = action.payload.groupId;
-      const members = action.payload.members;
-      const group = ArrayUtils.findValueById(state.groups, groupId) as Group;
-      if (group) {
-        const memberIds = members.map((m) => m.userId);
+        const memberIds = action.payload.map((m) => m.userId);
         group.members = group.members.filter((m) => !memberIds.includes(m.userId));
         state.groups = ArrayUtils.updateValueWithId(state.groups, group);
       }
@@ -121,95 +76,138 @@ const groupsSlice = createSlice({
     addItem: (state: GroupsState, action: PayloadAction<Item>) => {
       const item = action.payload;
       const oldItems = StoreUtils.getValue(state.items, item.groupId, []);
-      const oldCount = StoreUtils.getValue(state.itemsCount, item.groupId, 0);
-      const newItems = GroupUtils.filterItems([item, ...oldItems]);
-      const newCount = oldCount + 1;
+      const newItems = filterItems([item, ...oldItems]);
       state.items = StoreUtils.setValue(state.items, item.groupId, newItems);
-      state.itemsCount = StoreUtils.setValue(state.itemsCount, item.groupId, newCount);
     },
 
     updateItem: (state: GroupsState, action: PayloadAction<Item>) => {
       const item = action.payload;
-      if (!item.archived) {
-        const oldItems = StoreUtils.getValue(state.items, item.groupId, []);
-        const newItems = ArrayUtils.updateValueWithId(oldItems, item);
-        state.items = StoreUtils.setValue(state.items, item.groupId, newItems);
-      } else {
-        const oldItems = StoreUtils.getValue(state.items, item.groupId, []);
-        const newItems = ArrayUtils.deleteValueWithId(oldItems, item);
-        state.items = StoreUtils.setValue(state.items, item.groupId, newItems);
-      }
+      const items = StoreUtils.getValue(state.items, item.groupId, []);
+      const updatedItems = ArrayUtils.updateValueWithId(items, item);
+      state.items = StoreUtils.setValue(state.items, item.groupId, updatedItems);
     },
 
-    removeItem: (state: GroupsState, action: PayloadAction<string>) => {
-      const itemId = action.payload;
-      const map = new Map(state.items);
-      const itemArray = Array.from(map.values()).flatMap((items) => items);
-      const item = ArrayUtils.findValueById(itemArray, itemId);
-      if (item && !item.archived) {
-        const oldItems = StoreUtils.getValue(state.items, item.groupId, []);
-        const oldCount = StoreUtils.getValue(state.itemsCount, item.groupId, 0);
-        const newItems = ArrayUtils.deleteValueWithId(oldItems, item);
-        const newCount = oldCount - 1;
-        state.items = StoreUtils.setValue(state.items, item.groupId, newItems);
-        state.itemsCount = StoreUtils.setValue(state.itemsCount, item.groupId, newCount);
-      }
+    removeItem: (state: GroupsState, action: PayloadAction<Item>) => {
+      const item = action.payload;
+      const items = StoreUtils.getValue(state.items, item.groupId, []);
+      const updatedItems = ArrayUtils.deleteValueWithId(items, item);
+      state.items = StoreUtils.setValue(state.items, item.groupId, updatedItems);
+    },
+
+    setItems: (state: GroupsState, action: PayloadAction<[string, Item[]][]>) => {
+      const map = new Map(action.payload);
+      const groupIds = Array.from(map.keys());
+      const itemsFunc = (id: string): Item[] => map.get(id);
+      state.items = StoreUtils.setMultipleValuesFunc(state.itemsCount, groupIds, itemsFunc);
+    },
+
+    removeItems: (state: GroupsState, action: PayloadAction<string>) => {
+      state.items = StoreUtils.deleteValue(state.items, action.payload);
+    },
+
+    setItemsCount: (state: GroupsState, action: PayloadAction<[string, number][]>) => {
+      const map = new Map(action.payload);
+      const groupIds = Array.from(map.keys());
+      const countFunc = (id: string): number => map.get(id);
+      state.itemsCount = StoreUtils.setMultipleValuesFunc(state.itemsCount, groupIds, countFunc);
+    },
+
+    incrementItemsCount: (state: GroupsState, action: PayloadAction<string>) => {
+      const count = StoreUtils.getValue(state.itemsCount, action.payload, 0);
+      state.itemsCount = StoreUtils.setValue(state.itemsCount, action.payload, count + 1);
+    },
+
+    decrementItemsCount: (state: GroupsState, action: PayloadAction<string>) => {
+      const count = StoreUtils.getValue(state.itemsCount, action.payload, 0);
+      state.itemsCount = StoreUtils.setValue(state.itemsCount, action.payload, count - 1);
+    },
+
+    removeItemsCount: (state: GroupsState, action: PayloadAction<string>) => {
+      state.itemsCount = StoreUtils.deleteValue(state.items, action.payload);
+    },
+
+    setItemsLoading: (state: GroupsState, action: PayloadAction<[string, boolean][]>) => {
+      const map = new Map(action.payload);
+      const groupIds = Array.from(map.keys());
+      const loadingFunc = (id: string): boolean => map.get(id);
+      state.itemsLoading = StoreUtils.setMultipleValuesFunc(state.itemsCount, groupIds, loadingFunc);
+    },
+
+    removeItemsLoading: (state: GroupsState, action: PayloadAction<string>) => {
+      state.itemsLoading = StoreUtils.deleteValue(state.items, action.payload);
+    },
+
+    setCollapsed: (state: GroupsState, action: PayloadAction<[string, boolean]>) => {
+      state.itemsCollapsed = StoreUtils.setValue(state.itemsCollapsed, action.payload[0], action.payload[1]);
+    },
+
+    setAllCollapsed: (state: GroupsState, action: PayloadAction<boolean>) => {
+      state.itemsCollapsed = StoreUtils.setAllValues(state.itemsCollapsed, action.payload);
+    },
+
+    removeCollapsed: (state: GroupsState, action: PayloadAction<string>) => {
+      state.itemsCollapsed = StoreUtils.deleteValue(state.itemsCollapsed, action.payload);
     },
   },
   extraReducers: (builder) => {
     /*
     fetchGroups
     */
-    builder.addCase(GroupsActions.fetchGroupsThunk.pending, (state: GroupsState) => {
-      state.loading = true;
-    });
-    builder.addCase(GroupsActions.fetchGroupsThunk.fulfilled, (state: GroupsState, action) => {
-      state.groups = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(GroupsActions.fetchGroupsThunk.rejected, (state: GroupsState) => {
-      state.loading = false;
-    });
-
-    /*
-    refreshGroups
-    */
-    builder.addCase(GroupsActions.refreshGroupsThunk.pending, (state: GroupsState) => {
-      state.loading = true;
-    });
-    builder.addCase(GroupsActions.refreshGroupsThunk.fulfilled, (state: GroupsState, action) => {
-      Object.assign(state, initialState);
-      state.groups = action.payload;
-    });
-    builder.addCase(GroupsActions.refreshGroupsThunk.rejected, (state: GroupsState) => {
-      state.loading = false;
+    builder.addCase(GroupsActions.fetchGroupsThunk.fulfilled, (state, action) => {
+      groupsSlice.caseReducers.reset(state);
+      groupsSlice.caseReducers.setGroups(state, action);
     });
 
     /*
     fetchItems
     */
     builder.addCase(GroupsActions.fetchItemsThunk.pending, (state: GroupsState, action) => {
-      const groupIds = action.meta.arg;
-      state.items = StoreUtils.setMultipleValues(state.items, groupIds, []);
-      state.itemsCount = StoreUtils.setMultipleValues(state.itemsCount, groupIds, 0);
-      state.itemsCollapsed = StoreUtils.setMultipleValues(state.itemsCollapsed, groupIds, false);
-      state.itemsLoading = StoreUtils.setMultipleValues(state.itemsLoading, groupIds, true);
+      const loadingMap: [string, boolean][] = action.meta.arg.map((groupId) => [groupId, true]);
+      groupsSlice.caseReducers.setItemsLoading(state, {...action, payload: loadingMap});
     });
     builder.addCase(GroupsActions.fetchItemsThunk.fulfilled, (state: GroupsState, action) => {
-      const groupIds = action.meta.arg;
-      const pageableListMap = new Map(Object.entries(action.payload));
-      const itemFunc = (id: string): Item[] =>
-        pageableListMap.has(id) ? pageableListMap.get(id).data.sort(ComparatorUtils.createdAtDescComparator) : [];
-      const countFunc = (id: string): number => (pageableListMap.has(id) ? pageableListMap.get(id).count : 0);
-      state.items = StoreUtils.setMultipleValuesFunc(state.items, groupIds, itemFunc);
-      state.itemsCount = StoreUtils.setMultipleValuesFunc(state.itemsCount, groupIds, countFunc);
-      state.itemsLoading = StoreUtils.setMultipleValues(state.itemsLoading, groupIds, false);
+      const itemsMap: [string, Item[]][] = action.payload.map((entry) => [entry[0], entry[1].data]);
+      groupsSlice.caseReducers.setItems(state, {...action, payload: itemsMap});
+      const countMap: [string, number][] = action.payload.map((entry) => [entry[0], entry[1].count]);
+      groupsSlice.caseReducers.setItemsCount(state, {...action, payload: countMap});
+      const loadingMap: [string, boolean][] = action.meta.arg.map((groupId) => [groupId, false]);
+      groupsSlice.caseReducers.setItemsLoading(state, {...action, payload: loadingMap});
     });
     builder.addCase(GroupsActions.fetchItemsThunk.rejected, (state: GroupsState, action) => {
-      const groupIds = action.meta.arg;
-      state.itemsLoading = StoreUtils.setMultipleValues(state.itemsLoading, groupIds, false);
+      const loadingMap: [string, boolean][] = action.meta.arg.map((groupId) => [groupId, false]);
+      groupsSlice.caseReducers.setItemsLoading(state, {...action, payload: loadingMap});
+    });
+
+    /*
+    removeGroup
+    */
+    builder.addCase(GroupsActions.removeGroupThunk.fulfilled, (state, action) => {
+      groupsSlice.caseReducers.removeGroup(state, action);
+      groupsSlice.caseReducers.removeItems(state, action);
+      groupsSlice.caseReducers.removeItemsCount(state, action);
+      groupsSlice.caseReducers.removeItemsLoading(state, action);
+      groupsSlice.caseReducers.removeCollapsed(state, action);
+    });
+
+    /*
+    leaveGroup
+    */
+    builder.addCase(GroupsActions.leaveGroupThunk.fulfilled, (state, action) => {
+      groupsSlice.caseReducers.removeGroup(state, action);
+      groupsSlice.caseReducers.removeItems(state, action);
+      groupsSlice.caseReducers.removeItemsCount(state, action);
+      groupsSlice.caseReducers.removeItemsLoading(state, action);
+      groupsSlice.caseReducers.removeCollapsed(state, action);
     });
   },
 });
+
+const filterMembers = (members: GroupMember[]): GroupMember[] => {
+  return members.filter(FilterUtils.uniqueByUserIdFilter);
+};
+
+const filterItems = (items: Item[]): Item[] => {
+  return items.filter(FilterUtils.uniqueByIdFilter).sort(ComparatorUtils.createdAtDescComparator);
+};
 
 export default groupsSlice;

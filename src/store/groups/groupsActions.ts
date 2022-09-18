@@ -1,11 +1,12 @@
-import {AppDispatch} from '../store';
+import {AppDispatch, AsyncThunkConfig} from '../store';
 import groupsSlice from './groupsSlice';
 import {Group, GroupMember} from '../../models/Group';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ItemService from '../../services/ItemService';
-import snackSlice from '../snack/snackSlice';
 import {InfoActions} from '../info/infoActions';
 import {Item} from '../../models/Item';
+import {SnackActions} from '../snack/snackActions';
+import {PageableList} from '../../models/PageableList';
 
 const PREFIX = 'groups/';
 
@@ -22,14 +23,6 @@ export class GroupsActions {
     dispatch(groupsSlice.actions.resetGroupsFromCache());
   };
 
-  static setCollapsed = (groupId: string, value: boolean) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.setCollapsed({groupId, value}));
-  };
-
-  static setAllCollapsed = (value: boolean) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.setAllCollapsed(value));
-  };
-
   static addGroup = (group: Group) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.addGroup(group));
   };
@@ -40,74 +33,104 @@ export class GroupsActions {
 
   static removeGroup = (groupId: string) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.removeGroup(groupId));
+    dispatch(groupsSlice.actions.removeItems(groupId));
+    dispatch(groupsSlice.actions.removeItemsCount(groupId));
+    dispatch(groupsSlice.actions.removeItemsLoading(groupId));
+    dispatch(groupsSlice.actions.removeCollapsed(groupId));
   };
 
-  static addMembers = (groupId: string, members: GroupMember[]) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.addMembers({groupId, members}));
+  static addMembers = (members: GroupMember[]) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.setMembers(members));
   };
 
-  static updateMembers = (groupId: string, members: GroupMember[]) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.updateMembers({groupId, members}));
+  static updateMembers = (members: GroupMember[]) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.setMembers(members));
   };
 
-  static removeMembers = (groupId: string, members: GroupMember[]) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.removeMembers({groupId, members}));
+  static removeMembers = (members: GroupMember[]) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.removeMembers(members));
   };
 
   static addItem = (item: Item) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.addItem(item));
+    dispatch(groupsSlice.actions.incrementItemsCount(item.groupId));
   };
 
   static updateItem = (item: Item) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.updateItem(item));
   };
 
-  static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
-    dispatch(groupsSlice.actions.removeItem(itemId));
+  static updateItemArchived = (item: Item) => (dispatch: AppDispatch) => {
+    if (item.archived) {
+      dispatch(groupsSlice.actions.removeItem(item));
+      dispatch(groupsSlice.actions.decrementItemsCount(item.groupId));
+    } else {
+      dispatch(groupsSlice.actions.addItem(item));
+      dispatch(groupsSlice.actions.incrementItemsCount(item.groupId));
+    }
   };
 
-  static fetchGroupsThunk = createAsyncThunk(PREFIX + 'fetchGroups', async (_, thunkAPI) => {
-    const response = await ItemService.getAllGroups();
-    const groupIds = response.data.data.map((g) => g.id);
-    groupIds.length > 0 && thunkAPI.dispatch(GroupsActions.fetchItemsThunk(groupIds));
-    const groupUserIds = response.data.data.flatMap((g) => g.members).map((m) => m.userId);
-    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(groupUserIds));
-    return response.data.data;
-  });
+  static removeItem = (item: Item) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.removeItem(item));
+    dispatch(groupsSlice.actions.decrementItemsCount(item.groupId));
+  };
 
-  static refreshGroupsThunk = createAsyncThunk(PREFIX + 'refreshGroups', async (_, thunkAPI) => {
-    const response = await ItemService.getAllGroups();
-    const groupIds = response.data.data.map((g) => g.id);
-    groupIds.length > 0 && thunkAPI.dispatch(GroupsActions.fetchItemsThunk(groupIds));
-    const groupUserIds = response.data.data.flatMap((g) => g.members).map((m) => m.userId);
-    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(groupUserIds));
-    return response.data.data;
-  });
+  static setCollapsed = (groupId: string, value: boolean) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.setCollapsed([groupId, value]));
+  };
 
-  static fetchItemsThunk = createAsyncThunk(PREFIX + 'fetchItems', async (groupIds: string[], thunkAPI) => {
-    const response = await ItemService.getPreviewItemsByGroupIds(groupIds);
-    const pageableListMap = new Map(Object.entries(response.data));
-    const itemUserIds = Array.from(pageableListMap.values())
-      .flatMap((g) => g.data)
-      .flatMap((i) => [i.createdBy, i.lastModifiedBy]);
-    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
-    return response.data;
-  });
+  static setAllCollapsed = (value: boolean) => (dispatch: AppDispatch) => {
+    dispatch(groupsSlice.actions.setAllCollapsed(value));
+  };
 
-  static deleteGroupThunk = createAsyncThunk(PREFIX + 'deleteGroup', async (group: Group, thunkAPI) => {
-    await ItemService.deleteGroup(group.id);
-    thunkAPI.dispatch(groupsSlice.actions.removeGroup(group.id));
-    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.deleted', variant: 'info'}));
-  });
+  static fetchGroupsThunk = createAsyncThunk<Group[], void, AsyncThunkConfig>(
+    PREFIX + 'fetchGroups',
+    async (_, thunkAPI) => {
+      const response = await ItemService.getAllGroups();
+      const groupIds = response.data.data.map((g) => g.id);
+      const memberIds = response.data.data.flatMap((g) => g.members).map((m) => m.userId);
+      groupIds.length > 0 && thunkAPI.dispatch(GroupsActions.fetchItemsThunk(groupIds));
+      memberIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(memberIds));
+      return response.data.data;
+    },
+  );
 
-  static leaveGroupThunk = createAsyncThunk(PREFIX + 'leaveGroup', async (group: Group, thunkAPI) => {
-    await ItemService.leaveGroup(group.id);
-    thunkAPI.dispatch(groupsSlice.actions.removeGroup(group.id));
-    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.left', variant: 'info'}));
-  });
+  static fetchItemsThunk = createAsyncThunk<[string, PageableList<Item>][], string[], AsyncThunkConfig>(
+    PREFIX + 'fetchItems',
+    async (groupIds, thunkAPI) => {
+      const response = await ItemService.getPreviewItemsByGroupIds(groupIds);
+      const itemUserIds = response.data
+        .map((entry) => entry[1])
+        .flatMap((g) => g.data)
+        .flatMap((i) => [i.createdBy, i.lastModifiedBy]);
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+      return response.data;
+    },
+  );
 
-  static updateOrderThunk = createAsyncThunk(PREFIX + 'updateOrder', async (order: string[], thunkAPI) => {
-    await ItemService.setGroupOrder(order);
-    thunkAPI.dispatch(snackSlice.actions.handleCode({code: 'group.sorted', variant: 'info'}));
-  });
+  static removeGroupThunk = createAsyncThunk<string, string, AsyncThunkConfig>(
+    PREFIX + 'deleteGroup',
+    async (groupId, thunkAPI) => {
+      await ItemService.deleteGroup(groupId);
+      thunkAPI.dispatch(SnackActions.handleCode('group.deleted', 'info'));
+      return groupId;
+    },
+  );
+
+  static leaveGroupThunk = createAsyncThunk<string, string, AsyncThunkConfig>(
+    PREFIX + 'leaveGroup',
+    async (groupId, thunkAPI) => {
+      await ItemService.leaveGroup(groupId);
+      thunkAPI.dispatch(SnackActions.handleCode('group.left', 'info'));
+      return groupId;
+    },
+  );
+
+  static updateOrderThunk = createAsyncThunk<void, string[], AsyncThunkConfig>(
+    PREFIX + 'updateOrder',
+    async (order, thunkAPI) => {
+      await ItemService.setGroupOrder(order);
+      thunkAPI.dispatch(SnackActions.handleCode('group.sorted', 'info'));
+    },
+  );
 }

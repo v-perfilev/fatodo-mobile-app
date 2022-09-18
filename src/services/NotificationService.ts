@@ -11,10 +11,11 @@ export default class NotificationService {
     yearTo: number,
     monthTo: number,
     timezone: string,
-  ): AxiosPromise<Map<string, CalendarReminder[]>> => {
+  ): AxiosPromise<[string, CalendarReminder[]][]> => {
     const url = NotificationService.baseUrl + '/reminder/calendar';
     const params = {yearFrom, monthFrom, yearTo, monthTo, timezone};
-    return axiosDefault.get(url, {params});
+    const transformResponse = (data: string) => Object.entries(JSON.parse(data));
+    return axiosDefault.get(url, {params, transformResponse});
   };
 
   public static getAllByTargetId = (targetId: string): AxiosPromise<Reminder[]> => {

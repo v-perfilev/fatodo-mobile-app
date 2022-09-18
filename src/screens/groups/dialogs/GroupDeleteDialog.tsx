@@ -27,7 +27,7 @@ const GroupDeleteDialog = ({group, show, close, onSuccess = () => null}: GroupDe
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(GroupsActions.deleteGroupThunk(group))
+    dispatch(GroupsActions.removeGroupThunk(group.id))
       .unwrap()
       .then(() => {
         onSuccess();

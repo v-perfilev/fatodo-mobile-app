@@ -9,6 +9,7 @@ import groupsSlice from '../groups/groupsSlice';
 import {InfoActions} from '../info/infoActions';
 import {SnackActions} from '../snack/snackActions';
 import {PageableList} from '../../models/PageableList';
+import {GroupsActions} from '../groups/groupsActions';
 
 const PREFIX = 'group/';
 
@@ -96,7 +97,7 @@ export class GroupActions {
     PREFIX + 'deleteItem',
     async (item, thunkAPI) => {
       await ItemService.deleteItem(item.id);
-      thunkAPI.dispatch(groupsSlice.actions.removeItem(item.id));
+      thunkAPI.dispatch(GroupsActions.removeItem(item));
       thunkAPI.dispatch(SnackActions.handleCode('item.deleted', 'info'));
       return item.id;
     },
@@ -106,7 +107,7 @@ export class GroupActions {
     PREFIX + 'createGroup',
     async (formData, thunkAPI) => {
       const response = await ItemService.createGroup(formData);
-      thunkAPI.dispatch(groupsSlice.actions.addGroup(response.data));
+      thunkAPI.dispatch(GroupsActions.addGroup(response.data));
       thunkAPI.dispatch(SnackActions.handleCode('group.created', 'info'));
       return response.data;
     },
@@ -116,7 +117,7 @@ export class GroupActions {
     PREFIX + 'updateGroup',
     async (formData, thunkAPI) => {
       const response = await ItemService.updateGroup(formData);
-      thunkAPI.dispatch(groupsSlice.actions.updateGroup(response.data));
+      thunkAPI.dispatch(GroupsActions.updateGroup(response.data));
       thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
       return response.data;
     },
@@ -129,7 +130,7 @@ export class GroupActions {
       const updatedMembers = [...group.members, ...newMembers];
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.addMembersToGroup(group.id, userIds);
-      thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
+      thunkAPI.dispatch(GroupsActions.updateGroup(updatedGroup));
       thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
       return updatedGroup;
     },
@@ -141,7 +142,7 @@ export class GroupActions {
       const updatedMembers = ArrayUtils.updateValueWithUserId(group.members, member);
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.editGroupMember(group.id, member);
-      thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
+      thunkAPI.dispatch(GroupsActions.updateGroup(updatedGroup));
       thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
       return updatedGroup;
     },

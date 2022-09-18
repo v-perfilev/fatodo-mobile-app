@@ -54,10 +54,11 @@ export default class ItemService {
   ItemController
    */
 
-  public static getPreviewItemsByGroupIds = (groupIds: string[]): AxiosPromise<Map<string, PageableList<Item>>> => {
+  public static getPreviewItemsByGroupIds = (groupIds: string[]): AxiosPromise<[string, PageableList<Item>][]> => {
     const url = ItemService.baseUrl + '/item/preview';
     const params = {groupIds};
-    return axios.get(url, {params});
+    const transformResponse = (data: string) => Object.entries(JSON.parse(data));
+    return axios.get(url, {params, transformResponse});
   };
 
   public static getItemsByGroupId = (

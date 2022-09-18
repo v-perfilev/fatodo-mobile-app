@@ -49,7 +49,7 @@ const chatsSlice = createSlice({
       }
     },
 
-    addMembers: (state: ChatsState, action: PayloadAction<ChatMember[]>) => {
+    setMembers: (state: ChatsState, action: PayloadAction<ChatMember[]>) => {
       const members = action.payload;
       const chat: Chat = ArrayUtils.findValueById(state.chats, members[0].chatId);
       if (chat) {
@@ -58,7 +58,7 @@ const chatsSlice = createSlice({
       }
     },
 
-    deleteMembers: (state: ChatsState, action: PayloadAction<ChatMember[]>) => {
+    removeMembers: (state: ChatsState, action: PayloadAction<ChatMember[]>) => {
       const members = action.payload;
       const memberIds = members.map((m) => m.userId);
       const chat: Chat = ArrayUtils.findValueById(state.chats, members[0].chatId);
@@ -104,7 +104,7 @@ const chatsSlice = createSlice({
     /*
     refreshChats
     */
-    builder.addCase(ChatsActions.fetchChatsThunk.fulfilled, (state, action) => {
+    builder.addCase(ChatsActions.refreshChatsThunk.fulfilled, (state, action) => {
       chatsSlice.caseReducers.resetChats(state);
       chatsSlice.caseReducers.setChats(state, {...action, payload: action.payload.data});
       chatsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
@@ -154,7 +154,7 @@ const removeUnreadChat = (unreadMap: [string, string[]][], chatId: string): [str
 };
 
 const calculateUnreadCount = (unreadMap: [string, string[]][]): number => {
-  return unreadMap.map((u) => u[1]).reduce((a, b) => a + b.length, 0);
+  return unreadMap.map((entry) => entry[1]).reduce((a, b) => a + b.length, 0);
 };
 
 export default chatsSlice;
