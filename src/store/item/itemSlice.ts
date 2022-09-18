@@ -3,12 +3,12 @@ import {ItemState} from './itemType';
 import {ItemActions} from './itemActions';
 import {Item} from '../../models/Item';
 import {Group} from '../../models/Group';
+import {Reminder} from '../../models/Reminder';
 
 const initialState: ItemState = {
   item: undefined,
   group: undefined,
   reminders: [],
-  loading: false,
 };
 
 const itemSlice = createSlice({
@@ -26,65 +26,53 @@ const itemSlice = createSlice({
     setItem: (state: ItemState, action: PayloadAction<Item>) => {
       state.item = action.payload;
     },
+
+    setReminders: (state: ItemState, action: PayloadAction<Reminder[]>) => {
+      state.reminders = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
     fetchItem
     */
-    builder.addCase(ItemActions.fetchItemThunk.pending, (state: ItemState) => {
-      Object.assign(state, initialState);
-      state.loading = true;
+    builder.addCase(ItemActions.fetchItemThunk.pending, (state) => {
+      itemSlice.caseReducers.reset(state);
     });
-    builder.addCase(ItemActions.fetchItemThunk.fulfilled, (state: ItemState, action) => {
-      state.item = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(ItemActions.fetchItemThunk.rejected, (state: ItemState) => {
-      Object.assign(state, initialState);
+    builder.addCase(ItemActions.fetchItemThunk.fulfilled, (state, action) => {
+      itemSlice.caseReducers.setItem(state, action);
     });
 
     /*
     fetchGroup
     */
-    builder.addCase(ItemActions.fetchGroupThunk.fulfilled, (state: ItemState, action) => {
-      state.group = action.payload;
+    builder.addCase(ItemActions.fetchGroupThunk.fulfilled, (state, action) => {
+      itemSlice.caseReducers.setGroup(state, action);
     });
 
     /*
     fetchReminders
     */
-    builder.addCase(ItemActions.fetchRemindersThunk.fulfilled, (state: ItemState, action) => {
+    builder.addCase(ItemActions.fetchRemindersThunk.fulfilled, (state, action) => {
       state.reminders = action.payload;
     });
 
     /*
     createItem
     */
-    builder.addCase(ItemActions.createItemThunk.pending, (state: ItemState) => {
-      state.loading = true;
+    builder.addCase(ItemActions.createItemThunk.pending, (state) => {
+      itemSlice.caseReducers.reset(state);
     });
-    builder.addCase(ItemActions.createItemThunk.fulfilled, (state: ItemState, action) => {
-      state.item = action.payload;
-      state.reminders = action.meta.arg.reminders;
-      state.loading = false;
-    });
-    builder.addCase(ItemActions.createItemThunk.rejected, (state: ItemState) => {
-      Object.assign(state, initialState);
+    builder.addCase(ItemActions.createItemThunk.fulfilled, (state, action) => {
+      itemSlice.caseReducers.setItem(state, action);
+      itemSlice.caseReducers.setReminders(state, {...action, payload: action.meta.arg.reminders});
     });
 
     /*
     updateItem
     */
-    builder.addCase(ItemActions.updateItemThunk.pending, (state: ItemState) => {
-      state.loading = true;
-    });
     builder.addCase(ItemActions.updateItemThunk.fulfilled, (state: ItemState, action) => {
-      state.item = action.payload;
-      state.reminders = action.meta.arg.reminders;
-      state.loading = false;
-    });
-    builder.addCase(ItemActions.updateItemThunk.rejected, (state: ItemState) => {
-      state.loading = false;
+      itemSlice.caseReducers.setItem(state, action);
+      itemSlice.caseReducers.setReminders(state, {...action, payload: action.meta.arg.reminders});
     });
   },
 });

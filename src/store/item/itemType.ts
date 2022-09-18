@@ -6,5 +6,4 @@ export type ItemState = {
   group: Group;
   item: Item;
   reminders: Reminder[];
-  loading: boolean;
 };
