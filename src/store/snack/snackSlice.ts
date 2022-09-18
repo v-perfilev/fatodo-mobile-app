@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {ReduxSnack, SnackState} from './snackType';
-import {Snack} from '../../models/Snack';
+import {ReduxSnack, Snack} from '../../models/Snack';
+import {SnackState} from './snackType';
 
 const initialState: SnackState = {
   list: [],

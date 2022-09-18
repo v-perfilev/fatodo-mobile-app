@@ -1,6 +1,6 @@
 import {createSelector} from '@reduxjs/toolkit';
 import {RootState} from '../store';
-import {ReduxSnack} from './snackType';
+import {ReduxSnack} from '../../models/Snack';
 
 const getAuthState = (state: RootState) => state.snack;
 

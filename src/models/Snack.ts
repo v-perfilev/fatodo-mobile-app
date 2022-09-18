@@ -1,5 +1,10 @@
 export type SnackVariant = 'info' | 'warning' | 'error';
 
+export interface ReduxSnack extends Snack {
+  key: string;
+  dismissed: boolean;
+}
+
 export interface Snack {
   message: string;
   color: string;

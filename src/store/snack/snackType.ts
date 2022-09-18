@@ -1,9 +1,4 @@
-import {Snack} from '../../models/Snack';
-
-export interface ReduxSnack extends Snack {
-  key: string;
-  dismissed: boolean;
-}
+import {ReduxSnack} from '../../models/Snack';
 
 export type SnackState = {
   list: ReduxSnack[];
