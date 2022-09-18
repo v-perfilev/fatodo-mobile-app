@@ -3,6 +3,10 @@ export class FilterUtils {
     return arr.findIndex((v) => v === value) === i;
   };
 
+  public static uniqueByKeyFilter = (value: any, i: number, arr: any[]): boolean => {
+    return arr.findIndex((v) => v[0] === value[0]) === i;
+  };
+
   public static uniqueByIdFilter = (value: any, i: number, arr: any[]): boolean => {
     return arr.findIndex((v) => v.id === value.id) === i;
   };

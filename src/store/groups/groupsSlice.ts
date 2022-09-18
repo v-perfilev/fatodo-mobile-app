@@ -137,6 +137,10 @@ const groupsSlice = createSlice({
       state.itemsLoading = StoreUtils.deleteValue(state.items, action.payload);
     },
 
+    initializeCollapsed: (state: GroupsState, action: PayloadAction<string[]>) => {
+      state.itemsCollapsed = StoreUtils.setMultipleValues(state.itemsCollapsed, action.payload, false);
+    },
+
     setCollapsed: (state: GroupsState, action: PayloadAction<[string, boolean]>) => {
       state.itemsCollapsed = StoreUtils.setValue(state.itemsCollapsed, action.payload[0], action.payload[1]);
     },
@@ -154,7 +158,9 @@ const groupsSlice = createSlice({
     fetchGroups
     */
     builder.addCase(GroupsActions.fetchGroupsThunk.fulfilled, (state, action) => {
+      const groupIds = action.payload.map((g) => g.id);
       groupsSlice.caseReducers.setGroups(state, action);
+      groupsSlice.caseReducers.initializeCollapsed(state, {...action, payload: groupIds});
     });
 
     /*

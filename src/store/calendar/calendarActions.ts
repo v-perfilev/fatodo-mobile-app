@@ -34,7 +34,10 @@ export class CalendarActions {
       const response = await NotificationService.getAllByMonths(yearFrom, monthFrom, yearTo, monthTo, timezone);
       const responseValues = response.data.flatMap((v) => v[1]);
       thunkAPI.dispatch(CalendarActions.loadDependenciesThunk(responseValues));
-      return response.data;
+      const loadedKeys = response.data.map((entry) => entry[0]);
+      const missingKeys = keys.filter((key) => !loadedKeys.includes(key));
+      const missingReminders: [string, CalendarReminder[]][] = missingKeys.map((key) => [key, []]);
+      return [...response.data, ...missingReminders];
     },
   );
 

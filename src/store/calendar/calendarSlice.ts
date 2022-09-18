@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {CalendarState} from './calendarType';
 import {CalendarActions} from './calendarActions';
 import {CalendarReminder} from '../../models/Reminder';
+import {FilterUtils} from '../../shared/utils/FilterUtils';
 
 const initialState: CalendarState = {
   reminders: [],
@@ -25,11 +26,8 @@ const calendarSlice = createSlice({
     },
 
     setReminders: (state: CalendarState, action: PayloadAction<[string, CalendarReminder[]][]>) => {
-      state.reminders = [...state.reminders, ...action.payload];
-    },
-
-    removeReminders: (state: CalendarState, action: PayloadAction<string[]>) => {
-      state.reminders = state.reminders.filter((entry) => action.payload.includes(entry[0]));
+      console.log('set reminders');
+      state.reminders = filterReminders([...action.payload, ...state.reminders]);
     },
   },
   extraReducers: (builder) => {
@@ -40,7 +38,6 @@ const calendarSlice = createSlice({
       calendarSlice.caseReducers.addLoadingKeys(state, {...action, payload: action.meta.arg});
     });
     builder.addCase(CalendarActions.fetchRemindersThunk.fulfilled, (state, action) => {
-      calendarSlice.caseReducers.removeReminders(state, {...action, payload: action.meta.arg});
       calendarSlice.caseReducers.setReminders(state, action);
       calendarSlice.caseReducers.removeLoadingKeys(state, {...action, payload: action.meta.arg});
     });
@@ -49,5 +46,9 @@ const calendarSlice = createSlice({
     });
   },
 });
+
+const filterReminders = (reminders: [string, CalendarReminder[]][]): [string, CalendarReminder[]][] => {
+  return reminders.filter(FilterUtils.uniqueByKeyFilter);
+};
 
 export default calendarSlice;
