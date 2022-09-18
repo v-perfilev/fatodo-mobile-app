@@ -12,8 +12,6 @@ class UserSelectors {
   static groups = createSelector(getUserState, (state) => state.groups as Group[]);
 
   static relations = createSelector(getUserState, (state) => state.relations as ContactRelation[]);
-
-  static loading = createSelector(getUserState, (state) => state.loading as boolean);
 }
 
 export default UserSelectors;

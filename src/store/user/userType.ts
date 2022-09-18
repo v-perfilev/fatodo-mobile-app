@@ -6,5 +6,4 @@ export type UserState = {
   user: User;
   groups: Group[];
   relations: ContactRelation[];
-  loading: boolean;
 };

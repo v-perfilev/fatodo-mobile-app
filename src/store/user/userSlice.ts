@@ -2,12 +2,13 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {User} from '../../models/User';
 import {UserState} from './userType';
 import {UserActions} from './userActions';
+import {Group} from '../../models/Group';
+import {ContactRelation} from '../../models/Contact';
 
 const initialState: UserState = {
   user: undefined,
   groups: [],
   relations: [],
-  loading: false,
 };
 
 const userSlice = createSlice({
@@ -21,53 +22,48 @@ const userSlice = createSlice({
     setUser: (state: UserState, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
+
+    setGroups: (state: UserState, action: PayloadAction<Group[]>) => {
+      state.groups = action.payload;
+    },
+
+    setRelations: (state: UserState, action: PayloadAction<ContactRelation[]>) => {
+      state.relations = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
+    selectUser
+    */
+    builder.addCase(UserActions.selectUserThunk.pending, (state) => {
+      userSlice.caseReducers.reset(state);
+    });
+    builder.addCase(UserActions.selectUserThunk.fulfilled, (state, action) => {
+      userSlice.caseReducers.setUser(state, action);
+    });
+
+    /*
     fetchUser
     */
-    builder.addCase(UserActions.fetchUserThunk.pending, (state: UserState) => {
-      Object.assign(state, initialState);
-      state.loading = true;
+    builder.addCase(UserActions.fetchUserThunk.pending, (state) => {
+      userSlice.caseReducers.reset(state);
     });
-    builder.addCase(UserActions.fetchUserThunk.fulfilled, (state: UserState, action) => {
-      state.user = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(UserActions.fetchUserThunk.rejected, (state: UserState) => {
-      state.loading = false;
+    builder.addCase(UserActions.fetchUserThunk.fulfilled, (state, action) => {
+      userSlice.caseReducers.setUser(state, action);
     });
 
     /*
     fetchCommonGroups
     */
-    builder.addCase(UserActions.fetchCommonGroupsThunk.pending, (state: UserState) => {
-      state.groups = [];
-      state.loading = true;
-    });
     builder.addCase(UserActions.fetchCommonGroupsThunk.fulfilled, (state: UserState, action) => {
-      state.groups = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(UserActions.fetchCommonGroupsThunk.rejected, (state: UserState) => {
-      state.groups = [];
-      state.loading = false;
+      userSlice.caseReducers.setGroups(state, action);
     });
 
     /*
     fetchCommonRelations
     */
-    builder.addCase(UserActions.fetchCommonRelationsThunk.pending, (state: UserState) => {
-      state.relations = [];
-      state.loading = true;
-    });
     builder.addCase(UserActions.fetchCommonRelationsThunk.fulfilled, (state: UserState, action) => {
-      state.relations = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(UserActions.fetchCommonRelationsThunk.rejected, (state: UserState) => {
-      state.relations = [];
-      state.loading = false;
+      userSlice.caseReducers.setRelations(state, action);
     });
   },
 });
