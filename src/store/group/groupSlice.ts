@@ -59,16 +59,16 @@ const groupSlice = createSlice({
       const item = action.payload;
       const isArchived = item.archived;
       if (state.group?.id === item.groupId) {
-        const activeFunction = !isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValueWithId;
-        const archivedFunction = isArchived ? ArrayUtils.addValueToEnd : ArrayUtils.deleteValueWithId;
+        const addValueToEnd = (array: Item[], value: Item): Item[] => [...array, value];
+        const activeFunction = !isArchived ? addValueToEnd : ArrayUtils.deleteValueWithId;
+        const archivedFunction = isArchived ? addValueToEnd : ArrayUtils.deleteValueWithId;
         state.activeItems = filterItems(activeFunction(state.activeItems, item));
         state.archivedItems = filterItems(archivedFunction(state.archivedItems, item));
       }
     },
 
     removeItem: (state: GroupState, action: PayloadAction<string>) => {
-      const itemArray = [...state.activeItems, ...state.archivedItems];
-      const item = ArrayUtils.findValueById(itemArray, action.payload);
+      const item = [...state.activeItems, ...state.archivedItems].find((i) => i.id === action.payload);
       if (item && state.group.id === item.groupId) {
         const isArchived = item.archived;
         if (isArchived) {

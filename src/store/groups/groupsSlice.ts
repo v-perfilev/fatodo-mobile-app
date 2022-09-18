@@ -50,13 +50,13 @@ const groupsSlice = createSlice({
 
     removeGroup: (state: GroupsState, action: PayloadAction<string>) => {
       const groupId = action.payload;
-      const group = ArrayUtils.findValueById(state.groups, groupId);
+      const group = state.groups.find((g) => g.id === groupId);
       state.groups = ArrayUtils.deleteValueWithId(state.groups, group);
     },
 
     setMembers: (state: GroupsState, action: PayloadAction<GroupMember[]>) => {
       const groupId = action.payload[0].groupId;
-      const group = ArrayUtils.findValueById(state.groups, groupId) as Group;
+      const group = state.groups.find((g) => g.id === groupId);
       if (group) {
         group.members = filterMembers([...action.payload, ...group.members]);
         state.groups = ArrayUtils.updateValueWithId(state.groups, group);
@@ -65,7 +65,7 @@ const groupsSlice = createSlice({
 
     removeMembers: (state: GroupsState, action: PayloadAction<GroupMember[]>) => {
       const groupId = action.payload[0].groupId;
-      const group = ArrayUtils.findValueById(state.groups, groupId) as Group;
+      const group = state.groups.find((g) => g.id === groupId);
       if (group) {
         const memberIds = action.payload.map((m) => m.userId);
         group.members = group.members.filter((m) => !memberIds.includes(m.userId));
@@ -154,7 +154,6 @@ const groupsSlice = createSlice({
     fetchGroups
     */
     builder.addCase(GroupsActions.fetchGroupsThunk.fulfilled, (state, action) => {
-      groupsSlice.caseReducers.reset(state);
       groupsSlice.caseReducers.setGroups(state, action);
     });
 

@@ -43,7 +43,7 @@ const chatSlice = createSlice({
     setMessageReaction: (state: ChatState, action: PayloadAction<MessageReaction>) => {
       const reaction = action.payload;
       if (state.chat.id === reaction.chatId) {
-        const message: Message = ArrayUtils.findValueById(state.messages, reaction.messageId);
+        const message = state.messages.find((m) => m.id === reaction.messageId);
         if (message) {
           message.reactions =
             reaction.type === 'NONE'
@@ -58,7 +58,7 @@ const chatSlice = createSlice({
     setMessageStatus: (state: ChatState, action: PayloadAction<MessageStatus>) => {
       const status = action.payload;
       if (state.chat.id === status.chatId) {
-        const message = ArrayUtils.findValueById(state.messages, status.messageId);
+        const message = state.messages.find((m) => m.id === status.messageId);
         if (message) {
           message.statuses = filterStatuses([status, ...message.statuses]);
           state.messages = filterMessages([message, ...state.messages]);

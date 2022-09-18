@@ -1,31 +1,7 @@
 type WithId = {id: string};
 type WithUserId = {userId: string};
-type WithIdAndUserIdAndText = {id: string; userId: string; text: string};
 
 export class ArrayUtils {
-  public static findValueById = (array: WithId[], id: string): any => {
-    return array.find((i) => i.id === id);
-  };
-
-  public static findValueWithId = (array: WithId[], value: WithId): any => {
-    return array.find((i) => i.id === value.id);
-  };
-
-  public static findValueWithUserIdAndText = (array: WithIdAndUserIdAndText[], value: WithIdAndUserIdAndText): any => {
-    return array.find((m) => !m.id && m.userId === value.userId && m.text === value.text);
-  };
-
-  public static addValues = (array: any[], values: any[]): any[] => [...array, ...values];
-
-  public static addValueToEnd = (array: any[], value: any): any[] => [...array, value];
-
-  public static replaceValue = (array: any[], value: any, newValue: any): any[] => {
-    const arrayCopy = [...array];
-    const index = arrayCopy.indexOf(value);
-    arrayCopy[index] = newValue;
-    return arrayCopy;
-  };
-
   public static updateValueWithId = (array: WithId[], value: WithId): any[] => {
     const arrayCopy = [...array];
     const itemInList = arrayCopy.find((i) => i.id === value.id);

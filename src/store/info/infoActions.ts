@@ -1,4 +1,4 @@
-import {AppDispatch, AsyncThunkConfig, RootState} from '../store';
+import {AppDispatch, AsyncThunkConfig} from '../store';
 import {User} from '../../models/User';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import UserService from '../../services/UserService';
@@ -34,8 +34,7 @@ export class InfoActions {
   static handleUserIdsThunk = createAsyncThunk<User[], string[], AsyncThunkConfig>(
     PREFIX + 'handleUserIds',
     async (ids, thunkAPI) => {
-      const {users, loadingUserIds} = thunkAPI.getState().info;
-      const idsToLoad = extractIdsToLoad(ids, users, loadingUserIds);
+      const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.users);
       return idsToLoad.length > 0 ? (await UserService.getAllByIds(idsToLoad)).data : [];
     },
   );
@@ -46,8 +45,7 @@ export class InfoActions {
   static handleGroupIdsThunk = createAsyncThunk<GroupInfo[], string[], AsyncThunkConfig>(
     PREFIX + 'handleGroupIds',
     async (ids, thunkAPI) => {
-      const {groups, loadingGroupIds} = (thunkAPI.getState() as RootState).info;
-      const idsToLoad = extractIdsToLoad(ids, groups, loadingGroupIds);
+      const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.groups);
       return idsToLoad.length > 0 ? (await ItemService.getGroupInfoByIds(idsToLoad)).data : [];
     },
   );
@@ -58,8 +56,7 @@ export class InfoActions {
   static handleItemIdsThunk = createAsyncThunk<ItemInfo[], string[], AsyncThunkConfig>(
     PREFIX + 'handleItemIds',
     async (ids, thunkAPI) => {
-      const {items, loadingItemIds} = (thunkAPI.getState() as RootState).info;
-      const idsToLoad = extractIdsToLoad(ids, items, loadingItemIds);
+      const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.items);
       return idsToLoad.length > 0 ? (await ItemService.getItemInfoByIds(idsToLoad)).data : [];
     },
   );
@@ -70,8 +67,7 @@ export class InfoActions {
   static handleChatIdsThunk = createAsyncThunk<ChatInfo[], string[], AsyncThunkConfig>(
     PREFIX + 'handleChatIds',
     async (ids, thunkAPI) => {
-      const {chats, loadingChatIds} = (thunkAPI.getState() as RootState).info;
-      const idsToLoad = extractIdsToLoad(ids, chats, loadingChatIds);
+      const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.chats);
       return idsToLoad.length > 0 ? (await ChatService.getChatInfoByIds(idsToLoad)).data : [];
     },
   );
@@ -82,8 +78,7 @@ export class InfoActions {
   static handleMessageIdsThunk = createAsyncThunk<MessageInfo[], string[], AsyncThunkConfig>(
     PREFIX + 'handleMessageIds',
     async (ids, thunkAPI) => {
-      const {messages, loadingMessageIds} = (thunkAPI.getState() as RootState).info;
-      const idsToLoad = extractIdsToLoad(ids, messages, loadingMessageIds);
+      const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.messages);
       return idsToLoad.length > 0 ? (await ChatService.getMessageInfoByIds(idsToLoad)).data : [];
     },
   );
@@ -94,8 +89,7 @@ export class InfoActions {
   static handleCommentIdsThunk = createAsyncThunk<CommentInfo[], string[], AsyncThunkConfig>(
     PREFIX + 'handleCommentIds',
     async (ids, thunkAPI) => {
-      const {comments, loadingCommentsIds} = (thunkAPI.getState() as RootState).info;
-      const idsToLoad = extractIdsToLoad(ids, comments, loadingCommentsIds);
+      const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.comments);
       return idsToLoad.length > 0 ? (await CommentService.getCommentInfoByIds(idsToLoad)).data : [];
     },
   );
@@ -106,8 +100,7 @@ export class InfoActions {
   static handleCommentThreadIdsThunk = createAsyncThunk<CommentThreadInfo[], string[], AsyncThunkConfig>(
     PREFIX + 'fetchCommentThreads',
     async (targetIds, thunkAPI) => {
-      const {commentThreads, loadingCommentThreadIds} = (thunkAPI.getState() as RootState).info;
-      const idsToLoad = extractIdsToLoad(targetIds, commentThreads, loadingCommentThreadIds);
+      const idsToLoad = extractIdsToLoad(targetIds, thunkAPI.getState().info.commentThreads);
       return idsToLoad.length > 0 ? (await CommentService.getThreadInfoByTargetIds(idsToLoad)).data : [];
     },
   );
@@ -117,12 +110,11 @@ export class InfoActions {
   });
 }
 
-const extractIdsToLoad = (ids: string[], entries: [string, any][], loadingIds: string[]): string[] => {
+const extractIdsToLoad = (ids: string[], entries: [string, any][]): string[] => {
   const existingIds = entries.map(([key, _]) => key);
-  const notAllowedIds = [...existingIds, ...loadingIds];
   return ids
     .filter(FilterUtils.notUndefinedFilter)
     .filter(FilterUtils.notNullFilter)
     .filter(FilterUtils.uniqueFilter)
-    .filter((id) => !notAllowedIds.includes(id));
+    .filter((id) => !existingIds.includes(id));
 };

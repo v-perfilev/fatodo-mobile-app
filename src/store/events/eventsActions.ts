@@ -3,8 +3,9 @@ import EventService from '../../services/EventService';
 import {EventUtils} from '../../shared/utils/EventUtils';
 import {InfoActions} from '../info/infoActions';
 import {Event} from '../../models/Event';
-import {AppDispatch} from '../store';
+import {AppDispatch, AsyncThunkConfig} from '../store';
 import eventsSlice from './eventsSlice';
+import {PageableReadableList} from '../../models/PageableReadableList';
 
 const PREFIX = 'events/';
 
@@ -42,45 +43,60 @@ export class EventsActions {
     dispatch(eventsSlice.actions.removeContactEvents(userId));
   };
 
-  static fetchEventsThunk = createAsyncThunk(PREFIX + 'fetchEvents', async (offset: number, thunkAPI) => {
-    const response = await EventService.getEventsPageable(offset);
-    thunkAPI.dispatch(EventsActions.loadDependenciesThunk(response.data.data));
-    return response.data;
-  });
+  static fetchEventsThunk = createAsyncThunk<PageableReadableList<Event>, number, AsyncThunkConfig>(
+    PREFIX + 'fetchEvents',
+    async (offset, thunkAPI) => {
+      const response = await EventService.getEventsPageable(offset);
+      thunkAPI.dispatch(EventsActions.loadDependenciesThunk(response.data.data));
+      return response.data;
+    },
+  );
 
-  static refreshEventsThunk = createAsyncThunk(PREFIX + 'refreshEvents', async (_, thunkAPI) => {
-    const response = await EventService.getEventsPageable(0);
-    thunkAPI.dispatch(EventsActions.loadDependenciesThunk(response.data.data));
-    return response.data;
-  });
+  static refreshEventsThunk = createAsyncThunk<PageableReadableList<Event>, void, AsyncThunkConfig>(
+    PREFIX + 'refreshEvents',
+    async (_, thunkAPI) => {
+      const response = await EventService.getEventsPageable(0);
+      thunkAPI.dispatch(EventsActions.loadDependenciesThunk(response.data.data));
+      return response.data;
+    },
+  );
 
-  static fetchUnreadCountThunk = createAsyncThunk(PREFIX + 'fetchUnreadCount', async () => {
-    const response = await EventService.getUnreadCount();
-    return response.data;
-  });
+  static fetchUnreadCountThunk = createAsyncThunk<number, void, AsyncThunkConfig>(
+    PREFIX + 'fetchUnreadCount',
+    async () => {
+      const response = await EventService.getUnreadCount();
+      return response.data;
+    },
+  );
 
-  static refreshUnreadCountThunk = createAsyncThunk(PREFIX + 'refreshUnreadCount', async () => {
-    await EventService.refresh();
-  });
+  static refreshUnreadCountThunk = createAsyncThunk<void, void, AsyncThunkConfig>(
+    PREFIX + 'refreshUnreadCount',
+    async () => {
+      await EventService.refresh();
+    },
+  );
 
-  static loadDependenciesThunk = createAsyncThunk(PREFIX + 'loadDependencies', async (events: Event[], thunkAPI) => {
-    // handle userIds
-    const userIds = EventUtils.extractEventsUserIds(events);
-    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(userIds));
-    // handle groupIds
-    const groupIds = EventUtils.extractEventsGroupIds(events);
-    thunkAPI.dispatch(InfoActions.handleGroupIdsThunk(groupIds));
-    // handle itemIds
-    const itemIds = EventUtils.extractEventsItemIds(events);
-    thunkAPI.dispatch(InfoActions.handleItemIdsThunk(itemIds));
-    // handle chatIds
-    const chatIds = EventUtils.extractEventsChatIds(events);
-    thunkAPI.dispatch(InfoActions.handleChatIdsThunk(chatIds));
-    // handle messageIds
-    const messageIds = EventUtils.extractEventsMessageIds(events);
-    thunkAPI.dispatch(InfoActions.handleMessageIdsThunk(messageIds));
-    // handle commentIds
-    const commentIds = EventUtils.extractEventsCommentIds(events);
-    thunkAPI.dispatch(InfoActions.handleCommentIdsThunk(commentIds));
-  });
+  static loadDependenciesThunk = createAsyncThunk<void, Event[], AsyncThunkConfig>(
+    PREFIX + 'loadDependencies',
+    async (events, thunkAPI) => {
+      // handle userIds
+      const userIds = EventUtils.extractEventsUserIds(events);
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(userIds));
+      // handle groupIds
+      const groupIds = EventUtils.extractEventsGroupIds(events);
+      thunkAPI.dispatch(InfoActions.handleGroupIdsThunk(groupIds));
+      // handle itemIds
+      const itemIds = EventUtils.extractEventsItemIds(events);
+      thunkAPI.dispatch(InfoActions.handleItemIdsThunk(itemIds));
+      // handle chatIds
+      const chatIds = EventUtils.extractEventsChatIds(events);
+      thunkAPI.dispatch(InfoActions.handleChatIdsThunk(chatIds));
+      // handle messageIds
+      const messageIds = EventUtils.extractEventsMessageIds(events);
+      thunkAPI.dispatch(InfoActions.handleMessageIdsThunk(messageIds));
+      // handle commentIds
+      const commentIds = EventUtils.extractEventsCommentIds(events);
+      thunkAPI.dispatch(InfoActions.handleCommentIdsThunk(commentIds));
+    },
+  );
 }

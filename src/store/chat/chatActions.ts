@@ -72,7 +72,7 @@ export class ChatActions {
     return result.data;
   });
 
-  static refreshMessagesThunk = createAsyncThunk<PageableList<Message>, string>(
+  static refreshMessagesThunk = createAsyncThunk<PageableList<Message>, string, AsyncThunkConfig>(
     PREFIX + 'refreshMessages',
     async (chatId, thunkAPI) => {
       const result = await ChatService.getAllMessagesByChatIdPageable(chatId);

@@ -51,7 +51,7 @@ const chatsSlice = createSlice({
 
     setMembers: (state: ChatsState, action: PayloadAction<ChatMember[]>) => {
       const members = action.payload;
-      const chat: Chat = ArrayUtils.findValueById(state.chats, members[0].chatId);
+      const chat = state.chats.find((c) => c.id === members[0].chatId);
       if (chat) {
         chat.members = filterMembers([...members, ...chat.members]);
         state.chats = filterChats([chat, ...state.chats]);
@@ -61,7 +61,7 @@ const chatsSlice = createSlice({
     removeMembers: (state: ChatsState, action: PayloadAction<ChatMember[]>) => {
       const members = action.payload;
       const memberIds = members.map((m) => m.userId);
-      const chat: Chat = ArrayUtils.findValueById(state.chats, members[0].chatId);
+      const chat = state.chats.find((c) => c.id === members[0].chatId);
       if (chat) {
         chat.members = chat.members.filter((m) => !memberIds.includes(m.userId));
         state.chats = filterChats([chat, ...state.chats]);

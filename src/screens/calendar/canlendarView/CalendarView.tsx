@@ -8,7 +8,6 @@ import {useAppDispatch} from '../../../store/store';
 import CalendarViewContainer from './CalendarViewContainer';
 import FBox from '../../../components/boxes/FBox';
 import {CalendarActions} from '../../../store/calendar/calendarActions';
-import {useIsFocused} from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
 const months = CalendarUtils.generateAllCalendarMonths();
@@ -18,7 +17,6 @@ const getInitialIndex = (month: CalendarMonth): number => monthKeys.indexOf(mont
 
 const CalendarView = () => {
   const dispatch = useAppDispatch();
-  const isFocused = useIsFocused();
   const listRef = useRef<FlatListType>();
   const childRefMap = useRef<Map<string, MutableRefObject<ScrollView>>>(new Map());
   const initialMonth = useRef<CalendarMonth>(getInitialMonth());
@@ -80,10 +78,8 @@ const CalendarView = () => {
   );
 
   useEffect(() => {
-    if (isFocused) {
-      loadReminders(initialMonth.current);
-    }
-  }, [isFocused]);
+    loadReminders(initialMonth.current);
+  }, []);
 
   return (
     <FBox width={width}>

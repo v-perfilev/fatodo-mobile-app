@@ -1,6 +1,4 @@
 import {ChatEvent, CommentEvent, ContactEvent, Event, ItemEvent, ReminderEvent} from '../../models/Event';
-import {FilterUtils} from './FilterUtils';
-import {ComparatorUtils} from './ComparatorUtils';
 
 export class EventUtils {
   public static extractEventsUserIds = (events: Event[]): string[] => {

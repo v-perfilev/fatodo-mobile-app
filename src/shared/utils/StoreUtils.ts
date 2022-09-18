@@ -25,12 +25,6 @@ export class StoreUtils {
     return store;
   }
 
-  static setMultipleValues(store: [string, any][], requestedKeys: string[], value: any): [string, any][] {
-    const updatedStore = store.filter(([key, _]) => !requestedKeys.includes(key));
-    requestedKeys.forEach((key) => updatedStore.push([key, value]));
-    return updatedStore;
-  }
-
   static setMultipleValuesFunc(
     store: [string, any][],
     requestedKeys: string[],

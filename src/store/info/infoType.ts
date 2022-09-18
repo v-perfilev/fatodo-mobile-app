@@ -13,11 +13,4 @@ export type InfoState = {
   messages: [string, MessageInfo][];
   comments: [string, CommentInfo][];
   commentThreads: [string, CommentThreadInfo][];
-  loadingUserIds: string[];
-  loadingGroupIds: string[];
-  loadingItemIds: string[];
-  loadingChatIds: string[];
-  loadingMessageIds: string[];
-  loadingCommentsIds: string[];
-  loadingCommentThreadIds: string[];
 };

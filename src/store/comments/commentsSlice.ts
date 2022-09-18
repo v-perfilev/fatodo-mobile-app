@@ -38,7 +38,7 @@ const commentsSlice = createSlice({
     setCommentReaction: (state: CommentsState, action: PayloadAction<CommentReaction>) => {
       const reaction = action.payload;
       if (state.targetId === reaction.targetId) {
-        const comment: Comment = ArrayUtils.findValueById(state.comments, reaction.commentId);
+        const comment = state.comments.find((c) => c.id === reaction.commentId);
         if (comment) {
           comment.reactions =
             reaction.type === 'NONE'
