@@ -48,7 +48,7 @@ const TabNavigator = () => {
   const incomingRequestCount = useAppSelector(ContactsSelectors.incomingRequestCount);
 
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}} initialRouteName="Groups" tabBar={TabNavigatorBar}>
+    <Tab.Navigator screenOptions={{headerShown: false, lazy: false}} initialRouteName="Groups" tabBar={TabNavigatorBar}>
       <Tab.Screen name="Calendar" component={CalendarView} options={{tabBarIcon: calendarIcon}} />
       <Tab.Screen
         name="Events"
