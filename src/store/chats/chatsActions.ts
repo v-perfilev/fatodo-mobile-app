@@ -132,8 +132,8 @@ export class ChatsActions {
     },
   );
 
-  static increaseMessageCounterAction = createAsyncThunk<void, Message, AsyncThunkConfig>(
-    PREFIX + 'increaseMessageCounterAction',
+  static increaseMessageCountAction = createAsyncThunk<void, Message, AsyncThunkConfig>(
+    PREFIX + 'increaseMessageCountAction',
     async (message: Message, thunkAPI) => {
       const account = thunkAPI.getState().auth.account;
       if (!message?.isEvent && message?.userId === account.id) {

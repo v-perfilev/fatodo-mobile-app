@@ -19,6 +19,10 @@ export class CommentsActions {
     dispatch(commentsSlice.actions.setTargetId(targetId));
   };
 
+  static addComment = (comment: Comment) => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.setComments([comment]));
+  };
+
   static updateComment = (comment: Comment) => async (dispatch: AppDispatch) => {
     dispatch(commentsSlice.actions.setComments([comment]));
   };
@@ -54,65 +58,58 @@ export class CommentsActions {
     },
   );
 
-  static sendCommentThunk = createAsyncThunk<void, {targetId: string; dto: CommentDTO}, AsyncThunkConfig>(
+  static sendCommentThunk = createAsyncThunk<Comment, {targetId: string; dto: CommentDTO}, AsyncThunkConfig>(
     PREFIX + 'sendComment',
     async ({targetId, dto}, thunkAPI) => {
       const userId = thunkAPI.getState().auth.account.id;
-      const comment = buildCommentFromDTO(dto, targetId, userId);
-      thunkAPI.dispatch(commentsSlice.actions.setComments([comment]));
       CommentService.addComment(targetId, dto);
+      thunkAPI.dispatch(InfoActions.incrementCommentCount(targetId));
+      return buildCommentFromDTO(dto, targetId, userId);
     },
   );
 
-  static editCommentThunk = createAsyncThunk<void, {comment: Comment; dto: CommentDTO}, AsyncThunkConfig>(
+  static editCommentThunk = createAsyncThunk<Comment, {comment: Comment; dto: CommentDTO}, AsyncThunkConfig>(
     PREFIX + 'editComment',
     async ({comment, dto}, thunkAPI) => {
       const result = await CommentService.editComment(comment.id, dto);
-      thunkAPI.dispatch(commentsSlice.actions.setComments([result.data]));
       thunkAPI.dispatch(SnackActions.handleCode('comment.commentEdited', 'info'));
+      return result.data;
     },
   );
 
-  static deleteCommentThunk = createAsyncThunk<void, Comment, AsyncThunkConfig>(
+  static deleteCommentThunk = createAsyncThunk<Comment, Comment, AsyncThunkConfig>(
     PREFIX + 'deleteComment',
     async (comment, thunkAPI) => {
       CommentService.deleteComment(comment.id);
-      thunkAPI.dispatch(commentsSlice.actions.setComments([{...comment, isDeleted: true}]));
       thunkAPI.dispatch(SnackActions.handleCode('comment.commentDeleted', 'info'));
+      return {...comment, isDeleted: true};
     },
   );
 
-  static noReactionThunk = createAsyncThunk<void, {comment: Comment; account: UserAccount}, AsyncThunkConfig>(
-    PREFIX + 'noReaction',
-    async ({comment, account}, thunkAPI) => {
-      CommentService.noneCommentReaction(comment.id);
-      const reaction = buildCommentReaction(comment, account.id, 'NONE');
-      thunkAPI.dispatch(commentsSlice.actions.setCommentReaction(reaction));
-    },
-  );
+  static noReactionThunk = createAsyncThunk<
+    CommentReaction,
+    {comment: Comment; account: UserAccount},
+    AsyncThunkConfig
+  >(PREFIX + 'noReaction', async ({comment, account}) => {
+    CommentService.noneCommentReaction(comment.id);
+    return buildCommentReaction(comment, account.id, 'NONE');
+  });
 
-  static likeReactionThunk = createAsyncThunk<void, {comment: Comment; account: UserAccount}, AsyncThunkConfig>(
-    PREFIX + 'likeReaction',
-    async ({comment, account}, thunkAPI) => {
-      CommentService.likeCommentReaction(comment.id);
-      const reaction = buildCommentReaction(comment, account.id, 'LIKE');
-      thunkAPI.dispatch(commentsSlice.actions.setCommentReaction(reaction));
-    },
-  );
+  static likeReactionThunk = createAsyncThunk<
+    CommentReaction,
+    {comment: Comment; account: UserAccount},
+    AsyncThunkConfig
+  >(PREFIX + 'likeReaction', async ({comment, account}) => {
+    CommentService.likeCommentReaction(comment.id);
+    return buildCommentReaction(comment, account.id, 'LIKE');
+  });
 
-  static dislikeReactionThunk = createAsyncThunk<void, {comment: Comment; account: UserAccount}, AsyncThunkConfig>(
-    PREFIX + 'dislikeReaction',
-    async ({comment, account}, thunkAPI) => {
-      CommentService.dislikeCommentReaction(comment.id);
-      const reaction = buildCommentReaction(comment, account.id, 'DISLIKE');
-      thunkAPI.dispatch(commentsSlice.actions.setCommentReaction(reaction));
-    },
-  );
-
-  static addCommentAction = createAsyncThunk<void, Comment, AsyncThunkConfig>(
-    PREFIX + 'addCommentAction',
-    async (comment, thunkAPI) => {
-      thunkAPI.dispatch(commentsSlice.actions.setComments([comment]));
-    },
-  );
+  static dislikeReactionThunk = createAsyncThunk<
+    CommentReaction,
+    {comment: Comment; account: UserAccount},
+    AsyncThunkConfig
+  >(PREFIX + 'dislikeReaction', async ({comment, account}) => {
+    CommentService.dislikeCommentReaction(comment.id);
+    return buildCommentReaction(comment, account.id, 'DISLIKE');
+  });
 }

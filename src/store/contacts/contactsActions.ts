@@ -14,48 +14,48 @@ export class ContactsActions {
   static addIncomingRequest = (requesterId: string) => async (dispatch: AppDispatch) => {
     const request = ContactUtils.createStubIncomingRequest(requesterId);
     dispatch(contactsSlice.actions.addIncomingRequest(request));
-    dispatch(contactsSlice.actions.incrementIncomingRequestCounter());
+    dispatch(contactsSlice.actions.incrementIncomingRequestCount());
     dispatch(InfoActions.handleUserIdsThunk([requesterId]));
   };
 
   static addOutcomingRequest = (recipientId: string) => async (dispatch: AppDispatch) => {
     const request = ContactUtils.createStubOutcomingRequest(recipientId);
     dispatch(contactsSlice.actions.addOutcomingRequest(request));
-    dispatch(contactsSlice.actions.incrementOutcomingRequestCounter());
+    dispatch(contactsSlice.actions.incrementOutcomingRequestCount());
     dispatch(InfoActions.handleUserIdsThunk([recipientId]));
   };
 
   static acceptIncomingRequest = (requesterId: string) => async (dispatch: AppDispatch) => {
     const relation = ContactUtils.createStubRelation(requesterId);
     dispatch(contactsSlice.actions.removeIncomingRequest(requesterId));
-    dispatch(contactsSlice.actions.decrementIncomingRequestCounter());
+    dispatch(contactsSlice.actions.decrementIncomingRequestCount());
     dispatch(contactsSlice.actions.addRelation(relation));
-    dispatch(contactsSlice.actions.incrementRelationCounter());
+    dispatch(contactsSlice.actions.incrementRelationCount());
     dispatch(InfoActions.handleUserIdsThunk([requesterId]));
   };
 
   static acceptOutcomingRequest = (recipientId: string) => async (dispatch: AppDispatch) => {
     const relation = ContactUtils.createStubRelation(recipientId);
     dispatch(contactsSlice.actions.removeOutcomingRequest(recipientId));
-    dispatch(contactsSlice.actions.decrementOutcomingRequestCounter());
+    dispatch(contactsSlice.actions.decrementOutcomingRequestCount());
     dispatch(contactsSlice.actions.addRelation(relation));
-    dispatch(contactsSlice.actions.incrementRelationCounter());
+    dispatch(contactsSlice.actions.incrementRelationCount());
     dispatch(InfoActions.handleUserIdsThunk([recipientId]));
   };
 
   static removeRelation = (secondUserId: string) => async (dispatch: AppDispatch) => {
     dispatch(contactsSlice.actions.removeRelation(secondUserId));
-    dispatch(contactsSlice.actions.decrementRelationCounter());
+    dispatch(contactsSlice.actions.decrementRelationCount());
   };
 
   static removeIncomingRequest = (requesterId: string) => async (dispatch: AppDispatch) => {
     dispatch(contactsSlice.actions.removeIncomingRequest(requesterId));
-    dispatch(contactsSlice.actions.decrementIncomingRequestCounter());
+    dispatch(contactsSlice.actions.decrementIncomingRequestCount());
   };
 
   static removeOutcomingRequest = (recipientId: string) => async (dispatch: AppDispatch) => {
     dispatch(contactsSlice.actions.removeOutcomingRequest(recipientId));
-    dispatch(contactsSlice.actions.decrementOutcomingRequestCounter());
+    dispatch(contactsSlice.actions.decrementOutcomingRequestCount());
   };
 
   static fetchInfoThunk = createAsyncThunk<ContactInfo, void, AsyncThunkConfig>(PREFIX + 'fetchInfo', async () => {

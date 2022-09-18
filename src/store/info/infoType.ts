@@ -12,13 +12,12 @@ export type InfoState = {
   chats: [string, ChatInfo][];
   messages: [string, MessageInfo][];
   comments: [string, CommentInfo][];
-  commentThreadsInfo: [string, CommentThreadInfo][];
-
-  // loading
+  commentThreads: [string, CommentThreadInfo][];
   loadingUserIds: string[];
   loadingGroupIds: string[];
   loadingItemIds: string[];
   loadingChatIds: string[];
   loadingMessageIds: string[];
-  loadingCommentIds: string[];
+  loadingCommentsIds: string[];
+  loadingCommentThreadIds: string[];
 };

@@ -32,15 +32,15 @@ const contactsSlice = createSlice({
       state.relations = state.relations.filter((relation) => relation.secondUserId !== action.payload);
     },
 
-    setRelationCounter: (state: ContactsState, action: PayloadAction<number>) => {
+    setRelationCount: (state: ContactsState, action: PayloadAction<number>) => {
       state.relationCount = action.payload;
     },
 
-    incrementRelationCounter: (state: ContactsState) => {
+    incrementRelationCount: (state: ContactsState) => {
       state.relationCount = state.relationCount + 1;
     },
 
-    decrementRelationCounter: (state: ContactsState) => {
+    decrementRelationCount: (state: ContactsState) => {
       state.relationCount = state.relationCount - 1;
     },
 
@@ -56,15 +56,15 @@ const contactsSlice = createSlice({
       state.incomingRequests = state.incomingRequests.filter((request) => request.requesterId !== action.payload);
     },
 
-    setIncomingRequestCounter: (state: ContactsState, action: PayloadAction<number>) => {
+    setIncomingRequestCount: (state: ContactsState, action: PayloadAction<number>) => {
       state.incomingRequestCount = action.payload;
     },
 
-    incrementIncomingRequestCounter: (state: ContactsState) => {
+    incrementIncomingRequestCount: (state: ContactsState) => {
       state.incomingRequestCount = state.incomingRequestCount + 1;
     },
 
-    decrementIncomingRequestCounter: (state: ContactsState) => {
+    decrementIncomingRequestCount: (state: ContactsState) => {
       state.incomingRequestCount = state.incomingRequestCount - 1;
     },
 
@@ -80,15 +80,15 @@ const contactsSlice = createSlice({
       state.outcomingRequests = state.outcomingRequests.filter((request) => request.recipientId !== action.payload);
     },
 
-    setOutcomingRequestCounter: (state: ContactsState, action: PayloadAction<number>) => {
+    setOutcomingRequestCount: (state: ContactsState, action: PayloadAction<number>) => {
       state.outcomingRequestCount = action.payload;
     },
 
-    incrementOutcomingRequestCounter: (state: ContactsState) => {
+    incrementOutcomingRequestCount: (state: ContactsState) => {
       state.outcomingRequestCount = state.outcomingRequestCount + 1;
     },
 
-    decrementOutcomingRequestCounter: (state: ContactsState) => {
+    decrementOutcomingRequestCount: (state: ContactsState) => {
       state.outcomingRequestCount = state.outcomingRequestCount - 1;
     },
   },
@@ -97,15 +97,11 @@ const contactsSlice = createSlice({
     fetchInfo
     */
     builder.addCase(ContactsActions.fetchInfoThunk.fulfilled, (state, action) => {
-      contactsSlice.caseReducers.setRelationCounter(state, {...action, payload: action.payload.relationCount});
-      contactsSlice.caseReducers.setIncomingRequestCounter(state, {
-        ...action,
-        payload: action.payload.incomingRequestCount,
-      });
-      contactsSlice.caseReducers.setOutcomingRequestCounter(state, {
-        ...action,
-        payload: action.payload.outcomingRequestCount,
-      });
+      const incomingRequestCountAction = {...action, payload: action.payload.incomingRequestCount};
+      const outcomingRequestCountAction = {...action, payload: action.payload.outcomingRequestCount};
+      contactsSlice.caseReducers.setRelationCount(state, {...action, payload: action.payload.relationCount});
+      contactsSlice.caseReducers.setIncomingRequestCount(state, incomingRequestCountAction);
+      contactsSlice.caseReducers.setOutcomingRequestCount(state, outcomingRequestCountAction);
     });
 
     /*
@@ -134,7 +130,7 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.removeRelationThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.removeRelation(state, action);
-      contactsSlice.caseReducers.decrementRelationCounter(state);
+      contactsSlice.caseReducers.decrementRelationCount(state);
     });
 
     /*
@@ -142,7 +138,7 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.sendRequestThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.addOutcomingRequest(state, action);
-      contactsSlice.caseReducers.incrementOutcomingRequestCounter(state);
+      contactsSlice.caseReducers.incrementOutcomingRequestCount(state);
     });
 
     /*
@@ -150,9 +146,9 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.acceptIncomingRequestThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.removeIncomingRequest(state, {...action, payload: action.payload.secondUserId});
-      contactsSlice.caseReducers.decrementIncomingRequestCounter(state);
+      contactsSlice.caseReducers.decrementIncomingRequestCount(state);
       contactsSlice.caseReducers.addRelation(state, action);
-      contactsSlice.caseReducers.incrementRelationCounter(state);
+      contactsSlice.caseReducers.incrementRelationCount(state);
     });
 
     /*
@@ -160,7 +156,7 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.declineIncomingRequestThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.removeIncomingRequest(state, action);
-      contactsSlice.caseReducers.decrementIncomingRequestCounter(state);
+      contactsSlice.caseReducers.decrementIncomingRequestCount(state);
     });
 
     /*
@@ -168,7 +164,7 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.removeOutcomingRequestThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.removeOutcomingRequest(state, action);
-      contactsSlice.caseReducers.decrementIncomingRequestCounter(state);
+      contactsSlice.caseReducers.decrementIncomingRequestCount(state);
     });
   },
 });

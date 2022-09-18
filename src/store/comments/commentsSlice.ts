@@ -70,6 +70,34 @@ const commentsSlice = createSlice({
       commentsSlice.caseReducers.setComments(state, {...action, payload: action.payload.data});
       commentsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
     });
+
+    /*
+    sendComment
+    */
+    builder.addCase(CommentsActions.sendCommentThunk.fulfilled, (state, action) => {
+      commentsSlice.caseReducers.setComments(state, {...action, payload: [action.payload]});
+    });
+
+    /*
+    editComment
+    */
+    builder.addCase(CommentsActions.editCommentThunk.fulfilled, (state, action) => {
+      commentsSlice.caseReducers.setComments(state, {...action, payload: [action.payload]});
+    });
+
+    /*
+    deleteComment
+    */
+    builder.addCase(CommentsActions.deleteCommentThunk.fulfilled, (state, action) => {
+      commentsSlice.caseReducers.setComments(state, {...action, payload: [action.payload]});
+    });
+
+    /*
+    noReaction
+    */
+    builder.addCase(CommentsActions.noReactionThunk.fulfilled, (state, action) => {
+      commentsSlice.caseReducers.setCommentReaction(state, action);
+    });
   },
 });
 

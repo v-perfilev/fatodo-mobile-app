@@ -13,6 +13,7 @@ import {Item} from '../../../models/Item';
 import {Group, GroupMember} from '../../../models/Group';
 import {GroupsActions} from '../../../store/groups/groupsActions';
 import {GroupActions} from '../../../store/group/groupActions';
+import {InfoActions} from '../../../store/info/infoActions';
 
 type HandlerFunc = (msg: WsEvent<any>) => void;
 
@@ -214,7 +215,7 @@ export class WsStateHandler {
 
   private handleChatMessageCreateEvent = (msg: WsEvent<Message>): void => {
     this.dispatch(ChatsActions.setChatLastMessageAction(msg.payload));
-    this.dispatch(ChatsActions.increaseMessageCounterAction(msg.payload));
+    this.dispatch(ChatsActions.increaseMessageCountAction(msg.payload));
     this.dispatch(ChatActions.addMessage(msg.payload));
   };
 
@@ -269,7 +270,11 @@ export class WsStateHandler {
    */
 
   private handleCommentCreateEvent = (msg: WsEvent<Comment>): void => {
-    this.dispatch(CommentsActions.addCommentAction(msg.payload));
+    this.dispatch(CommentsActions.addComment(msg.payload));
+    this.dispatch(InfoActions.incrementCommentCount(msg.payload.targetId));
+    if (msg.payload.userId !== this.account.id) {
+      this.dispatch(InfoActions.incrementUnreadCommentCount(msg.payload.targetId));
+    }
   };
 
   private handleCommentUpdateEvent = (msg: WsEvent<Comment>): void => {
