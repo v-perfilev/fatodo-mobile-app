@@ -49,16 +49,16 @@ require('moment/locale/ru.js');
 export const languages = [
   {
     name: 'English',
-    code: 'en',
+    code: 'EN',
   },
   {
     name: 'Русский',
-    code: 'ru',
+    code: 'RU',
   },
 ];
 
 const resources = {
-  en: {
+  EN: {
     translation: translationEN,
     common: commonEN,
     account: accountEN,
@@ -74,7 +74,7 @@ const resources = {
     calendar: calendarEN,
     push: pushEN,
   },
-  ru: {
+  RU: {
     translation: translationRU,
     common: commonRU,
     account: accountRU,
@@ -98,7 +98,7 @@ i18next
     debug: false,
     compatibilityJSON: 'v3',
     resources,
-    lng: 'en',
+    lng: 'EN',
     ns: [
       'translation',
       'common',

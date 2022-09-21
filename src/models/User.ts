@@ -1,7 +1,11 @@
-export const genders = ['MALE', 'FEMALE', 'DIVERSE'];
+export const genders: Gender[] = ['MALE', 'FEMALE', 'DIVERSE'];
+export const timeFormats: TimeFormat[] = ['H12', 'H24'];
+export const dateFormats: DateFormat[] = ['YMD_DASH', 'MDY_SLASH', 'DMY_DASH', 'DMY_DOT', 'DMY_SLASH'];
 
-type Gender = 'MALE' | 'FEMALE' | 'DIVERSE';
-type Language = 'en' | 'ru';
+export type Gender = 'MALE' | 'FEMALE' | 'DIVERSE';
+export type Language = 'EN' | 'RU';
+export type TimeFormat = 'H12' | 'H24';
+export type DateFormat = 'YMD_DASH' | 'MDY_SLASH' | 'DMY_DASH' | 'DMY_DOT' | 'DMY_SLASH';
 
 export interface UserAccount {
   id: string;
@@ -28,4 +32,6 @@ export interface UserInfo {
   gender?: Gender;
   language: Language;
   timezone: string;
+  timeFormat: TimeFormat;
+  dateFormat: DateFormat;
 }

@@ -26,7 +26,6 @@ const calendarSlice = createSlice({
     },
 
     setReminders: (state: CalendarState, action: PayloadAction<[string, CalendarReminder[]][]>) => {
-      console.log('set reminders');
       state.reminders = filterReminders([...action.payload, ...state.reminders]);
     },
   },

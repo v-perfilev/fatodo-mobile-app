@@ -75,6 +75,23 @@
         "DIVERSE": "Diverse"
       }
     },
+    "timeFormat": {
+      "label": "Time format",
+      "options": {
+        "H12": "12-hour",
+        "H24": "24-hour"
+      }
+    },
+    "dateFormat": {
+      "label": "Date format",
+      "options": {
+        "YMD_DASH": "yyyy-mm-dd",
+        "MDY_SLASH": "mm/dd/yyyy",
+        "DMY_DASH": "dd-mm-yyyy",
+        "DMY_DOT": "dd.mm.yyyy",
+        "DMY_SLASH": "dd/mm/yyyy"
+      }
+    },
     "timezone": {
       "label": "Timezone",
       "required": "Required"
