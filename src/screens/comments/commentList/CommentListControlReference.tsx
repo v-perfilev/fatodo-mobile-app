@@ -4,10 +4,10 @@ import {useTranslation} from 'react-i18next';
 import {ReferenceComment} from '../../../models/Comment';
 import {useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
-import {DateFormatters} from '../../../shared/utils/DateUtils';
 import FHStack from '../../../components/boxes/FHStack';
 import CloseIcon from '../../../components/icons/CloseIcon';
 import PressableButton from '../../../components/controls/PressableButton';
+import DateView from '../../../components/views/DateView';
 
 type CommentListControlReferenceProps = {
   reference: ReferenceComment;
@@ -19,7 +19,7 @@ const CommentListControlReference = ({reference, clearReference}: CommentListCon
   const {t} = useTranslation();
   const user = useAppSelector((state) => userSelector(state, reference.userId));
 
-  const date = DateFormatters.formatDependsOnDay(new Date(reference.createdAt));
+  const date = new Date(reference.createdAt);
 
   return (
     <FHStack smallSpace alignItems="center">
@@ -27,7 +27,7 @@ const CommentListControlReference = ({reference, clearReference}: CommentListCon
         {t('comment:view.reference')}:
       </Text>
       <Text fontWeight="bold" fontSize="2xs">
-        {user.username}, {date}
+        {user.username}, <DateView date={date} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
       </Text>
       <PressableButton onPress={clearReference}>
         <CloseIcon size="xs" />

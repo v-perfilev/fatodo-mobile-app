@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Reminder} from '../../../models/Reminder';
 import {useTranslation} from 'react-i18next';
 import {DateParams} from '../../../models/DateParams';
-import {DateConverters} from '../../../shared/utils/DateUtils';
 import DateTimeSelect from '../DateTimeSelect';
 import DaysSelect from '../DaysSelect';
+import {DateConverters} from '../../../shared/utils/DateConverters';
 
 type FormikRemindersInputWeeklyProps = {
   setReminder: (reminder: Reminder) => void;

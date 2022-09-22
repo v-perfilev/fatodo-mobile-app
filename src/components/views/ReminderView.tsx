@@ -2,17 +2,19 @@ import * as React from 'react';
 import {FC} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Reminder} from '../../models/Reminder';
-import {DateConverters, DateFormatters, DateUtils} from '../../shared/utils/DateUtils';
+import {DateUtils} from '../../shared/utils/DateUtils';
 import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
+import {DateConverters} from '../../shared/utils/DateConverters';
+import {DateFormatters} from '../../shared/utils/DateFormatters';
 
 type Props = {
   reminder: Reminder;
 };
 
 const ReminderView: FC<Props> = ({reminder}: Props) => {
-  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
+  const account = useAppSelector(AuthSelectors.account);
   const timezone = account.info.timezone;
 
   //need to set locale in moment here cause of bug in material-ui
@@ -23,10 +25,10 @@ const ReminderView: FC<Props> = ({reminder}: Props) => {
   const timeDate = DateConverters.getTimeFromParamDate(reminder.date, timezone);
   const dateDate = DateConverters.getDateFromParamDate(reminder.date, timezone);
 
-  const time = DateFormatters.formatTime(timeDate);
+  const time = DateFormatters.formatDate(timeDate, account, 'FULL');
 
   const buildOnceDescription = (): string => {
-    const date = DateFormatters.formatDateWithYear(dateDate);
+    const date = DateFormatters.formatDate(dateDate, account, undefined, 'FULL');
     return t('common:reminders.' + reminder.periodicity, {time, date});
   };
 
@@ -49,7 +51,7 @@ const ReminderView: FC<Props> = ({reminder}: Props) => {
   };
 
   const buildYearlyDescription = (): string => {
-    const date = DateFormatters.formatDate(dateDate);
+    const date = DateFormatters.formatDate(dateDate, account, undefined, 'SHORT');
     return t('common:reminders.' + reminder.periodicity, {time, date});
   };
 

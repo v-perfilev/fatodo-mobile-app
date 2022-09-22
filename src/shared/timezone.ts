@@ -1,5 +1,5 @@
 import timezone from 'moment-timezone';
-import {DateFormatters} from './utils/DateUtils';
+import {DateFormatters} from './utils/DateFormatters';
 
 const deprecatedTimeZones = [
   'UCT',

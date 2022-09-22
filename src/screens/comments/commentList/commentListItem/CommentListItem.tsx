@@ -4,7 +4,6 @@ import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import {useTranslation} from 'react-i18next';
 import InfoSelectors from '../../../../store/info/infoSelectors';
-import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import {CommentUtils} from '../../../../shared/utils/CommentUtils';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
@@ -14,6 +13,7 @@ import CommentListItemReferenceButton from './CommentListItemReferenceButton';
 import CommentListItemReactions from './CommentListItemReactions';
 import CommentListItemMenu from './CommentListItemMenu';
 import CommentListItemReference from './CommentListItemReference';
+import DateView from '../../../../components/views/DateView';
 
 type CommentListItemProps = {
   comment: Comment;
@@ -26,7 +26,7 @@ const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
   const account = useAppSelector(AuthSelectors.account);
   const user = useAppSelector((state) => userSelector(state, comment.userId));
 
-  const date = DateFormatters.formatDependsOnDay(new Date(comment.createdAt));
+  const date = new Date(comment.createdAt);
   const isOwnComment = CommentUtils.isOwnComment(comment, account);
 
   return (
@@ -51,7 +51,7 @@ const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
               {user?.username}
             </Text>
             <Text color="gray.400" fontWeight="bold" fontSize="xs">
-              {date}
+              <DateView date={date} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
             </Text>
           </FHStack>
           <CommentListItemReferenceButton comment={comment} setReference={setReference} />

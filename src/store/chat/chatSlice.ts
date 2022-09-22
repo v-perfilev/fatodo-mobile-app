@@ -6,7 +6,7 @@ import {ChatActions} from './chatActions';
 import {Chat} from '../../models/Chat';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
 import {ComparatorUtils} from '../../shared/utils/ComparatorUtils';
-import {DateFormatters} from '../../shared/utils/DateUtils';
+import {DateFormatters} from '../../shared/utils/DateFormatters';
 
 const initialState: ChatState = {
   chat: undefined,
@@ -120,7 +120,7 @@ const convertMessagesToChatItems = (messagesToConvert: Message[]): ChatItem[] =>
   const handledDates: string[] = [];
   const handledItems: ChatItem[] = [];
   messagesToConvert.forEach((message) => {
-    const date = DateFormatters.formatDateWithYear(new Date(message.createdAt));
+    const date = DateFormatters.formatDate(new Date(message.createdAt), undefined, undefined, 'FULL');
     if (!handledDates.includes(date)) {
       handledDates.push(date);
       handledItems.push({date});

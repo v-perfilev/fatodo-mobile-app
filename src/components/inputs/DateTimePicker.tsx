@@ -3,7 +3,7 @@ import DatePicker from 'react-native-date-picker';
 import React, {useEffect} from 'react';
 import {DateUtils} from '../../shared/utils/DateUtils';
 
-type PickMode = 'date' | 'time' | 'dateWithoutYear' | 'monthWithYear';
+type PickMode = 'fullDate' | 'shortDate' | 'monthWithYear' | 'time';
 
 type DateTimePickerProps = {
   value?: Date;
@@ -18,7 +18,7 @@ const calcMode = (mode: PickMode): 'time' | 'date' => (mode === 'time' ? 'time' 
 
 const calcWidth = (mode: PickMode): string => {
   let width;
-  if (mode === 'dateWithoutYear') {
+  if (mode === 'shortDate') {
     width = '215px';
   } else if (mode === 'monthWithYear') {
     width = '190px';
@@ -36,7 +36,7 @@ const calcMarginLeft = (mode: PickMode): string => {
 
 const calcOverflow = (mode: PickMode): string => {
   let overflow;
-  if (mode === 'dateWithoutYear') {
+  if (mode === 'shortDate') {
     overflow = 'hidden';
   } else if (mode === 'monthWithYear') {
     overflow = 'hidden';

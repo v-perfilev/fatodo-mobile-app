@@ -1,35 +1,43 @@
 import {CheckIcon, Flex, FormControl} from 'native-base';
 import PressableButton from '../controls/PressableButton';
 import ClearableTextInput from './ClearableTextInput';
-import React, {useState} from 'react';
-import {DateFormatters} from '../../shared/utils/DateUtils';
+import React, {useMemo, useState} from 'react';
 import IconButton from '../controls/IconButton';
 import DateTimePicker from './DateTimePicker';
+import {UserAccount} from '../../models/User';
+import {DateFormatters} from '../../shared/utils/DateFormatters';
+import {useAppSelector} from '../../store/store';
+import AuthSelectors from '../../store/auth/authSelectors';
+
+type DateTimeSelectMode = 'fullDate' | 'shortDate' | 'time';
 
 type DateTimeSelectProps = {
   label: string;
   setResult: (time: Date) => void;
-  mode: 'date' | 'time' | 'dateWithoutYear';
+  mode: DateTimeSelectMode;
   locale: string;
   minimumDate?: Date;
 };
 
-const getFormatter = (mode: 'date' | 'time' | 'dateWithoutYear'): ((date: Date) => string) => {
+const formatValue = (date: Date, account: UserAccount, mode: DateTimeSelectMode): string => {
   switch (mode) {
-    case 'date':
-      return DateFormatters.formatDateWithYear;
+    case 'fullDate':
+      return DateFormatters.formatDate(date, account, undefined, 'FULL');
+    case 'shortDate':
+      return DateFormatters.formatDate(date, account, undefined, 'SHORT');
     case 'time':
-      return DateFormatters.formatTime;
-    case 'dateWithoutYear':
-      return DateFormatters.formatDate;
+      return DateFormatters.formatDate(date, account, 'FULL');
   }
 };
 
 const DateTimeSelect = ({label, setResult, mode, locale, minimumDate}: DateTimeSelectProps) => {
+  const account = useAppSelector(AuthSelectors.account);
   const [show, setShow] = useState<boolean>(false);
   const [value, setValue] = useState<Date>(undefined);
 
-  const formatter = getFormatter(mode);
+  const formattedValue = useMemo<string>(() => {
+    return value ? formatValue(value, account, mode) : undefined;
+  }, [value]);
 
   const openPicker = (): void => setShow(true);
 
@@ -50,12 +58,7 @@ const DateTimeSelect = ({label, setResult, mode, locale, minimumDate}: DateTimeS
       <FormControl>
         {<FormControl.Label>{label}</FormControl.Label>}
         <PressableButton onPress={openPicker}>
-          <ClearableTextInput
-            type="text"
-            value={value ? formatter(value) : undefined}
-            onChangeText={handleChangeText}
-            editable={false}
-          />
+          <ClearableTextInput type="text" value={formattedValue} onChangeText={handleChangeText} editable={false} />
         </PressableButton>
       </FormControl>
 

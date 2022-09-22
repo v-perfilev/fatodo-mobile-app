@@ -5,10 +5,10 @@ import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
-import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import FVStack from '../../../../components/boxes/FVStack';
 import ChatViewMessageReactions from './ChatViewMessageReactions';
 import ChatViewMessageMenu from './ChatViewMessageMenu';
+import DateView from '../../../../components/views/DateView';
 
 type ChatViewMessageOutcomingProps = {
   message: Message;
@@ -19,7 +19,7 @@ const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
   const {t} = useTranslation();
   const user = useAppSelector((state) => userSelector(state, message.userId));
 
-  const date = DateFormatters.formatTime(new Date(message.createdAt));
+  const date = new Date(message.createdAt);
 
   return (
     <FHStack space="2" width="90%" ml="10%" justifyContent="flex-end">
@@ -41,7 +41,7 @@ const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
               {user?.username}
             </Text>
             <Text color="gray.400" fontWeight="bold" fontSize="2xs">
-              {date}
+              <DateView date={date} timeFormat="FULL" />
             </Text>
           </FHStack>
           <ChatViewMessageMenu message={message} isOutcoming />

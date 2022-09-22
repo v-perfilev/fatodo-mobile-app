@@ -1,6 +1,5 @@
 import React, {memo, useMemo} from 'react';
 import FHStack from '../../../components/boxes/FHStack';
-import {DateFormatters} from '../../../shared/utils/DateUtils';
 import {Text} from 'native-base';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import FBox from '../../../components/boxes/FBox';
@@ -9,6 +8,7 @@ import PressableButton from '../../../components/controls/PressableButton';
 import {useCalendarDialogContext} from '../../../shared/contexts/dialogContexts/CalendarDialogContext';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import {useTranslation} from 'react-i18next';
+import {DateFormatters} from '../../../shared/utils/DateFormatters';
 
 type CalendarViewMonthNameProps = {
   month: CalendarMonth;
@@ -21,7 +21,7 @@ const CalendarViewMonthName = ({month, selectMonth}: CalendarViewMonthNameProps)
 
   const monthWithYear = useMemo(() => {
     const monthMoment = CalendarUtils.getMonthMoment(month.year, month.month);
-    const monthWithYear = DateFormatters.formatMonthWithYear(monthMoment.toDate());
+    const monthWithYear = DateFormatters.formatDate(monthMoment.toDate(), undefined, undefined, 'MONTH_YEAR');
     return monthWithYear.toUpperCase();
   }, [i18n.language]);
 

@@ -2,9 +2,9 @@ import React, {memo, ReactElement} from 'react';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text} from 'native-base';
-import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import PaperBox from '../../../../components/surfaces/PaperBox';
 import EventSkeleton from '../../components/skeletons/EventSkeleton';
+import DateView from '../../../../components/views/DateView';
 
 type EventListItemTemplateProps = {
   image?: ReactElement;
@@ -16,7 +16,7 @@ type EventListItemTemplateProps = {
 };
 
 const EventListItemTemplate = ({image, title, content, message, date, loading}: EventListItemTemplateProps) => {
-  const dateToShow = DateFormatters.formatDependsOnDay(new Date(date));
+  const dateToShow = new Date(date);
 
   const template = (
     <FHStack grow px="2" py="4" defaultSpace alignItems="flex-start">
@@ -29,7 +29,7 @@ const EventListItemTemplate = ({image, title, content, message, date, loading}: 
             </Text>
           </FHStack>
           <Text color="gray.400" fontWeight="bold" fontSize="xs">
-            {dateToShow}
+            <DateView date={dateToShow} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
           </Text>
         </FHStack>
         <Text>{content}</Text>

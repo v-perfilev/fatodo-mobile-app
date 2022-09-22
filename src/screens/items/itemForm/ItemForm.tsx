@@ -15,7 +15,6 @@ import {
   itemTypes,
 } from '../../../models/Item';
 import {Reminder} from '../../../models/Reminder';
-import {DateConverters} from '../../../shared/utils/DateUtils';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
 import FormikTypeInput from '../../../components/inputs/FormikTypeInput';
 import FormikPriorityInput from '../../../components/inputs/FormikPriorityInput';
@@ -30,6 +29,7 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import GhostButton from '../../../components/controls/GhostButton';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
 import FormikStatusInput from '../../../components/inputs/FormikStatusInput';
+import {DateConverters} from '../../../shared/utils/DateConverters';
 
 export interface ItemFormValues {
   title: string;

@@ -3,7 +3,7 @@ import {IFormControlProps} from 'native-base';
 import {FormikProps} from 'formik';
 import FormikSelect from './FormikSelect';
 import {timezones} from '../../shared/timezone';
-import {DateFormatters} from '../../shared/utils/DateUtils';
+import {DateFormatters} from '../../shared/utils/DateFormatters';
 
 type FormikTimezoneInputProps = IFormControlProps &
   FormikProps<any> & {

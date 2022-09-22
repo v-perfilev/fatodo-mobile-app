@@ -6,12 +6,12 @@ import {Box, Text} from 'native-base';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
-import {DateFormatters} from '../../../../shared/utils/DateUtils';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import FVStack from '../../../../components/boxes/FVStack';
 import UserView from '../../../../components/views/UserView';
 import ChatViewMessageReactions from './ChatViewMessageReactions';
 import ChatViewMessageMenu from './ChatViewMessageMenu';
+import DateView from '../../../../components/views/DateView';
 
 type ChatViewMessageIncomingProps = {
   message: Message;
@@ -23,7 +23,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
   const account = useAppSelector(AuthSelectors.account);
   const user = useAppSelector((state) => userSelector(state, message.userId));
 
-  const date = DateFormatters.formatTime(new Date(message.createdAt));
+  const date = new Date(message.createdAt);
   const isRead = MessageUtils.isReadMessage(message, account);
 
   return (
@@ -46,7 +46,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
               {user?.username}
             </Text>
             <Text color="gray.400" fontWeight="bold" fontSize="xs">
-              {date}
+              <DateView date={date} timeFormat="FULL" />
             </Text>
           </FHStack>
           <ChatViewMessageMenu message={message} isOutcoming={false} />
