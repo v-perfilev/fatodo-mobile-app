@@ -14,11 +14,11 @@ import Separator from '../../../../components/layouts/Separator';
 type GroupListCardContentProps = {
   group: Group;
   items: Item[];
-  count: number;
+  itemsCount: number;
   loading: boolean;
 };
 
-const GroupListCardContent = ({group, items, count, loading}: GroupListCardContentProps) => {
+const GroupListCardContent = ({group, items, itemsCount, loading}: GroupListCardContentProps) => {
   const account = useAppSelector(AuthSelectors.account);
 
   const canEdit = group && GroupUtils.canEdit(account, group);
@@ -33,7 +33,7 @@ const GroupListCardContent = ({group, items, count, loading}: GroupListCardConte
             <Separator />
           </Box>
         ))}
-      {!loading && <GroupListCardInfo group={group} items={items} count={count} />}
+      {!loading && <GroupListCardInfo group={group} items={items} itemsCount={itemsCount} />}
     </FVStack>
   );
 };

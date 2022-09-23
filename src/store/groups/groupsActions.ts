@@ -90,6 +90,7 @@ export class GroupsActions {
       const groupIds = response.data.data.map((g) => g.id);
       const memberIds = response.data.data.flatMap((g) => g.members).map((m) => m.userId);
       groupIds.length > 0 && thunkAPI.dispatch(GroupsActions.fetchItemsThunk(groupIds));
+      groupIds.length > 0 && thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk(groupIds));
       memberIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(memberIds));
       return response.data.data;
     },
@@ -99,11 +100,16 @@ export class GroupsActions {
     PREFIX + 'fetchItems',
     async (groupIds, thunkAPI) => {
       const response = await ItemService.getPreviewItemsByGroupIds(groupIds);
+      const itemIds = response.data
+        .map((entry) => entry[1])
+        .flatMap((g) => g.data)
+        .map((i) => i.id);
       const itemUserIds = response.data
         .map((entry) => entry[1])
         .flatMap((g) => g.data)
         .flatMap((i) => [i.createdBy, i.lastModifiedBy]);
-      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+      itemIds.length > 0 && thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk(itemIds));
+      itemUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
       return response.data;
     },
   );

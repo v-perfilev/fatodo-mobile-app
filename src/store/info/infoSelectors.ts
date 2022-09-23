@@ -6,7 +6,7 @@ import {Group} from '../../models/Group';
 import {Item} from '../../models/Item';
 import {Chat} from '../../models/Chat';
 import {Message} from '../../models/Message';
-import {Comment} from '../../models/Comment';
+import {Comment, CommentThreadInfo} from '../../models/Comment';
 
 const getInfoState = (state: RootState) => state.info;
 const getKey = (_: any, key: string) => key;
@@ -44,6 +44,12 @@ class InfoSelectors {
     createSelector(
       [getInfoState, getKey],
       (state, key) => StoreUtils.getValue(state.comments, key, undefined) as Comment,
+    );
+
+  static makeCommentThreadSelector = () =>
+    createSelector(
+      [getInfoState, getKey],
+      (state, key) => StoreUtils.getValue(state.commentThreads, key, undefined) as CommentThreadInfo,
     );
 }
 

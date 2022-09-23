@@ -21,7 +21,7 @@ const GroupListCard = ({group, sorting, drag, ...props}: GroupListCardProps) => 
   const itemsCollapsedSelector = useCallback(GroupsSelectors.makeItemsCollapsedSelector(), []);
   const itemsLoadingSelector = useCallback(GroupsSelectors.makeItemsLoadingSelector(), []);
   const items = useAppSelector((state) => itemsSelector(state, group.id));
-  const count = useAppSelector((state) => itemsCountSelector(state, group.id));
+  const itemsCount = useAppSelector((state) => itemsCountSelector(state, group.id));
   const collapsed = useAppSelector((state) => itemsCollapsedSelector(state, group.id));
   const loading = useAppSelector((state) => itemsLoadingSelector(state, group.id));
 
@@ -32,7 +32,7 @@ const GroupListCard = ({group, sorting, drag, ...props}: GroupListCardProps) => 
       <ThemeProvider theme={theme}>
         <GroupListCardHeader group={group} collapsed={collapsed} sorting={sorting} drag={drag} />
         <Collapsible collapsed={collapsed}>
-          <GroupListCardContent group={group} items={items} count={count} loading={loading} />
+          <GroupListCardContent group={group} items={items} itemsCount={itemsCount} loading={loading} />
         </Collapsible>
       </ThemeProvider>
     </Box>

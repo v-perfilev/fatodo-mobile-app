@@ -36,7 +36,8 @@ export class GroupActions {
     async (groupId, thunkAPI) => {
       const response = await ItemService.getGroup(groupId);
       const groupUserIds = response.data.members.map((m) => m.userId);
-      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(groupUserIds));
+      thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk([response.data.id]));
+      groupUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(groupUserIds));
       return response.data;
     },
   );
@@ -47,8 +48,10 @@ export class GroupActions {
     AsyncThunkConfig
   >(PREFIX + 'fetchActiveItems', async ({groupId, offset}, thunkAPI) => {
     const response = await ItemService.getItemsByGroupId(groupId, offset);
+    const itemIds = response.data.data.flatMap((i) => i.id);
     const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
-    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+    itemIds.length > 0 && thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk(itemIds));
+    itemUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
     return response.data;
   });
 
@@ -56,8 +59,10 @@ export class GroupActions {
     PREFIX + 'refreshActiveItems',
     async (groupId, thunkAPI) => {
       const response = await ItemService.getItemsByGroupId(groupId);
+      const itemIds = response.data.data.flatMap((i) => i.id);
       const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
-      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+      itemIds.length > 0 && thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk(itemIds));
+      itemUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
       return response.data;
     },
   );
@@ -68,8 +73,10 @@ export class GroupActions {
     AsyncThunkConfig
   >(PREFIX + 'fetchArchivedItems', async ({groupId, offset}, thunkAPI) => {
     const response = await ItemService.getArchivedItemsByGroupId(groupId, offset);
+    const itemIds = response.data.data.flatMap((i) => i.id);
     const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
-    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+    itemIds.length > 0 && thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk(itemIds));
+    itemUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
     return response.data;
   });
 
@@ -77,8 +84,10 @@ export class GroupActions {
     PREFIX + 'refreshArchivedItems',
     async (groupId, thunkAPI) => {
       const response = await ItemService.getArchivedItemsByGroupId(groupId);
+      const itemIds = response.data.data.flatMap((i) => i.id);
       const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
-      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+      itemIds.length > 0 && thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk(itemIds));
+      itemUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
       return response.data;
     },
   );

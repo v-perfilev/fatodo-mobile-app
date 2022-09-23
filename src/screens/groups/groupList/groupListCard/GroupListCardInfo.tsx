@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import {Item} from '../../../../models/Item';
@@ -10,22 +10,26 @@ import LinkButton from '../../../../components/controls/LinkButton';
 import {Group} from '../../../../models/Group';
 import FHStack from '../../../../components/boxes/FHStack';
 import CommentsIcon from '../../../../components/icons/CommentsIcon';
+import InfoSelectors from '../../../../store/info/infoSelectors';
+import {useAppSelector} from '../../../../store/store';
 
 type GroupListCardHeaderProps = {
   group: Group;
   items: Item[];
-  count: number;
+  itemsCount: number;
 };
 
-const GroupListCardInfo = ({group, items, count}: GroupListCardHeaderProps) => {
+const GroupListCardInfo = ({group, items, itemsCount}: GroupListCardHeaderProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const {t} = useTranslation();
+  const commentThreadSelector = useCallback(InfoSelectors.makeCommentThreadSelector(), []);
+  const commentThread = useAppSelector((state) => commentThreadSelector(state, group.id));
 
   const goToGroupView = (): void => navigation.navigate('GroupView', {group});
   const goToItemCreate = (): void => navigation.navigate('ItemCreate', {group});
 
-  const showButtonToGroupView = count !== items.length;
-  const showButtonToCreateItem = count === 0;
+  const showButtonToGroupView = itemsCount !== items.length;
+  const showButtonToCreateItem = itemsCount === 0;
 
   return (
     <FHStack defaultSpace h="45px" px="4" my="1" alignItems="center">
@@ -34,8 +38,8 @@ const GroupListCardInfo = ({group, items, count}: GroupListCardHeaderProps) => {
         {showButtonToGroupView && <LinkButton onPress={goToGroupView}>{t('group:actions.showAll')}</LinkButton>}
         {showButtonToCreateItem && <LinkButton onPress={goToItemCreate}>{t('group:actions.createItem')}</LinkButton>}
       </FHStack>
-      <BoxWithIcon icon={<CommentsIcon color="primary.500" size="md" />}>{count || 0}</BoxWithIcon>
-      <BoxWithIcon icon={<ItemsIcon color="primary.500" size="md" />}>{count || 0}</BoxWithIcon>
+      <BoxWithIcon icon={<CommentsIcon color="primary.500" size="md" />}>{commentThread?.count || 0}</BoxWithIcon>
+      <BoxWithIcon icon={<ItemsIcon color="primary.500" size="md" />}>{itemsCount || 0}</BoxWithIcon>
     </FHStack>
   );
 };
