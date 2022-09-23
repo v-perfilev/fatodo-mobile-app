@@ -95,7 +95,9 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
       if (extraScroll > MAX_REFRESH_HEIGHT) {
         overscrollInitValue.current = translationY - MAX_REFRESH_HEIGHT;
       }
-      extraScrollY.current.setValue(Math.min(extraScroll, MAX_REFRESH_HEIGHT));
+      if (extraScroll >= 0) {
+        extraScrollY.current.setValue(Math.min(extraScroll, MAX_REFRESH_HEIGHT));
+      }
       shouldRefresh.current = extraScroll > REFRESH_HEIGHT;
     }
     if (overscrollEnabled.current && !overscrollInitValue.current) {
