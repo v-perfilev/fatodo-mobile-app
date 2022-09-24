@@ -9,10 +9,10 @@ const EventSkeleton = () => {
       <Skeleton w="48px" h="48px" rounded="3xl" />
       <FVStack grow space="2">
         <FHStack grow justifyContent="space-between" alignItems="center">
-          <Skeleton w="70%" h="16px" rounded="md" />
-          <Skeleton w="65px" h="12px" rounded="md" />
+          <Skeleton w="70%" h="16px" />
+          <Skeleton w="65px" h="12px" />
         </FHStack>
-        <Skeleton w="90%" h="14px" rounded="md" />
+        <Skeleton w="90%" h="14px" />
       </FVStack>
     </FHStack>
   );

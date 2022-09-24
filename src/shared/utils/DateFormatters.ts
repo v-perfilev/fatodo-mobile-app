@@ -87,7 +87,7 @@ export class DateFormatters {
     } else if (dateFormatType === 'MONTH_YEAR') {
       formatArray.push(DateFormats.getMonthYearFormat());
     }
-    const formatter = formatArray.join(' - ');
+    const formatter = formatArray.join(', ');
     return moment(date).format(formatter);
   };
 }
