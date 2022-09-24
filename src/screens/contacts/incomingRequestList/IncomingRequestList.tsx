@@ -10,6 +10,7 @@ import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
 import IncomingRequestListItem from './IncomingRequestListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {useIsFocused} from '@react-navigation/native';
+import Separator from '../../../components/layouts/Separator';
 
 const IncomingRequestList = () => {
   const dispatch = useAppDispatch();
@@ -43,12 +44,11 @@ const IncomingRequestList = () => {
     isFocused && loading && refresh().finally(() => setLoading(false));
   }, [isFocused]);
 
-  const stub = useMemo<ReactElement>(() => <IncomingRequestListStub />, []);
-
   return (
     <CollapsableRefreshableFlatList
       loading={loading}
-      ListEmptyComponent={stub}
+      ListEmptyComponent={<IncomingRequestListStub />}
+      ItemSeparatorComponent={Separator}
       data={incomingRequests}
       render={renderItem}
       keyExtractor={keyExtractor}

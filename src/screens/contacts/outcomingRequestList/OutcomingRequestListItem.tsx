@@ -6,15 +6,14 @@ import {MenuElement} from '../../../models/MenuElement';
 import UserMinusIcon from '../../../components/icons/UserMinusIcon';
 import ControlMenu from '../../../components/layouts/ControlMenu';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
-import {IBoxProps} from 'native-base';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {ContactRequest} from '../../../models/Contact';
 
-type OutcomingRequestListItemProps = IBoxProps & {
+type OutcomingRequestListItemProps = {
   request: ContactRequest;
 };
 
-const OutcomingRequestListItem = ({request, ...props}: OutcomingRequestListItemProps) => {
+const OutcomingRequestListItem = ({request}: OutcomingRequestListItemProps) => {
   const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => userSelector(state, request.recipientId));
@@ -37,7 +36,7 @@ const OutcomingRequestListItem = ({request, ...props}: OutcomingRequestListItemP
   ];
 
   return (
-    <FHStack defaultSpace alignItems="center" {...props}>
+    <FHStack grow px="2" py="4" defaultSpace alignItems="center">
       <FHStack grow>
         <UserView user={user} withUsername picSize="md" />
       </FHStack>

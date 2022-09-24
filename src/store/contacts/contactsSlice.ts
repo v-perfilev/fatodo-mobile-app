@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ContactsState} from './contactsType';
 import {ContactsActions} from './contactsActions';
 import {ContactRelation, ContactRequest} from '../../models/Contact';
+import {FilterUtils} from '../../shared/utils/FilterUtils';
 
 const initialState: ContactsState = {
   relationCount: 0,
@@ -21,75 +22,60 @@ const contactsSlice = createSlice({
     },
 
     setRelations: (state: ContactsState, action: PayloadAction<ContactRelation[]>) => {
-      state.relations = action.payload;
+      state.relations = filterRelations(action.payload);
+      state.relationCount = state.relations.length;
     },
 
     addRelation: (state: ContactsState, action: PayloadAction<ContactRelation>) => {
-      state.relations = [action.payload, ...state.relations];
+      state.relations = filterRelations([action.payload, ...state.relations]);
+      state.relationCount = state.relations.length;
     },
 
     removeRelation: (state: ContactsState, action: PayloadAction<string>) => {
       state.relations = state.relations.filter((relation) => relation.secondUserId !== action.payload);
+      state.relationCount = state.relations.length;
     },
 
     setRelationCount: (state: ContactsState, action: PayloadAction<number>) => {
       state.relationCount = action.payload;
     },
 
-    incrementRelationCount: (state: ContactsState) => {
-      state.relationCount = state.relationCount + 1;
-    },
-
-    decrementRelationCount: (state: ContactsState) => {
-      state.relationCount = state.relationCount - 1;
-    },
-
     setIncomingRequests: (state: ContactsState, action: PayloadAction<ContactRequest[]>) => {
-      state.incomingRequests = action.payload;
+      state.incomingRequests = filterIncomingRequests(action.payload);
+      state.incomingRequestCount = state.incomingRequests.length;
     },
 
     addIncomingRequest: (state: ContactsState, action: PayloadAction<ContactRequest>) => {
-      state.incomingRequests = [action.payload, ...state.incomingRequests];
+      state.incomingRequests = filterIncomingRequests([action.payload, ...state.incomingRequests]);
+      state.incomingRequestCount = state.incomingRequests.length;
     },
 
     removeIncomingRequest: (state: ContactsState, action: PayloadAction<string>) => {
       state.incomingRequests = state.incomingRequests.filter((request) => request.requesterId !== action.payload);
+      state.incomingRequestCount = state.incomingRequests.length;
     },
 
     setIncomingRequestCount: (state: ContactsState, action: PayloadAction<number>) => {
       state.incomingRequestCount = action.payload;
     },
 
-    incrementIncomingRequestCount: (state: ContactsState) => {
-      state.incomingRequestCount = state.incomingRequestCount + 1;
-    },
-
-    decrementIncomingRequestCount: (state: ContactsState) => {
-      state.incomingRequestCount = state.incomingRequestCount - 1;
-    },
-
     setOutcomingRequests: (state: ContactsState, action: PayloadAction<ContactRequest[]>) => {
-      state.outcomingRequests = action.payload;
+      state.outcomingRequests = filterOutcomingRequests(action.payload);
+      state.outcomingRequestCount = state.outcomingRequests.length;
     },
 
     addOutcomingRequest: (state: ContactsState, action: PayloadAction<ContactRequest>) => {
-      state.outcomingRequests = [action.payload, ...state.outcomingRequests];
+      state.outcomingRequests = filterOutcomingRequests([action.payload, ...state.outcomingRequests]);
+      state.outcomingRequestCount = state.outcomingRequests.length;
     },
 
     removeOutcomingRequest: (state: ContactsState, action: PayloadAction<string>) => {
       state.outcomingRequests = state.outcomingRequests.filter((request) => request.recipientId !== action.payload);
+      state.outcomingRequestCount = state.outcomingRequests.length;
     },
 
     setOutcomingRequestCount: (state: ContactsState, action: PayloadAction<number>) => {
       state.outcomingRequestCount = action.payload;
-    },
-
-    incrementOutcomingRequestCount: (state: ContactsState) => {
-      state.outcomingRequestCount = state.outcomingRequestCount + 1;
-    },
-
-    decrementOutcomingRequestCount: (state: ContactsState) => {
-      state.outcomingRequestCount = state.outcomingRequestCount - 1;
     },
   },
   extraReducers: (builder) => {
@@ -130,7 +116,6 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.removeRelationThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.removeRelation(state, action);
-      contactsSlice.caseReducers.decrementRelationCount(state);
     });
 
     /*
@@ -138,7 +123,6 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.sendRequestThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.addOutcomingRequest(state, action);
-      contactsSlice.caseReducers.incrementOutcomingRequestCount(state);
     });
 
     /*
@@ -146,9 +130,7 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.acceptIncomingRequestThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.removeIncomingRequest(state, {...action, payload: action.payload.secondUserId});
-      contactsSlice.caseReducers.decrementIncomingRequestCount(state);
       contactsSlice.caseReducers.addRelation(state, action);
-      contactsSlice.caseReducers.incrementRelationCount(state);
     });
 
     /*
@@ -156,7 +138,6 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.declineIncomingRequestThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.removeIncomingRequest(state, action);
-      contactsSlice.caseReducers.decrementIncomingRequestCount(state);
     });
 
     /*
@@ -164,9 +145,20 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.removeOutcomingRequestThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.removeOutcomingRequest(state, action);
-      contactsSlice.caseReducers.decrementIncomingRequestCount(state);
     });
   },
 });
+
+const filterRelations = (relations: ContactRelation[]): ContactRelation[] => {
+  return relations.filter(FilterUtils.uniqueBySecondUserIdFilter);
+};
+
+const filterIncomingRequests = (relations: ContactRequest[]): ContactRequest[] => {
+  return relations.filter(FilterUtils.uniqueByRequesterIdFilter);
+};
+
+const filterOutcomingRequests = (relations: ContactRequest[]): ContactRequest[] => {
+  return relations.filter(FilterUtils.uniqueByRecipientIdFilter);
+};
 
 export default contactsSlice;

@@ -10,6 +10,7 @@ import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
 import OutcomingRequestListItem from './OutcomingRequestListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {useIsFocused} from '@react-navigation/native';
+import Separator from '../../../components/layouts/Separator';
 
 const OutcomingRequestList = () => {
   const dispatch = useAppDispatch();
@@ -39,6 +40,7 @@ const OutcomingRequestList = () => {
     <CollapsableRefreshableFlatList
       loading={loading}
       ListEmptyComponent={<OutcomingRequestListStub />}
+      ItemSeparatorComponent={Separator}
       data={outcomingRequests}
       render={renderItem}
       keyExtractor={keyExtractor}

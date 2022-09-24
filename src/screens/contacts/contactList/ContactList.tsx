@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useState} from 'react';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
@@ -16,6 +16,7 @@ import CornerManagement from '../../../components/controls/CornerManagement';
 import {CornerButton} from '../../../models/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import {useIsFocused} from '@react-navigation/native';
+import Separator from '../../../components/layouts/Separator';
 
 const loaderStyle: StyleProp<ViewStyle> = {paddingBottom: 50};
 
@@ -70,18 +71,15 @@ const ContactList = () => {
     setRelationsToShow(filteredRelations);
   }, [relations, filter]);
 
-  const previousNode = useMemo<ReactElement>(() => <ContactListControl setFilter={setFilter} />, []);
-
-  const stub = useMemo<ReactElement>(() => <ContactListStub />, []);
-
   const buttons: CornerButton[] = [{icon: <PlusIcon />, action: openContactRequestDialog}];
 
   return (
     <CollapsableRefreshableFlatList
       loaderStyle={loaderStyle}
-      previousNode={previousNode}
+      previousNode={<ContactListControl setFilter={setFilter} />}
       loading={loading}
-      ListEmptyComponent={stub}
+      ListEmptyComponent={<ContactListStub />}
+      ItemSeparatorComponent={Separator}
       data={relationsToShow}
       render={renderItem}
       keyExtractor={keyExtractor}

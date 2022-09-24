@@ -40,6 +40,18 @@ export class FilterUtils {
     return arr.findIndex((t) => t.userId === value.userId) === i;
   };
 
+  public static uniqueBySecondUserIdFilter = (value: any, i: number, arr: any[]): boolean => {
+    return arr.findIndex((t) => t.secondUserId === value.secondUserId) === i;
+  };
+
+  public static uniqueByRequesterIdFilter = (value: any, i: number, arr: any[]): boolean => {
+    return arr.findIndex((t) => t.requesterId === value.requesterId) === i;
+  };
+
+  public static uniqueByRecipientIdFilter = (value: any, i: number, arr: any[]): boolean => {
+    return arr.findIndex((t) => t.recipientId === value.recipientId) === i;
+  };
+
   public static notUndefinedFilter = (value: any): boolean => {
     return value !== undefined;
   };
