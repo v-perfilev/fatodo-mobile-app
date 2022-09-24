@@ -47,9 +47,9 @@ const ChatAddMembersDialog = ({chat, show, close}: ChatAddMembersDialogProps) =>
   useEffect(() => {
     const relationUserIds = relations.map((relation) => relation.secondUserId);
     const ignoredIds = chat?.members.map((m) => m.userId);
-    const contactIds = relationUserIds.filter((id) => !ignoredIds.includes(id));
+    const contactIds = relationUserIds.filter((id) => !ignoredIds || !ignoredIds.includes(id));
     setContactIds(contactIds);
-  }, [show, relations]);
+  }, [relations, show]);
 
   const isUserIdListEmpty = userIds.length === 0;
 

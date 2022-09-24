@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
+import React, {ReactElement, useCallback, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
@@ -11,6 +11,8 @@ import IncomingRequestListItem from './IncomingRequestListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {useIsFocused} from '@react-navigation/native';
 import Separator from '../../../components/layouts/Separator';
+import FBox from '../../../components/boxes/FBox';
+import ContactListSkeleton from '../components/skeletons/ContactListSkeleton';
 
 const IncomingRequestList = () => {
   const dispatch = useAppDispatch();
@@ -45,15 +47,18 @@ const IncomingRequestList = () => {
   }, [isFocused]);
 
   return (
-    <CollapsableRefreshableFlatList
-      loading={loading}
-      ListEmptyComponent={<IncomingRequestListStub />}
-      ItemSeparatorComponent={Separator}
-      data={incomingRequests}
-      render={renderItem}
-      keyExtractor={keyExtractor}
-      refresh={refresh}
-    />
+    <FBox>
+      <CollapsableRefreshableFlatList
+        loading={loading}
+        loadingPlaceholder={<ContactListSkeleton />}
+        ListEmptyComponent={<IncomingRequestListStub />}
+        ItemSeparatorComponent={Separator}
+        data={incomingRequests}
+        render={renderItem}
+        keyExtractor={keyExtractor}
+        refresh={refresh}
+      />
+    </FBox>
   );
 };
 

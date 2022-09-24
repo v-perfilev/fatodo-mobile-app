@@ -17,6 +17,7 @@ import {CornerButton} from '../../../models/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import {useIsFocused} from '@react-navigation/native';
 import Separator from '../../../components/layouts/Separator';
+import ContactListSkeleton from '../components/skeletons/ContactListSkeleton';
 
 const loaderStyle: StyleProp<ViewStyle> = {paddingBottom: 50};
 
@@ -63,12 +64,14 @@ const ContactList = () => {
   }, [isFocused]);
 
   useEffect(() => {
-    const filteredRelations = relations.filter((r) => {
-      const user = users.find((u) => u.id === r.secondUserId);
-      const str = user?.username + user?.firstname + user?.lastname;
-      return str.includes(filter);
-    });
-    setRelationsToShow(filteredRelations);
+    const relationsToShow = filter
+      ? relations.filter((r) => {
+          const user = users.find((u) => u.id === r.secondUserId);
+          const str = user?.username + user?.firstname + user?.lastname;
+          return str?.includes(filter);
+        })
+      : relations;
+    setRelationsToShow(relationsToShow);
   }, [relations, filter]);
 
   const buttons: CornerButton[] = [{icon: <PlusIcon />, action: openContactRequestDialog}];
@@ -78,7 +81,8 @@ const ContactList = () => {
       loaderStyle={loaderStyle}
       previousNode={<ContactListControl setFilter={setFilter} />}
       loading={loading}
-      ListEmptyComponent={<ContactListStub />}
+      loadingPlaceholder={<ContactListSkeleton />}
+      ListEmptyComponent={!filter && <ContactListStub />}
       ItemSeparatorComponent={Separator}
       data={relationsToShow}
       render={renderItem}

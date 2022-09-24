@@ -11,6 +11,7 @@ import OutcomingRequestListItem from './OutcomingRequestListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {useIsFocused} from '@react-navigation/native';
 import Separator from '../../../components/layouts/Separator';
+import ContactListSkeleton from '../components/skeletons/ContactListSkeleton';
 
 const OutcomingRequestList = () => {
   const dispatch = useAppDispatch();
@@ -39,6 +40,7 @@ const OutcomingRequestList = () => {
   return (
     <CollapsableRefreshableFlatList
       loading={loading}
+      loadingPlaceholder={<ContactListSkeleton />}
       ListEmptyComponent={<OutcomingRequestListStub />}
       ItemSeparatorComponent={Separator}
       data={outcomingRequests}
