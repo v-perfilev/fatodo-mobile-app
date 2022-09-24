@@ -4,7 +4,8 @@ import i18n from '../i18n';
 
 export class DateUtils {
   static resetLocale = (lang?: string): void => {
-    moment.locale(lang || i18n.language);
+    const locale = (lang || i18n.language).toLowerCase();
+    moment.locale(locale);
   };
 
   static getTimezone = (): string => tz.guess();
