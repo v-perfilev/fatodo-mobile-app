@@ -1,5 +1,5 @@
-import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {HEADER_HEIGHT} from '../../../constants';
+import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
+import {CHATS_FILTER_HEIGHT, HEADER_HEIGHT} from '../../../constants';
 import ChatListControl from './ChatListControl';
 import Header from '../../../components/layouts/Header';
 import {FlatListType} from '../../../components/scrollable/FlatList';
@@ -24,8 +24,8 @@ import {useIsFocused} from '@react-navigation/native';
 
 type ControlType = 'regular' | 'filtered';
 
-const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
-const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: 50};
+const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT + CHATS_FILTER_HEIGHT};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: CHATS_FILTER_HEIGHT};
 
 const ChatList = () => {
   const dispatch = useAppDispatch();
@@ -101,11 +101,6 @@ const ChatList = () => {
     setFilterLoading(filterLoadCounter > 0);
   }, [filterLoadCounter]);
 
-  const previousNode = useMemo<ReactElement>(
-    () => <ChatListControl setFilter={setFilter} marginTop={HEADER_HEIGHT} />,
-    [],
-  );
-
   const buttons: CornerButton[] = [
     {icon: <PlusIcon />, action: openCreateChatDialog},
     {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
@@ -121,7 +116,7 @@ const ChatList = () => {
       loaderStyle={loaderStyle}
       header={<Header showAvatar hideGoBack />}
       refresh={type === 'regular' ? refresh : undefined}
-      previousNode={previousNode}
+      previousNode={<ChatListControl setFilter={setFilter} />}
       loading={loading || filterLoading}
       ListEmptyComponent={<ChatListStub />}
       data={type === 'regular' ? chats : filteredChats}

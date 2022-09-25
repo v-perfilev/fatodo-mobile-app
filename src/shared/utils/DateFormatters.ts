@@ -1,6 +1,7 @@
 import moment from 'moment';
 import {tz} from 'moment-timezone';
 import {DateFormat, TimeFormat, UserAccount} from '../../models/User';
+import {FilterUtils} from './FilterUtils';
 
 export type TimeFormatType = 'FULL';
 export type DateFormatType = 'FULL' | 'SHORT' | 'MONTH_YEAR' | 'DEPENDS_ON_DAY';
@@ -87,7 +88,7 @@ export class DateFormatters {
     } else if (dateFormatType === 'MONTH_YEAR') {
       formatArray.push(DateFormats.getMonthYearFormat());
     }
-    const formatter = formatArray.join(', ');
+    const formatter = formatArray.filter(FilterUtils.notUndefinedFilter).join(', ');
     return moment(date).format(formatter);
   };
 }

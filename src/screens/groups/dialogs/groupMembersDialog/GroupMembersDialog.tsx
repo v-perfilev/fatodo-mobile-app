@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Group, GroupUser} from '../../../../models/Group';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
@@ -32,10 +32,10 @@ export const defaultGroupMembersDialogProps: Readonly<GroupMembersDialogProps> =
 
 const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEditMember}: GroupMembersDialogProps) => {
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
-  const {t} = useTranslation();
-  const memberIds = group?.members.map((m) => m.userId);
+  const memberIds = useMemo(() => group?.members.map((m) => m.userId), [group]);
   const account = useAppSelector(AuthSelectors.account);
   const users = useAppSelector((state) => usersSelector(state, memberIds));
+  const {t} = useTranslation();
   const [usersToShow, setUsersToShow] = useState<GroupUser[]>([]);
   const [deletedMemberIds, setDeletedMemberIds] = useState<string[]>([]);
 

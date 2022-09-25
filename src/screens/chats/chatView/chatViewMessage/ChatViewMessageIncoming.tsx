@@ -34,8 +34,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
         smallSpace
         minW="50%"
         borderWidth="1"
-        borderColor={isRead ? 'gray.300' : 'primary.500'}
-        borderRadius="5"
+        borderColor={isRead ? 'gray.100' : 'primary.500'}
         backgroundColor="gray.50"
         px="2"
         py="1.5"

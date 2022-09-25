@@ -31,7 +31,7 @@ const ChatViewHeader = () => {
     showChatDeleteDialog,
   } = useChatDialogContext();
   const chat = useAppSelector(ChatSelectors.chat);
-  const memberIds = chat.members.map((m) => m.userId);
+  const memberIds = chat?.members.map((m) => m.userId);
   const users = useAppSelector((state) => usersSelector(state, memberIds));
   const account = useAppSelector(AuthSelectors.account);
 
@@ -96,11 +96,7 @@ const ChatViewHeader = () => {
 
   return (
     <Header title={title}>
-      <Menu
-        trigger={(triggerProps) => (
-          <IconButton {...triggerProps} colorScheme="white" size="xl" p="1.5" icon={<DotsVerticalIcon />} />
-        )}
-      >
+      <Menu trigger={(triggerProps) => <IconButton {...triggerProps} size="xl" p="1.5" icon={<DotsVerticalIcon />} />}>
         {menuItems.map((itemProps, index) => (
           <MenuItem {...itemProps} key={index} />
         ))}

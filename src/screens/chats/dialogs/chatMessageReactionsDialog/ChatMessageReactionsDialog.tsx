@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {User} from '../../../../models/User';
 import ClearableTextInput from '../../../../components/inputs/ClearableTextInput';
@@ -30,9 +30,9 @@ export const defaultChatMessageReactionsDialogProps: Readonly<ChatMessageReactio
 
 const ChatMessageReactionsDialog = ({message, show, close}: ChatMessageReactionsDialogProps) => {
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
-  const {t} = useTranslation();
-  const reactionUserIds = message?.reactions.map((r) => r.userId);
+  const reactionUserIds = useMemo(() => message?.reactions.map((r) => r.userId), [message]);
   const users = useAppSelector((state) => usersSelector(state, reactionUserIds));
+  const {t} = useTranslation();
   const [reactions, setReactions] = useState<MessageReactionWithUser[]>([]);
   const [reactionsToShow, setReactionsToShow] = useState<MessageReactionWithUser[]>([]);
 

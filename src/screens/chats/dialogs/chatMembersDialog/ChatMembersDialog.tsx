@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import ClearableTextInput from '../../../../components/inputs/ClearableTextInput';
 import UserPlusIcon from '../../../../components/icons/UserPlusIcon';
@@ -29,9 +29,9 @@ export const defaultChatMembersDialogProps: Readonly<ChatMembersDialogProps> = {
 
 const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersDialogProps) => {
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
-  const {t} = useTranslation();
-  const memberIds = chat?.members.map((m) => m.userId);
+  const memberIds = useMemo(() => chat?.members.map((m) => m.userId), [chat]);
   const users = useAppSelector((state) => usersSelector(state, memberIds));
+  const {t} = useTranslation();
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
 
   const filterUsersToShow = (text: string): void => {

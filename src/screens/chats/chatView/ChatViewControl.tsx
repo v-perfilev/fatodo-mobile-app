@@ -9,6 +9,7 @@ import IconButton from '../../../components/controls/IconButton';
 import {useTranslation} from 'react-i18next';
 import {ChatActions} from '../../../store/chat/chatActions';
 import ChatSelectors from '../../../store/chat/chatSelectors';
+import {CHATS_INPUT_HEIGHT} from '../../../constants';
 
 const ChatViewControl = () => {
   const dispatch = useAppDispatch();
@@ -33,8 +34,18 @@ const ChatViewControl = () => {
   };
 
   return (
-    <FHStack space="2" p="2" alignItems="center" borderTopWidth="1" borderTopColor="gray.200">
-      <FBox>
+    <FHStack
+      position="absolute"
+      zIndex="1"
+      w="100%"
+      h={CHATS_INPUT_HEIGHT}
+      bottom="0"
+      alignItems="center"
+      borderTopWidth="1"
+      borderTopColor="gray.200"
+      bgColor="white"
+    >
+      <FBox px="2">
         <ClearableTextInput
           h="36px"
           px="2"

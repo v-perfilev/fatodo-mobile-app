@@ -6,6 +6,7 @@ import AuthSelectors from '../../../../store/auth/authSelectors';
 import ChatViewMessageOutcoming from './ChatViewMessageOutcoming';
 import ChatViewMessageIncoming from './ChatViewMessageIncoming';
 import ChatViewMessageEvent from './ChatViewMessageEvent';
+import FBox from '../../../../components/boxes/FBox';
 
 type ChatViewMessageProps = {
   message: Message;
@@ -27,11 +28,11 @@ const ChatViewMessage = ({message}: ChatViewMessageProps) => {
   }, [message]);
 
   return (
-    <>
+    <FBox p="2">
       {type === 'outcoming' && <ChatViewMessageOutcoming message={message} />}
       {type === 'incoming' && <ChatViewMessageIncoming message={message} />}
       {type === 'event' && <ChatViewMessageEvent message={message} />}
-    </>
+    </FBox>
   );
 };
 

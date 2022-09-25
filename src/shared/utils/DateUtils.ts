@@ -8,6 +8,10 @@ export class DateUtils {
     moment.locale(locale);
   };
 
+  static getNowTime = (): number => {
+    return new Date().getTime();
+  };
+
   static getTimezone = (): string => tz.guess();
 
   static getWeekdayNames = (): string[] => moment.weekdaysShort(true);

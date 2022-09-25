@@ -3,6 +3,7 @@ import {User, UserAccount} from '../../models/User';
 import {ViewToken} from 'react-native';
 import {MessageUtils} from './MessageUtils';
 import {FilterUtils} from './FilterUtils';
+import {Message} from '../../models/Message';
 
 export class ChatUtils {
   public static getDirectChatUser = (chat: Chat, users: User[], account: User): User => {
@@ -33,15 +34,15 @@ export class ChatUtils {
     return [...chatUserIds, ...lastMessageUserIds, ...eventUserIds];
   };
 
-  public static getUnreadIds = (
+  public static getUnreadMessages = (
     info: {viewableItems: ViewToken[]; changed: ViewToken[]},
     account: UserAccount,
-  ): string[] => {
+  ): Message[] => {
     return info.viewableItems
       .map((token) => token.item)
       .filter((item) => MessageUtils.isMessage(item.message))
       .filter((item) => MessageUtils.isIncomingMessage(item.message, account))
       .filter((item) => !MessageUtils.isReadMessage(item.message, account))
-      .map((item) => item.message.id);
+      .map((item) => item.message);
   };
 }

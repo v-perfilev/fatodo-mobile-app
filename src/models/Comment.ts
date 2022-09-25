@@ -1,5 +1,6 @@
 import {AbstractAuditing} from './AbstractAuditing';
 import {CommentDTO} from './dto/CommentDTO';
+import {DateUtils} from '../shared/utils/DateUtils';
 
 export const commentReactionTypes = ['LIKE', 'DISLIKE'];
 
@@ -51,7 +52,7 @@ export const buildCommentReaction = (comment: Comment, userId: string, type: Com
   commentId: comment.id,
   userId,
   type,
-  date: new Date().getTime(),
+  date: DateUtils.getNowTime(),
 });
 
 export const buildCommentFromDTO = (dto: CommentDTO, targetId: string, userId: string): Comment => ({
@@ -62,6 +63,6 @@ export const buildCommentFromDTO = (dto: CommentDTO, targetId: string, userId: s
   userId,
   isDeleted: false,
   reactions: [],
-  createdAt: new Date().getTime(),
+  createdAt: DateUtils.getNowTime(),
   createdBy: userId,
 });

@@ -46,21 +46,23 @@ const ChatListItem = ({chat}: ChatListItemProps) => {
 
   return (
     <PressableButton onPress={goToChat}>
-      <FHStack grow defaultSpace>
+      <FHStack p="2" grow defaultSpace>
         {pic}
         <FHStack grow>
           <FVStack grow alignItems="stretch" justifyContent="center">
-            <FHStack smallSpace>
-              {unreadCount > 0 && (
-                <Badge rounded="full" variant="solid" colorScheme="secondary">
-                  {unreadCount}
-                </Badge>
-              )}
-              <Text color="primary.500" fontWeight="bold">
-                {title}
-              </Text>
-              {chat.isDirect && <Text color="gray.400">{t('chat:common.direct')}</Text>}
-              <Text color="gray.400" fontWeight="bold" fontSize="0.7rem">
+            <FHStack smallSpace alignItems="center">
+              <FHStack grow smallSpace alignItems="center">
+                <Text color="primary.500" fontWeight="bold">
+                  {title}
+                </Text>
+                {chat.isDirect && <Text color="gray.400">{t('chat:common.direct')}</Text>}
+                {unreadCount > 0 && (
+                  <Badge rounded="full" variant="solid" colorScheme="secondary">
+                    {unreadCount}
+                  </Badge>
+                )}
+              </FHStack>
+              <Text color="gray.400" fontSize="xs" fontWeight="bold">
                 <DateView date={date} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
               </Text>
             </FHStack>

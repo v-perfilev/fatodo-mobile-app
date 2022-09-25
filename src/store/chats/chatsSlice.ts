@@ -126,7 +126,6 @@ const chatsSlice = createSlice({
   },
 });
 
-// TODO possibly add filter for chats without id
 const filterChats = (chats: Chat[]): Chat[] => {
   return chats
     .filter(FilterUtils.uniqueByIdFilter)

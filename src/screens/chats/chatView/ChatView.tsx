@@ -10,7 +10,7 @@ import {Box} from 'native-base';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {ChatActions} from '../../../store/chat/chatActions';
-import {ChatItem} from '../../../models/Message';
+import {ChatItem, Message} from '../../../models/Message';
 import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle, ViewToken} from 'react-native';
 import ChatViewItem from './ChatViewItem';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
@@ -24,13 +24,12 @@ import CornerManagement from '../../../components/controls/CornerManagement';
 type ChatViewProps = WithChatProps;
 
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
-const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT + 50};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 
-const ChatView = ({loading}: ChatViewProps) => {
+const ChatView = ({chat, loading}: ChatViewProps) => {
   const dispatch = useAppDispatch();
   const unreadTimersRef = useRef<Map<string, any>>(new Map());
   const listRef = useRef<FlatListType>();
-  const chat = useAppSelector(ChatSelectors.chat);
   const chatItems = useAppSelector(ChatSelectors.chatItems);
   const allLoaded = useAppSelector(ChatSelectors.allLoaded);
   const account = useAppSelector(AuthSelectors.account);
@@ -51,7 +50,10 @@ const ChatView = ({loading}: ChatViewProps) => {
   keyExtractor and renderItem
    */
 
-  const keyExtractor = useCallback((item: ChatItem): string => item.message?.id || item.date, []);
+  const keyExtractor = useCallback(
+    (item: ChatItem): string => item.date || item.message?.id || item.message?.createdAt.toString(),
+    [],
+  );
   const renderItem = useCallback(
     (info: ListRenderItemInfo<ChatItem>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout}>
@@ -66,12 +68,12 @@ const ChatView = ({loading}: ChatViewProps) => {
    */
 
   const addTimer = useCallback(
-    (messageId: string): void => {
+    (message: Message): void => {
       const timerId = setTimeout(() => {
-        dispatch(ChatActions.markMessageAsReadThunk({chatId: chat.id, messageId, account}));
-        unreadTimersRef.current.delete(messageId);
+        dispatch(ChatActions.markMessageAsReadThunk({message, account}));
+        unreadTimersRef.current.delete(message.id);
       }, TIMEOUT_BEFORE_MARK_AS_READ);
-      unreadTimersRef.current.set(messageId, timerId);
+      unreadTimersRef.current.set(message.id, timerId);
     },
     [chat.id, account, unreadTimersRef.current],
   );
@@ -87,11 +89,12 @@ const ChatView = ({loading}: ChatViewProps) => {
 
   const onViewableItemsChanged = useCallback(
     (info: {viewableItems: ViewToken[]; changed: ViewToken[]}): void => {
-      const unreadIds = ChatUtils.getUnreadIds(info, account);
+      const unreadMessages = ChatUtils.getUnreadMessages(info, account);
+      const unreadIds = unreadMessages.map((m) => m.id);
       const timerIds = Array.from(unreadTimersRef.current.keys());
-      const idsToAdd = unreadIds.filter((id) => !timerIds.includes(id));
+      const messagesToAdd = unreadMessages.filter((m) => !timerIds.includes(m.id));
       const idsToDelete = timerIds.filter((id) => !unreadIds.includes(id));
-      idsToAdd.forEach((id) => addTimer(id));
+      messagesToAdd.forEach((m) => addTimer(m));
       idsToDelete.forEach((id) => deleteTimer(id));
     },
     [account, unreadTimersRef.current, addTimer, deleteTimer],

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {User} from '../../../../models/User';
 import ClearableTextInput from '../../../../components/inputs/ClearableTextInput';
@@ -30,9 +30,9 @@ export const defaultChatMessageStatusesDialogProps: Readonly<ChatMessageStatuses
 
 const ChatMessageStatusesDialog = ({message, show, close}: ChatMessageStatusesDialogProps) => {
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
-  const {t} = useTranslation();
-  const statusUserIds = message?.statuses.map((s) => s.userId);
+  const statusUserIds = useMemo(() => message?.statuses.map((s) => s.userId), [message]);
   const users = useAppSelector((state) => usersSelector(state, statusUserIds));
+  const {t} = useTranslation();
   const [statuses, setStatuses] = useState<ReadStatusWithUser[]>([]);
   const [statusesToShow, setStatusesToShow] = useState<ReadStatusWithUser[]>([]);
 

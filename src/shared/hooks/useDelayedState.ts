@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {DateUtils} from '../utils/DateUtils';
 
 export const useDelayedState = (initialValue = true, timeout = 100): [boolean, (value: boolean) => void] => {
   const [value, setValue] = useState<boolean>(initialValue);
@@ -6,11 +7,11 @@ export const useDelayedState = (initialValue = true, timeout = 100): [boolean, (
   let timerId: NodeJS.Timeout;
 
   const resetTimer = (): void => {
-    timer = new Date().getTime();
+    timer = DateUtils.getNowTime();
   };
 
   const getTimeDifference = (): number => {
-    const now = new Date().getTime();
+    const now = DateUtils.getNowTime();
     return timer + timeout - now;
   };
 

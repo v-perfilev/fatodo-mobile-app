@@ -29,7 +29,8 @@ export default class ChatService {
 
   public static createDirectChat = (userId: string): AxiosPromise<Chat> => {
     const url = ChatService.baseUrl + '/chat/direct';
-    return axios.post(url, userId);
+    const config = {headers: {'content-type': 'text/plain'}};
+    return axios.post(url, userId, config);
   };
 
   public static createIndirectChat = (userIds: string[]): AxiosPromise<Chat> => {

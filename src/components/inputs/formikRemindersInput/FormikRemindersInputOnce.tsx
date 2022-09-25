@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Reminder} from '../../../models/Reminder';
 import {useTranslation} from 'react-i18next';
 import {DateParams} from '../../../models/DateParams';
-import {DateConverters, DateUtils} from '../../../shared/utils/DateUtils';
+import {DateUtils} from '../../../shared/utils/DateUtils';
 import DateTimeSelect from '../DateTimeSelect';
+import {DateConverters} from '../../../shared/utils/DateConverters';
 
 type FormikRemindersInputOnceProps = {
   setReminder: (reminder: Reminder) => void;
@@ -56,7 +57,7 @@ const FormikRemindersInputOnce = ({setReminder, locale, timezone}: FormikReminde
       />
       <DateTimeSelect
         label={t('common:reminders.fields.date')}
-        mode="date"
+        mode="fullDate"
         setResult={setDate}
         locale={locale}
         minimumDate={minimumDate}

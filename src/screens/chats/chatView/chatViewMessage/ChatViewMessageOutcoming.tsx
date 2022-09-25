@@ -29,8 +29,7 @@ const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
         smallSpace
         minW="60%"
         borderWidth="1"
-        borderColor="gray.300"
-        borderRadius="5"
+        borderColor="gray.100"
         backgroundColor="gray.50"
         px="2"
         py="1.5"

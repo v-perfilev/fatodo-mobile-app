@@ -1,6 +1,7 @@
 import {AbstractAuditing} from './AbstractAuditing';
 import {ID_STUB} from '../constants';
 import {MessageDTO} from './dto/MessageDTO';
+import {DateUtils} from '../shared/utils/DateUtils';
 
 export const messageReactionTypes = ['LIKE', 'DISLIKE'];
 
@@ -77,7 +78,7 @@ export const buildEventMessage = (chatId: string, userId: string, type: EventMes
     isEvent: true,
     statuses: [],
     reactions: [],
-    createdAt: new Date().getTime(),
+    createdAt: DateUtils.getNowTime(),
   };
 };
 
@@ -91,7 +92,7 @@ export const buildMessageReaction = (
   messageId,
   userId,
   type,
-  date: new Date().getTime(),
+  date: DateUtils.getNowTime(),
 });
 
 export const buildMessageStatus = (
@@ -104,7 +105,7 @@ export const buildMessageStatus = (
   messageId,
   userId,
   type,
-  date: new Date().getTime(),
+  date: DateUtils.getNowTime(),
 });
 
 export const buildMessageFromDTO = (dto: MessageDTO, chatId: string, userId: string): Message => ({
@@ -116,6 +117,6 @@ export const buildMessageFromDTO = (dto: MessageDTO, chatId: string, userId: str
   isEvent: false,
   statuses: [],
   reactions: [],
-  createdAt: new Date().getTime(),
+  createdAt: DateUtils.getNowTime(),
   createdBy: userId,
 });

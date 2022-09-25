@@ -13,7 +13,7 @@ export class MessageUtils {
     paramUsers: User[],
     t: TFunction,
   ): string => {
-    const username = messageUser.username;
+    const username = messageUser?.username;
     const usernames = paramUsers.map((u) => u.username).join(', ');
     const title = MessageUtils.extractTextFromParams(params);
     let text = '';

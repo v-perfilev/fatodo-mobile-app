@@ -3,17 +3,28 @@ import FHStack from '../../../components/boxes/FHStack';
 import React, {Dispatch, SetStateAction} from 'react';
 import {useTranslation} from 'react-i18next';
 import FBox from '../../../components/boxes/FBox';
+import {CHATS_FILTER_HEIGHT, HEADER_HEIGHT} from '../../../constants';
 
 type ChatListControlProps = {
   setFilter: Dispatch<SetStateAction<string>>;
-  marginTop?: number;
 };
 
-const ChatListControl = ({setFilter, marginTop}: ChatListControlProps) => {
+const ChatListControl = ({setFilter}: ChatListControlProps) => {
   const {t} = useTranslation();
 
   return (
-    <FHStack zIndex="1" h="50px" space="2" px="2" marginTop={marginTop} py="1" alignItems="center" bgColor="white">
+    <FHStack
+      position="absolute"
+      zIndex="1"
+      w="100%"
+      h={CHATS_FILTER_HEIGHT}
+      space="2"
+      px="2"
+      py="1"
+      marginTop={HEADER_HEIGHT}
+      alignItems="center"
+      bgColor="white"
+    >
       <FBox bg="gray.100" borderRadius="2">
         <ClearableTextInput
           h="40px"

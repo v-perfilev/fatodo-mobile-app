@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ReduxSnack, Snack} from '../../models/Snack';
 import {SnackState} from './snackType';
+import {DateUtils} from '../../shared/utils/DateUtils';
 
 const initialState: SnackState = {
   list: [],
@@ -11,7 +12,7 @@ const snackSlice = createSlice({
   initialState,
   reducers: {
     enqueueSnack: (state: SnackState, action: PayloadAction<Snack>) => {
-      const snack = {...action.payload, dismissed: false, key: `${new Date().getTime()}${Math.random()}`};
+      const snack = {...action.payload, dismissed: false, key: `${DateUtils.getNowTime()}${Math.random()}`};
       state.list = [...state.list, snack];
     },
 
