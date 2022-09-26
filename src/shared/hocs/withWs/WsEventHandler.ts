@@ -282,7 +282,7 @@ export class WsEventHandler {
     if (reaction !== 'NONE') {
       const chatEvent: ChatEvent = {userId, chatId, messageId, reaction};
       const event: Event = {type: EventType.CHAT_REACTION, chatEvent, date: msg.date};
-      this.dispatch(EventsActions.addEvent(event));
+      this.dispatch(EventsActions.addEvent(event, false));
     }
   };
 
@@ -294,7 +294,7 @@ export class WsEventHandler {
     const firstUserId = msg.payload.requesterId;
     const secondUserId = msg.payload.recipientId;
     const contactEvent: ContactEvent = {firstUserId, secondUserId};
-    const event: Event = {type: EventType.CONTACT_SEND, contactEvent, date: msg.date};
+    const event: Event = {type: EventType.CONTACT_REQUEST, contactEvent, date: msg.date};
     this.dispatch(EventsActions.removeContactEvents(msg.payload.requesterId));
     this.dispatch(EventsActions.removeContactEvents(msg.payload.recipientId));
     const isOwnEvent = this.account.id === firstUserId;
@@ -346,7 +346,7 @@ export class WsEventHandler {
     if (reaction !== 'NONE') {
       const commentEvent: CommentEvent = {userId: msg.userId, parentId, targetId, commentId, reaction};
       const event: Event = {type: EventType.COMMENT_REACTION, commentEvent, date: msg.date};
-      this.dispatch(EventsActions.addEvent(event));
+      this.dispatch(EventsActions.addEvent(event, false));
     }
   };
 
@@ -357,6 +357,6 @@ export class WsEventHandler {
   private handleReminderEvent = (msg: WsEvent<CalendarReminder>): void => {
     const reminderEvent: ReminderEvent = {groupId: msg.payload.parentId, itemId: msg.payload.targetId};
     const event: Event = {type: EventType.REMINDER, reminderEvent, date: msg.date};
-    this.dispatch(EventsActions.addEvent(event));
+    this.dispatch(EventsActions.addEvent(event, false));
   };
 }

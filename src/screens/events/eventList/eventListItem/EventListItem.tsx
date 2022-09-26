@@ -33,11 +33,9 @@ const EventListItem = ({event}: EventListItemProps) => {
         return <EventWelcome event={event} />;
 
       // CONTACT
-      case EventType.CONTACT_REQUEST_INCOMING:
-      case EventType.CONTACT_REQUEST_OUTCOMING:
+      case EventType.CONTACT_REQUEST:
         return <EventContactSend event={event} />;
-      case EventType.CONTACT_ACCEPT_INCOMING:
-      case EventType.CONTACT_ACCEPT_OUTCOMING:
+      case EventType.CONTACT_ACCEPT:
         return <EventContactAccept event={event} />;
 
       // ITEM

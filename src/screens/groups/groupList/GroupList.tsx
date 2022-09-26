@@ -20,6 +20,7 @@ import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import GroupListCard from './groupListCard/GroupListCard';
+import GroupListStub from './GroupListStub';
 
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
@@ -100,6 +101,7 @@ const GroupList = () => {
       containerStyle={containerStyle}
       header={<GroupListHeader sorting={sorting} setSorting={setSorting} />}
       data={groups}
+      ListEmptyComponent={<GroupListStub />}
       renderItem={renderDraggableItem}
       keyExtractor={keyExtractor}
       handleDragEnd={handleDragEnd}
@@ -112,6 +114,7 @@ const GroupList = () => {
       loaderStyle={loaderStyle}
       header={<GroupListHeader sorting={sorting} setSorting={setSorting} />}
       loading={loading}
+      ListEmptyComponent={<GroupListStub />}
       refresh={refresh}
       data={groups}
       render={renderFlatItem}

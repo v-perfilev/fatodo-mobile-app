@@ -45,8 +45,8 @@ const calcOverflow = (mode: PickMode): string => {
 };
 
 const calcLocale = (mode: PickMode, locale: string) => {
-  let localeMode = locale;
-  if (mode === 'monthWithYear' && locale.startsWith('en')) {
+  let localeMode = locale.toLowerCase();
+  if (mode === 'monthWithYear' && localeMode.startsWith('en')) {
     localeMode = 'en_GB';
   }
   return localeMode;
