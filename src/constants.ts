@@ -1,8 +1,8 @@
 export const IS_DEVELOPMENT = __DEV__;
 
 // API
-// export const API_URL = __DEV__ ? 'http://75.119.154.167:4000' : 'http://75.119.154.167:4000';
-export const API_URL = __DEV__ ? 'http://10.0.2.2:4000' : 'http://75.119.154.167:4000';
+export const API_URL = __DEV__ ? 'http://75.119.154.167:4000' : 'http://75.119.154.167:4000';
+// export const API_URL = __DEV__ ? 'http://10.0.2.2:4000' : 'http://75.119.154.167:4000';
 export const API_TIMEOUT = 60 * 1000;
 export const IMAGE_URL = API_URL + '/api/image/store/';
 export const SLEEP_MODE_TIMEOUT = 10 * 60 * 1000;

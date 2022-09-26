@@ -47,7 +47,7 @@
     "react-native-linear-gradient": "^2.5.6",
     "react-native-pager-view": "^5.4.24",
     "react-native-push-notification": "^8.1.1",
-    "react-native-reanimated": "^2.8.0",
+    "react-native-reanimated": "^2.10.0",
     "react-native-recaptcha-that-works": "^1.2.0",
     "react-native-safe-area-context": "^3.4.1",
     "react-native-screens": "^3.13.1",
@@ -83,11 +83,6 @@
     "metro-react-native-babel-preset": "^0.71.0",
     "react-test-renderer": "17.0.2",
     "typescript": "^4.5.5"
-  },
-  "overrides": {
-    "react-native": {
-      "react-devtools-core": "4.14.0"
-    }
   },
   "jest": {
     "preset": "react-native",
