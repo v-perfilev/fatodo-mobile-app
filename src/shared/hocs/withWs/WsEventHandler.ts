@@ -68,11 +68,13 @@ export class WsEventHandler {
         return this.handleChatReactionIncomingEvent;
       // CONTACT
       case 'CONTACT_REQUEST_INCOMING':
+        return this.handleContactRequestIncomingEvent;
       case 'CONTACT_REQUEST_OUTCOMING':
-        return this.handleContactRequestEvent;
+        return this.handleContactRequestOutcomingEvent;
       case 'CONTACT_ACCEPT_INCOMING':
+        return this.handleContactAcceptIncomingEvent;
       case 'CONTACT_ACCEPT_OUTCOMING':
-        return this.handleContactAcceptEvent;
+        return this.handleContactAcceptOutcomingEvent;
       case 'CONTACT_DELETE_INCOMING':
       case 'CONTACT_DELETE_OUTCOMING':
         return this.handleContactRequestRemoveEvent;
@@ -209,7 +211,7 @@ export class WsEventHandler {
   private handleChatCreateEvent = (msg: WsEvent<Chat>): void => {
     const userId = msg.userId;
     const chatId = msg.payload.id;
-    const userIds = msg.payload.members.map((m) => m.userId);
+    const userIds = msg.payload.members.map((m) => m.userId).filter((id) => id !== userId);
     const chatEvent: ChatEvent = {userId, chatId, userIds};
     const event: Event = {type: EventType.CHAT_CREATE, chatEvent, date: msg.date};
     const isOwnEvent = this.account.id === userId;
@@ -290,26 +292,44 @@ export class WsEventHandler {
   CONTACT
    */
 
-  private handleContactRequestEvent = (msg: WsEvent<ContactRequest>): void => {
+  private handleContactRequestIncomingEvent = (msg: WsEvent<ContactRequest>): void => {
     const firstUserId = msg.payload.requesterId;
     const secondUserId = msg.payload.recipientId;
     const contactEvent: ContactEvent = {firstUserId, secondUserId};
-    const event: Event = {type: EventType.CONTACT_REQUEST, contactEvent, date: msg.date};
+    const event: Event = {type: EventType.CONTACT_REQUEST_INCOMING, contactEvent, date: msg.date};
     this.dispatch(EventsActions.removeContactEvents(msg.payload.requesterId));
     this.dispatch(EventsActions.removeContactEvents(msg.payload.recipientId));
-    const isOwnEvent = this.account.id === firstUserId;
-    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
+    this.dispatch(EventsActions.addEvent(event, false));
   };
 
-  private handleContactAcceptEvent = (msg: WsEvent<ContactRequest>): void => {
+  private handleContactRequestOutcomingEvent = (msg: WsEvent<ContactRequest>): void => {
+    const firstUserId = msg.payload.requesterId;
+    const secondUserId = msg.payload.recipientId;
+    const contactEvent: ContactEvent = {firstUserId, secondUserId};
+    const event: Event = {type: EventType.CONTACT_REQUEST_OUTCOMING, contactEvent, date: msg.date};
+    this.dispatch(EventsActions.removeContactEvents(msg.payload.requesterId));
+    this.dispatch(EventsActions.removeContactEvents(msg.payload.recipientId));
+    this.dispatch(EventsActions.addEvent(event, true));
+  };
+
+  private handleContactAcceptIncomingEvent = (msg: WsEvent<ContactRequest>): void => {
     const firstUserId = msg.payload.recipientId;
     const secondUserId = msg.payload.requesterId;
     const contactEvent: ContactEvent = {firstUserId, secondUserId};
-    const event: Event = {type: EventType.CONTACT_ACCEPT, contactEvent, date: msg.date};
+    const event: Event = {type: EventType.CONTACT_ACCEPT_INCOMING, contactEvent, date: msg.date};
     this.dispatch(EventsActions.removeContactEvents(msg.payload.requesterId));
     this.dispatch(EventsActions.removeContactEvents(msg.payload.recipientId));
-    const isOwnEvent = this.account.id === firstUserId;
-    this.dispatch(EventsActions.addEvent(event, isOwnEvent));
+    this.dispatch(EventsActions.addEvent(event, false));
+  };
+
+  private handleContactAcceptOutcomingEvent = (msg: WsEvent<ContactRequest>): void => {
+    const firstUserId = msg.payload.recipientId;
+    const secondUserId = msg.payload.requesterId;
+    const contactEvent: ContactEvent = {firstUserId, secondUserId};
+    const event: Event = {type: EventType.CONTACT_ACCEPT_OUTCOMING, contactEvent, date: msg.date};
+    this.dispatch(EventsActions.removeContactEvents(msg.payload.requesterId));
+    this.dispatch(EventsActions.removeContactEvents(msg.payload.recipientId));
+    this.dispatch(EventsActions.addEvent(event, true));
   };
 
   private handleContactRequestRemoveEvent = (msg: WsEvent<ContactRequest>): void => {
