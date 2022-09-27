@@ -39,12 +39,16 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
    */
 
   const load = useCallback(async (): Promise<void> => {
-    await dispatch(ChatActions.fetchMessagesThunk({chatId: chat.id, offset: chatItems.length}));
-  }, [chat.id, chatItems.length]);
+    if (chat) {
+      await dispatch(ChatActions.fetchMessagesThunk({chatId: chat.id, offset: chatItems.length}));
+    }
+  }, [chat?.id, chatItems.length]);
 
   const refresh = useCallback(async (): Promise<void> => {
-    await dispatch(ChatActions.refreshMessagesThunk(chat.id));
-  }, [chat.id]);
+    if (chat) {
+      await dispatch(ChatActions.refreshMessagesThunk(chat.id));
+    }
+  }, [chat?.id]);
 
   /*
   keyExtractor and renderItem
@@ -75,7 +79,7 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
       }, TIMEOUT_BEFORE_MARK_AS_READ);
       unreadTimersRef.current.set(message.id, timerId);
     },
-    [chat.id, account, unreadTimersRef.current],
+    [chat?.id, account, unreadTimersRef.current],
   );
 
   const deleteTimer = useCallback(
