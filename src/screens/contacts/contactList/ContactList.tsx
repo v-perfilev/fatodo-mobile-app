@@ -45,7 +45,7 @@ const ContactList = () => {
   Key extractor and render item
    */
 
-  const keyExtractor = useCallback((relation: ContactRelation): string => relation.id, []);
+  const keyExtractor = useCallback((relation: ContactRelation): string => relation.id || relation.secondUserId, []);
   const renderItem = useCallback(
     (info: ListRenderItemInfo<ContactRelation>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout}>

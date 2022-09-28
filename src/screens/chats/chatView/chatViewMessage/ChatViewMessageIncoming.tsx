@@ -44,10 +44,10 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
             <Text color="primary.500" fontWeight="bold">
               {user?.username}
             </Text>
-            <Text color="gray.400" fontWeight="bold" fontSize="xs">
-              <DateView date={date} timeFormat="FULL" />
-            </Text>
           </FHStack>
+          <Text color="gray.400" fontWeight="bold" fontSize="xs">
+            <DateView date={date} timeFormat="FULL" />
+          </Text>
           <ChatViewMessageMenu message={message} isOutcoming={false} />
         </FHStack>
         {!message.isDeleted && <Text color="gray.700">{message.text}</Text>}

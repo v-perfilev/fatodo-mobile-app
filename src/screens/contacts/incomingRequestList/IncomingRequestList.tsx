@@ -28,7 +28,7 @@ const IncomingRequestList = () => {
   Key extractor and render item
    */
 
-  const keyExtractor = useCallback((relation: ContactRequest): string => relation.id, []);
+  const keyExtractor = useCallback((request: ContactRequest): string => request.id || request.requesterId, []);
   const renderItem = useCallback(
     (info: ListRenderItemInfo<ContactRequest>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout}>

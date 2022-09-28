@@ -98,6 +98,7 @@ export class ContactsActions {
     async (dto, thunkAPI) => {
       await ContactService.sendRequest(dto);
       const request = ContactUtils.createStubOutcomingRequest(dto.recipientId);
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk([dto.recipientId]));
       thunkAPI.dispatch(SnackActions.handleCode('contact.requestSent', 'info'));
       return request;
     },
@@ -108,6 +109,7 @@ export class ContactsActions {
     async (userId, thunkAPI) => {
       await ContactService.acceptRequest(userId);
       const relation = ContactUtils.createStubRelation(userId);
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk([userId]));
       thunkAPI.dispatch(SnackActions.handleCode('contact.requestAccepted', 'info'));
       return relation;
     },
