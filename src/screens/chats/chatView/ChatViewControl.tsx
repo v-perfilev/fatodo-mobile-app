@@ -40,6 +40,7 @@ const ChatViewControl = () => {
       w="100%"
       h={CHATS_INPUT_HEIGHT}
       bottom="0"
+      p="2"
       alignItems="center"
       borderTopWidth="1"
       borderTopColor="gray.200"
@@ -48,7 +49,7 @@ const ChatViewControl = () => {
       <FBox px="2">
         <ClearableTextInput
           h="36px"
-          px="2"
+          p="0"
           variant="unstyled"
           placeholder={t('chat:view.inputPlaceholder')}
           value={updater}

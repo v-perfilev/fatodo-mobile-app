@@ -58,58 +58,60 @@ export class CommentsActions {
     },
   );
 
-  static sendCommentThunk = createAsyncThunk<Comment, {targetId: string; dto: CommentDTO}, AsyncThunkConfig>(
+  static sendCommentThunk = createAsyncThunk<void, {targetId: string; dto: CommentDTO}, AsyncThunkConfig>(
     PREFIX + 'sendComment',
     async ({targetId, dto}, thunkAPI) => {
       const userId = thunkAPI.getState().auth.account.id;
+      const comment = buildCommentFromDTO(dto, targetId, userId);
+      thunkAPI.dispatch(commentsSlice.actions.setComments([comment]));
       CommentService.addComment(targetId, dto);
-      thunkAPI.dispatch(InfoActions.incrementCommentCount(targetId));
-      return buildCommentFromDTO(dto, targetId, userId);
     },
   );
 
-  static editCommentThunk = createAsyncThunk<Comment, {comment: Comment; dto: CommentDTO}, AsyncThunkConfig>(
+  static editCommentThunk = createAsyncThunk<void, {comment: Comment; dto: CommentDTO}, AsyncThunkConfig>(
     PREFIX + 'editComment',
     async ({comment, dto}, thunkAPI) => {
-      const result = await CommentService.editComment(comment.id, dto);
+      const editedComment = {...comment, ...dto} as Comment;
+      thunkAPI.dispatch(commentsSlice.actions.setComments([editedComment]));
+      await CommentService.editComment(comment.id, dto);
       thunkAPI.dispatch(SnackActions.handleCode('comment.commentEdited', 'info'));
-      return result.data;
     },
   );
 
-  static deleteCommentThunk = createAsyncThunk<Comment, Comment, AsyncThunkConfig>(
+  static deleteCommentThunk = createAsyncThunk<void, Comment, AsyncThunkConfig>(
     PREFIX + 'deleteComment',
     async (comment, thunkAPI) => {
-      CommentService.deleteComment(comment.id);
+      const deletedComment = {...comment, isDeleted: true} as Comment;
+      thunkAPI.dispatch(commentsSlice.actions.setComments([deletedComment]));
+      await CommentService.deleteComment(comment.id);
       thunkAPI.dispatch(SnackActions.handleCode('comment.commentDeleted', 'info'));
-      return {...comment, isDeleted: true};
     },
   );
 
-  static noReactionThunk = createAsyncThunk<
-    CommentReaction,
-    {comment: Comment; account: UserAccount},
-    AsyncThunkConfig
-  >(PREFIX + 'noReaction', async ({comment, account}) => {
-    CommentService.noneCommentReaction(comment.id);
-    return buildCommentReaction(comment, account.id, 'NONE');
-  });
+  static noReactionThunk = createAsyncThunk<void, {comment: Comment; account: UserAccount}, AsyncThunkConfig>(
+    PREFIX + 'noReaction',
+    async ({comment, account}, thunkAPI) => {
+      const reaction = buildCommentReaction(comment, account.id, 'NONE');
+      thunkAPI.dispatch(commentsSlice.actions.setCommentReaction(reaction));
+      CommentService.noneCommentReaction(comment.id);
+    },
+  );
 
-  static likeReactionThunk = createAsyncThunk<
-    CommentReaction,
-    {comment: Comment; account: UserAccount},
-    AsyncThunkConfig
-  >(PREFIX + 'likeReaction', async ({comment, account}) => {
-    CommentService.likeCommentReaction(comment.id);
-    return buildCommentReaction(comment, account.id, 'LIKE');
-  });
+  static likeReactionThunk = createAsyncThunk<void, {comment: Comment; account: UserAccount}, AsyncThunkConfig>(
+    PREFIX + 'likeReaction',
+    async ({comment, account}, thunkAPI) => {
+      const reaction = buildCommentReaction(comment, account.id, 'LIKE');
+      thunkAPI.dispatch(commentsSlice.actions.setCommentReaction(reaction));
+      CommentService.likeCommentReaction(comment.id);
+    },
+  );
 
-  static dislikeReactionThunk = createAsyncThunk<
-    CommentReaction,
-    {comment: Comment; account: UserAccount},
-    AsyncThunkConfig
-  >(PREFIX + 'dislikeReaction', async ({comment, account}) => {
-    CommentService.dislikeCommentReaction(comment.id);
-    return buildCommentReaction(comment, account.id, 'DISLIKE');
-  });
+  static dislikeReactionThunk = createAsyncThunk<void, {comment: Comment; account: UserAccount}, AsyncThunkConfig>(
+    PREFIX + 'dislikeReaction',
+    async ({comment, account}, thunkAPI) => {
+      const reaction = buildCommentReaction(comment, account.id, 'DISLIKE');
+      thunkAPI.dispatch(commentsSlice.actions.setCommentReaction(reaction));
+      CommentService.dislikeCommentReaction(comment.id);
+    },
+  );
 }

@@ -12,6 +12,7 @@ import FHStack from '../../../../components/boxes/FHStack';
 import CommentsIcon from '../../../../components/icons/CommentsIcon';
 import InfoSelectors from '../../../../store/info/infoSelectors';
 import {useAppSelector} from '../../../../store/store';
+import {RootNavigationProp} from '../../../../navigators/RootNavigator';
 
 type GroupListCardHeaderProps = {
   group: Group;
@@ -20,13 +21,19 @@ type GroupListCardHeaderProps = {
 };
 
 const GroupListCardInfo = ({group, items, itemsCount}: GroupListCardHeaderProps) => {
-  const navigation = useNavigation<GroupNavigationProp>();
-  const {t} = useTranslation();
   const commentThreadSelector = useCallback(InfoSelectors.makeCommentThreadSelector(), []);
   const commentThread = useAppSelector((state) => commentThreadSelector(state, group.id));
+  const {t} = useTranslation();
+  const rootNavigation = useNavigation<RootNavigationProp>();
+  const groupNavigation = useNavigation<GroupNavigationProp>();
 
-  const goToGroupView = (): void => navigation.navigate('GroupView', {group});
-  const goToItemCreate = (): void => navigation.navigate('ItemCreate', {group});
+  const goToGroupView = (): void => groupNavigation.navigate('GroupView', {group});
+  const goToItemCreate = (): void => groupNavigation.navigate('ItemCreate', {group});
+  const goToComments = (): void =>
+    rootNavigation.navigate('CommentList', {
+      targetId: group.id,
+      colorScheme: group.color,
+    });
 
   const showButtonToGroupView = itemsCount !== items.length;
   const showButtonToCreateItem = itemsCount === 0;
@@ -38,7 +45,9 @@ const GroupListCardInfo = ({group, items, itemsCount}: GroupListCardHeaderProps)
         {showButtonToGroupView && <LinkButton onPress={goToGroupView}>{t('group:actions.showAll')}</LinkButton>}
         {showButtonToCreateItem && <LinkButton onPress={goToItemCreate}>{t('group:actions.createItem')}</LinkButton>}
       </FHStack>
-      <BoxWithIcon icon={<CommentsIcon color="primary.500" size="md" />}>{commentThread?.count || 0}</BoxWithIcon>
+      <BoxWithIcon icon={<CommentsIcon color="primary.500" size="md" />} onPress={goToComments}>
+        {commentThread?.count || 0}
+      </BoxWithIcon>
       <BoxWithIcon icon={<ItemsIcon color="primary.500" size="md" />}>{itemsCount || 0}</BoxWithIcon>
     </FHStack>
   );

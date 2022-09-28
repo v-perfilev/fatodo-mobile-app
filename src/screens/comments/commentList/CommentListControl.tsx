@@ -11,6 +11,7 @@ import {CommentsActions} from '../../../store/comments/commentsActions';
 import {Comment} from '../../../models/Comment';
 import FVStack from '../../../components/boxes/FVStack';
 import CommentListControlReference from './CommentListControlReference';
+import {COMMENTS_INPUT_HEIGHT} from '../../../constants';
 
 type CommentsViewControlProps = {
   reference: Comment;
@@ -45,15 +46,18 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
 
   return (
     <FHStack
+      position="absolute"
       zIndex="1"
-      h="50px"
+      w="100%"
+      h={COMMENTS_INPUT_HEIGHT}
+      bottom="0"
       space="2"
       px="2"
       py={reference ? 1 : 2}
       alignItems="center"
-      bgColor="white"
       borderTopWidth="1"
       borderTopColor="gray.200"
+      bgColor="white"
     >
       <FVStack grow px="2" pb={reference ? 1 : 0}>
         {reference && <CommentListControlReference reference={reference} clearReference={clearReference} />}

@@ -6,7 +6,7 @@ import {GroupInfo} from '../../models/Group';
 import {ItemInfo} from '../../models/Item';
 import {ChatInfo} from '../../models/Chat';
 import {MessageInfo} from '../../models/Message';
-import {CommentInfo, CommentThreadInfo} from '../../models/Comment';
+import {buildCommentThreadInfo, CommentInfo, CommentThreadInfo} from '../../models/Comment';
 import {StoreUtils} from '../../shared/utils/StoreUtils';
 
 const initialState: InfoState = {
@@ -60,7 +60,7 @@ const infoSlice = createSlice({
     },
 
     incrementCommentCount: (state: InfoState, action: PayloadAction<string>) => {
-      const info = StoreUtils.getValue(state.commentThreads, action.payload, undefined);
+      const info = StoreUtils.getValue(state.commentThreads, action.payload, buildCommentThreadInfo(action.payload));
       if (info) {
         info.count = info.count + 1;
         state.commentThreads = StoreUtils.setValue(state.commentThreads, action.payload, info);
@@ -68,7 +68,7 @@ const infoSlice = createSlice({
     },
 
     incrementUnreadCommentCount: (state: InfoState, action: PayloadAction<string>) => {
-      const info = StoreUtils.getValue(state.commentThreads, action.payload, undefined);
+      const info = StoreUtils.getValue(state.commentThreads, action.payload, buildCommentThreadInfo(action.payload));
       if (info) {
         info.unread = info.unread + 1;
         state.commentThreads = StoreUtils.setValue(state.commentThreads, action.payload, info);
@@ -76,7 +76,7 @@ const infoSlice = createSlice({
     },
 
     refreshUnreadCommentCount: (state: InfoState, action: PayloadAction<string>) => {
-      const info = StoreUtils.getValue(state.commentThreads, action.payload, undefined);
+      const info = StoreUtils.getValue(state.commentThreads, action.payload, buildCommentThreadInfo(action.payload));
       if (info) {
         info.unread = 0;
         state.commentThreads = StoreUtils.setValue(state.commentThreads, action.payload, info);

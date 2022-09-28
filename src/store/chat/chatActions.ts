@@ -189,7 +189,7 @@ export class ChatActions {
     PREFIX + 'editMessage',
     async ({message, dto}, thunkAPI) => {
       const editedMessage = {...message, ...dto} as Message;
-      thunkAPI.dispatch(ChatActions.updateMessage(editedMessage));
+      thunkAPI.dispatch(chatSlice.actions.setMessages([editedMessage]));
       await ChatService.editMessage(message.id, dto);
       thunkAPI.dispatch(SnackActions.handleCode('chat.messageEdited', 'info'));
     },

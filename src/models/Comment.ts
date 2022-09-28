@@ -7,9 +7,7 @@ export const commentReactionTypes = ['LIKE', 'DISLIKE'];
 export type CommentReactionType = 'LIKE' | 'DISLIKE' | 'NONE';
 
 export interface CommentThreadInfo {
-  parentId: string;
   targetId: string;
-  type: string;
   count: number;
   unread: number;
 }
@@ -65,4 +63,10 @@ export const buildCommentFromDTO = (dto: CommentDTO, targetId: string, userId: s
   reactions: [],
   createdAt: DateUtils.getNowTime(),
   createdBy: userId,
+});
+
+export const buildCommentThreadInfo = (targetId: string): CommentThreadInfo => ({
+  targetId,
+  count: 0,
+  unread: 0,
 });

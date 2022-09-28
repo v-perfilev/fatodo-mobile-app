@@ -17,6 +17,7 @@ import {useAppSelector} from '../../../../store/store';
 import PressableButton from '../../../../components/controls/PressableButton';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
+import {RootNavigationProp} from '../../../../navigators/RootNavigator';
 
 type GroupItemProps = IBoxProps & {
   item: Item;
@@ -27,9 +28,15 @@ type GroupItemProps = IBoxProps & {
 const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
   const commentThreadSelector = useCallback(InfoSelectors.makeCommentThreadSelector(), []);
   const commentThread = useAppSelector((state) => commentThreadSelector(state, item.id));
-  const navigation = useNavigation<GroupNavigationProp>();
+  const rootNavigation = useNavigation<RootNavigationProp>();
+  const groupNavigation = useNavigation<GroupNavigationProp>();
 
-  const goToItemView = (): void => navigation.navigate('ItemView', {group, item});
+  const goToItemView = (): void => groupNavigation.navigate('ItemView', {group, item});
+  const goToComments = (): void =>
+    rootNavigation.navigate('CommentList', {
+      targetId: item.id,
+      colorScheme: group.color,
+    });
 
   return (
     <PressableButton onPress={goToItemView}>
@@ -55,7 +62,9 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
             {item.remindersCount > 0 && (
               <BoxWithIcon icon={<AlarmIcon color="primary.500" size="md" />}>{item.remindersCount}</BoxWithIcon>
             )}
-            <BoxWithIcon icon={<CommentsIcon color="primary.500" size="md" />}>{commentThread?.count || 0}</BoxWithIcon>
+            <BoxWithIcon icon={<CommentsIcon color="primary.500" size="md" />} onPress={goToComments}>
+              {commentThread?.count || 0}
+            </BoxWithIcon>
           </FHStack>
         </Box>
       </FVStack>

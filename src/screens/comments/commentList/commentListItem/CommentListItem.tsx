@@ -30,7 +30,7 @@ const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
   const isOwnComment = CommentUtils.isOwnComment(comment, account);
 
   return (
-    <FHStack space="2">
+    <FHStack p="2" space="2">
       <FVStack mt="1.5" space="2">
         {user && <UserView user={user} picSize="sm" />}
         <CommentListItemReactions comment={comment} isOwnComment={isOwnComment} />
@@ -50,10 +50,10 @@ const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
             <Text color="primary.500" fontWeight="bold">
               {user?.username}
             </Text>
-            <Text color="gray.400" fontWeight="bold" fontSize="xs">
-              <DateView date={date} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
-            </Text>
           </FHStack>
+          <Text color="gray.400" fontWeight="bold" fontSize="xs">
+            <DateView date={date} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
+          </Text>
           <CommentListItemReferenceButton comment={comment} setReference={setReference} />
           <CommentListItemMenu comment={comment} isOwnComment={isOwnComment} setReference={setReference} />
         </FHStack>

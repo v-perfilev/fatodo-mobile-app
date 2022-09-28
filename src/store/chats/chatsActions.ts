@@ -111,13 +111,14 @@ export class ChatsActions {
     PREFIX + 'addChatLastMessageAction',
     async (message, thunkAPI) => {
       let chat = thunkAPI.getState().chats.chats.find((chat) => chat.id === message.chatId);
+      let updatedChat: Chat;
       if (chat) {
-        chat.lastMessage = message;
+        updatedChat = {...chat, lastMessage: message};
       } else {
         const response = await ChatService.getChatById(message.chatId);
-        chat = response.data;
+        updatedChat = {...response.data, lastMessage: message};
       }
-      thunkAPI.dispatch(chatsSlice.actions.setChats([chat]));
+      thunkAPI.dispatch(chatsSlice.actions.setChats([updatedChat]));
     },
   );
 
@@ -125,9 +126,9 @@ export class ChatsActions {
     PREFIX + 'addChatLastMessageAction',
     async (message, thunkAPI) => {
       let chat = thunkAPI.getState().chats.chats.find((chat) => chat.id === message.chatId);
-      if (chat && chat.lastMessage?.id === message.id) {
-        chat.lastMessage = message;
-        thunkAPI.dispatch(chatsSlice.actions.setChats([chat]));
+      if (chat?.lastMessage?.id === message.id) {
+        const updatedChat = {...chat, lastMessage: message};
+        thunkAPI.dispatch(chatsSlice.actions.setChats([updatedChat]));
       }
     },
   );
@@ -136,7 +137,7 @@ export class ChatsActions {
     PREFIX + 'increaseMessageCountAction',
     async (message: Message, thunkAPI) => {
       const account = thunkAPI.getState().auth.account;
-      if (!message?.isEvent && message?.userId === account.id) {
+      if (!message?.isEvent && message?.userId !== account.id) {
         thunkAPI.dispatch(chatsSlice.actions.addUnreadMessage(message));
       }
     },
