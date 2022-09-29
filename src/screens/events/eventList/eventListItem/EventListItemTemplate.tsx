@@ -34,7 +34,7 @@ const EventListItemTemplate = ({image, title, content, message, date, loading}: 
         </FHStack>
         <Text>{content}</Text>
         {message && (
-          <PaperBox mt="2" px="2" py="1" bg="gray.50">
+          <PaperBox mt="2" px="2" py="1" borderWidth="0" bg="gray.50">
             <Text numberOfLines={3} isTruncated>
               {message}
             </Text>
