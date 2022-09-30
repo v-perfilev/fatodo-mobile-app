@@ -25,20 +25,20 @@ import {PageableList} from '../../models/PageableList';
 const PREFIX = 'chat/';
 
 export class ChatActions {
-  static addMessage = (message: Message) => async (dispatch: AppDispatch) => {
-    dispatch(chatSlice.actions.setMessages([message]));
+  static addMessage = (message: Message, account: UserAccount) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.setMessages({messages: [message], account}));
   };
 
-  static updateMessage = (message: Message) => async (dispatch: AppDispatch) => {
-    dispatch(chatSlice.actions.setMessages([message]));
+  static updateMessage = (message: Message, account: UserAccount) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.setMessages({messages: [message], account}));
   };
 
-  static setMessageReaction = (messageReaction: MessageReaction) => async (dispatch: AppDispatch) => {
-    dispatch(chatSlice.actions.setMessageReaction(messageReaction));
+  static setMessageReaction = (reaction: MessageReaction, account: UserAccount) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.setMessageReaction({reaction, account}));
   };
 
-  static setMessageStatus = (messageStatus: MessageStatus) => async (dispatch: AppDispatch) => {
-    dispatch(chatSlice.actions.setMessageStatus(messageStatus));
+  static setMessageStatus = (status: MessageStatus, account: UserAccount) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.setMessageStatus({status, account}));
   };
 
   static selectChatThunk = createAsyncThunk<void, Chat, AsyncThunkConfig>(
@@ -61,61 +61,68 @@ export class ChatActions {
   );
 
   static fetchMessagesThunk = createAsyncThunk<
-    PageableList<Message>,
+    {list: PageableList<Message>; account: UserAccount},
     {chatId: string; offset: number},
     AsyncThunkConfig
   >(PREFIX + 'fetchMessages', async ({chatId, offset}, thunkAPI) => {
+    const account = thunkAPI.getState().auth.account;
     const result = await ChatService.getAllMessagesByChatIdPageable(chatId, offset);
     const messages = result.data.data;
     const messageUserIds = MessageUtils.extractUserIds(messages);
     thunkAPI.dispatch(InfoActions.handleUserIdsThunk(messageUserIds));
-    return result.data;
+    return {list: result.data, account};
   });
 
-  static refreshMessagesThunk = createAsyncThunk<PageableList<Message>, string, AsyncThunkConfig>(
-    PREFIX + 'refreshMessages',
-    async (chatId, thunkAPI) => {
-      const result = await ChatService.getAllMessagesByChatIdPageable(chatId);
-      const messages = result.data.data;
-      const messageUserIds = MessageUtils.extractUserIds(messages);
-      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(messageUserIds));
-      return result.data;
-    },
-  );
+  static refreshMessagesThunk = createAsyncThunk<
+    {list: PageableList<Message>; account: UserAccount},
+    string,
+    AsyncThunkConfig
+  >(PREFIX + 'refreshMessages', async (chatId, thunkAPI) => {
+    const account = thunkAPI.getState().auth.account;
+    const result = await ChatService.getAllMessagesByChatIdPageable(chatId);
+    const messages = result.data.data;
+    const messageUserIds = MessageUtils.extractUserIds(messages);
+    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(messageUserIds));
+    return {list: result.data, account};
+  });
 
-  static markMessageAsReadThunk = createAsyncThunk<void, {message: Message; account: UserAccount}, AsyncThunkConfig>(
+  static markMessageAsReadThunk = createAsyncThunk<void, Message, AsyncThunkConfig>(
     PREFIX + 'markAsRead',
-    async ({message, account}, thunkAPI) => {
+    async (message, thunkAPI) => {
+      const account = thunkAPI.getState().auth.account;
       const status = buildMessageStatus(message.chatId, message.id, account.id, 'READ');
-      thunkAPI.dispatch(chatSlice.actions.setMessageStatus(status));
+      thunkAPI.dispatch(chatSlice.actions.setMessageStatus({status, account}));
       thunkAPI.dispatch(ChatsActions.removeUnreadMessage(message));
       ChatService.markMessageAsRead(message.id);
     },
   );
 
-  static noReactionThunk = createAsyncThunk<void, {message: Message; account: UserAccount}>(
+  static noReactionThunk = createAsyncThunk<void, Message, AsyncThunkConfig>(
     PREFIX + 'noReaction',
-    async ({message, account}, thunkAPI) => {
+    async (message, thunkAPI) => {
+      const account = thunkAPI.getState().auth.account;
       const reaction = buildMessageReaction(message.chatId, message.id, account.id, 'NONE');
-      thunkAPI.dispatch(chatSlice.actions.setMessageReaction(reaction));
+      thunkAPI.dispatch(chatSlice.actions.setMessageReaction({reaction, account}));
       ChatService.noneMessageReaction(message.id);
     },
   );
 
-  static likeReactionThunk = createAsyncThunk<void, {message: Message; account: UserAccount}>(
+  static likeReactionThunk = createAsyncThunk<void, Message, AsyncThunkConfig>(
     PREFIX + 'likeReaction',
-    async ({message, account}, thunkAPI) => {
+    async (message, thunkAPI) => {
+      const account = thunkAPI.getState().auth.account;
       const reaction = buildMessageReaction(message.chatId, message.id, account.id, 'LIKE');
-      thunkAPI.dispatch(chatSlice.actions.setMessageReaction(reaction));
+      thunkAPI.dispatch(chatSlice.actions.setMessageReaction({reaction, account}));
       ChatService.likeMessageReaction(message.id);
     },
   );
 
-  static dislikeReactionThunk = createAsyncThunk<void, {message: Message; account: UserAccount}, AsyncThunkConfig>(
+  static dislikeReactionThunk = createAsyncThunk<void, Message, AsyncThunkConfig>(
     PREFIX + 'dislikeReaction',
-    async ({message, account}, thunkAPI) => {
+    async (message, thunkAPI) => {
+      const account = thunkAPI.getState().auth.account;
       const reaction = buildMessageReaction(message.chatId, message.id, account.id, 'DISLIKE');
-      thunkAPI.dispatch(chatSlice.actions.setMessageReaction(reaction));
+      thunkAPI.dispatch(chatSlice.actions.setMessageReaction({reaction, account}));
       ChatService.dislikeMessageReaction(message.id);
     },
   );
@@ -131,10 +138,11 @@ export class ChatActions {
   static clearChatThunk = createAsyncThunk<void, Chat, AsyncThunkConfig>(
     PREFIX + 'clearChat',
     async (chat, thunkAPI) => {
+      const account = thunkAPI.getState().auth.account;
       await ChatService.clearChat(chat.id);
       const message = buildEventMessage(chat.id, undefined, EventMessageType.CLEAR_CHAT, undefined);
       thunkAPI.dispatch(chatSlice.actions.resetMessages());
-      thunkAPI.dispatch(chatSlice.actions.setMessages([message]));
+      thunkAPI.dispatch(chatSlice.actions.setMessages({messages: [message], account}));
       thunkAPI.dispatch(ChatsActions.setChatLastMessageAction(message));
       thunkAPI.dispatch(ChatsActions.removeUnreadChat(message.chatId));
       thunkAPI.dispatch(SnackActions.handleCode('chat.cleared', 'info'));
@@ -178,9 +186,9 @@ export class ChatActions {
   static sendMessageThunk = createAsyncThunk<void, {chatId: string; dto: MessageDTO}, AsyncThunkConfig>(
     PREFIX + 'sendMessage',
     async ({chatId, dto}, thunkAPI) => {
-      const userId = thunkAPI.getState().auth.account.id;
-      const message = buildMessageFromDTO(dto, chatId, userId);
-      thunkAPI.dispatch(chatSlice.actions.setMessages([message]));
+      const account = thunkAPI.getState().auth.account;
+      const message = buildMessageFromDTO(dto, chatId, account.id);
+      thunkAPI.dispatch(chatSlice.actions.setMessages({messages: [message], account}));
       ChatService.sendIndirectMessage(chatId, dto);
     },
   );
@@ -188,8 +196,9 @@ export class ChatActions {
   static editMessageThunk = createAsyncThunk<void, {message: Message; dto: MessageDTO}, AsyncThunkConfig>(
     PREFIX + 'editMessage',
     async ({message, dto}, thunkAPI) => {
+      const account = thunkAPI.getState().auth.account;
       const editedMessage = {...message, ...dto} as Message;
-      thunkAPI.dispatch(chatSlice.actions.setMessages([editedMessage]));
+      thunkAPI.dispatch(chatSlice.actions.setMessages({messages: [editedMessage], account}));
       await ChatService.editMessage(message.id, dto);
       thunkAPI.dispatch(SnackActions.handleCode('chat.messageEdited', 'info'));
     },
@@ -198,8 +207,9 @@ export class ChatActions {
   static deleteMessageThunk = createAsyncThunk<void, Message, AsyncThunkConfig>(
     PREFIX + 'deleteMessage',
     async (message, thunkAPI) => {
+      const account = thunkAPI.getState().auth.account;
       const deletedMessage = {...message, isDeleted: true} as Message;
-      thunkAPI.dispatch(chatSlice.actions.setMessages([deletedMessage]));
+      thunkAPI.dispatch(chatSlice.actions.setMessages({messages: [deletedMessage], account}));
       await ChatService.deleteMessage(message.id);
       thunkAPI.dispatch(SnackActions.handleCode('chat.messageDeleted', 'info'));
     },

@@ -2,7 +2,7 @@ import React, {ReactElement, useCallback, useRef} from 'react';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
-import {HEADER_HEIGHT, TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
+import {CHATS_INPUT_HEIGHT, HEADER_HEIGHT, TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import ChatViewStub from './ChatViewStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -74,7 +74,7 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
   const addTimer = useCallback(
     (message: Message): void => {
       const timerId = setTimeout(() => {
-        dispatch(ChatActions.markMessageAsReadThunk({message, account}));
+        dispatch(ChatActions.markMessageAsReadThunk(message));
         unreadTimersRef.current.delete(message.id);
       }, TIMEOUT_BEFORE_MARK_AS_READ);
       unreadTimersRef.current.set(message.id, timerId);
@@ -112,7 +112,9 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
 
   const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
   const cornerManagement = useCallback(
-    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    ({scrollY}: CollapsableRefreshableChildrenProps) => (
+      <CornerManagement buttons={buttons} scrollY={scrollY} bottomPadding={CHATS_INPUT_HEIGHT} />
+    ),
     [],
   );
 

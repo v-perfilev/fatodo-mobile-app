@@ -19,7 +19,7 @@ import CollapsableRefreshableFlatList, {
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
-import {HEADER_HEIGHT} from '../../../constants';
+import {COMMENTS_INPUT_HEIGHT, HEADER_HEIGHT} from '../../../constants';
 
 type CommentListProps = WithCommentsProps;
 
@@ -73,7 +73,9 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
 
   const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
   const cornerManagement = useCallback(
-    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    ({scrollY}: CollapsableRefreshableChildrenProps) => (
+      <CornerManagement buttons={buttons} scrollY={scrollY} bottomPadding={COMMENTS_INPUT_HEIGHT} />
+    ),
     [],
   );
 

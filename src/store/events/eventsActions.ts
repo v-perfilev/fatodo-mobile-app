@@ -10,10 +10,10 @@ import {PageableReadableList} from '../../models/PageableReadableList';
 const PREFIX = 'events/';
 
 export class EventsActions {
-  static addEvent = (event: Event, isOwnComment: boolean) => async (dispatch: AppDispatch) => {
+  static addEvent = (event: Event, isOwnEvent: boolean) => async (dispatch: AppDispatch) => {
     dispatch(EventsActions.loadDependenciesThunk([event]));
     dispatch(eventsSlice.actions.setEvents([event]));
-    !isOwnComment && dispatch(eventsSlice.actions.incrementUnreadCount());
+    !isOwnEvent && dispatch(eventsSlice.actions.incrementUnreadCount());
   };
 
   static removeChatEvents = (chatId: string) => async (dispatch: AppDispatch) => {

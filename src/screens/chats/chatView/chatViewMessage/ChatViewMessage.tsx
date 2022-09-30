@@ -3,10 +3,10 @@ import {useAppSelector} from '../../../../store/store';
 import React, {useMemo} from 'react';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
 import AuthSelectors from '../../../../store/auth/authSelectors';
-import ChatViewMessageOutcoming from './ChatViewMessageOutcoming';
-import ChatViewMessageIncoming from './ChatViewMessageIncoming';
 import ChatViewMessageEvent from './ChatViewMessageEvent';
 import FBox from '../../../../components/boxes/FBox';
+import ChatViewMessageIncoming from './ChatViewMessageIncoming';
+import ChatViewMessageOutcoming from './ChatViewMessageOutcoming';
 
 type ChatViewMessageProps = {
   message: Message;

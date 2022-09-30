@@ -9,6 +9,7 @@ import CompositeAnimation = Animated.CompositeAnimation;
 type CornerManagementProps = {
   buttons: CornerButton[];
   scrollY?: Animated.Value;
+  bottomPadding?: number;
 };
 
 const CORNER_MANAGEMENT_BUTTON_PADDING = 60;
@@ -54,7 +55,7 @@ const CornerManagementButton = ({button, ...props}: IIconButtonProps & {button: 
   );
 };
 
-const CornerManagement = ({buttons, scrollY}: CornerManagementProps) => {
+const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementProps) => {
   const mainButtons = useRef<CornerButton[]>(buttons.filter((b) => !b.additionalColumn));
   const addButtons = useRef<CornerButton[]>(buttons.filter((b) => b.additionalColumn));
   const maxButtonsLength = useRef<number>(Math.max(mainButtons.current.length, addButtons.current.length));
@@ -117,7 +118,7 @@ const CornerManagement = ({buttons, scrollY}: CornerManagementProps) => {
     return () => scrollY?.removeAllListeners();
   }, []);
 
-  const viewStyle: StyleProp<ViewStyle> = {position: 'absolute', bottom: 0, right: 0};
+  const viewStyle: StyleProp<ViewStyle> = {position: 'absolute', bottom: bottomPadding || 0, right: 0};
 
   return (
     <>

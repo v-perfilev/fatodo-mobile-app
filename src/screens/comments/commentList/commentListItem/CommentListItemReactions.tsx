@@ -5,7 +5,7 @@ import FVStack from '../../../../components/boxes/FVStack';
 import ReactionView from '../../../../components/views/ReactionView';
 import PressableButton from '../../../../components/controls/PressableButton';
 import FHStack from '../../../../components/boxes/FHStack';
-import {Text} from 'native-base';
+import {Box, Text} from 'native-base';
 import {Comment, CommentReactionType, commentReactionTypes} from '../../../../models/Comment';
 import {CommentsActions} from '../../../../store/comments/commentsActions';
 
@@ -60,18 +60,25 @@ const CommentListItemReactions = ({comment, isOwnComment}: CommentListItemReacti
 
   const reaction = (r: CommentReactionType, key: number): ReactElement => {
     const count = reactionMap.get(r);
-    const color = r === activeReaction ? 'primary.500' : 'gray.400';
+    const color = r === activeReaction ? 'primary.500' : 'gray.300';
     const onPress = handlePress(r);
-    return (
-      <PressableButton onPress={onPress} isDisabled={isOwnComment} key={key}>
-        <FHStack h="20px" smallSpace alignItems="center">
-          {count > 0 && (
-            <Text color="gray.400" fontSize="xs">
-              {count}
-            </Text>
-          )}
-          <ReactionView reactionType={r} size="sm" color={color} />
-        </FHStack>
+
+    const iconWithCount = (
+      <FHStack h="20px" smallSpace alignItems="center">
+        {count > 0 && (
+          <Text color="gray.500" fontSize="xs">
+            {count}
+          </Text>
+        )}
+        <ReactionView reactionType={r} size="sm" color={color} />
+      </FHStack>
+    );
+
+    return isOwnComment ? (
+      <Box key={key}>{iconWithCount}</Box>
+    ) : (
+      <PressableButton onPress={onPress} key={key}>
+        {iconWithCount}
       </PressableButton>
     );
   };

@@ -47,7 +47,7 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
   return (
     <FHStack
       position="absolute"
-      zIndex="1"
+      zIndex="200"
       w="100%"
       h={COMMENTS_INPUT_HEIGHT}
       bottom="0"

@@ -36,7 +36,7 @@ const ChatViewControl = () => {
   return (
     <FHStack
       position="absolute"
-      zIndex="1"
+      zIndex="200"
       w="100%"
       h={CHATS_INPUT_HEIGHT}
       bottom="0"

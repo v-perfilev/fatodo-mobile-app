@@ -7,6 +7,7 @@ import {Chat} from '../../models/Chat';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
 import {ComparatorUtils} from '../../shared/utils/ComparatorUtils';
 import {DateFormatters} from '../../shared/utils/DateFormatters';
+import {UserAccount} from '../../models/User';
 
 const initialState: ChatState = {
   chat: undefined,
@@ -32,16 +33,21 @@ const chatSlice = createSlice({
       state.chatItems = [];
     },
 
-    setMessages: (state: ChatState, action: PayloadAction<Message[]>) => {
-      const messages = action.payload;
+    setMessages: (state: ChatState, action: PayloadAction<{messages: Message[]; account: UserAccount}>) => {
+      const messages = action.payload.messages;
+      const account = action.payload.account;
       if (state.chat.id === messages[0].chatId) {
         state.messages = filterMessages([...messages, ...state.messages]);
-        state.chatItems = convertMessagesToChatItems(state.messages);
+        state.chatItems = convertMessagesToChatItems(state.messages, account);
       }
     },
 
-    setMessageReaction: (state: ChatState, action: PayloadAction<MessageReaction>) => {
-      const reaction = action.payload;
+    setMessageReaction: (
+      state: ChatState,
+      action: PayloadAction<{reaction: MessageReaction; account: UserAccount}>,
+    ) => {
+      const reaction = action.payload.reaction;
+      const account = action.payload.account;
       if (state.chat.id === reaction.chatId) {
         const message = state.messages.find((m) => m.id === reaction.messageId);
         if (message) {
@@ -50,19 +56,20 @@ const chatSlice = createSlice({
               ? ArrayUtils.deleteValueWithUserId(message.reactions, reaction)
               : filterReactions([reaction, ...message.reactions]);
           state.messages = filterMessages([message, ...state.messages]);
-          state.chatItems = convertMessagesToChatItems(state.messages);
+          state.chatItems = convertMessagesToChatItems(state.messages, account);
         }
       }
     },
 
-    setMessageStatus: (state: ChatState, action: PayloadAction<MessageStatus>) => {
-      const status = action.payload;
+    setMessageStatus: (state: ChatState, action: PayloadAction<{status: MessageStatus; account: UserAccount}>) => {
+      const status = action.payload.status;
+      const account = action.payload.account;
       if (state.chat.id === status.chatId) {
         const message = state.messages.find((m) => m.id === status.messageId);
         if (message) {
           message.statuses = filterStatuses([status, ...message.statuses]);
           state.messages = filterMessages([message, ...state.messages]);
-          state.chatItems = convertMessagesToChatItems(state.messages);
+          state.chatItems = convertMessagesToChatItems(state.messages, account);
         }
       }
     },
@@ -86,17 +93,23 @@ const chatSlice = createSlice({
     fetchMessages
     */
     builder.addCase(ChatActions.fetchMessagesThunk.fulfilled, (state, action) => {
-      chatSlice.caseReducers.setMessages(state, {...action, payload: action.payload.data});
-      chatSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
+      const messages = action.payload.list.data;
+      const count = action.payload.list.count;
+      const account = action.payload.account;
+      chatSlice.caseReducers.setMessages(state, {...action, payload: {messages, account}});
+      chatSlice.caseReducers.calculateAllLoaded(state, {...action, payload: count});
     });
 
     /*
     refreshMessages
     */
     builder.addCase(ChatActions.refreshMessagesThunk.fulfilled, (state, action) => {
+      const messages = action.payload.list.data;
+      const count = action.payload.list.count;
+      const account = action.payload.account;
       chatSlice.caseReducers.resetMessages(state);
-      chatSlice.caseReducers.setMessages(state, {...action, payload: action.payload.data});
-      chatSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
+      chatSlice.caseReducers.setMessages(state, {...action, payload: {messages, account}});
+      chatSlice.caseReducers.calculateAllLoaded(state, {...action, payload: count});
     });
   },
 });
@@ -116,11 +129,11 @@ const filterStatuses = (statuses: MessageStatus[]): MessageStatus[] => {
   return statuses.filter(FilterUtils.uniqueByUserIdFilter).sort(ComparatorUtils.createdAtComparator);
 };
 
-const convertMessagesToChatItems = (messagesToConvert: Message[]): ChatItem[] => {
+const convertMessagesToChatItems = (messagesToConvert: Message[], account: UserAccount): ChatItem[] => {
   const handledDates: string[] = [];
   const handledItems: ChatItem[] = [];
   messagesToConvert.forEach((message) => {
-    const date = DateFormatters.formatDate(new Date(message.createdAt), undefined, undefined, 'FULL');
+    const date = DateFormatters.formatDate(new Date(message.createdAt), account, undefined, 'FULL');
     if (!handledDates.includes(date)) {
       handledDates.push(date);
       handledItems.push({date});

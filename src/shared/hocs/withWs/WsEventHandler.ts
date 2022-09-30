@@ -283,7 +283,7 @@ export class WsEventHandler {
     this.dispatch(EventsActions.removeChatReactionEvents(messageId, msg.userId));
     if (reaction !== 'NONE') {
       const chatEvent: ChatEvent = {userId, chatId, messageId, reaction};
-      const event: Event = {type: EventType.CHAT_REACTION, chatEvent, date: msg.date};
+      const event: Event = {type: EventType.CHAT_REACTION_INCOMING, chatEvent, date: msg.date};
       this.dispatch(EventsActions.addEvent(event, false));
     }
   };
@@ -365,7 +365,7 @@ export class WsEventHandler {
     this.dispatch(EventsActions.removeCommentReactionEvents(commentId, msg.userId));
     if (reaction !== 'NONE') {
       const commentEvent: CommentEvent = {userId: msg.userId, parentId, targetId, commentId, reaction};
-      const event: Event = {type: EventType.COMMENT_REACTION, commentEvent, date: msg.date};
+      const event: Event = {type: EventType.COMMENT_REACTION_INCOMING, commentEvent, date: msg.date};
       this.dispatch(EventsActions.addEvent(event, false));
     }
   };

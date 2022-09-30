@@ -63,7 +63,7 @@ const EventListItem = ({event}: EventListItemProps) => {
       // COMMENT
       case EventType.COMMENT_CREATE:
         return <EventCommentAdd event={event} />;
-      case EventType.COMMENT_REACTION:
+      case EventType.COMMENT_REACTION_INCOMING:
         return <EventCommentReaction event={event} />;
 
       // CHAT
@@ -77,7 +77,7 @@ const EventListItem = ({event}: EventListItemProps) => {
         return <EventChatMemberDelete event={event} />;
       case EventType.CHAT_MEMBER_LEAVE:
         return <EventChatMemberLeave event={event} />;
-      case EventType.CHAT_REACTION:
+      case EventType.CHAT_REACTION_INCOMING:
         return <EventChatReaction event={event} />;
 
       // REMINDER

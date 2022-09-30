@@ -6,7 +6,7 @@ import FVStack from '../../../../components/boxes/FVStack';
 import ReactionView from '../../../../components/views/ReactionView';
 import PressableButton from '../../../../components/controls/PressableButton';
 import FHStack from '../../../../components/boxes/FHStack';
-import {Text} from 'native-base';
+import {Box, Text} from 'native-base';
 import {ChatActions} from '../../../../store/chat/chatActions';
 
 const buildReactionMap = (message: Message, isOutcoming: boolean): Map<MessageReactionType, number> => {
@@ -46,11 +46,11 @@ const ChatViewMessageReactions = ({message, isOutcoming}: ChatViewMessageReactio
   const handlePress = useCallback(
     (r: MessageReactionType) => (): void => {
       if (r === activeReaction) {
-        dispatch(ChatActions.noReactionThunk({message, account}));
+        dispatch(ChatActions.noReactionThunk(message));
       } else if (r === 'LIKE') {
-        dispatch(ChatActions.likeReactionThunk({message, account}));
+        dispatch(ChatActions.likeReactionThunk(message));
       } else if (r === 'DISLIKE') {
-        dispatch(ChatActions.dislikeReactionThunk({message, account}));
+        dispatch(ChatActions.dislikeReactionThunk(message));
       }
     },
     [message, activeReaction],
@@ -63,18 +63,25 @@ const ChatViewMessageReactions = ({message, isOutcoming}: ChatViewMessageReactio
 
   const reaction = (r: MessageReactionType, key: number): ReactElement => {
     const count = reactionMap.get(r);
-    const color = r === activeReaction ? 'primary.500' : 'gray.400';
+    const color = r === activeReaction ? 'primary.500' : 'gray.300';
     const onPress = handlePress(r);
-    return (
-      <PressableButton onPress={onPress} isDisabled={isOutcoming} key={key}>
-        <FHStack h="20px" smallSpace reversed alignItems="center">
-          {count > 0 && (
-            <Text color="gray.400" fontSize="xs">
-              {count}
-            </Text>
-          )}
-          <ReactionView reactionType={r} size="sm" color={color} />
-        </FHStack>
+
+    const iconWithCount = (
+      <FHStack h="20px" smallSpace reversed alignItems="center">
+        {count > 0 && (
+          <Text color="gray.500" fontSize="xs">
+            {count}
+          </Text>
+        )}
+        <ReactionView reactionType={r} size="sm" color={color} />
+      </FHStack>
+    );
+
+    return isOutcoming ? (
+      <Box key={key}>{iconWithCount}</Box>
+    ) : (
+      <PressableButton onPress={onPress} key={key}>
+        {iconWithCount}
       </PressableButton>
     );
   };
