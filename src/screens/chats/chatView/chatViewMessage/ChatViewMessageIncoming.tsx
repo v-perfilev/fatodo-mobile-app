@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {memo, useCallback} from 'react';
 import {Message} from '../../../../models/Message';
 import {useTranslation} from 'react-i18next';
 import FHStack from '../../../../components/boxes/FHStack';
@@ -62,4 +62,4 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
   );
 };
 
-export default ChatViewMessageIncoming;
+export default memo(ChatViewMessageIncoming);

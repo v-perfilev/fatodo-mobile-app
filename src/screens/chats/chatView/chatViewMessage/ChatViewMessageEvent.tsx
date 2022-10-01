@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {memo, useCallback} from 'react';
 import {Message} from '../../../../models/Message';
 import {useTranslation} from 'react-i18next';
 import {Text} from 'native-base';
@@ -30,4 +30,4 @@ const ChatViewMessageEvent = ({message}: ChatViewMessageEventProps) => {
   );
 };
 
-export default ChatViewMessageEvent;
+export default memo(ChatViewMessageEvent);
