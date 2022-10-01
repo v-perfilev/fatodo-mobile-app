@@ -1,9 +1,9 @@
 import {Animated, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleProp, View, ViewStyle} from 'react-native';
 import React, {memo, MutableRefObject, ReactElement, useCallback, useEffect, useMemo, useRef} from 'react';
-import {FlatListType} from './FlatList';
-import {HEADER_HEIGHT} from '../../constants';
+import {FlatListType} from '../FlatList';
+import {HEADER_HEIGHT} from '../../../constants';
 
-export type CollapsableHeaderChildrenProps = {
+export type CollapsableHeaderContainerChildrenProps = {
   collapsableRef: MutableRefObject<any>;
   handleEventSnap: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   handleEventScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
@@ -13,7 +13,7 @@ export type CollapsableHeaderChildrenProps = {
 
 type CollapsableHeaderContainerProps = {
   header?: ReactElement;
-  children: (props: CollapsableHeaderChildrenProps) => ReactElement;
+  children: (props: CollapsableHeaderContainerChildrenProps) => ReactElement;
 };
 
 const safeAreaStyle: StyleProp<ViewStyle> = {flex: 1};
@@ -75,7 +75,7 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
 
   const animatedHeaderStyle = {transform: [{translateY}]};
 
-  const childrenProps: CollapsableHeaderChildrenProps = {
+  const childrenProps: CollapsableHeaderContainerChildrenProps = {
     collapsableRef,
     handleEventSnap,
     handleEventScroll,

@@ -1,4 +1,6 @@
-import CollapsableHeaderContainer, {CollapsableHeaderChildrenProps} from './CollapsableHeaderContainer';
+import CollapsableHeaderContainer, {
+  CollapsableHeaderContainerChildrenProps,
+} from './containers/CollapsableHeaderContainer';
 import React, {memo, ReactElement} from 'react';
 import DraggableList, {DraggableListProps} from './DraggableList';
 import {RefUtils} from '../../shared/utils/RefUtils';
@@ -9,14 +11,14 @@ type CollapsableDraggableListProps = DraggableListProps<any> & {
   containerStyle?: StyleProp<ViewStyle>;
 };
 
-const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
+const flexStyle: StyleProp<ViewStyle> = {paddingTop: 1000, flexGrow: 1};
 
 const CollapsableDraggableList = React.forwardRef((props: CollapsableDraggableListProps, ref: any) => {
   const {header, containerStyle, ...otherProps} = props;
 
   return (
     <CollapsableHeaderContainer header={header}>
-      {({handleOffsetScroll, handleEventSnap, collapsableRef}: CollapsableHeaderChildrenProps) => (
+      {({handleOffsetScroll, handleEventSnap, collapsableRef}: CollapsableHeaderContainerChildrenProps) => (
         <DraggableList
           onScrollOffsetChange={handleOffsetScroll}
           onMomentumScrollEnd={handleEventSnap}

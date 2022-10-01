@@ -1,20 +1,17 @@
-import CollapsableHeaderContainer, {
-  CollapsableHeaderContainerChildrenProps,
-} from './containers/CollapsableHeaderContainer';
 import RefreshableContainer, {RefreshableContainerChildrenProps} from './containers/RefreshableContainer';
 import FlatList, {FlatListProps} from './FlatList';
-import {RefUtils} from '../../shared/utils/RefUtils';
 import React, {memo, ReactElement, ReactNode} from 'react';
 import {Animated, StyleProp, ViewStyle} from 'react-native';
 import ConditionalSpinner from '../surfaces/ConditionalSpinner';
+import RegularHeaderContainer, {RegularHeaderContainerChildrenProps} from './containers/RegularHeaderContainer';
 
-export type CollapsableRefreshableFlatListChildrenProps = {
+export type RefreshableFlatListChildrenProps = {
   scrollY: Animated.Value;
 };
 
-type ChildrenFuncType = (props: CollapsableRefreshableFlatListChildrenProps) => ReactNode;
+type ChildrenFuncType = (props: RefreshableFlatListChildrenProps) => ReactNode;
 
-type CollapsableRefreshableFlatListProps = Omit<FlatListProps<any>, 'children'> & {
+type RefreshableFlatListProps = Omit<FlatListProps<any>, 'children'> & {
   header?: ReactElement;
   loading?: boolean;
   refresh?: () => Promise<void>;
@@ -28,7 +25,7 @@ type CollapsableRefreshableFlatListProps = Omit<FlatListProps<any>, 'children'> 
 
 const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
 
-const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefreshableFlatListProps, ref: any) => {
+const RefreshableFlatList = React.forwardRef((props: RefreshableFlatListProps, ref: any) => {
   const {
     header,
     loading,
@@ -44,8 +41,8 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
   } = props;
 
   return (
-    <CollapsableHeaderContainer header={header}>
-      {({handleEventScroll, handleEventSnap, collapsableRef, scrollY}: CollapsableHeaderContainerChildrenProps) => (
+    <RegularHeaderContainer header={header}>
+      {({handleEventScroll, scrollY}: RegularHeaderContainerChildrenProps) => (
         <>
           {previousNode}
           <ConditionalSpinner loading={loading} loadingPlaceholder={loadingPlaceholder} style={loaderStyle}>
@@ -54,8 +51,7 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
                 <FlatList
                   ListHeaderComponent={refresher}
                   onScroll={handleEventScroll}
-                  onMomentumScrollEnd={handleEventSnap}
-                  ref={RefUtils.merge(ref, collapsableRef)}
+                  ref={ref}
                   inverted={inverted}
                   contentContainerStyle={[flexStyle, containerStyle]}
                   {...otherProps}
@@ -67,8 +63,8 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
           {nextNode}
         </>
       )}
-    </CollapsableHeaderContainer>
+    </RegularHeaderContainer>
   );
 });
 
-export default memo(CollapsableRefreshableFlatList);
+export default memo(RefreshableFlatList);

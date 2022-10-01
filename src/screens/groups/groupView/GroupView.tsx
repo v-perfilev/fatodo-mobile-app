@@ -14,7 +14,7 @@ import {Item} from '../../../models/Item';
 import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import CollapsableRefreshableFlatList, {
-  CollapsableRefreshableChildrenProps,
+  CollapsableRefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
@@ -114,7 +114,9 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
     {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
   ];
   const cornerManagement = useCallback(
-    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    ({scrollY}: CollapsableRefreshableFlatListChildrenProps) => (
+      <CornerManagement buttons={buttons} scrollY={scrollY} />
+    ),
     [],
   );
 

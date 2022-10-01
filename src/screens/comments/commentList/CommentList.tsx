@@ -14,7 +14,7 @@ import {CommentsActions} from '../../../store/comments/commentsActions';
 import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import CommentListItem from './commentListItem/CommentListItem';
 import CollapsableRefreshableFlatList, {
-  CollapsableRefreshableChildrenProps,
+  CollapsableRefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
@@ -73,7 +73,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
 
   const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
   const cornerManagement = useCallback(
-    ({scrollY}: CollapsableRefreshableChildrenProps) => (
+    ({scrollY}: CollapsableRefreshableFlatListChildrenProps) => (
       <CornerManagement buttons={buttons} scrollY={scrollY} bottomPadding={COMMENTS_INPUT_HEIGHT} />
     ),
     [],

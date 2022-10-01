@@ -13,7 +13,7 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ChatsSelectors from '../../../store/chats/chatsSelectors';
 import {ChatsActions} from '../../../store/chats/chatsActions';
 import CollapsableRefreshableFlatList, {
-  CollapsableRefreshableChildrenProps,
+  CollapsableRefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {CornerButton} from '../../../models/CornerButton';
@@ -106,7 +106,9 @@ const ChatList = () => {
     {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
   ];
   const cornerManagement = useCallback(
-    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    ({scrollY}: CollapsableRefreshableFlatListChildrenProps) => (
+      <CornerManagement buttons={buttons} scrollY={scrollY} />
+    ),
     [],
   );
 

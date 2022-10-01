@@ -14,16 +14,16 @@ import {ChatItem, Message} from '../../../models/Message';
 import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle, ViewToken} from 'react-native';
 import ChatViewItem from './ChatViewItem';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
-import CollapsableRefreshableFlatList, {
-  CollapsableRefreshableChildrenProps,
-} from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
+import RefreshableFlatList, {
+  RefreshableFlatListChildrenProps,
+} from '../../../components/scrollable/RefreshableFlatList';
 
 type ChatViewProps = WithChatProps;
 
-const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
+const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: HEADER_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 
 const ChatView = ({chat, loading}: ChatViewProps) => {
@@ -112,14 +112,14 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
 
   const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
   const cornerManagement = useCallback(
-    ({scrollY}: CollapsableRefreshableChildrenProps) => (
+    ({scrollY}: RefreshableFlatListChildrenProps) => (
       <CornerManagement buttons={buttons} scrollY={scrollY} bottomPadding={CHATS_INPUT_HEIGHT} />
     ),
     [],
   );
 
   return (
-    <CollapsableRefreshableFlatList
+    <RefreshableFlatList
       containerStyle={containerStyle}
       loaderStyle={loaderStyle}
       header={<ChatViewHeader />}
@@ -136,7 +136,7 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
       ref={listRef}
     >
       {cornerManagement}
-    </CollapsableRefreshableFlatList>
+    </RefreshableFlatList>
   );
 };
 

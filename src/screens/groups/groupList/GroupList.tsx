@@ -11,7 +11,7 @@ import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import {HEADER_HEIGHT} from '../../../constants';
 import CollapsableRefreshableFlatList, {
-  CollapsableRefreshableChildrenProps,
+  CollapsableRefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import CollapsableDraggableList from '../../../components/scrollable/CollapsableDraggableList';
@@ -92,7 +92,9 @@ const GroupList = () => {
     {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
   ];
   const cornerManagement = useCallback(
-    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    ({scrollY}: CollapsableRefreshableFlatListChildrenProps) => (
+      <CornerManagement buttons={buttons} scrollY={scrollY} />
+    ),
     [],
   );
 

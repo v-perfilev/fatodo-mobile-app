@@ -10,7 +10,7 @@ import {Event} from '../../../models/Event';
 import {Box} from 'native-base';
 import EventListItem from './eventListItem/EventListItem';
 import CollapsableRefreshableFlatList, {
-  CollapsableRefreshableChildrenProps,
+  CollapsableRefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {HEADER_HEIGHT} from '../../../constants';
 import {CornerButton} from '../../../models/CornerButton';
@@ -86,7 +86,9 @@ const EventList = () => {
 
   const buttons: CornerButton[] = [{icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true}];
   const cornerManagement = useCallback(
-    ({scrollY}: CollapsableRefreshableChildrenProps) => <CornerManagement buttons={buttons} scrollY={scrollY} />,
+    ({scrollY}: CollapsableRefreshableFlatListChildrenProps) => (
+      <CornerManagement buttons={buttons} scrollY={scrollY} />
+    ),
     [],
   );
 

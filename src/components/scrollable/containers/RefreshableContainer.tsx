@@ -2,10 +2,10 @@ import {Animated, Easing, NativeScrollEvent, NativeSyntheticEvent, StyleProp} fr
 import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {NativeViewGestureHandler, PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlerCommon';
-import {MAX_REFRESH_HEIGHT, REFRESH_HEIGHT} from '../../constants';
-import Refresher from './Refresher';
+import {MAX_REFRESH_HEIGHT, REFRESH_HEIGHT} from '../../../constants';
+import Refresher from '../Refresher';
 
-export type RefreshableChildrenProps = {
+export type RefreshableContainerChildrenProps = {
   refresher: ReactElement;
   handleEventScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 };
@@ -14,7 +14,7 @@ type RefreshableContainerProps = {
   refresh?: () => Promise<void>;
   parentScrollY?: Animated.Value;
   inverted?: boolean;
-  children: (props: RefreshableChildrenProps) => ReactElement;
+  children: (props: RefreshableContainerChildrenProps) => ReactElement;
 };
 
 const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: RefreshableContainerProps) => {
