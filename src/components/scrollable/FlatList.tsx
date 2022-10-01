@@ -27,7 +27,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
         return lengthMap.current.get(key) || 0;
       }
     },
-    [fixedLength, data, keyExtractor, lengthMap],
+    [data],
   );
 
   const getItemOffset = useCallback(
@@ -46,26 +46,20 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
     [getItemLength],
   );
 
-  const _onLayout = useCallback(
-    (key: string, event: LayoutChangeEvent): void => {
-      const height = event.nativeEvent.layout.height;
-      lengthMap.current.set(key, height);
-    },
-    [lengthMap.current],
-  );
+  const _onLayout = useCallback((key: string, event: LayoutChangeEvent): void => {
+    const height = event.nativeEvent.layout.height;
+    lengthMap.current.set(key, height);
+  }, []);
 
-  const _renderItem = useCallback(
-    (info: ListRenderItemInfo<any>): ReactElement => {
-      if (fixedLength) {
-        return render(info);
-      } else {
-        const key = keyExtractor(info.item);
-        const onLayout = (event: LayoutChangeEvent): void => _onLayout(key, event);
-        return render(info, onLayout);
-      }
-    },
-    [keyExtractor, _onLayout, render],
-  );
+  const _renderItem = useCallback((info: ListRenderItemInfo<any>): ReactElement => {
+    if (fixedLength) {
+      return render(info);
+    } else {
+      const key = keyExtractor(info.item);
+      const onLayout = (event: LayoutChangeEvent): void => _onLayout(key, event);
+      return render(info, onLayout);
+    }
+  }, []);
 
   const _getItemLayout = useCallback(
     (data: any, index: number) => {
