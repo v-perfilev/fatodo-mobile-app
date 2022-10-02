@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Group, GroupUser} from '../../../../models/Group';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
@@ -112,4 +112,4 @@ const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEdi
   );
 };
 
-export default GroupMembersDialog;
+export default memo(GroupMembersDialog);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useTranslation} from 'react-i18next';
 import {Group} from '../../../models/Group';
@@ -52,4 +52,4 @@ const GroupDeleteDialog = ({group, show, close, onSuccess = () => null}: GroupDe
   );
 };
 
-export default GroupDeleteDialog;
+export default memo(GroupDeleteDialog);

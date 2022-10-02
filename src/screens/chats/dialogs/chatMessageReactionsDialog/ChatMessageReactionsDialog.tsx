@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {User} from '../../../../models/User';
 import ClearableTextInput from '../../../../components/inputs/ClearableTextInput';
@@ -77,4 +77,4 @@ const ChatMessageReactionsDialog = ({message, show, close}: ChatMessageReactions
   return <ModalDialog open={show} close={close} title={t('chat:reactions.title')} content={content} />;
 };
 
-export default ChatMessageReactionsDialog;
+export default memo(ChatMessageReactionsDialog);

@@ -1,5 +1,5 @@
 import ModalDialog from '../../../../components/modals/ModalDialog';
-import React from 'react';
+import React, {memo} from 'react';
 import {useTranslation} from 'react-i18next';
 import ContactRequestDialogForm from './ContactRequestDialogForm';
 import {ContactRequestDTO} from '../../../../models/dto/ContactRequestDTO';
@@ -32,4 +32,4 @@ const ContactRequestDialog = ({show, close}: ContactRequestDialogProps) => {
   return <ModalDialog open={show} close={close} title={t('contact:addContact.title')} content={content} size="xl" />;
 };
 
-export default ContactRequestDialog;
+export default memo(ContactRequestDialog);

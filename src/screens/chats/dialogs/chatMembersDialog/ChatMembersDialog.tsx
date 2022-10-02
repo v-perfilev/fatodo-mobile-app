@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import ClearableTextInput from '../../../../components/inputs/ClearableTextInput';
 import UserPlusIcon from '../../../../components/icons/UserPlusIcon';
@@ -81,4 +81,4 @@ const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersD
   );
 };
 
-export default ChatMembersDialog;
+export default memo(ChatMembersDialog);

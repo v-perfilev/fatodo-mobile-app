@@ -1,5 +1,5 @@
 import {Box, Button, Center, KeyboardAvoidingView, Modal} from 'native-base';
-import React, {ReactElement} from 'react';
+import React, {memo, ReactElement} from 'react';
 import {LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
 import ThemeProvider from '../layouts/ThemeProvider';
 import {SizeType} from 'native-base/lib/typescript/components/types';
@@ -43,4 +43,4 @@ const ModalDialog = ({open, close, title, content, actions, size}: ModalDialogPr
   </ThemeProvider>
 );
 
-export default ModalDialog;
+export default memo(ModalDialog);

@@ -1,5 +1,5 @@
 import ModalDialog from '../../../../components/modals/ModalDialog';
-import React from 'react';
+import React, {memo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../../store/store';
 import CommentEditForm from './CommentEditForm';
@@ -35,4 +35,4 @@ const CommentEditDialog = ({comment, show, close}: CommentEditDialogProps) => {
   return <ModalDialog open={show} close={close} title={t('comment:editComment.title')} content={content} size="xl" />;
 };
 
-export default CommentEditDialog;
+export default memo(CommentEditDialog);

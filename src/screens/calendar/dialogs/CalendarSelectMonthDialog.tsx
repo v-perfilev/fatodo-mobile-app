@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {CalendarItem, CalendarMonth} from '../../../../models/Calendar';
-import DateTimePicker from '../../../../components/inputs/DateTimePicker';
-import {useAppSelector} from '../../../../store/store';
-import AuthSelectors from '../../../../store/auth/authSelectors';
-import OutlinedButton from '../../../../components/controls/OutlinedButton';
-import ModalDialog from '../../../../components/modals/ModalDialog';
-import GhostButton from '../../../../components/controls/GhostButton';
-import FBox from '../../../../components/boxes/FBox';
+import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
+import DateTimePicker from '../../../components/inputs/DateTimePicker';
+import {useAppSelector} from '../../../store/store';
+import AuthSelectors from '../../../store/auth/authSelectors';
+import OutlinedButton from '../../../components/controls/OutlinedButton';
+import ModalDialog from '../../../components/modals/ModalDialog';
+import GhostButton from '../../../components/controls/GhostButton';
+import FBox from '../../../components/boxes/FBox';
 
 export type CalendarSelectMonthDialogProps = {
   month: CalendarMonth;
@@ -76,4 +76,4 @@ const CalendarSelectMonthDialog = ({month, selectMonth, show, close}: CalendarSe
   );
 };
 
-export default CalendarSelectMonthDialog;
+export default memo(CalendarSelectMonthDialog);

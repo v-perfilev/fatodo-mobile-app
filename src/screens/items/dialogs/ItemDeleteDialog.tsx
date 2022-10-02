@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {useTranslation} from 'react-i18next';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {Item} from '../../../models/Item';
@@ -52,4 +52,4 @@ const ItemDeleteDialog = ({item, close, onSuccess = () => null}: ItemDeleteDialo
   );
 };
 
-export default ItemDeleteDialog;
+export default memo(ItemDeleteDialog);

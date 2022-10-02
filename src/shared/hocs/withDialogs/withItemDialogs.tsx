@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ComponentType, useEffect} from 'react';
+import {ComponentType, memo, useCallback, useEffect, useMemo} from 'react';
 import {useDialogContext} from '../../contexts/dialogContexts/DialogContext';
 import {Item} from '../../../models/Item';
 import {ItemDialogContext} from '../../contexts/dialogContexts/ItemDialogContext';
@@ -7,6 +7,7 @@ import ItemDeleteDialog, {
   defaultItemDeleteDialogProps,
   ItemDeleteDialogProps,
 } from '../../../screens/items/dialogs/ItemDeleteDialog';
+import {flowRight} from 'lodash';
 
 enum ItemDialogs {
   DELETE = 'ITEM_DELETE_DIALOG',
@@ -15,24 +16,23 @@ enum ItemDialogs {
 const withItemDialogs = (Component: ComponentType) => (props: any) => {
   const {handleDialog, setDialogProps, clearDialogProps} = useDialogContext();
 
-  const showItemDeleteDialog = (item: Item, onSuccess?: () => void): void => {
+  const showItemDeleteDialog = useCallback((item: Item, onSuccess?: () => void): void => {
     const show = true;
     const close = (): void => clearDialogProps(ItemDialogs.DELETE);
     const props: ItemDeleteDialogProps = {item, show, close, onSuccess};
     setDialogProps(ItemDialogs.DELETE, props);
-  };
-
-  const initDialogs = (): void => {
-    handleDialog(ItemDialogs.DELETE, ItemDeleteDialog, defaultItemDeleteDialogProps);
-  };
-
-  useEffect(() => {
-    initDialogs();
   }, []);
 
-  const context = {
-    showItemDeleteDialog,
-  };
+  useEffect(() => {
+    handleDialog(ItemDialogs.DELETE, ItemDeleteDialog, defaultItemDeleteDialogProps);
+  }, []);
+
+  const context = useMemo(
+    () => ({
+      showItemDeleteDialog,
+    }),
+    [showItemDeleteDialog],
+  );
 
   return (
     <ItemDialogContext.Provider value={context}>
@@ -41,4 +41,4 @@ const withItemDialogs = (Component: ComponentType) => (props: any) => {
   );
 };
 
-export default withItemDialogs;
+export default flowRight([memo, withItemDialogs]);

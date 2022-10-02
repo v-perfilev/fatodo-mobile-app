@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Group} from '../../../models/Group';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
@@ -27,7 +27,7 @@ const GroupLeaveDialog = ({group, show, close, onSuccess = () => null}: GroupLea
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(GroupsActions.leaveGroupThunk(group))
+    dispatch(GroupsActions.leaveGroupThunk(group.id))
       .unwrap()
       .then(() => {
         onSuccess();
@@ -52,4 +52,4 @@ const GroupLeaveDialog = ({group, show, close, onSuccess = () => null}: GroupLea
   );
 };
 
-export default GroupLeaveDialog;
+export default memo(GroupLeaveDialog);

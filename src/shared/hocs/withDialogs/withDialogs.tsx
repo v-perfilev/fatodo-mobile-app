@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ComponentType, memo, ReactElement, useMemo, useState} from 'react';
+import {ComponentType, ReactElement, useCallback, useMemo, useState} from 'react';
 import {flowRight} from 'lodash';
 import {DialogContext} from '../../contexts/dialogContexts/DialogContext';
 import withGroupDialogs from './withGroupDialogs';
@@ -19,7 +19,7 @@ const withDialogs = (Component: ComponentType) => (props: any) => {
   const [dialogMap, setDialogMap] = useState<Map<string, ComponentWithProps>>(new Map());
   const [propsMap, setPropsMap] = useState<Map<string, any>>(new Map());
 
-  const handleDialog = (name: string, component: ComponentType, defaultProps: any): void => {
+  const handleDialog = useCallback((name: string, component: ComponentType, defaultProps: any): void => {
     const isDialogNotInMap = !dialogMap.has(name);
     if (isDialogNotInMap) {
       setDialogMap((prevState) => {
@@ -28,33 +28,33 @@ const withDialogs = (Component: ComponentType) => (props: any) => {
         return new Map(prevState);
       });
     }
-  };
+  }, []);
 
-  const setDialogProps = (name: string, props: any): void => {
+  const setDialogProps = useCallback((name: string, props: any): void => {
     setPropsMap((prevState) => {
       prevState.set(name, props);
       return new Map(prevState);
     });
-  };
+  }, []);
 
-  const updateDialogProps = (name: string, props: any): void => {
+  const updateDialogProps = useCallback((name: string, props: any): void => {
     setPropsMap((prevState) => {
       const oldProps = prevState.has(name) ? prevState.get(name) : dialogMap.get(name).defaultProps;
       prevState.set(name, {...oldProps, ...props});
       return new Map(prevState);
     });
-  };
+  }, []);
 
-  const clearDialogProps = (name: string): void => {
+  const clearDialogProps = useCallback((name: string): void => {
     setPropsMap((prevState) => {
       prevState.delete(name);
       return new Map(prevState);
     });
-  };
+  }, []);
 
-  const clearAllDialogsProps = (): void => {
+  const clearAllDialogsProps = useCallback((): void => {
     setPropsMap(new Map());
-  };
+  }, []);
 
   const dialogs = useMemo<ReactElement[]>(() => {
     return Array.from(dialogMap.keys()).map((name, index) => {
@@ -64,13 +64,16 @@ const withDialogs = (Component: ComponentType) => (props: any) => {
     });
   }, [dialogMap, propsMap]);
 
-  const context = {
-    handleDialog,
-    setDialogProps,
-    updateDialogProps,
-    clearDialogProps,
-    clearAllDialogsProps,
-  };
+  const context = useMemo(
+    () => ({
+      handleDialog,
+      setDialogProps,
+      updateDialogProps,
+      clearDialogProps,
+      clearAllDialogsProps,
+    }),
+    [handleDialog, setDialogProps, updateDialogProps, clearDialogProps, clearAllDialogsProps],
+  );
 
   return (
     <DialogContext.Provider value={context}>
@@ -83,7 +86,6 @@ const withDialogs = (Component: ComponentType) => (props: any) => {
 };
 
 export default flowRight([
-  memo,
   withDialogs,
   withGroupDialogs,
   withItemDialogs,

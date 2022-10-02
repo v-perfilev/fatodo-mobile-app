@@ -1,12 +1,13 @@
 import * as React from 'react';
-import {ComponentType, useEffect} from 'react';
+import {ComponentType, memo, useCallback, useEffect, useMemo} from 'react';
 import {useDialogContext} from '../../contexts/dialogContexts/DialogContext';
 import {CalendarDialogContext} from '../../contexts/dialogContexts/CalendarDialogContext';
 import CalendarSelectMonthDialog, {
   CalendarSelectMonthDialogProps,
   defaultCalendarSelectMonthDialogProps,
-} from '../../../screens/calendar/canlendarView/dialogs/CalendarSelectMonthDialog';
+} from '../../../screens/calendar/dialogs/CalendarSelectMonthDialog';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
+import {flowRight} from 'lodash';
 
 enum CalendarDialogs {
   SELECT_MONTH = 'CALENDAR_SELECT_MONTH',
@@ -15,26 +16,28 @@ enum CalendarDialogs {
 const withCalendarDialogs = (Component: ComponentType) => (props: any) => {
   const {handleDialog, setDialogProps, clearDialogProps} = useDialogContext();
 
-  const showSelectMonthDialog = (month: CalendarMonth, selectMonth: (month: CalendarItem) => void): void => {
-    const show = true;
-    const close = (): void => {
-      clearDialogProps(CalendarDialogs.SELECT_MONTH);
-    };
-    const props: CalendarSelectMonthDialogProps = {month, selectMonth, show, close};
-    setDialogProps(CalendarDialogs.SELECT_MONTH, props);
-  };
-
-  const initDialogs = (): void => {
-    handleDialog(CalendarDialogs.SELECT_MONTH, CalendarSelectMonthDialog, defaultCalendarSelectMonthDialogProps);
-  };
+  const showSelectMonthDialog = useCallback(
+    (month: CalendarMonth, selectMonth: (month: CalendarItem) => void): void => {
+      const show = true;
+      const close = (): void => {
+        clearDialogProps(CalendarDialogs.SELECT_MONTH);
+      };
+      const props: CalendarSelectMonthDialogProps = {month, selectMonth, show, close};
+      setDialogProps(CalendarDialogs.SELECT_MONTH, props);
+    },
+    [],
+  );
 
   useEffect(() => {
-    initDialogs();
+    handleDialog(CalendarDialogs.SELECT_MONTH, CalendarSelectMonthDialog, defaultCalendarSelectMonthDialogProps);
   }, []);
 
-  const context = {
-    showSelectMonthDialog,
-  };
+  const context = useMemo(
+    () => ({
+      showSelectMonthDialog,
+    }),
+    [showSelectMonthDialog],
+  );
 
   return (
     <CalendarDialogContext.Provider value={context}>
@@ -43,4 +46,4 @@ const withCalendarDialogs = (Component: ComponentType) => (props: any) => {
   );
 };
 
-export default withCalendarDialogs;
+export default flowRight([memo, withCalendarDialogs]);

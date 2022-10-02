@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../store/store';
@@ -52,4 +52,4 @@ const ChatClearDialog = ({chat, show, close, onSuccess = () => null}: ChatClearD
   );
 };
 
-export default ChatClearDialog;
+export default memo(ChatClearDialog);

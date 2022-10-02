@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
+import React, {FC, memo, useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {User} from '../../../models/User';
 import {Text} from 'native-base';
@@ -18,8 +18,8 @@ type Props = {
 };
 
 const UsersSelect: FC<Props> = ({allowedIds, setUserIds}: Props) => {
-  const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const dispatch = useAppDispatch();
+  const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const users = useAppSelector((state) => usersSelector(state, allowedIds));
   const {t} = useTranslation();
   const [filter, setFilter] = useState<string>('');
@@ -58,7 +58,10 @@ const UsersSelect: FC<Props> = ({allowedIds, setUserIds}: Props) => {
   };
 
   useEffect(() => {
-    dispatch(InfoActions.handleUserIdsThunk(allowedIds));
+    if (users.length !== allowedIds.length) {
+      const handleUserIds = async () => dispatch(InfoActions.handleUserIdsThunk(allowedIds));
+      handleUserIds().finally();
+    }
   }, [allowedIds]);
 
   useEffect(() => {
@@ -70,7 +73,7 @@ const UsersSelect: FC<Props> = ({allowedIds, setUserIds}: Props) => {
   }, [selectedIds]);
 
   useEffect(() => {
-    handleUsersToShow();
+    users.length > 0 && handleUsersToShow();
   }, [users, selectedIds, filter]);
 
   return (
@@ -96,4 +99,4 @@ const UsersSelect: FC<Props> = ({allowedIds, setUserIds}: Props) => {
     </FVStack>
   );
 };
-export default UsersSelect;
+export default memo(UsersSelect);

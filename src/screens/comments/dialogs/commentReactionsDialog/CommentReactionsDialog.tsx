@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {User} from '../../../../models/User';
 import ClearableTextInput from '../../../../components/inputs/ClearableTextInput';
@@ -77,4 +77,4 @@ const CommentReactionsDialog = ({comment, show, close}: CommentReactionsDialogPr
   return <ModalDialog open={show} close={close} title={t('comment:reactions.title')} content={content} />;
 };
 
-export default CommentReactionsDialog;
+export default memo(CommentReactionsDialog);

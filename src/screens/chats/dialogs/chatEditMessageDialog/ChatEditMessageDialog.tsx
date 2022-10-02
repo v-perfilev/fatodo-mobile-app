@@ -1,5 +1,5 @@
 import ModalDialog from '../../../../components/modals/ModalDialog';
-import React from 'react';
+import React, {memo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../../store/store';
 import {MessageDTO} from '../../../../models/dto/MessageDTO';
@@ -35,4 +35,4 @@ const ChatEditMessageDialog = ({message, show, close}: ChatEditMessageDialogProp
   return <ModalDialog open={show} close={close} title={t('chat:editMessage.title')} content={content} size="xl" />;
 };
 
-export default ChatEditMessageDialog;
+export default memo(ChatEditMessageDialog);

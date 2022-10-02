@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import ModalDialog from '../../../components/modals/ModalDialog';
-import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
 import GhostButton from '../../../components/controls/GhostButton';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
@@ -9,6 +8,7 @@ import {ChatsActions} from '../../../store/chats/chatsActions';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
+import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
 
 export type ChatCreateDialogProps = {
   show: boolean;
@@ -53,9 +53,7 @@ const ChatCreateDialog = ({show, close}: ChatCreateDialogProps) => {
   };
 
   useEffect(() => {
-    if (show) {
-      dispatch(ContactsActions.fetchRelationsThunk());
-    }
+    show && dispatch(ContactsActions.fetchRelationsThunk());
   }, [show]);
 
   useEffect(() => {
@@ -90,4 +88,4 @@ const ChatCreateDialog = ({show, close}: ChatCreateDialogProps) => {
   );
 };
 
-export default ChatCreateDialog;
+export default memo(ChatCreateDialog);

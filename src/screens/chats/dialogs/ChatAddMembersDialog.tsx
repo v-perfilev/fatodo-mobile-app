@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import ModalDialog from '../../../components/modals/ModalDialog';
 import UsersSelect from '../../../components/inputs/userSelect/UsersSelect';
@@ -83,4 +83,4 @@ const ChatAddMembersDialog = ({chat, show, close}: ChatAddMembersDialogProps) =>
   );
 };
 
-export default ChatAddMembersDialog;
+export default memo(ChatAddMembersDialog);

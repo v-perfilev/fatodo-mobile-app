@@ -1,5 +1,5 @@
 import ModalDialog from '../../../../components/modals/ModalDialog';
-import React from 'react';
+import React, {memo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../../store/store';
 import {User} from '../../../../models/User';
@@ -35,4 +35,4 @@ const ChatDirectMessageDialog = ({user, show, close}: ChatDirectMessageDialogPro
   return <ModalDialog open={show} close={close} title={t('chat:directMessage.title')} content={content} size="xl" />;
 };
 
-export default ChatDirectMessageDialog;
+export default memo(ChatDirectMessageDialog);

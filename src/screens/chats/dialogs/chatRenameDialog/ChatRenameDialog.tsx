@@ -1,5 +1,5 @@
 import ModalDialog from '../../../../components/modals/ModalDialog';
-import React from 'react';
+import React, {memo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch} from '../../../../store/store';
 import ChatRenameForm from './ChatRenameForm';
@@ -34,4 +34,4 @@ const ChatRenameDialog = ({chat, show, close}: ChatRenameDialogProps) => {
   return <ModalDialog open={show} close={close} title={t('chat:renameChat.title')} content={content} />;
 };
 
-export default ChatRenameDialog;
+export default memo(ChatRenameDialog);

@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Group, GroupMember, GroupPermission, GroupUser} from '../../../models/Group';
 import UserView from '../../../components/views/UserView';
@@ -34,7 +34,7 @@ const GroupEditMemberDialog: FC<Props> = ({group, user, show, close}: Props) => 
 
   const editMember = (): void => {
     setIsSubmitting(true);
-    const editedMember: GroupMember = {userId: user.userId, permission};
+    const editedMember: GroupMember = {groupId: group.id, userId: user.userId, permission};
     dispatch(GroupActions.editGroupMemberThunk({group, member: editedMember}))
       .unwrap()
       .then(() => close())
@@ -70,4 +70,4 @@ const GroupEditMemberDialog: FC<Props> = ({group, user, show, close}: Props) => 
   );
 };
 
-export default GroupEditMemberDialog;
+export default memo(GroupEditMemberDialog);
