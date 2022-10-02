@@ -1,5 +1,4 @@
-import React, {MutableRefObject, ReactElement, RefObject, useCallback, useEffect, useRef} from 'react';
-import Header from '../../../components/layouts/Header';
+import React, {MutableRefObject, ReactElement, RefObject, useCallback, useEffect, useRef, useState} from 'react';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {Dimensions, ListRenderItemInfo, NativeScrollEvent, NativeSyntheticEvent, ScrollView} from 'react-native';
@@ -8,6 +7,7 @@ import {useAppDispatch} from '../../../store/store';
 import CalendarViewContainer from './CalendarViewContainer';
 import FBox from '../../../components/boxes/FBox';
 import {CalendarActions} from '../../../store/calendar/calendarActions';
+import CalendarViewHeader from './CalendarViewHeader';
 
 const width = Dimensions.get('window').width;
 const months = CalendarUtils.generateAllCalendarMonths();
@@ -22,6 +22,7 @@ const CalendarView = () => {
   const initialMonth = useRef<CalendarMonth>(getInitialMonth());
   const initialIndex = useRef<number>(getInitialIndex(initialMonth.current));
   const canMomentum = useRef<boolean>(false);
+  const [activeMonth, setActiveMonth] = useState<CalendarMonth>(initialMonth.current);
 
   const scrollAllToTop = useCallback((): void => {
     const scrollToTop = (scrollView: RefObject<ScrollView>) => scrollView.current?.scrollTo({y: 0});
@@ -49,7 +50,9 @@ const CalendarView = () => {
       const offset = event.nativeEvent.contentOffset.x;
       const index = Math.round(offset / width);
       if (index < months.length) {
-        loadReminders(months[index]);
+        const activeMonth = months[index];
+        loadReminders(activeMonth);
+        setActiveMonth(activeMonth);
       }
     }
     canMomentum.current = false;
@@ -59,8 +62,10 @@ const CalendarView = () => {
     const key = CalendarUtils.buildMonthKey(month.year, month.month);
     const index = monthKeys.indexOf(key);
     if (index && index >= 0 && index < months.length) {
+      const activeMonth = months[index];
       scrollToItem(index, false);
-      loadReminders(months[index]);
+      loadReminders(activeMonth);
+      setActiveMonth(activeMonth);
     }
   }, []);
 
@@ -83,7 +88,7 @@ const CalendarView = () => {
 
   return (
     <FBox width={width}>
-      <Header showAvatar hideGoBack />
+      <CalendarViewHeader activeMonth={activeMonth} selectMonth={selectMonth} />
       <FlatList
         data={months}
         render={renderItem}

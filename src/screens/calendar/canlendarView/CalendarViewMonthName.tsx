@@ -34,10 +34,10 @@ const CalendarViewMonthName = ({month, selectMonth}: CalendarViewMonthNameProps)
       <FBox alignItems="center">
         <PressableButton onPress={handleMonthClick}>
           <FHStack smallSpace alignItems="center">
-            <Text fontSize="18" fontWeight="bold" color="gray.400">
+            <Text fontSize="16" fontWeight="bold" color="gray.400">
               {monthWithYear}
             </Text>
-            <ArrowDownIcon color="primary.500" size="xl" />
+            <ArrowDownIcon color="primary.500" size="lg" />
           </FHStack>
         </PressableButton>
       </FBox>

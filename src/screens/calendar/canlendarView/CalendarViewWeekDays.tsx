@@ -11,7 +11,7 @@ const CalendarViewWeekDays = () => {
     <FHStack mx="2px">
       {dayNames.map((day) => (
         <FBox alignItems="center" key={day}>
-          <Text fontSize="14" fontWeight="extrabold" color="gray.400">
+          <Text fontSize="14" fontWeight="bold" color="gray.400">
             {day.toUpperCase()}
           </Text>
         </FBox>

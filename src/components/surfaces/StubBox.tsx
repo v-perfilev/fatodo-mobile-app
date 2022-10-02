@@ -11,7 +11,7 @@ const StubBox = ({inverted, children, ...props}: StubBoxProps) => {
   const containerStyle: StyleProp<any> = {scaleY: inverted ? -1 : 1};
   return (
     <FCenter style={containerStyle} grow {...props}>
-      <Text fontSize="16" fontWeight="bold" color="gray.500">
+      <Text fontSize="18" fontWeight="bold" color="gray.400">
         {children}
       </Text>
     </FCenter>

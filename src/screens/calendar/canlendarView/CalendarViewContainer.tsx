@@ -32,7 +32,7 @@ const CalendarViewContainer = ({month, selectMonth, childRefMap, width}: Calenda
   const initDate = useCallback((): void => {
     const newActiveDate = isCurrentMonth ? CalendarUtils.getNowDate() : undefined;
     if (newActiveDate?.date !== activeDate?.date) {
-      setActiveDate(activeDate);
+      setActiveDate(newActiveDate);
     }
   }, []);
 

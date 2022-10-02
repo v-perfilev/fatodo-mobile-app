@@ -18,8 +18,8 @@ import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import Header from '../../../components/layouts/Header';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import Separator from '../../../components/layouts/Separator';
-import EventListSkeleton from '../components/skeletons/GroupListCardSkeleton';
 import CentredLoader from '../../../components/surfaces/CentredLoader';
+import EventListSkeleton from '../components/skeletons/EventListSkeleton';
 
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
