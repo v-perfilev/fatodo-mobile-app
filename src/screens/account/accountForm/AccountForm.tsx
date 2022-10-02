@@ -97,8 +97,6 @@ const AccountForm = () => {
     addValueToForm(formData, 'imageFilename', values.imageFilename, !values.imageContent);
     addValueToForm(formData, 'imageContent', values.imageContent);
 
-    helpers.setSubmitting(false);
-
     dispatch(AuthActions.updateAccountThunk(formData))
       .unwrap()
       .then(() => navigation.goBack())
