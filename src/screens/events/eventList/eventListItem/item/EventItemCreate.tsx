@@ -18,8 +18,13 @@ const EventItemCreate = ({user, group, item, date}: WithEventItemProps) => {
 
   const image = <UserView user={user} picSize="md" />;
 
+  const context = user?.gender;
   const content = (
-    <Trans i18nKey="event:item.create.content" components={{user: <User />, group: <Group />, item: <Item />}} />
+    <Trans
+      i18nKey="event:item.create.content"
+      context={context}
+      components={{user: <User />, group: <Group />, item: <Item />}}
+    />
   );
 
   const loading = !user || !group || !item;

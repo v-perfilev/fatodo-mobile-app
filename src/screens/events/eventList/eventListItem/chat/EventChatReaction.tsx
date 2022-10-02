@@ -16,7 +16,10 @@ const EventChatReaction = ({user, chat, message, reaction, date}: WithEventChatP
 
   const image = <UserReactionView user={user} size="md" reactionType={reaction} />;
 
-  const content = <Trans i18nKey="event:chat.reaction.content" components={{user: <User />, chat: <Chat />}} />;
+  const context = user?.gender;
+  const content = (
+    <Trans i18nKey="event:chat.reaction.content" context={context} components={{user: <User />, chat: <Chat />}} />
+  );
 
   const loading = !user || !chat || !message;
 

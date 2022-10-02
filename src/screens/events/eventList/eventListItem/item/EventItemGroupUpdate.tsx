@@ -16,7 +16,10 @@ const EventItemGroupUpdate = ({user, group, date}: WithEventItemProps) => {
 
   const image = <UserView user={user} picSize="md" />;
 
-  const content = <Trans i18nKey="event:item.groupUpdate.content" components={{user: <User />, group: <Group />}} />;
+  const context = user?.gender;
+  const content = (
+    <Trans i18nKey="event:item.groupUpdate.content" context={context} components={{user: <User />, group: <Group />}} />
+  );
 
   const loading = !user || !group;
 

@@ -14,6 +14,7 @@ export class MessageUtils {
     t: TFunction,
   ): string => {
     const username = messageUser?.username;
+    const context = messageUser?.gender;
     const usernames = paramUsers.map((u) => u.username).join(', ');
     const title = MessageUtils.extractTextFromParams(params);
     let text = '';
@@ -23,11 +24,11 @@ export class MessageUtils {
       params?.type === EventMessageType.ADD_MEMBERS ||
       params?.type === EventMessageType.DELETE_MEMBERS
     ) {
-      text = t('chat:event.' + params.type, {username, usernames});
+      text = t('chat:event.' + params.type, {username, usernames, context});
     } else if (params?.type === EventMessageType.RENAME_CHAT) {
-      text = t('chat:event.' + params.type, {username, title});
+      text = t('chat:event.' + params.type, {username, title, context});
     } else if (params?.type === EventMessageType.LEAVE_CHAT) {
-      text = t('chat:event.' + params.type, {username});
+      text = t('chat:event.' + params.type, {username, context});
     } else if (params?.type === EventMessageType.CLEAR_CHAT) {
       text = t('chat:event.' + params.type);
     }

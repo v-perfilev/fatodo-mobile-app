@@ -15,10 +15,10 @@ const ChatListMessageEvent = ({message}: ChatListMessageEventProps) => {
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const {t} = useTranslation();
   const params = MessageUtils.parseEventMessage(message);
-  const messageUsers = useAppSelector((state) => userSelector(state, message.userId));
+  const messageUser = useAppSelector((state) => userSelector(state, message.userId));
   const paramUsers = useAppSelector((state) => usersSelector(state, params.ids || []));
 
-  const text = MessageUtils.buildEventMessageText(params, messageUsers, paramUsers, t);
+  const text = MessageUtils.buildEventMessageText(params, messageUser, paramUsers, t);
 
   return (
     <Text isTruncated color="gray.400" fontSize="xs">

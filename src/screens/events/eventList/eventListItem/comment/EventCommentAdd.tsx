@@ -18,14 +18,27 @@ const EventCommentAdd = ({user, group, item, comment, date}: WithEventCommentPro
 
   const image = <UserView user={user} picSize="md" />;
 
+  const context = user?.gender;
   let content = null;
 
   if (Group) {
-    content = <Trans i18nKey="event:comment.add.contentWithGroup" components={{user: <User />, group: <Group />}} />;
+    content = (
+      <Trans
+        i18nKey="event:comment.add.contentWithGroup"
+        context={context}
+        components={{user: <User />, group: <Group />}}
+      />
+    );
   }
 
   if (Item) {
-    content = <Trans i18nKey="event:comment.add.contentWithItem" components={{user: <User />, item: <Item />}} />;
+    content = (
+      <Trans
+        i18nKey="event:comment.add.contentWithItem"
+        context={context}
+        components={{user: <User />, item: <Item />}}
+      />
+    );
   }
 
   const loading = !user || !(!!group || !!item) || !comment;

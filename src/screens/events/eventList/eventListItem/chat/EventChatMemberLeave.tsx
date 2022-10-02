@@ -16,7 +16,10 @@ const EventChatMemberLeave = ({user, chat, date}: WithEventChatProps) => {
 
   const image = <UserView user={user} picSize="md" />;
 
-  const content = <Trans i18nKey="event:chat.memberLeave.content" components={{user: <User />, chat: <Chat />}} />;
+  const context = user?.gender;
+  const content = (
+    <Trans i18nKey="event:chat.memberLeave.content" context={context} components={{user: <User />, chat: <Chat />}} />
+  );
 
   const loading = !user || !chat;
 

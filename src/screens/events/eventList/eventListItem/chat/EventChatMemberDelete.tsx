@@ -18,8 +18,13 @@ const EventChatMemberDelete = ({user, chat, users, date}: WithEventChatProps) =>
 
   const image = <UserView user={user} picSize="md" />;
 
+  const context = user?.gender;
   const content = (
-    <Trans i18nKey="event:chat.memberDelete.content" components={{user: <User />, chat: <Chat />, users: <Users />}} />
+    <Trans
+      i18nKey="event:chat.memberDelete.content"
+      context={context}
+      components={{user: <User />, chat: <Chat />, users: <Users />}}
+    />
   );
 
   const loading = !user || !chat || !users.length;

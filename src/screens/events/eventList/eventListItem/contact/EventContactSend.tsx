@@ -15,8 +15,13 @@ const EventContactSend = ({firstUser, secondUser, date}: WithEventContactProps) 
 
   const image = <UserView user={firstUser} picSize="md" />;
 
+  const context = firstUser?.gender;
   const content = (
-    <Trans i18nKey="event:contact.send.content" components={{firstUser: <FirstUser />, secondUser: <SecondUser />}} />
+    <Trans
+      i18nKey="event:contact.send.content"
+      context={context}
+      components={{firstUser: <FirstUser />, secondUser: <SecondUser />}}
+    />
   );
 
   const loading = !firstUser || !secondUser;

@@ -18,8 +18,13 @@ const EventChatCreate = ({user, chat, users, date}: WithEventChatProps) => {
 
   const image = <UserView user={user} picSize="md" />;
 
+  const context = user?.gender;
   const content = (
-    <Trans i18nKey="event:chat.create.content" components={{user: <User />, chat: <Chat />, users: <Users />}} />
+    <Trans
+      i18nKey="event:chat.create.content"
+      context={context}
+      components={{user: <User />, chat: <Chat />, users: <Users />}}
+    />
   );
 
   const loading = !user || !chat || !users.length;

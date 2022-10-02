@@ -18,9 +18,11 @@ const EventItemMemberDelete = ({user, group, users, date}: WithEventItemProps) =
 
   const image = <UserView user={user} picSize="md" />;
 
+  const context = user?.gender;
   const content = (
     <Trans
       i18nKey="event:item.memberDelete.content"
+      context={context}
       components={{user: <User />, group: <Group />, users: <Users />}}
     />
   );

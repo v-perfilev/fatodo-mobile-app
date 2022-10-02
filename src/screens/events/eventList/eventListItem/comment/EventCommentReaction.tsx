@@ -18,16 +18,27 @@ const EventCommentReaction = ({user, group, item, comment, reaction, date}: With
 
   const image = <UserReactionView user={user} size="md" reactionType={reaction} />;
 
+  const context = user?.gender;
   let content = null;
 
   if (Group) {
     content = (
-      <Trans i18nKey="event:comment.reaction.contentWithGroup" components={{user: <User />, group: <Group />}} />
+      <Trans
+        i18nKey="event:comment.reaction.contentWithGroup"
+        context={context}
+        components={{user: <User />, group: <Group />}}
+      />
     );
   }
 
   if (Item) {
-    content = <Trans i18nKey="event:comment.reaction.contentWithItem" components={{user: <User />, item: <Item />}} />;
+    content = (
+      <Trans
+        i18nKey="event:comment.reaction.contentWithItem"
+        context={context}
+        components={{user: <User />, item: <Item />}}
+      />
+    );
   }
 
   const loading = !user || !(!!group || !!item) || !comment;
