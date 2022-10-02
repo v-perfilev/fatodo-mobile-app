@@ -26,10 +26,13 @@ export const MAX_REFRESH_HEIGHT = 200;
 export const AVATARS_IN_CARD = 3;
 
 // SKELETONS
-export const CARD_ITEMS_COUNT = 5;
-export const GROUP_ITEMS_COUNT = 20;
-export const EVENT_ITEMS_COUNT = 20;
-export const CONTACT_ITEMS_COUNT = 20;
+export const GROUP_ITEM_SKELETONS_COUNT = 5;
+export const ITEM_SKELETONS_COUNT = 20;
+export const EVENT_SKELETONS_COUNT = 20;
+export const CONTACT_SKELETONS_COUNT = 20;
+export const CHATS_SKELETONS_COUNT = 20;
+export const MESSAGE_SKELETONS_COUNT = 20;
+export const COMMENT_SKELETONS_COUNT = 20;
 
 // IMAGES
 export const IMAGE_SIZE = 500;
@@ -45,8 +48,6 @@ export const SMALL_SPACE = 1;
 export const TIMEOUT_BEFORE_MARK_AS_READ = 1000;
 export const CHATS_FILTER_HEIGHT = 50;
 export const CHATS_INPUT_HEIGHT = 50;
-export const CHATS_ITEMS_COUNT = 20;
-export const CHAT_ITEMS_COUNT = 20;
 
 // COMMENTS
 export const COMMENTS_INPUT_HEIGHT = 50;

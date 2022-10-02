@@ -4,7 +4,7 @@ import {Skeleton} from 'native-base';
 
 const MessageOutcomingSkeleton = () => {
   return (
-    <FHStack w="100%" px="2" py="4" justifyContent="flex-end" defaultSpace alignItems="center">
+    <FHStack w="100%" p="2" justifyContent="flex-end" defaultSpace alignItems="center">
       <Skeleton w="70%" h="60px" />
     </FHStack>
   );

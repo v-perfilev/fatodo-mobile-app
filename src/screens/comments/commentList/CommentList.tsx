@@ -20,11 +20,12 @@ import {COMMENTS_INPUT_HEIGHT, HEADER_HEIGHT} from '../../../constants';
 import RefreshableFlatList, {
   RefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/RefreshableFlatList';
+import CommentListSkeleton from '../components/skeletons/CommentListSkeleton';
 
 type CommentListProps = WithCommentsProps;
 
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
-const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT + 50};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 
 const CommentList = ({loading, colorScheme}: CommentListProps) => {
   const dispatch = useAppDispatch();
@@ -88,6 +89,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
         nextNode={<CommentListControl reference={reference} clearReference={clearReference} />}
         refresh={refresh}
         loading={loading}
+        loadingPlaceholder={<CommentListSkeleton />}
         inverted
         ListEmptyComponent={<CommentListStub />}
         data={comments}
