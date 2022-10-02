@@ -41,6 +41,16 @@ export class ChatsActions {
     dispatch(chatsSlice.actions.removeUnreadMessage(message));
   };
 
+  static fetchChatThunk = createAsyncThunk<Chat, string, AsyncThunkConfig>(
+    PREFIX + 'fetchChat',
+    async (chatId, thunkAPI) => {
+      const result = await ChatService.getChatById(chatId);
+      const chatUserIds = ChatUtils.extractUserIds([result.data]);
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(chatUserIds));
+      return result.data;
+    },
+  );
+
   static fetchChatsThunk = createAsyncThunk<PageableList<Chat>, number, AsyncThunkConfig>(
     PREFIX + 'fetchChats',
     async (offset, thunkAPI) => {

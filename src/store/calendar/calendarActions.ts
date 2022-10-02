@@ -1,15 +1,20 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AsyncThunkConfig} from '../store';
+import {AppDispatch, AsyncThunkConfig} from '../store';
 import NotificationService from '../../services/NotificationService';
 import {InfoActions} from '../info/infoActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
 import {CalendarMonth} from '../../models/Calendar';
 import {CALENDAR_LOAD_INDENT} from '../../constants';
+import calendarSlice from './calendarSlice';
 
 const PREFIX = 'calendar/';
 
 export class CalendarActions {
+  static reset = () => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.reset());
+  };
+
   static handleMonthThunk = createAsyncThunk<void, CalendarMonth, AsyncThunkConfig>(
     PREFIX + 'handleMonth',
     async (month, thunkAPI) => {

@@ -96,7 +96,7 @@ export class GroupActions {
     PREFIX + 'updateItemArchived',
     async (item, thunkAPI) => {
       const response = await ItemService.updateItemArchived(item.id, !item.archived);
-      thunkAPI.dispatch(groupsSlice.actions.updateItem(response.data));
+      thunkAPI.dispatch(GroupActions.updateItem(response.data));
       thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
       return response.data;
     },

@@ -94,6 +94,13 @@ const chatsSlice = createSlice({
   },
   extraReducers: (builder) => {
     /*
+    fetchChat
+    */
+    builder.addCase(ChatsActions.fetchChatThunk.fulfilled, (state, action) => {
+      chatsSlice.caseReducers.setChats(state, {...action, payload: [action.payload]});
+    });
+
+    /*
     fetchChats
     */
     builder.addCase(ChatsActions.fetchChatsThunk.fulfilled, (state, action) => {

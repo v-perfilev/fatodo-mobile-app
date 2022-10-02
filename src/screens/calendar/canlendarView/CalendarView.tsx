@@ -3,11 +3,12 @@ import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {Dimensions, ListRenderItemInfo, NativeScrollEvent, NativeSyntheticEvent, ScrollView} from 'react-native';
 import FlatList, {FlatListType} from '../../../components/scrollable/FlatList';
-import {useAppDispatch} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CalendarViewContainer from './CalendarViewContainer';
 import FBox from '../../../components/boxes/FBox';
 import {CalendarActions} from '../../../store/calendar/calendarActions';
 import CalendarViewHeader from './CalendarViewHeader';
+import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 
 const width = Dimensions.get('window').width;
 const months = CalendarUtils.generateAllCalendarMonths();
@@ -17,6 +18,7 @@ const getInitialIndex = (month: CalendarMonth): number => monthKeys.indexOf(mont
 
 const CalendarView = () => {
   const dispatch = useAppDispatch();
+  const shouldLoad = useAppSelector(CalendarSelectors.shouldLoad);
   const listRef = useRef<FlatListType>();
   const childRefMap = useRef<Map<string, MutableRefObject<ScrollView>>>(new Map());
   const initialMonth = useRef<CalendarMonth>(getInitialMonth());
@@ -51,7 +53,6 @@ const CalendarView = () => {
       const index = Math.round(offset / width);
       if (index < months.length) {
         const activeMonth = months[index];
-        loadReminders(activeMonth);
         setActiveMonth(activeMonth);
       }
     }
@@ -64,7 +65,6 @@ const CalendarView = () => {
     if (index && index >= 0 && index < months.length) {
       const activeMonth = months[index];
       scrollToItem(index, false);
-      loadReminders(activeMonth);
       setActiveMonth(activeMonth);
     }
   }, []);
@@ -83,8 +83,8 @@ const CalendarView = () => {
   );
 
   useEffect(() => {
-    loadReminders(initialMonth.current);
-  }, []);
+    loadReminders(activeMonth);
+  }, [shouldLoad, activeMonth]);
 
   return (
     <FBox width={width}>

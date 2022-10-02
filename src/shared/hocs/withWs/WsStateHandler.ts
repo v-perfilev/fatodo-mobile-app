@@ -149,14 +149,20 @@ export class WsStateHandler {
 
   private handleItemMemberAddEvent = (msg: WsEvent<GroupMember[]>): void => {
     const members = msg.payload;
-    this.dispatch(GroupsActions.addMembers(members));
+    const memberIds = members.map((m) => m.userId);
+    if (memberIds.includes(this.account.id)) {
+      const groupId = msg.payload[0].groupId;
+      this.dispatch(GroupsActions.fetchGroupThunk(groupId));
+    } else {
+      this.dispatch(GroupsActions.addMembers(members));
+    }
   };
 
   private handleItemMemberDeleteEvent = (msg: WsEvent<GroupMember[]>): void => {
-    const groupId = msg.payload[0].groupId;
     const members = msg.payload;
     const memberIds = members.map((m) => m.userId);
     if (memberIds.includes(this.account.id)) {
+      const groupId = msg.payload[0].groupId;
       this.dispatch(GroupsActions.removeGroup(groupId));
     } else {
       this.dispatch(GroupsActions.removeMembers(members));
@@ -164,9 +170,9 @@ export class WsStateHandler {
   };
 
   private handleItemMemberLeaveEvent = (msg: WsEvent<GroupMember>): void => {
-    const groupId = msg.payload.groupId;
     const member = msg.payload;
     if (member.userId === this.account.id) {
+      const groupId = msg.payload.groupId;
       this.dispatch(GroupsActions.removeGroup(groupId));
     } else {
       this.dispatch(GroupsActions.removeMembers([member]));
@@ -191,7 +197,14 @@ export class WsStateHandler {
   };
 
   private handleChatMemberAddEvent = (msg: WsEvent<ChatMember[]>): void => {
-    this.dispatch(ChatsActions.addMembers(msg.payload));
+    const members = msg.payload;
+    const memberIds = members.map((m) => m.userId);
+    if (memberIds.includes(this.account.id)) {
+      const chatId = msg.payload[0].chatId;
+      this.dispatch(ChatsActions.fetchChatThunk(chatId));
+    } else {
+      this.dispatch(ChatsActions.addMembers(msg.payload));
+    }
   };
 
   private handleChatMemberDeleteEvent = (msg: WsEvent<ChatMember[]>): void => {
@@ -216,20 +229,20 @@ export class WsStateHandler {
   private handleChatMessageCreateEvent = (msg: WsEvent<Message>): void => {
     this.dispatch(ChatsActions.setChatLastMessageAction(msg.payload));
     this.dispatch(ChatsActions.increaseMessageCountAction(msg.payload));
-    this.dispatch(ChatActions.addMessage(msg.payload));
+    this.dispatch(ChatActions.addMessage(msg.payload, this.account));
   };
 
   private handleChatMessageUpdateEvent = (msg: WsEvent<Message>): void => {
     this.dispatch(ChatsActions.updateChatLastMessageAction(msg.payload));
-    this.dispatch(ChatActions.updateMessage(msg.payload));
+    this.dispatch(ChatActions.updateMessage(msg.payload, this.account));
   };
 
   private handleChatReactionEvent = (msg: WsEvent<MessageReaction>): void => {
-    this.dispatch(ChatActions.setMessageReaction(msg.payload));
+    this.dispatch(ChatActions.setMessageReaction(msg.payload, this.account));
   };
 
   private handleChatStatusEvent = (msg: WsEvent<MessageStatus>): void => {
-    this.dispatch(ChatActions.setMessageStatus(msg.payload));
+    this.dispatch(ChatActions.setMessageStatus(msg.payload, this.account));
   };
 
   /*
