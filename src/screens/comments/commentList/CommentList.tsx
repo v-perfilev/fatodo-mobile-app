@@ -13,13 +13,13 @@ import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {CommentsActions} from '../../../store/comments/commentsActions';
 import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import CommentListItem from './commentListItem/CommentListItem';
-import CollapsableRefreshableFlatList, {
-  CollapsableRefreshableFlatListChildrenProps,
-} from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {COMMENTS_INPUT_HEIGHT, HEADER_HEIGHT} from '../../../constants';
+import RefreshableFlatList, {
+  RefreshableFlatListChildrenProps,
+} from '../../../components/scrollable/RefreshableFlatList';
 
 type CommentListProps = WithCommentsProps;
 
@@ -73,7 +73,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
 
   const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
   const cornerManagement = useCallback(
-    ({scrollY}: CollapsableRefreshableFlatListChildrenProps) => (
+    ({scrollY}: RefreshableFlatListChildrenProps) => (
       <CornerManagement buttons={buttons} scrollY={scrollY} bottomPadding={COMMENTS_INPUT_HEIGHT} />
     ),
     [],
@@ -81,7 +81,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <CollapsableRefreshableFlatList
+      <RefreshableFlatList
         containerStyle={containerStyle}
         loaderStyle={loaderStyle}
         header={<Header />}
@@ -97,7 +97,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
         ref={listRef}
       >
         {cornerManagement}
-      </CollapsableRefreshableFlatList>
+      </RefreshableFlatList>
     </ThemeProvider>
   );
 };

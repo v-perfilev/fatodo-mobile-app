@@ -4,7 +4,7 @@ import {Path} from 'react-native-svg';
 
 const GroupsIcon = (props: IIconProps) => {
   return (
-    <Icon viewBox="0 0 24 24" {...props}>
+    <Icon pointerEvents="none" viewBox="0 0 24 24" {...props}>
       <Path
         fill="currentColor"
         d="M16,15H9V13H16V15M19,11H9V9H19V11M19,7H9V5H19V7M3,5V21H19V23H3A2,2 0 0,1 1,21V5H3M21,1A2,2 0 0,1

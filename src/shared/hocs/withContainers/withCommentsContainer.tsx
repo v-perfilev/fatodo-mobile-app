@@ -28,7 +28,7 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
     dispatch(CommentsActions.init(routeTargetId));
     dispatch(CommentsActions.fetchCommentsThunk({targetId: routeTargetId, offset: 0}))
       .unwrap()
-      .catch((status) => (status !== 404 ? goBack() : null))
+      .catch(() => goBack())
       .finally(() => setLoading(false));
   };
 

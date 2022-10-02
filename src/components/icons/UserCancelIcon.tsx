@@ -4,7 +4,7 @@ import {Path} from 'react-native-svg';
 
 const UserCancelIcon = (props: IIconProps) => {
   return (
-    <Icon viewBox="0 0 24 24" {...props}>
+    <Icon pointerEvents="none" viewBox="0 0 24 24" {...props}>
       <Path
         fill="currentColor"
         d="M10 4A4 4 0 0 0 6 8A4 4 0 0 0 10 12A4 4 0 0 0 14 8A4 4 0 0 0 10 4M17.5 13C15 13 13 15 13 17.5C13 20 15 22

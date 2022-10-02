@@ -36,13 +36,10 @@ export class CommentsActions {
     {targetId: string; offset: number},
     AsyncThunkConfig
   >(PREFIX + 'fetchComments', async ({targetId, offset}, thunkAPI) => {
-    return await CommentService.getAllPageable(targetId, offset)
-      .then((response: AxiosResponse<PageableList<Comment>>) => {
-        const commentUserIds = CommentUtils.extractUserIds(response.data.data);
-        thunkAPI.dispatch(InfoActions.handleUserIdsThunk(commentUserIds));
-        return response.data;
-      })
-      .catch((response: AxiosResponse) => thunkAPI.rejectWithValue(response.status));
+    const response = await CommentService.getAllPageable(targetId, offset);
+    const commentUserIds = CommentUtils.extractUserIds(response.data.data);
+    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(commentUserIds));
+    return response.data;
   });
 
   static refreshCommentsThunk = createAsyncThunk<PageableList<Comment>, string, AsyncThunkConfig>(

@@ -54,26 +54,29 @@ const ContactNavigator = () => {
     ) : null;
   };
 
-  const tabBarColor = theme.colors.white;
   const indicatorColor = theme.colors.secondary['500'];
   const indicatorStyle = {backgroundColor: indicatorColor, height: 3};
   const tabBarStyle: StyleProp<ViewStyle> = {
-    height: HEADER_HEIGHT,
-    flexGrow: 1,
     shadowOffset: {width: 0, height: 0},
     justifyContent: 'center',
-    backgroundColor: tabBarColor,
+    backgroundColor: theme.colors.white,
   };
 
   const renderTabBarItem = (props: TabBarItemProps<ContactRoute>): ReactElement => {
     return (
-      <PressableButton flex="1" h={HEADER_HEIGHT} onPress={props.onPress} key={props.route.key}>
-        <FBox flexGrow="1" justifyContent="center" alignItems="center">
-          <FHStack smallSpace mt="3px">
-            <Text color="primary.500">{t(`contact:${props.route.key}.title`)}</Text>
-            {renderBadge(props.route)}
-          </FHStack>
-        </FBox>
+      <PressableButton
+        flexGrow="1"
+        w="33.3%"
+        h={HEADER_HEIGHT}
+        onPress={props.onPress}
+        key={props.route.key}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <FHStack smallSpace mt="3px">
+          <Text color="primary.500">{t(`contact:${props.route.key}.title`)}</Text>
+          {renderBadge(props.route)}
+        </FHStack>
       </PressableButton>
     );
   };

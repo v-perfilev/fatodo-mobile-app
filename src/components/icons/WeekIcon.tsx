@@ -4,7 +4,7 @@ import {Path} from 'react-native-svg';
 
 const WeekIcon = (props: IIconProps) => {
   return (
-    <Icon viewBox="0 0 24 24" {...props}>
+    <Icon pointerEvents="none" viewBox="0 0 24 24" {...props}>
       <Path
         fill="currentColor"
         d="M6 1H8V3H16V1H18V3H19C20.11 3 21 3.9 21 5V19C21 20.11 20.11 21 19 21H5C3.89

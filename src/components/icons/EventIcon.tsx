@@ -4,7 +4,7 @@ import {Path} from 'react-native-svg';
 
 const EventIcon = (props: IIconProps) => {
   return (
-    <Icon viewBox="0 0 24 24" {...props}>
+    <Icon pointerEvents="none" viewBox="0 0 24 24" {...props}>
       <Path
         fill="currentColor"
         d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89

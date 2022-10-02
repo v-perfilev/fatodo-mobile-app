@@ -25,7 +25,12 @@ import withRootContainer from './shared/hocs/withContainers/withRootContainer';
 import DrawerNavigator from './navigators/DrawerNavigator';
 
 // ignore some warnings
-const ignoredLogPatterns = ['Require cycle', 'Possible Unhandled Promise Rejection', 'NativeBase:'];
+const ignoredLogPatterns = [
+  'Require cycle',
+  'Possible Unhandled Promise Rejection',
+  'NativeBase:',
+  'EventEmitter.removeListener',
+];
 LogBox.ignoreLogs(ignoredLogPatterns);
 
 // setup push notification

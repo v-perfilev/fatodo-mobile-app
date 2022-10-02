@@ -39,7 +39,7 @@ const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
         grow
         smallSpace
         borderWidth="1"
-        borderColor="gray.300"
+        borderColor="gray.100"
         borderRadius="5"
         backgroundColor="gray.50"
         px="2"

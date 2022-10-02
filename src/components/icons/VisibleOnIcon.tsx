@@ -4,7 +4,7 @@ import {Path} from 'react-native-svg';
 
 const VisibleOnIcon = (props: IIconProps) => {
   return (
-    <Icon viewBox="0 0 24 24" {...props}>
+    <Icon pointerEvents="none" viewBox="0 0 24 24" {...props}>
       <Path fill="none" d="M0 0h24v24H0z" />
       <Path
         fill="currentColor"

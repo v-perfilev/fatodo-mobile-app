@@ -2,16 +2,16 @@ import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import FHStack from '../../../components/boxes/FHStack';
 import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
-import SendMessageIcon from '../../../components/icons/SendMessageIcon';
-import IconButton from '../../../components/controls/IconButton';
 import {useTranslation} from 'react-i18next';
 import {CommentDTO} from '../../../models/dto/CommentDTO';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
-import {CommentsActions} from '../../../store/comments/commentsActions';
 import {Comment} from '../../../models/Comment';
 import FVStack from '../../../components/boxes/FVStack';
 import CommentListControlReference from './CommentListControlReference';
 import {COMMENTS_INPUT_HEIGHT} from '../../../constants';
+import SendMessageIcon from '../../../components/icons/SendMessageIcon';
+import IconButton from '../../../components/controls/IconButton';
+import {CommentsActions} from '../../../store/comments/commentsActions';
 
 type CommentsViewControlProps = {
   reference: Comment;
