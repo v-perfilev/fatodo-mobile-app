@@ -30,7 +30,7 @@ const commentsSlice = createSlice({
 
     setComments: (state: CommentsState, action: PayloadAction<Comment[]>) => {
       const comments = action.payload;
-      if (state.targetId === comments[0].targetId) {
+      if (comments.length > 0 && state.targetId === comments[0].targetId) {
         state.comments = filterComments([...comments, ...state.comments]);
       }
     },

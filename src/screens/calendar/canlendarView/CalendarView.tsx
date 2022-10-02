@@ -31,10 +31,6 @@ const CalendarView = () => {
     Array.from(childRefMap.current.values()).forEach(scrollToTop);
   }, []);
 
-  const loadReminders = useCallback((month: CalendarMonth): void => {
-    dispatch(CalendarActions.handleMonthThunk(month));
-  }, []);
-
   const scrollToItem = useCallback(
     (index: number, animated = true): void => {
       listRef.current?.scrollToIndex({index, animated});
@@ -83,7 +79,8 @@ const CalendarView = () => {
   );
 
   useEffect(() => {
-    loadReminders(activeMonth);
+    const loadReminders = async () => dispatch(CalendarActions.handleMonthThunk(activeMonth));
+    loadReminders().finally();
   }, [shouldLoad, activeMonth]);
 
   return (
