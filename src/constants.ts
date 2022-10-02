@@ -45,6 +45,8 @@ export const SMALL_SPACE = 1;
 export const TIMEOUT_BEFORE_MARK_AS_READ = 1000;
 export const CHATS_FILTER_HEIGHT = 50;
 export const CHATS_INPUT_HEIGHT = 50;
+export const CHATS_ITEMS_COUNT = 20;
+export const CHAT_ITEMS_COUNT = 20;
 
 // COMMENTS
 export const COMMENTS_INPUT_HEIGHT = 50;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Skeleton} from 'native-base';
@@ -26,4 +26,4 @@ const GroupItemSkeleton = () => {
   );
 };
 
-export default GroupItemSkeleton;
+export default memo(GroupItemSkeleton);

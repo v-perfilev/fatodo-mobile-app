@@ -21,11 +21,12 @@ import PlusIcon from '../../../components/icons/PlusIcon';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
 import {useIsFocused} from '@react-navigation/native';
+import ChatListSkeleton from '../components/skeletons/ChatListSkeleton';
 
 type ControlType = 'regular' | 'filtered';
 
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT + CHATS_FILTER_HEIGHT};
-const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: CHATS_FILTER_HEIGHT};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT + CHATS_FILTER_HEIGHT};
 
 const ChatList = () => {
   const dispatch = useAppDispatch();
@@ -120,6 +121,7 @@ const ChatList = () => {
       refresh={type === 'regular' ? refresh : undefined}
       previousNode={<ChatListControl setFilter={setFilter} />}
       loading={loading || filterLoading}
+      loadingPlaceholder={<ChatListSkeleton />}
       ListEmptyComponent={<ChatListStub />}
       data={type === 'regular' ? chats : filteredChats}
       render={renderItem}

@@ -20,6 +20,7 @@ import CornerManagement from '../../../components/controls/CornerManagement';
 import RefreshableFlatList, {
   RefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/RefreshableFlatList';
+import MessageListSkeleton from '../components/skeletons/MessageListSkeleton';
 
 type ChatViewProps = WithChatProps;
 
@@ -126,6 +127,7 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
       nextNode={<ChatViewControl />}
       refresh={refresh}
       loading={loading}
+      loadingPlaceholder={<MessageListSkeleton />}
       inverted
       ListEmptyComponent={<ChatViewStub />}
       data={chatItems}

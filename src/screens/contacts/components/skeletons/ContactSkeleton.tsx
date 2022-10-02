@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Skeleton} from 'native-base';
 
@@ -14,4 +14,4 @@ const ContactSkeleton = () => {
   );
 };
 
-export default ContactSkeleton;
+export default memo(ContactSkeleton);

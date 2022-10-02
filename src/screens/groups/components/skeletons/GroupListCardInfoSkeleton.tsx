@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Skeleton} from 'native-base';
 
@@ -12,4 +12,4 @@ const GroupListCardInfoSkeleton = () => {
   );
 };
 
-export default GroupListCardInfoSkeleton;
+export default memo(GroupListCardInfoSkeleton);
