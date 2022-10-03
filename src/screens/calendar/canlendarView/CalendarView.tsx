@@ -79,8 +79,7 @@ const CalendarView = () => {
   );
 
   useEffect(() => {
-    const loadReminders = async () => dispatch(CalendarActions.handleMonthThunk(activeMonth));
-    loadReminders().finally();
+    dispatch(CalendarActions.handleMonthThunk(activeMonth));
   }, [shouldLoad, activeMonth]);
 
   return (

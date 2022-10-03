@@ -30,7 +30,7 @@ const CalendarViewDate = ({month, date, selectDate, isActiveDate}: CalendarViewD
   };
 
   const bg = useColorModeValue(
-    calcBgColor('primary.50', 'gray.50', 'gray.200'),
+    calcBgColor('primary.100', 'gray.50', 'gray.200'),
     calcBgColor('primary.900', 'gray.700', 'gray.800'),
   );
   const color = useColorModeValue('gray.500', 'gray.300');

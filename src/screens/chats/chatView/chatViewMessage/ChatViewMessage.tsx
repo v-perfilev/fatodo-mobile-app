@@ -1,6 +1,6 @@
 import {ChatItemType, Message} from '../../../../models/Message';
 import {useAppSelector} from '../../../../store/store';
-import React, {useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {MessageUtils} from '../../../../shared/utils/MessageUtils';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import ChatViewMessageEvent from './ChatViewMessageEvent';
@@ -36,4 +36,4 @@ const ChatViewMessage = ({message}: ChatViewMessageProps) => {
   );
 };
 
-export default ChatViewMessage;
+export default memo(ChatViewMessage);

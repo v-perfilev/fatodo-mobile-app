@@ -7,6 +7,8 @@ type ThemeProviderProps = PropsWithChildren<{
   theme?: ITheme;
 }>;
 
+type RootThemeProviderProps = PropsWithChildren<{}>;
+
 type ThemeProviderChildProps = PropsWithChildren<{
   parentColorMode?: ColorMode;
 }>;
@@ -51,12 +53,21 @@ const ThemeProviderChild = ({parentColorMode, children}: ThemeProviderChildProps
 
 const ThemeProvider = ({theme = defaultTheme, children}: ThemeProviderProps) => {
   const {colorMode} = useColorMode();
-
   const preparedTheme: ITheme = {...theme, config: {initialColorMode: colorMode}};
 
-  return (
-    <NativeBaseProvider theme={preparedTheme} config={config} colorModeManager={colorModeManager}>
+  return theme !== defaultTheme ? (
+    <NativeBaseProvider theme={preparedTheme} config={config}>
       <ThemeProviderChild parentColorMode={colorMode}>{children}</ThemeProviderChild>
+    </NativeBaseProvider>
+  ) : (
+    <>{children}</>
+  );
+};
+
+export const RootThemeProvider = ({children}: RootThemeProviderProps) => {
+  return (
+    <NativeBaseProvider theme={defaultTheme} config={config} colorModeManager={colorModeManager}>
+      {children}
     </NativeBaseProvider>
   );
 };
