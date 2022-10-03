@@ -21,7 +21,9 @@ const withChatContainer = (Component: ComponentType<WithChatProps>) => (props: a
   const routeChatId = route.params.chatId;
   const chat = useAppSelector(ChatSelectors.chat);
 
-  const goBack = (): void => navigation.goBack();
+  const goBack = (): void => {
+    navigation.goBack();
+  };
 
   const selectChat = (): void => {
     dispatch(ChatActions.selectChatThunk(routeChat))

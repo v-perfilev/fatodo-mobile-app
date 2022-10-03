@@ -23,6 +23,14 @@ export const LINEAR_GRADIENT = {
   },
 };
 
+export const LINEAR_GRADIENT_DARK = {
+  linearGradient: {
+    colors: ['tertiary.900', 'tertiary.800'],
+    start: [0, 1],
+    end: [1, 0],
+  },
+};
+
 export class ThemeFactory {
   private static yellowTheme = extendTheme({
     colors: yellowPalette,

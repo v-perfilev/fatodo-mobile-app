@@ -12,6 +12,8 @@ import {COMMENTS_INPUT_HEIGHT} from '../../../constants';
 import SendMessageIcon from '../../../components/icons/SendMessageIcon';
 import IconButton from '../../../components/controls/IconButton';
 import {CommentsActions} from '../../../store/comments/commentsActions';
+import {useColorModeValue} from 'native-base';
+import {DARK_BG, LIGHT_BG} from '../../../shared/themes/colors';
 
 type CommentsViewControlProps = {
   reference: Comment;
@@ -44,6 +46,9 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
     dispatch(CommentsActions.sendCommentThunk({targetId, dto}));
   };
 
+  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
+  const borderBg = useColorModeValue('gray.200', 'gray.700');
+
   return (
     <FHStack
       position="absolute"
@@ -56,8 +61,8 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
       py={reference ? 1 : 2}
       alignItems="center"
       borderTopWidth="1"
-      borderTopColor="gray.200"
-      bgColor="white"
+      borderTopColor={borderBg}
+      bgColor={bg}
     >
       <FVStack grow px="2" pb={reference ? 1 : 0}>
         {reference && <CommentListControlReference reference={reference} clearReference={clearReference} />}

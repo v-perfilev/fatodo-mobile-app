@@ -1,5 +1,5 @@
 import React, {Dispatch, memo, SetStateAction, useCallback} from 'react';
-import {Text} from 'native-base';
+import {Text, useColorModeValue} from 'native-base';
 import PaperBox from '../../../components/surfaces/PaperBox';
 import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
@@ -8,6 +8,7 @@ import {CalendarDate, CalendarMonth} from '../../../models/Calendar';
 import CalendarViewDateReminders from './CalendarViewDateReminders';
 import {useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
+import {ColorType} from 'native-base/lib/typescript/components/types';
 
 type CalendarViewDateProps = {
   month: CalendarMonth;
@@ -24,16 +25,22 @@ const CalendarViewDate = ({month, date, selectDate, isActiveDate}: CalendarViewD
     date.isCurrentMonth && selectDate(date);
   };
 
-  let bg = date.isCurrentMonth ? 'gray.50' : 'gray.200';
-  bg = isActiveDate && date.isCurrentMonth ? 'primary.50' : bg;
-  let border = isActiveDate && date.isCurrentMonth ? 'primary.500' : bg;
+  const calcBgColor = (activeColor: ColorType, currentColor: ColorType, otherColor: ColorType): ColorType => {
+    return isActiveDate && date.isCurrentMonth ? activeColor : date.isCurrentMonth ? currentColor : otherColor;
+  };
+
+  const bg = useColorModeValue(
+    calcBgColor('primary.50', 'gray.50', 'gray.200'),
+    calcBgColor('primary.900', 'gray.700', 'gray.800'),
+  );
+  const color = useColorModeValue('gray.500', 'gray.300');
 
   return (
     <PressableButton m="1" flexGrow="1" flexBasis="1" onPress={handlePress}>
-      <PaperBox height="55px" bg={bg} borderWidth="2" borderColor={border}>
+      <PaperBox height="55px" bg={bg} borderWidth="0">
         <FVStack>
           <FHStack justifyContent="flex-end">
-            <Text fontSize="14" fontWeight="bold" color="gray.500">
+            <Text fontSize="14" fontWeight="bold" color={color}>
               {date.date}
             </Text>
           </FHStack>

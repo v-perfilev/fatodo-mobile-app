@@ -55,7 +55,7 @@ export class ChatActions {
       const result = await ChatService.getChatById(chatId);
       const chatUserIds = ChatUtils.extractUserIds([result.data]);
       thunkAPI.dispatch(InfoActions.handleUserIdsThunk(chatUserIds));
-      await thunkAPI.dispatch(ChatActions.fetchMessagesThunk({chatId: result.data.id, offset: 0}));
+      await thunkAPI.dispatch(ChatActions.fetchMessagesThunk({chatId, offset: 0}));
       return result.data;
     },
   );

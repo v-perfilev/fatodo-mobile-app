@@ -17,13 +17,13 @@ const IconButton = React.forwardRef((props: IconButtonProps, ref: any) => {
   const prepareColor = (scheme: ColorSchemeType): string => (scheme !== 'white' ? `${scheme}.500` : 'white');
   const prepareBgColor = (scheme: ColorSchemeType): string => prepareColor(scheme) + ':alpha.' + bgTransparency;
   const color = prepareColor(colorScheme);
-  const bgColor = bgColorScheme !== null ? prepareBgColor(bgColorScheme || colorScheme) : undefined;
+  const bg = bgColorScheme !== null ? prepareBgColor(bgColorScheme || colorScheme) : undefined;
 
   const iconElement = React.cloneElement(icon, {size, color});
 
   return (
     <PressableButton {...other} ref={ref} rounded="full" overflow="hidden">
-      <Box bgColor={bgColor} p={p}>
+      <Box bg={bg} p={p}>
         {iconElement}
       </Box>
     </PressableButton>

@@ -10,6 +10,7 @@ import {DateFormatters} from '../../shared/utils/DateFormatters';
 import {UserAccount} from '../../models/User';
 
 const initialState: ChatState = {
+  chatId: undefined,
   chat: undefined,
   messages: [],
   chatItems: [],
@@ -24,7 +25,12 @@ const chatSlice = createSlice({
       Object.assign(state, initialState);
     },
 
+    setChatId: (state: ChatState, action: PayloadAction<string>) => {
+      state.chatId = action.payload;
+    },
+
     setChat: (state: ChatState, action: PayloadAction<Chat>) => {
+      state.chatId = action.payload?.id;
       state.chat = action.payload;
     },
 
@@ -36,7 +42,7 @@ const chatSlice = createSlice({
     setMessages: (state: ChatState, action: PayloadAction<{messages: Message[]; account: UserAccount}>) => {
       const messages = action.payload.messages;
       const account = action.payload.account;
-      if (state.chat.id === messages[0].chatId) {
+      if (messages.length > 0 && state.chatId === messages[0].chatId) {
         state.messages = filterMessages([...messages, ...state.messages]);
         state.chatItems = convertMessagesToChatItems(state.messages, account);
       }
@@ -48,7 +54,7 @@ const chatSlice = createSlice({
     ) => {
       const reaction = action.payload.reaction;
       const account = action.payload.account;
-      if (state.chat.id === reaction.chatId) {
+      if (state.chatId === reaction.chatId) {
         const message = state.messages.find((m) => m.id === reaction.messageId);
         if (message) {
           message.reactions =
@@ -64,7 +70,7 @@ const chatSlice = createSlice({
     setMessageStatus: (state: ChatState, action: PayloadAction<{status: MessageStatus; account: UserAccount}>) => {
       const status = action.payload.status;
       const account = action.payload.account;
-      if (state.chat.id === status.chatId) {
+      if (state.chatId === status.chatId) {
         const message = state.messages.find((m) => m.id === status.messageId);
         if (message) {
           message.statuses = filterStatuses([status, ...message.statuses]);
@@ -82,8 +88,9 @@ const chatSlice = createSlice({
     /*
     fetchChat
     */
-    builder.addCase(ChatActions.fetchChatThunk.pending, (state) => {
+    builder.addCase(ChatActions.fetchChatThunk.pending, (state, action) => {
       chatSlice.caseReducers.reset(state);
+      chatSlice.caseReducers.setChatId(state, {...action, payload: action.meta.arg});
     });
     builder.addCase(ChatActions.fetchChatThunk.fulfilled, (state, action) => {
       chatSlice.caseReducers.setChat(state, action);

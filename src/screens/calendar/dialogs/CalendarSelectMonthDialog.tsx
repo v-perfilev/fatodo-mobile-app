@@ -47,7 +47,7 @@ const CalendarSelectMonthDialog = ({month, selectMonth, show, close}: CalendarSe
         value={value}
         setValue={setValue}
         mode="monthWithYear"
-        locale={account.info.language}
+        locale={account?.info.language}
         minDate={minDate}
         maxDate={maxDate}
       />

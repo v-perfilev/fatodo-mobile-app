@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {Item} from '../../../../models/Item';
 import {Box, IBoxProps, Text} from 'native-base';
 import FVStack from '../../../../components/boxes/FVStack';
@@ -72,4 +72,4 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
   );
 };
 
-export default memo(GroupItem);
+export default GroupItem;

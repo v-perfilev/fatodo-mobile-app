@@ -14,8 +14,8 @@ import EventsSelectors from '../store/events/eventsSelectors';
 import ChatsSelectors from '../store/chats/chatsSelectors';
 import ContactsSelectors from '../store/contacts/contactsSelectors';
 import CalendarIcon from '../components/icons/CalendarIcon';
-import CalendarView from '../screens/calendar/canlendarView/CalendarView';
 import {NavigationProps} from './RootNavigator';
+import CalendarView from '../screens/calendar/canlendarView/CalendarView';
 
 export type TabParamList = {
   Groups: NavigationProps<GroupParamList>;
@@ -48,7 +48,11 @@ const TabNavigator = () => {
   const incomingRequestCount = useAppSelector(ContactsSelectors.incomingRequestCount);
 
   return (
-    <Tab.Navigator screenOptions={{headerShown: false, lazy: false}} initialRouteName="Groups" tabBar={TabNavigatorBar}>
+    <Tab.Navigator
+      screenOptions={{headerShown: false, lazy: false, freezeOnBlur: true}}
+      initialRouteName="Groups"
+      tabBar={TabNavigatorBar}
+    >
       <Tab.Screen name="Calendar" component={CalendarView} options={{tabBarIcon: calendarIcon}} />
       <Tab.Screen
         name="Events"

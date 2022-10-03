@@ -1,7 +1,7 @@
 import React, {memo, ReactElement} from 'react';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
-import {Text} from 'native-base';
+import {Text, useColorModeValue} from 'native-base';
 import PaperBox from '../../../../components/surfaces/PaperBox';
 import EventSkeleton from '../../components/skeletons/EventSkeleton';
 import DateView from '../../../../components/views/DateView';
@@ -18,13 +18,16 @@ type EventListItemTemplateProps = {
 const EventListItemTemplate = ({image, title, content, message, date, loading}: EventListItemTemplateProps) => {
   const dateToShow = new Date(date);
 
+  const titleColor = useColorModeValue('gray.500', 'gray.400');
+  const messageBg = useColorModeValue('gray.50', 'gray.800');
+
   const template = (
     <FHStack grow px="2" py="4" defaultSpace alignItems="flex-start">
       {image}
       <FVStack grow space="2">
         <FHStack grow defaultSpace alignItems="center">
           <FHStack grow>
-            <Text color="gray.600" fontWeight="bold">
+            <Text color={titleColor} fontWeight="bold">
               {title}
             </Text>
           </FHStack>
@@ -34,7 +37,7 @@ const EventListItemTemplate = ({image, title, content, message, date, loading}: 
         </FHStack>
         <Text>{content}</Text>
         {message && (
-          <PaperBox mt="2" px="2" py="1" borderWidth="0" bg="gray.50">
+          <PaperBox mt="2" px="2" py="1" borderWidth="0" bg={messageBg}>
             <Text numberOfLines={3} isTruncated>
               {message}
             </Text>

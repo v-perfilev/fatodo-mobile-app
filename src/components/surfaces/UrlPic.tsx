@@ -1,9 +1,10 @@
 import React, {memo} from 'react';
 import {ImageUtils} from '../../shared/utils/imageUtils';
-import {Avatar, Image} from 'native-base';
+import {Avatar, Image, useColorModeValue} from 'native-base';
 import {ISizes} from 'native-base/lib/typescript/theme/base/sizes';
+import FCenter from '../boxes/FCenter';
 
-const img = require('../../../assets/images/fallback.jpg');
+const img = require('../../../assets/images/logo-grayscale.png');
 
 type UrlPicProps = {
   file: string;
@@ -17,9 +18,13 @@ const UrlPic = ({file, size, border = 0, invertedBorder}: UrlPicProps) => {
   const source = !file || ImageUtils.isUrl(file) ? file : ImageUtils.buildImageUri(file, !isBigImage);
   const borderColor = invertedBorder ? 'white' : 'tertiary.500';
 
+  const bg = useColorModeValue('white', 'gray.700');
+
   return (
-    <Avatar source={{uri: source}} size={size} borderWidth={border} borderColor={borderColor} overflow="hidden">
-      <Image source={img} width="100%" height="100%" alt="Fatodo fallback image" />
+    <Avatar bg={bg} source={{uri: source}} size={size} borderWidth={border} borderColor={borderColor} overflow="hidden">
+      <FCenter w="100%" h="100%" justifyContent="center" alignItems="center">
+        <Image source={img} width="75%" height="75%" bg={bg} alt="Fatodo fallback image" />
+      </FCenter>
     </Avatar>
   );
 };

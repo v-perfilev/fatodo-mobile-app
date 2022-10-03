@@ -23,6 +23,7 @@ import Notifications from './shared/push/notifications';
 import NotificationsRemote from './shared/push/notificationsRemote';
 import withRootContainer from './shared/hocs/withContainers/withRootContainer';
 import DrawerNavigator from './navigators/DrawerNavigator';
+import ColoredStatusBar from './components/layouts/ColoredStatusBar';
 
 // ignore some warnings
 const ignoredLogPatterns = [
@@ -62,6 +63,7 @@ const App = ({ready}: AppProps) => {
 
   return (
     <>
+      <ColoredStatusBar />
       {ready && isAuthenticated && !isSleepMode && <DrawerNavigator />}
       {ready && !isAuthenticated && <AuthNavigator />}
     </>

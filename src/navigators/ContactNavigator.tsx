@@ -7,7 +7,7 @@ import {Route, SceneMap, TabBar, TabBarItemProps, TabView} from 'react-native-ta
 import {NavigationState, SceneRendererProps} from 'react-native-tab-view/lib/typescript/types';
 import {useTranslation} from 'react-i18next';
 import FHStack from '../components/boxes/FHStack';
-import {Badge, Text, useTheme} from 'native-base';
+import {Badge, Text, useColorModeValue, useTheme} from 'native-base';
 import Header from '../components/layouts/Header';
 import ContactsSelectors from '../store/contacts/contactsSelectors';
 import {useAppSelector} from '../store/store';
@@ -15,6 +15,7 @@ import FBox from '../components/boxes/FBox';
 import {HEADER_HEIGHT} from '../constants';
 import PressableButton from '../components/controls/PressableButton';
 import {ContactInfo} from '../models/Contact';
+import {DARK_BG, LIGHT_BG} from '../shared/themes/colors';
 
 type TabBarProps = SceneRendererProps & {navigationState: NavigationState<ContactRoute>};
 
@@ -27,7 +28,7 @@ type ContactRoute = Route & {
 const initialLayout = {width: Dimensions.get('window').width};
 
 const buildRoutes = (info: ContactInfo): ContactRoute[] => [
-  {key: 'relations', title: 'test', count: info.relationCount, maxCount: 999, showBadgeAlways: true},
+  {key: 'relations', count: info.relationCount, maxCount: 999, showBadgeAlways: true},
   {key: 'incoming', count: info.incomingRequestCount, maxCount: 9, showBadgeAlways: false},
   {key: 'outcoming', count: info.outcomingRequestCount, maxCount: 9, showBadgeAlways: false},
 ];
@@ -54,12 +55,14 @@ const ContactNavigator = () => {
     ) : null;
   };
 
+  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
+
   const indicatorColor = theme.colors.secondary['500'];
   const indicatorStyle = {backgroundColor: indicatorColor, height: 3};
   const tabBarStyle: StyleProp<ViewStyle> = {
     shadowOffset: {width: 0, height: 0},
     justifyContent: 'center',
-    backgroundColor: theme.colors.white,
+    backgroundColor: bg,
   };
 
   const renderTabBarItem = (props: TabBarItemProps<ContactRoute>): ReactElement => {

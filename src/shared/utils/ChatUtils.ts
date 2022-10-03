@@ -25,9 +25,11 @@ export class ChatUtils {
 
   public static extractUserIds = (chats: Chat[]): string[] => {
     const chatUserIds = chats.flatMap((c) => c.members).map((m) => m.userId);
-    const lastMessageUserIds = chats.map((c) => c.lastMessage.userId);
+    const lastMessageUserIds = chats.map((c) => c.lastMessage?.userId).filter(FilterUtils.notUndefinedFilter);
     const eventUserIds = chats
       .map((c) => c.lastMessage)
+      .filter(FilterUtils.notNullFilter)
+      .filter(FilterUtils.notUndefinedFilter)
       .filter((m) => m.isEvent)
       .map((m) => MessageUtils.parseEventMessage(m))
       .flatMap((p) => p.ids);

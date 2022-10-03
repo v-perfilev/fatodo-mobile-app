@@ -10,6 +10,8 @@ import {useTranslation} from 'react-i18next';
 import {ChatActions} from '../../../store/chat/chatActions';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import {CHATS_INPUT_HEIGHT} from '../../../constants';
+import {useColorModeValue} from 'native-base';
+import {DARK_BG, LIGHT_BG} from '../../../shared/themes/colors';
 
 const ChatViewControl = () => {
   const dispatch = useAppDispatch();
@@ -33,6 +35,9 @@ const ChatViewControl = () => {
     setUpdater('');
   };
 
+  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
+  const borderBg = useColorModeValue('gray.200', 'gray.700');
+
   return (
     <FHStack
       position="absolute"
@@ -43,8 +48,8 @@ const ChatViewControl = () => {
       p="2"
       alignItems="center"
       borderTopWidth="1"
-      borderTopColor="gray.200"
-      bgColor="white"
+      borderTopColor={borderBg}
+      bgColor={bg}
     >
       <FBox px="2">
         <ClearableTextInput

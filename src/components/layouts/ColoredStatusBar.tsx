@@ -1,6 +1,7 @@
 import React from 'react';
-import {Box, StatusBar} from 'native-base';
+import {Box, StatusBar, useColorModeValue} from 'native-base';
 import {SafeAreaView, StatusBarStyle} from 'react-native';
+import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
 
 type ColoredStatusBarProps = {
   bgColor?: string;
@@ -8,13 +9,16 @@ type ColoredStatusBarProps = {
 };
 
 const ColoredStatusBar = ({bgColor, barStyle}: ColoredStatusBarProps) => {
-  const backgroundColor = bgColor || 'white';
-  const style = barStyle || 'dark-content';
+  const background = useColorModeValue(LIGHT_BG, DARK_BG);
+  const bar = useColorModeValue('dark-content', 'light-content');
+
+  const bg = bgColor || background;
+  const style = barStyle || bar;
 
   return (
-    <Box bgColor={backgroundColor}>
+    <Box bg={bg}>
       <SafeAreaView>
-        <StatusBar backgroundColor={backgroundColor} barStyle={style} />
+        <StatusBar backgroundColor={bg} barStyle={style} />
       </SafeAreaView>
     </Box>
   );

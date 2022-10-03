@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {ComponentType, useEffect, useState} from 'react';
 import {flowRight} from 'lodash';
-import {useToast} from 'native-base';
+import {useColorModeValue, useToast} from 'native-base';
 import withNativeBase from './withNativeBase';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import SnackSelectors from '../../store/snack/snackSelectors';
 import {SnackActions} from '../../store/snack/snackActions';
 import {ReduxSnack} from '../../models/Snack';
+import {DARK_BG, LIGHT_BG} from '../themes/colors';
 
 const withSnackDisplay = (Component: ComponentType) => (props: any) => {
   const dispatch = useAppDispatch();
@@ -27,6 +28,8 @@ const withSnackDisplay = (Component: ComponentType) => (props: any) => {
   const displayedKeys = Array.from(displayed.keys());
   const displayedMessages = Array.from(displayed.values());
 
+  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
+
   useEffect(() => {
     snackList.forEach(({message, color, key, dismissed = false}: ReduxSnack) => {
       if (dismissed) {
@@ -38,8 +41,8 @@ const withSnackDisplay = (Component: ComponentType) => (props: any) => {
         show({
           title: message,
           borderColor: color,
-          borderWidth: 2,
-          bgColor: 'white',
+          borderWidth: 1,
+          bg,
           _title: {color},
           id: key,
           onCloseComplete,

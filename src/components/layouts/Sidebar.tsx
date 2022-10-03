@@ -14,6 +14,9 @@ import LanguageMenu from '../controls/LanguageMenu';
 import OutlinedButton from '../controls/OutlinedButton';
 import Separator from './Separator';
 import {StyleProp, ViewStyle} from 'react-native';
+import ColorModeSwitch from '../controls/ColorModeSwitch';
+import {useColorModeValue} from 'native-base';
+import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
 
 const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
 
@@ -49,8 +52,10 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
     setToggleDrawer(() => navigation.toggleDrawer);
   }, []);
 
+  const backgroundColor = useColorModeValue(LIGHT_BG, DARK_BG);
+
   return (
-    <DrawerContentScrollView contentContainerStyle={flexStyle}>
+    <DrawerContentScrollView contentContainerStyle={[flexStyle, {backgroundColor}]}>
       <FVStack grow mx="3" my="4" space="6" defaultSpace>
         <UserFullView user={account} account={account} />
 
@@ -67,6 +72,7 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
           )}
         </FVStack>
 
+        <ColorModeSwitch />
         <LanguageMenu onChange={changeLanguage} />
         <OutlinedButton onPress={logout}>{t('account:actions.logout')}</OutlinedButton>
       </FVStack>

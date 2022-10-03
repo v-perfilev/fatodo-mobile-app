@@ -4,6 +4,8 @@ import React, {Dispatch, SetStateAction} from 'react';
 import {useTranslation} from 'react-i18next';
 import FBox from '../../../components/boxes/FBox';
 import {CHATS_FILTER_HEIGHT, HEADER_HEIGHT} from '../../../constants';
+import {useColorModeValue} from 'native-base';
+import {DARK_BG, LIGHT_BG} from '../../../shared/themes/colors';
 
 type ChatListControlProps = {
   setFilter: Dispatch<SetStateAction<string>>;
@@ -11,6 +13,9 @@ type ChatListControlProps = {
 
 const ChatListControl = ({setFilter}: ChatListControlProps) => {
   const {t} = useTranslation();
+
+  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
+  const inputBg = useColorModeValue('gray.100', 'gray.900');
 
   return (
     <FHStack
@@ -23,9 +28,9 @@ const ChatListControl = ({setFilter}: ChatListControlProps) => {
       py="1"
       marginTop={HEADER_HEIGHT}
       alignItems="center"
-      bgColor="white"
+      bgColor={bg}
     >
-      <FBox bg="gray.100" borderRadius="2">
+      <FBox bg={inputBg} borderRadius="2">
         <ClearableTextInput
           h="40px"
           px="2"

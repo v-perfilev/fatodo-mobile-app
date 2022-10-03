@@ -18,7 +18,7 @@
     "memberDelete": {
       "title": "Чат изменён",
       "content": "<user/> удалил <users/> из чата <chat/>",
-      "content_FEMALE": "<user/> удалила <users/> из чата <chat/>"
+      "content_FEMALE": "<user/> удалила <users/> из <chat/>"
     },
     "memberLeave": {
       "title": "Чат изменён",

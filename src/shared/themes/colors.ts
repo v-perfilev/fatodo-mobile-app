@@ -1,3 +1,6 @@
+export const LIGHT_BG = '#ffffff';
+export const DARK_BG = '#222222';
+
 export const YELLOW_COLOR = {
   50: '#fdf5e0',
   100: '#fbe5b3',

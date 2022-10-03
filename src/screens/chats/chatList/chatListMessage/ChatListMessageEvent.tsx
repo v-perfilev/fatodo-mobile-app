@@ -21,7 +21,7 @@ const ChatListMessageEvent = ({message}: ChatListMessageEventProps) => {
   const text = MessageUtils.buildEventMessageText(params, messageUser, paramUsers, t);
 
   return (
-    <Text isTruncated color="gray.400" fontSize="xs">
+    <Text isTruncated fontSize="xs">
       {text}
     </Text>
   );

@@ -100,7 +100,7 @@ const CalendarView = () => {
         initialScrollIndex={initialIndex.current}
         initialNumToRender={1}
         maxToRenderPerBatch={3}
-        windowSize={3}
+        windowSize={1}
         ref={listRef}
       />
     </FBox>

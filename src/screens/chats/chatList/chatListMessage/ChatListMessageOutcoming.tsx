@@ -19,7 +19,7 @@ const ChatListMessageOutcoming = ({message}: ChatListMessageOutcomingProps) => {
       </Text>
       {!message.isDeleted && (
         <FBox>
-          <Text isTruncated color="gray.500" fontSize="xs">
+          <Text isTruncated fontSize="xs">
             {message.text}
           </Text>
         </FBox>

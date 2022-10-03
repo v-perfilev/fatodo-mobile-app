@@ -5,7 +5,7 @@ import FVStack from '../../../../components/boxes/FVStack';
 import ReactionView from '../../../../components/views/ReactionView';
 import PressableButton from '../../../../components/controls/PressableButton';
 import FHStack from '../../../../components/boxes/FHStack';
-import {Box, Text} from 'native-base';
+import {Box, Text, useColorModeValue} from 'native-base';
 import {Comment, CommentReactionType, commentReactionTypes} from '../../../../models/Comment';
 import {CommentsActions} from '../../../../store/comments/commentsActions';
 
@@ -58,9 +58,11 @@ const CommentListItemReactions = ({comment, isOwnComment}: CommentListItemReacti
     updateActiveReaction();
   }, [comment.reactions]);
 
+  const reactionColor = useColorModeValue('gray.300', 'gray.500');
+
   const reaction = (r: CommentReactionType, key: number): ReactElement => {
     const count = reactionMap.get(r);
-    const color = r === activeReaction ? 'primary.500' : 'gray.300';
+    const color = r === activeReaction ? 'primary.500' : reactionColor;
     const onPress = handlePress(r);
 
     const iconWithCount = (

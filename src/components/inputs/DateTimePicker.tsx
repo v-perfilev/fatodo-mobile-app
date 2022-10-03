@@ -1,4 +1,4 @@
-import {Box, useTheme} from 'native-base';
+import {Box, useColorModeValue, useTheme} from 'native-base';
 import DatePicker from 'react-native-date-picker';
 import React, {useEffect} from 'react';
 import {DateUtils} from '../../shared/utils/DateUtils';
@@ -66,6 +66,8 @@ const DateTimePicker = ({value, setValue, mode, locale, minDate, maxDate}: DateT
     setValue(initialValue);
   }, []);
 
+  const textColor = useColorModeValue(theme.colors.gray['600'], theme.colors.gray['300']);
+
   return (
     <Box width={width} overflow={overflow}>
       <Box ml={marginLeft}>
@@ -75,7 +77,7 @@ const DateTimePicker = ({value, setValue, mode, locale, minDate, maxDate}: DateT
           mode={pickerMode}
           locale={localeMode}
           is24hourSource="locale"
-          textColor={theme.colors.gray['600']}
+          textColor={textColor}
           fadeToColor="none"
           minimumDate={minDate}
           maximumDate={maxDate}

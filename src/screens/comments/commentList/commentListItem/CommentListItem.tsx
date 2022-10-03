@@ -6,7 +6,7 @@ import {useTranslation} from 'react-i18next';
 import InfoSelectors from '../../../../store/info/infoSelectors';
 import {CommentUtils} from '../../../../shared/utils/CommentUtils';
 import FHStack from '../../../../components/boxes/FHStack';
-import {Text} from 'native-base';
+import {Text, useColorModeValue} from 'native-base';
 import UserView from '../../../../components/views/UserView';
 import FVStack from '../../../../components/boxes/FVStack';
 import CommentListItemReferenceButton from './CommentListItemReferenceButton';
@@ -29,22 +29,15 @@ const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
   const date = new Date(comment.createdAt);
   const isOwnComment = CommentUtils.isOwnComment(comment, account);
 
+  const bg = useColorModeValue('gray.50', 'gray.800');
+
   return (
     <FHStack p="2" space="2">
       <FVStack mt="1.5" space="2">
         {user && <UserView user={user} picSize="sm" />}
         <CommentListItemReactions comment={comment} isOwnComment={isOwnComment} />
       </FVStack>
-      <FVStack
-        grow
-        smallSpace
-        borderWidth="1"
-        borderColor="gray.100"
-        borderRadius="5"
-        backgroundColor="gray.50"
-        px="2"
-        py="1.5"
-      >
+      <FVStack grow smallSpace backgroundColor={bg} px="2" py="1.5">
         <FHStack defaultSpace alignItems="center">
           <FHStack grow defaultSpace alignItems="center">
             <Text color="primary.500" fontWeight="bold">
@@ -58,7 +51,7 @@ const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
           <CommentListItemMenu comment={comment} isOwnComment={isOwnComment} setReference={setReference} />
         </FHStack>
         {comment.reference && <CommentListItemReference reference={comment.reference} />}
-        {!comment.isDeleted && <Text color="gray.700">{comment.text}</Text>}
+        {!comment.isDeleted && <Text>{comment.text}</Text>}
         {comment.isDeleted && (
           <Text color="gray.400" fontWeight="bold">
             {t('comment:comment.deleted')}

@@ -22,7 +22,7 @@
     },
     "reaction": {
       "title": "Reaction in chat",
-      "content": "<user/> reacted on your message in chat <chat/>"
+      "content": "<user/> reacted on your message in <chat/>"
     }
   },
   "comment": {
