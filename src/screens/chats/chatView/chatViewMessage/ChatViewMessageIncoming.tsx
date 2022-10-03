@@ -26,7 +26,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
   const date = new Date(message.createdAt);
   const isRead = MessageUtils.isReadMessage(message, account);
 
-  const bg = useColorModeValue('gray.50', 'gray.800');
+  const bg = useColorModeValue('gray.50', 'gray.700');
 
   return (
     <FHStack space="2" width="95%" mr="5%">

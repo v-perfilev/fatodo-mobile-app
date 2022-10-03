@@ -54,9 +54,9 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
         </FHStack>
         <Box flexDirection="row">
           <FHStack grow defaultSpace>
-            <TypeView type={item.type} fontColor="gray.500" />
-            <PriorityView priority={item.priority} fontColor="gray.500" />
-            <StatusView statusType={item.status} fontColor="gray.500" />
+            <TypeView type={item.type} fontColor="gray.400" />
+            <PriorityView priority={item.priority} fontColor="gray.400" />
+            <StatusView statusType={item.status} fontColor="gray.400" />
           </FHStack>
           <FHStack defaultSpace>
             {item.remindersCount > 0 && (

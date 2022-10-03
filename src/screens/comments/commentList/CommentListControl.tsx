@@ -70,6 +70,7 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
           h={reference ? '21px' : '36px'}
           p="0"
           variant="unstyled"
+          placeholderTextColor="gray.400"
           placeholder={t('comment:view.inputPlaceholder')}
           value={updater}
           onChangeText={handleTextChange}

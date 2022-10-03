@@ -29,7 +29,7 @@ const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
   const date = new Date(comment.createdAt);
   const isOwnComment = CommentUtils.isOwnComment(comment, account);
 
-  const bg = useColorModeValue('gray.50', 'gray.800');
+  const bg = useColorModeValue('gray.50', 'gray.700');
 
   return (
     <FHStack p="2" space="2">

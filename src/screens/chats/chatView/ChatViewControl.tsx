@@ -57,6 +57,7 @@ const ChatViewControl = () => {
           p="0"
           variant="unstyled"
           placeholder={t('chat:view.inputPlaceholder')}
+          placeholderTextColor="gray.400"
           value={updater}
           onChangeText={handleTextChange}
         />

@@ -108,24 +108,23 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   const handleGestureEnded = useCallback((): void => {
     overscrollEnabled.current = false;
 
-    if (overscrollInitValue.current) {
-      if (!shouldRefresh.current) {
-        closeLoader();
-      } else {
-        halfCloseLoader();
-        colorizeRefresher();
-        requestAnimationFrame(() => {
-          setRefreshGesturesAllowed(false);
-          refresh().finally(() => {
-            setTimeout(() => closeLoader(), 500);
-            setTimeout(() => setRefreshGesturesAllowed(true), 500);
-            setTimeout(() => grayscaleRefresher(), 1500);
-          });
+    if (overscrollInitValue.current && shouldRefresh.current) {
+      halfCloseLoader();
+      colorizeRefresher();
+      requestAnimationFrame(() => {
+        setRefreshGesturesAllowed(false);
+        refresh().finally(() => {
+          setTimeout(() => closeLoader(), 500);
+          setTimeout(() => setRefreshGesturesAllowed(true), 500);
+          setTimeout(() => grayscaleRefresher(), 1500);
         });
-      }
-      overscrollInitValue.current = undefined;
-      shouldRefresh.current = false;
+      });
+    } else {
+      closeLoader();
     }
+
+    overscrollInitValue.current = undefined;
+    shouldRefresh.current = false;
   }, []);
 
   useEffect(() => {

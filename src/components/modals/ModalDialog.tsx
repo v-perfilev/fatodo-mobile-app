@@ -17,7 +17,7 @@ const theme = ThemeFactory.getDefaultTheme();
 
 const ModalDialog = ({open, close, title, content, actions, size}: ModalDialogProps) => {
   const bg = useColorModeValue('gray.50', 'gray.800');
-  const backdrop = useColorModeValue('gray.400', 'gray.800');
+  const backdrop = useColorModeValue('gray.400', 'gray.600');
 
   return (
     <ThemeProvider theme={theme}>

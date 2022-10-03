@@ -36,6 +36,7 @@ const ChatListControl = ({setFilter}: ChatListControlProps) => {
           px="2"
           variant="unstyled"
           placeholder={t('inputs.filter')}
+          placeholderTextColor="gray.400"
           onChangeText={setFilter}
         />
       </FBox>

@@ -55,19 +55,21 @@ const groupsSlice = createSlice({
     },
 
     setMembers: (state: GroupsState, action: PayloadAction<GroupMember[]>) => {
-      const groupId = action.payload[0].groupId;
+      const members = action.payload;
+      const groupId = members.length > 0 && members[0].groupId;
       const group = state.groups.find((g) => g.id === groupId);
       if (group) {
-        group.members = filterMembers([...action.payload, ...group.members]);
+        group.members = filterMembers([...members, ...group.members]);
         state.groups = ArrayUtils.updateValueWithId(state.groups, group);
       }
     },
 
     removeMembers: (state: GroupsState, action: PayloadAction<GroupMember[]>) => {
-      const groupId = action.payload[0].groupId;
+      const members = action.payload;
+      const groupId = members.length > 0 && members[0].groupId;
       const group = state.groups.find((g) => g.id === groupId);
       if (group) {
-        const memberIds = action.payload.map((m) => m.userId);
+        const memberIds = members.map((m) => m.userId);
         group.members = group.members.filter((m) => !memberIds.includes(m.userId));
         state.groups = ArrayUtils.updateValueWithId(state.groups, group);
       }

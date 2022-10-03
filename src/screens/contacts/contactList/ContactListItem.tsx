@@ -36,7 +36,7 @@ const ContactListItem = ({relation}: ContactListItemProps) => {
   ];
 
   return (
-    <FHStack grow px="2" py="4" defaultSpace alignItems="center">
+    <FHStack grow p="2" defaultSpace alignItems="center">
       <FHStack grow>
         <UserView user={user} withUsername picSize="md" />
       </FHStack>

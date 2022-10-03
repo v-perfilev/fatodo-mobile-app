@@ -15,6 +15,7 @@
     "dev-menu": "adb shell input keyevent 82"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-community/push-notification-ios": "^1.10.1",
     "@react-native-firebase/app": "^15.3.0",
     "@react-native-firebase/messaging": "^15.3.0",

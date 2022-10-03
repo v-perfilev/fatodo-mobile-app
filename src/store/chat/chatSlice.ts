@@ -42,7 +42,8 @@ const chatSlice = createSlice({
     setMessages: (state: ChatState, action: PayloadAction<{messages: Message[]; account: UserAccount}>) => {
       const messages = action.payload.messages;
       const account = action.payload.account;
-      if (messages.length > 0 && state.chatId === messages[0].chatId) {
+      const chatId = messages.length > 0 && messages[0].chatId;
+      if (chatId && state.chatId === chatId) {
         state.messages = filterMessages([...messages, ...state.messages]);
         state.chatItems = convertMessagesToChatItems(state.messages, account);
       }
