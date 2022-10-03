@@ -18,9 +18,8 @@ export class CalendarActions {
   static handleMonthThunk = createAsyncThunk<void, CalendarMonth, AsyncThunkConfig>(
     PREFIX + 'handleMonth',
     async (month, thunkAPI) => {
-      const {reminders, loadingKeys} = thunkAPI.getState().calendar;
-      const loadedKeys = Array.from(new Map(reminders).keys());
-      const actualKeyLoaded = loadedKeys.includes(month.key);
+      const {loadingKeys, loadedKeys} = thunkAPI.getState().calendar;
+      const actualKeyLoaded = loadingKeys.includes(month.key) || loadedKeys.includes(month.key);
       let missingMonths = CalendarUtils.generateCalendarMonths(month, CALENDAR_LOAD_INDENT);
       const missingKeys = missingMonths.map((r) => r.key);
       const keysToLoad = missingKeys

@@ -7,6 +7,7 @@ import {FilterUtils} from '../../shared/utils/FilterUtils';
 const initialState: CalendarState = {
   reminders: [],
   loadingKeys: [],
+  loadedKeys: [],
   shouldLoad: true,
 };
 
@@ -20,6 +21,10 @@ const calendarSlice = createSlice({
 
     addLoadingKeys: (state: CalendarState, action: PayloadAction<string[]>) => {
       state.loadingKeys = [...state.loadingKeys, ...action.payload];
+    },
+
+    addLoadedKeys: (state: CalendarState, action: PayloadAction<string[]>) => {
+      state.loadedKeys = [...state.loadedKeys, ...action.payload].filter(FilterUtils.uniqueFilter);
     },
 
     removeLoadingKeys: (state: CalendarState, action: PayloadAction<string[]>) => {
@@ -43,6 +48,7 @@ const calendarSlice = createSlice({
       calendarSlice.caseReducers.setShouldNotLoad(state);
     });
     builder.addCase(CalendarActions.fetchRemindersThunk.fulfilled, (state, action) => {
+      calendarSlice.caseReducers.addLoadedKeys(state, {...action, payload: action.meta.arg});
       calendarSlice.caseReducers.setReminders(state, action);
       calendarSlice.caseReducers.removeLoadingKeys(state, {...action, payload: action.meta.arg});
     });
