@@ -14,22 +14,24 @@ import commentsSlice from './comments/commentsSlice';
 import userSlice from './user/userSlice';
 import eventsSlice from './events/eventsSlice';
 import calendarSlice from './calendar/calendarSlice';
+import commonSlice from './common/commonSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
-    snack: snackSlice.reducer,
-    contacts: contactsSlice.reducer,
-    info: infoSlice.reducer,
-    groups: groupsSlice.reducer,
-    group: groupSlice.reducer,
-    item: itemSlice.reducer,
-    chats: chatsSlice.reducer,
-    chat: chatSlice.reducer,
-    comments: commentsSlice.reducer,
-    user: userSlice.reducer,
-    events: eventsSlice.reducer,
     calendar: calendarSlice.reducer,
+    chat: chatSlice.reducer,
+    chats: chatsSlice.reducer,
+    comments: commentsSlice.reducer,
+    common: commonSlice.reducer,
+    contacts: contactsSlice.reducer,
+    events: eventsSlice.reducer,
+    group: groupSlice.reducer,
+    groups: groupsSlice.reducer,
+    info: infoSlice.reducer,
+    item: itemSlice.reducer,
+    snack: snackSlice.reducer,
+    user: userSlice.reducer,
   },
   devTools: IS_DEVELOPMENT,
 });
