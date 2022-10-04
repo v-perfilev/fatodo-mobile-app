@@ -47,20 +47,15 @@ const TabNavigator = () => {
   const unreadEventCount = useAppSelector(EventsSelectors.unreadCount);
   const unreadMessageCount = useAppSelector(ChatsSelectors.unreadCount);
   const incomingRequestCount = useAppSelector(ContactsSelectors.incomingRequestCount);
-  const freezeTabs = useAppSelector(CommonSelectors.freezeTabs);
-  const freezeCalendar = useAppSelector(CommonSelectors.freezeCalendar);
+  const freeze = useAppSelector(CommonSelectors.freeze);
 
   return (
     <Tab.Navigator
-      screenOptions={{headerShown: false, lazy: false, freezeOnBlur: freezeTabs}}
+      screenOptions={{headerShown: false, lazy: false, freezeOnBlur: freeze}}
       initialRouteName="Groups"
       tabBar={TabNavigatorBar}
     >
-      <Tab.Screen
-        name="Calendar"
-        component={CalendarView}
-        options={{tabBarIcon: calendarIcon, freezeOnBlur: freezeCalendar}}
-      />
+      <Tab.Screen name="Calendar" component={CalendarView} options={{tabBarIcon: calendarIcon}} />
       <Tab.Screen
         name="Events"
         component={EventList}

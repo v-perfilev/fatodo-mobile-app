@@ -44,10 +44,7 @@ export type RootNavigationProp = NativeStackNavigationProp<RootParamList>;
 
 const RootNavigator = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{headerShown: false, animation: 'slide_from_bottom', freezeOnBlur: true}}
-      initialRouteName={'HomeTabs'}
-    >
+    <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_bottom'}} initialRouteName={'HomeTabs'}>
       <Stack.Screen name="HomeTabs" component={TabNavigator} />
       <Stack.Screen name="ChatView" component={ChatView} />
       <Stack.Screen name="CommentList" component={CommentList} />

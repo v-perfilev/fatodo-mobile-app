@@ -52,11 +52,11 @@ export class ChatActions {
   static fetchChatThunk = createAsyncThunk<Chat, string, AsyncThunkConfig>(
     PREFIX + 'fetchChat',
     async (chatId, thunkAPI) => {
-      const result = await ChatService.getChatById(chatId);
-      const chatUserIds = ChatUtils.extractUserIds([result.data]);
+      const response = await ChatService.getChatById(chatId);
+      const chatUserIds = ChatUtils.extractUserIds([response.data]);
       thunkAPI.dispatch(InfoActions.handleUserIdsThunk(chatUserIds));
       await thunkAPI.dispatch(ChatActions.fetchMessagesThunk({chatId, offset: 0}));
-      return result.data;
+      return response.data;
     },
   );
 
@@ -66,11 +66,11 @@ export class ChatActions {
     AsyncThunkConfig
   >(PREFIX + 'fetchMessages', async ({chatId, offset}, thunkAPI) => {
     const account = thunkAPI.getState().auth.account;
-    const result = await ChatService.getAllMessagesByChatIdPageable(chatId, offset);
-    const messages = result.data.data;
+    const response = await ChatService.getAllMessagesByChatIdPageable(chatId, offset);
+    const messages = response.data.data;
     const messageUserIds = MessageUtils.extractUserIds(messages);
     thunkAPI.dispatch(InfoActions.handleUserIdsThunk(messageUserIds));
-    return {list: result.data, account};
+    return {list: response.data, account};
   });
 
   static refreshMessagesThunk = createAsyncThunk<
@@ -79,11 +79,11 @@ export class ChatActions {
     AsyncThunkConfig
   >(PREFIX + 'refreshMessages', async (chatId, thunkAPI) => {
     const account = thunkAPI.getState().auth.account;
-    const result = await ChatService.getAllMessagesByChatIdPageable(chatId);
-    const messages = result.data.data;
+    const response = await ChatService.getAllMessagesByChatIdPageable(chatId);
+    const messages = response.data.data;
     const messageUserIds = MessageUtils.extractUserIds(messages);
     thunkAPI.dispatch(InfoActions.handleUserIdsThunk(messageUserIds));
-    return {list: result.data, account};
+    return {list: response.data, account};
   });
 
   static markMessageAsReadThunk = createAsyncThunk<void, Message, AsyncThunkConfig>(

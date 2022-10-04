@@ -28,6 +28,7 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
   const goBack = (): void => navigation.goBack();
 
   const setGroup = (): void => {
+    dispatch(GroupActions.reset());
     dispatch(GroupActions.setGroup(routeGroup));
   };
 

@@ -53,7 +53,9 @@ export class ItemActions {
   static fetchRemindersThunk = createAsyncThunk<Reminder[], string, AsyncThunkConfig>(
     PREFIX + 'fetchReminders',
     async (itemId) => {
-      const response = await NotificationService.getAllByTargetId(itemId);
+      const response = await NotificationService.getAllByTargetId(itemId)
+        .then((response) => response)
+        .catch(() => ({data: []}));
       return response.data;
     },
   );

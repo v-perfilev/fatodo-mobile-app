@@ -9,6 +9,7 @@ import LanguageMenu from '../../../components/controls/LanguageMenu';
 import FCenter from '../../../components/boxes/FCenter';
 import FVStack from '../../../components/boxes/FVStack';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
+import ColorModeSwitch from '../../../components/controls/ColorModeSwitch';
 
 const ForgotPassword = () => {
   const navigation = useNavigation<AuthNavigationProp>();
@@ -18,7 +19,7 @@ const ForgotPassword = () => {
 
   return (
     <SimpleScrollView>
-      <FCenter grow pt="10" pb="5">
+      <FCenter grow pt="10">
         <FVStack space="5" w="90%" maxW="300">
           <FCenter grow>
             <Logo withText />
@@ -29,9 +30,10 @@ const ForgotPassword = () => {
           </FVStack>
         </FVStack>
       </FCenter>
-      <FCenter pt="5" pb="10">
+      <FVStack space="5" pb="5">
         <LanguageMenu />
-      </FCenter>
+        <ColorModeSwitch />
+      </FVStack>
     </SimpleScrollView>
   );
 };

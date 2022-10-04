@@ -72,9 +72,9 @@ const App = ({ready}: AppProps) => {
 
 export default flowRight([
   withStore,
-  withSnackDisplay,
   withGestureHandler,
   withNativeBase,
+  withSnackDisplay,
   withNavigationContainer,
   withWsClient,
   withDialogs,

@@ -23,7 +23,7 @@ const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
 const Sidebar = ({navigation}: DrawerContentComponentProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
-  const {setToggleDrawer} = useDrawerContext();
+  const {toggleDrawer, setToggleDrawer} = useDrawerContext();
   const account = useAppSelector(AuthSelectors.account);
 
   const goToAccountForm = (): void => {
@@ -35,6 +35,7 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
   };
 
   const logout = (): void => {
+    toggleDrawer();
     dispatch(AuthActions.logout());
     requestAnimationFrame(() => {
       dispatch(RootActions.resetState());
@@ -72,8 +73,8 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
           )}
         </FVStack>
 
-        <ColorModeSwitch />
         <LanguageMenu onChange={changeLanguage} />
+        <ColorModeSwitch />
         <OutlinedButton onPress={logout}>{t('account:actions.logout')}</OutlinedButton>
       </FVStack>
     </DrawerContentScrollView>

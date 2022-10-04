@@ -14,8 +14,11 @@ import {GroupsActions} from '../groups/groupsActions';
 const PREFIX = 'group/';
 
 export class GroupActions {
-  static setGroup = (group: Group) => async (dispatch: AppDispatch) => {
+  static reset = () => async (dispatch: AppDispatch) => {
     dispatch(groupSlice.actions.reset());
+  };
+
+  static setGroup = (group: Group) => async (dispatch: AppDispatch) => {
     dispatch(groupSlice.actions.setGroup(group));
   };
 

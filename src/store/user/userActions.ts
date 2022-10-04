@@ -23,15 +23,15 @@ export class UserActions {
   static fetchUserThunk = createAsyncThunk<User, string, AsyncThunkConfig>(
     PREFIX + 'fetchUser',
     async (userId: string, thunkAPI) => {
-      const result = await UserService.getAllByIds([userId]);
-      if (result.data.length !== 1) {
+      const response = await UserService.getAllByIds([userId]);
+      if (response.data.length !== 1) {
         thunkAPI.rejectWithValue(undefined);
       } else {
         await Promise.all([
           thunkAPI.dispatch(UserActions.fetchCommonGroupsThunk(userId)),
           thunkAPI.dispatch(UserActions.fetchCommonRelationsThunk(userId)),
         ]);
-        return result.data[0];
+        return response.data[0];
       }
     },
   );
@@ -39,18 +39,18 @@ export class UserActions {
   static fetchCommonGroupsThunk = createAsyncThunk<Group[], string, AsyncThunkConfig>(
     PREFIX + 'fetchCommonGroups',
     async (userId) => {
-      const result = await ItemService.getAllCommonGroups(userId);
-      return result.data;
+      const response = await ItemService.getAllCommonGroups(userId);
+      return response.data;
     },
   );
 
   static fetchCommonRelationsThunk = createAsyncThunk<ContactRelation[], string, AsyncThunkConfig>(
     PREFIX + 'fetchCommonRelations',
     async (userId, thunkAPI) => {
-      const result = await ContactService.getCommonRelations(userId);
-      const relationUserIds = result.data.map((r) => r.secondUserId);
+      const response = await ContactService.getCommonRelations(userId);
+      const relationUserIds = response.data.map((r) => r.secondUserId);
       thunkAPI.dispatch(InfoActions.handleUserIdsThunk(relationUserIds));
-      return result.data;
+      return response.data;
     },
   );
 }

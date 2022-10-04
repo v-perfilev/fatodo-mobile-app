@@ -24,7 +24,9 @@ const groupSlice = createSlice({
     },
 
     setGroup: (state: GroupState, action: PayloadAction<Group>) => {
-      state.group = action.payload;
+      if (!state.group || state.group.id === action.payload.id) {
+        state.group = action.payload;
+      }
     },
 
     resetActiveItems: (state: GroupState) => {

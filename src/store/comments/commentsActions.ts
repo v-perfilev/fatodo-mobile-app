@@ -36,7 +36,9 @@ export class CommentsActions {
     {targetId: string; offset: number},
     AsyncThunkConfig
   >(PREFIX + 'fetchComments', async ({targetId, offset}, thunkAPI) => {
-    const response = await CommentService.getAllPageable(targetId, offset);
+    const response = await CommentService.getAllPageable(targetId, offset)
+      .then((response) => response)
+      .catch(() => ({data: {data: [], count: 0}}));
     const commentUserIds = CommentUtils.extractUserIds(response.data.data);
     thunkAPI.dispatch(InfoActions.handleUserIdsThunk(commentUserIds));
     return response.data;

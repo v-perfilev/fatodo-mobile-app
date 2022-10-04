@@ -140,6 +140,7 @@ export class WsStateHandler {
   private handleItemGroupUpdateEvent = (msg: WsEvent<Group>): void => {
     const group = msg.payload;
     this.dispatch(GroupsActions.updateGroup(group));
+    this.dispatch(GroupActions.setGroup(group));
   };
 
   private handleItemGroupDeleteEvent = (msg: WsEvent<Group>): void => {

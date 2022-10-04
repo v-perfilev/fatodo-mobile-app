@@ -1,4 +1,4 @@
-import React, {ComponentType, memo, useEffect, useRef, useState} from 'react';
+import React, {ComponentType, memo, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
@@ -84,8 +84,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
     isAuthenticated && refresh();
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    // splash screen (timeout needed for initial navigation event)
+  useLayoutEffect(() => {
     ready && SplashScreen.hide();
   }, [ready]);
 

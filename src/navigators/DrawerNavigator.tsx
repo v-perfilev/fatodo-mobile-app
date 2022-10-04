@@ -10,10 +10,7 @@ const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator
-      screenOptions={{headerShown: false, drawerType: 'back', lazy: false, freezeOnBlur: true}}
-      drawerContent={Sidebar}
-    >
+    <Drawer.Navigator screenOptions={{headerShown: false, drawerType: 'back', lazy: false}} drawerContent={Sidebar}>
       <Drawer.Screen name="Default" component={RootNavigator} />
       <Drawer.Screen name="AccountForm" component={AccountForm} />
       <Drawer.Screen name="AccountChangePasswordForm" component={AccountChangePasswordForm} />

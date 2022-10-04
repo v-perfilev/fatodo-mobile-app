@@ -44,50 +44,52 @@ export class ChatsActions {
   static fetchChatThunk = createAsyncThunk<Chat, string, AsyncThunkConfig>(
     PREFIX + 'fetchChat',
     async (chatId, thunkAPI) => {
-      const result = await ChatService.getChatById(chatId);
-      const chatUserIds = ChatUtils.extractUserIds([result.data]);
+      const response = await ChatService.getChatById(chatId);
+      const chatUserIds = ChatUtils.extractUserIds([response.data]);
       thunkAPI.dispatch(InfoActions.handleUserIdsThunk(chatUserIds));
-      return result.data;
+      return response.data;
     },
   );
 
   static fetchChatsThunk = createAsyncThunk<PageableList<Chat>, number, AsyncThunkConfig>(
     PREFIX + 'fetchChats',
     async (offset, thunkAPI) => {
-      const result = await ChatService.getAllChatsPageable(offset);
-      const chats = result.data.data;
+      const response = await ChatService.getAllChatsPageable(offset);
+      const chats = response.data.data;
       const chatUserIds = ChatUtils.extractUserIds(chats);
       thunkAPI.dispatch(InfoActions.handleUserIdsThunk(chatUserIds));
-      return result.data;
+      return response.data;
     },
   );
 
   static refreshChatsThunk = createAsyncThunk<PageableList<Chat>, void, AsyncThunkConfig>(
     PREFIX + 'refreshChats',
     async (_, thunkAPI) => {
-      const result = await ChatService.getAllChatsPageable();
-      const chats = result.data.data;
+      const response = await ChatService.getAllChatsPageable();
+      const chats = response.data.data;
       const chatUserIds = ChatUtils.extractUserIds(chats);
       thunkAPI.dispatch(InfoActions.handleUserIdsThunk(chatUserIds));
-      return result.data;
+      return response.data;
     },
   );
 
   static fetchFilteredChatsThunk = createAsyncThunk<Chat[], string, AsyncThunkConfig>(
     PREFIX + 'fetchFilteredChats',
     async (filter, thunkAPI) => {
-      const result = await ChatService.getFilteredChats(filter);
-      const chatUserIds = ChatUtils.extractUserIds(result.data);
+      const response = await ChatService.getFilteredChats(filter)
+        .then((response) => response)
+        .catch(() => ({data: []}));
+      const chatUserIds = ChatUtils.extractUserIds(response.data);
       thunkAPI.dispatch(InfoActions.handleUserIdsThunk(chatUserIds));
-      return result.data;
+      return response.data;
     },
   );
 
   static createDirectChatThunk = createAsyncThunk<void, string, AsyncThunkConfig>(
     PREFIX + 'createDirectChat',
     async (userId, thunkAPI) => {
-      const result = await ChatService.createDirectChat(userId);
-      thunkAPI.dispatch(chatsSlice.actions.setChats([result.data]));
+      const response = await ChatService.createDirectChat(userId);
+      thunkAPI.dispatch(chatsSlice.actions.setChats([response.data]));
       thunkAPI.dispatch(SnackActions.handleCode('chat.created', 'info'));
     },
   );
@@ -95,8 +97,8 @@ export class ChatsActions {
   static createIndirectChatThunk = createAsyncThunk<void, string[], AsyncThunkConfig>(
     PREFIX + 'createIndirectChat',
     async (userIds, thunkAPI) => {
-      const result = await ChatService.createIndirectChat(userIds);
-      thunkAPI.dispatch(chatsSlice.actions.setChats([result.data]));
+      const response = await ChatService.createIndirectChat(userIds);
+      thunkAPI.dispatch(chatsSlice.actions.setChats([response.data]));
       thunkAPI.dispatch(SnackActions.handleCode('chat.created', 'info'));
     },
   );
@@ -104,8 +106,8 @@ export class ChatsActions {
   static sendDirectMessageThunk = createAsyncThunk<void, {userId: string; dto: MessageDTO}, AsyncThunkConfig>(
     PREFIX + 'sendDirectMessage',
     async ({userId, dto}, thunkAPI) => {
-      const result = await ChatService.sendDirectMessage(userId, dto);
-      thunkAPI.dispatch(ChatsActions.setChatLastMessageAction(result.data));
+      const response = await ChatService.sendDirectMessage(userId, dto);
+      thunkAPI.dispatch(ChatsActions.setChatLastMessageAction(response.data));
     },
   );
 
