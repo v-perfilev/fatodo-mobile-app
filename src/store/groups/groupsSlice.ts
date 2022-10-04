@@ -35,12 +35,11 @@ const groupsSlice = createSlice({
     },
 
     setGroups: (state: GroupsState, action: PayloadAction<Group[]>) => {
-      state.groups = action.payload;
+      state.groups = filterGroups(action.payload);
     },
 
     addGroup: (state: GroupsState, action: PayloadAction<Group>) => {
-      const group = action.payload;
-      state.groups = [...state.groups, group];
+      state.groups = filterGroups([...state.groups, action.payload]);
     },
 
     updateGroup: (state: GroupsState, action: PayloadAction<Group>) => {
@@ -217,6 +216,10 @@ const groupsSlice = createSlice({
     });
   },
 });
+
+const filterGroups = (groups: Group[]): Group[] => {
+  return groups.filter(FilterUtils.uniqueByIdFilter);
+};
 
 const filterMembers = (members: GroupMember[]): GroupMember[] => {
   return members.filter(FilterUtils.uniqueByUserIdFilter);

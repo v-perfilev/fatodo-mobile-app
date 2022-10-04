@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ComponentType, useEffect, useState} from 'react';
+import {ComponentType, useState} from 'react';
 import {flowRight} from 'lodash';
 import {useColorModeValue, useToast} from 'native-base';
 import withNativeBase from './withNativeBase';
@@ -30,7 +30,7 @@ const withSnackDisplay = (Component: ComponentType) => (props: any) => {
 
   const bg = useColorModeValue(LIGHT_BG, DARK_BG);
 
-  useEffect(() => {
+  const handleSnacks = (): void => {
     snackList.forEach(({message, color, key, dismissed = false}: ReduxSnack) => {
       if (dismissed) {
         close(key);
@@ -52,7 +52,9 @@ const withSnackDisplay = (Component: ComponentType) => (props: any) => {
     });
     const keyList = snackList.map((reduxSnack: ReduxSnack) => reduxSnack.key);
     displayedKeys.filter((key) => !keyList.includes(key)).forEach(removeDisplayed);
-  });
+  };
+
+  handleSnacks();
 
   return <Component {...props} />;
 };
