@@ -51,8 +51,8 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
   return (
     <Component
       loading={!loadingFinished}
-      groupId={routeGroup?.id || routeGroupId}
-      group={routeGroup || group}
+      groupId={routeGroupId || routeGroup?.id}
+      group={group || routeGroup}
       {...props}
     />
   );

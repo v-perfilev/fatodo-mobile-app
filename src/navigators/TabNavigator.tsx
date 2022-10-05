@@ -7,7 +7,6 @@ import GroupsIcon from '../components/icons/GroupsIcon';
 import ContactsIcon from '../components/icons/ContactsIcon';
 import ChatsIcon from '../components/icons/ChatsIcon';
 import ChatList from '../screens/chats/chatList/ChatList';
-import AlarmIcon from '../components/icons/AlarmIcon';
 import EventList from '../screens/events/eventList/EventList';
 import {useAppSelector} from '../store/store';
 import EventsSelectors from '../store/events/eventsSelectors';
@@ -17,6 +16,7 @@ import CalendarIcon from '../components/icons/CalendarIcon';
 import {NavigationProps} from './RootNavigator';
 import CalendarView from '../screens/calendar/canlendarView/CalendarView';
 import CommonSelectors from '../store/common/commonSelectors';
+import BellIcon from '../components/icons/BellIcon';
 
 export type TabParamList = {
   Groups: NavigationProps<GroupParamList>;
@@ -37,10 +37,10 @@ const Tab = createBottomTabNavigator<TabParamList>();
 
 export type TabNavigationProp = BottomTabNavigationProp<TabParamList>;
 
-const groupsIcon = ({color, size}: TabIconProps): ReactNode => <GroupsIcon color={color} size={size} />;
 const calendarIcon = ({color, size}: TabIconProps): ReactNode => <CalendarIcon color={color} size={size} />;
-const eventsIcon = ({color, size}: TabIconProps): ReactNode => <AlarmIcon color={color} size={size} />;
-const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={color} size={size} />;
+const eventsIcon = ({color, size}: TabIconProps): ReactNode => <BellIcon color={color} size={size - 1} />;
+const groupsIcon = ({color, size}: TabIconProps): ReactNode => <GroupsIcon color={color} size={size + 1} />;
+const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={color} size={size - 1} />;
 const contactsIcon = ({color, size}: TabIconProps): ReactNode => <ContactsIcon color={color} size={size} />;
 
 const TabNavigator = () => {

@@ -7,9 +7,7 @@ type GroupListCardDragButtonProps = {
 };
 
 const GroupListCardDragButton = ({drag}: GroupListCardDragButtonProps) => {
-  return (
-    <IconButton colorScheme="primary" bgTransparency="10" size="lg" p="1" icon={<ReorderIcon />} onPressIn={drag} />
-  );
+  return <IconButton colorScheme="white" bgTransparency="10" size="lg" p="1" icon={<ReorderIcon />} onPressIn={drag} />;
 };
 
 export default GroupListCardDragButton;

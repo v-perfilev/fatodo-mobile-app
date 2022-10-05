@@ -1,6 +1,6 @@
 import React, {PropsWithChildren, useEffect} from 'react';
 import {ColorMode, ITheme, NativeBaseProvider, StorageManager, useColorMode} from 'native-base';
-import {ThemeFactory} from '../../shared/themes/ThemeFactory';
+import {ThemeFactory} from './ThemeFactory';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ThemeProviderProps = PropsWithChildren<{
@@ -55,12 +55,10 @@ const ThemeProvider = ({theme = defaultTheme, children}: ThemeProviderProps) => 
   const {colorMode} = useColorMode();
   const preparedTheme: ITheme = {...theme, config: {initialColorMode: colorMode}};
 
-  return theme !== defaultTheme ? (
+  return (
     <NativeBaseProvider theme={preparedTheme} config={config}>
       <ThemeProviderChild parentColorMode={colorMode}>{children}</ThemeProviderChild>
     </NativeBaseProvider>
-  ) : (
-    <>{children}</>
   );
 };
 

@@ -14,6 +14,7 @@ import {Group, GroupMember} from '../../../models/Group';
 import {GroupsActions} from '../../../store/groups/groupsActions';
 import {GroupActions} from '../../../store/group/groupActions';
 import {InfoActions} from '../../../store/info/infoActions';
+import {ItemActions} from '../../../store/item/itemActions';
 
 type HandlerFunc = (msg: WsEvent<any>) => void;
 
@@ -141,6 +142,7 @@ export class WsStateHandler {
     const group = msg.payload;
     this.dispatch(GroupsActions.updateGroup(group));
     this.dispatch(GroupActions.setGroup(group));
+    this.dispatch(ItemActions.setGroup(group));
   };
 
   private handleItemGroupDeleteEvent = (msg: WsEvent<Group>): void => {

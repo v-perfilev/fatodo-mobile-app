@@ -38,7 +38,7 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
 
   return (
     <Pressable flex="1" p="3" onPress={onPress}>
-      <FCenter>
+      <FCenter h="30px">
         <Box>
           {showBadgeNode && badgeNode}
           {icon({focused: isFocused, color: iconColor, size: 8})}

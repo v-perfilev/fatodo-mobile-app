@@ -1,5 +1,5 @@
 import React, {ComponentType, memo} from 'react';
-import {RootThemeProvider} from '../../components/layouts/ThemeProvider';
+import {RootThemeProvider} from '../themes/ThemeProvider';
 import {flowRight} from 'lodash';
 
 const withNativeBase = (Component: ComponentType) => (props: any) => {

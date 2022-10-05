@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box} from 'native-base';
 import {ColorScheme, LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
-import ThemeProvider from '../layouts/ThemeProvider';
+import ThemeProvider from '../../shared/themes/ThemeProvider';
 
 type BulletProps = {
   color?: ColorScheme;

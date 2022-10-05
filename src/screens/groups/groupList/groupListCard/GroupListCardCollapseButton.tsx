@@ -26,7 +26,7 @@ const GroupListCardCollapseButton = ({group, collapsed}: GroupListCardCollapseBu
 
   return (
     <IconButton
-      colorScheme="primary"
+      colorScheme="white"
       size="xl"
       p="0.5"
       icon={<CollapsedIcon hidden={!collapsed} />}

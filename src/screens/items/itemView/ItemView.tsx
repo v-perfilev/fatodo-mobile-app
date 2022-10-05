@@ -1,5 +1,5 @@
 import React from 'react';
-import ThemeProvider from '../../../components/layouts/ThemeProvider';
+import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ItemViewHeader from './ItemViewHeader';
@@ -51,11 +51,11 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
             <ItemViewType />
             <ItemViewPriority />
             <ItemViewDate />
-            <Separator bg="secondary.500" />
+            <Separator bg="primary.500" />
             <ItemViewDescription />
             {showReminders && <Separator bg="secondary.500" />}
             {showReminders && <ItemReminders />}
-            <Separator bg="secondary.500" />
+            <Separator bg="primary.500" />
             <ItemViewChanges />
           </FVStack>
         </SimpleScrollView>

@@ -5,7 +5,7 @@ import GroupForm from '../groupForm/GroupForm';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {useAppDispatch} from '../../../store/store';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
-import ThemeProvider from '../../../components/layouts/ThemeProvider';
+import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import Header from '../../../components/layouts/Header';
 import {GroupActions} from '../../../store/group/groupActions';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
@@ -18,9 +18,12 @@ const GroupEdit = ({group, loading}: GroupEditProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
   const theme = ThemeFactory.getTheme(group?.color);
 
+  const routes = navigation.getState().routes;
+  const isPreviousGroupView = routes[routes.length - 2].name === 'GroupView';
+
   const goBack = (): void => navigation.goBack();
   const goToGroupView = (): void =>
-    navigation.getParent().getId() === 'GroupView' ? navigation.goBack() : navigation.replace('GroupView', {group});
+    isPreviousGroupView ? navigation.goBack() : navigation.replace('GroupView', {group});
 
   const request = (formData: FormData, stopSubmitting: () => void): void => {
     dispatch(GroupActions.updateGroupThunk(formData))

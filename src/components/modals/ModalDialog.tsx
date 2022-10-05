@@ -1,7 +1,7 @@
 import {Box, Button, Center, KeyboardAvoidingView, Modal, useColorModeValue} from 'native-base';
 import React, {memo, ReactElement} from 'react';
 import {LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
-import ThemeProvider from '../layouts/ThemeProvider';
+import ThemeProvider from '../../shared/themes/ThemeProvider';
 import {SizeType} from 'native-base/lib/typescript/components/types';
 
 type ModalDialogProps = {

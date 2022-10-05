@@ -4,7 +4,7 @@ import {Comment} from '../../../models/Comment';
 import Header from '../../../components/layouts/Header';
 import {Box} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
-import ThemeProvider from '../../../components/layouts/ThemeProvider';
+import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import CommentListControl from './CommentListControl';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import CommentListStub from './CommentListStub';

@@ -1,13 +1,13 @@
 import React, {memo, useCallback} from 'react';
 import {Box, IBoxProps} from 'native-base';
 import GroupListCardHeader from './GroupListCardHeader';
-import Collapsible from 'react-native-collapsible';
-import ThemeProvider from '../../../../components/layouts/ThemeProvider';
+import ThemeProvider from '../../../../shared/themes/ThemeProvider';
 import GroupListCardContent from './GroupListCardContent';
 import {Group} from '../../../../models/Group';
 import {ThemeFactory} from '../../../../shared/themes/ThemeFactory';
 import {useAppSelector} from '../../../../store/store';
 import GroupsSelectors from '../../../../store/groups/groupsSelectors';
+import Collapsible from 'react-native-collapsible';
 
 type GroupListCardProps = IBoxProps & {
   group: Group;

@@ -7,7 +7,7 @@ import ItemForm from '../itemForm/ItemForm';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
-import ThemeProvider from '../../../components/layouts/ThemeProvider';
+import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import Header from '../../../components/layouts/Header';
 import {ItemActions} from '../../../store/item/itemActions';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
@@ -21,9 +21,12 @@ const ItemEdit = ({group, item, loading}: ItemEditProps) => {
   const reminders = useAppSelector(ItemSelectors.reminders);
   const theme = ThemeFactory.getTheme(group?.color);
 
+  const routes = navigation.getState().routes;
+  const isPreviousItemView = routes[routes.length - 2].name === 'ItemView';
+
   const goBack = (): void => navigation.goBack();
   const goToItemView = (): void =>
-    navigation.getParent().getId() === 'ItemView' ? navigation.goBack() : navigation.replace('ItemView', {group, item});
+    isPreviousItemView ? navigation.goBack() : navigation.replace('ItemView', {group, item});
 
   const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
     dispatch(ItemActions.updateItemThunk(dto))

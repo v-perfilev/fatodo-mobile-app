@@ -12,7 +12,7 @@ type CornerManagementProps = {
   bottomPadding?: number;
 };
 
-const CORNER_MANAGEMENT_BUTTON_PADDING = 60;
+const CORNER_MANAGEMENT_BUTTON_PADDING = 64;
 
 const isButtonShown = (button: CornerButton, onTop: boolean, directScroll: boolean): boolean => {
   const hideOnTop = onTop && button.hideOnTop;
@@ -129,7 +129,7 @@ const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementPro
           </Animated.View>
         ))}
       </Box>
-      <Box zIndex="100" position="absolute" bottom="8px" right="68px">
+      <Box zIndex="100" position="absolute" bottom="8px" right="72px">
         {addButtons.current.map((button, index) => (
           <Animated.View key={index} style={[{translateY: additionalPositionValues[index].current}, viewStyle]}>
             <CornerManagementButton button={button} />

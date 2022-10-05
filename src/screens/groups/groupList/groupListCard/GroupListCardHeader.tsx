@@ -10,7 +10,7 @@ import {Group} from '../../../../models/Group';
 import FHStack from '../../../../components/boxes/FHStack';
 import GroupListCardDragButton from './GroupListCardDragButton';
 import PressableButton from '../../../../components/controls/PressableButton';
-import Separator from '../../../../components/layouts/Separator';
+import {DARK_BG, LIGHT_BG} from '../../../../shared/themes/colors';
 
 type GroupListCardHeaderProps = {
   group: Group;
@@ -24,16 +24,17 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
 
   const goToGroupView = (): void => !sorting && navigation.navigate('GroupView', {group});
 
-  const separatorBg = useColorModeValue('tertiary.300', 'tertiary.400');
+  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
+  const bgOpacity = useColorModeValue(1, 0.6);
+  const titleColor = useColorModeValue('white', 'gray.100');
 
   return (
     <PressableButton onPress={goToGroupView}>
-      <Separator bg={separatorBg} />
-      <Box position="relative" h="50px" px="4" justifyContent="center">
-        <Box position="absolute" left="0" right="0" top="0" bottom="0" bg={LINEAR_GRADIENT} opacity="0.1" />
+      <Box position="relative" h="50px" px="4" pr="2" bg={bg} justifyContent="center">
+        <Box position="absolute" left="0" right="0" top="0" bottom="0" bg={LINEAR_GRADIENT} opacity={bgOpacity} />
         <FHStack defaultSpace alignItems="center">
           {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} invertedBorder />}
-          <Text fontSize="lg" color="primary.500" isTruncated>
+          <Text fontSize="lg" color={titleColor} isTruncated>
             {group.title}
           </Text>
           <FHStack grow space="2" alignItems="center" justifyContent="flex-end">
@@ -48,7 +49,7 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
           </FHStack>
         </FHStack>
       </Box>
-      <Separator bg={separatorBg} />
+      {/*<Separator h="5px" bg={LINEAR_GRADIENT} />*/}
     </PressableButton>
   );
 };

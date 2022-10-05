@@ -1,5 +1,5 @@
 import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
-import ThemeProvider from '../../../components/layouts/ThemeProvider';
+import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import GroupViewHeader from './GroupViewHeader';

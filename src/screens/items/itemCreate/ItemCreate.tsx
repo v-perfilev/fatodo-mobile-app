@@ -6,7 +6,7 @@ import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner'
 import ItemForm from '../itemForm/ItemForm';
 import {useAppDispatch} from '../../../store/store';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
-import ThemeProvider from '../../../components/layouts/ThemeProvider';
+import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import Header from '../../../components/layouts/Header';
 import {ItemActions} from '../../../store/item/itemActions';
 import {Item} from '../../../models/Item';

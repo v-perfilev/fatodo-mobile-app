@@ -48,7 +48,7 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
             </Text>
             <GroupItemChanges item={item} />
           </FVStack>
-          <Box>
+          <Box mr="-2">
             <GroupItemMenu group={group} item={item} canEdit={canEdit} />
           </Box>
         </FHStack>

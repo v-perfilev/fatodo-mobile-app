@@ -14,7 +14,10 @@ export class DateUtils {
 
   static getTimezone = (): string => tz.guess();
 
-  static getWeekdayNames = (): string[] => moment.weekdaysShort(true);
+  static getWeekdayNames = (): string[] => {
+    const weekdays = moment.weekdaysShort();
+    return [...weekdays.slice(1), weekdays[0]];
+  };
 
   static getWeekdayNumbers = (): number[] => {
     const firstDayOfWeek = moment().startOf('week').day();

@@ -1,11 +1,14 @@
-import React, {memo} from 'react';
+import React, {useMemo} from 'react';
 import FHStack from '../../../components/boxes/FHStack';
 import FBox from '../../../components/boxes/FBox';
 import {DateUtils} from '../../../shared/utils/DateUtils';
 import {Text} from 'native-base';
+import {useTranslation} from 'react-i18next';
 
 const CalendarViewWeekDays = () => {
-  const dayNames = DateUtils.getWeekdayNames();
+  const {i18n} = useTranslation();
+
+  const dayNames = useMemo(() => DateUtils.getWeekdayNames(), [i18n.language]);
 
   return (
     <FHStack mx="2px">
@@ -20,4 +23,4 @@ const CalendarViewWeekDays = () => {
   );
 };
 
-export default memo(CalendarViewWeekDays);
+export default CalendarViewWeekDays;

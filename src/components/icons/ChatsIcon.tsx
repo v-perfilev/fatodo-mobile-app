@@ -7,8 +7,8 @@ const ChatsIcon = (props: IIconProps) => {
     <Icon pointerEvents="none" viewBox="0 0 24 24" {...props}>
       <Path
         fill="currentColor"
-        d="M20,2A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H6L2,22V4C2,2.89 2.9,2
-      4,2H20M4,4V17.17L5.17,16H20V4H4M6,7H18V9H6V7M6,11H15V13H6V11Z"
+        d="M18,8H6V6H18V8M18,11H6V9H18V11M18,14H6V12H18V14M22,4A2,2 0 0,0 20,2H4A2,2 0
+        0,0 2,4V16A2,2 0 0,0 4,18H18L22,22V4Z"
       />
     </Icon>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Text} from 'native-base';
 import {Group} from '../../../models/Group';
 import {LINEAR_GRADIENT, ThemeFactory} from '../../../shared/themes/ThemeFactory';
-import ThemeProvider from '../../../components/layouts/ThemeProvider';
+import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import PressableButton from '../../../components/controls/PressableButton';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';

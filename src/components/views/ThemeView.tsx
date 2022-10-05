@@ -1,6 +1,6 @@
 import React from 'react';
 import {ColorScheme, LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
-import ThemeProvider from '../layouts/ThemeProvider';
+import ThemeProvider from '../../shared/themes/ThemeProvider';
 import FBox from '../boxes/FBox';
 import {IBoxProps} from 'native-base';
 
