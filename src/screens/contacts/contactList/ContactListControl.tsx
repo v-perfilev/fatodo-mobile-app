@@ -18,7 +18,7 @@ const ContactListControl = ({setFilter}: ContactListHeaderProps) => {
 
   return (
     <FHStack zIndex="1" h="50px" space="2" px="2" py="2" alignItems="center" bgColor={bg}>
-      <FBox bg={inputBg} borderRadius="2">
+      <FBox bg={inputBg} borderRadius="xl">
         <ClearableTextInput
           h="40px"
           px="2"

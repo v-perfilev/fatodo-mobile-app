@@ -15,7 +15,7 @@ const GroupItemSkeleton = () => {
           </FVStack>
         </FBox>
         <FBox flex="0">
-          <Skeleton w="30px" h="30px" rounded="3xl" />
+          <Skeleton w="30px" h="30px" rounded="full" />
         </FBox>
       </FHStack>
       <FHStack grow justifyContent="space-between" alignItems="center">

@@ -5,11 +5,13 @@ import GroupListCardInfo from './GroupListCardInfo';
 import GroupItem from '../../components/groupItem/GroupItem';
 import {Group} from '../../../../models/Group';
 import FVStack from '../../../../components/boxes/FVStack';
-import {Box} from 'native-base';
+import {Box, useColorModeValue} from 'native-base';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import Separator from '../../../../components/layouts/Separator';
+import {LINEAR_GRADIENT} from '../../../../shared/themes/ThemeFactory';
+import {DARK_BG, LIGHT_BG} from '../../../../shared/themes/colors';
 
 type GroupListCardContentProps = {
   group: Group;
@@ -21,10 +23,12 @@ type GroupListCardContentProps = {
 const GroupListCardContent = ({group, items, itemsCount, loading}: GroupListCardContentProps) => {
   const account = useAppSelector(AuthSelectors.account);
 
-  const canEdit = group && GroupUtils.canEdit(account, group);
+  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
 
+  const canEdit = group && GroupUtils.canEdit(account, group);
   return (
-    <FVStack>
+    <FVStack bg={bg}>
+      <Separator h="5px" bg={LINEAR_GRADIENT} />
       {loading && <GroupListCardSkeleton />}
       {!loading &&
         items.slice(0, 5).map((item, index) => (

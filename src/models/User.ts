@@ -35,3 +35,12 @@ export interface UserInfo {
   timeFormat: TimeFormat;
   dateFormat: DateFormat;
 }
+
+export const accountToUser = (account: UserAccount): User => ({
+  id: account.id,
+  username: account.username,
+  firstname: account.info.firstname,
+  lastname: account.info.lastname,
+  gender: account.info.gender,
+  imageFilename: account.info.imageFilename,
+});

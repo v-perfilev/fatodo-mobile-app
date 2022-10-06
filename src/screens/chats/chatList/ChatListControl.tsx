@@ -30,7 +30,7 @@ const ChatListControl = ({setFilter}: ChatListControlProps) => {
       alignItems="center"
       bgColor={bg}
     >
-      <FBox bg={inputBg} borderRadius="2">
+      <FBox bg={inputBg} borderRadius="xl">
         <ClearableTextInput
           h="40px"
           px="2"

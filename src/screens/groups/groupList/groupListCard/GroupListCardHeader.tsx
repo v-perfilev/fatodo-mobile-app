@@ -25,15 +25,15 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
   const goToGroupView = (): void => !sorting && navigation.navigate('GroupView', {group});
 
   const bg = useColorModeValue(LIGHT_BG, DARK_BG);
-  const bgOpacity = useColorModeValue(1, 0.6);
-  const titleColor = useColorModeValue('white', 'gray.100');
+  const bgOpacity = useColorModeValue(0.1, 0.1);
+  const titleColor = useColorModeValue('primary.500', 'gray.100');
 
   return (
     <PressableButton onPress={goToGroupView}>
       <Box position="relative" h="50px" px="4" pr="2" bg={bg} justifyContent="center">
         <Box position="absolute" left="0" right="0" top="0" bottom="0" bg={LINEAR_GRADIENT} opacity={bgOpacity} />
         <FHStack defaultSpace alignItems="center">
-          {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} invertedBorder />}
+          {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} />}
           <Text fontSize="lg" color={titleColor} isTruncated>
             {group.title}
           </Text>
@@ -49,7 +49,6 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
           </FHStack>
         </FHStack>
       </Box>
-      {/*<Separator h="5px" bg={LINEAR_GRADIENT} />*/}
     </PressableButton>
   );
 };

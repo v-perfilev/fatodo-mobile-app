@@ -53,7 +53,14 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
     }
   }, []);
 
-  return <Component loading={loading} group={group || routeGroup} item={item || routeItem} {...props} />;
+  return (
+    <Component
+      loading={loading}
+      group={group || routeGroup}
+      item={item?.id === routeItem?.id || item?.id === routeItemId ? item : routeItem}
+      {...props}
+    />
+  );
 };
 
 export default withItemContainer;

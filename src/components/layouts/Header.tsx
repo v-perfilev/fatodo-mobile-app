@@ -14,6 +14,7 @@ import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import UserView from '../views/UserView';
 import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
+import {accountToUser} from '../../models/User';
 
 type HeaderProps = PropsWithChildren<{
   title?: string;
@@ -44,7 +45,7 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
       {!hideGoBack && canGoBack && <IconButton size="2xl" p="1" icon={<ArrowBackIcon />} onPress={goBack} />}
       {showAvatar && (
         <PressableButton onPress={toggleDrawer}>
-          <UserView user={account} withUserPic picSize="43px" />
+          <UserView user={accountToUser(account)} withUserPic picSize="43px" />
         </PressableButton>
       )}
       {showLogo && <Logo size={10} />}

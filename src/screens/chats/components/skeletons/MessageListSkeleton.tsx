@@ -1,12 +1,15 @@
 import React, {memo} from 'react';
-import {MESSAGE_SKELETONS_COUNT} from '../../../../constants';
+import {MESSAGE_SKELETONS_HEIGHT} from '../../../../constants';
 import FVStack from '../../../../components/boxes/FVStack';
 import {Box} from 'native-base';
 import MessageIncomingSkeleton from './MessageIncomingSkeleton';
 import MessageOutcomingSkeleton from './MessageOutcomingSkeleton';
+import {Dimensions} from 'react-native';
 
 const ChatListSkeleton = () => {
-  const indexArray = Array.from(Array(MESSAGE_SKELETONS_COUNT).keys());
+  const height = Dimensions.get('window').height;
+  const count = Math.round(height / MESSAGE_SKELETONS_HEIGHT);
+  const indexArray = Array.from(Array(count).keys());
 
   return (
     <FVStack>

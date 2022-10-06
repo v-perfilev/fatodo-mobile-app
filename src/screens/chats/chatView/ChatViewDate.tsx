@@ -1,7 +1,7 @@
 import {Text} from 'native-base';
 import React from 'react';
-import FCenter from '../../../components/boxes/FCenter';
 import Separator from '../../../components/layouts/Separator';
+import FCenter from '../../../components/boxes/FCenter';
 
 type ChatViewDateProps = {
   date: string;

@@ -17,6 +17,7 @@ import {StyleProp, ViewStyle} from 'react-native';
 import ColorModeSwitch from '../controls/ColorModeSwitch';
 import {useColorModeValue} from 'native-base';
 import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
+import {accountToUser} from '../../models/User';
 
 const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
 
@@ -58,7 +59,7 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
   return (
     <DrawerContentScrollView contentContainerStyle={[flexStyle, {backgroundColor}]}>
       <FVStack grow mx="3" my="4" space="6" defaultSpace>
-        <UserFullView user={account} account={account} />
+        <UserFullView user={accountToUser(account)} account={account} />
 
         <Separator bg="secondary.500" />
 

@@ -7,7 +7,7 @@ const OutlinedButton = React.forwardRef((props: OutlinedButtonProps, ref: any) =
   const {children, ...other} = props;
 
   return (
-    <Button {...other} borderRadius={0} variant="outline" ref={ref}>
+    <Button {...other} borderRadius="xl" variant="outline" ref={ref}>
       {children}
     </Button>
   );

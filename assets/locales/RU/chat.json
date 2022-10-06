@@ -5,8 +5,7 @@
   "list": {
     "chatsNotFound": "Пока чатов нет"
   },
-  "content": {
-    "placeholder": "Чат не выбран",
+  "view": {
     "messagesNotFound": "Пока сообщений нет",
     "inputPlaceholder": "Введите сообщение..."
   },

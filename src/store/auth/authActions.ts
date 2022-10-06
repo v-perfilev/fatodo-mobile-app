@@ -12,7 +12,8 @@ import NotificationsRemote from '../../shared/push/notificationsRemote';
 import {ChangeLanguageDTO} from '../../models/dto/ChangeLanguageDTO';
 import {SnackActions} from '../snack/snackActions';
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {UserAccount} from '../../models/User';
+import {accountToUser, UserAccount} from '../../models/User';
+import {InfoActions} from '../info/infoActions';
 
 const PREFIX = 'auth/';
 
@@ -59,10 +60,11 @@ export class AuthActions {
 
   static fetchAccountThunk = createAsyncThunk<UserAccount, void, AsyncThunkConfig>(
     PREFIX + 'fetchAccount',
-    async () => {
+    async (_, thunkAPI) => {
       const response = await UserService.getCurrent();
       const account = response.data;
       LanguageUtils.setLanguageFromUser(account);
+      thunkAPI.dispatch(InfoActions.handleUsers([accountToUser(account)]));
       return account;
     },
   );

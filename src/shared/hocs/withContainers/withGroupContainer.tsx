@@ -52,7 +52,7 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
     <Component
       loading={!loadingFinished}
       groupId={routeGroupId || routeGroup?.id}
-      group={group || routeGroup}
+      group={group?.id === routeGroup?.id || group?.id === routeGroupId ? group : routeGroup}
       {...props}
     />
   );

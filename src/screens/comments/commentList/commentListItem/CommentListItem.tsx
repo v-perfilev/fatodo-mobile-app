@@ -37,7 +37,7 @@ const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
         {user && <UserView user={user} picSize="sm" />}
         <CommentListItemReactions comment={comment} isOwnComment={isOwnComment} />
       </FVStack>
-      <FVStack grow smallSpace backgroundColor={bg} px="2" py="1.5">
+      <FVStack grow smallSpace backgroundColor={bg} px="2" py="1.5" borderRadius="xl">
         <FHStack defaultSpace alignItems="center">
           <FHStack grow defaultSpace alignItems="center">
             <Text color="primary.500" fontWeight="bold">

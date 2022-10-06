@@ -5,9 +5,9 @@ import {Skeleton} from 'native-base';
 const CommentSkeleton = () => {
   return (
     <FHStack w="100%" p="2" defaultSpace>
-      <Skeleton mt="2" w="35px" h="35px" rounded="3xl" />
+      <Skeleton mt="2" w="35px" h="35px" rounded="full" />
       <FHStack grow>
-        <Skeleton flexGrow="1" h="60px" />
+        <Skeleton flexGrow="1" h="60px" rounded="xl" />
       </FHStack>
     </FHStack>
   );

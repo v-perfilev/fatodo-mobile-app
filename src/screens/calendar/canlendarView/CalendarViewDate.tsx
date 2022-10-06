@@ -37,7 +37,7 @@ const CalendarViewDate = ({month, date, selectDate, isActiveDate}: CalendarViewD
 
   return (
     <PressableButton m="1" flexGrow="1" flexBasis="1" onPress={handlePress}>
-      <PaperBox height="55px" bg={bg} borderWidth="0">
+      <PaperBox height="55px" bg={bg} borderRadius="lg" borderWidth="0">
         <FVStack>
           <FHStack justifyContent="flex-end">
             <Text fontSize="14" fontWeight="bold" color={color}>

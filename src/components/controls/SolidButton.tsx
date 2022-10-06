@@ -7,7 +7,7 @@ const SolidButton = React.forwardRef((props: SolidButtonProps, ref: any) => {
   const {children, ...other} = props;
 
   return (
-    <Button {...other} borderRadius={0} variant="solid" ref={ref}>
+    <Button {...other} borderRadius="xl" variant="solid" ref={ref}>
       {children}
     </Button>
   );

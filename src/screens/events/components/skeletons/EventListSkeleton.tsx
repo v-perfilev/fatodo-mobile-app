@@ -1,12 +1,15 @@
 import React, {memo} from 'react';
-import {EVENT_SKELETONS_COUNT} from '../../../../constants';
+import {EVENT_SKELETONS_HEIGHT} from '../../../../constants';
 import FVStack from '../../../../components/boxes/FVStack';
 import Separator from '../../../../components/layouts/Separator';
 import {Box} from 'native-base';
 import EventSkeleton from './EventSkeleton';
+import {Dimensions} from 'react-native';
 
 const EventListSkeleton = () => {
-  const indexArray = Array.from(Array(EVENT_SKELETONS_COUNT).keys());
+  const height = Dimensions.get('window').height;
+  const count = Math.round(height / EVENT_SKELETONS_HEIGHT);
+  const indexArray = Array.from(Array(count).keys());
 
   return (
     <FVStack>
