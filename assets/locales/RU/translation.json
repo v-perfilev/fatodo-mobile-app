@@ -1,7 +1,5 @@
 {
   "routes": {
-    "Home": "Главная",
-    "Account": "Аккаунт",
     "Groups": "Группы",
     "Calendar": "Календарь",
     "Contacts": "Контакты",
@@ -21,6 +19,7 @@
     "ChatView": "Чат",
     "CommentList": "Комментарии",
     "AccountForm": "Редактировать аккаунт",
+    "AccountSettingsForm": "Изменить настройки",
     "AccountChangePasswordForm": "Изменить пароль",
     "UserView": "Пользователь",
     "EventList": "События",

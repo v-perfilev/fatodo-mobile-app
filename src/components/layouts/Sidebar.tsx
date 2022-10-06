@@ -31,6 +31,10 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
     navigation.navigate('AccountForm');
   };
 
+  const goToAccountSettingsForm = (): void => {
+    navigation.navigate('AccountSettingsForm');
+  };
+
   const goToAccountChangePasswordForm = (): void => {
     navigation.navigate('AccountChangePasswordForm');
   };
@@ -66,6 +70,9 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
         <FVStack flex="1" flexGrow="1" defaultSpace flexShrink="1">
           <GhostButton justifyContent="flex-start" onPress={goToAccountForm}>
             {t('routes.AccountForm')}
+          </GhostButton>
+          <GhostButton justifyContent="flex-start" onPress={goToAccountSettingsForm}>
+            {t('routes.AccountSettingsForm')}
           </GhostButton>
           {account.provider === 'LOCAL' && (
             <GhostButton justifyContent="flex-start" onPress={goToAccountChangePasswordForm}>

@@ -1,12 +1,14 @@
 import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {Badge, Box, Pressable} from 'native-base';
+import {Badge, Pressable, Text} from 'native-base';
 import {BottomTabDescriptorMap} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import {NavigationHelpers, ParamListBase, TabNavigationState} from '@react-navigation/native';
 import {BottomTabNavigationEventMap} from '@react-navigation/bottom-tabs/src/types';
 import FHStack from '../boxes/FHStack';
 import FCenter from '../boxes/FCenter';
 import Separator from './Separator';
+import {useTranslation} from 'react-i18next';
+import FVStack from '../boxes/FVStack';
 
 type TabNavigatorBarProps = BottomTabBarProps;
 
@@ -20,11 +22,12 @@ type TabNavigatorItemProps = {
 };
 
 const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, index}: TabNavigatorItemProps) => {
+  const {t} = useTranslation();
   const {options} = descriptors[routeKey];
   const isFocused = state.index === index;
   const icon = options.tabBarIcon;
   const badge = options.tabBarBadge;
-  const iconColor = isFocused ? 'primary.500' : 'gray.400';
+  const color = isFocused ? 'primary.500' : 'gray.400';
 
   const onPress = (): void => navigation.navigate(routeName);
 
@@ -37,13 +40,16 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
   );
 
   return (
-    <Pressable flex="1" p="3" onPress={onPress}>
-      <FCenter h="30px">
-        <Box>
+    <Pressable flex="1" h="50px" px="3" py="1" onPress={onPress}>
+      <FVStack grow justifyContent="center" alignItems="center">
+        <FCenter flex="1" flexGrow="1">
           {showBadgeNode && badgeNode}
-          {icon({focused: isFocused, color: iconColor, size: 8})}
-        </Box>
-      </FCenter>
+          {icon({focused: isFocused, color, size: 7})}
+        </FCenter>
+        <Text fontSize="2xs" color={color}>
+          {t('routes.' + routeName)}
+        </Text>
+      </FVStack>
     </Pressable>
   );
 };

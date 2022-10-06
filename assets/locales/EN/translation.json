@@ -1,7 +1,5 @@
 {
   "routes": {
-    "Home": "Home",
-    "Account": "Account",
     "Groups": "Groups",
     "Calendar": "Calendar",
     "Events": "Events",
@@ -21,6 +19,7 @@
     "ChatView": "Chat",
     "CommentList": "Comments",
     "AccountForm": "Edit account",
+    "AccountSettingsForm": "Edit settings",
     "AccountChangePasswordForm": "Change password",
     "UserView": "User",
     "EventList": "Events",

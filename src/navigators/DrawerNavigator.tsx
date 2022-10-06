@@ -5,6 +5,7 @@ import withDrawer from '../shared/hocs/withDrawer';
 import AccountForm from '../screens/account/accountForm/AccountForm';
 import AccountChangePasswordForm from '../screens/account/accountChangePasswordForm/AccountChangePasswordForm';
 import Sidebar from '../components/layouts/Sidebar';
+import AccountSettingsForm from '../screens/account/accountSettingsForm/AccountSettingsForm';
 
 const Drawer = createDrawerNavigator();
 
@@ -13,6 +14,7 @@ const DrawerNavigator = () => {
     <Drawer.Navigator screenOptions={{headerShown: false, drawerType: 'back', lazy: false}} drawerContent={Sidebar}>
       <Drawer.Screen name="Default" component={RootNavigator} />
       <Drawer.Screen name="AccountForm" component={AccountForm} />
+      <Drawer.Screen name="AccountSettingsForm" component={AccountSettingsForm} />
       <Drawer.Screen name="AccountChangePasswordForm" component={AccountChangePasswordForm} />
     </Drawer.Navigator>
   );

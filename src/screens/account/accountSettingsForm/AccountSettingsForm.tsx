@@ -9,15 +9,16 @@ import FHStack from '../../../components/boxes/FHStack';
 import * as Yup from 'yup';
 import {usernameChangeValidator} from '../../../shared/validators';
 import {DateFormat, dateFormats, Gender, Language, TimeFormat, timeFormats, UserAccount} from '../../../models/User';
-import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import {useNavigation} from '@react-navigation/native';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
-import FormikGenderInput from '../../../components/inputs/FormikGenderInput';
-import ImageUpload from '../../../components/inputs/imageUpload/ImageUpload';
+import FormikTimezoneInput from '../../../components/inputs/FormikTimezoneInput';
+import FormikLanguageInput from '../../../components/inputs/FormikLanguageInput';
 import {AuthActions} from '../../../store/auth/authActions';
+import FormikTimeFormatInput from '../../../components/inputs/FormikTimeFormatInput';
+import FormikDateFormatInput from '../../../components/inputs/FormikDateFormatInput';
 
-export interface AccountFormValues {
+export interface AccountSettingsFormValues {
   username: string;
   firstname: string;
   lastname: string;
@@ -30,7 +31,7 @@ export interface AccountFormValues {
   imageContent?: Blob;
 }
 
-const defaultAccountFormValues: Readonly<AccountFormValues> = {
+const defaultAccountSettingsFormValues: Readonly<AccountSettingsFormValues> = {
   username: '',
   firstname: '',
   lastname: '',
@@ -43,7 +44,7 @@ const defaultAccountFormValues: Readonly<AccountFormValues> = {
   imageContent: null,
 };
 
-const initialValues = (account: UserAccount): AccountFormValues =>
+const initialValues = (account: UserAccount): AccountSettingsFormValues =>
   account
     ? {
         username: account.username,
@@ -57,14 +58,14 @@ const initialValues = (account: UserAccount): AccountFormValues =>
         imageFilename: account.info.imageFilename,
         imageContent: null,
       }
-    : defaultAccountFormValues;
+    : defaultAccountSettingsFormValues;
 
 const validationSchema = (account: UserAccount) =>
   Yup.object().shape({
     username: usernameChangeValidator(account.username).check(),
   });
 
-const AccountForm = () => {
+const AccountSettingsForm = () => {
   const dispatch = useAppDispatch();
   const account = useAppSelector(AuthSelectors.account);
   const navigation = useNavigation();
@@ -79,7 +80,7 @@ const AccountForm = () => {
     }
   };
 
-  const handleSubmit = (values: AccountFormValues, helpers: FormikHelpers<AccountFormValues>): void => {
+  const handleSubmit = (values: AccountSettingsFormValues, helpers: FormikHelpers<AccountSettingsFormValues>): void => {
     const formData = new FormData();
     addValueToForm(formData, 'id', account.id);
     addValueToForm(formData, 'username', values.username);
@@ -106,36 +107,28 @@ const AccountForm = () => {
         <Formik initialValues={values} validationSchema={valSchema} onSubmit={handleSubmit} enableReinitialize>
           {(formikProps) => (
             <FVStack defaultSpace>
-              <FormikTextInput
-                name="username"
-                label={t('account:fields.username.label')}
+              <FormikLanguageInput
+                name="language"
+                label={t('account:fields.language.label')}
                 isDisabled={formikProps.isSubmitting}
                 {...formikProps}
               />
-              <FormikTextInput
-                name="firstname"
-                label={t('account:fields.firstname.label')}
+              <FormikTimezoneInput
+                name="timezone"
+                label={t('account:fields.timezone.label')}
                 isDisabled={formikProps.isSubmitting}
                 {...formikProps}
               />
-              <FormikTextInput
-                name="lastname"
-                label={t('account:fields.lastname.label')}
+              <FormikTimeFormatInput
+                name="timeFormat"
+                label={t('account:fields.timeFormat.label')}
                 isDisabled={formikProps.isSubmitting}
                 {...formikProps}
               />
-              <FormikGenderInput
-                name="gender"
-                label={t('account:fields.gender.label')}
+              <FormikDateFormatInput
+                name="dateFormat"
+                label={t('account:fields.dateFormat.label')}
                 isDisabled={formikProps.isSubmitting}
-                {...formikProps}
-              />
-              <ImageUpload
-                filenameName="imageFilename"
-                contentName="imageContent"
-                label={t('account:fields.image.label')}
-                preview
-                crop
                 {...formikProps}
               />
 
@@ -158,4 +151,4 @@ const AccountForm = () => {
   );
 };
 
-export default AccountForm;
+export default AccountSettingsForm;

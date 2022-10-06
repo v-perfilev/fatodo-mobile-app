@@ -17,7 +17,7 @@ const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
 
   const date = new Date(message.createdAt);
 
-  const bg = useColorModeValue('gray.50', 'gray.600');
+  const bg = useColorModeValue('gray.100', 'gray.600');
 
   return (
     <FHStack space="2" width="90%" ml="10%" justifyContent="flex-end">
