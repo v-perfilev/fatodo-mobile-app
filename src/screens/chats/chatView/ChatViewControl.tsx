@@ -5,13 +5,13 @@ import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
 import FBox from '../../../components/boxes/FBox';
 import SendMessageIcon from '../../../components/icons/SendMessageIcon';
 import {MessageDTO} from '../../../models/dto/MessageDTO';
-import IconButton from '../../../components/controls/IconButton';
 import {useTranslation} from 'react-i18next';
 import {ChatActions} from '../../../store/chat/chatActions';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import {CHATS_INPUT_HEIGHT} from '../../../constants';
 import {useColorModeValue} from 'native-base';
 import {DARK_BG, LIGHT_BG} from '../../../shared/themes/colors';
+import IconButton from '../../../components/controls/IconButton';
 
 const ChatViewControl = () => {
   const dispatch = useAppDispatch();
@@ -62,7 +62,14 @@ const ChatViewControl = () => {
           onChangeText={handleTextChange}
         />
       </FBox>
-      <IconButton icon={<SendMessageIcon />} onPress={handleSend} isDisabled={!isValid} />
+      <IconButton
+        size="lg"
+        p="2"
+        icon={<SendMessageIcon />}
+        onPress={handleSend}
+        isDisabled={!isValid}
+        disabled={!isValid}
+      />
     </FHStack>
   );
 };

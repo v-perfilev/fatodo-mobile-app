@@ -10,10 +10,10 @@ import FVStack from '../../../components/boxes/FVStack';
 import CommentListControlReference from './CommentListControlReference';
 import {COMMENTS_INPUT_HEIGHT} from '../../../constants';
 import SendMessageIcon from '../../../components/icons/SendMessageIcon';
-import IconButton from '../../../components/controls/IconButton';
 import {CommentsActions} from '../../../store/comments/commentsActions';
 import {useColorModeValue} from 'native-base';
 import {DARK_BG, LIGHT_BG} from '../../../shared/themes/colors';
+import IconButton from '../../../components/controls/IconButton';
 
 type CommentsViewControlProps = {
   reference: Comment;
@@ -76,7 +76,14 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
           onChangeText={handleTextChange}
         />
       </FVStack>
-      <IconButton icon={<SendMessageIcon />} onPress={handleSend} isDisabled={!isValid} />
+      <IconButton
+        size="lg"
+        p="2"
+        icon={<SendMessageIcon />}
+        onPress={handleSend}
+        disabled={!isValid}
+        isDisabled={!isValid}
+      />
     </FHStack>
   );
 };

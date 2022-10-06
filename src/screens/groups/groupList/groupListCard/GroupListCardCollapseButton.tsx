@@ -3,8 +3,8 @@ import {GestureResponderEvent} from 'react-native';
 import CollapsedIcon from '../../../../components/icons/CollapsedIcon';
 import {Group} from '../../../../models/Group';
 import {useAppDispatch} from '../../../../store/store';
-import IconButton from '../../../../components/controls/IconButton';
 import {GroupsActions} from '../../../../store/groups/groupsActions';
+import IconButton from '../../../../components/controls/IconButton';
 
 type GroupListCardCollapseButtonProps = {
   group: Group;
@@ -24,15 +24,7 @@ const GroupListCardCollapseButton = ({group, collapsed}: GroupListCardCollapseBu
     setCollapsed(group.id, !collapsed);
   };
 
-  return (
-    <IconButton
-      colorScheme="primary"
-      size="xl"
-      p="0.5"
-      icon={<CollapsedIcon hidden={!collapsed} />}
-      onPress={handlePress}
-    />
-  );
+  return <IconButton size="xl" icon={<CollapsedIcon hidden={!collapsed} />} onPress={handlePress} />;
 };
 
 export default GroupListCardCollapseButton;

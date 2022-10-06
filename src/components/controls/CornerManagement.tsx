@@ -1,9 +1,9 @@
-import {Box, IIconButtonProps} from 'native-base';
+import {Box} from 'native-base';
 import {Animated, StyleProp, ViewStyle} from 'react-native';
 import {CornerButton} from '../../models/CornerButton';
-import IconButton from './IconButton';
 import React, {memo, RefObject, useEffect, useRef} from 'react';
 import {SharedValue, useSharedValue} from 'react-native-reanimated';
+import IconButton from './IconButton';
 import CompositeAnimation = Animated.CompositeAnimation;
 
 type CornerManagementProps = {
@@ -12,7 +12,7 @@ type CornerManagementProps = {
   bottomPadding?: number;
 };
 
-const CORNER_MANAGEMENT_BUTTON_PADDING = 64;
+const CORNER_MANAGEMENT_BUTTON_PADDING = 60;
 
 const isButtonShown = (button: CornerButton, onTop: boolean, directScroll: boolean): boolean => {
   const hideOnTop = onTop && button.hideOnTop;
@@ -40,19 +40,8 @@ const createAnimatedValues = (positions: number[]): RefObject<Animated.Value>[] 
     .map((animatedValue) => React.useRef<Animated.Value>(animatedValue));
 };
 
-const CornerManagementButton = ({button, ...props}: IIconButtonProps & {button: CornerButton}) => {
-  return (
-    <IconButton
-      icon={button.icon}
-      onPressIn={button.action}
-      bgColorScheme={button.color || 'primary'}
-      colorScheme="white"
-      bgTransparency="100"
-      size="30"
-      p="3"
-      {...props}
-    />
-  );
+const CornerManagementButton = ({button}: {button: CornerButton}) => {
+  return <IconButton icon={button.icon} colorScheme={button.color} size="xl" variant="solid" p="3" />;
 };
 
 const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementProps) => {
@@ -129,7 +118,7 @@ const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementPro
           </Animated.View>
         ))}
       </Box>
-      <Box zIndex="100" position="absolute" bottom="8px" right="72px">
+      <Box zIndex="100" position="absolute" bottom="8px" right="68px">
         {addButtons.current.map((button, index) => (
           <Animated.View key={index} style={[{translateY: additionalPositionValues[index].current}, viewStyle]}>
             <CornerManagementButton button={button} />

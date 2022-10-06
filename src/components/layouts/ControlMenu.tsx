@@ -23,6 +23,7 @@ const ControlMenu = ({menu, disabled}: ControlMenuProps) => {
           onPress={action.action}
           isDisabled={disabled || action.disabled}
           size="md"
+          p="2"
           key={index}
         />
       ))}

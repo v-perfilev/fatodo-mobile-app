@@ -41,7 +41,7 @@ const ClearableTextInput = ({value, onChangeText, ...props}: IInputProps) => {
       fontSize={INPUT_FONT_SIZE}
       onChangeText={handleChangeText}
       value={updater}
-      InputRightElement={showClearButton && <IconButton size="xs" icon={<CloseIcon />} mx="2" onPress={clear} />}
+      InputRightElement={showClearButton && <IconButton size="sm" p="1" icon={<CloseIcon />} mx="2" onPress={clear} />}
     />
   );
 };

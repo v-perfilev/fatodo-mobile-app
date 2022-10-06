@@ -10,6 +10,7 @@ import {Group} from '../../../../models/Group';
 import FHStack from '../../../../components/boxes/FHStack';
 import GroupListCardDragButton from './GroupListCardDragButton';
 import PressableButton from '../../../../components/controls/PressableButton';
+import {DARK_BG, LIGHT_BG} from '../../../../shared/themes/colors';
 
 type GroupListCardHeaderProps = {
   group: Group;
@@ -23,12 +24,13 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
 
   const goToGroupView = (): void => !sorting && navigation.navigate('GroupView', {group});
 
+  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
   const bgOpacity = useColorModeValue(0.1, 0.1);
   const titleColor = useColorModeValue('primary.500', 'gray.100');
 
   return (
     <PressableButton onPress={goToGroupView}>
-      <Box position="relative" h="50px" px="4" pr="2" justifyContent="center">
+      <Box position="relative" h="50px" px="4" pr="3" justifyContent="center" bg={bg}>
         <Box position="absolute" left="0" right="0" top="0" bottom="0" bg={LINEAR_GRADIENT} opacity={bgOpacity} />
         <FHStack defaultSpace alignItems="center">
           {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} />}

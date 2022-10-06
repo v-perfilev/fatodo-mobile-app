@@ -6,8 +6,8 @@ import ReorderIcon from '../../../components/icons/ReorderIcon';
 import CollapsedIcon from '../../../components/icons/CollapsedIcon';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
-import IconButton from '../../../components/controls/IconButton';
 import {GroupsActions} from '../../../store/groups/groupsActions';
+import IconButton from '../../../components/controls/IconButton';
 
 type GroupListHeaderProps = {
   sorting: boolean;
@@ -60,13 +60,13 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
     <Header showAvatar hideGoBack>
       {sorting ? (
         <>
-          <IconButton size="xl" p="1.5" icon={<CheckIcon />} onPress={saveSorting} />
-          <IconButton size="xl" p="1.5" icon={<CloseIcon />} onPress={cancelSorting} />
+          <IconButton size="2xl" icon={<CheckIcon />} onPress={saveSorting} />
+          <IconButton size="2xl" icon={<CloseIcon />} onPress={cancelSorting} />
         </>
       ) : (
         <>
-          <IconButton size="xl" p="1.5" icon={<ReorderIcon />} onPress={enableSorting} />
-          <IconButton size="2xl" p="1" icon={<CollapsedIcon hidden={!allCollapsed} />} onPress={switchCollapsed} />
+          <IconButton size="2xl" icon={<ReorderIcon />} onPress={enableSorting} />
+          <IconButton size="4xl" p="0" icon={<CollapsedIcon hidden={!allCollapsed} />} onPress={switchCollapsed} />
         </>
       )}
     </Header>

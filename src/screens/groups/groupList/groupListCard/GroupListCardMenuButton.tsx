@@ -63,18 +63,7 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
   ];
 
   return (
-    <Menu
-      trigger={(triggerProps) => (
-        <IconButton
-          {...triggerProps}
-          colorScheme="primary"
-          bgTransparency="10"
-          size="lg"
-          p="1"
-          icon={<DotsVerticalIcon />}
-        />
-      )}
-    >
+    <Menu trigger={(triggerProps) => <IconButton {...triggerProps} icon={<DotsVerticalIcon />} />}>
       {menuItems.map((itemProps, index) => (
         <MenuItem {...itemProps} key={index} />
       ))}

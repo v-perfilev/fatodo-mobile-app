@@ -6,7 +6,6 @@ import UrlPic from '../surfaces/UrlPic';
 import ArrowBackIcon from '../icons/ArrowBackIcon';
 import FHStack from '../boxes/FHStack';
 import Logo from './Logo';
-import IconButton from '../controls/IconButton';
 import {HEADER_HEIGHT} from '../../constants';
 import PressableButton from '../controls/PressableButton';
 import {useDrawerContext} from '../../shared/contexts/DrawerContext';
@@ -15,6 +14,7 @@ import AuthSelectors from '../../store/auth/authSelectors';
 import UserView from '../views/UserView';
 import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
 import {accountToUser} from '../../models/User';
+import IconButton from '../controls/IconButton';
 
 type HeaderProps = PropsWithChildren<{
   title?: string;
@@ -42,7 +42,7 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
 
   return (
     <FHStack h={HEADER_HEIGHT} defaultSpace bg={background} px="2" alignItems="center">
-      {!hideGoBack && canGoBack && <IconButton size="2xl" p="1" icon={<ArrowBackIcon />} onPress={goBack} />}
+      {!hideGoBack && canGoBack && <IconButton size="3xl" p="0" mr="-1" icon={<ArrowBackIcon />} onPress={goBack} />}
       {showAvatar && (
         <PressableButton onPress={toggleDrawer}>
           <UserView user={accountToUser(account)} withUserPic picSize="43px" />

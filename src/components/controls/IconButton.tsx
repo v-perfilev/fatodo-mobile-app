@@ -1,32 +1,27 @@
-import React, {ReactElement} from 'react';
-import {Box, IButtonProps} from 'native-base';
-import {ColorSchemeType, SizeType} from 'native-base/lib/typescript/components/types';
-import PressableButton from './PressableButton';
+import React from 'react';
+import {IconButton as NBIconButton, IIconButtonProps} from 'native-base';
 
-type IconButtonProps = IButtonProps & {
-  icon: ReactElement;
-  size?: SizeType;
-  colorScheme?: ColorSchemeType;
-  bgColorScheme?: ColorSchemeType;
-  bgTransparency?: string;
-};
+type IconButtonProps = IIconButtonProps;
 
 const IconButton = React.forwardRef((props: IconButtonProps, ref: any) => {
-  const {icon, colorScheme = 'primary', bgColorScheme, bgTransparency = '10', size = 'md', p = '2', ...other} = props;
+  let additionalProps = {};
+  if (props.colorScheme === 'white' && props.variant === 'solid') {
+    additionalProps = {
+      bg: 'white:alpha.20',
+      _icon: {color: 'white'},
+      _pressed: {bg: 'white:alpha.20'},
+    };
+  } else if (props.colorScheme === 'white') {
+    additionalProps = {
+      _icon: {color: 'white'},
+      _pressed: {bg: 'white:alpha.10'},
+    };
+  }
 
-  const prepareColor = (scheme: ColorSchemeType): string => (scheme !== 'white' ? `${scheme}.500` : 'white');
-  const prepareBgColor = (scheme: ColorSchemeType): string => prepareColor(scheme) + ':alpha.' + bgTransparency;
-  const color = prepareColor(colorScheme);
-  const bg = bgColorScheme !== null ? prepareBgColor(bgColorScheme || colorScheme) : undefined;
-
-  const iconElement = React.cloneElement(icon, {size, color});
+  const icon = React.cloneElement(props.icon, {size: props.size || 'lg'});
 
   return (
-    <PressableButton {...other} ref={ref} rounded="full" overflow="hidden">
-      <Box bg={bg} p={p}>
-        {iconElement}
-      </Box>
-    </PressableButton>
+    <NBIconButton borderRadius="full" p="1" {...additionalProps} {...props} size={undefined} icon={icon} ref={ref} />
   );
 });
 

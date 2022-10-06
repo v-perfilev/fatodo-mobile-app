@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Spinner, useColorMode} from 'native-base';
-import IconButton from './IconButton';
 import SunIcon from '../icons/SunIcon';
 import MoonIcon from '../icons/MoonIcon';
 import FHStack from '../boxes/FHStack';
 import {useAppDispatch} from '../../store/store';
 import {CommonActions} from '../../store/common/commonActions';
+import IconButton from './IconButton';
 
 const ColorModeSwitch = () => {
   const dispatch = useAppDispatch();

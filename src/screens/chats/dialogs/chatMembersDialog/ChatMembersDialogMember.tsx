@@ -8,8 +8,8 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import {Chat} from '../../../../models/Chat';
 import {User} from '../../../../models/User';
-import IconButton from '../../../../components/controls/IconButton';
 import {ChatActions} from '../../../../store/chat/chatActions';
+import IconButton from '../../../../components/controls/IconButton';
 
 type ChatMembersDialogMemberProps = {
   chat: Chat;
@@ -54,7 +54,7 @@ const ChatMembersDialogMember = ({chat, user}: ChatMembersDialogMemberProps) => 
         <UserView user={user} withUsername withUserPic picSize="sm" />
       </FHStack>
       {chat && !chat.isDirect && user.id !== account.id && (
-        <IconButton colorScheme="error" size="md" icon={<UserMinusIcon />} onPress={switchRemovingConfirmation} />
+        <IconButton colorScheme="error" size="md" p="2" icon={<UserMinusIcon />} onPress={switchRemovingConfirmation} />
       )}
       {removingConfirmation}
     </FHStack>

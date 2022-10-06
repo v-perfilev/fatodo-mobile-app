@@ -1,9 +1,9 @@
 import React, {useCallback, useMemo} from 'react';
 import Header from '../../../components/layouts/Header';
-import IconButton from '../../../components/controls/IconButton';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import ActiveDateIcon from '../../../components/icons/ActiveDateIcon';
+import IconButton from '../../../components/controls/IconButton';
 
 type CalendarViewHeaderProps = {
   activeMonth: CalendarMonth;
@@ -23,7 +23,7 @@ const CalendarViewHeader = ({activeMonth, selectMonth}: CalendarViewHeaderProps)
 
   return (
     <Header showAvatar hideGoBack>
-      {!isCurrentMonth && <IconButton size="xl" p="1.5" icon={<ActiveDateIcon />} onPress={goToCurrentMonth} />}
+      {!isCurrentMonth && <IconButton size="2xl" icon={<ActiveDateIcon />} onPress={goToCurrentMonth} />}
     </Header>
   );
 };
