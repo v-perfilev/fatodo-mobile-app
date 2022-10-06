@@ -37,7 +37,7 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
           <Text fontSize="lg" color={titleColor} isTruncated>
             {group.title}
           </Text>
-          <FHStack grow space="2" alignItems="center" justifyContent="flex-end">
+          <FHStack grow smallSpace alignItems="center" justifyContent="flex-end">
             {sorting ? (
               <GroupListCardDragButton drag={drag} />
             ) : (

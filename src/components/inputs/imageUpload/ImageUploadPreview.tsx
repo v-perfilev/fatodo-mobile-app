@@ -7,7 +7,7 @@ type ImageUploadPreviewProps = {
 };
 
 const ImageUploadPreview = ({image}: ImageUploadPreviewProps) => {
-  return image?.filename ? <UrlPic file={image.filename} size="xl" border={3} /> : null;
+  return image?.filename ? <UrlPic file={image.filename} size="2xl" border={3} /> : null;
 };
 
 export default ImageUploadPreview;

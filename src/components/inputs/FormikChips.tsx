@@ -47,7 +47,7 @@ const FormikChips = (props: FormikChipsProps<any>) => {
     <FormControl {...props}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <PressableButton onPress={openInput}>
-        <PaperBox flexDir="row" minH="45px" alignItems="center" px="3" py="2">
+        <PaperBox flexDir="row" minH="45px" alignItems="center" px="3" py="2" borderRadius="xl">
           <FContainer itemM="1">
             {chipsElements}
             {input(showInput, addValue, closeInput)}

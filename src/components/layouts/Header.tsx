@@ -41,21 +41,23 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
   const background = useColorModeValue(LIGHT_BG, DARK_BG);
 
   return (
-    <FHStack h={HEADER_HEIGHT} defaultSpace bg={background} px="2" alignItems="center">
-      {!hideGoBack && canGoBack && <IconButton size="3xl" p="0" mr="-1" icon={<ArrowBackIcon />} onPress={goBack} />}
-      {showAvatar && (
-        <PressableButton onPress={toggleDrawer}>
-          <UserView user={accountToUser(account)} withUserPic picSize="43px" />
-        </PressableButton>
-      )}
-      {showLogo && <Logo size={10} />}
-      {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="43px" border="1" />}
-      {!hideTitle && (
-        <Text fontWeight="400" fontSize="xl" lineHeight="xl" color="primary.500" isTruncated>
-          {label}
-        </Text>
-      )}
-      <FHStack grow h="100%" space="2" alignItems="center" justifyContent="flex-end">
+    <FHStack h={HEADER_HEIGHT} smallSpace bg={background} px="2" alignItems="center">
+      {!hideGoBack && canGoBack && <IconButton size="2xl" icon={<ArrowBackIcon />} onPress={goBack} />}
+      <FHStack defaultSpace alignItems="center">
+        {showAvatar && (
+          <PressableButton onPress={toggleDrawer}>
+            <UserView user={accountToUser(account)} withUserPic picSize="43px" />
+          </PressableButton>
+        )}
+        {showLogo && <Logo size={10} />}
+        {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="43px" border="1" />}
+        {!hideTitle && (
+          <Text fontWeight="400" fontSize="xl" lineHeight="xl" color="primary.500" isTruncated>
+            {label}
+          </Text>
+        )}
+      </FHStack>
+      <FHStack grow h="100%" smallSpace alignItems="center" justifyContent="flex-end">
         {children}
       </FHStack>
     </FHStack>

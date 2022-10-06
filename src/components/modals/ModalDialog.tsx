@@ -24,7 +24,7 @@ const ModalDialog = ({open, close, title, content, actions, size}: ModalDialogPr
       <Modal isOpen={open} onClose={close} _backdrop={{bg: backdrop}} size={size}>
         <KeyboardAvoidingView w="100%" behavior="position">
           <Center>
-            <Modal.Content borderRadius="0">
+            <Modal.Content borderRadius="xl">
               <Modal.CloseButton
                 rounded="3xl"
                 _pressed={{bgColor: 'primary.100:alpha.30'}}

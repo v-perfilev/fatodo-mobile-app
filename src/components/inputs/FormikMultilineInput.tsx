@@ -21,6 +21,7 @@ const FormikMultilineInput = (props: FormikMultilineInputProps) => {
         h={120}
         totalLines={20}
         autoCompleteType={undefined}
+        borderRadius="xl"
       />
       {isTouched && <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>}
     </FormControl>

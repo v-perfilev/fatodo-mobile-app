@@ -63,7 +63,7 @@ const FormikSelect = (props: FormikSelectProps) => {
       <Menu
         trigger={(triggerProps) => (
           <PressableButton {...filterPropsIfDisabled(triggerProps)}>
-            <PaperBox h="45px" justifyContent="center" px="3" opacity={isDisabled ? 0.5 : undefined}>
+            <PaperBox h="45px" justifyContent="center" px="3" borderRadius="xl" opacity={isDisabled ? 0.5 : undefined}>
               {options.get(current)}
             </PaperBox>
           </PressableButton>

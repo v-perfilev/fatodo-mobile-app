@@ -42,6 +42,7 @@ const ClearableTextInput = ({value, onChangeText, ...props}: IInputProps) => {
       onChangeText={handleChangeText}
       value={updater}
       InputRightElement={showClearButton && <IconButton size="sm" p="1" icon={<CloseIcon />} mx="2" onPress={clear} />}
+      borderRadius="xl"
     />
   );
 };

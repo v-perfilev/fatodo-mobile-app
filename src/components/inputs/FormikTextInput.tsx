@@ -20,6 +20,7 @@ const FormikTextInput = (props: FormikTextInputProps) => {
         onChangeText={onChange}
         onBlur={onBlur}
         value={value}
+        borderRadius="xl"
       />
       {isTouched && <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>}
     </FormControl>

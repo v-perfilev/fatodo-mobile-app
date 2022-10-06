@@ -66,7 +66,7 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
       ) : (
         <>
           <IconButton size="2xl" icon={<ReorderIcon />} onPress={enableSorting} />
-          <IconButton size="4xl" p="0" icon={<CollapsedIcon hidden={!allCollapsed} />} onPress={switchCollapsed} />
+          <IconButton size="3xl" p="0.5" icon={<CollapsedIcon hidden={!allCollapsed} />} onPress={switchCollapsed} />
         </>
       )}
     </Header>

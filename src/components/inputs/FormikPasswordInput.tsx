@@ -36,6 +36,7 @@ const FormikPasswordInput = (props: FormikPasswordInputProps) => {
         onBlur={onBlur}
         value={value}
         InputRightElement={InputRightElement}
+        borderRadius="xl"
       />
       {isTouched && <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>}
     </FormControl>

@@ -41,7 +41,16 @@ const createAnimatedValues = (positions: number[]): RefObject<Animated.Value>[] 
 };
 
 const CornerManagementButton = ({button}: {button: CornerButton}) => {
-  return <IconButton icon={button.icon} colorScheme={button.color} size="xl" variant="solid" p="3" />;
+  return (
+    <IconButton
+      icon={button.icon}
+      colorScheme={button.color}
+      onPressIn={button.action}
+      size="xl"
+      variant="solid"
+      p="3"
+    />
+  );
 };
 
 const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementProps) => {

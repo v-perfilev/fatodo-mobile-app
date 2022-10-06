@@ -42,8 +42,8 @@ const ImageUpload = (props: ImageUploadProps) => {
 
   return (
     <FormControl {...props}>
-      {label && <FormControl.Label>{label}</FormControl.Label>}
-      <FVStack smallSpace>
+      <FVStack defaultSpace>
+        {label && <FormControl.Label>{label}</FormControl.Label>}
         {preview && <ImageUploadPreview image={image} />}
         <ImageUploadButtons image={image} setImage={setImage} crop={crop} loading={loading} setLoading={setLoading} />
       </FVStack>
