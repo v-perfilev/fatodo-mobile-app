@@ -35,7 +35,7 @@ const FormikRemindersInputMonthly = ({setReminder}: FormikRemindersInputMonthlyP
   }, [time, dates]);
 
   return (
-    <FVStack w="100%" defaultSpace>
+    <FVStack w="100%" h="100%" defaultSpace>
       <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} />
       <DatesSelect label={t('common:reminders.fields.monthdays')} dates={dates} setDates={setDates} />
     </FVStack>

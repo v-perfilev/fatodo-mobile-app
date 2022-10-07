@@ -34,7 +34,7 @@ const FormikRemindersInputYearly = ({setReminder}: FormikRemindersInputYearlyPro
   }, [time, date]);
 
   return (
-    <FVStack w="100%" defaultSpace>
+    <FVStack w="100%" h="100%" defaultSpace>
       <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} />
       <DateTimeSelect label={t('common:reminders.fields.date')} mode="shortDate" setResult={setDate} />
     </FVStack>
