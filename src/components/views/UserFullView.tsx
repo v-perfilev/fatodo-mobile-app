@@ -10,9 +10,10 @@ import FCenter from '../boxes/FCenter';
 type UserFullViewProps = {
   user: User;
   account?: UserAccount;
+  withoutUsername?: boolean;
 };
 
-export const UserFullView = ({user, account}: UserFullViewProps) => {
+export const UserFullView = ({user, account, withoutUsername}: UserFullViewProps) => {
   const {t} = useTranslation();
 
   return (
@@ -20,9 +21,11 @@ export const UserFullView = ({user, account}: UserFullViewProps) => {
       <FCenter>
         <UrlPic size="2xl" file={user.imageFilename} border={1} />
       </FCenter>
-      <Text fontSize="xl" fontWeight="bold" color="primary.500" isTruncated>
-        {user.username}
-      </Text>
+      {!withoutUsername && (
+        <Text fontSize="xl" fontWeight="bold" color="primary.500" isTruncated>
+          {user.username}
+        </Text>
+      )}
       <LabeledBox label={t('account:fields.firstname.label')} isText isTruncated showNotSet>
         {user.firstname}
       </LabeledBox>

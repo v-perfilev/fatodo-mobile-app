@@ -1,4 +1,13 @@
-import React, {MutableRefObject, ReactElement, RefObject, useCallback, useEffect, useRef, useState} from 'react';
+import React, {
+  MutableRefObject,
+  ReactElement,
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {Dimensions, ListRenderItemInfo, NativeScrollEvent, NativeSyntheticEvent, ScrollView} from 'react-native';
@@ -9,6 +18,7 @@ import FBox from '../../../components/boxes/FBox';
 import {CalendarActions} from '../../../store/calendar/calendarActions';
 import CalendarViewHeader from './CalendarViewHeader';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
+import {useIsFocused} from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;
 const months = CalendarUtils.generateAllCalendarMonths();
@@ -19,12 +29,15 @@ const getInitialIndex = (month: CalendarMonth): number => monthKeys.indexOf(mont
 const CalendarView = () => {
   const dispatch = useAppDispatch();
   const shouldLoad = useAppSelector(CalendarSelectors.shouldLoad);
+  const isFocused = useIsFocused();
   const listRef = useRef<FlatListType>();
   const childRefMap = useRef<Map<string, MutableRefObject<ScrollView>>>(new Map());
   const initialMonth = useRef<CalendarMonth>(getInitialMonth());
   const initialIndex = useRef<number>(getInitialIndex(initialMonth.current));
   const canMomentum = useRef<boolean>(false);
   const [activeMonth, setActiveMonth] = useState<CalendarMonth>(initialMonth.current);
+
+  const windowSize = useMemo<number>(() => (isFocused ? 3 : 1), [isFocused]);
 
   const scrollAllToTop = useCallback((): void => {
     const scrollToTop = (scrollView: RefObject<ScrollView>) => scrollView.current?.scrollTo({y: 0});
@@ -79,8 +92,8 @@ const CalendarView = () => {
   );
 
   useEffect(() => {
-    dispatch(CalendarActions.handleMonthThunk(activeMonth));
-  }, [shouldLoad, activeMonth]);
+    isFocused && dispatch(CalendarActions.handleMonthThunk(activeMonth));
+  }, [isFocused, shouldLoad, activeMonth]);
 
   return (
     <FBox width={width}>
@@ -99,7 +112,7 @@ const CalendarView = () => {
         initialScrollIndex={initialIndex.current}
         initialNumToRender={1}
         maxToRenderPerBatch={3}
-        windowSize={3}
+        windowSize={windowSize}
         ref={listRef}
       />
     </FBox>

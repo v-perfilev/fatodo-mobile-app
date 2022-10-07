@@ -7,11 +7,12 @@ type BulletProps = {
   color?: ColorScheme;
   size?: string;
   fullWidth?: boolean;
+  inverted?: boolean;
 };
 
-const Bullet = ({color, size = '10px', fullWidth}: BulletProps) => {
+const Bullet = ({color, size = '10px', fullWidth, inverted}: BulletProps) => {
   const theme = ThemeFactory.getTheme(color);
-  const bgColor = color ? LINEAR_GRADIENT : 'gray.500';
+  const bgColor = !inverted && color ? LINEAR_GRADIENT : inverted ? 'gray.200' : 'gray.400';
   const width = fullWidth ? '100%' : size;
 
   return (

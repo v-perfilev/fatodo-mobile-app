@@ -19,7 +19,7 @@ const EventListItemTemplate = ({image, title, content, message, date, loading}: 
   const dateToShow = new Date(date);
 
   const titleColor = useColorModeValue('gray.500', 'gray.400');
-  const messageBg = useColorModeValue('gray.50', 'gray.700');
+  const messageBg = useColorModeValue('gray.100', 'gray.700');
 
   const template = (
     <FHStack grow px="2" py="4" defaultSpace alignItems="flex-start">

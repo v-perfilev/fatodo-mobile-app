@@ -53,7 +53,7 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
             <ItemViewDate />
             <Separator bg="primary.500" />
             <ItemViewDescription />
-            {showReminders && <Separator bg="secondary.500" />}
+            {showReminders && <Separator bg="primary.500" />}
             {showReminders && <ItemReminders />}
             <Separator bg="primary.500" />
             <ItemViewChanges />

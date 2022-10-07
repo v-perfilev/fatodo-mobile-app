@@ -1,7 +1,6 @@
 import withUserContainer, {WithUserProps} from '../../../shared/hocs/withContainers/withUserContainer';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import React from 'react';
-import Header from '../../../components/layouts/Header';
 import UserFullView from '../../../components/views/UserFullView';
 import FVStack from '../../../components/boxes/FVStack';
 import UserViewGroups from './UserViewGroups';
@@ -9,17 +8,18 @@ import UserViewControl from './UserViewControl';
 import UserViewRelations from './UserViewRelations';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import Separator from '../../../components/layouts/Separator';
+import UserViewHeader from './UserViewHeader';
 
 type UserViewProps = WithUserProps;
 
 const UserView = ({user, loading}: UserViewProps) => {
   return (
     <>
-      <Header />
+      <UserViewHeader />
       <ConditionalSpinner loading={loading}>
         <SimpleScrollView>
           <FVStack defaultSpace>
-            <UserFullView user={user} />
+            <UserFullView user={user} withoutUsername />
             <Separator bg="secondary.500" />
             <UserViewControl user={user} />
             <Separator bg="secondary.500" />

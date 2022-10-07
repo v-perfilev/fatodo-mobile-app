@@ -44,7 +44,7 @@ const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
               {user?.username}
             </Text>
           </FHStack>
-          <Text color="gray.400" fontWeight="bold" fontSize="xs">
+          <Text color="gray.400" fontWeight="bold" fontSize="2xs">
             <DateView date={date} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
           </Text>
           <CommentListItemReferenceButton comment={comment} setReference={setReference} />

@@ -23,7 +23,7 @@ const CalendarViewHeader = ({activeMonth, selectMonth}: CalendarViewHeaderProps)
 
   return (
     <Header showAvatar hideGoBack>
-      {!isCurrentMonth && <IconButton size="2xl" icon={<ActiveDateIcon />} onPress={goToCurrentMonth} />}
+      {!isCurrentMonth && <IconButton size="xl" p="2" icon={<ActiveDateIcon />} onPress={goToCurrentMonth} />}
     </Header>
   );
 };

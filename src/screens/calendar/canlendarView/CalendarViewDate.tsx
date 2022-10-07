@@ -25,15 +25,15 @@ const CalendarViewDate = ({month, date, selectDate, isActiveDate}: CalendarViewD
     date.isCurrentMonth && selectDate(date);
   };
 
-  const calcBgColor = (activeColor: ColorType, currentColor: ColorType, otherColor: ColorType): ColorType => {
+  const calcColor = (activeColor: ColorType, currentColor: ColorType, otherColor: ColorType): ColorType => {
     return isActiveDate && date.isCurrentMonth ? activeColor : date.isCurrentMonth ? currentColor : otherColor;
   };
 
   const bg = useColorModeValue(
-    calcBgColor('primary.100', 'gray.50', 'gray.200'),
-    calcBgColor('primary.900', 'gray.700', 'gray.800'),
+    calcColor('primary.300', 'gray.50', 'gray.200'),
+    calcColor('primary.900', 'gray.700', 'gray.800'),
   );
-  const color = useColorModeValue('gray.500', 'gray.300');
+  const color = useColorModeValue(calcColor('white', 'gray.500', 'gray.500'), 'gray.300');
 
   return (
     <PressableButton m="1" flexGrow="1" flexBasis="1" onPress={handlePress}>
@@ -44,7 +44,7 @@ const CalendarViewDate = ({month, date, selectDate, isActiveDate}: CalendarViewD
               {date.date}
             </Text>
           </FHStack>
-          <CalendarViewDateReminders reminders={reminders} />
+          <CalendarViewDateReminders reminders={reminders} isActiveDate={isActiveDate} />
         </FVStack>
       </PaperBox>
     </PressableButton>

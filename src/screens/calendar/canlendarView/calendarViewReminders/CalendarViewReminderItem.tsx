@@ -42,7 +42,7 @@ const CalendarViewReminderItem = ({reminder}: CalendarViewReminderItemProps) => 
         </Text>
       </FVStack>
       <Box>
-        <Text color="gray.500">
+        <Text color="gray.500" fontSize="xs">
           <DateView date={date} timeFormat="FULL" />
         </Text>
       </Box>

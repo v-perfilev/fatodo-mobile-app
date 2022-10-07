@@ -1,19 +1,22 @@
 import React from 'react';
 import PaperBox from './PaperBox';
-import {IBoxProps, Icon, Text} from 'native-base';
+import {IBoxProps, Text, useColorModeValue} from 'native-base';
 import CloseIcon from '../icons/CloseIcon';
+import IconButton from '../controls/IconButton';
 
 type ChipBoxProps = IBoxProps & {
   closeAction?: () => void;
 };
 
 const ChipBox = ({children, closeAction, ...props}: ChipBoxProps) => {
+  const chipBg = useColorModeValue('gray.100', 'gray.700');
+
   return (
-    <PaperBox {...props} bg="gray.100" flexDir="row" alignItems="center">
-      <Text color="gray.500" fontWeight="bold" fontSize="xs">
+    <PaperBox {...props} bg={chipBg} px="2" py="1" borderRadius="xl" borderWidth="0" flexDir="row" alignItems="center">
+      <Text fontWeight="bold" fontSize="xs">
         {children}
       </Text>
-      {closeAction && <Icon as={<CloseIcon />} size="4" ml="1" onPress={closeAction} />}
+      {closeAction && <IconButton icon={<CloseIcon />} size="sm" p="1" ml="1" onPress={closeAction} />}
     </PaperBox>
   );
 };

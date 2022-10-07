@@ -34,7 +34,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
       <FVStack
         shrink
         smallSpace
-        minW="50%"
+        minW="60%"
         borderWidth="1"
         borderColor={isRead ? bg : 'primary.500'}
         borderRadius="xl"
@@ -48,7 +48,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
               {user?.username}
             </Text>
           </FHStack>
-          <Text color="gray.400" fontWeight="bold" fontSize="xs">
+          <Text color="gray.400" fontWeight="bold" fontSize="2xs">
             <DateView date={date} timeFormat="FULL" />
           </Text>
           <ChatViewMessageMenu message={message} isOutcoming={false} />
