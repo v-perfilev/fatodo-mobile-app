@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {FormikProps} from 'formik';
 import FormikSelect from './FormikSelect';
 import {languages} from '../../shared/i18n';
@@ -20,4 +20,4 @@ const FormikLanguageInput = (props: FormikLanguageInputProps) => {
   return <FormikSelect options={languageSelectMap} {...props} />;
 };
 
-export default FormikLanguageInput;
+export default memo(FormikLanguageInput);

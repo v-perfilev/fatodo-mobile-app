@@ -32,4 +32,4 @@ const FormikRadioInput = (props: FormikTextInputProps) => {
   );
 };
 
-export default flowRight([withFormikWrapper, memo])(FormikRadioInput);
+export default flowRight([memo, withFormikWrapper])(FormikRadioInput);

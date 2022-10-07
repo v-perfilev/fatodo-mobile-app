@@ -1,4 +1,4 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, memo, ReactElement, SetStateAction, useCallback, useMemo} from 'react';
 import {FormControl} from 'native-base';
 import RoundButton from '../controls/RoundButton';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
@@ -11,29 +11,34 @@ type DatesSelectProps = {
 };
 
 const DatesSelect = ({label, dates, setDates}: DatesSelectProps) => {
-  const handleClickOnDate = (date: number): void => {
-    setDates((prevState) => {
-      if (prevState.includes(date)) {
-        prevState = ArrayUtils.deleteValue(prevState, date);
-      } else {
-        prevState.push(date);
-        prevState.sort();
-      }
-      return [...prevState];
-    });
-  };
+  const handleClickOnDate = useCallback(
+    (date: number): void => {
+      setDates((prevState) => {
+        if (prevState.includes(date)) {
+          prevState = ArrayUtils.deleteValue(prevState, date);
+        } else {
+          prevState.push(date);
+          prevState.sort();
+        }
+        return [...prevState];
+      });
+    },
+    [setDates],
+  );
 
-  const monthArray = Array.from({length: 31}, (_, i) => i + 1);
-
-  const monthDates = monthArray.map((date, index) => {
-    const active = dates.includes(date);
-    const handleClick = (): void => handleClickOnDate(date);
-    return (
-      <RoundButton size="9" bg={active ? 'grey.50' : undefined} onPress={handleClick} key={index}>
-        {date}
-      </RoundButton>
-    );
-  });
+  const monthDates = useMemo<ReactElement[]>(
+    () =>
+      Array.from({length: 31}, (_, i) => i + 1).map((date, index) => {
+        const active = dates.includes(date);
+        const handleClick = (): void => handleClickOnDate(date);
+        return (
+          <RoundButton active={active} size={9} onPress={handleClick} key={index}>
+            {date}
+          </RoundButton>
+        );
+      }),
+    [dates, handleClickOnDate],
+  );
 
   return (
     <FormControl>
@@ -43,4 +48,4 @@ const DatesSelect = ({label, dates, setDates}: DatesSelectProps) => {
   );
 };
 
-export default DatesSelect;
+export default memo(DatesSelect);

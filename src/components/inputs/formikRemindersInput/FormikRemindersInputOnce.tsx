@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {Reminder} from '../../../models/Reminder';
 import {useTranslation} from 'react-i18next';
 import {DateParams} from '../../../models/DateParams';
@@ -7,6 +7,7 @@ import DateTimeSelect from '../DateTimeSelect';
 import {DateConverters} from '../../../shared/utils/DateConverters';
 import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import FVStack from '../../boxes/FVStack';
 
 type FormikRemindersInputOnceProps = {
   setReminder: (reminder: Reminder) => void;
@@ -50,7 +51,7 @@ const FormikRemindersInputOnce = ({setReminder}: FormikRemindersInputOnceProps) 
   }, [time, date]);
 
   return (
-    <>
+    <FVStack w="100%" defaultSpace>
       <DateTimeSelect
         label={t('common:reminders.fields.time')}
         mode="time"
@@ -63,8 +64,8 @@ const FormikRemindersInputOnce = ({setReminder}: FormikRemindersInputOnceProps) 
         setResult={setDate}
         minimumDate={minimumDate}
       />
-    </>
+    </FVStack>
   );
 };
 
-export default FormikRemindersInputOnce;
+export default memo(FormikRemindersInputOnce);

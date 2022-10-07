@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {Reminder} from '../../../models/Reminder';
 import {useTranslation} from 'react-i18next';
 import {DateParams} from '../../../models/DateParams';
@@ -31,11 +31,7 @@ const FormikRemindersInputDaily = ({setReminder}: FormikRemindersInputDailyProps
     updateReminder();
   }, [time]);
 
-  return (
-    <>
-      <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} />
-    </>
-  );
+  return <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} />;
 };
 
-export default FormikRemindersInputDaily;
+export default memo(FormikRemindersInputDaily);

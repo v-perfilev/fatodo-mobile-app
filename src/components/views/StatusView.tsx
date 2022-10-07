@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ReactElement} from 'react';
+import {ReactElement, useMemo} from 'react';
 import {IIconProps, Text} from 'native-base';
 import {ItemStatusType} from '../../models/Item';
 import StatusCreatedIcon from '../icons/StatusCreatedIcon';
@@ -18,7 +18,7 @@ type StatusViewProps = IIconProps & {
 };
 
 const StatusView = ({statusType, fontColor, withoutText, ...props}: StatusViewProps) => {
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
 
   const getIcon = (): ReactElement => {
     switch (statusType) {
@@ -34,7 +34,7 @@ const StatusView = ({statusType, fontColor, withoutText, ...props}: StatusViewPr
   };
 
   const icon = React.cloneElement(getIcon(), {...props, color: 'primary.500', mt: !withoutText ? 1 : undefined});
-  const text = t('common:statuses.' + statusType);
+  const text = useMemo(() => t('common:statuses.' + statusType), [statusType, i18n.language]);
 
   const onlyIcon = <FCenter>{icon}</FCenter>;
 

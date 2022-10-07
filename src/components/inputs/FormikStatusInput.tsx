@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {memo, ReactElement} from 'react';
 import {IFormControlProps} from 'native-base';
 import {FormikProps} from 'formik';
 import FormikSelect from './FormikSelect';
@@ -18,4 +18,4 @@ const FormikStatusInput = (props: FormikStatusInputProps) => {
   return <FormikSelect options={statusSelectMap} {...props} />;
 };
 
-export default FormikStatusInput;
+export default memo(FormikStatusInput);

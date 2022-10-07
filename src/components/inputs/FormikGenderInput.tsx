@@ -1,4 +1,4 @@
-import React, {ReactElement, useMemo} from 'react';
+import React, {memo, ReactElement, useMemo} from 'react';
 import {IFormControlProps, Text} from 'native-base';
 import {FormikProps} from 'formik';
 import FormikRadioInput from './FormikRadioInput';
@@ -23,4 +23,4 @@ const FormikGenderInput = (props: FormikGenderInputProps) => {
   return <FormikRadioInput options={genderSelectMap} {...props} />;
 };
 
-export default FormikGenderInput;
+export default memo(FormikGenderInput);

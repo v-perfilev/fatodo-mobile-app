@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {Reminder} from '../../../models/Reminder';
 import {useTranslation} from 'react-i18next';
 import {DateParams} from '../../../models/DateParams';
@@ -7,6 +7,7 @@ import DaysSelect from '../DaysSelect';
 import {DateConverters} from '../../../shared/utils/DateConverters';
 import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import FVStack from '../../boxes/FVStack';
 
 type FormikRemindersInputWeeklyProps = {
   setReminder: (reminder: Reminder) => void;
@@ -34,11 +35,11 @@ const FormikRemindersInputWeekly = ({setReminder}: FormikRemindersInputWeeklyPro
   }, [time, days]);
 
   return (
-    <>
+    <FVStack w="100%" defaultSpace>
       <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} />
       <DaysSelect label={t('common:reminders.fields.weekdays')} days={days} setDays={setDays} />
-    </>
+    </FVStack>
   );
 };
 
-export default FormikRemindersInputWeekly;
+export default memo(FormikRemindersInputWeekly);

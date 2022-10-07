@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useMemo} from 'react';
 import {ItemPriorityType} from '../../models/Item';
 import {useTranslation} from 'react-i18next';
 import {IIconProps, Text} from 'native-base';
@@ -16,7 +16,7 @@ type PriorityViewProps = IIconProps & {
 };
 
 export const PriorityView = ({priority, fontColor, withoutText, ...props}: PriorityViewProps) => {
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
 
   const getIcon = (priority: ItemPriorityType): ReactElement => {
     switch (priority) {
@@ -30,7 +30,7 @@ export const PriorityView = ({priority, fontColor, withoutText, ...props}: Prior
   };
 
   const icon = React.cloneElement(getIcon(priority), {...props, mt: !withoutText ? 1 : undefined});
-  const text = t('common:priorities.' + priority);
+  const text = useMemo(() => t('common:priorities.' + priority), [priority, i18n.language]);
 
   const onlyIcon = <FCenter>{icon}</FCenter>;
 

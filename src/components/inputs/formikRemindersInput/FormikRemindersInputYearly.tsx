@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {Reminder} from '../../../models/Reminder';
 import {useTranslation} from 'react-i18next';
 import {DateParams} from '../../../models/DateParams';
@@ -6,6 +6,7 @@ import DateTimeSelect from '../DateTimeSelect';
 import {DateConverters} from '../../../shared/utils/DateConverters';
 import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import FVStack from '../../boxes/FVStack';
 
 type FormikRemindersInputYearlyProps = {
   setReminder: (reminder: Reminder) => void;
@@ -33,11 +34,11 @@ const FormikRemindersInputYearly = ({setReminder}: FormikRemindersInputYearlyPro
   }, [time, date]);
 
   return (
-    <>
+    <FVStack w="100%" defaultSpace>
       <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} />
       <DateTimeSelect label={t('common:reminders.fields.date')} mode="shortDate" setResult={setDate} />
-    </>
+    </FVStack>
   );
 };
 
-export default FormikRemindersInputYearly;
+export default memo(FormikRemindersInputYearly);

@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {memo, ReactElement} from 'react';
 import {IFormControlProps} from 'native-base';
 import {FormikProps} from 'formik';
 import FormikSelect from './FormikSelect';
@@ -18,4 +18,4 @@ const FormikTypeInput = (props: FormikTypeInputProps) => {
   return <FormikSelect options={prioritySelectMap} {...props} />;
 };
 
-export default FormikTypeInput;
+export default memo(FormikTypeInput);

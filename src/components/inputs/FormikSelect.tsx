@@ -33,7 +33,7 @@ const FormikSelect = (props: FormikSelectProps) => {
     (info: ListRenderItemInfo<string>): ReactElement => (
       <FormikSelectItem options={options} option={info.item} setCurrent={setCurrent} />
     ),
-    [],
+    [options],
   );
 
   const flatList = useMemo<ReactElement>(
@@ -42,7 +42,7 @@ const FormikSelect = (props: FormikSelectProps) => {
         <FlatList fixedLength={40} data={data} render={renderItem} />
       </ScrollView>
     ),
-    [data],
+    [data, renderItem],
   );
 
   useEffect(() => {
@@ -85,4 +85,4 @@ const FormikSelect = (props: FormikSelectProps) => {
   );
 };
 
-export default flowRight([withFormikWrapper, memo])(FormikSelect);
+export default flowRight([memo, withFormikWrapper])(FormikSelect);

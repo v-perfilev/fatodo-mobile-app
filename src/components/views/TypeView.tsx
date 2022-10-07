@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useMemo} from 'react';
 import {ItemType} from '../../models/Item';
 import {useTranslation} from 'react-i18next';
 import {IIconProps, Text} from 'native-base';
@@ -17,7 +17,7 @@ type TypeViewProps = IIconProps & {
 };
 
 export const TypeView = ({type, fontColor, withoutText, ...props}: TypeViewProps) => {
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
 
   const getIcon = (): ReactElement => {
     switch (type) {
@@ -33,7 +33,7 @@ export const TypeView = ({type, fontColor, withoutText, ...props}: TypeViewProps
   };
 
   const icon = React.cloneElement(getIcon(), {...props, color: 'primary.500', mt: !withoutText ? 1 : undefined});
-  const text = t('common:types.' + type);
+  const text = useMemo(() => t('common:types.' + type), [type, i18n.language]);
 
   const onlyIcon = <FCenter>{icon}</FCenter>;
   const iconWithText = (

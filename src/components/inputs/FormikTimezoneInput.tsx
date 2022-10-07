@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {IFormControlProps} from 'native-base';
 import {FormikProps} from 'formik';
 import FormikSelect from './FormikSelect';
@@ -21,4 +21,4 @@ const FormikTimezoneInput = (props: FormikTimezoneInputProps) => {
   return <FormikSelect options={timezoneSelectMap} {...props} />;
 };
 
-export default FormikTimezoneInput;
+export default memo(FormikTimezoneInput);

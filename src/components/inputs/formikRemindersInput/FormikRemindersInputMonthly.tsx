@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {Reminder} from '../../../models/Reminder';
 import {useTranslation} from 'react-i18next';
 import {DateParams} from '../../../models/DateParams';
@@ -7,6 +7,7 @@ import DatesSelect from '../DatesSelect';
 import {DateConverters} from '../../../shared/utils/DateConverters';
 import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import FVStack from '../../boxes/FVStack';
 
 type FormikRemindersInputMonthlyProps = {
   setReminder: (reminder: Reminder) => void;
@@ -34,11 +35,11 @@ const FormikRemindersInputMonthly = ({setReminder}: FormikRemindersInputMonthlyP
   }, [time, dates]);
 
   return (
-    <>
+    <FVStack w="100%" defaultSpace>
       <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} />
       <DatesSelect label={t('common:reminders.fields.monthdays')} dates={dates} setDates={setDates} />
-    </>
+    </FVStack>
   );
 };
 
-export default FormikRemindersInputMonthly;
+export default memo(FormikRemindersInputMonthly);

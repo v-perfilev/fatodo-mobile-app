@@ -1,4 +1,4 @@
-import React, {ReactElement, useMemo} from 'react';
+import React, {memo, ReactElement, useMemo} from 'react';
 import {Box, IFormControlProps} from 'native-base';
 import {FormikProps} from 'formik';
 import ThemeView from '../views/ThemeView';
@@ -28,4 +28,4 @@ const FormikThemeInput = (props: FormikThemeInputProps) => {
   return <FormikSelect options={themeSelectMap} {...props} />;
 };
 
-export default FormikThemeInput;
+export default memo(FormikThemeInput);
