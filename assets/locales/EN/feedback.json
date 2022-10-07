@@ -27,7 +27,7 @@
     }
   },
   "model": {
-    "exists": "Object already exists in database",
+    "exists": "Object already exists",
     "duplicated": "At least one of unique fields is duplicated",
     "notFound": "Object not found",
     "invalid": "Object contains invalid parameter"

@@ -33,7 +33,7 @@
   },
   "comment": {
     "add": {
-      "title": "Комментарий доавлен",
+      "title": "Комментарий добавлен",
       "contentWithGroup": "<user/> добавил комментарий в группе <group/>",
       "contentWithGroup_FEMALE": "<user/> добавила комментарий в группе <group/>",
       "contentWithItem": "<user/> добавил комментарий в группе <item/>",
