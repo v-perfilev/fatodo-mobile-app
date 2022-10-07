@@ -1,13 +1,4 @@
-import React, {
-  MutableRefObject,
-  ReactElement,
-  RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, {MutableRefObject, ReactElement, RefObject, useCallback, useEffect, useRef, useState} from 'react';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {Dimensions, ListRenderItemInfo, NativeScrollEvent, NativeSyntheticEvent, ScrollView} from 'react-native';
@@ -36,8 +27,6 @@ const CalendarView = () => {
   const initialIndex = useRef<number>(getInitialIndex(initialMonth.current));
   const canMomentum = useRef<boolean>(false);
   const [activeMonth, setActiveMonth] = useState<CalendarMonth>(initialMonth.current);
-
-  const windowSize = useMemo<number>(() => (isFocused ? 3 : 1), [isFocused]);
 
   const scrollAllToTop = useCallback((): void => {
     const scrollToTop = (scrollView: RefObject<ScrollView>) => scrollView.current?.scrollTo({y: 0});
@@ -92,8 +81,12 @@ const CalendarView = () => {
   );
 
   useEffect(() => {
-    isFocused && dispatch(CalendarActions.handleMonthThunk(activeMonth));
-  }, [isFocused, shouldLoad, activeMonth]);
+    dispatch(CalendarActions.handleMonthThunk(activeMonth));
+  }, [activeMonth]);
+
+  useEffect(() => {
+    isFocused && shouldLoad && dispatch(CalendarActions.handleMonthThunk(activeMonth));
+  }, [isFocused, shouldLoad]);
 
   return (
     <FBox width={width}>
@@ -112,7 +105,7 @@ const CalendarView = () => {
         initialScrollIndex={initialIndex.current}
         initialNumToRender={1}
         maxToRenderPerBatch={3}
-        windowSize={windowSize}
+        windowSize={3}
         ref={listRef}
       />
     </FBox>
