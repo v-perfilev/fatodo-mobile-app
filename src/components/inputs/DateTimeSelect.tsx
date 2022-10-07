@@ -8,6 +8,7 @@ import {DateFormatters} from '../../shared/utils/DateFormatters';
 import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import IconButton from '../controls/IconButton';
+import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
 
 type DateTimeSelectMode = 'fullDate' | 'shortDate' | 'time';
 
@@ -52,7 +53,7 @@ const DateTimeSelect = ({label, setResult, mode, minimumDate}: DateTimeSelectPro
     }
   };
 
-  const bg = useColorModeValue('gray.50', 'gray.800');
+  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
 
   return (
     <>

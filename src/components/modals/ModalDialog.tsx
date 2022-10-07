@@ -3,6 +3,7 @@ import React, {memo, ReactElement} from 'react';
 import {LINEAR_GRADIENT, ThemeFactory} from '../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../shared/themes/ThemeProvider';
 import {SizeType} from 'native-base/lib/typescript/components/types';
+import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
 
 type ModalDialogProps = {
   open: boolean;
@@ -16,7 +17,7 @@ type ModalDialogProps = {
 const theme = ThemeFactory.getDefaultTheme();
 
 const ModalDialog = ({open, close, title, content, actions, size}: ModalDialogProps) => {
-  const bg = useColorModeValue('gray.50', 'gray.800');
+  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
   const backdrop = useColorModeValue('gray.400', 'gray.600');
 
   return (
@@ -33,10 +34,10 @@ const ModalDialog = ({open, close, title, content, actions, size}: ModalDialogPr
               <Modal.Header bg={bg} borderBottomWidth="0" _text={{color: 'primary.500'}}>
                 {title}
               </Modal.Header>
-              <Box w="100%" h="1" bg={LINEAR_GRADIENT} />
-              <Modal.Body>{content}</Modal.Body>
+              <Box w="100%" h="3px" bg={LINEAR_GRADIENT} />
+              <Modal.Body bg={bg}>{content}</Modal.Body>
               {actions && (
-                <Modal.Footer pt="0" borderTopWidth="0">
+                <Modal.Footer bg={bg} pt="0" borderTopWidth="0">
                   <Button.Group space="2">{actions}</Button.Group>
                 </Modal.Footer>
               )}

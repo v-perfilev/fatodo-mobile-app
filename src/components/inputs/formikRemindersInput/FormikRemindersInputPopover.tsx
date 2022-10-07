@@ -11,6 +11,7 @@ import FormikRemindersInputMonthly from './FormikRemindersInputMonthly';
 import FormikRemindersInputYearly from './FormikRemindersInputYearly';
 import FVStack from '../../boxes/FVStack';
 import {LINEAR_GRADIENT} from '../../../shared/themes/ThemeFactory';
+import {DARK_BG, LIGHT_BG} from '../../../shared/themes/colors';
 
 type FormikRemindersInputPopoverProps = {
   show: boolean;
@@ -22,7 +23,7 @@ const FormikRemindersInputPopover = ({show, handleClose}: FormikRemindersInputPo
   const [reminder, setReminder] = useState<Reminder>(null);
   const [periodicity, setPeriodicity] = useState<ReminderPeriodicity>('ONCE');
 
-  const bg = useColorModeValue('gray.50', 'gray.800');
+  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
   const backdrop = useColorModeValue('gray.400', 'gray.600');
 
   const close = (): void => {
@@ -39,8 +40,8 @@ const FormikRemindersInputPopover = ({show, handleClose}: FormikRemindersInputPo
         <Modal.Header p="0" bg={bg} borderBottomWidth="0">
           <FormikRemindersInputToolbar periodicity={periodicity} setPeriodicity={setPeriodicity} />
         </Modal.Header>
-        <Box w="100%" h="1" bg={LINEAR_GRADIENT} />
-        <Modal.Body>
+        <Box w="100%" h="3px" bg={LINEAR_GRADIENT} />
+        <Modal.Body bg={bg}>
           <FVStack defaultSpace position="relative" width="100%" minH="225" alignItems="center">
             {periodicity === 'ONCE' && <FormikRemindersInputOnce setReminder={setReminder} />}
             {periodicity === 'DAILY' && <FormikRemindersInputDaily setReminder={setReminder} />}
@@ -49,7 +50,7 @@ const FormikRemindersInputPopover = ({show, handleClose}: FormikRemindersInputPo
             {periodicity === 'YEARLY' && <FormikRemindersInputYearly setReminder={setReminder} />}
           </FVStack>
         </Modal.Body>
-        <Modal.Footer pt="0" borderTopWidth="0">
+        <Modal.Footer pt="0" borderTopWidth="0" bg={bg}>
           <Button.Group space="3">
             <GhostButton colorScheme="primary" onPress={add} isDisabled={!reminder}>
               {t('item:actions.add')}
