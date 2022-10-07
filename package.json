@@ -54,6 +54,7 @@
     "react-native-screens": "^3.17.0",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^12.3.0",
+    "react-native-system-navigation-bar": "^2.0.0",
     "react-native-tab-view": "^3.2.1",
     "react-native-webview": "^11.23.1",
     "react-redux": "^8.0.4",
