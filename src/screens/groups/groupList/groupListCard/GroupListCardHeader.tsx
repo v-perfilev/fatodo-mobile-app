@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Box, Text, useColorModeValue} from 'native-base';
 import GroupListCardCollapseButton from './GroupListCardCollapseButton';
 import {useNavigation} from '@react-navigation/native';
@@ -25,12 +25,12 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
   const goToGroupView = (): void => !sorting && navigation.navigate('GroupView', {group});
 
   const bg = useColorModeValue(LIGHT_BG, DARK_BG);
-  const bgOpacity = useColorModeValue(0.1, 0.1);
+  const bgOpacity = useColorModeValue(0.1, 0.15);
   const titleColor = useColorModeValue('primary.500', 'gray.100');
 
   return (
     <PressableButton onPress={goToGroupView}>
-      <Box position="relative" h="50px" px="4" pr="3" justifyContent="center" bg={bg}>
+      <Box position="relative" h="50px" px="4" pr="3" justifyContent="center" bg={sorting ? bg : undefined}>
         <Box position="absolute" left="0" right="0" top="0" bottom="0" bg={LINEAR_GRADIENT} opacity={bgOpacity} />
         <FHStack defaultSpace alignItems="center">
           {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} />}
@@ -53,4 +53,4 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
   );
 };
 
-export default GroupListCardHeader;
+export default memo(GroupListCardHeader);

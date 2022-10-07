@@ -40,13 +40,13 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
   );
 
   return (
-    <Pressable flex="1" h="50px" px="3" py="1" onPress={onPress}>
+    <Pressable flex="1" h="50px" p="1" onPress={onPress}>
       <FVStack grow justifyContent="center" alignItems="center">
         <FCenter flex="1" flexGrow="1">
           {showBadgeNode && badgeNode}
           {icon({focused: isFocused, color, size: 7})}
         </FCenter>
-        <Text fontSize="2xs" color={color}>
+        <Text fontSize="2xs" color={color} isTruncated>
           {t('routes.' + routeName)}
         </Text>
       </FVStack>

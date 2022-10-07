@@ -39,7 +39,9 @@ export const TypeView = ({type, fontColor, withoutText, ...props}: TypeViewProps
   const iconWithText = (
     <FHStack smallSpace alignItems="center">
       {icon}
-      <Text color={fontColor}>{text}</Text>
+      <Text color={fontColor} isTruncated>
+        {text}
+      </Text>
     </FHStack>
   );
 

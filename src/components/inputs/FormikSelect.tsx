@@ -1,5 +1,5 @@
 import React, {memo, ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
-import {FormControl, ScrollView, Text} from 'native-base';
+import {FormControl, ScrollView, Text, useColorModeValue} from 'native-base';
 import Menu, {MenuItem} from '../controls/Menu';
 import PressableButton from '../controls/PressableButton';
 import PaperBox from '../surfaces/PaperBox';
@@ -57,13 +57,22 @@ const FormikSelect = (props: FormikSelectProps) => {
 
   const filterPropsIfDisabled = (props: any): any => (!isDisabled ? props : undefined);
 
+  const borderColor = useColorModeValue('gray.400', 'gray.600');
+
   return (
     <FormControl isInvalid={isTouched && isError} isDisabled={isDisabled}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <Menu
         trigger={(triggerProps) => (
           <PressableButton {...filterPropsIfDisabled(triggerProps)}>
-            <PaperBox h="45px" justifyContent="center" px="3" borderRadius="xl" opacity={isDisabled ? 0.5 : undefined}>
+            <PaperBox
+              h="45px"
+              justifyContent="center"
+              px="3"
+              borderColor={borderColor}
+              borderRadius="xl"
+              opacity={isDisabled ? 0.5 : undefined}
+            >
               {options.get(current)}
             </PaperBox>
           </PressableButton>

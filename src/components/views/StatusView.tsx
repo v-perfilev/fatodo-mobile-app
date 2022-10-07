@@ -39,7 +39,7 @@ const StatusView = ({statusType, fontColor, withoutText, ...props}: StatusViewPr
   const onlyIcon = <FCenter>{icon}</FCenter>;
 
   const iconWithText = (
-    <FHStack smallSpace alignItems="center">
+    <FHStack smallSpace justifyContent="center" alignItems="center">
       {icon}
       <Text color={fontColor} isTruncated>
         {text}

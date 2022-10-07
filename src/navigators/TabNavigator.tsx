@@ -37,7 +37,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
 
 export type TabNavigationProp = BottomTabNavigationProp<TabParamList>;
 
-const calendarIcon = ({color, size}: TabIconProps): ReactNode => <CalendarIcon color={color} size={size} />;
+const calendarIcon = ({color, size}: TabIconProps): ReactNode => <CalendarIcon color={color} size={size - 1} />;
 const eventsIcon = ({color, size}: TabIconProps): ReactNode => <BellIcon color={color} size={size - 1} />;
 const groupsIcon = ({color, size}: TabIconProps): ReactNode => <GroupsIcon color={color} size={size + 1} />;
 const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={color} size={size - 1} />;

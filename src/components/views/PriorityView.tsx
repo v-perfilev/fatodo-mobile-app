@@ -37,7 +37,9 @@ export const PriorityView = ({priority, fontColor, withoutText, ...props}: Prior
   const iconWithText = (
     <FHStack smallSpace alignItems="center">
       {icon}
-      <Text color={fontColor}>{text}</Text>
+      <Text color={fontColor} isTruncated>
+        {text}
+      </Text>
     </FHStack>
   );
 

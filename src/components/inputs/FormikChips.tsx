@@ -1,5 +1,5 @@
 import React, {ReactElement, useState} from 'react';
-import {FormControl, IFormControlProps} from 'native-base';
+import {FormControl, IFormControlProps, useColorModeValue} from 'native-base';
 import {FormikProps} from 'formik';
 import PaperBox from '../surfaces/PaperBox';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
@@ -43,11 +43,21 @@ const FormikChips = (props: FormikChipsProps<any>) => {
     </ChipBox>
   ));
 
+  const borderColor = useColorModeValue('gray.400', 'gray.600');
+
   return (
     <FormControl {...props}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
       <PressableButton onPress={openInput}>
-        <PaperBox flexDir="row" minH="45px" alignItems="center" px="3" py="2" borderRadius="xl">
+        <PaperBox
+          flexDir="row"
+          minH="45px"
+          alignItems="center"
+          px="3"
+          py="2"
+          borderColor={borderColor}
+          borderRadius="xl"
+        >
           <FContainer itemM="1">
             {chipsElements}
             {input(showInput, addValue, closeInput)}

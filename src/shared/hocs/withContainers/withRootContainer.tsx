@@ -52,6 +52,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   };
 
   const refresh = (): void => {
+    dispatch(ContactsActions.fetchRelationsThunk());
     dispatch(ContactsActions.fetchInfoThunk());
     dispatch(ChatsActions.fetchUnreadMessagesMapThunk());
     dispatch(EventsActions.fetchUnreadCountThunk());

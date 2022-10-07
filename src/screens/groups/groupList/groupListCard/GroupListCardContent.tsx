@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Item} from '../../../../models/Item';
 import GroupListCardSkeleton from '../../components/skeletons/GroupListCardSkeleton';
 import GroupListCardInfo from './GroupListCardInfo';
@@ -25,7 +25,7 @@ const GroupListCardContent = ({group, items, itemsCount, loading}: GroupListCard
   const canEdit = group && GroupUtils.canEdit(account, group);
   return (
     <FVStack>
-      <Separator h="5px" bg={LINEAR_GRADIENT} />
+      <Separator h="3px" bg={LINEAR_GRADIENT} />
       {loading && <GroupListCardSkeleton />}
       {!loading &&
         items.slice(0, 5).map((item, index) => (
@@ -39,4 +39,4 @@ const GroupListCardContent = ({group, items, itemsCount, loading}: GroupListCard
   );
 };
 
-export default GroupListCardContent;
+export default memo(GroupListCardContent);

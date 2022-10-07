@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {memo, useCallback} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import {Item} from '../../../../models/Item';
@@ -53,4 +53,4 @@ const GroupListCardInfo = ({group, items, itemsCount}: GroupListCardHeaderProps)
   );
 };
 
-export default GroupListCardInfo;
+export default memo(GroupListCardInfo);
