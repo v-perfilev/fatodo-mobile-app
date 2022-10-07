@@ -5,18 +5,21 @@ import {DateParams} from '../../../models/DateParams';
 import {DateUtils} from '../../../shared/utils/DateUtils';
 import DateTimeSelect from '../DateTimeSelect';
 import {DateConverters} from '../../../shared/utils/DateConverters';
+import {useAppSelector} from '../../../store/store';
+import AuthSelectors from '../../../store/auth/authSelectors';
 
 type FormikRemindersInputOnceProps = {
   setReminder: (reminder: Reminder) => void;
-  locale: string;
-  timezone: string;
 };
 
-const FormikRemindersInputOnce = ({setReminder, locale, timezone}: FormikRemindersInputOnceProps) => {
+const FormikRemindersInputOnce = ({setReminder}: FormikRemindersInputOnceProps) => {
+  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const [time, setTime] = useState<Date>(null);
   const [date, setDate] = useState<Date>(null);
   const [minimumDate, setMinimumDate] = useState<Date>(null);
+
+  const timezone = account.info.timezone;
 
   const updateMinimum = (): void => {
     const now = new Date();
@@ -52,14 +55,12 @@ const FormikRemindersInputOnce = ({setReminder, locale, timezone}: FormikReminde
         label={t('common:reminders.fields.time')}
         mode="time"
         setResult={setTime}
-        locale={locale}
         minimumDate={minimumDate}
       />
       <DateTimeSelect
         label={t('common:reminders.fields.date')}
         mode="fullDate"
         setResult={setDate}
-        locale={locale}
         minimumDate={minimumDate}
       />
     </>

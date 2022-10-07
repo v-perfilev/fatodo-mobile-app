@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import {Flex, FormControl, IFormControlProps, useTheme} from 'native-base';
+import {Flex, FormControl, IFormControlProps, useColorModeValue, useTheme} from 'native-base';
 import {FormikProps} from 'formik';
 import PressableButton from '../controls/PressableButton';
 import {DateUtils} from '../../shared/utils/DateUtils';
@@ -29,6 +29,16 @@ const formatValue = (date: Date, account: UserAccount, mode: FormikDateTimePicke
   }
 };
 
+const calcLocale = (mode: FormikDateTimePickerMode, account: UserAccount) => {
+  const locale = account.info.language;
+  const timeFormat = account.info.timeFormat;
+  if (mode === 'time') {
+    return timeFormat === 'H12' ? 'en_US' : 'en_GB';
+  } else {
+    return locale.toLowerCase();
+  }
+};
+
 const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
   const {name, label, mode} = props;
   const {values, errors, touched, handleBlur, setFieldValue} = props;
@@ -41,7 +51,7 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
   const value = values[name];
   const isTouched = name in touched;
   const isError = name in errors;
-  const locale = account.info.language;
+  const locale = calcLocale(mode, account);
 
   const formattedValue = useMemo<string>(() => {
     return value ? formatValue(value, account, mode) : undefined;
@@ -69,6 +79,8 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
     closePicker();
   };
 
+  const textColor = useColorModeValue(theme.colors.gray['600'], theme.colors.gray['300']);
+
   const picker = (
     <Flex alignItems="center">
       <DatePicker
@@ -77,7 +89,7 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
         mode={mode}
         locale={locale}
         is24hourSource="locale"
-        textColor={theme.colors.primary['700']}
+        textColor={textColor}
         fadeToColor="none"
       />
     </Flex>

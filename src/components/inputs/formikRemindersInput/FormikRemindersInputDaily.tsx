@@ -4,16 +4,19 @@ import {useTranslation} from 'react-i18next';
 import {DateParams} from '../../../models/DateParams';
 import DateTimeSelect from '../DateTimeSelect';
 import {DateConverters} from '../../../shared/utils/DateConverters';
+import {useAppSelector} from '../../../store/store';
+import AuthSelectors from '../../../store/auth/authSelectors';
 
 type FormikRemindersInputDailyProps = {
   setReminder: (reminder: Reminder) => void;
-  locale: string;
-  timezone: string;
 };
 
-const FormikRemindersInputDaily = ({setReminder, locale, timezone}: FormikRemindersInputDailyProps) => {
+const FormikRemindersInputDaily = ({setReminder}: FormikRemindersInputDailyProps) => {
+  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const [time, setTime] = useState<Date>(null);
+
+  const timezone = account.info.timezone;
 
   const updateReminder = (): void => {
     if (time) {
@@ -30,7 +33,7 @@ const FormikRemindersInputDaily = ({setReminder, locale, timezone}: FormikRemind
 
   return (
     <>
-      <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} locale={locale} />
+      <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} />
     </>
   );
 };

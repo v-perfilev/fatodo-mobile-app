@@ -15,7 +15,6 @@ type DateTimeSelectProps = {
   label: string;
   setResult: (time: Date) => void;
   mode: DateTimeSelectMode;
-  locale: string;
   minimumDate?: Date;
 };
 
@@ -30,7 +29,7 @@ const formatValue = (date: Date, account: UserAccount, mode: DateTimeSelectMode)
   }
 };
 
-const DateTimeSelect = ({label, setResult, mode, locale, minimumDate}: DateTimeSelectProps) => {
+const DateTimeSelect = ({label, setResult, mode, minimumDate}: DateTimeSelectProps) => {
   const account = useAppSelector(AuthSelectors.account);
   const [show, setShow] = useState<boolean>(false);
   const [value, setValue] = useState<Date>(undefined);
@@ -64,7 +63,7 @@ const DateTimeSelect = ({label, setResult, mode, locale, minimumDate}: DateTimeS
 
       {show && (
         <Flex width="100%" height="100%" position="absolute" alignItems="center" zIndex="1000" bg="gray.50">
-          <DateTimePicker setValue={setValue} mode={mode} locale={locale} minDate={minimumDate} />
+          <DateTimePicker setValue={setValue} mode={mode} minDate={minimumDate} />
           <Flex position="absolute" bottom="0">
             <IconButton icon={<CheckIcon />} onPress={closePicker} />
           </Flex>

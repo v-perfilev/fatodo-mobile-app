@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Reminder, ReminderPeriodicity} from '../../../models/Reminder';
-import {Button, Modal} from 'native-base';
+import {Box, Button, Modal, useColorModeValue} from 'native-base';
 import FormikRemindersInputToolbar from './FormikRemindersInputToolbar';
 import GhostButton from '../../controls/GhostButton';
 import FormikRemindersInputOnce from './FormikRemindersInputOnce';
@@ -10,8 +10,7 @@ import FormikRemindersInputWeekly from './FormikRemindersInputWeekly';
 import FormikRemindersInputMonthly from './FormikRemindersInputMonthly';
 import FormikRemindersInputYearly from './FormikRemindersInputYearly';
 import FVStack from '../../boxes/FVStack';
-import {useAppSelector} from '../../../store/store';
-import AuthSelectors from '../../../store/auth/authSelectors';
+import {LINEAR_GRADIENT} from '../../../shared/themes/ThemeFactory';
 
 type FormikRemindersInputPopoverProps = {
   show: boolean;
@@ -19,12 +18,12 @@ type FormikRemindersInputPopoverProps = {
 };
 
 const FormikRemindersInputPopover = ({show, handleClose}: FormikRemindersInputPopoverProps) => {
-  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const [reminder, setReminder] = useState<Reminder>(null);
   const [periodicity, setPeriodicity] = useState<ReminderPeriodicity>('ONCE');
-  const locale = account.info.language;
-  const timezone = account.info.timezone;
+
+  const bg = useColorModeValue('gray.50', 'gray.800');
+  const backdrop = useColorModeValue('gray.400', 'gray.600');
 
   const close = (): void => {
     handleClose(null);
@@ -35,28 +34,19 @@ const FormikRemindersInputPopover = ({show, handleClose}: FormikRemindersInputPo
   };
 
   return (
-    <Modal isOpen={show} onClose={close} _backdrop={{bg: 'gray.300'}}>
+    <Modal isOpen={show} onClose={close} _backdrop={{bg: backdrop}}>
       <Modal.Content>
-        <Modal.Header p="0" borderBottomWidth="0">
+        <Modal.Header p="0" bg={bg} borderBottomWidth="0">
           <FormikRemindersInputToolbar periodicity={periodicity} setPeriodicity={setPeriodicity} />
         </Modal.Header>
+        <Box w="100%" h="1" bg={LINEAR_GRADIENT} />
         <Modal.Body>
           <FVStack defaultSpace position="relative" width="100%" minH="225" alignItems="center">
-            {periodicity === 'ONCE' && (
-              <FormikRemindersInputOnce setReminder={setReminder} locale={locale} timezone={timezone} />
-            )}
-            {periodicity === 'DAILY' && (
-              <FormikRemindersInputDaily setReminder={setReminder} locale={locale} timezone={timezone} />
-            )}
-            {periodicity === 'WEEKLY' && (
-              <FormikRemindersInputWeekly setReminder={setReminder} locale={locale} timezone={timezone} />
-            )}
-            {periodicity === 'MONTHLY' && (
-              <FormikRemindersInputMonthly setReminder={setReminder} locale={locale} timezone={timezone} />
-            )}
-            {periodicity === 'YEARLY' && (
-              <FormikRemindersInputYearly setReminder={setReminder} locale={locale} timezone={timezone} />
-            )}
+            {periodicity === 'ONCE' && <FormikRemindersInputOnce setReminder={setReminder} />}
+            {periodicity === 'DAILY' && <FormikRemindersInputDaily setReminder={setReminder} />}
+            {periodicity === 'WEEKLY' && <FormikRemindersInputWeekly setReminder={setReminder} />}
+            {periodicity === 'MONTHLY' && <FormikRemindersInputMonthly setReminder={setReminder} />}
+            {periodicity === 'YEARLY' && <FormikRemindersInputYearly setReminder={setReminder} />}
           </FVStack>
         </Modal.Body>
         <Modal.Footer pt="0" borderTopWidth="0">

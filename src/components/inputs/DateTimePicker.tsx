@@ -2,6 +2,9 @@ import {Box, useColorModeValue, useTheme} from 'native-base';
 import DatePicker from 'react-native-date-picker';
 import React, {useEffect} from 'react';
 import {DateUtils} from '../../shared/utils/DateUtils';
+import {UserAccount} from '../../models/User';
+import {useAppSelector} from '../../store/store';
+import AuthSelectors from '../../store/auth/authSelectors';
 
 type PickMode = 'fullDate' | 'shortDate' | 'monthWithYear' | 'time';
 
@@ -9,7 +12,6 @@ type DateTimePickerProps = {
   value?: Date;
   setValue: (value: Date) => void;
   mode: PickMode;
-  locale: string;
   minDate?: Date;
   maxDate?: Date;
 };
@@ -44,15 +46,19 @@ const calcOverflow = (mode: PickMode): string => {
   return overflow;
 };
 
-const calcLocale = (mode: PickMode, locale: string) => {
-  let localeMode = locale.toLowerCase();
-  if (mode === 'monthWithYear' && localeMode.startsWith('en')) {
-    localeMode = 'en_GB';
+const calcLocale = (mode: PickMode, account: UserAccount) => {
+  const timeFormat = account.info.timeFormat;
+  let locale = account.info.language.toLowerCase();
+  if (mode === 'monthWithYear' && locale.startsWith('en')) {
+    locale = 'en_GB';
+  } else if (mode === 'time') {
+    locale = timeFormat === 'H12' ? 'en_US' : 'en_GB';
   }
-  return localeMode;
+  return locale;
 };
 
-const DateTimePicker = ({value, setValue, mode, locale, minDate, maxDate}: DateTimePickerProps) => {
+const DateTimePicker = ({value, setValue, mode, minDate, maxDate}: DateTimePickerProps) => {
+  const account = useAppSelector(AuthSelectors.account);
   const theme = useTheme();
   const initialValue = value || minDate || DateUtils.addMinutes(new Date(), 20);
 
@@ -60,7 +66,7 @@ const DateTimePicker = ({value, setValue, mode, locale, minDate, maxDate}: DateT
   const width = calcWidth(mode);
   const marginLeft = calcMarginLeft(mode);
   const overflow = calcOverflow(mode);
-  const localeMode = calcLocale(mode, locale);
+  const localeMode = calcLocale(mode, account);
 
   useEffect(() => {
     setValue(initialValue);

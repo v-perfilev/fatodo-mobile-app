@@ -5,17 +5,20 @@ import {DateParams} from '../../../models/DateParams';
 import DateTimeSelect from '../DateTimeSelect';
 import DatesSelect from '../DatesSelect';
 import {DateConverters} from '../../../shared/utils/DateConverters';
+import {useAppSelector} from '../../../store/store';
+import AuthSelectors from '../../../store/auth/authSelectors';
 
 type FormikRemindersInputMonthlyProps = {
   setReminder: (reminder: Reminder) => void;
-  locale: string;
-  timezone: string;
 };
 
-const FormikRemindersInputMonthly = ({setReminder, locale, timezone}: FormikRemindersInputMonthlyProps) => {
+const FormikRemindersInputMonthly = ({setReminder}: FormikRemindersInputMonthlyProps) => {
+  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const [time, setTime] = useState<Date>(null);
   const [dates, setDates] = useState<number[]>([]);
+
+  const timezone = account.info.timezone;
 
   const updateReminder = (): void => {
     if (time && dates && dates.length > 0) {
@@ -32,7 +35,7 @@ const FormikRemindersInputMonthly = ({setReminder, locale, timezone}: FormikRemi
 
   return (
     <>
-      <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} locale={locale} />
+      <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} />
       <DatesSelect label={t('common:reminders.fields.monthdays')} dates={dates} setDates={setDates} />
     </>
   );

@@ -89,6 +89,7 @@ export class DateFormatters {
       formatArray.push(DateFormats.getMonthYearFormat());
     }
     const formatter = formatArray.filter(FilterUtils.notUndefinedFilter).join(', ');
+    moment.locale('en');
     return moment(date).format(formatter);
   };
 }

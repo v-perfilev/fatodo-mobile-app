@@ -43,20 +43,20 @@ const FormikRemindersInputToolbar = ({periodicity, setPeriodicity}: FormikRemind
   const yearVariant = periodicity === 'YEARLY' ? 'solid' : undefined;
 
   return (
-    <FVStack bg="primary.500" alignItems="center" p="2">
+    <FVStack alignItems="center" p="2">
       <FHStack space="1.5">
-        <IconButton colorScheme="white" variant={onceVariant} icon={<OnceIcon />} onPress={handleOnceClick} />
-        <IconButton colorScheme="white" variant={dayVariant} icon={<DayIcon />} onPress={handleDayClick} />
-        <IconButton colorScheme="white" variant={weekVariant} icon={<WeekIcon />} onPress={handleWeekClick} />
-        <IconButton colorScheme="white" variant={monthVariant} icon={<MonthIcon />} onPress={handleMonthClick} />
-        <IconButton colorScheme="white" variant={yearVariant} icon={<YearIcon />} onPress={handleYearClick} />
+        <IconButton variant={onceVariant} icon={<OnceIcon />} onPress={handleOnceClick} />
+        <IconButton variant={dayVariant} icon={<DayIcon />} onPress={handleDayClick} />
+        <IconButton variant={weekVariant} icon={<WeekIcon />} onPress={handleWeekClick} />
+        <IconButton variant={monthVariant} icon={<MonthIcon />} onPress={handleMonthClick} />
+        <IconButton variant={yearVariant} icon={<YearIcon />} onPress={handleYearClick} />
       </FHStack>
       <PresenceTransition
         visible={show}
         initial={{opacity: 0, scale: 0}}
-        animate={{opacity: 1, scale: 1, transition: {duration: 100, delay: 150}}}
+        animate={{opacity: 1, scale: 1, transition: {duration: 50, delay: 50}}}
       >
-        <Text color="white" fontWeight="600" fontSize="lg">
+        <Text color="primary.500" fontWeight="600" fontSize="lg">
           {t('common:reminders.periodicity.' + periodicity)}
         </Text>
       </PresenceTransition>
