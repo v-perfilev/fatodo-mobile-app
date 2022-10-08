@@ -10,8 +10,8 @@ const GroupItemSkeleton = () => {
       <FHStack space="4">
         <FBox flex="1" flexGrow="1">
           <FVStack space="4">
-            <Skeleton w="90%" h="16px" />
-            <Skeleton w="120px" h="12px" />
+            <Skeleton w="90%" h="16px" rounded="xl" />
+            <Skeleton w="120px" h="12px" rounded="xl" />
           </FVStack>
         </FBox>
         <FBox flex="0">
@@ -19,8 +19,8 @@ const GroupItemSkeleton = () => {
         </FBox>
       </FHStack>
       <FHStack grow justifyContent="space-between" alignItems="center">
-        <Skeleton w="200px" h="16px" />
-        <Skeleton w="50px" h="22px" />
+        <Skeleton w="200px" h="16px" rounded="xl" />
+        <Skeleton w="50px" h="22px" rounded="xl" />
       </FHStack>
     </FVStack>
   );
