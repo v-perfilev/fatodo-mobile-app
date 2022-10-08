@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {Box, StatusBar, useColorMode, useColorModeValue} from 'native-base';
-import {Platform, SafeAreaView, StatusBarStyle} from 'react-native';
+import {StatusBar, useColorMode, useColorModeValue} from 'native-base';
+import {Platform, StatusBarStyle} from 'react-native';
 import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
@@ -23,13 +23,7 @@ const ColoredStatusBar = ({bgColor, barStyle}: ColoredStatusBarProps) => {
     }
   }, [colorMode]);
 
-  return (
-    <Box bg={bg}>
-      <SafeAreaView>
-        <StatusBar backgroundColor={bg} barStyle={style} />
-      </SafeAreaView>
-    </Box>
-  );
+  return <StatusBar backgroundColor={bg} barStyle={style} />;
 };
 
 export default ColoredStatusBar;

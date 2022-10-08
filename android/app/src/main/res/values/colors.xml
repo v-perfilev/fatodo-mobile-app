@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="launch_screen_bg">#0BACA2</color>
+    <color name="window_bg">#666666</color>
+    <color name="navbar_bg">#222222</color>
 </resources>
