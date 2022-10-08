@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
@@ -48,14 +48,19 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
   const listRef = useRef<FlatListType>();
 
   const theme = ThemeFactory.getTheme(group?.color);
-  const canEdit = group && GroupUtils.canEdit(account, group);
 
-  const goToItemCreate = (): void => groupNavigation.navigate('ItemCreate', {group});
-  const goToComments = (): void =>
+  const canEdit = useMemo<boolean>(() => {
+    return group && GroupUtils.canEdit(account, group);
+  }, [group, account]);
+
+  const goToItemCreate = useCallback((): void => groupNavigation.navigate('ItemCreate', {group}), [group]);
+
+  const goToComments = useCallback((): void => {
     rootNavigation.navigate('CommentList', {
       targetId: group.id,
       colorScheme: group.color,
     });
+  }, [group]);
 
   /*
   loaders
@@ -108,16 +113,20 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
     }
   }, [showArchived]);
 
-  const buttons: CornerButton[] = [
-    {icon: <PlusIcon />, action: goToItemCreate, hidden: !canEdit},
-    {icon: <CommentsIcon />, action: goToComments},
-    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
-  ];
+  const buttons = useMemo<CornerButton[]>(
+    () => [
+      {icon: <PlusIcon />, action: goToItemCreate, hidden: !canEdit},
+      {icon: <CommentsIcon />, action: goToComments},
+      {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
+    ],
+    [goToItemCreate, goToComments, canEdit],
+  );
+
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableFlatListChildrenProps) => (
       <CornerManagement buttons={buttons} scrollY={scrollY} />
     ),
-    [],
+    [buttons],
   );
 
   return (

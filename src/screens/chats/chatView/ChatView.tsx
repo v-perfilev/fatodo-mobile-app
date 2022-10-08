@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useRef} from 'react';
+import React, {ReactElement, useCallback, useMemo, useRef} from 'react';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
@@ -111,7 +111,10 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
 
   const scrollDown = (): void => listRef.current.scrollToOffset({offset: 0});
 
-  const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
+  const buttons = useMemo<CornerButton[]>(
+    () => [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}],
+    [],
+  );
   const cornerManagement = useCallback(
     ({scrollY}: RefreshableFlatListChildrenProps) => (
       <CornerManagement buttons={buttons} scrollY={scrollY} bottomPadding={CHATS_INPUT_HEIGHT} />

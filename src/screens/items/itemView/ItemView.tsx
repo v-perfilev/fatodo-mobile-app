@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
@@ -35,9 +35,11 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
 
   const showReminders = reminders?.length > 0;
 
-  const goToComments = (): void => navigation.navigate('CommentList', {targetId: item.id, colorScheme: group.color});
+  const goToComments = useCallback(() => {
+    navigation.navigate('CommentList', {targetId: item.id, colorScheme: group.color});
+  }, [item, group]);
 
-  const buttons: CornerButton[] = [{icon: <CommentsIcon />, action: goToComments}];
+  const buttons = useMemo<CornerButton[]>(() => [{icon: <CommentsIcon />, action: goToComments}], [goToComments]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -64,5 +66,4 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
     </ThemeProvider>
   );
 };
-
 export default withItemContainer(ItemView);

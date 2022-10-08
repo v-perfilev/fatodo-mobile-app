@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {CHATS_FILTER_HEIGHT, HEADER_HEIGHT} from '../../../constants';
 import ChatListControl from './ChatListControl';
 import Header from '../../../components/layouts/Header';
@@ -40,10 +40,6 @@ const ChatList = () => {
   const [filterLoading, setFilterLoading] = useDelayedState();
   const [filterLoadCounter, setFilterLoadCounter] = useState<number>(0);
   const listRef = useRef<FlatListType>();
-
-  const openCreateChatDialog = (): void => {
-    showChatCreateDialog();
-  };
 
   /*
   loaders
@@ -102,15 +98,18 @@ const ChatList = () => {
     setFilterLoading(filterLoadCounter > 0);
   }, [filterLoadCounter]);
 
-  const buttons: CornerButton[] = [
-    {icon: <PlusIcon />, action: openCreateChatDialog},
-    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
-  ];
+  const buttons = useMemo<CornerButton[]>(
+    () => [
+      {icon: <PlusIcon />, action: showChatCreateDialog},
+      {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
+    ],
+    [showChatCreateDialog],
+  );
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableFlatListChildrenProps) => (
       <CornerManagement buttons={buttons} scrollY={scrollY} />
     ),
-    [],
+    [buttons],
   );
 
   return (

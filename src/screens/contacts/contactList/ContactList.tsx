@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
@@ -32,10 +32,6 @@ const ContactList = () => {
   const [loading, setLoading] = useDelayedState();
   const [filter, setFilter] = useState<string>('');
   const [relationsToShow, setRelationsToShow] = useState<ContactRelation[]>([]);
-
-  const openContactRequestDialog = (): void => {
-    showContactRequestDialog();
-  };
 
   const refresh = useCallback(async (): Promise<void> => {
     await dispatch(ContactsActions.fetchRelationsThunk());
@@ -74,7 +70,10 @@ const ContactList = () => {
     setRelationsToShow(relationsToShow);
   }, [relations, filter]);
 
-  const buttons: CornerButton[] = [{icon: <PlusIcon />, action: openContactRequestDialog}];
+  const buttons = useMemo<CornerButton[]>(
+    () => [{icon: <PlusIcon />, action: showContactRequestDialog}],
+    [showContactRequestDialog],
+  );
 
   return (
     <CollapsableRefreshableFlatList

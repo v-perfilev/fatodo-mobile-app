@@ -1,7 +1,7 @@
 import {Box} from 'native-base';
 import {Animated, StyleProp, ViewStyle} from 'react-native';
 import {CornerButton} from '../../models/CornerButton';
-import React, {memo, RefObject, useEffect, useRef} from 'react';
+import React, {memo, RefObject, useEffect, useRef, useState} from 'react';
 import {SharedValue, useSharedValue} from 'react-native-reanimated';
 import IconButton from './IconButton';
 import CompositeAnimation = Animated.CompositeAnimation;
@@ -54,15 +54,11 @@ const CornerManagementButton = ({button}: {button: CornerButton}) => {
 };
 
 const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementProps) => {
-  const mainButtons = useRef<CornerButton[]>(buttons.filter((b) => !b.additionalColumn));
-  const addButtons = useRef<CornerButton[]>(buttons.filter((b) => b.additionalColumn));
-  const maxButtonsLength = useRef<number>(Math.max(mainButtons.current.length, addButtons.current.length));
-  const mainButtonPositions = useSharedValue<number[]>(
-    calculatePositions(mainButtons.current, maxButtonsLength.current),
-  );
-  const additionalButtonPositions = useSharedValue<number[]>(
-    calculatePositions(addButtons.current, maxButtonsLength.current),
-  );
+  const [mainButtons, setMainButtons] = useState<CornerButton[]>(buttons.filter((b) => !b.additionalColumn));
+  const [addButtons, setAddButtons] = useState<CornerButton[]>(buttons.filter((b) => b.additionalColumn));
+  const maxButtonsLength = useRef<number>(Math.max(mainButtons.length, addButtons.length));
+  const mainButtonPositions = useSharedValue<number[]>(calculatePositions(mainButtons, maxButtonsLength.current));
+  const additionalButtonPositions = useSharedValue<number[]>(calculatePositions(addButtons, maxButtonsLength.current));
   const mainPositionValues = createAnimatedValues(mainButtonPositions.value);
   const additionalPositionValues = createAnimatedValues(additionalButtonPositions.value);
   const onTop = useRef<boolean>(true);
@@ -85,8 +81,8 @@ const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementPro
   };
 
   const animateAllButtons = (): void => {
-    animateButtons(mainButtons.current, mainButtonPositions, mainPositionValues);
-    animateButtons(addButtons.current, additionalButtonPositions, additionalPositionValues);
+    animateButtons(mainButtons, mainButtonPositions, mainPositionValues);
+    animateButtons(addButtons, additionalButtonPositions, additionalPositionValues);
   };
 
   const handleScrollY = ({value}: {value: number}): void => {
@@ -116,19 +112,24 @@ const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementPro
     return () => scrollY?.removeAllListeners();
   }, []);
 
+  useEffect(() => {
+    setMainButtons(buttons.filter((b) => !b.additionalColumn));
+    setAddButtons(buttons.filter((b) => b.additionalColumn));
+  }, [buttons]);
+
   const viewStyle: StyleProp<ViewStyle> = {position: 'absolute', bottom: bottomPadding || 0, right: 0};
 
   return (
     <>
       <Box zIndex="100" position="absolute" bottom="8px" right="8px">
-        {mainButtons.current.map((button, index) => (
+        {mainButtons.map((button, index) => (
           <Animated.View key={index} style={[{translateY: mainPositionValues[index].current}, viewStyle]}>
             <CornerManagementButton button={button} />
           </Animated.View>
         ))}
       </Box>
       <Box zIndex="100" position="absolute" bottom="8px" right="68px">
-        {addButtons.current.map((button, index) => (
+        {addButtons.map((button, index) => (
           <Animated.View key={index} style={[{translateY: additionalPositionValues[index].current}, viewStyle]}>
             <CornerManagementButton button={button} />
           </Animated.View>

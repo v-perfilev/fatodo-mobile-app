@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useRef} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {EventsActions} from '../../../store/events/eventsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
@@ -84,7 +84,10 @@ const EventList = () => {
     isFocused && unreadCount > 0 && refreshUnread();
   }, [isFocused, unreadCount]);
 
-  const buttons: CornerButton[] = [{icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true}];
+  const buttons = useMemo<CornerButton[]>(
+    () => [{icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true}],
+    [],
+  );
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableFlatListChildrenProps) => (
       <CornerManagement buttons={buttons} scrollY={scrollY} />

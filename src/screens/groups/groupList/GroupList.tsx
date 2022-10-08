@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import GroupListHeader from './GroupListHeader';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {GroupsActions} from '../../../store/groups/groupsActions';
@@ -33,7 +33,7 @@ const GroupList = () => {
   const [loading, setLoading] = useDelayedState();
   const listRef = useRef<FlatListType>();
 
-  const goToGroupCreate = (): void => navigation.navigate('GroupCreate');
+  const goToGroupCreate = useCallback(() => navigation.navigate('GroupCreate'), []);
 
   /*
   loaders
@@ -87,10 +87,13 @@ const GroupList = () => {
     dispatch(GroupsActions.fetchGroupsThunk()).finally(() => setLoading(false));
   }, []);
 
-  const buttons: CornerButton[] = [
-    {icon: <PlusIcon />, action: goToGroupCreate},
-    {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
-  ];
+  const buttons = useMemo<CornerButton[]>(
+    () => [
+      {icon: <PlusIcon />, action: goToGroupCreate},
+      {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
+    ],
+    [],
+  );
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableFlatListChildrenProps) => (
       <CornerManagement buttons={buttons} scrollY={scrollY} />

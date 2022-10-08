@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useRef, useState} from 'react';
+import React, {ReactElement, useCallback, useMemo, useRef, useState} from 'react';
 import withCommentsContainer, {WithCommentsProps} from '../../../shared/hocs/withContainers/withCommentsContainer';
 import {Comment} from '../../../models/Comment';
 import Header from '../../../components/layouts/Header';
@@ -72,7 +72,10 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
 
   const scrollDown = (): void => listRef.current.scrollToOffset({offset: 0});
 
-  const buttons: CornerButton[] = [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}];
+  const buttons = useMemo<CornerButton[]>(
+    () => [{icon: <ArrowDownIcon />, action: scrollDown, color: 'trueGray', hideOnTop: true}],
+    [],
+  );
   const cornerManagement = useCallback(
     ({scrollY}: RefreshableFlatListChildrenProps) => (
       <CornerManagement buttons={buttons} scrollY={scrollY} bottomPadding={COMMENTS_INPUT_HEIGHT} />
