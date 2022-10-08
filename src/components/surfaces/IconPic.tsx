@@ -11,7 +11,7 @@ type IconPicProps = {
 };
 
 const IconPic = ({icon, size, border = 1, invertedBorder}: IconPicProps) => {
-  const borderColor = invertedBorder ? 'white' : 'tertiary.500';
+  const borderColor = invertedBorder ? 'white' : 'primary.500';
 
   const iconElement = React.cloneElement(icon, {size: '70%', color: 'primary.500'});
 

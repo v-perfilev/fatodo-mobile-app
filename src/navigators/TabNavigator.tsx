@@ -53,6 +53,7 @@ const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{headerShown: false, lazy: false, freezeOnBlur: freeze}}
       initialRouteName="Groups"
+      backBehavior="initialRoute"
       tabBar={TabNavigatorBar}
     >
       <Tab.Screen name="Calendar" component={CalendarView} options={{tabBarIcon: calendarIcon}} />

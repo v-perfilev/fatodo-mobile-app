@@ -1,77 +1,77 @@
 import {
   bluePalette,
   components,
+  config,
   fontConfig,
   fonts,
   greenPalette,
-  lightConfig,
   purplePalette,
   turquoisePalette,
   yellowPalette,
 } from './sets';
 import {extendTheme, Theme} from 'native-base';
 
-export const colorSchemes: ColorScheme[] = ['yellow', 'turquoise', 'purple', 'green', 'blue'];
+export const colorSchemes: ColorScheme[] = ['turquoise', 'yellow', 'purple', 'green', 'blue'];
 
-export type ColorScheme = 'yellow' | 'turquoise' | 'purple' | 'green' | 'blue';
+export type ColorScheme = 'turquoise' | 'yellow' | 'purple' | 'green' | 'blue';
 
 export const LINEAR_GRADIENT = {
   linearGradient: {
-    colors: ['tertiary.400', 'tertiary.300'],
+    colors: ['primary.400', 'primary.300'],
     start: [0, 1],
     end: [1, 0],
   },
 };
 
 export class ThemeFactory {
-  private static yellowTheme = extendTheme({
-    colors: yellowPalette,
-    fontConfig: fontConfig,
-    fonts: fonts,
-    components: components,
-    config: lightConfig,
-  });
-
   private static turquoiseTheme = extendTheme({
     colors: turquoisePalette,
-    fontConfig: fontConfig,
-    fonts: fonts,
-    components: components,
-    config: lightConfig,
+    fontConfig,
+    fonts,
+    components,
+    config,
+  });
+
+  private static yellowTheme = extendTheme({
+    colors: yellowPalette,
+    fontConfig,
+    fonts,
+    components,
+    config,
   });
 
   private static purpleTheme = extendTheme({
     colors: purplePalette,
-    fontConfig: fontConfig,
-    fonts: fonts,
-    components: components,
-    config: lightConfig,
+    fontConfig,
+    fonts,
+    components,
+    config,
   });
 
   private static greenTheme = extendTheme({
     colors: greenPalette,
-    fontConfig: fontConfig,
-    fonts: fonts,
-    components: components,
-    config: lightConfig,
+    fontConfig,
+    fonts,
+    components,
+    config,
   });
 
   private static blueTheme = extendTheme({
     colors: bluePalette,
-    fontConfig: fontConfig,
-    fonts: fonts,
-    components: components,
-    config: lightConfig,
+    fontConfig,
+    fonts,
+    components,
+    config,
   });
 
-  public static getDefaultTheme = (): Theme => ThemeFactory.yellowTheme;
+  public static getDefaultTheme = (): Theme => ThemeFactory.turquoiseTheme;
 
   public static getTheme = (color: ColorScheme): Theme => {
     switch (color) {
-      case 'yellow':
-        return ThemeFactory.yellowTheme;
       case 'turquoise':
         return ThemeFactory.turquoiseTheme;
+      case 'yellow':
+        return ThemeFactory.yellowTheme;
       case 'purple':
         return ThemeFactory.purpleTheme;
       case 'green':

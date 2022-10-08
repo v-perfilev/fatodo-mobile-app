@@ -16,7 +16,7 @@ type UrlPicProps = {
 const UrlPic = ({file, size, border = 0, invertedBorder}: UrlPicProps) => {
   const isBigImage = size === 'lg' || size === 'xl' || size === '2xl' || size > 60;
   const source = !file || ImageUtils.isUrl(file) ? file : ImageUtils.buildImageUri(file, !isBigImage);
-  const borderColor = invertedBorder ? 'white' : 'tertiary.500';
+  const borderColor = invertedBorder ? 'white' : 'primary.500';
 
   const bg = useColorModeValue('white', 'gray.700');
 

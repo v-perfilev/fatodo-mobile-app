@@ -19,39 +19,34 @@ export const additionalPalette = {
   error: ERROR_COLOR,
 };
 
-export const yellowPalette = {
-  ...additionalPalette,
-  primary: TURQUOISE_COLOR,
-  secondary: YELLOW_COLOR,
-  tertiary: YELLOW_COLOR,
-};
-
 export const turquoisePalette = {
   ...additionalPalette,
   primary: TURQUOISE_COLOR,
   secondary: YELLOW_COLOR,
-  tertiary: TURQUOISE_COLOR,
+};
+
+export const yellowPalette = {
+  ...additionalPalette,
+  primary: YELLOW_COLOR,
+  secondary: TURQUOISE_COLOR,
 };
 
 export const purplePalette = {
   ...additionalPalette,
   primary: PURPLE_COLOR,
   secondary: YELLOW_COLOR,
-  tertiary: PURPLE_COLOR,
 };
 
 export const greenPalette = {
   ...additionalPalette,
   primary: GREEN_COLOR,
   secondary: YELLOW_COLOR,
-  tertiary: GREEN_COLOR,
 };
 
 export const bluePalette = {
   ...additionalPalette,
   primary: BLUE_COLOR,
   secondary: YELLOW_COLOR,
-  tertiary: BLUE_COLOR,
 };
 
 // FONTS
@@ -103,16 +98,12 @@ export const fonts = {
   mono: 'Roboto',
 };
 
-// CONFIGS
-
-export const lightConfig = {
-  initialColorMode: 'light',
-};
-
-export const darkConfig = {
-  initialColorMode: 'dark',
-};
-
 // COMPONENTS
 
 export const components = {};
+
+// CONFIGS
+
+export const config = {
+  initialColorMode: 'light',
+};
