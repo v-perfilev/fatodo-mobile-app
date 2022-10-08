@@ -1,6 +1,6 @@
 import {Box, useColorModeValue, useTheme} from 'native-base';
 import DatePicker from 'react-native-date-picker';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {DateUtils} from '../../shared/utils/DateUtils';
 import {UserAccount} from '../../models/User';
 import {useAppSelector} from '../../store/store';
@@ -60,7 +60,7 @@ const calcLocale = (mode: PickMode, account: UserAccount) => {
 const DateTimePicker = ({value, setValue, mode, minDate, maxDate}: DateTimePickerProps) => {
   const account = useAppSelector(AuthSelectors.account);
   const theme = useTheme();
-  const initialValue = value || minDate || DateUtils.addMinutes(new Date(), 20);
+  const [dataValue, setDataValue] = useState<Date>(value || minDate || DateUtils.addMinutes(new Date(), 20));
 
   const pickerMode = calcMode(mode);
   const width = calcWidth(mode);
@@ -68,8 +68,13 @@ const DateTimePicker = ({value, setValue, mode, minDate, maxDate}: DateTimePicke
   const overflow = calcOverflow(mode);
   const localeMode = calcLocale(mode, account);
 
+  const handleDateChange = (date: Date): void => {
+    setValue(date);
+    setDataValue(dataValue);
+  };
+
   useEffect(() => {
-    setValue(initialValue);
+    setValue(dataValue);
   }, []);
 
   const textColor = useColorModeValue(theme.colors.gray['600'], theme.colors.gray['300']);
@@ -78,8 +83,8 @@ const DateTimePicker = ({value, setValue, mode, minDate, maxDate}: DateTimePicke
     <Box width={width} overflow={overflow}>
       <Box ml={marginLeft}>
         <DatePicker
-          date={value || initialValue}
-          onDateChange={setValue}
+          date={dataValue}
+          onDateChange={handleDateChange}
           mode={pickerMode}
           locale={localeMode}
           is24hourSource="locale"
