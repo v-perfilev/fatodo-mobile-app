@@ -41,10 +41,6 @@
     "REPETITION": "repetition",
     "NOTE": "note"
   },
-  "paramDate": {
-    "time": "at {{time}}",
-    "date": "on {{date}}"
-  },
   "priorities": {
     "LOW": "low",
     "NORMAL": "normal",

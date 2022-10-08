@@ -41,10 +41,6 @@
     "REPETITION": "дата",
     "NOTE": "заметка"
   },
-  "paramDate": {
-    "time": "в {{time}}",
-    "date": "{{date}}"
-  },
   "priorities": {
     "LOW": "низкий",
     "NORMAL": "нормальный",

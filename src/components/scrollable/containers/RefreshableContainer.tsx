@@ -30,6 +30,7 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   const scrollYValue = useRef<number>(0);
   const overscrollEnabled = useRef<boolean>(true);
   const overscrollInitValue = useRef<number>(undefined);
+  const extraScrollValue = useRef<number>(undefined);
 
   const translateY = extraScrollY.current.interpolate({
     inputRange: [0, MAX_REFRESH_HEIGHT],
@@ -84,7 +85,7 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   }, []);
 
   const handleGestureEvent = useCallback((event: GestureEvent<any>) => {
-    if (scrollYValue.current > 0) {
+    if (overscrollEnabled.current === false || scrollYValue.current > 0) {
       overscrollInitValue.current = undefined;
       overscrollEnabled.current = false;
       return;
@@ -106,8 +107,6 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   }, []);
 
   const handleGestureEnded = useCallback((): void => {
-    overscrollEnabled.current = false;
-
     if (overscrollInitValue.current && shouldRefresh.current) {
       halfCloseLoader();
       colorizeRefresher();
@@ -119,12 +118,13 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
           setTimeout(() => grayscaleRefresher(), 1500);
         });
       });
-    } else {
+    } else if (extraScrollValue.current > 0) {
       closeLoader();
     }
 
     overscrollInitValue.current = undefined;
     shouldRefresh.current = false;
+    overscrollEnabled.current = false;
   }, []);
 
   useEffect(() => {
@@ -134,6 +134,11 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
 
   useEffect(() => {
     scrollY.current?.addListener(({value}) => (scrollYValue.current = value));
+    return () => scrollY.current?.removeAllListeners();
+  }, []);
+
+  useEffect(() => {
+    extraScrollY.current?.addListener(({value}) => (extraScrollValue.current = value));
     return () => scrollY.current?.removeAllListeners();
   }, []);
 

@@ -45,9 +45,8 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
   const account = useAppSelector(AuthSelectors.account);
   const theme = useTheme();
   const [show, setShow] = useState<boolean>(false);
-  const [pickerValue, setPickerValue] = useState<Date>();
+  const [dateValue, setDateValue] = useState<Date>(values[name] || DateUtils.addMinutes(new Date(), 20));
 
-  const initialValue = DateUtils.addMinutes(new Date(), 20);
   const value = values[name];
   const isTouched = name in touched;
   const isError = name in errors;
@@ -67,11 +66,11 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
   };
 
   const handlePickerChange = (date: Date): void => {
-    setPickerValue(date);
+    setDateValue(date);
   };
 
   const onAgree = (): void => {
-    setFieldValue(name, pickerValue || initialValue);
+    setFieldValue(name, dateValue);
     closePicker();
   };
 
@@ -84,7 +83,7 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
   const picker = (
     <Flex alignItems="center">
       <DatePicker
-        date={value || initialValue}
+        date={dateValue}
         onDateChange={handlePickerChange}
         mode={mode}
         locale={locale}

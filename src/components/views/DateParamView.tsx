@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {useTranslation} from 'react-i18next';
 import {DateParams} from '../../models/DateParams';
 import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
@@ -11,7 +10,6 @@ type DateParamViewProps = {
 };
 
 const DateParamView = ({date: paramDate}: DateParamViewProps) => {
-  const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
   const timezone = account.info.timezone;
 
@@ -19,12 +17,12 @@ const DateParamView = ({date: paramDate}: DateParamViewProps) => {
   if (paramDate.time) {
     const timeDate = DateConverters.getTimeFromParamDate(paramDate, timezone);
     const time = DateFormatters.formatDate(timeDate, account, 'FULL');
-    description = description.concat(t('common:paramDate.time', {time}));
+    description = description.concat(time);
   }
 
   if (paramDate.date && paramDate.month) {
     if (paramDate.time) {
-      description = description.concat(' ');
+      description = description.concat(', ');
     }
 
     const dateDate = DateConverters.getDateFromParamDate(paramDate, timezone);
@@ -32,7 +30,7 @@ const DateParamView = ({date: paramDate}: DateParamViewProps) => {
       ? DateFormatters.formatDate(dateDate, account, undefined, 'FULL')
       : DateFormatters.formatDate(dateDate, account, undefined, 'SHORT');
 
-    description = description.concat(t('common:paramDate.date', {date}));
+    description = description.concat(date);
   }
 
   return <>{description}</>;
