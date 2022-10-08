@@ -128,7 +128,7 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   }, []);
 
   useEffect(() => {
-    parentScrollY?.addListener(({value}) => scrollY.current.setValue(value));
+    parentScrollY?.addListener(({value}) => (scrollYValue.current = value));
     return () => parentScrollY?.removeAllListeners();
   }, []);
 
