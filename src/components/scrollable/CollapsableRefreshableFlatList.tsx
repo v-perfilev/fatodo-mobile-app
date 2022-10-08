@@ -21,6 +21,7 @@ type CollapsableRefreshableFlatListProps = Omit<FlatListProps<any>, 'children'> 
   previousNode?: ReactNode;
   nextNode?: ReactNode;
   loadingPlaceholder?: ReactElement;
+  horizontalScrollEnabled?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   loaderStyle?: StyleProp<ViewStyle>;
   children?: ReactNode | ChildrenFuncType;
@@ -36,6 +37,7 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
     previousNode,
     nextNode,
     loadingPlaceholder,
+    horizontalScrollEnabled,
     inverted,
     containerStyle,
     loaderStyle,
@@ -49,7 +51,12 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
         <>
           {previousNode}
           <ConditionalSpinner loading={loading} loadingPlaceholder={loadingPlaceholder} style={loaderStyle}>
-            <RefreshableContainer refresh={refresh} parentScrollY={scrollY} inverted={inverted}>
+            <RefreshableContainer
+              refresh={refresh}
+              parentScrollY={scrollY}
+              inverted={inverted}
+              horizontalScrollEnabled={horizontalScrollEnabled}
+            >
               {({refresher}: RefreshableContainerChildrenProps) => (
                 <FlatList
                   ListHeaderComponent={refresher}

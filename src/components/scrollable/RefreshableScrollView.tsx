@@ -6,17 +6,18 @@ import ConditionalSpinner from '../surfaces/ConditionalSpinner';
 type RefreshableScrollViewProps = ScrollViewProps & {
   refresh?: () => Promise<void>;
   loading?: boolean;
+  horizontalScrollEnabled?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
 };
 
 const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
 
 const RefreshableScrollView = React.forwardRef((props: RefreshableScrollViewProps, ref: any) => {
-  const {refresh, loading, containerStyle, children} = props;
+  const {refresh, loading, horizontalScrollEnabled, containerStyle, children} = props;
 
   return (
     <ConditionalSpinner loading={loading}>
-      <RefreshableContainer refresh={refresh}>
+      <RefreshableContainer refresh={refresh} horizontalScrollEnabled={horizontalScrollEnabled}>
         {({refresher, handleEventScroll}: RefreshableContainerChildrenProps) => (
           <Animated.ScrollView
             contentContainerStyle={[flexStyle, containerStyle]}
