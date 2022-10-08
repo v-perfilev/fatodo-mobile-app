@@ -46,7 +46,7 @@ const CalendarViewContainer = ({month, selectMonth, childRefMap, width}: Calenda
 
   return (
     <FBox width={width}>
-      <RefreshableScrollView refresh={refresh} ref={scrollViewRef} horizontalScrollEnabled>
+      <RefreshableScrollView refresh={refresh} ref={scrollViewRef}>
         <CalendarViewContent
           month={month}
           selectMonth={selectMonth}

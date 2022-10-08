@@ -14,17 +14,10 @@ type RefreshableContainerProps = {
   refresh?: () => Promise<void>;
   parentScrollY?: Animated.Value;
   inverted?: boolean;
-  horizontalScrollEnabled?: boolean;
   children: (props: RefreshableContainerChildrenProps) => ReactElement;
 };
 
-const RefreshableContainer = ({
-  refresh,
-  parentScrollY,
-  inverted,
-  horizontalScrollEnabled,
-  children,
-}: RefreshableContainerProps) => {
+const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: RefreshableContainerProps) => {
   const [refreshGesturesAllowed, setRefreshGesturesAllowed] = useState<boolean>(!!refresh);
 
   const panRef = useRef();
@@ -175,7 +168,7 @@ const RefreshableContainer = ({
         onBegan={refreshGesturesAllowed ? handleGestureBegan : undefined}
         onGestureEvent={refreshGesturesAllowed ? handleGestureEvent : undefined}
         onEnded={refreshGesturesAllowed ? handleGestureEnded : undefined}
-        activeOffsetY={horizontalScrollEnabled ? [-15, 15] : undefined}
+        activeOffsetY={[-15, 15]}
         simultaneousHandlers={nativeRef}
         ref={panRef}
       >

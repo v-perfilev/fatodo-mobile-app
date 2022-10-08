@@ -83,7 +83,6 @@ const ContactList = () => {
       loadingPlaceholder={<ContactListSkeleton />}
       ListEmptyComponent={!filter && <ContactListStub />}
       ItemSeparatorComponent={Separator}
-      horizontalScrollEnabled
       data={relationsToShow}
       render={renderItem}
       keyExtractor={keyExtractor}

@@ -53,7 +53,6 @@ const IncomingRequestList = () => {
         loadingPlaceholder={<ContactListSkeleton />}
         ListEmptyComponent={<IncomingRequestListStub />}
         ItemSeparatorComponent={Separator}
-        horizontalScrollEnabled
         data={incomingRequests}
         render={renderItem}
         keyExtractor={keyExtractor}

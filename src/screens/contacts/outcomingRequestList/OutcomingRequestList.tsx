@@ -43,7 +43,6 @@ const OutcomingRequestList = () => {
       loadingPlaceholder={<ContactListSkeleton />}
       ListEmptyComponent={<OutcomingRequestListStub />}
       ItemSeparatorComponent={Separator}
-      horizontalScrollEnabled
       data={outcomingRequests}
       render={renderItem}
       keyExtractor={keyExtractor}
