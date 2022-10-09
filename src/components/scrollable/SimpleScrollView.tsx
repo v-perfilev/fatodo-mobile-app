@@ -6,7 +6,7 @@ type SimpleScrollViewProps = IScrollViewProps & {
   containerStyle?: StyleProp<ViewStyle>;
 };
 
-const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1, padding: 12};
+const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1, paddingHorizontal: 12, paddingVertical: 6};
 
 const SimpleScrollView = ({containerStyle, children, ...props}: SimpleScrollViewProps) => {
   return (

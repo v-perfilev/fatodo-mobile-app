@@ -16,7 +16,7 @@ type TypeViewProps = IIconProps & {
   withoutText?: boolean;
 };
 
-export const TypeView = ({type, fontColor, withoutText, ...props}: TypeViewProps) => {
+export const TypeView = ({type, fontSize, fontColor, withoutText, ...props}: TypeViewProps) => {
   const {t, i18n} = useTranslation();
 
   const getIcon = (): ReactElement => {
@@ -32,14 +32,14 @@ export const TypeView = ({type, fontColor, withoutText, ...props}: TypeViewProps
     }
   };
 
-  const icon = React.cloneElement(getIcon(), {...props, color: 'primary.500', mt: !withoutText ? 1 : undefined});
+  const icon = React.cloneElement(getIcon(), {...props, color: 'primary.500', mt: !withoutText ? 0.5 : undefined});
   const text = useMemo(() => t('common:types.' + type), [type, i18n.language]);
 
   const onlyIcon = <FCenter>{icon}</FCenter>;
   const iconWithText = (
     <FHStack smallSpace alignItems="center">
       {icon}
-      <Text color={fontColor} isTruncated>
+      <Text fontSize={fontSize} color={fontColor} isTruncated>
         {text}
       </Text>
     </FHStack>

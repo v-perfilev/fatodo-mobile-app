@@ -22,7 +22,7 @@ const ItemViewChanges = () => {
   };
 
   const labeledBox = (label: string, text: string): ReactElement => (
-    <LabeledBox label={label} isText color="gray.500" fontSize="xs">
+    <LabeledBox label={label} color="gray.500" fontSize="xs">
       {text}
     </LabeledBox>
   );

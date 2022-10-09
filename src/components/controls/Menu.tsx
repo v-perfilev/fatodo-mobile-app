@@ -34,7 +34,7 @@ export const MenuItem = ({action, icon, text, children, loading, disabled, hidde
 
 const Menu = ({trigger, children}: MenuProps) => {
   return (
-    <NbMenu defaultIsOpen={false} trigger={trigger} borderRadius="0" p="0">
+    <NbMenu defaultIsOpen={false} trigger={trigger} borderRadius="xl" p="0">
       {children}
     </NbMenu>
   );

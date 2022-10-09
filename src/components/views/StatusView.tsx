@@ -17,7 +17,7 @@ type StatusViewProps = IIconProps & {
   withoutText?: boolean;
 };
 
-const StatusView = ({statusType, fontColor, withoutText, ...props}: StatusViewProps) => {
+const StatusView = ({statusType, fontSize, fontColor, withoutText, ...props}: StatusViewProps) => {
   const {t, i18n} = useTranslation();
 
   const getIcon = (): ReactElement => {
@@ -33,7 +33,7 @@ const StatusView = ({statusType, fontColor, withoutText, ...props}: StatusViewPr
     }
   };
 
-  const icon = React.cloneElement(getIcon(), {...props, color: 'primary.500', mt: !withoutText ? 1 : undefined});
+  const icon = React.cloneElement(getIcon(), {...props, color: 'primary.500', mt: !withoutText ? 0.5 : undefined});
   const text = useMemo(() => t('common:statuses.' + statusType), [statusType, i18n.language]);
 
   const onlyIcon = <FCenter>{icon}</FCenter>;
@@ -41,7 +41,7 @@ const StatusView = ({statusType, fontColor, withoutText, ...props}: StatusViewPr
   const iconWithText = (
     <FHStack smallSpace justifyContent="center" alignItems="center">
       {icon}
-      <Text color={fontColor} isTruncated>
+      <Text fontSize={fontSize} color={fontColor} isTruncated>
         {text}
       </Text>
     </FHStack>

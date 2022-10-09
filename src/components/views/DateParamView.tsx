@@ -4,6 +4,7 @@ import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import {DateConverters} from '../../shared/utils/DateConverters';
 import {DateFormatters} from '../../shared/utils/DateFormatters';
+import {Text} from 'native-base';
 
 type DateParamViewProps = {
   date: DateParams;
@@ -33,7 +34,7 @@ const DateParamView = ({date: paramDate}: DateParamViewProps) => {
     description = description.concat(date);
   }
 
-  return <>{description}</>;
+  return <Text>{description}</Text>;
 };
 
 export default DateParamView;

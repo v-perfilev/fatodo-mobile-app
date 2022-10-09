@@ -15,7 +15,7 @@ type PriorityViewProps = IIconProps & {
   withoutText?: boolean;
 };
 
-export const PriorityView = ({priority, fontColor, withoutText, ...props}: PriorityViewProps) => {
+export const PriorityView = ({priority, fontSize, fontColor, withoutText, ...props}: PriorityViewProps) => {
   const {t, i18n} = useTranslation();
 
   const getIcon = (priority: ItemPriorityType): ReactElement => {
@@ -29,7 +29,7 @@ export const PriorityView = ({priority, fontColor, withoutText, ...props}: Prior
     }
   };
 
-  const icon = React.cloneElement(getIcon(priority), {...props, mt: !withoutText ? 1 : undefined});
+  const icon = React.cloneElement(getIcon(priority), {...props, mt: !withoutText ? 0.5 : undefined});
   const text = useMemo(() => t('common:priorities.' + priority), [priority, i18n.language]);
 
   const onlyIcon = <FCenter>{icon}</FCenter>;
@@ -37,7 +37,7 @@ export const PriorityView = ({priority, fontColor, withoutText, ...props}: Prior
   const iconWithText = (
     <FHStack smallSpace alignItems="center">
       {icon}
-      <Text color={fontColor} isTruncated>
+      <Text fontSize={fontSize} color={fontColor} isTruncated>
         {text}
       </Text>
     </FHStack>

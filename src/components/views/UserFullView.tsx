@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {User, UserAccount} from '../../models/User';
 import UrlPic from '../surfaces/UrlPic';
 import FVStack from '../boxes/FVStack';
@@ -6,6 +6,7 @@ import LabeledBox from '../surfaces/LabeledBox';
 import {useTranslation} from 'react-i18next';
 import {Text} from 'native-base';
 import FCenter from '../boxes/FCenter';
+import MultiLabeledBox, {MultiLabeledBoxItem} from '../surfaces/MultiLabeledBox';
 
 type UserFullViewProps = {
   user: User;
@@ -14,7 +15,15 @@ type UserFullViewProps = {
 };
 
 export const UserFullView = ({user, account, withoutUsername}: UserFullViewProps) => {
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
+
+  const labeledItems = useMemo<MultiLabeledBoxItem[]>(
+    () => [
+      {label: t('account:fields.firstname.label'), value: user.firstname, showNotSet: true},
+      {label: t('account:fields.lastname.label'), value: user.lastname, showNotSet: true},
+    ],
+    [user, i18n.language],
+  );
 
   return (
     <FVStack defaultSpace>
@@ -26,14 +35,9 @@ export const UserFullView = ({user, account, withoutUsername}: UserFullViewProps
           {user.username}
         </Text>
       )}
-      <LabeledBox label={t('account:fields.firstname.label')} isText isTruncated showNotSet>
-        {user.firstname}
-      </LabeledBox>
-      <LabeledBox label={t('account:fields.lastname.label')} isText isTruncated showNotSet>
-        {user.lastname}
-      </LabeledBox>
+      <MultiLabeledBox items={labeledItems} isTruncated />
       {account && (
-        <LabeledBox label={t('account:fields.timezone.label')} isText showNotSet>
+        <LabeledBox label={t('account:fields.timezone.label')} showNotSet>
           {account.info.timezone}
         </LabeledBox>
       )}

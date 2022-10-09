@@ -38,12 +38,12 @@
   "types": {
     "TASK": "задача",
     "EVENT": "событие",
-    "REPETITION": "дата",
+    "REPETITION": "повторение",
     "NOTE": "заметка"
   },
   "priorities": {
     "LOW": "низкий",
-    "NORMAL": "нормальный",
+    "NORMAL": "средний",
     "HIGH": "высокий"
   }
 }

@@ -40,23 +40,25 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
 
   return (
     <PressableButton onPress={goToItemView}>
-      <FVStack p="4" defaultSpace {...props}>
-        <FHStack>
-          <FVStack grow defaultSpace>
+      <FVStack p="4" space="2" {...props}>
+        <FHStack grow justifyContent="space-between" alignItems="center">
+          <FHStack defaultSpace alignItems="center">
             <Text fontSize="16" numberOfLines={2} isTruncated>
               {item.title}
             </Text>
-            <GroupItemChanges item={item} />
-          </FVStack>
+          </FHStack>
           <Box mr="-1">
             <GroupItemMenu group={group} item={item} canEdit={canEdit} />
           </Box>
         </FHStack>
-        <Box flexDirection="row">
-          <FHStack grow defaultSpace>
-            <TypeView type={item.type} fontColor="gray.400" />
-            <PriorityView priority={item.priority} fontColor="gray.400" />
-            <StatusView statusType={item.status} fontColor="gray.400" />
+        <FHStack>
+          <GroupItemChanges item={item} />
+        </FHStack>
+        <FHStack justifyContent="space-between" alignItems="center">
+          <FHStack space="2">
+            <TypeView type={item.type} fontSize="11" fontColor="gray.400" />
+            <PriorityView priority={item.priority} fontSize="11" fontColor="gray.400" />
+            <StatusView statusType={item.status} fontSize="11" fontColor="gray.400" />
           </FHStack>
           <FHStack defaultSpace>
             {item.remindersCount > 0 && (
@@ -66,7 +68,7 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
               {commentThread?.count || 0}
             </BoxWithIcon>
           </FHStack>
-        </Box>
+        </FHStack>
       </FVStack>
     </PressableButton>
   );

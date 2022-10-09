@@ -5,12 +5,7 @@ import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ItemViewHeader from './ItemViewHeader';
 import ItemViewDescription from './ItemViewDescription';
 import ItemViewChanges from './ItemViewChanges';
-import ItemViewDate from './itemViewDate';
-import ItemViewPriority from './itemViewPriority';
-import ItemViewType from './itemViewType';
-import ItemViewGroup from './itemViewGroup';
 import ItemReminders from './ItemReminders';
-import ItemViewName from './itemViewName';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
@@ -23,11 +18,17 @@ import {CornerButton} from '../../../models/CornerButton';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import Separator from '../../../components/layouts/Separator';
-import ItemViewStatus from './itemViewStatus';
+import {useTranslation} from 'react-i18next';
+import MultiLabeledBox, {MultiLabeledBoxItem} from '../../../components/surfaces/MultiLabeledBox';
+import StatusView from '../../../components/views/StatusView';
+import TypeView from '../../../components/views/TypeView';
+import PriorityView from '../../../components/views/PriorityView';
+import DateParamView from '../../../components/views/DateParamView';
 
 type ItemViewProps = WithItemProps;
 
 const ItemView = ({group, item, loading}: ItemViewProps) => {
+  const {t, i18n} = useTranslation();
   const navigation = useNavigation<RootNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const reminders = useAppSelector(ItemSelectors.reminders);
@@ -39,6 +40,21 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
     navigation.navigate('CommentList', {targetId: item.id, colorScheme: group.color});
   }, [item, group]);
 
+  const labeledItems = useMemo<MultiLabeledBoxItem[]>(
+    () =>
+      item
+        ? [
+            {label: t('item:labels.item'), value: item.title},
+            {label: t('item:labels.group'), value: group?.title},
+            {label: t('item:labels.status'), value: <StatusView statusType={item.status} />},
+            {label: t('item:labels.type'), value: <TypeView type={item.type} />},
+            {label: t('item:labels.priority'), value: <PriorityView priority={item.priority} />},
+            {label: t('item:labels.date'), value: item.date && <DateParamView date={item.date} />},
+          ]
+        : [],
+    [item, group, i18n.language],
+  );
+
   const buttons = useMemo<CornerButton[]>(() => [{icon: <CommentsIcon />, action: goToComments}], [goToComments]);
 
   return (
@@ -47,12 +63,7 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
       <ConditionalSpinner loading={loading}>
         <SimpleScrollView>
           <FVStack defaultSpace>
-            <ItemViewName />
-            <ItemViewGroup />
-            <ItemViewStatus />
-            <ItemViewType />
-            <ItemViewPriority />
-            <ItemViewDate />
+            <MultiLabeledBox items={labeledItems} />
             <Separator bg="primary.500" />
             <ItemViewDescription />
             {showReminders && <Separator bg="primary.500" />}

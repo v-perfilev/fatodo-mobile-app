@@ -10,7 +10,7 @@ const ItemViewDescription: FC = () => {
   const item = useAppSelector(ItemSelectors.item);
 
   return item.description ? (
-    <LabeledBox label={t('item:labels.description')} isText isVertical>
+    <LabeledBox label={t('item:labels.description')} isVertical>
       {item.description}
     </LabeledBox>
   ) : (
