@@ -95,7 +95,7 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
     (info: ListRenderItemInfo<Item>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <GroupItem item={info.item} group={group} canEdit={canEdit} onLayout={onLayout} />
     ),
-    [],
+    [group],
   );
 
   /*

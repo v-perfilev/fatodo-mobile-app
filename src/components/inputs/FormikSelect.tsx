@@ -39,7 +39,14 @@ const FormikSelect = (props: FormikSelectProps) => {
   const flatList = useMemo<ReactElement>(
     () => (
       <ScrollView maxHeight={listHeight} horizontal={true}>
-        <FlatList fixedLength={40} data={data} render={renderItem} />
+        <FlatList
+          fixedLength={40}
+          data={data}
+          render={renderItem}
+          maxToRenderPerBatch={100}
+          updateCellsBatchingPeriod={10}
+          onEndReachedThreshold={4}
+        />
       </ScrollView>
     ),
     [data, renderItem],
