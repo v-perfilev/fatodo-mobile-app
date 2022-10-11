@@ -36,6 +36,7 @@ const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 
 const GroupView = ({groupId, group, loading}: GroupViewProps) => {
+  const [showArchived, setShowArchived] = useState<boolean>(false);
   const itemsSelector = useCallback(GroupSelectors.makeItemsSelector(), []);
   const allItemsLoadedSelector = useCallback(GroupSelectors.makeAllItemsLoadedSelector(), []);
   const dispatch = useAppDispatch();
@@ -44,7 +45,6 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
   const allItemsLoaded = useAppSelector((state) => allItemsLoadedSelector(state, showArchived));
   const rootNavigation = useNavigation<RootNavigationProp>();
   const groupNavigation = useNavigation<GroupNavigationProp>();
-  const [showArchived, setShowArchived] = useState<boolean>(false);
 
   const listRef = useRef<FlatListType>();
 
