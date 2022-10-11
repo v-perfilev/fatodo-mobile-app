@@ -25,12 +25,22 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
   const goToGroupView = (): void => !sorting && navigation.navigate('GroupView', {group});
 
   const bg = useColorModeValue(LIGHT_BG, DARK_BG);
-  const bgOpacity = useColorModeValue(0.1, 0.15);
+  const bgOpacity = useColorModeValue(0.2, 0.3);
   const titleColor = useColorModeValue('primary.500', 'gray.100');
 
   return (
     <PressableButton onPress={goToGroupView}>
-      <Box position="relative" h="50px" px="4" pr="3" justifyContent="center" bg={sorting ? bg : undefined}>
+      <Box
+        position="relative"
+        h="50px"
+        mx="1"
+        px="3"
+        pr="2"
+        borderRadius="xl"
+        overflow="hidden"
+        justifyContent="center"
+        bg={sorting ? bg : undefined}
+      >
         <Box position="absolute" left="0" right="0" top="0" bottom="0" bg={LINEAR_GRADIENT} opacity={bgOpacity} />
         <FHStack defaultSpace alignItems="center">
           {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} />}

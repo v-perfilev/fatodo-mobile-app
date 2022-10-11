@@ -10,7 +10,6 @@ import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import Separator from '../../../../components/layouts/Separator';
-import {LINEAR_GRADIENT} from '../../../../shared/themes/ThemeFactory';
 
 type GroupListCardContentProps = {
   group: Group;
@@ -25,7 +24,6 @@ const GroupListCardContent = ({group, items, itemsCount, loading}: GroupListCard
   const canEdit = group && GroupUtils.canEdit(account, group);
   return (
     <FVStack>
-      <Separator h="3px" bg={LINEAR_GRADIENT} />
       {loading && <GroupListCardSkeleton />}
       {!loading &&
         items.slice(0, 5).map((item, index) => (
