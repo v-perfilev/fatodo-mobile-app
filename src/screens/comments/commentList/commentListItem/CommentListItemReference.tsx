@@ -21,7 +21,7 @@ const CommentListItemReference = ({reference}: CommentListItemReferenceProps) =>
   return (
     <FHStack smallSpace>
       <Text color="gray.400" fontWeight="bold" fontSize="2xs">
-        {t('comment:view.reference')}:
+        {t('comment:list.reference')}:
       </Text>
       <Text fontWeight="bold" fontSize="2xs">
         {user?.username}, <DateView date={date} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />

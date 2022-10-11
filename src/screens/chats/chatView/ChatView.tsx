@@ -17,9 +17,7 @@ import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
-import RefreshableFlatList, {
-  RefreshableFlatListChildrenProps,
-} from '../../../components/scrollable/RefreshableFlatList';
+import LoadableFlatList, {RefreshableFlatListChildrenProps} from '../../../components/scrollable/LoadableFlatList';
 import MessageListSkeleton from '../components/skeletons/MessageListSkeleton';
 
 type ChatViewProps = WithChatProps;
@@ -31,6 +29,7 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
   const dispatch = useAppDispatch();
   const unreadTimersRef = useRef<Map<string, any>>(new Map());
   const listRef = useRef<FlatListType>();
+  const messages = useAppSelector(ChatSelectors.messages);
   const chatItems = useAppSelector(ChatSelectors.chatItems);
   const allLoaded = useAppSelector(ChatSelectors.allLoaded);
   const account = useAppSelector(AuthSelectors.account);
@@ -41,15 +40,9 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
 
   const load = useCallback(async (): Promise<void> => {
     if (chat) {
-      await dispatch(ChatActions.fetchMessagesThunk({chatId: chat.id, offset: chatItems.length}));
+      await dispatch(ChatActions.fetchMessagesThunk({chatId: chat.id, offset: messages.length}));
     }
   }, [chat?.id, chatItems.length]);
-
-  const refresh = useCallback(async (): Promise<void> => {
-    if (chat) {
-      await dispatch(ChatActions.refreshMessagesThunk(chat.id));
-    }
-  }, [chat?.id]);
 
   /*
   keyExtractor and renderItem
@@ -123,12 +116,11 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
   );
 
   return (
-    <RefreshableFlatList
+    <LoadableFlatList
       containerStyle={containerStyle}
       loaderStyle={loaderStyle}
       header={<ChatViewHeader />}
       nextNode={<ChatViewControl />}
-      refresh={refresh}
       loading={loading}
       loadingPlaceholder={<MessageListSkeleton />}
       inverted
@@ -141,7 +133,7 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
       ref={listRef}
     >
       {cornerManagement}
-    </RefreshableFlatList>
+    </LoadableFlatList>
   );
 };
 

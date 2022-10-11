@@ -5,7 +5,7 @@ import {Group} from '../../models/Group';
 import {Item} from '../../models/Item';
 
 const getGroupsState = (state: RootState) => state.groups;
-const getGroupId = (_: any, groupId: string) => groupId;
+const getGroupId = (_: RootState, groupId: string) => groupId;
 
 class GroupsSelectors {
   static groups = createSelector(getGroupsState, (state) => state.groups as Group[]);

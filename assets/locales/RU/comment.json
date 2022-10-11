@@ -1,8 +1,11 @@
 {
-  "view": {
+  "list": {
     "inputPlaceholder": "Оставьте свой комментарий...",
     "reference": "Ответ на",
     "commentsNotFound": "Пока комментариев нет"
+  },
+  "menu": {
+    "refresh": "Обновить"
   },
   "comment": {
     "deleted": "Комментарий удалён",

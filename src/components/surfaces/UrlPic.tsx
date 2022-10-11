@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {ImageUtils} from '../../shared/utils/imageUtils';
+import {ImageUtils} from '../../shared/utils/ImageUtils';
 import {Avatar, Image, useColorModeValue} from 'native-base';
 import {ISizes} from 'native-base/lib/typescript/theme/base/sizes';
 import FCenter from '../boxes/FCenter';

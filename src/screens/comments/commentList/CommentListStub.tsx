@@ -8,7 +8,7 @@ const CommentListStub = () => {
 
   return (
     <StubBox paddingTop={HEADER_HEIGHT} inverted>
-      {t('comment:view.commentsNotFound')}
+      {t('comment:list.commentsNotFound')}
     </StubBox>
   );
 };

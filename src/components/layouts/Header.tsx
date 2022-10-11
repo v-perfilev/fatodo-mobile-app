@@ -1,5 +1,5 @@
-import React, {PropsWithChildren, useCallback, useMemo} from 'react';
-import {Text, useColorModeValue} from 'native-base';
+import React, {PropsWithChildren, useCallback, useEffect, useMemo} from 'react';
+import {Text, useColorModeValue, useTheme} from 'native-base';
 import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import UrlPic from '../surfaces/UrlPic';
@@ -15,6 +15,7 @@ import UserView from '../views/UserView';
 import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
 import {accountToUser} from '../../models/User';
 import IconButton from '../controls/IconButton';
+import {useTabThemeContext} from '../../shared/contexts/TabThemeContext';
 
 type HeaderProps = PropsWithChildren<{
   title?: string;
@@ -27,11 +28,13 @@ type HeaderProps = PropsWithChildren<{
 
 const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBack, hideTitle}: HeaderProps) => {
   const account = useAppSelector(AuthSelectors.account);
+  const {toggleDrawer} = useDrawerContext();
+  const {tabTheme, setTabTheme} = useTabThemeContext();
+  const {t} = useTranslation();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const {toggleDrawer} = useDrawerContext();
+  const theme = useTheme();
   const route = useRoute();
-  const {t} = useTranslation();
 
   const label = title || t('routes.' + route.name);
 
@@ -39,6 +42,12 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
   const canGoBack = useMemo(() => navigation.canGoBack(), [isFocused]);
 
   const background = useColorModeValue(LIGHT_BG, DARK_BG);
+
+  useEffect(() => {
+    if (setTabTheme && isFocused && tabTheme !== theme) {
+      setTabTheme(theme);
+    }
+  }, [isFocused, theme, setTabTheme]);
 
   return (
     <FHStack h={HEADER_HEIGHT} smallSpace bg={background} px="2" alignItems="center">

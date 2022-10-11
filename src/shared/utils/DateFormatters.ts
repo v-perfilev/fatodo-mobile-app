@@ -81,15 +81,17 @@ export class DateFormatters {
     }
     if (dateFormatType === 'DEPENDS_ON_DAY') {
       formatArray.push(DateFormats.getDependsOnDayFormat(date, dateFormat));
+      moment.locale('en');
     } else if (dateFormatType === 'FULL') {
       formatArray.push(DateFormats.getFullDateFormat(dateFormat));
+      moment.locale('en');
     } else if (dateFormatType === 'SHORT') {
       formatArray.push(DateFormats.getShortDateFormat(dateFormat));
+      moment.locale('en');
     } else if (dateFormatType === 'MONTH_YEAR') {
       formatArray.push(DateFormats.getMonthYearFormat());
     }
     const formatter = formatArray.filter(FilterUtils.notUndefinedFilter).join(', ');
-    moment.locale('en');
     return moment(date).format(formatter);
   };
 }

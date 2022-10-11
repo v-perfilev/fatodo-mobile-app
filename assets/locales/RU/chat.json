@@ -10,7 +10,7 @@
     "inputPlaceholder": "Введите сообщение..."
   },
   "menu": {
-    "toChatList": "К списку чатов",
+    "refresh": "Обновить",
     "showMembers": "Пользователи",
     "addMembers": "Пригласить",
     "renameChat": "Переименовать чат",

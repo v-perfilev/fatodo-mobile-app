@@ -9,6 +9,9 @@ import FCenter from '../boxes/FCenter';
 import Separator from './Separator';
 import {useTranslation} from 'react-i18next';
 import FVStack from '../boxes/FVStack';
+import ThemeProvider from '../../shared/themes/ThemeProvider';
+import {ThemeFactory} from '../../shared/themes/ThemeFactory';
+import {useTabThemeContext} from '../../shared/contexts/TabThemeContext';
 
 type TabNavigatorBarProps = BottomTabBarProps;
 
@@ -23,6 +26,9 @@ type TabNavigatorItemProps = {
 
 const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, index}: TabNavigatorItemProps) => {
   const {t} = useTranslation();
+  const {tabTheme} = useTabThemeContext();
+  const defaultTheme = ThemeFactory.getDefaultTheme();
+
   const {options} = descriptors[routeKey];
   const isFocused = state.index === index;
   const icon = options.tabBarIcon;
@@ -42,13 +48,15 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
   return (
     <Pressable flex="1" h="50px" p="1" onPress={onPress}>
       <FVStack grow justifyContent="center" alignItems="center">
-        <FCenter flex="1" flexGrow="1">
-          {showBadgeNode && badgeNode}
-          {icon({focused: isFocused, color, size: 7})}
-        </FCenter>
-        <Text fontSize="2xs" color={color} isTruncated>
-          {t('routes.' + routeName)}
-        </Text>
+        <ThemeProvider theme={tabTheme || defaultTheme}>
+          <FCenter flex="1" flexGrow="1">
+            {showBadgeNode && badgeNode}
+            {icon({focused: isFocused, color, size: 7})}
+          </FCenter>
+          <Text fontSize="2xs" color={color} isTruncated>
+            {t('routes.' + routeName)}
+          </Text>
+        </ThemeProvider>
       </FVStack>
     </Pressable>
   );

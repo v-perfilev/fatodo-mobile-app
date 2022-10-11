@@ -30,13 +30,13 @@ const ItemViewChanges = () => {
   return (
     <FVStack defaultSpace>
       {creator && (
-        <FHStack defaultSpace>
+        <FHStack defaultSpace flexWrap="wrap">
           {labeledBox(t('item:labels.createdBy'), creator.username)}
           {labeledBox(t('item:labels.createdAt'), formatDate(item.createdAt))}
         </FHStack>
       )}
       {updater && item.createdAt !== item.lastModifiedAt && (
-        <FHStack defaultSpace>
+        <FHStack defaultSpace flexWrap="wrap">
           {labeledBox(t('item:labels.updatedBy'), updater.username)}
           {labeledBox(t('item:labels.createdAt'), formatDate(item.lastModifiedAt))}
         </FHStack>

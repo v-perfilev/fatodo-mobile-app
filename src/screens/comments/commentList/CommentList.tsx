@@ -1,7 +1,6 @@
 import React, {ReactElement, useCallback, useMemo, useRef, useState} from 'react';
 import withCommentsContainer, {WithCommentsProps} from '../../../shared/hocs/withContainers/withCommentsContainer';
 import {Comment} from '../../../models/Comment';
-import Header from '../../../components/layouts/Header';
 import {Box} from 'native-base';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ThemeProvider from '../../../shared/themes/ThemeProvider';
@@ -17,10 +16,9 @@ import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {COMMENTS_INPUT_HEIGHT, HEADER_HEIGHT} from '../../../constants';
-import RefreshableFlatList, {
-  RefreshableFlatListChildrenProps,
-} from '../../../components/scrollable/RefreshableFlatList';
+import LoadableFlatList, {RefreshableFlatListChildrenProps} from '../../../components/scrollable/LoadableFlatList';
 import CommentListSkeleton from '../components/skeletons/CommentListSkeleton';
+import CommentListHeader from './CommentListHeader';
 
 type CommentListProps = WithCommentsProps;
 
@@ -47,10 +45,6 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
   const load = useCallback(async (): Promise<void> => {
     await dispatch(CommentsActions.fetchCommentsThunk({targetId, offset: comments.length}));
   }, [targetId, comments.length]);
-
-  const refresh = useCallback(async (): Promise<void> => {
-    await dispatch(CommentsActions.refreshCommentsThunk(targetId));
-  }, [targetId]);
 
   /*
   keyExtractor and renderItem
@@ -85,12 +79,11 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <RefreshableFlatList
+      <LoadableFlatList
         containerStyle={containerStyle}
         loaderStyle={loaderStyle}
-        header={<Header />}
+        header={<CommentListHeader />}
         nextNode={<CommentListControl reference={reference} clearReference={clearReference} />}
-        refresh={refresh}
         loading={loading}
         loadingPlaceholder={<CommentListSkeleton />}
         inverted
@@ -102,7 +95,7 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
         ref={listRef}
       >
         {cornerManagement}
-      </RefreshableFlatList>
+      </LoadableFlatList>
     </ThemeProvider>
   );
 };

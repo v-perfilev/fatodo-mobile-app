@@ -4,7 +4,7 @@ import {Theme, useTheme} from 'native-base';
 import {useTranslation} from 'react-i18next';
 import {openPicker, Options} from 'react-native-image-crop-picker';
 import {IMAGE_SIZE} from '../../../constants';
-import {ImageUtils} from '../../../shared/utils/imageUtils';
+import {ImageUtils} from '../../../shared/utils/ImageUtils';
 import FHStack from '../../boxes/FHStack';
 import OutlinedButton from '../../controls/OutlinedButton';
 

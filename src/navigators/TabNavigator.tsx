@@ -17,6 +17,7 @@ import {NavigationProps} from './RootNavigator';
 import CalendarView from '../screens/calendar/canlendarView/CalendarView';
 import CommonSelectors from '../store/common/commonSelectors';
 import BellIcon from '../components/icons/BellIcon';
+import withTabTheme from '../shared/hocs/withTabTheme';
 
 export type TabParamList = {
   Groups: NavigationProps<GroupParamList>;
@@ -77,4 +78,4 @@ const TabNavigator = () => {
   );
 };
 
-export default TabNavigator;
+export default withTabTheme(TabNavigator);
