@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect} from 'react';
+import React, {memo, ReactElement, useCallback, useEffect} from 'react';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
@@ -51,4 +51,4 @@ const OutcomingRequestList = () => {
   );
 };
 
-export default OutcomingRequestList;
+export default memo(OutcomingRequestList);

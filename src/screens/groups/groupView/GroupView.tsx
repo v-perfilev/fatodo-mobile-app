@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
@@ -28,6 +28,7 @@ import GroupItem from '../components/groupItem/GroupItem';
 import GroupViewListSkeleton from '../components/skeletons/GroupViewListSkeleton';
 import CentredLoader from '../../../components/surfaces/CentredLoader';
 import Separator from '../../../components/layouts/Separator';
+import {flowRight} from 'lodash';
 
 type GroupViewProps = WithGroupProps;
 
@@ -153,4 +154,4 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
   );
 };
 
-export default withGroupContainer(GroupView);
+export default flowRight([memo, withGroupContainer, memo])(GroupView);

@@ -1,4 +1,4 @@
-import React, {MutableRefObject, ReactElement, RefObject, useCallback, useEffect, useRef, useState} from 'react';
+import React, {memo, MutableRefObject, ReactElement, RefObject, useCallback, useEffect, useRef, useState} from 'react';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import {Dimensions, ListRenderItemInfo, NativeScrollEvent, NativeSyntheticEvent, ScrollView} from 'react-native';
@@ -111,4 +111,4 @@ const CalendarView = () => {
     </FBox>
   );
 };
-export default CalendarView;
+export default memo(CalendarView);

@@ -1,13 +1,11 @@
 import React, {ComponentType, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {RouteProp, useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import {Group} from '../../../models/Group';
 import {ItemActions} from '../../../store/item/itemActions';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import {Item} from '../../../models/Item';
-import {useTabThemeContext} from '../../contexts/TabThemeContext';
-import {ThemeFactory} from '../../themes/ThemeFactory';
 
 export type WithItemProps = {
   group?: Group;
@@ -20,8 +18,6 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
   const navigation = useNavigation<GroupNavigationProp>();
   const stateGroup = useAppSelector(ItemSelectors.group);
   const stateItem = useAppSelector(ItemSelectors.item);
-  const isFocused = useIsFocused();
-  const {tabTheme, setTabTheme} = useTabThemeContext();
   const [loading, setLoading] = useState<boolean>(true);
   const route = useRoute<RouteProp<GroupParamList, 'withItem'>>();
   const routeItemId = route.params.itemId;
@@ -29,7 +25,6 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
   const routeGroup = route.params.group;
   const group = stateGroup || routeGroup;
   const item = stateItem?.id === routeItem?.id || stateItem?.id === routeItemId ? stateItem : routeItem;
-  const theme = ThemeFactory.getTheme(group?.color);
 
   const canSetGroupAndItem =
     routeGroup && routeItem && (routeGroup.id !== stateGroup?.id || routeItem.id !== stateItem?.id);
@@ -64,12 +59,6 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
       setLoading(false);
     }
   }, []);
-
-  useEffect(() => {
-    if (setTabTheme && isFocused && tabTheme !== theme) {
-      setTabTheme(theme);
-    }
-  }, [isFocused, theme, setTabTheme]);
 
   return <Component loading={loading} group={group} item={item} {...props} />;
 };

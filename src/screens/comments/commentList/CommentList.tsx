@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useMemo, useRef, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useMemo, useRef, useState} from 'react';
 import withCommentsContainer, {WithCommentsProps} from '../../../shared/hocs/withContainers/withCommentsContainer';
 import {Comment} from '../../../models/Comment';
 import {Box} from 'native-base';
@@ -19,6 +19,7 @@ import {COMMENTS_INPUT_HEIGHT, HEADER_HEIGHT} from '../../../constants';
 import LoadableFlatList, {RefreshableFlatListChildrenProps} from '../../../components/scrollable/LoadableFlatList';
 import CommentListSkeleton from '../components/skeletons/CommentListSkeleton';
 import CommentListHeader from './CommentListHeader';
+import {flowRight} from 'lodash';
 
 type CommentListProps = WithCommentsProps;
 
@@ -100,4 +101,4 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
   );
 };
 
-export default withCommentsContainer(CommentList);
+export default flowRight([memo, withCommentsContainer])(CommentList);

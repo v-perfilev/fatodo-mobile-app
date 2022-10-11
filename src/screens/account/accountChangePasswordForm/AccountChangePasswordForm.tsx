@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch} from '../../../store/store';
 import Header from '../../../components/layouts/Header';
@@ -91,4 +91,4 @@ const AccountChangePasswordForm = () => {
   );
 };
 
-export default AccountChangePasswordForm;
+export default memo(AccountChangePasswordForm);

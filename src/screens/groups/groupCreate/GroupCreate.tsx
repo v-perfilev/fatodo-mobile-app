@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import GroupForm from '../groupForm/GroupForm';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
@@ -31,4 +31,4 @@ const GroupCreate = () => {
   );
 };
 
-export default GroupCreate;
+export default memo(GroupCreate);

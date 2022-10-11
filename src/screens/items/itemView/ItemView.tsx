@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {memo, useCallback, useMemo} from 'react';
 import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
@@ -24,6 +24,7 @@ import StatusView from '../../../components/views/StatusView';
 import TypeView from '../../../components/views/TypeView';
 import PriorityView from '../../../components/views/PriorityView';
 import DateParamView from '../../../components/views/DateParamView';
+import {flowRight} from 'lodash';
 
 type ItemViewProps = WithItemProps;
 
@@ -77,4 +78,5 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
     </ThemeProvider>
   );
 };
-export default withItemContainer(ItemView);
+
+export default flowRight([memo, withItemContainer])(ItemView);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import SignIn from '../screens/auth/signIn/SignIn';
 import SignUp from '../screens/auth/signUp/SignUp';
@@ -24,4 +24,4 @@ const AuthNavigator = () => {
   );
 };
 
-export default AuthNavigator;
+export default memo(AuthNavigator);

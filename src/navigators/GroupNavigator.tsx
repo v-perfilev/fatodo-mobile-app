@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import GroupList from '../screens/groups/groupList/GroupList';
 import GroupView from '../screens/groups/groupView/GroupView';
@@ -51,4 +51,4 @@ const GroupNavigator = () => {
   );
 };
 
-export default GroupNavigator;
+export default memo(GroupNavigator);

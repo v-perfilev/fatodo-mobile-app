@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useMemo, useRef} from 'react';
+import React, {memo, ReactElement, useCallback, useMemo, useRef} from 'react';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
@@ -19,6 +19,7 @@ import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import LoadableFlatList, {RefreshableFlatListChildrenProps} from '../../../components/scrollable/LoadableFlatList';
 import MessageListSkeleton from '../components/skeletons/MessageListSkeleton';
+import {flowRight} from 'lodash';
 
 type ChatViewProps = WithChatProps;
 
@@ -137,4 +138,4 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
   );
 };
 
-export default withChatContainer(ChatView);
+export default flowRight([memo, withChatContainer])(ChatView);

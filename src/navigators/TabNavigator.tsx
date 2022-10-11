@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, {memo, ReactNode} from 'react';
 import {BottomTabNavigationProp, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TabNavigatorBar from '../components/layouts/TabNavigatorBar';
 import GroupNavigator, {GroupParamList} from './GroupNavigator';
@@ -17,7 +17,7 @@ import {NavigationProps} from './RootNavigator';
 import CalendarView from '../screens/calendar/canlendarView/CalendarView';
 import CommonSelectors from '../store/common/commonSelectors';
 import BellIcon from '../components/icons/BellIcon';
-import withTabTheme from '../shared/hocs/withTabTheme';
+import {flowRight} from 'lodash';
 
 export type TabParamList = {
   Groups: NavigationProps<GroupParamList>;
@@ -78,4 +78,4 @@ const TabNavigator = () => {
   );
 };
 
-export default withTabTheme(TabNavigator);
+export default flowRight([memo])(TabNavigator);

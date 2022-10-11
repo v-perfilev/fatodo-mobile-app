@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
@@ -12,6 +12,7 @@ import {ItemActions} from '../../../store/item/itemActions';
 import {Item} from '../../../models/Item';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
+import {flowRight} from 'lodash';
 
 type ItemCreateProps = WithGroupProps;
 
@@ -42,4 +43,4 @@ const ItemCreate = ({group, loading}: ItemCreateProps) => {
   );
 };
 
-export default withGroupContainer(ItemCreate);
+export default flowRight([memo, withGroupContainer, memo])(ItemCreate);

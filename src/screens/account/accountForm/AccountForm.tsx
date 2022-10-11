@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import Header from '../../../components/layouts/Header';
@@ -158,4 +158,4 @@ const AccountForm = () => {
   );
 };
 
-export default AccountForm;
+export default memo(AccountForm);

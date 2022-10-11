@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ContactsSelectors from '../../../store/contacts/contactsSelectors';
@@ -93,4 +93,4 @@ const ContactList = () => {
   );
 };
 
-export default ContactList;
+export default memo(ContactList);

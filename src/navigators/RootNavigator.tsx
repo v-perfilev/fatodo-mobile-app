@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Chat} from '../models/Chat';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import ChatView from '../screens/chats/chatView/ChatView';
@@ -53,4 +53,4 @@ const RootNavigator = () => {
   );
 };
 
-export default RootNavigator;
+export default memo(RootNavigator);

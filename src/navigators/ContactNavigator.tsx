@@ -1,4 +1,4 @@
-import React, {ReactElement, useMemo} from 'react';
+import React, {memo, ReactElement, useMemo} from 'react';
 import ContactList from '../screens/contacts/contactList/ContactList';
 import OutcomingRequestList from '../screens/contacts/outcomingRequestList/OutcomingRequestList';
 import IncomingRequestList from '../screens/contacts/incomingRequestList/IncomingRequestList';
@@ -106,4 +106,4 @@ const ContactNavigator = () => {
   );
 };
 
-export default ContactNavigator;
+export default memo(ContactNavigator);
