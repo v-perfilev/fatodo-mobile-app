@@ -38,12 +38,12 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
   const itemsSelector = useCallback(GroupSelectors.makeItemsSelector(), []);
   const allItemsLoadedSelector = useCallback(GroupSelectors.makeAllItemsLoadedSelector(), []);
   const dispatch = useAppDispatch();
-  const rootNavigation = useNavigation<RootNavigationProp>();
-  const groupNavigation = useNavigation<GroupNavigationProp>();
-  const [showArchived, setShowArchived] = useState<boolean>(false);
   const account = useAppSelector(AuthSelectors.account);
   const items = useAppSelector((state) => itemsSelector(state, showArchived));
   const allItemsLoaded = useAppSelector((state) => allItemsLoadedSelector(state, showArchived));
+  const rootNavigation = useNavigation<RootNavigationProp>();
+  const groupNavigation = useNavigation<GroupNavigationProp>();
+  const [showArchived, setShowArchived] = useState<boolean>(false);
 
   const listRef = useRef<FlatListType>();
 

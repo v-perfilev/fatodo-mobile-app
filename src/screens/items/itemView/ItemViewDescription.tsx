@@ -9,7 +9,7 @@ const ItemViewDescription: FC = () => {
   const {t} = useTranslation();
   const item = useAppSelector(ItemSelectors.item);
 
-  return item.description ? (
+  return item?.description ? (
     <LabeledBox label={t('item:labels.description')} isVertical>
       {item.description}
     </LabeledBox>

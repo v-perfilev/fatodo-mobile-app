@@ -1,10 +1,12 @@
 import React, {ComponentType, useEffect} from 'react';
 import {GroupActions} from '../../../store/group/groupActions';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {RouteProp, useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import {Group} from '../../../models/Group';
+import {ThemeFactory} from '../../themes/ThemeFactory';
+import {useTabThemeContext} from '../../contexts/TabThemeContext';
 
 export type WithGroupProps = {
   groupId: string;
@@ -16,14 +18,20 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'withGroup'>>();
+  const isFocused = useIsFocused();
+  const {tabTheme, setTabTheme} = useTabThemeContext();
+  const stateGroup = useAppSelector(GroupSelectors.group);
   const routeGroupId = route.params.groupId;
   const routeGroup = route.params.group;
-  const group = useAppSelector(GroupSelectors.group);
+  const groupId = routeGroupId || routeGroup?.id;
+  const group = stateGroup?.id === routeGroup?.id || stateGroup?.id === routeGroupId ? stateGroup : routeGroup;
+  const theme = ThemeFactory.getTheme(group?.color);
 
-  const canSetGroup = routeGroup && routeGroup.id !== group?.id;
-  const canLoadGroup = routeGroupId && routeGroupId !== group?.id;
+  const canSetGroup = routeGroup && routeGroup.id !== stateGroup?.id;
+  const canLoadGroup = routeGroupId && routeGroupId !== stateGroup?.id;
   const wrongRoute = !routeGroup && !routeGroupId;
-  const loadingFinished = (routeGroup && routeGroup.id === group?.id) || (routeGroupId && routeGroupId === group?.id);
+  const loadingFinished =
+    (routeGroup && routeGroup.id === stateGroup?.id) || (routeGroupId && routeGroupId === stateGroup?.id);
 
   const goBack = (): void => navigation.goBack();
 
@@ -48,14 +56,13 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
     }
   }, []);
 
-  return (
-    <Component
-      loading={!loadingFinished}
-      groupId={routeGroupId || routeGroup?.id}
-      group={group?.id === routeGroup?.id || group?.id === routeGroupId ? group : routeGroup}
-      {...props}
-    />
-  );
+  useEffect(() => {
+    if (setTabTheme && isFocused && tabTheme !== theme) {
+      setTabTheme(theme);
+    }
+  }, [isFocused, theme, setTabTheme]);
+
+  return <Component loading={!loadingFinished} groupId={groupId} group={group} {...props} />;
 };
 
 export default withGroupContainer;

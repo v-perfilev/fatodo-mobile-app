@@ -5,7 +5,7 @@ import {GroupsActions} from '../../../store/groups/groupsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Group} from '../../../models/Group';
 import {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import PlusIcon from '../../../components/icons/PlusIcon';
@@ -21,6 +21,7 @@ import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import GroupListCard from './groupListCard/GroupListCard';
 import GroupListStub from './GroupListStub';
+import {useTabThemeContext} from '../../../shared/contexts/TabThemeContext';
 
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
@@ -29,6 +30,8 @@ const GroupList = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const groups = useAppSelector(GroupsSelectors.groups);
+  const isFocused = useIsFocused();
+  const {setTabTheme} = useTabThemeContext();
   const [sorting, setSorting] = useState<boolean>(false);
   const [loading, setLoading] = useDelayedState();
   const listRef = useRef<FlatListType>();
@@ -86,6 +89,12 @@ const GroupList = () => {
   useEffect(() => {
     dispatch(GroupsActions.fetchGroupsThunk()).finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (setTabTheme && isFocused) {
+      setTabTheme(undefined);
+    }
+  }, [isFocused, setTabTheme]);
 
   const buttons = useMemo<CornerButton[]>(
     () => [

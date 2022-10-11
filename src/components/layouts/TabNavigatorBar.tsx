@@ -45,10 +45,12 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
     </Badge>
   );
 
+  const theme = routeName === 'Groups' ? tabTheme || defaultTheme : defaultTheme;
+
   return (
     <Pressable flex="1" h="50px" p="1" onPress={onPress}>
       <FVStack grow justifyContent="center" alignItems="center">
-        <ThemeProvider theme={tabTheme || defaultTheme}>
+        <ThemeProvider theme={theme}>
           <FCenter flex="1" flexGrow="1">
             {showBadgeNode && badgeNode}
             {icon({focused: isFocused, color, size: 7})}
