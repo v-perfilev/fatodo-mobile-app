@@ -1,5 +1,5 @@
 import {Animated, Easing, NativeScrollEvent, NativeSyntheticEvent, StyleProp} from 'react-native';
-import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {memo, MutableRefObject, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {NativeViewGestureHandler, PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlerCommon';
 import {MAX_REFRESH_HEIGHT, REFRESH_HEIGHT} from '../../../constants';
@@ -8,16 +8,25 @@ import Refresher from '../Refresher';
 export type RefreshableContainerChildrenProps = {
   refresher: ReactElement;
   handleEventScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  refreshableRef?: MutableRefObject<any>;
+  panRef?: MutableRefObject<any>;
 };
 
 type RefreshableContainerProps = {
   refresh?: () => Promise<void>;
   parentScrollY?: Animated.Value;
   inverted?: boolean;
+  withGestureHandler?: boolean;
   children: (props: RefreshableContainerChildrenProps) => ReactElement;
 };
 
-const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: RefreshableContainerProps) => {
+const RefreshableContainer = ({
+  refresh,
+  parentScrollY,
+  inverted,
+  withGestureHandler,
+  children,
+}: RefreshableContainerProps) => {
   const [refreshGesturesAllowed, setRefreshGesturesAllowed] = useState<boolean>(!!refresh);
 
   const panRef = useRef();
@@ -142,6 +151,10 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
     return () => scrollY.current?.removeAllListeners();
   }, []);
 
+  useEffect(() => {
+    setRefreshGesturesAllowed(!!refresh);
+  }, [refresh]);
+
   const refresher = useMemo<ReactElement>(
     () => (
       <Refresher
@@ -154,8 +167,15 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
     [],
   );
 
+  const childrenProps: RefreshableContainerChildrenProps = {
+    refresher,
+    handleEventScroll,
+    refreshableRef: nativeRef,
+    panRef,
+  };
+
   const childrenWithProps = useMemo<ReactElement>(
-    () => children({refresher, handleEventScroll}),
+    () => children(childrenProps),
     [children, refresher, handleEventScroll],
   );
 
@@ -167,6 +187,14 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   };
   const animatedContainerStyle = {transform: [{translateY}]};
 
+  const gestureHandler = withGestureHandler ? (
+    childrenWithProps
+  ) : (
+    <NativeViewGestureHandler simultaneousHandlers={panRef} ref={nativeRef}>
+      {childrenWithProps}
+    </NativeViewGestureHandler>
+  );
+
   return (
     <Animated.View style={[containerStyle, animatedContainerStyle]}>
       <PanGestureHandler
@@ -177,9 +205,7 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
         simultaneousHandlers={nativeRef}
         ref={panRef}
       >
-        <NativeViewGestureHandler simultaneousHandlers={panRef} ref={nativeRef}>
-          {childrenWithProps}
-        </NativeViewGestureHandler>
+        {gestureHandler}
       </PanGestureHandler>
     </Animated.View>
   );

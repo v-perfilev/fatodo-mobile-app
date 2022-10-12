@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import GroupListHeader from './GroupListHeader';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {GroupsActions} from '../../../store/groups/groupsActions';
@@ -10,12 +10,11 @@ import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import {HEADER_HEIGHT} from '../../../constants';
-import CollapsableRefreshableFlatList, {
-  CollapsableRefreshableFlatListChildrenProps,
-} from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {FlatListType} from '../../../components/scrollable/FlatList';
-import CollapsableDraggableList from '../../../components/scrollable/CollapsableDraggableList';
-import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import CollapsableDraggableList, {
+  CollapsableRefreshableDraggableListChildrenProps,
+} from '../../../components/scrollable/CollapsableRefreshableDraggableList';
+import {StyleProp, ViewStyle} from 'react-native';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
@@ -50,19 +49,12 @@ const GroupList = () => {
   const keyExtractor = useCallback((group: Group): string => group.id, []);
 
   const renderDraggableItem = useCallback(
-    (props: RenderItemParams<Group>) => (
+    ({item, drag}: RenderItemParams<Group>) => (
       <ScaleDecorator activeScale={1.03}>
-        <GroupListCard group={props.item} sorting={sorting} {...props} />
+        <GroupListCard group={item} sorting={sorting} drag={sorting ? drag : undefined} />
       </ScaleDecorator>
     ),
     [sorting],
-  );
-
-  const renderFlatItem = useCallback(
-    (info: ListRenderItemInfo<Group>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <GroupListCard group={info.item} sorting={false} drag={undefined} onLayout={onLayout} />
-    ),
-    [],
   );
 
   /*
@@ -95,42 +87,30 @@ const GroupList = () => {
     [],
   );
   const cornerManagement = useCallback(
-    ({scrollY}: CollapsableRefreshableFlatListChildrenProps) => (
+    ({scrollY}: CollapsableRefreshableDraggableListChildrenProps) => (
       <CornerManagement buttons={buttons} scrollY={scrollY} />
     ),
     [],
   );
 
-  const draggableList = (
+  return (
     <CollapsableDraggableList
-      containerStyle={containerStyle}
-      header={<GroupListHeader sorting={sorting} setSorting={setSorting} />}
-      data={groups}
-      ListEmptyComponent={<GroupListStub />}
-      renderItem={renderDraggableItem}
-      keyExtractor={keyExtractor}
-      handleDragEnd={handleDragEnd}
-    />
-  );
-
-  const flatList = (
-    <CollapsableRefreshableFlatList
       containerStyle={containerStyle}
       loaderStyle={loaderStyle}
       header={<GroupListHeader sorting={sorting} setSorting={setSorting} />}
       loading={loading}
+      sorting={sorting}
       ListEmptyComponent={<GroupListStub />}
       refresh={refresh}
       data={groups}
-      render={renderFlatItem}
+      renderItem={renderDraggableItem}
       keyExtractor={keyExtractor}
+      handleDragEnd={handleDragEnd}
       ref={listRef}
     >
       {cornerManagement}
-    </CollapsableRefreshableFlatList>
+    </CollapsableDraggableList>
   );
-
-  return sorting ? draggableList : flatList;
 };
 
 export default memo(GroupList);

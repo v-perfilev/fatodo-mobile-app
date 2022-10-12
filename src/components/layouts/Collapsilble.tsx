@@ -1,31 +1,29 @@
 import React, {PropsWithChildren, useEffect, useState} from 'react';
-import {LayoutAnimation, Platform, UIManager} from 'react-native';
-import FBox from '../boxes/FBox';
+import {LayoutAnimation, Platform, StyleProp, UIManager, ViewStyle} from 'react-native';
+import {View} from 'native-base';
 
 type CollapsibleProps = PropsWithChildren<{
   show: boolean;
 }>;
 
 const Collapsible = ({show, children}: CollapsibleProps) => {
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [collapsed, setCollapsed] = useState<boolean>(!show);
 
   useEffect(() => {
-    if (Platform.OS === 'android') {
-      UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
+    Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental(true);
   }, []);
 
   useEffect(() => {
-    const animationConfig = {...LayoutAnimation.Presets.easeInEaseOut, duration: 250};
-    LayoutAnimation.configureNext(animationConfig);
-    setCollapsed(!show);
+    if (collapsed === show) {
+      const config = {...LayoutAnimation.Presets.easeInEaseOut, duration: 250};
+      LayoutAnimation.configureNext(config);
+      setCollapsed(!show);
+    }
   }, [show]);
 
-  return (
-    <FBox overflow="hidden" height={collapsed ? 0 : undefined}>
-      {children}
-    </FBox>
-  );
+  const style: StyleProp<ViewStyle> = {height: collapsed ? 0 : undefined, overflow: 'hidden'};
+
+  return <View style={style}>{children}</View>;
 };
 
 export default Collapsible;

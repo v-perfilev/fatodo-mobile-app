@@ -24,7 +24,7 @@ const GroupListCardCollapseButton = ({group, collapsed}: GroupListCardCollapseBu
     setCollapsed(group.id, !collapsed);
   };
 
-  return <IconButton size="xl" icon={<CollapsedIcon hidden={!collapsed} />} onPress={handlePress} />;
+  return <IconButton size="xl" icon={<CollapsedIcon collapsed={!collapsed} />} onPress={handlePress} />;
 };
 
 export default GroupListCardCollapseButton;

@@ -39,21 +39,21 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
   const switchCollapsed = (): void => setAllCollapsed(!allCollapsed);
 
   const enableSorting = (): void => {
-    setAllCollapsed(true);
     cacheOrder();
-    setTimeout(() => setSorting(true), allCollapsed ? 0 : 600);
+    setAllCollapsed(true);
+    setTimeout(() => setSorting(true), allCollapsed ? 0 : 250);
   };
 
   const saveSorting = (): void => {
-    setAllCollapsed(false);
     saveOrder();
-    setTimeout(() => setSorting(false), !allCollapsed ? 0 : 600);
+    setSorting(false);
+    setTimeout(() => setAllCollapsed(false), 50);
   };
 
   const cancelSorting = (): void => {
-    setAllCollapsed(false);
     resetOrder();
-    setTimeout(() => setSorting(false), !allCollapsed ? 0 : 600);
+    setSorting(false);
+    setTimeout(() => setAllCollapsed(false), 50);
   };
 
   return (
@@ -66,7 +66,7 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
       ) : (
         <>
           <IconButton size="2xl" icon={<ReorderIcon />} onPress={enableSorting} />
-          <IconButton size="3xl" p="0.5" icon={<CollapsedIcon hidden={!allCollapsed} />} onPress={switchCollapsed} />
+          <IconButton size="3xl" p="0.5" icon={<CollapsedIcon collapsed={!allCollapsed} />} onPress={switchCollapsed} />
         </>
       )}
     </Header>

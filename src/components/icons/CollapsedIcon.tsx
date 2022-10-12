@@ -1,27 +1,34 @@
-import React from 'react';
-import {IIconProps, PresenceTransition} from 'native-base';
+import React, {useEffect, useRef} from 'react';
+import {IIconProps} from 'native-base';
 import ArrowDownIcon from './ArrowDownIcon';
+import {Animated} from 'react-native';
 
 type CollapsedIconProps = IIconProps & {
-  hidden: boolean;
+  collapsed: boolean;
 };
 
-const CollapsedIcon = ({hidden, ...props}: CollapsedIconProps) => {
-  const initial = {
-    rotate: '180deg',
+const CollapsedIcon = ({collapsed, ...props}: CollapsedIconProps) => {
+  const value = useRef(new Animated.Value(collapsed ? 0 : 1)).current;
+
+  const spin = value.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['180deg', '360deg'],
+  });
+
+  const animate = (to: number) => {
+    Animated.timing(value, {toValue: to, duration: 300, useNativeDriver: true}).start();
   };
 
-  const animate = {
-    rotate: '360deg',
-    transition: {
-      duration: 300,
-    },
-  };
+  useEffect(() => {
+    animate(collapsed ? 0 : 1);
+  }, [collapsed]);
+
+  const animatedStyle = {transform: [{rotateZ: spin}]};
 
   return (
-    <PresenceTransition visible={!hidden} initial={initial} animate={animate}>
+    <Animated.View style={animatedStyle}>
       <ArrowDownIcon {...props} />
-    </PresenceTransition>
+    </Animated.View>
   );
 };
 

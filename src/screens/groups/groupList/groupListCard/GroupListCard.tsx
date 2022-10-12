@@ -26,9 +26,9 @@ const GroupListCard = ({group, sorting, drag, ...props}: GroupListCardProps) => 
   const loading = useAppSelector((state) => itemsLoadingSelector(state, group.id));
 
   return (
-    <Box py="1" {...props}>
+    <Box overflow="hidden" py="1" {...props}>
       <GroupListCardHeader group={group} collapsed={collapsed} sorting={sorting} drag={drag} />
-      <Collapsible show={!collapsed}>
+      <Collapsible show={!collapsed && !sorting}>
         <GroupListCardContent group={group} items={items} itemsCount={itemsCount} loading={loading} />
       </Collapsible>
     </Box>
