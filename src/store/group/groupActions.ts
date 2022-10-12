@@ -119,7 +119,7 @@ export class GroupActions {
     PREFIX + 'createGroup',
     async (formData, thunkAPI) => {
       const response = await ItemService.createGroup(formData);
-      thunkAPI.dispatch(GroupsActions.addGroup(response.data));
+      thunkAPI.dispatch(GroupsActions.createGroup(response.data));
       thunkAPI.dispatch(SnackActions.handleCode('group.created', 'info'));
       return response.data;
     },

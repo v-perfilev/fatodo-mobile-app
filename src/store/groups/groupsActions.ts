@@ -24,8 +24,17 @@ export class GroupsActions {
     dispatch(groupsSlice.actions.resetGroupsFromCache());
   };
 
-  static addGroup = (group: Group) => (dispatch: AppDispatch) => {
+  static createGroup = (group: Group) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.addGroup(group));
+    dispatch(groupsSlice.actions.setCollapsed([group.id, false]));
+  };
+
+  static addGroup = (group: Group) => (dispatch: AppDispatch) => {
+    const memberIds = group.members.map((m) => m.userId);
+    dispatch(groupsSlice.actions.addGroup(group));
+    dispatch(GroupsActions.fetchItemsThunk([group.id]));
+    dispatch(InfoActions.handleCommentThreadIdsThunk([group.id]));
+    dispatch(InfoActions.handleUserIdsThunk(memberIds));
   };
 
   static updateGroup = (group: Group) => (dispatch: AppDispatch) => {

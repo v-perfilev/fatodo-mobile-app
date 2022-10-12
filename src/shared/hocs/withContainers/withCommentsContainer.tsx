@@ -10,7 +10,7 @@ import {ColorScheme} from '../../themes/ThemeFactory';
 export type WithCommentsProps = {
   targetId: string;
   loading: boolean;
-  colorScheme: ColorScheme;
+  color: ColorScheme;
 };
 
 const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (props: any) => {
@@ -42,7 +42,7 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
     }
   }, []);
 
-  return <Component targetId={targetId} loading={loading} colorScheme={routeColorScheme} {...props} />;
+  return <Component targetId={targetId} loading={loading} color={routeColorScheme} {...props} />;
 };
 
 export default withCommentsContainer;

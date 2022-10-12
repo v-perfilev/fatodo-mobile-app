@@ -1,7 +1,5 @@
 import React, {memo, useCallback, useMemo} from 'react';
-import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
-import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import ItemViewHeader from './ItemViewHeader';
 import ItemViewDescription from './ItemViewDescription';
 import ItemViewChanges from './ItemViewChanges';
@@ -25,6 +23,7 @@ import TypeView from '../../../components/views/TypeView';
 import PriorityView from '../../../components/views/PriorityView';
 import DateParamView from '../../../components/views/DateParamView';
 import {flowRight} from 'lodash';
+import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 
 type ItemViewProps = WithItemProps;
 
@@ -33,7 +32,6 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
   const navigation = useNavigation<RootNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const reminders = useAppSelector(ItemSelectors.reminders);
-  const theme = ThemeFactory.getTheme(group?.color);
 
   const showReminders = reminders?.length > 0;
 
@@ -59,7 +57,7 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
   const buttons = useMemo<CornerButton[]>(() => [{icon: <CommentsIcon />, action: goToComments}], [goToComments]);
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <ItemViewHeader account={account} />
       <ConditionalSpinner loading={loading}>
         <SimpleScrollView>
@@ -75,8 +73,8 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
         </SimpleScrollView>
       </ConditionalSpinner>
       <CornerManagement buttons={buttons} />
-    </ThemeProvider>
+    </>
   );
 };
 
-export default flowRight([memo, withItemContainer])(ItemView);
+export default flowRight([memo, withItemContainer, withThemeProvider, memo])(ItemView);

@@ -51,10 +51,10 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
             <GroupItemMenu group={group} item={item} canEdit={canEdit} />
           </Box>
         </FHStack>
-        <FHStack>
+        <FHStack grow>
           <GroupItemChanges item={item} />
         </FHStack>
-        <FHStack justifyContent="space-between" alignItems="center">
+        <FHStack grow justifyContent="space-between" alignItems="center">
           <FHStack space="2">
             <TypeView type={item.type} fontSize="11" fontColor="gray.400" />
             <PriorityView priority={item.priority} fontSize="11" fontColor="gray.400" />

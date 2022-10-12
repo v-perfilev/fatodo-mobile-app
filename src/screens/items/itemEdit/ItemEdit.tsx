@@ -6,14 +6,13 @@ import {ItemDTO} from '../../../models/dto/ItemDTO';
 import ItemForm from '../itemForm/ItemForm';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
-import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
-import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import Header from '../../../components/layouts/Header';
 import {ItemActions} from '../../../store/item/itemActions';
 import {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import {flowRight} from 'lodash';
 import withGroupContainer from '../../../shared/hocs/withContainers/withGroupContainer';
+import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 
 type ItemEditProps = WithItemProps;
 
@@ -21,7 +20,6 @@ const ItemEdit = ({group, item, loading}: ItemEditProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const reminders = useAppSelector(ItemSelectors.reminders);
-  const theme = ThemeFactory.getTheme(group?.color);
 
   const routes = navigation.getState().routes;
   const isPreviousItemView = routes[routes.length - 2].name === 'ItemView';
@@ -38,15 +36,15 @@ const ItemEdit = ({group, item, loading}: ItemEditProps) => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Header />
       <ConditionalSpinner loading={loading}>
         <SimpleScrollView>
           <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goBack} />
         </SimpleScrollView>
       </ConditionalSpinner>
-    </ThemeProvider>
+    </>
   );
 };
 
-export default flowRight([memo, withGroupContainer, memo])(ItemEdit);
+export default flowRight([memo, withGroupContainer, withThemeProvider, memo])(ItemEdit);

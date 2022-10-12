@@ -4,20 +4,18 @@ import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupForm from '../groupForm/GroupForm';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {useAppDispatch} from '../../../store/store';
-import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
-import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import Header from '../../../components/layouts/Header';
 import {GroupActions} from '../../../store/group/groupActions';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import {flowRight} from 'lodash';
+import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 
 type GroupEditProps = WithGroupProps;
 
 const GroupEdit = ({group, loading}: GroupEditProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
-  const theme = ThemeFactory.getTheme(group?.color);
 
   const routes = navigation.getState().routes;
   const isPreviousGroupView = routes[routes.length - 2].name === 'GroupView';
@@ -34,15 +32,15 @@ const GroupEdit = ({group, loading}: GroupEditProps) => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Header />
       <ConditionalSpinner loading={loading}>
         <SimpleScrollView>
           <GroupForm group={group} request={request} cancel={goBack} />
         </SimpleScrollView>
       </ConditionalSpinner>
-    </ThemeProvider>
+    </>
   );
 };
 
-export default flowRight([memo, withGroupContainer, memo])(GroupEdit);
+export default flowRight([memo, withGroupContainer, withThemeProvider, memo])(GroupEdit);

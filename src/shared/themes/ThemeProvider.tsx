@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useEffect} from 'react';
+import React, {memo, PropsWithChildren, useEffect} from 'react';
 import {ColorMode, ITheme, NativeBaseProvider, StorageManager, useColorMode} from 'native-base';
 import {ThemeFactory} from './ThemeFactory';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -70,4 +70,4 @@ export const RootThemeProvider = ({children}: RootThemeProviderProps) => {
   );
 };
 
-export default ThemeProvider;
+export default memo(ThemeProvider);

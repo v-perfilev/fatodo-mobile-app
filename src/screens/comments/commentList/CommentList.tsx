@@ -2,8 +2,6 @@ import React, {memo, ReactElement, useCallback, useMemo, useRef, useState} from 
 import withCommentsContainer, {WithCommentsProps} from '../../../shared/hocs/withContainers/withCommentsContainer';
 import {Comment} from '../../../models/Comment';
 import {Box} from 'native-base';
-import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
-import ThemeProvider from '../../../shared/themes/ThemeProvider';
 import CommentListControl from './CommentListControl';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import CommentListStub from './CommentListStub';
@@ -20,20 +18,20 @@ import LoadableFlatList, {RefreshableFlatListChildrenProps} from '../../../compo
 import CommentListSkeleton from '../components/skeletons/CommentListSkeleton';
 import CommentListHeader from './CommentListHeader';
 import {flowRight} from 'lodash';
+import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 
 type CommentListProps = WithCommentsProps;
 
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 
-const CommentList = ({loading, colorScheme}: CommentListProps) => {
+const CommentList = ({loading}: CommentListProps) => {
   const dispatch = useAppDispatch();
   const listRef = useRef<FlatListType>();
   const targetId = useAppSelector(CommentsSelectors.targetId);
   const comments = useAppSelector(CommentsSelectors.comments);
   const allLoaded = useAppSelector(CommentsSelectors.allLoaded);
   const [reference, setReference] = useState<Comment>();
-  const theme = ThemeFactory.getTheme(colorScheme);
 
   const clearReference = (): void => {
     setReference(null);
@@ -79,26 +77,24 @@ const CommentList = ({loading, colorScheme}: CommentListProps) => {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <LoadableFlatList
-        containerStyle={containerStyle}
-        loaderStyle={loaderStyle}
-        header={<CommentListHeader />}
-        nextNode={<CommentListControl reference={reference} clearReference={clearReference} />}
-        loading={loading}
-        loadingPlaceholder={<CommentListSkeleton />}
-        inverted
-        ListEmptyComponent={<CommentListStub />}
-        data={comments}
-        render={renderItem}
-        keyExtractor={keyExtractor}
-        onEndReached={!allLoaded ? load : undefined}
-        ref={listRef}
-      >
-        {cornerManagement}
-      </LoadableFlatList>
-    </ThemeProvider>
+    <LoadableFlatList
+      containerStyle={containerStyle}
+      loaderStyle={loaderStyle}
+      header={<CommentListHeader />}
+      nextNode={<CommentListControl reference={reference} clearReference={clearReference} />}
+      loading={loading}
+      loadingPlaceholder={<CommentListSkeleton />}
+      inverted
+      ListEmptyComponent={<CommentListStub />}
+      data={comments}
+      render={renderItem}
+      keyExtractor={keyExtractor}
+      onEndReached={!allLoaded ? load : undefined}
+      ref={listRef}
+    >
+      {cornerManagement}
+    </LoadableFlatList>
   );
 };
 
-export default flowRight([memo, withCommentsContainer])(CommentList);
+export default flowRight([memo, withCommentsContainer, withThemeProvider, memo])(CommentList);

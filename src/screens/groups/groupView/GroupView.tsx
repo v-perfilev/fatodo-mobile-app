@@ -1,6 +1,4 @@
 import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import ThemeProvider from '../../../shared/themes/ThemeProvider';
-import {ThemeFactory} from '../../../shared/themes/ThemeFactory';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import GroupViewHeader from './GroupViewHeader';
 import {HEADER_HEIGHT} from '../../../constants';
@@ -29,6 +27,7 @@ import GroupViewListSkeleton from '../components/skeletons/GroupViewListSkeleton
 import CentredLoader from '../../../components/surfaces/CentredLoader';
 import Separator from '../../../components/layouts/Separator';
 import {flowRight} from 'lodash';
+import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 
 type GroupViewProps = WithGroupProps;
 
@@ -47,8 +46,6 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
   const groupNavigation = useNavigation<GroupNavigationProp>();
 
   const listRef = useRef<FlatListType>();
-
-  const theme = ThemeFactory.getTheme(group?.color);
 
   const canEdit = useMemo<boolean>(() => {
     return group && GroupUtils.canEdit(account, group);
@@ -131,27 +128,25 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <CollapsableRefreshableFlatList
-        containerStyle={containerStyle}
-        loaderStyle={loaderStyle}
-        header={<GroupViewHeader setShowArchived={setShowArchived} />}
-        loading={loading || (items.length === 0 && !allItemsLoaded)}
-        loadingPlaceholder={<GroupViewListSkeleton />}
-        ListEmptyComponent={<GroupViewStub />}
-        ListFooterComponent={items.length > 0 && !allItemsLoaded ? <CentredLoader my="5" /> : undefined}
-        ItemSeparatorComponent={Separator}
-        data={items}
-        render={renderItem}
-        keyExtractor={keyExtractor}
-        onEndReached={!allItemsLoaded ? load : undefined}
-        refresh={refresh}
-        ref={listRef}
-      >
-        {cornerManagement}
-      </CollapsableRefreshableFlatList>
-    </ThemeProvider>
+    <CollapsableRefreshableFlatList
+      containerStyle={containerStyle}
+      loaderStyle={loaderStyle}
+      header={<GroupViewHeader setShowArchived={setShowArchived} />}
+      loading={loading || (items.length === 0 && !allItemsLoaded)}
+      loadingPlaceholder={<GroupViewListSkeleton />}
+      ListEmptyComponent={<GroupViewStub />}
+      ListFooterComponent={items.length > 0 && !allItemsLoaded ? <CentredLoader my="5" /> : undefined}
+      ItemSeparatorComponent={Separator}
+      data={items}
+      render={renderItem}
+      keyExtractor={keyExtractor}
+      onEndReached={!allItemsLoaded ? load : undefined}
+      refresh={refresh}
+      ref={listRef}
+    >
+      {cornerManagement}
+    </CollapsableRefreshableFlatList>
   );
 };
 
-export default flowRight([memo, withGroupContainer, memo])(GroupView);
+export default flowRight([memo, withGroupContainer, withThemeProvider, memo])(GroupView);

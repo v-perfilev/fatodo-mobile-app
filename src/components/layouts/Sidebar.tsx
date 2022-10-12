@@ -42,9 +42,7 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
   const logout = (): void => {
     toggleDrawer();
     dispatch(AuthActions.logout());
-    requestAnimationFrame(() => {
-      dispatch(RootActions.resetState());
-    });
+    dispatch(RootActions.resetState());
   };
 
   const changeLanguage = (code: string): void => {

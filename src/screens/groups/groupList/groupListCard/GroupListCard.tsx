@@ -1,13 +1,13 @@
 import React, {memo, useCallback} from 'react';
 import {Box, IBoxProps} from 'native-base';
 import GroupListCardHeader from './GroupListCardHeader';
-import ThemeProvider from '../../../../shared/themes/ThemeProvider';
 import GroupListCardContent from './GroupListCardContent';
 import {Group} from '../../../../models/Group';
-import {ThemeFactory} from '../../../../shared/themes/ThemeFactory';
 import {useAppSelector} from '../../../../store/store';
 import GroupsSelectors from '../../../../store/groups/groupsSelectors';
-import Collapsible from 'react-native-collapsible';
+import Collapsible from '../../../../components/layouts/Collapsilble';
+import withThemeProvider from '../../../../shared/hocs/withThemeProvider';
+import {flowRight} from 'lodash';
 
 type GroupListCardProps = IBoxProps & {
   group: Group;
@@ -25,18 +25,14 @@ const GroupListCard = ({group, sorting, drag, ...props}: GroupListCardProps) => 
   const collapsed = useAppSelector((state) => itemsCollapsedSelector(state, group.id));
   const loading = useAppSelector((state) => itemsLoadingSelector(state, group.id));
 
-  const theme = ThemeFactory.getTheme(group.color);
-
   return (
     <Box py="1" {...props}>
-      <ThemeProvider theme={theme}>
-        <GroupListCardHeader group={group} collapsed={collapsed} sorting={sorting} drag={drag} />
-        <Collapsible collapsed={collapsed}>
-          <GroupListCardContent group={group} items={items} itemsCount={itemsCount} loading={loading} />
-        </Collapsible>
-      </ThemeProvider>
+      <GroupListCardHeader group={group} collapsed={collapsed} sorting={sorting} drag={drag} />
+      <Collapsible show={!collapsed}>
+        <GroupListCardContent group={group} items={items} itemsCount={itemsCount} loading={loading} />
+      </Collapsible>
     </Box>
   );
 };
 
-export default memo(GroupListCard);
+export default flowRight([withThemeProvider, memo])(GroupListCard);
