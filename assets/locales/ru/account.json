@@ -43,9 +43,6 @@
       "required": "Обязательное поле",
       "notEqual": "Пароли не совпадают"
     },
-    "rememberMe": {
-      "label": "Запомнить меня"
-    },
     "email": {
       "label": "Email",
       "required": "Обязательное поле",

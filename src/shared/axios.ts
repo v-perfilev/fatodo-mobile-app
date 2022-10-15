@@ -31,9 +31,9 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
   };
 
   const logError = (response: AxiosResponse): void => {
-    const responsePath = response.data.path || 'unknown path';
-    const responseMsg = response.data.message || 'no message';
-    const consoleMsg = `Request failed: ${responsePath} - ${response.status}:  ${responseMsg}`;
+    const responsePath = response?.data.path || 'unknown path';
+    const responseMsg = response?.data.message || 'no message';
+    const consoleMsg = `Request failed: ${responsePath} - ${response?.status}:  ${responseMsg}`;
     console.warn(consoleMsg);
   };
 
@@ -79,13 +79,13 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
     }
   };
 
-  const defaultOnResponseError = (err: AxiosError): AxiosPromise => {
+  const defaultOnResponseError = (err: AxiosError): AxiosPromise<AxiosResponse> => {
     defaultHandleErrorFeedback(err.response);
     handleErrorStatus(err.response);
     return Promise.reject(err.response);
   };
 
-  const ignore404OnResponseError = (err: AxiosError): AxiosPromise => {
+  const ignore404OnResponseError = (err: AxiosError): AxiosPromise<AxiosResponse> => {
     ignore404handleErrorFeedback(err.response);
     handleErrorStatus(err.response);
     return Promise.reject(err.response);

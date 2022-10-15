@@ -1,47 +1,47 @@
 import i18next from 'i18next';
 import {initReactI18next} from 'react-i18next';
 // translation
-import translationEN from '../../assets/locales/EN/translation.json';
-import translationRU from '../../assets/locales/RU/translation.json';
+import translationEN from '../../assets/locales/en/translation.json';
+import translationRU from '../../assets/locales/ru/translation.json';
 // common
-import commonEN from '../../assets/locales/EN/common.json';
-import commonRU from '../../assets/locales/RU/common.json';
+import commonEN from '../../assets/locales/en/common.json';
+import commonRU from '../../assets/locales/ru/common.json';
 // account
-import accountEN from '../../assets/locales/EN/account.json';
-import accountRU from '../../assets/locales/RU/account.json';
+import accountEN from '../../assets/locales/en/account.json';
+import accountRU from '../../assets/locales/ru/account.json';
 // feedback
-import feedbackEN from '../../assets/locales/EN/feedback.json';
-import feedbackRU from '../../assets/locales/RU/feedback.json';
+import feedbackEN from '../../assets/locales/en/feedback.json';
+import feedbackRU from '../../assets/locales/ru/feedback.json';
 // snack
-import snackEN from '../../assets/locales/EN/snack.json';
-import snackRU from '../../assets/locales/RU/snack.json';
+import snackEN from '../../assets/locales/en/snack.json';
+import snackRU from '../../assets/locales/ru/snack.json';
 // group
-import groupEN from '../../assets/locales/EN/group.json';
-import groupRU from '../../assets/locales/RU/group.json';
+import groupEN from '../../assets/locales/en/group.json';
+import groupRU from '../../assets/locales/ru/group.json';
 // item
-import itemEN from '../../assets/locales/EN/item.json';
-import itemRU from '../../assets/locales/RU/item.json';
+import itemEN from '../../assets/locales/en/item.json';
+import itemRU from '../../assets/locales/ru/item.json';
 // contact
-import contactEN from '../../assets/locales/EN/contact.json';
-import contactRU from '../../assets/locales/RU/contact.json';
+import contactEN from '../../assets/locales/en/contact.json';
+import contactRU from '../../assets/locales/ru/contact.json';
 // chat
-import chatEN from '../../assets/locales/EN/chat.json';
-import chatRU from '../../assets/locales/RU/chat.json';
+import chatEN from '../../assets/locales/en/chat.json';
+import chatRU from '../../assets/locales/ru/chat.json';
 // comment
-import commentEN from '../../assets/locales/EN/comment.json';
-import commentRU from '../../assets/locales/RU/comment.json';
+import commentEN from '../../assets/locales/en/comment.json';
+import commentRU from '../../assets/locales/ru/comment.json';
 // user
-import userEN from '../../assets/locales/EN/user.json';
-import userRU from '../../assets/locales/RU/user.json';
+import userEN from '../../assets/locales/en/user.json';
+import userRU from '../../assets/locales/ru/user.json';
 // event
-import eventEN from '../../assets/locales/EN/event.json';
-import eventRU from '../../assets/locales/RU/event.json';
+import eventEN from '../../assets/locales/en/event.json';
+import eventRU from '../../assets/locales/ru/event.json';
 // calendar
-import calendarEN from '../../assets/locales/EN/calendar.json';
-import calendarRU from '../../assets/locales/RU/calendar.json';
+import calendarEN from '../../assets/locales/en/calendar.json';
+import calendarRU from '../../assets/locales/ru/calendar.json';
 // push
-import pushEN from '../../assets/locales/EN/push.json';
-import pushRU from '../../assets/locales/RU/push.json';
+import pushEN from '../../assets/locales/en/push.json';
+import pushRU from '../../assets/locales/ru/push.json';
 
 require('moment/locale/en-gb.js');
 require('moment/locale/ru.js');
@@ -49,16 +49,16 @@ require('moment/locale/ru.js');
 export const languages = [
   {
     name: 'English',
-    code: 'EN',
+    code: 'en',
   },
   {
     name: 'Русский',
-    code: 'RU',
+    code: 'ru',
   },
 ];
 
 const resources = {
-  EN: {
+  en: {
     translation: translationEN,
     common: commonEN,
     account: accountEN,
@@ -74,7 +74,7 @@ const resources = {
     calendar: calendarEN,
     push: pushEN,
   },
-  RU: {
+  ru: {
     translation: translationRU,
     common: commonRU,
     account: accountRU,
@@ -98,7 +98,7 @@ i18next
     debug: false,
     compatibilityJSON: 'v3',
     resources,
-    lng: 'EN',
+    lng: 'en',
     ns: [
       'translation',
       'common',

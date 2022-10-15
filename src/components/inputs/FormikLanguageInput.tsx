@@ -13,7 +13,7 @@ type FormikLanguageInputProps = IFormControlProps &
 const FormikLanguageInput = (props: FormikLanguageInputProps) => {
   const languageSelectMap = useMemo<Map<string, string>>(() => {
     const map = new Map<string, string>();
-    languages.forEach((l) => map.set(l.code, l.name));
+    languages.forEach((l) => map.set(l.code.toUpperCase(), l.name));
     return map;
   }, []);
 

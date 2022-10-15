@@ -47,7 +47,7 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
 
   const changeLanguage = (code: string): void => {
     requestAnimationFrame(() => {
-      const dto: ChangeLanguageDTO = {language: code};
+      const dto: ChangeLanguageDTO = {language: code.toUpperCase()};
       dispatch(AuthActions.changeLanguageThunk(dto));
     });
   };
