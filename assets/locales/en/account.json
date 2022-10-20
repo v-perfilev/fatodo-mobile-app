@@ -1,11 +1,11 @@
 {
   "login": {
-    "header": "Log In",
-    "submit": "Log In"
+    "header": "Log in",
+    "submit": "Log in"
   },
   "register": {
-    "header": "Sign Up",
-    "submit": "Sign Up"
+    "header": "Sign up",
+    "submit": "Sign up"
   },
   "forgotPassword": {
     "header": "Forgot password?",
@@ -102,6 +102,6 @@
   },
   "actions": {
     "save": "Save",
-    "logout": "Log Out"
+    "logout": "Log out"
   }
 }
