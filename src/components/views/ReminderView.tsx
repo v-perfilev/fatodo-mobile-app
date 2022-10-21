@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {FC} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Reminder} from '../../models/Reminder';
 import {DateUtils} from '../../shared/utils/DateUtils';
@@ -8,11 +7,11 @@ import AuthSelectors from '../../store/auth/authSelectors';
 import {DateConverters} from '../../shared/utils/DateConverters';
 import {DateFormatters} from '../../shared/utils/DateFormatters';
 
-type Props = {
+type ReminderViewProps = {
   reminder: Reminder;
 };
 
-const ReminderView: FC<Props> = ({reminder}: Props) => {
+const ReminderView = ({reminder}: ReminderViewProps) => {
   const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
   const timezone = account.info.timezone;

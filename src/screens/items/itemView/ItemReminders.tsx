@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
 import ReminderView from '../../../components/views/ReminderView';
@@ -7,7 +7,7 @@ import FHStack from '../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
 
-const ItemReminders: FC = () => {
+const ItemReminders = () => {
   const {t} = useTranslation();
   const reminders = useAppSelector(ItemSelectors.reminders);
 
