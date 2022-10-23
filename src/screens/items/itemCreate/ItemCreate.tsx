@@ -12,6 +12,7 @@ import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withConta
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
+import {Reminder} from '../../../models/Reminder';
 
 type ItemCreateProps = WithGroupProps;
 
@@ -22,8 +23,8 @@ const ItemCreate = ({group, loading}: ItemCreateProps) => {
   const goBack = (): void => navigation.goBack();
   const goToItemView = (item: Item): void => navigation.replace('ItemView', {group, item});
 
-  const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
-    dispatch(ItemActions.createItemThunk(dto))
+  const request = (dto: ItemDTO, reminders: Reminder[], stopSubmitting: () => void): void => {
+    dispatch(ItemActions.createItemThunk({dto, reminders}))
       .unwrap()
       .then((item) => goToItemView(item))
       .catch(() => stopSubmitting());

@@ -8,11 +8,11 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import Header from '../../../components/layouts/Header';
 import {ItemActions} from '../../../store/item/itemActions';
-import {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
+import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import {flowRight} from 'lodash';
-import withGroupContainer from '../../../shared/hocs/withContainers/withGroupContainer';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
+import {Reminder} from '../../../models/Reminder';
 
 type ItemEditProps = WithItemProps;
 
@@ -28,8 +28,8 @@ const ItemEdit = ({group, item, loading}: ItemEditProps) => {
   const goToItemView = (): void =>
     isPreviousItemView ? navigation.goBack() : navigation.replace('ItemView', {group, item});
 
-  const request = (dto: ItemDTO, stopSubmitting: () => void): void => {
-    dispatch(ItemActions.updateItemThunk(dto))
+  const request = (dto: ItemDTO, reminders: Reminder[], stopSubmitting: () => void): void => {
+    dispatch(ItemActions.updateItemThunk({dto, reminders}))
       .unwrap()
       .then(() => goToItemView())
       .catch(() => stopSubmitting());
@@ -47,4 +47,4 @@ const ItemEdit = ({group, item, loading}: ItemEditProps) => {
   );
 };
 
-export default flowRight([memo, withGroupContainer, withThemeProvider, memo])(ItemEdit);
+export default flowRight([memo, withItemContainer, withThemeProvider, memo])(ItemEdit);

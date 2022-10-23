@@ -60,9 +60,9 @@ export class ItemActions {
     },
   );
 
-  static createItemThunk = createAsyncThunk<Item, ItemDTO, AsyncThunkConfig>(
+  static createItemThunk = createAsyncThunk<Item, {dto: ItemDTO; reminders: Reminder[]}, AsyncThunkConfig>(
     PREFIX + 'createItem',
-    async (dto: ItemDTO, thunkAPI) => {
+    async ({dto}, thunkAPI) => {
       const response = await ItemService.createItem(dto);
       thunkAPI.dispatch(GroupsActions.addItem(response.data));
       thunkAPI.dispatch(GroupActions.addItem(response.data));
@@ -71,9 +71,9 @@ export class ItemActions {
     },
   );
 
-  static updateItemThunk = createAsyncThunk<Item, ItemDTO, AsyncThunkConfig>(
+  static updateItemThunk = createAsyncThunk<Item, {dto: ItemDTO; reminders: Reminder[]}, AsyncThunkConfig>(
     PREFIX + 'updateItem',
-    async (dto: ItemDTO, thunkAPI) => {
+    async ({dto}, thunkAPI) => {
       const response = await ItemService.updateItem(dto);
       thunkAPI.dispatch(GroupsActions.updateItem(response.data));
       thunkAPI.dispatch(GroupActions.updateItem(response.data));
