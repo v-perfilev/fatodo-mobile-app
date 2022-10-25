@@ -33,6 +33,7 @@ const ChatList = () => {
   const isFocused = useIsFocused();
   const {showChatCreateDialog} = useChatDialogContext();
   const chats = useAppSelector(ChatsSelectors.chats);
+  const allLoaded = useAppSelector(ChatsSelectors.allLoaded);
   const filteredChats = useAppSelector(ChatsSelectors.filteredChats);
   const [type, setType] = useState<ControlType>('regular');
   const [filter, setFilter] = useState<string>('');
@@ -125,7 +126,7 @@ const ChatList = () => {
       data={type === 'regular' ? chats : filteredChats}
       render={renderItem}
       keyExtractor={keyExtractor}
-      onEndReached={type === 'regular' ? load : loadFiltered}
+      onEndReached={type === 'regular' && !allLoaded ? load : undefined}
       ref={listRef}
     >
       {cornerManagement}
