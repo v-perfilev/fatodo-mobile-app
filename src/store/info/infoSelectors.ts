@@ -2,11 +2,11 @@ import {RootState} from '../store';
 import {createSelector} from '@reduxjs/toolkit';
 import {StoreUtils} from '../../shared/utils/StoreUtils';
 import {User} from '../../models/User';
-import {Group} from '../../models/Group';
-import {Item} from '../../models/Item';
-import {Chat} from '../../models/Chat';
-import {Message} from '../../models/Message';
-import {Comment, CommentThreadInfo} from '../../models/Comment';
+import {GroupInfo} from '../../models/Group';
+import {ItemInfo} from '../../models/Item';
+import {ChatInfo} from '../../models/Chat';
+import {MessageInfo} from '../../models/Message';
+import {CommentInfo, CommentThreadInfo} from '../../models/Comment';
 
 const getInfoState = (state: RootState) => state.info;
 const getKey = (_: any, key: string) => key;
@@ -20,30 +20,39 @@ class InfoSelectors {
     createSelector([getInfoState, getKeys], (state, keys) => StoreUtils.getMultipleValues(state.users, keys) as User[]);
 
   static makeGroupSelector = () =>
-    createSelector([getInfoState, getKey], (state, key) => StoreUtils.getValue(state.groups, key, undefined) as Group);
+    createSelector(
+      [getInfoState, getKey],
+      (state, key) => StoreUtils.getValue(state.groups, key, undefined) as GroupInfo,
+    );
 
   static makeGroupsSelector = () =>
     createSelector(
       [getInfoState, getKeys],
-      (state, keys) => StoreUtils.getMultipleValues(state.groups, keys) as Group[],
+      (state, keys) => StoreUtils.getMultipleValues(state.groups, keys) as GroupInfo[],
     );
 
   static makeItemSelector = () =>
-    createSelector([getInfoState, getKey], (state, key) => StoreUtils.getValue(state.items, key, undefined) as Item);
+    createSelector(
+      [getInfoState, getKey],
+      (state, key) => StoreUtils.getValue(state.items, key, undefined) as ItemInfo,
+    );
 
   static makeChatSelector = () =>
-    createSelector([getInfoState, getKey], (state, key) => StoreUtils.getValue(state.chats, key, undefined) as Chat);
+    createSelector(
+      [getInfoState, getKey],
+      (state, key) => StoreUtils.getValue(state.chats, key, undefined) as ChatInfo,
+    );
 
   static makeMessageSelector = () =>
     createSelector(
       [getInfoState, getKey],
-      (state, key) => StoreUtils.getValue(state.messages, key, undefined) as Message,
+      (state, key) => StoreUtils.getValue(state.messages, key, undefined) as MessageInfo,
     );
 
   static makeCommentSelector = () =>
     createSelector(
       [getInfoState, getKey],
-      (state, key) => StoreUtils.getValue(state.comments, key, undefined) as Comment,
+      (state, key) => StoreUtils.getValue(state.comments, key, undefined) as CommentInfo,
     );
 
   static makeCommentThreadSelector = () =>
