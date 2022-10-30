@@ -17,7 +17,7 @@ const EventWelcome = ({event}: EventWelcomeProps) => {
 
   const title = t('event:default.welcome.title');
 
-  let content = <Trans i18nKey="event:default.welcome.content" />;
+  const content = <Trans i18nKey="event:default.welcome.content" />;
 
   return <EventListItemTemplate image={image} title={title} content={content} date={date} />;
 };

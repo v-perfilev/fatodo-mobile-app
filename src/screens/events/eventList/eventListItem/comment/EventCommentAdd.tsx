@@ -19,24 +19,23 @@ const EventCommentAdd = ({user, group, item, comment, date}: WithEventCommentPro
   const image = <UserView user={user} picSize="md" />;
 
   const context = user?.gender;
+
   let content = null;
 
-  if (Group) {
-    content = (
-      <Trans
-        i18nKey="event:comment.add.contentWithGroup"
-        context={context}
-        components={{user: <User />, group: <Group />}}
-      />
-    );
-  }
-
-  if (Item) {
+  if (item) {
     content = (
       <Trans
         i18nKey="event:comment.add.contentWithItem"
         context={context}
         components={{user: <User />, item: <Item />}}
+      />
+    );
+  } else if (group) {
+    content = (
+      <Trans
+        i18nKey="event:comment.add.contentWithGroup"
+        context={context}
+        components={{user: <User />, group: <Group />}}
       />
     );
   }

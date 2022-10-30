@@ -17,7 +17,7 @@ const EventReminder = ({group, item, date}: WithEventReminderProps) => {
 
   const image = <IconPic icon={<AlarmIcon />} size="md" />;
 
-  let content = <Trans i18nKey="event:reminder.content" components={{group: <Group />, item: <Item />}} />;
+  const content = <Trans i18nKey="event:reminder.content" components={{group: <Group />, item: <Item />}} />;
 
   const loading = !group || !item;
 
