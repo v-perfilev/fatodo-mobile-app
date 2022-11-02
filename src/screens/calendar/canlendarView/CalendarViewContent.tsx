@@ -2,7 +2,7 @@ import React, {Dispatch, memo, SetStateAction} from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import CalendarViewMonthName from './CalendarViewMonthName';
 import CalendarViewWeekDays from './CalendarViewWeekDays';
-import CalendarViewMonth from './CalendarViewMonth';
+import CalendarViewMonth from './CalendarViewMonthDates';
 import {CalendarDate, CalendarItem, CalendarMonth} from '../../../models/Calendar';
 import Separator from '../../../components/layouts/Separator';
 import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';

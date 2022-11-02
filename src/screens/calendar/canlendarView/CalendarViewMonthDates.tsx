@@ -5,14 +5,14 @@ import FHStack from '../../../components/boxes/FHStack';
 import CalendarViewDate from './CalendarViewDate';
 import {Box} from 'native-base';
 
-type CalendarViewMonthProps = {
+type CalendarViewMonthDatesProps = {
   month: CalendarMonth;
   activeDate: CalendarDate;
   selectDate: Dispatch<SetStateAction<CalendarDate>>;
   width: number;
 };
 
-const CalendarViewMonth = ({month, activeDate, selectDate, width}: CalendarViewMonthProps) => {
+const CalendarViewMonthDates = ({month, activeDate, selectDate, width}: CalendarViewMonthDatesProps) => {
   const pageDates = useMemo<CalendarDate[]>(() => CalendarUtils.getOnePageDates(month.year, month.month), [month]);
 
   const isActiveDate = useCallback((date: CalendarDate) => date.date === activeDate?.date, [activeDate]);
@@ -30,4 +30,4 @@ const CalendarViewMonth = ({month, activeDate, selectDate, width}: CalendarViewM
   );
 };
 
-export default memo(CalendarViewMonth);
+export default memo(CalendarViewMonthDates);
