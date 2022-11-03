@@ -18,7 +18,10 @@ const DrawerNavigator = () => {
   const MainComponent = isActive ? RootNavigator : Box;
 
   return (
-    <Drawer.Navigator screenOptions={{headerShown: false, drawerType: 'back', lazy: false}} drawerContent={Sidebar}>
+    <Drawer.Navigator
+      screenOptions={{headerShown: false, lazy: false, drawerType: 'back', swipeEdgeWidth: 0}}
+      drawerContent={Sidebar}
+    >
       <Drawer.Screen name="Default" component={MainComponent} />
       <Drawer.Screen name="AccountForm" component={AccountForm} />
       <Drawer.Screen name="AccountSettingsForm" component={AccountSettingsForm} />
