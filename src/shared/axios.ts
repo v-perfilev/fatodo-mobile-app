@@ -24,16 +24,25 @@ interface SetupAxiosActions {
   handleResponse: (status: number, feedbackCode: string) => void;
 }
 
+interface ObservableAxiosRequestConfig extends AxiosRequestConfig {
+  startTime?: Date;
+}
+
 export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleResponse}: SetupAxiosActions): void => {
-  const logRequest = (request: AxiosRequestConfig): void => {
-    const consoleMsg = `Request sent: ${request.method.toUpperCase()} ${request.url}`;
+  const logSuccess = (request: ObservableAxiosRequestConfig): void => {
+    const method = request.method.toUpperCase();
+    const url = request.url;
+    const time = new Date().getTime() - request.startTime.getTime();
+    const consoleMsg = `Request sent: ${method} ${url}: ${time}ms`;
     console.info(consoleMsg);
   };
 
   const logError = (response: AxiosResponse): void => {
-    const responsePath = response?.data.path || 'unknown path';
-    const responseMsg = response?.data.message || 'no message';
-    const consoleMsg = `Request failed: ${responsePath} - ${response?.status}:  ${responseMsg}`;
+    const method = response.request.method.toUpperCase();
+    const url = response?.data.path || 'unknown path';
+    const status = response?.status || 'unknown status';
+    const msg = response?.data.message || 'no message';
+    const consoleMsg = `Request failed: ${method} ${url}: ${status} - ${msg}`;
     console.warn(consoleMsg);
   };
 
@@ -91,16 +100,20 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
     return Promise.reject(err.response);
   };
 
-  const onRequest = async (request: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
+  const onRequest = async (config: ObservableAxiosRequestConfig): Promise<AxiosRequestConfig> => {
     const token = await SecurityUtils.getAuthToken();
     if (token) {
-      request.headers.authorization = `Bearer ${token}`;
+      config.headers.authorization = `Bearer ${token}`;
     }
-    logRequest(request);
-    return request;
+    config.startTime = new Date();
+    return config;
   };
 
-  const onResponseSuccess = (response: AxiosResponse): AxiosResponse => response;
+  const onResponseSuccess = (response: AxiosResponse): AxiosResponse => {
+    const config = response.config as ObservableAxiosRequestConfig;
+    logSuccess(config);
+    return response;
+  };
 
   axiosDefault.interceptors.request.use(onRequest);
   axiosDefault.interceptors.response.use(onResponseSuccess, defaultOnResponseError);
