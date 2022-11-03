@@ -8,7 +8,7 @@ const CommentSkeleton = () => {
     <FHStack w="100%" h={`${COMMENT_SKELETON_HEIGHT}px`} p="2" defaultSpace>
       <Skeleton mt="2" w="35px" h="35px" rounded="full" />
       <FHStack grow>
-        <Skeleton flexGrow="1" h="60px" rounded="xl" />
+        <Skeleton flexGrow="1" h="58px" rounded="xl" />
       </FHStack>
     </FHStack>
   );

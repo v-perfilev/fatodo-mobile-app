@@ -32,8 +32,8 @@ export const ITEM_SKELETON_HEIGHT = 118;
 export const EVENT_SKELETON_HEIGHT = 127;
 export const CONTACT_SKELETON_HEIGHT = 64;
 export const CHAT_SKELETON_HEIGHT = 64;
-export const MESSAGE_SKELETON_HEIGHT = 75;
-export const COMMENT_SKELETON_HEIGHT = 70;
+export const MESSAGE_SKELETON_HEIGHT = 74;
+export const COMMENT_SKELETON_HEIGHT = 74;
 
 // IMAGES
 export const IMAGE_SIZE = 500;

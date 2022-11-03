@@ -22,7 +22,7 @@ const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
   return (
     <FHStack space="2" width="90%" ml="10%" justifyContent="flex-end">
       <ChatViewMessageReactions message={message} isOutcoming />
-      <FVStack shrink smallSpace minW="60%" borderRadius="xl" backgroundColor={bg} px="2" py="1.5">
+      <FVStack shrink smallSpace minW="60%" borderRadius="xl" backgroundColor={bg} pl="3" pr="2" py="1.5">
         <FHStack defaultSpace alignItems="center">
           <FHStack grow defaultSpace alignItems="center">
             <Text color="primary.500" fontWeight="bold">

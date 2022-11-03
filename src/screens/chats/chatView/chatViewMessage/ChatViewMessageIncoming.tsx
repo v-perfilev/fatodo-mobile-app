@@ -39,7 +39,8 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
         borderColor={isRead ? bg : 'primary.500'}
         borderRadius="xl"
         backgroundColor={bg}
-        px="2"
+        pl="3"
+        pr="2"
         py="1.5"
       >
         <FHStack defaultSpace alignItems="center">
