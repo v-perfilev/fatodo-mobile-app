@@ -6,7 +6,7 @@ import {EVENT_SKELETON_HEIGHT} from '../../../constants';
 
 const EventSkeleton = () => {
   return (
-    <FHStack w="100%" h={EVENT_SKELETON_HEIGHT} px="2" py="4" defaultSpace alignItems="flex-start">
+    <FHStack w="100%" h={`${EVENT_SKELETON_HEIGHT}px`} px="2" py="4" defaultSpace alignItems="flex-start">
       <Skeleton w="48px" h="48px" rounded="full" />
       <FVStack grow space="4" pt="1" justifyContent="center">
         <FHStack justifyContent="space-between">

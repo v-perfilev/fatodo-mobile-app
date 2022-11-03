@@ -6,7 +6,7 @@ import {CHAT_SKELETON_HEIGHT} from '../../../constants';
 
 const ChatSkeleton = () => {
   return (
-    <FHStack w="100%" h={CHAT_SKELETON_HEIGHT} px="2" py="4" defaultSpace alignItems="center">
+    <FHStack w="100%" h={`${CHAT_SKELETON_HEIGHT}px`} px="2" py="4" defaultSpace alignItems="center">
       <Skeleton w="48px" h="48px" rounded="full" />
       <FVStack grow space="2">
         <FHStack grow space="2" justifyContent="space-between">

@@ -7,7 +7,7 @@ import {ITEM_SKELETON_HEIGHT} from '../../../constants';
 
 const GroupItemSkeleton = () => {
   return (
-    <FVStack h={ITEM_SKELETON_HEIGHT} px="4" py="5" space="4">
+    <FVStack h={`${ITEM_SKELETON_HEIGHT}px`} px="4" py="5" space="4">
       <FHStack alignItems="center">
         <FBox flex="1" flexGrow="1">
           <Skeleton w="90%" h="16px" rounded="xl" />
