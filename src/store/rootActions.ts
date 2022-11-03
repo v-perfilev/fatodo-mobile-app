@@ -12,7 +12,7 @@ import userSlice from './user/userSlice';
 
 export class RootActions {
   static resetState = () => (dispatch: AppDispatch) => {
-    // all stores except of infoStore
+    // all stores except of authStore and infoStore
     dispatch(calendarSlice.actions.reset());
     dispatch(chatSlice.actions.reset());
     dispatch(chatsSlice.actions.reset());

@@ -18,7 +18,7 @@ import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import LoadableFlatList, {RefreshableFlatListChildrenProps} from '../../../components/scrollable/LoadableFlatList';
-import MessageListSkeleton from '../components/skeletons/MessageListSkeleton';
+import MessageListSkeleton from '../skeletons/MessageListSkeleton';
 import {flowRight} from 'lodash';
 
 type ChatViewProps = WithChatProps;

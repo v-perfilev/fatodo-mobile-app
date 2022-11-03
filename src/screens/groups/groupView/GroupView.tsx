@@ -23,7 +23,7 @@ import CommentsIcon from '../../../components/icons/CommentsIcon';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import GroupItem from '../components/groupItem/GroupItem';
-import GroupViewListSkeleton from '../components/skeletons/GroupViewListSkeleton';
+import GroupViewListSkeleton from '../skeletons/GroupViewListSkeleton';
 import CentredLoader from '../../../components/surfaces/CentredLoader';
 import Separator from '../../../components/layouts/Separator';
 import {flowRight} from 'lodash';

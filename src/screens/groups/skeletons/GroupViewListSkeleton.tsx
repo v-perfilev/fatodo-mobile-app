@@ -1,14 +1,14 @@
 import React, {memo} from 'react';
-import {ITEM_SKELETONS_HEIGHT} from '../../../../constants';
-import FVStack from '../../../../components/boxes/FVStack';
+import {HEADER_HEIGHT, ITEM_SKELETON_HEIGHT, TAB_HEIGHT} from '../../../constants';
+import FVStack from '../../../components/boxes/FVStack';
 import GroupItemSkeleton from './GroupItemSkeleton';
 import {Box} from 'native-base';
-import Separator from '../../../../components/layouts/Separator';
+import Separator from '../../../components/layouts/Separator';
 import {Dimensions} from 'react-native';
 
 const GroupListCardSkeleton = () => {
-  const height = Dimensions.get('window').height;
-  const count = Math.round(height / ITEM_SKELETONS_HEIGHT);
+  const height = Dimensions.get('window').height - HEADER_HEIGHT - TAB_HEIGHT;
+  const count = Math.floor(height / ITEM_SKELETON_HEIGHT);
   const indexArray = Array.from(Array(count).keys());
 
   return (

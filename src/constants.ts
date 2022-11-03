@@ -8,8 +8,6 @@ export const WS_ROOT_TOPIC = '/user/topic/root';
 
 // TIMEOUTS
 export const API_TIMEOUT = 60 * 1000;
-// export const SLEEP_MODE_TIMEOUT = 10 * 60 * 1000;
-export const SLEEP_MODE_TIMEOUT = 10 * 1000;
 
 // AUTHORIZATION
 export const AUTHORIZATION_HEADER = 'authorization';
@@ -19,22 +17,23 @@ export const AUTHORIZATION_PREFIX = 'Bearer ';
 export const BASE_URL = 'http://75.119.154.167';
 ***REMOVED***
 
-// HEADER
+// HEADER AND TAB
 export const HEADER_HEIGHT = 55;
 export const REFRESH_HEIGHT = 150;
 export const MAX_REFRESH_HEIGHT = 200;
+export const TAB_HEIGHT = 50;
 
 // AVATARS
 export const AVATARS_IN_CARD = 3;
 
 // SKELETONS
 export const GROUP_ITEM_SKELETONS_COUNT = 5;
-export const ITEM_SKELETONS_HEIGHT = 118;
-export const EVENT_SKELETONS_HEIGHT = 82;
-export const CONTACT_SKELETONS_HEIGHT = 50;
-export const CHATS_SKELETONS_HEIGHT = 64;
-export const MESSAGE_SKELETONS_HEIGHT = 150;
-export const COMMENT_SKELETONS_HEIGHT = 70;
+export const ITEM_SKELETON_HEIGHT = 118;
+export const EVENT_SKELETON_HEIGHT = 127;
+export const CONTACT_SKELETON_HEIGHT = 64;
+export const CHAT_SKELETON_HEIGHT = 64;
+export const MESSAGE_SKELETON_HEIGHT = 75;
+export const COMMENT_SKELETON_HEIGHT = 70;
 
 // IMAGES
 export const IMAGE_SIZE = 500;

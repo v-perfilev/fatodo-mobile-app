@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import FHStack from '../../../../components/boxes/FHStack';
+import FHStack from '../../../components/boxes/FHStack';
 import {Skeleton} from 'native-base';
 
 const GroupListCardInfoSkeleton = () => {

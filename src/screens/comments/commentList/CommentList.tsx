@@ -15,7 +15,7 @@ import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {COMMENTS_INPUT_HEIGHT, HEADER_HEIGHT} from '../../../constants';
 import LoadableFlatList, {RefreshableFlatListChildrenProps} from '../../../components/scrollable/LoadableFlatList';
-import CommentListSkeleton from '../components/skeletons/CommentListSkeleton';
+import CommentListSkeleton from '../skeletons/CommentListSkeleton';
 import CommentListHeader from './CommentListHeader';
 import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';

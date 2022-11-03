@@ -61,8 +61,8 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   }, []);
 
   useEffect(() => {
+    reset();
     isActive && isAuthenticated && refresh();
-    !isActive && reset();
   }, [isActive, isAuthenticated]);
 
   useEffect(() => {

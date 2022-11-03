@@ -99,7 +99,7 @@ const ContactNavigator = () => {
   const renderTabBar = (props: TabBarProps): ReactElement => {
     return (
       <Header showAvatar hideGoBack hideTitle>
-        <FBox ml="1" mr="-2">
+        <FBox ml="1" mr="-2" overflow="hidden">
           <TabBar
             style={tabBarStyle}
             indicatorStyle={indicatorStyle}

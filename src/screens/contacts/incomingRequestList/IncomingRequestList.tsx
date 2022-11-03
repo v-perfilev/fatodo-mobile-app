@@ -12,7 +12,7 @@ import CollapsableRefreshableFlatList from '../../../components/scrollable/Colla
 import {useIsFocused} from '@react-navigation/native';
 import Separator from '../../../components/layouts/Separator';
 import FBox from '../../../components/boxes/FBox';
-import ContactListSkeleton from '../components/skeletons/ContactListSkeleton';
+import ContactListSkeleton from '../skeletons/ContactListSkeleton';
 
 const IncomingRequestList = () => {
   const dispatch = useAppDispatch();

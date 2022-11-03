@@ -21,7 +21,7 @@ import PlusIcon from '../../../components/icons/PlusIcon';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
 import {useIsFocused} from '@react-navigation/native';
-import ChatListSkeleton from '../components/skeletons/ChatListSkeleton';
+import ChatListSkeleton from '../skeletons/ChatListSkeleton';
 
 type ControlType = 'regular' | 'filtered';
 

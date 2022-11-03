@@ -17,7 +17,7 @@ import {CornerButton} from '../../../models/CornerButton';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import {useIsFocused} from '@react-navigation/native';
 import Separator from '../../../components/layouts/Separator';
-import ContactListSkeleton from '../components/skeletons/ContactListSkeleton';
+import ContactListSkeleton from '../skeletons/ContactListSkeleton';
 
 const loaderStyle: StyleProp<ViewStyle> = {paddingBottom: 50};
 

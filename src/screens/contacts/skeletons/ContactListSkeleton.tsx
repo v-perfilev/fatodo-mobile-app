@@ -1,14 +1,14 @@
 import React, {memo} from 'react';
-import {CONTACT_SKELETONS_HEIGHT} from '../../../../constants';
-import FVStack from '../../../../components/boxes/FVStack';
-import Separator from '../../../../components/layouts/Separator';
+import {CONTACT_SKELETON_HEIGHT, HEADER_HEIGHT, TAB_HEIGHT} from '../../../constants';
+import FVStack from '../../../components/boxes/FVStack';
+import Separator from '../../../components/layouts/Separator';
 import {Box} from 'native-base';
 import ContactSkeleton from './ContactSkeleton';
 import {Dimensions} from 'react-native';
 
 const ContactListSkeleton = () => {
-  const height = Dimensions.get('window').height;
-  const count = Math.round(height / CONTACT_SKELETONS_HEIGHT);
+  const height = Dimensions.get('window').height - HEADER_HEIGHT - TAB_HEIGHT;
+  const count = Math.floor(height / CONTACT_SKELETON_HEIGHT);
   const indexArray = Array.from(Array(count).keys());
 
   return (

@@ -9,6 +9,7 @@ import FCenter from '../boxes/FCenter';
 import Separator from './Separator';
 import {useTranslation} from 'react-i18next';
 import FVStack from '../boxes/FVStack';
+import {TAB_HEIGHT} from '../../constants';
 
 type TabNavigatorBarProps = BottomTabBarProps;
 
@@ -40,7 +41,7 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
   );
 
   return (
-    <Pressable flex="1" h="50px" p="1" onPress={onPress}>
+    <Pressable flex="1" h={TAB_HEIGHT} p="1" onPress={onPress}>
       <FVStack grow justifyContent="center" alignItems="center">
         <FCenter flex="1" flexGrow="1">
           {showBadgeNode && badgeNode}

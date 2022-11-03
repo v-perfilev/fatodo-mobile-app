@@ -1,12 +1,13 @@
 import React, {memo} from 'react';
-import FVStack from '../../../../components/boxes/FVStack';
-import FHStack from '../../../../components/boxes/FHStack';
+import FVStack from '../../../components/boxes/FVStack';
+import FHStack from '../../../components/boxes/FHStack';
 import {Skeleton} from 'native-base';
-import FBox from '../../../../components/boxes/FBox';
+import FBox from '../../../components/boxes/FBox';
+import {ITEM_SKELETON_HEIGHT} from '../../../constants';
 
 const GroupItemSkeleton = () => {
   return (
-    <FVStack h="118" px="4" py="5" space="4">
+    <FVStack h={ITEM_SKELETON_HEIGHT} px="4" py="5" space="4">
       <FHStack alignItems="center">
         <FBox flex="1" flexGrow="1">
           <Skeleton w="90%" h="16px" rounded="xl" />

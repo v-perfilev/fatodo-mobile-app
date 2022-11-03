@@ -10,7 +10,7 @@ import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {useIsFocused} from '@react-navigation/native';
 import Separator from '../../../components/layouts/Separator';
-import ContactListSkeleton from '../components/skeletons/ContactListSkeleton';
+import ContactListSkeleton from '../skeletons/ContactListSkeleton';
 import OutcomingRequestListItem from './OutcomingRequestListItem';
 
 const OutcomingRequestList = () => {

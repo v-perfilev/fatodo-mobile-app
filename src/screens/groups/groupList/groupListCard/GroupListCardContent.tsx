@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 import {Item} from '../../../../models/Item';
-import GroupListCardSkeleton from '../../components/skeletons/GroupListCardSkeleton';
+import GroupListCardSkeleton from '../../skeletons/GroupListCardSkeleton';
 import GroupListCardInfo from './GroupListCardInfo';
 import GroupItem from '../../components/groupItem/GroupItem';
 import {Group} from '../../../../models/Group';

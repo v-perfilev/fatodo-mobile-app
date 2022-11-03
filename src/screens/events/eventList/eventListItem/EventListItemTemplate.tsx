@@ -3,7 +3,7 @@ import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Text, useColorModeValue} from 'native-base';
 import PaperBox from '../../../../components/surfaces/PaperBox';
-import EventSkeleton from '../../components/skeletons/EventSkeleton';
+import EventSkeleton from '../../skeletons/EventSkeleton';
 import DateView from '../../../../components/views/DateView';
 
 type EventListItemTemplateProps = {

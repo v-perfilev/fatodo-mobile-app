@@ -6,13 +6,14 @@ import PressableButton from '../controls/PressableButton';
 
 type BoxWithIconProps = IPressableProps & {
   icon: ReactNode;
+  text: string | number;
 };
 
-const BoxWithIcon = ({icon, onPress, children}: BoxWithIconProps) => {
+const BoxWithIcon = ({icon, onPress, text}: BoxWithIconProps) => {
   const content = (
     <FHStack smallSpace alignItems="center">
       {icon}
-      <Text>{children}</Text>
+      <Text color="gray.400">{text}</Text>
     </FHStack>
   );
 
