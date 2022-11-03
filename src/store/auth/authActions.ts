@@ -22,10 +22,6 @@ export class AuthActions {
     dispatch(authSlice.actions.setIsActive(isActive));
   };
 
-  static setIsSleepMode = (isSleepMode: boolean) => (dispatch: AppDispatch) => {
-    dispatch(authSlice.actions.setIsSleepMode(isSleepMode));
-  };
-
   static setIsAuthenticated = () => (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.setIsAuthenticated(true));
   };

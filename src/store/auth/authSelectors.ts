@@ -7,8 +7,6 @@ const getAuthState = (state: RootState) => state.auth;
 class AuthSelectors {
   static isActive = createSelector(getAuthState, (state) => state.isActive as boolean);
 
-  static isSleepMode = createSelector(getAuthState, (state) => state.isSleepMode as boolean);
-
   static isAuthenticated = createSelector(getAuthState, (state) => state.isAuthenticated as boolean);
 
   static account = createSelector(getAuthState, (state) => state.account as UserAccount);

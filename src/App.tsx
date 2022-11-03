@@ -59,12 +59,11 @@ type AppProps = {
 
 const App = ({ready}: AppProps) => {
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
-  const isSleepMode = useAppSelector(AuthSelectors.isSleepMode);
 
   return (
     <>
       <ColoredStatusBar />
-      {ready && isAuthenticated && !isSleepMode && <DrawerNavigator />}
+      {ready && isAuthenticated && <DrawerNavigator />}
       {ready && !isAuthenticated && <AuthNavigator />}
     </>
   );
@@ -74,8 +73,8 @@ export default flowRight([
   withStore,
   withGestureHandler,
   withNativeBase,
-  withSnackDisplay,
   withNavigationContainer,
+  withSnackDisplay,
   withWsClient,
   withDialogs,
   withRootContainer,

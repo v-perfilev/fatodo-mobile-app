@@ -52,7 +52,7 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator
-      screenOptions={{headerShown: false, lazy: false, freezeOnBlur: freeze}}
+      screenOptions={{headerShown: false, freezeOnBlur: freeze}}
       initialRouteName="Groups"
       backBehavior="initialRoute"
       tabBar={TabNavigatorBar}

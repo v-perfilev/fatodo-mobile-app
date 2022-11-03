@@ -7,6 +7,7 @@ import CommentList from '../screens/comments/commentList/CommentList';
 import {ColorScheme} from '../shared/themes/ThemeFactory';
 import {User} from '../models/User';
 import UserView from '../screens/user/userView/UserView';
+import {flowRight} from 'lodash';
 
 export type NavigationProps<ParamList> = {
   screen: keyof ParamList;
@@ -53,4 +54,4 @@ const RootNavigator = () => {
   );
 };
 
-export default memo(RootNavigator);
+export default flowRight([memo])(RootNavigator);

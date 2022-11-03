@@ -1,4 +1,4 @@
-import React, {ComponentType, memo, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {ComponentType, memo, useEffect, useLayoutEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
@@ -8,7 +8,6 @@ import NotificationsRemote from '../../push/notificationsRemote';
 import {AuthActions} from '../../../store/auth/authActions';
 import {SecurityUtils} from '../../utils/SecurityUtils';
 import {AppState, NativeEventSubscription} from 'react-native';
-import {SLEEP_MODE_TIMEOUT} from '../../../constants';
 import {RootActions} from '../../../store/rootActions';
 import SplashScreen from 'react-native-splash-screen';
 import {flowRight} from 'lodash';
@@ -22,9 +21,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   const account = useAppSelector(AuthSelectors.account);
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
   const isActive = useAppSelector(AuthSelectors.isActive);
-  const isSleepMode = useAppSelector(AuthSelectors.isSleepMode);
   const [ready, setReady] = useState(false);
-  const sleepModeTimer = useRef<NodeJS.Timeout>();
 
   const login = (): void => {
     const tryToLogin = async (token: string): Promise<void> => {
@@ -41,22 +38,13 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
     });
   };
 
-  const handleAppStatus = (): void => {
-    if (!isActive) {
-      sleepModeTimer.current = setTimeout(() => dispatch(AuthActions.setIsSleepMode(true)), SLEEP_MODE_TIMEOUT);
-    } else {
-      sleepModeTimer.current && clearTimeout(sleepModeTimer.current);
-      sleepModeTimer.current = undefined;
-      dispatch(AuthActions.setIsSleepMode(false));
-    }
-  };
-
   const refresh = (): void => {
-    dispatch(ContactsActions.fetchRelationsThunk());
-    dispatch(ContactsActions.fetchInfoThunk());
-    dispatch(ChatsActions.fetchUnreadMessagesMapThunk());
-    dispatch(EventsActions.fetchUnreadCountThunk());
-    account?.id && NotificationsRemote.subscribeToFirebase(account.id);
+    setTimeout(() => {
+      dispatch(ContactsActions.fetchRelationsThunk());
+      dispatch(ContactsActions.fetchInfoThunk());
+      dispatch(ChatsActions.fetchUnreadMessagesMapThunk());
+      dispatch(EventsActions.fetchUnreadCountThunk());
+    }, 1000);
   };
 
   const reset = (): void => {
@@ -73,17 +61,13 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   }, []);
 
   useEffect(() => {
-    handleAppStatus();
-  }, [isActive]);
+    isActive && isAuthenticated && refresh();
+    !isActive && reset();
+  }, [isActive, isAuthenticated]);
 
   useEffect(() => {
-    !isSleepMode && isAuthenticated && refresh();
-    isSleepMode && reset();
-  }, [isSleepMode]);
-
-  useEffect(() => {
-    isAuthenticated && refresh();
-  }, [isAuthenticated]);
+    account && NotificationsRemote.subscribeToFirebase(account.id);
+  }, [account]);
 
   useLayoutEffect(() => {
     ready && SplashScreen.hide();

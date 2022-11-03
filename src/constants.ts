@@ -8,7 +8,8 @@ export const WS_ROOT_TOPIC = '/user/topic/root';
 
 // TIMEOUTS
 export const API_TIMEOUT = 60 * 1000;
-export const SLEEP_MODE_TIMEOUT = 10 * 60 * 1000;
+// export const SLEEP_MODE_TIMEOUT = 10 * 60 * 1000;
+export const SLEEP_MODE_TIMEOUT = 10 * 1000;
 
 // AUTHORIZATION
 export const AUTHORIZATION_HEADER = 'authorization';

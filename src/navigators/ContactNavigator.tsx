@@ -3,7 +3,15 @@ import ContactList from '../screens/contacts/contactList/ContactList';
 import OutcomingRequestList from '../screens/contacts/outcomingRequestList/OutcomingRequestList';
 import IncomingRequestList from '../screens/contacts/incomingRequestList/IncomingRequestList';
 import {Dimensions, StyleProp, ViewStyle} from 'react-native';
-import {Route, SceneMap, TabBar, TabBarItemProps, TabView} from 'react-native-tab-view';
+import {
+  Route,
+  SceneMap,
+  TabBar,
+  TabBarIndicator,
+  TabBarIndicatorProps,
+  TabBarItemProps,
+  TabView,
+} from 'react-native-tab-view';
 import {NavigationState, SceneRendererProps} from 'react-native-tab-view/lib/typescript/types';
 import {useTranslation} from 'react-i18next';
 import FHStack from '../components/boxes/FHStack';
@@ -84,11 +92,21 @@ const ContactNavigator = () => {
     );
   };
 
+  const renderIndicator = (props: TabBarIndicatorProps<ContactRoute>): ReactElement => {
+    return <TabBarIndicator {...props} width="33.3%" />;
+  };
+
   const renderTabBar = (props: TabBarProps): ReactElement => {
     return (
       <Header showAvatar hideGoBack hideTitle>
-        <FBox ml="1" mr="-2" overflow="hidden">
-          <TabBar style={tabBarStyle} indicatorStyle={indicatorStyle} renderTabBarItem={renderTabBarItem} {...props} />
+        <FBox ml="1" mr="-2">
+          <TabBar
+            style={tabBarStyle}
+            indicatorStyle={indicatorStyle}
+            renderIndicator={renderIndicator}
+            renderTabBarItem={renderTabBarItem}
+            {...props}
+          />
         </FBox>
       </Header>
     );
@@ -99,7 +117,6 @@ const ContactNavigator = () => {
       navigationState={{index, routes}}
       renderScene={renderScene}
       renderTabBar={renderTabBar}
-      showPageIndicator={true}
       onIndexChange={setIndex}
       initialLayout={initialLayout}
     />
