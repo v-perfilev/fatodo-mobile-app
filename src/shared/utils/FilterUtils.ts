@@ -1,3 +1,5 @@
+import {SAME_DATE_TIMEOUT} from '../../constants';
+
 export class FilterUtils {
   public static uniqueFilter = (value: any, i: number, arr: any[]): boolean => {
     return arr.findIndex((v) => v === value) === i;
@@ -16,7 +18,11 @@ export class FilterUtils {
       return t.id === value.id;
     };
     const userIdAndTextAndDateEqual = (value: any, t: any): boolean => {
-      return t.userId === value.userId && t.text === value.text && Math.abs(t.createdAt - value.createdAt) < 1000;
+      return (
+        t.userId === value.userId &&
+        t.text === value.text &&
+        Math.abs(t.createdAt - value.createdAt) < SAME_DATE_TIMEOUT
+      );
     };
     const findIndexWithId = (value: any): number => {
       return arr.findIndex((t) => t.id && userIdAndTextAndDateEqual(value, t));
