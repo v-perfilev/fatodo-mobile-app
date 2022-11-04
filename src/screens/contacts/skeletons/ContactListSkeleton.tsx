@@ -8,7 +8,7 @@ import {Dimensions} from 'react-native';
 
 const ContactListSkeleton = () => {
   const height = Dimensions.get('window').height - HEADER_HEIGHT - TAB_HEIGHT;
-  const count = Math.floor(height / CONTACT_SKELETON_HEIGHT);
+  const count = Math.ceil(height / CONTACT_SKELETON_HEIGHT);
   const indexArray = Array.from(Array(count).keys());
 
   return (

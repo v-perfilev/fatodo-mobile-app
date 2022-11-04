@@ -11,7 +11,9 @@ type ConditionalSpinnerProps = IBoxProps &
 
 const ConditionalLoader = ({loading, loadingPlaceholder, children, ...props}: ConditionalSpinnerProps) => {
   const loader = loadingPlaceholder ? (
-    <FBox {...props}>{loadingPlaceholder}</FBox>
+    <FBox flexGrow="1" {...props}>
+      {loadingPlaceholder}
+    </FBox>
   ) : (
     <CentredLoader {...props} size={50} />
   );

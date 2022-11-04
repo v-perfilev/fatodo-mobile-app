@@ -22,8 +22,8 @@ import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 
 type CommentListProps = WithCommentsProps;
 
-const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
-const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
+const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: COMMENTS_INPUT_HEIGHT};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: COMMENTS_INPUT_HEIGHT};
 
 const CommentList = ({loading}: CommentListProps) => {
   const dispatch = useAppDispatch();

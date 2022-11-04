@@ -7,11 +7,11 @@ import {Dimensions} from 'react-native';
 
 const CommentListSkeleton = () => {
   const height = Dimensions.get('window').height - HEADER_HEIGHT - TAB_HEIGHT;
-  const count = Math.floor(height / COMMENT_SKELETON_HEIGHT);
+  const count = Math.ceil(height / COMMENT_SKELETON_HEIGHT);
   const indexArray = Array.from(Array(count).keys());
 
   return (
-    <FVStack>
+    <FVStack py="1" justifyContent="flex-end">
       {indexArray.map((index) => (
         <Box key={index}>
           <CommentSkeleton />

@@ -8,11 +8,11 @@ import {Dimensions} from 'react-native';
 
 const ChatListSkeleton = () => {
   const height = Dimensions.get('window').height - HEADER_HEIGHT - TAB_HEIGHT;
-  const count = Math.floor(height / MESSAGE_SKELETON_HEIGHT / 2);
+  const count = Math.ceil(height / MESSAGE_SKELETON_HEIGHT / 2);
   const indexArray = Array.from(Array(count).keys());
 
   return (
-    <FVStack>
+    <FVStack py="1" justifyContent="flex-end">
       {indexArray.map((index) => (
         <Box key={index}>
           <MessageIncomingSkeleton />

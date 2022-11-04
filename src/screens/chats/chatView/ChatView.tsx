@@ -23,8 +23,8 @@ import {flowRight} from 'lodash';
 
 type ChatViewProps = WithChatProps;
 
-const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: HEADER_HEIGHT};
-const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
+const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: CHATS_INPUT_HEIGHT};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: CHATS_INPUT_HEIGHT};
 
 const ChatView = ({chat, loading}: ChatViewProps) => {
   const dispatch = useAppDispatch();
