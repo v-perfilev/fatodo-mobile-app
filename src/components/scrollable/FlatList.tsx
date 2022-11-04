@@ -1,6 +1,7 @@
 import React, {ForwardedRef, memo, ReactElement, useCallback, useRef} from 'react';
 import {IFlatListProps} from 'native-base/lib/typescript/components/basic/FlatList';
 import {Animated, FlatList as RNFlatList, LayoutChangeEvent, ListRenderItemInfo, Platform} from 'react-native';
+import {DEFAULT_FLAT_LIST_ITEM_HEIGHT} from '../../constants';
 
 export type FlatListType = RNFlatList;
 
@@ -24,7 +25,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
       } else {
         const item = data[index];
         const key = keyExtractor(item);
-        return lengthMap.current.get(key) || 0;
+        return lengthMap.current.get(key) || DEFAULT_FLAT_LIST_ITEM_HEIGHT;
       }
     },
     [data],

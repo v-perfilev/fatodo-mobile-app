@@ -23,6 +23,9 @@ export const REFRESH_HEIGHT = 150;
 export const MAX_REFRESH_HEIGHT = 200;
 export const TAB_HEIGHT = 50;
 
+// LIST
+export const DEFAULT_FLAT_LIST_ITEM_HEIGHT = 100;
+
 // AVATARS
 export const AVATARS_IN_CARD = 3;
 
