@@ -122,9 +122,9 @@ const RefreshableContainer = ({
       requestAnimationFrame(() => {
         setRefreshGesturesAllowed(false);
         refresh().finally(() => {
-          setTimeout(() => closeLoader(), 500);
-          setTimeout(() => setRefreshGesturesAllowed(true), 500);
-          setTimeout(() => grayscaleRefresher(), 1500);
+          grayscaleRefresher();
+          closeLoader();
+          setTimeout(() => setRefreshGesturesAllowed(true), 1000);
         });
       });
     } else if (extraScrollValue.current > 0) {

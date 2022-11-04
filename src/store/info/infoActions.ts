@@ -35,7 +35,9 @@ export class InfoActions {
     PREFIX + 'handleUserIds',
     async (ids, thunkAPI) => {
       const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.users);
-      return idsToLoad.length > 0 ? (await UserService.getAllByIds(idsToLoad)).data : [];
+      return idsToLoad.length > 0
+        ? (await UserService.getAllByIds(idsToLoad)).data
+        : thunkAPI.rejectWithValue(undefined);
     },
   );
 
@@ -46,7 +48,9 @@ export class InfoActions {
     PREFIX + 'handleGroupIds',
     async (ids, thunkAPI) => {
       const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.groups);
-      return idsToLoad.length > 0 ? (await ItemService.getGroupInfoByIds(idsToLoad)).data : [];
+      return idsToLoad.length > 0
+        ? (await ItemService.getGroupInfoByIds(idsToLoad)).data
+        : thunkAPI.rejectWithValue(undefined);
     },
   );
 
@@ -57,7 +61,9 @@ export class InfoActions {
     PREFIX + 'handleItemIds',
     async (ids, thunkAPI) => {
       const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.items);
-      return idsToLoad.length > 0 ? (await ItemService.getItemInfoByIds(idsToLoad)).data : [];
+      return idsToLoad.length > 0
+        ? (await ItemService.getItemInfoByIds(idsToLoad)).data
+        : thunkAPI.rejectWithValue(undefined);
     },
   );
 
@@ -68,7 +74,9 @@ export class InfoActions {
     PREFIX + 'handleChatIds',
     async (ids, thunkAPI) => {
       const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.chats);
-      return idsToLoad.length > 0 ? (await ChatService.getChatInfoByIds(idsToLoad)).data : [];
+      return idsToLoad.length > 0
+        ? (await ChatService.getChatInfoByIds(idsToLoad)).data
+        : thunkAPI.rejectWithValue(undefined);
     },
   );
 
@@ -79,7 +87,9 @@ export class InfoActions {
     PREFIX + 'handleMessageIds',
     async (ids, thunkAPI) => {
       const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.messages);
-      return idsToLoad.length > 0 ? (await ChatService.getMessageInfoByIds(idsToLoad)).data : [];
+      return idsToLoad.length > 0
+        ? (await ChatService.getMessageInfoByIds(idsToLoad)).data
+        : thunkAPI.rejectWithValue(undefined);
     },
   );
 
@@ -90,7 +100,9 @@ export class InfoActions {
     PREFIX + 'handleCommentIds',
     async (ids, thunkAPI) => {
       const idsToLoad = extractIdsToLoad(ids, thunkAPI.getState().info.comments);
-      return idsToLoad.length > 0 ? (await CommentService.getCommentInfoByIds(idsToLoad)).data : [];
+      return idsToLoad.length > 0
+        ? (await CommentService.getCommentInfoByIds(idsToLoad)).data
+        : thunkAPI.rejectWithValue(undefined);
     },
   );
 
@@ -101,7 +113,9 @@ export class InfoActions {
     PREFIX + 'fetchCommentThreads',
     async (targetIds, thunkAPI) => {
       const idsToLoad = extractIdsToLoad(targetIds, thunkAPI.getState().info.commentThreads);
-      return idsToLoad.length > 0 ? (await CommentService.getThreadInfoByTargetIds(idsToLoad)).data : [];
+      return idsToLoad.length > 0
+        ? (await CommentService.getThreadInfoByTargetIds(idsToLoad)).data
+        : thunkAPI.rejectWithValue(undefined);
     },
   );
 

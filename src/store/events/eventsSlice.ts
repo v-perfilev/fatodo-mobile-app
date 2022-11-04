@@ -98,7 +98,7 @@ const eventsSlice = createSlice({
     /*
     fetchEvents
     */
-    builder.addCase(EventsActions.fetchEventsThunk.fulfilled, (state, action) => {
+    builder.addCase(EventsActions.fetchEventsThunk.fulfilled, (state: EventsState, action) => {
       eventsSlice.caseReducers.setEvents(state, {...action, payload: action.payload.data});
       eventsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
       eventsSlice.caseReducers.setUnreadCount(state, {...action, payload: action.payload.unread});

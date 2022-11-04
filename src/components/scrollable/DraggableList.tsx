@@ -16,7 +16,7 @@ const DraggableList = React.forwardRef((props: DraggableListProps<any>, ref: For
 
   return (
     <AnimatedDraggableList
-      initialNumToRender={10}
+      initialNumToRender={20}
       maxToRenderPerBatch={10}
       updateCellsBatchingPeriod={20}
       onEndReachedThreshold={2}

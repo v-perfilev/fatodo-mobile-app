@@ -72,7 +72,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
 
   return (
     <Animated.FlatList
-      initialNumToRender={10}
+      initialNumToRender={20}
       maxToRenderPerBatch={10}
       updateCellsBatchingPeriod={20}
       onEndReachedThreshold={2}
