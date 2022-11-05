@@ -125,8 +125,6 @@ const ChatView = ({chat, containerLoading}: ChatViewProps) => {
     [],
   );
 
-  console.log(containerLoading, loading);
-
   return (
     <RefreshableFlatList
       containerStyle={containerStyle}
