@@ -136,13 +136,11 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   useEffect(() => {
     parentScrollY?.addListener(({value}) => {
       scrollYValue.current = value;
-      const newEnabledValue = value === 0;
-      enabled !== newEnabledValue && setEnabled(newEnabledValue);
+      setEnabled(value === 0);
     });
     scrollY.current?.addListener(({value}) => {
       scrollYValue.current = value;
-      const newEnabledValue = value === 0;
-      enabled !== newEnabledValue && setEnabled(newEnabledValue);
+      setEnabled(value === 0);
     });
     extraScrollY.current?.addListener(({value}) => (extraScrollValue.current = value));
     return () => {
