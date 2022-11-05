@@ -15,7 +15,7 @@ type RefreshableContainerProps = {
   refresh?: () => Promise<void>;
   parentScrollY?: Animated.Value;
   inverted?: boolean;
-  withGestureHandler?: boolean;
+  withoutNativeHandler?: boolean;
   children: (props: RefreshableContainerChildrenProps) => ReactElement;
 };
 
@@ -23,7 +23,7 @@ const RefreshableContainer = ({
   refresh,
   parentScrollY,
   inverted,
-  withGestureHandler,
+  withoutNativeHandler,
   children,
 }: RefreshableContainerProps) => {
   const [refreshGesturesAllowed, setRefreshGesturesAllowed] = useState<boolean>(!!refresh);
@@ -122,7 +122,7 @@ const RefreshableContainer = ({
         refresh().finally(() => {
           grayscaleRefresher();
           closeLoader();
-          setTimeout(() => setRefreshGesturesAllowed(true), 1000);
+          setTimeout(() => setRefreshGesturesAllowed(true), 500);
         });
       });
     } else if (extraScrollValue.current > 0) {
@@ -140,13 +140,14 @@ const RefreshableContainer = ({
   }, []);
 
   useEffect(() => {
+    parentScrollY?.addListener(({value}) => (scrollYValue.current = value));
     scrollY.current?.addListener(({value}) => (scrollYValue.current = value));
-    return () => scrollY.current?.removeAllListeners();
-  }, []);
-
-  useEffect(() => {
     extraScrollY.current?.addListener(({value}) => (extraScrollValue.current = value));
-    return () => scrollY.current?.removeAllListeners();
+    return () => {
+      parentScrollY?.removeAllListeners();
+      scrollY.current?.removeAllListeners();
+      extraScrollY.current?.removeAllListeners();
+    };
   }, []);
 
   useEffect(() => {
@@ -196,8 +197,9 @@ const RefreshableContainer = ({
   const panGestureHandlerElement = (content: ReactElement): ReactElement => (
     <PanGestureHandler
       onBegan={refreshGesturesAllowed ? handleGestureBegan : undefined}
-      onGestureEvent={refreshGesturesAllowed ? handleGestureEvent : undefined}
-      onEnded={refreshGesturesAllowed ? handleGestureEnded : undefined}
+      onGestureEvent={refreshGesturesAllowed ? handleGestureEvent : handleGestureEnded}
+      onEnded={handleGestureEnded}
+      onCancelled={handleGestureEnded}
       activeOffsetY={[-15, 15]}
       ref={panRef}
     >
@@ -205,7 +207,7 @@ const RefreshableContainer = ({
     </PanGestureHandler>
   );
 
-  return withGestureHandler
+  return withoutNativeHandler
     ? animatedElement(panGestureHandlerElement(childrenWithProps))
     : animatedElement(panGestureHandlerElement(nativeGestureHandlerElement(childrenWithProps)));
 };
