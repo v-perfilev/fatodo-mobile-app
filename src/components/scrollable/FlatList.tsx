@@ -1,6 +1,14 @@
 import React, {ForwardedRef, memo, ReactElement, useCallback, useRef} from 'react';
 import {IFlatListProps} from 'native-base/lib/typescript/components/basic/FlatList';
-import {Animated, FlatList as RNFlatList, LayoutChangeEvent, ListRenderItemInfo, Platform} from 'react-native';
+import {
+  Animated,
+  FlatList as RNFlatList,
+  LayoutChangeEvent,
+  ListRenderItemInfo,
+  Platform,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import {DEFAULT_FLAT_LIST_ITEM_HEIGHT} from '../../constants';
 
 export type FlatListType = RNFlatList;
@@ -12,7 +20,7 @@ export type FlatListProps<T> = Partial<IFlatListProps<T>> & {
 };
 
 const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<any>) => {
-  const {data, render, keyExtractor, fixedLength} = props;
+  const {data, render, keyExtractor, fixedLength, contentContainerStyle} = props;
   const lengthMap = useRef<Map<string, number>>(new Map());
 
   const getItemLength = useCallback(
@@ -71,6 +79,8 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
     [getItemLength, getItemOffset],
   );
 
+  const style: StyleProp<ViewStyle> = {minHeight: '100%'};
+
   return (
     <Animated.FlatList
       initialNumToRender={20}
@@ -78,6 +88,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
       updateCellsBatchingPeriod={10}
       onEndReachedThreshold={1}
       {...props}
+      contentContainerStyle={[style, contentContainerStyle]}
       data={data}
       renderItem={_renderItem}
       getItemLayout={_getItemLayout}

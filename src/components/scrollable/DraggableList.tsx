@@ -1,6 +1,6 @@
 import React, {ForwardedRef, memo} from 'react';
 import DraggableFlatList, {DragEndParams, DraggableFlatListProps} from 'react-native-draggable-flatlist';
-import {Animated, Platform} from 'react-native';
+import {Animated, Platform, StyleProp, ViewStyle} from 'react-native';
 
 export type DraggableListProps<T> = Partial<DraggableFlatListProps<T>> & {
   keyExtractor: (item: T) => string;
@@ -10,7 +10,9 @@ export type DraggableListProps<T> = Partial<DraggableFlatListProps<T>> & {
 const AnimatedDraggableList = Animated.createAnimatedComponent(DraggableFlatList);
 
 const DraggableList = React.forwardRef((props: DraggableListProps<any>, ref: ForwardedRef<any>) => {
-  const {data, renderItem, keyExtractor, handleDragEnd} = props;
+  const {data, renderItem, keyExtractor, handleDragEnd, containerStyle} = props;
+
+  const style: StyleProp<ViewStyle> = {minHeight: '100%'};
 
   return (
     <AnimatedDraggableList
@@ -19,6 +21,7 @@ const DraggableList = React.forwardRef((props: DraggableListProps<any>, ref: For
       updateCellsBatchingPeriod={20}
       onEndReachedThreshold={2}
       {...props}
+      containerStyle={[style, containerStyle]}
       data={data}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
