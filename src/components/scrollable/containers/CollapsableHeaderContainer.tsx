@@ -7,7 +7,6 @@ export type CollapsableHeaderContainerChildrenProps = {
   collapsableRef: MutableRefObject<any>;
   handleEventSnap: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
   handleEventScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-  handleOffsetScroll: (offset: number) => void;
   scrollY: Animated.Value;
 };
 
@@ -61,13 +60,6 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
     [scrollY.current],
   );
 
-  const handleOffsetScroll = useCallback(
-    (offset: number): void => {
-      scrollY.current.setValue(Math.max(0, offset));
-    },
-    [scrollY.current],
-  );
-
   useEffect(() => {
     translateY.addListener(({value}) => (translateYNumber.current = value));
     return () => translateY.removeAllListeners();
@@ -79,13 +71,12 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
     collapsableRef,
     handleEventSnap,
     handleEventScroll,
-    handleOffsetScroll,
     scrollY: scrollY.current,
   };
 
   const childWithProps = useMemo<ReactElement>(
     () => children(childrenProps),
-    [children, handleEventSnap, handleEventScroll, handleOffsetScroll],
+    [children, handleEventSnap, handleEventScroll],
   );
 
   return (

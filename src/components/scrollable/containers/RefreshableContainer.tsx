@@ -174,40 +174,39 @@ const RefreshableContainer = ({
     panRef,
   };
 
-  const childrenWithProps = useMemo<ReactElement>(
-    () => children(childrenProps),
-    [children, refresher, handleEventScroll],
-  );
-
   const containerStyle: StyleProp<any> = {
     display: 'flex',
     flexGrow: 1,
     marginTop: inverted ? -REFRESH_HEIGHT : undefined,
     marginBottom: !inverted ? -REFRESH_HEIGHT : undefined,
   };
+
   const animatedContainerStyle = {transform: [{translateY}]};
 
+  const childrenWithProps = useMemo<ReactElement>(
+    () => children(childrenProps),
+    [children, refresher, handleEventScroll],
+  );
+
   const gestureHandler = withGestureHandler ? (
-    childrenWithProps
+    <Animated.View style={[containerStyle, animatedContainerStyle]}>{childrenWithProps}</Animated.View>
   ) : (
     <NativeViewGestureHandler simultaneousHandlers={panRef} ref={nativeRef}>
-      {childrenWithProps}
+      <Animated.View style={[containerStyle, animatedContainerStyle]}>{childrenWithProps}</Animated.View>
     </NativeViewGestureHandler>
   );
 
   return (
-    <Animated.View style={[containerStyle, animatedContainerStyle]}>
-      <PanGestureHandler
-        onBegan={refreshGesturesAllowed ? handleGestureBegan : undefined}
-        onGestureEvent={refreshGesturesAllowed ? handleGestureEvent : undefined}
-        onEnded={refreshGesturesAllowed ? handleGestureEnded : undefined}
-        activeOffsetY={[-15, 15]}
-        simultaneousHandlers={nativeRef}
-        ref={panRef}
-      >
-        {gestureHandler}
-      </PanGestureHandler>
-    </Animated.View>
+    <PanGestureHandler
+      onBegan={refreshGesturesAllowed ? handleGestureBegan : undefined}
+      onGestureEvent={refreshGesturesAllowed ? handleGestureEvent : undefined}
+      onEnded={refreshGesturesAllowed ? handleGestureEnded : undefined}
+      activeOffsetY={[-15, 15]}
+      simultaneousHandlers={nativeRef}
+      ref={panRef}
+    >
+      {gestureHandler}
+    </PanGestureHandler>
   );
 };
 

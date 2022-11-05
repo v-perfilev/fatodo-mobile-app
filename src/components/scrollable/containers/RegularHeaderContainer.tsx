@@ -3,7 +3,6 @@ import React, {memo, ReactElement, useCallback, useMemo, useRef} from 'react';
 
 export type RegularHeaderContainerChildrenProps = {
   handleEventScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-  handleOffsetScroll: (offset: number) => void;
   scrollY: Animated.Value;
 };
 
@@ -25,23 +24,12 @@ const RegularHeaderContainer = ({header, children}: RegularHeaderContainerProps)
     [scrollY.current],
   );
 
-  const handleOffsetScroll = useCallback(
-    (offset: number): void => {
-      scrollY.current.setValue(Math.max(0, offset));
-    },
-    [scrollY.current],
-  );
-
   const childrenProps: RegularHeaderContainerChildrenProps = {
     handleEventScroll,
-    handleOffsetScroll,
     scrollY: scrollY.current,
   };
 
-  const childWithProps = useMemo<ReactElement>(
-    () => children(childrenProps),
-    [children, handleEventScroll, handleOffsetScroll],
-  );
+  const childWithProps = useMemo<ReactElement>(() => children(childrenProps), [children, handleEventScroll]);
 
   return (
     <View style={safeAreaStyle}>
