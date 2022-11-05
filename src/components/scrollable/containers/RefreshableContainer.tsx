@@ -173,8 +173,6 @@ const RefreshableContainer = ({
   };
 
   const containerStyle: StyleProp<any> = {
-    display: 'flex',
-    flexGrow: 1,
     marginTop: inverted ? -REFRESH_HEIGHT : undefined,
     marginBottom: !inverted ? -REFRESH_HEIGHT : undefined,
   };

@@ -9,20 +9,22 @@ import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import PlusIcon from '../../../components/icons/PlusIcon';
-import {HEADER_HEIGHT} from '../../../constants';
+import {HEADER_HEIGHT, REFRESH_HEIGHT, TAB_HEIGHT} from '../../../constants';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import CollapsableDraggableList, {
   CollapsableRefreshableDraggableListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableDraggableList';
-import {StyleProp, ViewStyle} from 'react-native';
+import {Dimensions, StyleProp, ViewStyle} from 'react-native';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import GroupListCard from './groupListCard/GroupListCard';
 import GroupListStub from './GroupListStub';
 
-const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: 4};
-const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
+const paddingTop = HEADER_HEIGHT;
+const minHeight = Dimensions.get('window').height - HEADER_HEIGHT - TAB_HEIGHT + REFRESH_HEIGHT;
+const containerStyle: StyleProp<ViewStyle> = {paddingTop, minHeight};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop};
 
 const GroupList = () => {
   const dispatch = useAppDispatch();

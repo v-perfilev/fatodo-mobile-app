@@ -49,6 +49,9 @@ export const INPUT_FONT_SIZE = 13;
 export const DEFAULT_SPACE = 3;
 export const SMALL_SPACE = 1;
 
+// CONTACTS
+export const CONTACTS_FILTER_HEIGHT = 50;
+
 // CHATS
 export const TIMEOUT_BEFORE_MARK_AS_READ = 1000;
 export const CHATS_FILTER_HEIGHT = 50;

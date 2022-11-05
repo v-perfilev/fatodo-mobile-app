@@ -1,7 +1,7 @@
 import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import GroupViewHeader from './GroupViewHeader';
-import {HEADER_HEIGHT} from '../../../constants';
+import {HEADER_HEIGHT, REFRESH_HEIGHT, TAB_HEIGHT} from '../../../constants';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import GroupViewStub from './GroupViewStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -9,7 +9,7 @@ import GroupSelectors from '../../../store/group/groupSelectors';
 import {GroupActions} from '../../../store/group/groupActions';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {Item} from '../../../models/Item';
-import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import {Dimensions, LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableFlatListChildrenProps,
@@ -31,8 +31,10 @@ import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 
 type GroupViewProps = WithGroupProps;
 
-const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
-const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
+const paddingTop = HEADER_HEIGHT;
+const minHeight = Dimensions.get('window').height - HEADER_HEIGHT - TAB_HEIGHT + REFRESH_HEIGHT;
+const containerStyle: StyleProp<ViewStyle> = {paddingTop, minHeight};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop};
 
 const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
   const [showArchived, setShowArchived] = useState<boolean>(false);
@@ -66,21 +68,21 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
 
   const initialLoad = useCallback(async (): Promise<void> => {
     showArchived
-      ? dispatch(GroupActions.fetchArchivedItemsThunk({groupId, offset: 0}))
-      : dispatch(GroupActions.fetchActiveItemsThunk({groupId, offset: 0}));
+      ? await dispatch(GroupActions.fetchArchivedItemsThunk({groupId, offset: 0}))
+      : await dispatch(GroupActions.fetchActiveItemsThunk({groupId, offset: 0}));
   }, [items, showArchived]);
 
   const load = useCallback(async (): Promise<void> => {
     const offset = items.length;
     showArchived
-      ? dispatch(GroupActions.fetchArchivedItemsThunk({groupId, offset}))
-      : dispatch(GroupActions.fetchActiveItemsThunk({groupId, offset}));
+      ? await dispatch(GroupActions.fetchArchivedItemsThunk({groupId, offset}))
+      : await dispatch(GroupActions.fetchActiveItemsThunk({groupId, offset}));
   }, [items, showArchived]);
 
   const refresh = useCallback(async (): Promise<void> => {
     showArchived
-      ? dispatch(GroupActions.refreshArchivedItemsThunk(groupId))
-      : dispatch(GroupActions.refreshActiveItemsThunk(groupId));
+      ? await dispatch(GroupActions.refreshArchivedItemsThunk(groupId))
+      : await dispatch(GroupActions.refreshActiveItemsThunk(groupId));
   }, [showArchived]);
 
   /*
@@ -129,7 +131,7 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
 
   return (
     <CollapsableRefreshableFlatList
-      containerStyle={containerStyle}
+      contentContainerStyle={containerStyle}
       loaderStyle={loaderStyle}
       header={<GroupViewHeader setShowArchived={setShowArchived} />}
       loading={containerLoading || (items.length === 0 && !allItemsLoaded)}

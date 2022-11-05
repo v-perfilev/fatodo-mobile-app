@@ -1,12 +1,12 @@
 import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {CHATS_FILTER_HEIGHT, HEADER_HEIGHT} from '../../../constants';
+import {CHATS_FILTER_HEIGHT, HEADER_HEIGHT, REFRESH_HEIGHT, TAB_HEIGHT} from '../../../constants';
 import ChatListControl from './ChatListControl';
 import Header from '../../../components/layouts/Header';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import ChatListStub from './ChatListStub';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Chat} from '../../../models/Chat';
-import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import {Dimensions, LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import {Box} from 'native-base';
 import ChatListItem from './ChatListItem';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -25,8 +25,10 @@ import ChatListSkeleton from '../skeletons/ChatListSkeleton';
 
 type ControlType = 'regular' | 'filtered';
 
-const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT + CHATS_FILTER_HEIGHT};
-const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT + CHATS_FILTER_HEIGHT};
+const paddingTop = HEADER_HEIGHT + CHATS_FILTER_HEIGHT;
+const minHeight = Dimensions.get('window').height - HEADER_HEIGHT - CHATS_FILTER_HEIGHT - TAB_HEIGHT + REFRESH_HEIGHT;
+const containerStyle: StyleProp<ViewStyle> = {paddingTop, minHeight};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop};
 
 const ChatList = () => {
   const dispatch = useAppDispatch();
@@ -115,7 +117,7 @@ const ChatList = () => {
 
   return (
     <CollapsableRefreshableFlatList
-      containerStyle={containerStyle}
+      contentContainerStyle={containerStyle}
       loaderStyle={loaderStyle}
       header={<Header showAvatar hideGoBack />}
       refresh={type === 'regular' ? refresh : undefined}

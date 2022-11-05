@@ -18,12 +18,10 @@ type RefreshableFlatListProps = Omit<FlatListProps<any>, 'children'> & {
   previousNode?: ReactNode;
   nextNode?: ReactNode;
   loadingPlaceholder?: ReactElement;
-  containerStyle?: StyleProp<ViewStyle>;
+  contentContainerStyle?: StyleProp<ViewStyle>;
   loaderStyle?: StyleProp<ViewStyle>;
   children?: ReactNode | ChildrenFuncType;
 };
-
-const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
 
 const RefreshableFlatList = React.forwardRef((props: RefreshableFlatListProps, ref: any) => {
   const {
@@ -34,7 +32,6 @@ const RefreshableFlatList = React.forwardRef((props: RefreshableFlatListProps, r
     nextNode,
     loadingPlaceholder,
     inverted,
-    containerStyle,
     loaderStyle,
     children,
     ...otherProps
@@ -53,7 +50,6 @@ const RefreshableFlatList = React.forwardRef((props: RefreshableFlatListProps, r
                   onScroll={handleEventScroll}
                   ref={ref}
                   inverted={inverted}
-                  contentContainerStyle={[flexStyle, containerStyle]}
                   {...otherProps}
                 />
               )}

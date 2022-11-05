@@ -25,28 +25,16 @@ type CollapsableRefreshableDraggableListProps = Omit<DraggableListProps<any>, 'c
   children?: ReactNode | ChildrenFuncType;
 };
 
-const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
-
 const CollapsableRefreshableDraggableList = React.forwardRef(
   (props: CollapsableRefreshableDraggableListProps, ref: any) => {
-    const {
-      header,
-      loading,
-      sorting,
-      refresh,
-      loadingPlaceholder,
-      containerStyle,
-      loaderStyle,
-      children,
-      ...otherProps
-    } = props;
+    const {header, loading, sorting, refresh, loadingPlaceholder, loaderStyle, children, ...otherProps} = props;
 
     return (
       <CollapsableHeaderContainer header={header}>
         {({handleEventScroll, handleEventSnap, scrollY, collapsableRef}: CollapsableHeaderContainerChildrenProps) => (
           <>
             <ConditionalSpinner loading={loading} loadingPlaceholder={loadingPlaceholder} style={loaderStyle}>
-              <RefreshableContainer withGestureHandler refresh={!sorting && refresh} parentScrollY={scrollY}>
+              <RefreshableContainer withoutNativeHandler refresh={!sorting && refresh} parentScrollY={scrollY}>
                 {({refresher, panRef}: RefreshableContainerChildrenProps) => (
                   <DraggableList
                     ListHeaderComponent={refresher}
@@ -54,7 +42,6 @@ const CollapsableRefreshableDraggableList = React.forwardRef(
                     onMomentumScrollEnd={handleEventSnap}
                     ref={RefUtils.merge(ref, collapsableRef)}
                     simultaneousHandlers={panRef}
-                    contentContainerStyle={[flexStyle, containerStyle]}
                     {...otherProps}
                   />
                 )}

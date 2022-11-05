@@ -21,12 +21,10 @@ type CollapsableRefreshableFlatListProps = Omit<FlatListProps<any>, 'children'> 
   previousNode?: ReactNode;
   nextNode?: ReactNode;
   loadingPlaceholder?: ReactElement;
-  containerStyle?: StyleProp<ViewStyle>;
+  contentContainerStyle?: StyleProp<ViewStyle>;
   loaderStyle?: StyleProp<ViewStyle>;
   children?: ReactNode | ChildrenFuncType;
 };
-
-const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
 
 const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefreshableFlatListProps, ref: any) => {
   const {
@@ -37,7 +35,6 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
     nextNode,
     loadingPlaceholder,
     inverted,
-    containerStyle,
     loaderStyle,
     children,
     ...otherProps
@@ -57,7 +54,6 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
                   onMomentumScrollEnd={handleEventSnap}
                   ref={RefUtils.merge(ref, collapsableRef)}
                   inverted={inverted}
-                  contentContainerStyle={[flexStyle, containerStyle]}
                   {...otherProps}
                 />
               )}

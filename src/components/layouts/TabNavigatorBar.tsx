@@ -41,7 +41,7 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
   );
 
   return (
-    <Pressable flex="1" h={TAB_HEIGHT} p="1" onPress={onPress}>
+    <Pressable flex="1" p="1" onPress={onPress}>
       <FVStack grow justifyContent="center" alignItems="center">
         <FCenter flex="1" flexGrow="1">
           {showBadgeNode && badgeNode}
@@ -57,9 +57,9 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
 
 const TabNavigatorBar = ({state, descriptors, navigation}: TabNavigatorBarProps) => {
   return (
-    <>
+    <FVStack safeAreaBottom h={TAB_HEIGHT}>
       <Separator />
-      <FHStack safeAreaBottom>
+      <FHStack grow>
         {state.routes.map((route, index) => (
           <TabNavigatorItem
             routeKey={route.key}
@@ -72,7 +72,7 @@ const TabNavigatorBar = ({state, descriptors, navigation}: TabNavigatorBarProps)
           />
         ))}
       </FHStack>
-    </>
+    </FVStack>
   );
 };
 

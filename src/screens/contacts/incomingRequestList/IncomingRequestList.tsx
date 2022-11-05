@@ -6,13 +6,17 @@ import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import IncomingRequestListStub from './IncomingRequestListStub';
 import {Box} from 'native-base';
 import {ContactRequest} from '../../../models/Contact';
-import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
+import {Dimensions, LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import IncomingRequestListItem from './IncomingRequestListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {useIsFocused} from '@react-navigation/native';
 import Separator from '../../../components/layouts/Separator';
 import FBox from '../../../components/boxes/FBox';
 import ContactListSkeleton from '../skeletons/ContactListSkeleton';
+import {HEADER_HEIGHT, REFRESH_HEIGHT} from '../../../constants';
+
+const minHeight = Dimensions.get('window').height - HEADER_HEIGHT + REFRESH_HEIGHT;
+const containerStyle: StyleProp<ViewStyle> = {minHeight};
 
 const IncomingRequestList = () => {
   const dispatch = useAppDispatch();
@@ -49,6 +53,7 @@ const IncomingRequestList = () => {
   return (
     <FBox>
       <CollapsableRefreshableFlatList
+        contentContainerStyle={containerStyle}
         loading={loading}
         loadingPlaceholder={<ContactListSkeleton />}
         ListEmptyComponent={<IncomingRequestListStub />}

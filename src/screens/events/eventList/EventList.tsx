@@ -5,14 +5,14 @@ import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useIsFocused} from '@react-navigation/native';
 import EventsSelectors from '../../../store/events/eventsSelectors';
 import {FlatListType} from '../../../components/scrollable/FlatList';
-import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import {Dimensions, LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import {Event} from '../../../models/Event';
 import {Box} from 'native-base';
 import EventListItem from './eventListItem/EventListItem';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
-import {HEADER_HEIGHT} from '../../../constants';
+import {HEADER_HEIGHT, REFRESH_HEIGHT, TAB_HEIGHT} from '../../../constants';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import Header from '../../../components/layouts/Header';
@@ -21,8 +21,10 @@ import Separator from '../../../components/layouts/Separator';
 import CentredLoader from '../../../components/surfaces/CentredLoader';
 import EventListSkeleton from '../skeletons/EventListSkeleton';
 
-const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
-const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
+const paddingTop = HEADER_HEIGHT;
+const minHeight = Dimensions.get('window').height - HEADER_HEIGHT - TAB_HEIGHT + REFRESH_HEIGHT;
+const containerStyle: StyleProp<ViewStyle> = {paddingTop, minHeight};
+const loaderStyle: StyleProp<ViewStyle> = {paddingTop};
 
 const EventList = () => {
   const dispatch = useAppDispatch();
@@ -97,7 +99,7 @@ const EventList = () => {
 
   return (
     <CollapsableRefreshableFlatList
-      containerStyle={containerStyle}
+      contentContainerStyle={containerStyle}
       loaderStyle={loaderStyle}
       header={<Header showAvatar hideGoBack />}
       refresh={refresh}
