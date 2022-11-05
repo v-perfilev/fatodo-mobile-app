@@ -11,7 +11,6 @@ type RegularHeaderContainerProps = {
   children: (props: RegularHeaderContainerChildrenProps) => ReactElement;
 };
 
-const safeAreaStyle: StyleProp<ViewStyle> = {flex: 1};
 const headerStyle: StyleProp<ViewStyle> = {zIndex: 1, position: 'absolute', width: '100%'};
 
 const RegularHeaderContainer = ({header, children}: RegularHeaderContainerProps) => {
@@ -32,10 +31,10 @@ const RegularHeaderContainer = ({header, children}: RegularHeaderContainerProps)
   const childWithProps = useMemo<ReactElement>(() => children(childrenProps), [children, handleEventScroll]);
 
   return (
-    <View style={safeAreaStyle}>
+    <>
       {header && <View style={headerStyle}>{header}</View>}
       {childWithProps}
-    </View>
+    </>
   );
 };
 

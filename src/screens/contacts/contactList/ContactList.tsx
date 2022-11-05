@@ -9,7 +9,7 @@ import {Box} from 'native-base';
 import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {ContactRelation} from '../../../models/Contact';
-import {Dimensions, LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import ContactListItem from './ContactListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import CornerManagement from '../../../components/controls/CornerManagement';
@@ -18,11 +18,9 @@ import PlusIcon from '../../../components/icons/PlusIcon';
 import {useIsFocused} from '@react-navigation/native';
 import Separator from '../../../components/layouts/Separator';
 import ContactListSkeleton from '../skeletons/ContactListSkeleton';
-import {CONTACTS_FILTER_HEIGHT, HEADER_HEIGHT, REFRESH_HEIGHT} from '../../../constants';
+import {CONTACTS_FILTER_HEIGHT} from '../../../constants';
 
 const paddingBottom = CONTACTS_FILTER_HEIGHT;
-const minHeight = Dimensions.get('window').height - HEADER_HEIGHT - CONTACTS_FILTER_HEIGHT + REFRESH_HEIGHT;
-const containerStyle: StyleProp<ViewStyle> = {minHeight};
 const loaderStyle: StyleProp<ViewStyle> = {paddingBottom};
 
 const ContactList = () => {
@@ -81,7 +79,6 @@ const ContactList = () => {
 
   return (
     <CollapsableRefreshableFlatList
-      contentContainerStyle={containerStyle}
       loaderStyle={loaderStyle}
       previousNode={<ContactListControl setFilter={setFilter} />}
       loading={loading}

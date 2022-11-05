@@ -1,7 +1,7 @@
 import React, {memo, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withContainers/withGroupContainer';
 import GroupViewHeader from './GroupViewHeader';
-import {HEADER_HEIGHT, REFRESH_HEIGHT, TAB_HEIGHT} from '../../../constants';
+import {HEADER_HEIGHT} from '../../../constants';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import GroupViewStub from './GroupViewStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -9,7 +9,7 @@ import GroupSelectors from '../../../store/group/groupSelectors';
 import {GroupActions} from '../../../store/group/groupActions';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {Item} from '../../../models/Item';
-import {Dimensions, LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableFlatListChildrenProps,
@@ -32,8 +32,7 @@ import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 type GroupViewProps = WithGroupProps;
 
 const paddingTop = HEADER_HEIGHT;
-const minHeight = Dimensions.get('window').height - HEADER_HEIGHT - TAB_HEIGHT + REFRESH_HEIGHT;
-const containerStyle: StyleProp<ViewStyle> = {paddingTop, minHeight};
+const containerStyle: StyleProp<ViewStyle> = {paddingTop};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop};
 
 const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {

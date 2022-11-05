@@ -2,13 +2,7 @@ import React, {memo, ReactElement, useCallback, useMemo, useRef} from 'react';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
-import {
-  CHATS_INPUT_HEIGHT,
-  HEADER_HEIGHT,
-  REFRESH_HEIGHT,
-  TAB_HEIGHT,
-  TIMEOUT_BEFORE_MARK_AS_READ,
-} from '../../../constants';
+import {CHATS_INPUT_HEIGHT, HEADER_HEIGHT, TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import ChatViewStub from './ChatViewStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -17,7 +11,7 @@ import ChatSelectors from '../../../store/chat/chatSelectors';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {ChatActions} from '../../../store/chat/chatActions';
 import {ChatItem, Message} from '../../../models/Message';
-import {Dimensions, LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle, ViewToken} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle, ViewToken} from 'react-native';
 import ChatViewItem from './ChatViewItem';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {CornerButton} from '../../../models/CornerButton';
@@ -34,8 +28,7 @@ type ChatViewProps = WithChatProps;
 
 const paddingTop = HEADER_HEIGHT;
 const paddingBottom = CHATS_INPUT_HEIGHT;
-const minHeight = Dimensions.get('window').height - HEADER_HEIGHT - CHATS_INPUT_HEIGHT - TAB_HEIGHT + REFRESH_HEIGHT;
-const containerStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom, minHeight};
+const containerStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom};
 
 const ChatView = ({chat, containerLoading}: ChatViewProps) => {

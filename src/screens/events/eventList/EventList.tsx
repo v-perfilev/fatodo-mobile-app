@@ -5,14 +5,14 @@ import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {useIsFocused} from '@react-navigation/native';
 import EventsSelectors from '../../../store/events/eventsSelectors';
 import {FlatListType} from '../../../components/scrollable/FlatList';
-import {Dimensions, LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import {Event} from '../../../models/Event';
 import {Box} from 'native-base';
 import EventListItem from './eventListItem/EventListItem';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
-import {HEADER_HEIGHT, REFRESH_HEIGHT, TAB_HEIGHT} from '../../../constants';
+import {HEADER_HEIGHT} from '../../../constants';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import Header from '../../../components/layouts/Header';
@@ -22,8 +22,7 @@ import CentredLoader from '../../../components/surfaces/CentredLoader';
 import EventListSkeleton from '../skeletons/EventListSkeleton';
 
 const paddingTop = HEADER_HEIGHT;
-const minHeight = Dimensions.get('window').height - HEADER_HEIGHT - TAB_HEIGHT + REFRESH_HEIGHT;
-const containerStyle: StyleProp<ViewStyle> = {paddingTop, minHeight};
+const containerStyle: StyleProp<ViewStyle> = {paddingTop};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop};
 
 const EventList = () => {

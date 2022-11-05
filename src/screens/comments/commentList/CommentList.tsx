@@ -8,12 +8,12 @@ import CommentListStub from './CommentListStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {CommentsActions} from '../../../store/comments/commentsActions';
-import {Dimensions, LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import CommentListItem from './commentListItem/CommentListItem';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
-import {COMMENTS_INPUT_HEIGHT, HEADER_HEIGHT, REFRESH_HEIGHT, TAB_HEIGHT} from '../../../constants';
+import {COMMENTS_INPUT_HEIGHT, HEADER_HEIGHT} from '../../../constants';
 import RefreshableFlatList, {
   RefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/RefreshableFlatList';
@@ -27,8 +27,7 @@ type CommentListProps = WithCommentsProps;
 
 const paddingTop = HEADER_HEIGHT;
 const paddingBottom = COMMENTS_INPUT_HEIGHT;
-const minHeight = Dimensions.get('window').height - HEADER_HEIGHT - COMMENTS_INPUT_HEIGHT - TAB_HEIGHT + REFRESH_HEIGHT;
-const containerStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom, minHeight};
+const containerStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom};
 
 const CommentList = ({containerLoading}: CommentListProps) => {

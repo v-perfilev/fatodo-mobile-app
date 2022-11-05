@@ -6,16 +6,12 @@ import {ContactsActions} from '../../../store/contacts/contactsActions';
 import OutcomingRequestListStub from './OutcomingRequestListStub';
 import {Box} from 'native-base';
 import {ContactRequest} from '../../../models/Contact';
-import {Dimensions, LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import {LayoutChangeEvent, ListRenderItemInfo} from 'react-native';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {useIsFocused} from '@react-navigation/native';
 import Separator from '../../../components/layouts/Separator';
 import ContactListSkeleton from '../skeletons/ContactListSkeleton';
 import OutcomingRequestListItem from './OutcomingRequestListItem';
-import {HEADER_HEIGHT, REFRESH_HEIGHT} from '../../../constants';
-
-const minHeight = Dimensions.get('window').height - HEADER_HEIGHT + REFRESH_HEIGHT;
-const containerStyle: StyleProp<ViewStyle> = {minHeight};
 
 const OutcomingRequestList = () => {
   const dispatch = useAppDispatch();
@@ -43,7 +39,6 @@ const OutcomingRequestList = () => {
 
   return (
     <CollapsableRefreshableFlatList
-      contentContainerStyle={containerStyle}
       loading={loading}
       loadingPlaceholder={<ContactListSkeleton />}
       ListEmptyComponent={<OutcomingRequestListStub />}

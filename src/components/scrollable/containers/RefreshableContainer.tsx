@@ -173,6 +173,7 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   };
 
   const containerStyle: StyleProp<ViewStyle> = {
+    flex: 1,
     marginTop: !inverted ? -REFRESH_HEIGHT : undefined,
     marginBottom: inverted ? -REFRESH_HEIGHT : undefined,
   };
