@@ -50,6 +50,8 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
       loadGroup();
     } else if (wrongRoute) {
       goBack();
+    } else {
+      setContainerLoading(false);
     }
   }, []);
 
