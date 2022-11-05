@@ -13,7 +13,7 @@ import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 
 type GroupEditProps = WithGroupProps;
 
-const GroupEdit = ({group, loading}: GroupEditProps) => {
+const GroupEdit = ({group, containerLoading}: GroupEditProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
 
@@ -34,7 +34,7 @@ const GroupEdit = ({group, loading}: GroupEditProps) => {
   return (
     <>
       <Header />
-      <ConditionalSpinner loading={loading}>
+      <ConditionalSpinner loading={containerLoading}>
         <SimpleScrollView>
           <GroupForm group={group} request={request} cancel={goBack} />
         </SimpleScrollView>

@@ -9,13 +9,13 @@ import {UserActions} from '../../../store/user/userActions';
 
 export type WithUserProps = {
   user?: User;
-  loading: boolean;
+  containerLoading: boolean;
 };
 
 const withUserContainer = (Component: ComponentType<WithUserProps>) => (props: any) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<RootNavigationProp>();
-  const [loading, setLoading] = useDelayedState();
+  const [containerLoading, setContainerLoading] = useDelayedState();
   const route = useRoute<RouteProp<RootParamList, 'withUser'>>();
   const routeUser = route.params.user;
   const routeUserId = route.params.userId;
@@ -26,14 +26,14 @@ const withUserContainer = (Component: ComponentType<WithUserProps>) => (props: a
   const selectUser = (): void => {
     dispatch(UserActions.selectUserThunk(routeUser))
       .unwrap()
-      .then(() => setLoading(false));
+      .then(() => setContainerLoading(false));
   };
 
   const loadUser = (): void => {
     dispatch(UserActions.fetchUserThunk(routeUserId))
       .unwrap()
       .catch(() => goBack())
-      .finally(() => setLoading(false));
+      .finally(() => setContainerLoading(false));
   };
 
   useEffect(() => {
@@ -44,11 +44,11 @@ const withUserContainer = (Component: ComponentType<WithUserProps>) => (props: a
     } else if (!routeUser && !routeUserId) {
       goBack();
     } else {
-      setLoading(false);
+      setContainerLoading(false);
     }
   }, []);
 
-  return <Component loading={loading} user={user || routeUser} {...props} />;
+  return <Component containerLoading={containerLoading} user={user || routeUser} {...props} />;
 };
 
 export default withUserContainer;

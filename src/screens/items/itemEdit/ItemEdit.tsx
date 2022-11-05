@@ -16,7 +16,7 @@ import {Reminder} from '../../../models/Reminder';
 
 type ItemEditProps = WithItemProps;
 
-const ItemEdit = ({group, item, loading}: ItemEditProps) => {
+const ItemEdit = ({group, item, containerLoading}: ItemEditProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const reminders = useAppSelector(ItemSelectors.reminders);
@@ -38,7 +38,7 @@ const ItemEdit = ({group, item, loading}: ItemEditProps) => {
   return (
     <>
       <Header />
-      <ConditionalSpinner loading={loading}>
+      <ConditionalSpinner loading={containerLoading}>
         <SimpleScrollView>
           <ItemForm group={group} item={item} reminders={reminders} request={request} cancel={goBack} />
         </SimpleScrollView>

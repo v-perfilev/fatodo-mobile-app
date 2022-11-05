@@ -16,7 +16,7 @@ import {Reminder} from '../../../models/Reminder';
 
 type ItemCreateProps = WithGroupProps;
 
-const ItemCreate = ({group, loading}: ItemCreateProps) => {
+const ItemCreate = ({group, containerLoading}: ItemCreateProps) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
 
@@ -33,7 +33,7 @@ const ItemCreate = ({group, loading}: ItemCreateProps) => {
   return (
     <>
       <Header />
-      <ConditionalSpinner loading={loading}>
+      <ConditionalSpinner loading={containerLoading}>
         <SimpleScrollView>
           <ItemForm group={group} request={request} cancel={goBack} />
         </SimpleScrollView>

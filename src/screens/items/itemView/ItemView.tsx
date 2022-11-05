@@ -27,7 +27,7 @@ import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 
 type ItemViewProps = WithItemProps;
 
-const ItemView = ({group, item, loading}: ItemViewProps) => {
+const ItemView = ({group, item, containerLoading}: ItemViewProps) => {
   const {t, i18n} = useTranslation();
   const navigation = useNavigation<RootNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
@@ -59,7 +59,7 @@ const ItemView = ({group, item, loading}: ItemViewProps) => {
   return (
     <>
       <ItemViewHeader account={account} />
-      <ConditionalSpinner loading={loading}>
+      <ConditionalSpinner loading={containerLoading}>
         <SimpleScrollView>
           <FVStack defaultSpace>
             <MultiLabeledBox items={labeledItems} />

@@ -13,11 +13,11 @@ import {flowRight} from 'lodash';
 
 type UserViewProps = WithUserProps;
 
-const UserView = ({user, loading}: UserViewProps) => {
+const UserView = ({user, containerLoading}: UserViewProps) => {
   return (
     <>
       <UserViewHeader />
-      <ConditionalSpinner loading={loading}>
+      <ConditionalSpinner loading={containerLoading}>
         <SimpleScrollView>
           <FVStack defaultSpace>
             <UserFullView user={user} withoutUsername />

@@ -1,4 +1,4 @@
-import React, {ComponentType, useEffect, useState} from 'react';
+import React, {ComponentType, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
@@ -6,11 +6,12 @@ import {Group} from '../../../models/Group';
 import {ItemActions} from '../../../store/item/itemActions';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import {Item} from '../../../models/Item';
+import {useDelayedState} from '../../hooks/useDelayedState';
 
 export type WithItemProps = {
   group?: Group;
   item?: Item;
-  loading: boolean;
+  containerLoading: boolean;
 };
 
 const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: any) => {
@@ -18,7 +19,7 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
   const navigation = useNavigation<GroupNavigationProp>();
   const stateGroup = useAppSelector(ItemSelectors.group);
   const stateItem = useAppSelector(ItemSelectors.item);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [containerLoading, setContainerLoading] = useDelayedState();
   const route = useRoute<RouteProp<GroupParamList, 'withItem'>>();
   const routeItemId = route.params.itemId;
   const routeItem = route.params.item;
@@ -38,14 +39,14 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
       dispatch(ItemActions.reset()),
       dispatch(ItemActions.setGroup(routeGroup)),
       dispatch(ItemActions.setItem(routeItem)),
-    ]).finally(() => setLoading(false));
+    ]).finally(() => setContainerLoading(false));
   };
 
   const loadItem = (): void => {
     dispatch(ItemActions.fetchItemThunk(routeItemId))
       .unwrap()
       .catch(() => goBack())
-      .finally(() => setLoading(false));
+      .finally(() => setContainerLoading(false));
   };
 
   useEffect(() => {
@@ -56,11 +57,11 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
     } else if (wrongRoute) {
       goBack();
     } else {
-      setLoading(false);
+      setContainerLoading(false);
     }
   }, []);
 
-  return <Component loading={loading} group={group} item={item} {...props} />;
+  return <Component containerLoading={containerLoading} group={group} item={item} {...props} />;
 };
 
 export default withItemContainer;

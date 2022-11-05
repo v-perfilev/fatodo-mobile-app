@@ -5,11 +5,12 @@ import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import {Group} from '../../../models/Group';
+import {useDelayedState} from '../../hooks/useDelayedState';
 
 export type WithGroupProps = {
   groupId: string;
   group?: Group;
-  loading: boolean;
+  containerLoading: boolean;
 };
 
 const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props: any) => {
@@ -17,6 +18,7 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'withGroup'>>();
   const stateGroup = useAppSelector(GroupSelectors.group);
+  const [containerLoading, setContainerLoading] = useDelayedState();
   const routeGroupId = route.params.groupId;
   const routeGroup = route.params.group;
   const groupId = routeGroupId || routeGroup?.id;
@@ -25,20 +27,20 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
   const canSetGroup = routeGroup && routeGroup.id !== stateGroup?.id;
   const canLoadGroup = routeGroupId && routeGroupId !== stateGroup?.id;
   const wrongRoute = !routeGroup && !routeGroupId;
-  const loadingFinished =
-    (routeGroup && routeGroup.id === stateGroup?.id) || (routeGroupId && routeGroupId === stateGroup?.id);
 
   const goBack = (): void => navigation.goBack();
 
   const setGroup = (): void => {
-    dispatch(GroupActions.reset());
-    dispatch(GroupActions.setGroup(routeGroup));
+    Promise.all([dispatch(GroupActions.reset()), dispatch(GroupActions.setGroup(routeGroup))]).finally(() =>
+      setContainerLoading(false),
+    );
   };
 
   const loadGroup = (): void => {
     dispatch(GroupActions.fetchGroupThunk(routeGroupId))
       .unwrap()
-      .catch(() => goBack());
+      .catch(() => goBack())
+      .finally(() => setContainerLoading(false));
   };
 
   useEffect(() => {
@@ -51,7 +53,7 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
     }
   }, []);
 
-  return <Component loading={!loadingFinished} groupId={groupId} group={group} {...props} />;
+  return <Component containerLoading={containerLoading} groupId={groupId} group={group} {...props} />;
 };
 
 export default withGroupContainer;

@@ -34,7 +34,7 @@ type GroupViewProps = WithGroupProps;
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT};
 
-const GroupView = ({groupId, group, loading}: GroupViewProps) => {
+const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
   const [showArchived, setShowArchived] = useState<boolean>(false);
   const itemsSelector = useCallback(GroupSelectors.makeItemsSelector(), []);
   const allItemsLoadedSelector = useCallback(GroupSelectors.makeAllItemsLoadedSelector(), []);
@@ -106,7 +106,7 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
    */
 
   useEffect(() => {
-    if (loading || (items.length === 0 && !allItemsLoaded)) {
+    if (containerLoading || (items.length === 0 && !allItemsLoaded)) {
       initialLoad().finally();
     }
   }, [showArchived]);
@@ -132,7 +132,7 @@ const GroupView = ({groupId, group, loading}: GroupViewProps) => {
       containerStyle={containerStyle}
       loaderStyle={loaderStyle}
       header={<GroupViewHeader setShowArchived={setShowArchived} />}
-      loading={loading || (items.length === 0 && !allItemsLoaded)}
+      loading={containerLoading || (items.length === 0 && !allItemsLoaded)}
       loadingPlaceholder={<GroupViewListSkeleton />}
       ListEmptyComponent={<GroupViewStub />}
       ListFooterComponent={items.length > 0 && !allItemsLoaded ? <CentredLoader my="5" /> : undefined}
