@@ -8,7 +8,6 @@ import Refresher from '../Refresher';
 export type RefreshableContainerChildrenProps = {
   refresher: ReactElement;
   handleEventScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-  refreshableRef?: MutableRefObject<any>;
   panRef?: MutableRefObject<any>;
 };
 
@@ -30,7 +29,6 @@ const RefreshableContainer = ({
   const [refreshGesturesAllowed, setRefreshGesturesAllowed] = useState<boolean>(!!refresh);
 
   const panRef = useRef();
-  const nativeRef = useRef();
   const scrollY = useRef<Animated.Value>(new Animated.Value(0));
   const extraScrollY = useRef<Animated.Value>(new Animated.Value(0));
   const refreshing = useRef<Animated.Value>(new Animated.Value(0));
@@ -170,7 +168,6 @@ const RefreshableContainer = ({
   const childrenProps: RefreshableContainerChildrenProps = {
     refresher,
     handleEventScroll,
-    refreshableRef: nativeRef,
     panRef,
   };
 
@@ -193,9 +190,7 @@ const RefreshableContainer = ({
   );
 
   const nativeGestureHandlerElement = (content: ReactElement): ReactElement => (
-    <NativeViewGestureHandler simultaneousHandlers={panRef} ref={nativeRef}>
-      {content}
-    </NativeViewGestureHandler>
+    <NativeViewGestureHandler simultaneousHandlers={panRef}>{content}</NativeViewGestureHandler>
   );
 
   const panGestureHandlerElement = (content: ReactElement): ReactElement => (
@@ -204,7 +199,6 @@ const RefreshableContainer = ({
       onGestureEvent={refreshGesturesAllowed ? handleGestureEvent : undefined}
       onEnded={refreshGesturesAllowed ? handleGestureEnded : undefined}
       activeOffsetY={[-15, 15]}
-      simultaneousHandlers={nativeRef}
       ref={panRef}
     >
       {content}

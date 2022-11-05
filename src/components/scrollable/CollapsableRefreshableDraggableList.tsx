@@ -47,12 +47,12 @@ const CollapsableRefreshableDraggableList = React.forwardRef(
           <>
             <ConditionalSpinner loading={loading} loadingPlaceholder={loadingPlaceholder} style={loaderStyle}>
               <RefreshableContainer withGestureHandler refresh={!sorting && refresh} parentScrollY={scrollY}>
-                {({refresher, refreshableRef, panRef}: RefreshableContainerChildrenProps) => (
+                {({refresher, panRef}: RefreshableContainerChildrenProps) => (
                   <DraggableList
                     ListHeaderComponent={refresher}
                     onScroll={handleEventScroll}
                     onMomentumScrollEnd={handleEventSnap}
-                    ref={RefUtils.merge(ref, collapsableRef, refreshableRef)}
+                    ref={RefUtils.merge(ref, collapsableRef)}
                     simultaneousHandlers={panRef}
                     contentContainerStyle={[flexStyle, containerStyle]}
                     {...otherProps}
