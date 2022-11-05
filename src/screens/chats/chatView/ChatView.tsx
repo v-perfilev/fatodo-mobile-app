@@ -17,10 +17,11 @@ import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
-import {RefreshableFlatListChildrenProps} from '../../../components/scrollable/LoadableFlatList';
+import RefreshableFlatList, {
+  RefreshableFlatListChildrenProps,
+} from '../../../components/scrollable/RefreshableFlatList';
 import MessageListSkeleton from '../skeletons/MessageListSkeleton';
 import {flowRight} from 'lodash';
-import RefreshableFlatList from '../../../components/scrollable/RefreshableFlatList';
 
 type ChatViewProps = WithChatProps;
 
@@ -123,6 +124,8 @@ const ChatView = ({chat, containerLoading}: ChatViewProps) => {
     ),
     [],
   );
+
+  console.log(containerLoading, loading);
 
   return (
     <RefreshableFlatList

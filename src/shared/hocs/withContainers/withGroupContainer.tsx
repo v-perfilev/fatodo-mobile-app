@@ -18,7 +18,7 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
   const navigation = useNavigation<GroupNavigationProp>();
   const route = useRoute<RouteProp<GroupParamList, 'withGroup'>>();
   const stateGroup = useAppSelector(GroupSelectors.group);
-  const [containerLoading, setContainerLoading] = useDelayedState();
+  const [containerLoading, setContainerLoading] = useDelayedState(true, 500);
   const routeGroupId = route.params.groupId;
   const routeGroup = route.params.group;
   const groupId = routeGroupId || routeGroup?.id;

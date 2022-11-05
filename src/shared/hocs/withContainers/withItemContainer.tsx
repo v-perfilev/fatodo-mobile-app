@@ -19,7 +19,7 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
   const navigation = useNavigation<GroupNavigationProp>();
   const stateGroup = useAppSelector(ItemSelectors.group);
   const stateItem = useAppSelector(ItemSelectors.item);
-  const [containerLoading, setContainerLoading] = useDelayedState();
+  const [containerLoading, setContainerLoading] = useDelayedState(true, 500);
   const route = useRoute<RouteProp<GroupParamList, 'withItem'>>();
   const routeItemId = route.params.itemId;
   const routeItem = route.params.item;

@@ -16,7 +16,7 @@ export type WithCommentsProps = {
 const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (props: any) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<RootNavigationProp>();
-  const [containerLoading, setContainerLoading] = useDelayedState();
+  const [containerLoading, setContainerLoading] = useDelayedState(true, 500);
   const route = useRoute<RouteProp<RootParamList, 'withComments'>>();
   const routeTargetId = route.params.targetId;
   const routeColorScheme = route.params.colorScheme;

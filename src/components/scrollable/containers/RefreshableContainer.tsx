@@ -213,7 +213,7 @@ const RefreshableContainer = ({
 
   return withGestureHandler
     ? animatedElement(panGestureHandlerElement(childrenWithProps))
-    : panGestureHandlerElement(animatedElement(nativeGestureHandlerElement(childrenWithProps)));
+    : animatedElement(panGestureHandlerElement(nativeGestureHandlerElement(childrenWithProps)));
 };
 
 export default memo(RefreshableContainer);

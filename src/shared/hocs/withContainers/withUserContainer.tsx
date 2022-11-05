@@ -15,7 +15,7 @@ export type WithUserProps = {
 const withUserContainer = (Component: ComponentType<WithUserProps>) => (props: any) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<RootNavigationProp>();
-  const [containerLoading, setContainerLoading] = useDelayedState();
+  const [containerLoading, setContainerLoading] = useDelayedState(true, 500);
   const route = useRoute<RouteProp<RootParamList, 'withUser'>>();
   const routeUser = route.params.user;
   const routeUserId = route.params.userId;

@@ -15,7 +15,7 @@ export type WithChatProps = {
 const withChatContainer = (Component: ComponentType<WithChatProps>) => (props: any) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<RootNavigationProp>();
-  const [containerLoading, setContainerLoading] = useDelayedState();
+  const [containerLoading, setContainerLoading] = useDelayedState(true, 500);
   const route = useRoute<RouteProp<RootParamList, 'withChat'>>();
   const routeChat = route.params.chat;
   const routeChatId = route.params.chatId;
