@@ -76,7 +76,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
       initialNumToRender={20}
       maxToRenderPerBatch={10}
       updateCellsBatchingPeriod={20}
-      onEndReachedThreshold={2}
+      onEndReachedThreshold={1}
       {...props}
       data={data}
       renderItem={_renderItem}

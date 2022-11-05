@@ -15,6 +15,7 @@ const initialState: ChatState = {
   messages: [],
   chatItems: [],
   allLoaded: false,
+  loading: false,
 };
 
 const chatSlice = createSlice({
@@ -84,6 +85,10 @@ const chatSlice = createSlice({
     calculateAllLoaded: (state: ChatState, action: PayloadAction<number>) => {
       state.allLoaded = state.messages.length === action.payload;
     },
+
+    setLoading: (state: ChatState, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
@@ -100,17 +105,27 @@ const chatSlice = createSlice({
     /*
     fetchMessages
     */
+    builder.addCase(ChatActions.fetchMessagesThunk.pending, (state, action) => {
+      chatSlice.caseReducers.setLoading(state, {...action, payload: true});
+    });
     builder.addCase(ChatActions.fetchMessagesThunk.fulfilled, (state, action) => {
       const messages = action.payload.list.data;
       const count = action.payload.list.count;
       const account = action.payload.account;
       chatSlice.caseReducers.setMessages(state, {...action, payload: {messages, account}});
       chatSlice.caseReducers.calculateAllLoaded(state, {...action, payload: count});
+      chatSlice.caseReducers.setLoading(state, {...action, payload: false});
+    });
+    builder.addCase(ChatActions.fetchMessagesThunk.rejected, (state, action) => {
+      chatSlice.caseReducers.setLoading(state, {...action, payload: false});
     });
 
     /*
     refreshMessages
     */
+    builder.addCase(ChatActions.refreshMessagesThunk.pending, (state, action) => {
+      chatSlice.caseReducers.setLoading(state, {...action, payload: true});
+    });
     builder.addCase(ChatActions.refreshMessagesThunk.fulfilled, (state, action) => {
       const messages = action.payload.list.data;
       const count = action.payload.list.count;
@@ -118,6 +133,10 @@ const chatSlice = createSlice({
       chatSlice.caseReducers.resetMessages(state);
       chatSlice.caseReducers.setMessages(state, {...action, payload: {messages, account}});
       chatSlice.caseReducers.calculateAllLoaded(state, {...action, payload: count});
+      chatSlice.caseReducers.setLoading(state, {...action, payload: false});
+    });
+    builder.addCase(ChatActions.refreshMessagesThunk.rejected, (state, action) => {
+      chatSlice.caseReducers.setLoading(state, {...action, payload: false});
     });
   },
 });

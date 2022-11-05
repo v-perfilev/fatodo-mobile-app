@@ -4,4 +4,5 @@ export type CommentsState = {
   targetId: string;
   comments: Comment[];
   allLoaded: boolean;
+  loading: boolean;
 };

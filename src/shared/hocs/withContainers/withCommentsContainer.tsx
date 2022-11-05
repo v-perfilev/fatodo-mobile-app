@@ -9,14 +9,14 @@ import {ColorScheme} from '../../themes/ThemeFactory';
 
 export type WithCommentsProps = {
   targetId: string;
-  loading: boolean;
+  containerLoading: boolean;
   color: ColorScheme;
 };
 
 const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (props: any) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<RootNavigationProp>();
-  const [loading, setLoading] = useDelayedState();
+  const [containerLoading, setContainerLoading] = useDelayedState();
   const route = useRoute<RouteProp<RootParamList, 'withComments'>>();
   const routeTargetId = route.params.targetId;
   const routeColorScheme = route.params.colorScheme;
@@ -29,7 +29,7 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
     dispatch(CommentsActions.fetchCommentsThunk({targetId: routeTargetId, offset: 0}))
       .unwrap()
       .catch(() => goBack())
-      .finally(() => setLoading(false));
+      .finally(() => setContainerLoading(false));
   };
 
   useEffect(() => {
@@ -38,11 +38,11 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
     } else if (!routeTargetId) {
       goBack();
     } else {
-      setLoading(false);
+      setContainerLoading(false);
     }
   }, []);
 
-  return <Component targetId={targetId} loading={loading} color={routeColorScheme} {...props} />;
+  return <Component targetId={targetId} containerLoading={containerLoading} color={routeColorScheme} {...props} />;
 };
 
 export default withCommentsContainer;

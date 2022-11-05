@@ -1,3 +1,4 @@
+import RefreshableContainer, {RefreshableContainerChildrenProps} from './containers/RefreshableContainer';
 import FlatList, {FlatListProps} from './FlatList';
 import React, {memo, ReactElement, ReactNode} from 'react';
 import {Animated, StyleProp, ViewStyle} from 'react-native';
@@ -13,6 +14,7 @@ type ChildrenFuncType = (props: RefreshableFlatListChildrenProps) => ReactNode;
 type RefreshableFlatListProps = Omit<FlatListProps<any>, 'children'> & {
   header?: ReactElement;
   loading?: boolean;
+  refresh?: () => Promise<void>;
   previousNode?: ReactNode;
   nextNode?: ReactNode;
   loadingPlaceholder?: ReactElement;
@@ -23,10 +25,11 @@ type RefreshableFlatListProps = Omit<FlatListProps<any>, 'children'> & {
 
 const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
 
-const LoadableFlatList = React.forwardRef((props: RefreshableFlatListProps, ref: any) => {
+const RefreshableFlatList = React.forwardRef((props: RefreshableFlatListProps, ref: any) => {
   const {
     header,
     loading,
+    refresh,
     previousNode,
     nextNode,
     loadingPlaceholder,
@@ -43,13 +46,18 @@ const LoadableFlatList = React.forwardRef((props: RefreshableFlatListProps, ref:
         <>
           {previousNode}
           <ConditionalSpinner loading={loading} loadingPlaceholder={loadingPlaceholder} style={loaderStyle}>
-            <FlatList
-              onScroll={handleEventScroll}
-              ref={ref}
-              inverted={inverted}
-              contentContainerStyle={[flexStyle, containerStyle]}
-              {...otherProps}
-            />
+            <RefreshableContainer refresh={refresh} parentScrollY={scrollY} inverted={inverted}>
+              {({refresher}: RefreshableContainerChildrenProps) => (
+                <FlatList
+                  ListHeaderComponent={refresher}
+                  onScroll={handleEventScroll}
+                  ref={ref}
+                  inverted={inverted}
+                  contentContainerStyle={[flexStyle, containerStyle]}
+                  {...otherProps}
+                />
+              )}
+            </RefreshableContainer>
           </ConditionalSpinner>
           {typeof children === 'function' ? children({scrollY}) : children}
           {nextNode}
@@ -59,4 +67,4 @@ const LoadableFlatList = React.forwardRef((props: RefreshableFlatListProps, ref:
   );
 });
 
-export default memo(LoadableFlatList);
+export default memo(RefreshableFlatList);

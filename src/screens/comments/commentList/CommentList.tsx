@@ -14,23 +14,25 @@ import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {COMMENTS_INPUT_HEIGHT, HEADER_HEIGHT} from '../../../constants';
-import LoadableFlatList, {RefreshableFlatListChildrenProps} from '../../../components/scrollable/LoadableFlatList';
+import {RefreshableFlatListChildrenProps} from '../../../components/scrollable/LoadableFlatList';
 import CommentListSkeleton from '../skeletons/CommentListSkeleton';
-import CommentListHeader from './CommentListHeader';
 import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
+import Header from '../../../components/layouts/Header';
+import RefreshableFlatList from '../../../components/scrollable/RefreshableFlatList';
 
 type CommentListProps = WithCommentsProps;
 
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: COMMENTS_INPUT_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: COMMENTS_INPUT_HEIGHT};
 
-const CommentList = ({loading}: CommentListProps) => {
+const CommentList = ({containerLoading}: CommentListProps) => {
   const dispatch = useAppDispatch();
   const listRef = useRef<FlatListType>();
   const targetId = useAppSelector(CommentsSelectors.targetId);
   const comments = useAppSelector(CommentsSelectors.comments);
   const allLoaded = useAppSelector(CommentsSelectors.allLoaded);
+  const loading = useAppSelector(CommentsSelectors.loading);
   const [reference, setReference] = useState<Comment>();
 
   const clearReference = (): void => {
@@ -42,8 +44,16 @@ const CommentList = ({loading}: CommentListProps) => {
    */
 
   const load = useCallback(async (): Promise<void> => {
-    await dispatch(CommentsActions.fetchCommentsThunk({targetId, offset: comments.length}));
+    if (targetId) {
+      await dispatch(CommentsActions.fetchCommentsThunk({targetId, offset: comments.length}));
+    }
   }, [targetId, comments.length]);
+
+  const refresh = useCallback(async (): Promise<void> => {
+    if (targetId) {
+      await dispatch(CommentsActions.refreshCommentsThunk(targetId));
+    }
+  }, [targetId]);
 
   /*
   keyExtractor and renderItem
@@ -77,23 +87,24 @@ const CommentList = ({loading}: CommentListProps) => {
   );
 
   return (
-    <LoadableFlatList
+    <RefreshableFlatList
       containerStyle={containerStyle}
       loaderStyle={loaderStyle}
-      header={<CommentListHeader />}
+      header={<Header />}
       nextNode={<CommentListControl reference={reference} clearReference={clearReference} />}
-      loading={loading}
+      refresh={refresh}
+      loading={containerLoading}
       loadingPlaceholder={<CommentListSkeleton />}
       inverted
       ListEmptyComponent={<CommentListStub />}
       data={comments}
       render={renderItem}
       keyExtractor={keyExtractor}
-      onEndReached={!allLoaded ? load : undefined}
+      onEndReached={!allLoaded && !loading ? load : undefined}
       ref={listRef}
     >
       {cornerManagement}
-    </LoadableFlatList>
+    </RefreshableFlatList>
   );
 };
 

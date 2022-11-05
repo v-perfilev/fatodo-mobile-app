@@ -188,15 +188,17 @@ const RefreshableContainer = ({
     [children, refresher, handleEventScroll],
   );
 
-  const gestureHandler = withGestureHandler ? (
-    <Animated.View style={[containerStyle, animatedContainerStyle]}>{childrenWithProps}</Animated.View>
-  ) : (
+  const animatedElement = (content: ReactElement): ReactElement => (
+    <Animated.View style={[containerStyle, animatedContainerStyle]}>{content}</Animated.View>
+  );
+
+  const nativeGestureHandlerElement = (content: ReactElement): ReactElement => (
     <NativeViewGestureHandler simultaneousHandlers={panRef} ref={nativeRef}>
-      <Animated.View style={[containerStyle, animatedContainerStyle]}>{childrenWithProps}</Animated.View>
+      {content}
     </NativeViewGestureHandler>
   );
 
-  return (
+  const panGestureHandlerElement = (content: ReactElement): ReactElement => (
     <PanGestureHandler
       onBegan={refreshGesturesAllowed ? handleGestureBegan : undefined}
       onGestureEvent={refreshGesturesAllowed ? handleGestureEvent : undefined}
@@ -205,9 +207,13 @@ const RefreshableContainer = ({
       simultaneousHandlers={nativeRef}
       ref={panRef}
     >
-      {gestureHandler}
+      {content}
     </PanGestureHandler>
   );
+
+  return withGestureHandler
+    ? animatedElement(panGestureHandlerElement(childrenWithProps))
+    : panGestureHandlerElement(animatedElement(nativeGestureHandlerElement(childrenWithProps)));
 };
 
 export default memo(RefreshableContainer);

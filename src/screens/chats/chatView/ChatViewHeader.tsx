@@ -12,16 +12,13 @@ import LeaveIcon from '../../../components/icons/LeaveIcon';
 import DeleteIcon from '../../../components/icons/DeleteIcon';
 import {useNavigation} from '@react-navigation/native';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import IconButton from '../../../components/controls/IconButton';
-import {ChatActions} from '../../../store/chat/chatActions';
-import RefreshIcon from '../../../components/icons/RefreshIcon';
 
 const ChatViewHeader = () => {
-  const dispatch = useAppDispatch();
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const navigation = useNavigation();
   const {t} = useTranslation();
@@ -41,10 +38,6 @@ const ChatViewHeader = () => {
   const title = useMemo<string>(() => {
     return chat ? ChatUtils.getTitle(chat, users, account) : '';
   }, [chat, users, account]);
-
-  const refresh = (): void => {
-    chat && dispatch(ChatActions.refreshMessagesThunk(chat.id));
-  };
 
   const showMembers = (): void => {
     showChatMembersDialog(chat);
@@ -73,7 +66,6 @@ const ChatViewHeader = () => {
   };
 
   const menuItems: MenuItemProps[] = [
-    {action: refresh, icon: <RefreshIcon color="primary.500" />, text: t('chat:menu.refresh')},
     {action: showMembers, icon: <MembersIcon color="primary.500" />, text: t('chat:menu.showMembers')},
     {
       action: addMembers,

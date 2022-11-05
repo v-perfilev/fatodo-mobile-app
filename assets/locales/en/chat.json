@@ -10,7 +10,6 @@
     "inputPlaceholder": "Type your message..."
   },
   "menu": {
-    "refresh": "Refresh",
     "showMembers": "Members",
     "addMembers": "Add members",
     "renameChat": "Rename chat",

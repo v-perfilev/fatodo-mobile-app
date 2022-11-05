@@ -10,6 +10,7 @@ const initialState: CommentsState = {
   targetId: undefined,
   comments: [],
   allLoaded: false,
+  loading: false,
 };
 
 const commentsSlice = createSlice({
@@ -53,23 +54,41 @@ const commentsSlice = createSlice({
     calculateAllLoaded: (state: CommentsState, action: PayloadAction<number>) => {
       state.allLoaded = state.comments.length === action.payload;
     },
+
+    setLoading: (state: CommentsState, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
     fetchComments
     */
+    builder.addCase(CommentsActions.fetchCommentsThunk.pending, (state, action) => {
+      commentsSlice.caseReducers.setLoading(state, {...action, payload: true});
+    });
     builder.addCase(CommentsActions.fetchCommentsThunk.fulfilled, (state, action) => {
       commentsSlice.caseReducers.setComments(state, {...action, payload: action.payload.data});
       commentsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
+      commentsSlice.caseReducers.setLoading(state, {...action, payload: false});
+    });
+    builder.addCase(CommentsActions.fetchCommentsThunk.rejected, (state, action) => {
+      commentsSlice.caseReducers.setLoading(state, {...action, payload: false});
     });
 
     /*
     refreshComments
     */
+    builder.addCase(CommentsActions.refreshCommentsThunk.pending, (state, action) => {
+      commentsSlice.caseReducers.setLoading(state, {...action, payload: true});
+    });
     builder.addCase(CommentsActions.refreshCommentsThunk.fulfilled, (state, action) => {
       commentsSlice.caseReducers.resetComments(state);
       commentsSlice.caseReducers.setComments(state, {...action, payload: action.payload.data});
       commentsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
+      commentsSlice.caseReducers.setLoading(state, {...action, payload: false});
+    });
+    builder.addCase(CommentsActions.refreshCommentsThunk.rejected, (state, action) => {
+      commentsSlice.caseReducers.setLoading(state, {...action, payload: false});
     });
   },
 });

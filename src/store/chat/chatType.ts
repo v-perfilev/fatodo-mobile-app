@@ -7,4 +7,5 @@ export type ChatState = {
   messages: Message[];
   chatItems: ChatItem[];
   allLoaded: boolean;
+  loading: boolean;
 };

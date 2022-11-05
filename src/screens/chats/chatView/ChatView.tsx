@@ -17,23 +17,25 @@ import {ChatUtils} from '../../../shared/utils/ChatUtils';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
-import LoadableFlatList, {RefreshableFlatListChildrenProps} from '../../../components/scrollable/LoadableFlatList';
+import {RefreshableFlatListChildrenProps} from '../../../components/scrollable/LoadableFlatList';
 import MessageListSkeleton from '../skeletons/MessageListSkeleton';
 import {flowRight} from 'lodash';
+import RefreshableFlatList from '../../../components/scrollable/RefreshableFlatList';
 
 type ChatViewProps = WithChatProps;
 
 const containerStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: CHATS_INPUT_HEIGHT};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop: HEADER_HEIGHT, paddingBottom: CHATS_INPUT_HEIGHT};
 
-const ChatView = ({chat, loading}: ChatViewProps) => {
+const ChatView = ({chat, containerLoading}: ChatViewProps) => {
   const dispatch = useAppDispatch();
-  const unreadTimersRef = useRef<Map<string, any>>(new Map());
-  const listRef = useRef<FlatListType>();
   const messages = useAppSelector(ChatSelectors.messages);
   const chatItems = useAppSelector(ChatSelectors.chatItems);
   const allLoaded = useAppSelector(ChatSelectors.allLoaded);
+  const loading = useAppSelector(ChatSelectors.loading);
   const account = useAppSelector(AuthSelectors.account);
+  const unreadTimersRef = useRef<Map<string, any>>(new Map());
+  const listRef = useRef<FlatListType>();
 
   /*
   loaders
@@ -43,7 +45,13 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
     if (chat) {
       await dispatch(ChatActions.fetchMessagesThunk({chatId: chat.id, offset: messages.length}));
     }
-  }, [chat?.id, chatItems.length]);
+  }, [chat?.id, messages.length]);
+
+  const refresh = useCallback(async (): Promise<void> => {
+    if (chat) {
+      await dispatch(ChatActions.refreshMessagesThunk(chat.id));
+    }
+  }, [chat?.id]);
 
   /*
   keyExtractor and renderItem
@@ -117,24 +125,25 @@ const ChatView = ({chat, loading}: ChatViewProps) => {
   );
 
   return (
-    <LoadableFlatList
+    <RefreshableFlatList
       containerStyle={containerStyle}
       loaderStyle={loaderStyle}
       header={<ChatViewHeader />}
       nextNode={<ChatViewControl />}
-      loading={loading}
+      refresh={refresh}
+      loading={containerLoading}
       loadingPlaceholder={<MessageListSkeleton />}
       inverted
       ListEmptyComponent={<ChatViewStub />}
       data={chatItems}
       render={renderItem}
       keyExtractor={keyExtractor}
-      onEndReached={!allLoaded ? load : undefined}
+      onEndReached={!allLoaded && !loading ? load : undefined}
       onViewableItemsChanged={onViewableItemsChanged}
       ref={listRef}
     >
       {cornerManagement}
-    </LoadableFlatList>
+    </RefreshableFlatList>
   );
 };
 

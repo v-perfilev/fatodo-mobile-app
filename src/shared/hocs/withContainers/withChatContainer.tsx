@@ -9,13 +9,13 @@ import {Chat} from '../../../models/Chat';
 
 export type WithChatProps = {
   chat?: Chat;
-  loading: boolean;
+  containerLoading: boolean;
 };
 
 const withChatContainer = (Component: ComponentType<WithChatProps>) => (props: any) => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<RootNavigationProp>();
-  const [loading, setLoading] = useDelayedState();
+  const [containerLoading, setContainerLoading] = useDelayedState();
   const route = useRoute<RouteProp<RootParamList, 'withChat'>>();
   const routeChat = route.params.chat;
   const routeChatId = route.params.chatId;
@@ -28,14 +28,14 @@ const withChatContainer = (Component: ComponentType<WithChatProps>) => (props: a
   const selectChat = (): void => {
     dispatch(ChatActions.selectChatThunk(routeChat))
       .unwrap()
-      .then(() => setLoading(false));
+      .then(() => setContainerLoading(false));
   };
 
   const loadChat = (): void => {
     dispatch(ChatActions.fetchChatThunk(routeChatId))
       .unwrap()
       .catch(() => goBack())
-      .finally(() => setLoading(false));
+      .finally(() => setContainerLoading(false));
   };
 
   useEffect(() => {
@@ -46,11 +46,11 @@ const withChatContainer = (Component: ComponentType<WithChatProps>) => (props: a
     } else if (!routeChat && !routeChatId) {
       goBack();
     } else {
-      setLoading(false);
+      setContainerLoading(false);
     }
   }, []);
 
-  return <Component loading={loading} chat={chat || routeChat} {...props} />;
+  return <Component containerLoading={containerLoading} chat={chat || routeChat} {...props} />;
 };
 
 export default withChatContainer;
