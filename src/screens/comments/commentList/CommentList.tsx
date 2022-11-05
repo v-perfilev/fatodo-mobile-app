@@ -21,6 +21,7 @@ import CommentListSkeleton from '../skeletons/CommentListSkeleton';
 import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 import Header from '../../../components/layouts/Header';
+import CentredLoader from '../../../components/surfaces/CentredLoader';
 
 type CommentListProps = WithCommentsProps;
 
@@ -99,6 +100,7 @@ const CommentList = ({containerLoading}: CommentListProps) => {
       refresh={refresh}
       loading={containerLoading}
       loadingPlaceholder={<CommentListSkeleton />}
+      ListFooterComponent={comments.length > 0 && !allLoaded ? <CentredLoader my="5" /> : undefined}
       inverted
       ListEmptyComponent={<CommentListStub />}
       data={comments}

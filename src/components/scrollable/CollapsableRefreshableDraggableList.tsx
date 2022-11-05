@@ -34,7 +34,7 @@ const CollapsableRefreshableDraggableList = React.forwardRef(
         {({handleEventScroll, handleEventSnap, scrollY, collapsableRef}: CollapsableHeaderContainerChildrenProps) => (
           <>
             <ConditionalSpinner loading={loading} loadingPlaceholder={loadingPlaceholder} style={loaderStyle}>
-              <RefreshableContainer withoutNativeHandler refresh={!sorting && refresh} parentScrollY={scrollY}>
+              <RefreshableContainer refresh={!sorting && refresh} parentScrollY={scrollY}>
                 {({refresher, panRef}: RefreshableContainerChildrenProps) => (
                   <DraggableList
                     ListHeaderComponent={refresher}

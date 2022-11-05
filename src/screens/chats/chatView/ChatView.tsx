@@ -28,6 +28,7 @@ import RefreshableFlatList, {
 } from '../../../components/scrollable/RefreshableFlatList';
 import MessageListSkeleton from '../skeletons/MessageListSkeleton';
 import {flowRight} from 'lodash';
+import CentredLoader from '../../../components/surfaces/CentredLoader';
 
 type ChatViewProps = WithChatProps;
 
@@ -143,6 +144,7 @@ const ChatView = ({chat, containerLoading}: ChatViewProps) => {
       refresh={refresh}
       loading={containerLoading}
       loadingPlaceholder={<MessageListSkeleton />}
+      ListFooterComponent={chatItems.length > 0 && !allLoaded ? <CentredLoader my="5" /> : undefined}
       inverted
       ListEmptyComponent={<ChatViewStub />}
       data={chatItems}

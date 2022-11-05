@@ -22,6 +22,7 @@ import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
 import {useIsFocused} from '@react-navigation/native';
 import ChatListSkeleton from '../skeletons/ChatListSkeleton';
+import CentredLoader from '../../../components/surfaces/CentredLoader';
 
 type ControlType = 'regular' | 'filtered';
 
@@ -125,6 +126,7 @@ const ChatList = () => {
       loading={loading || filterLoading}
       loadingPlaceholder={<ChatListSkeleton />}
       ListEmptyComponent={<ChatListStub />}
+      ListFooterComponent={type === 'regular' && chats.length > 0 && !allLoaded ? <CentredLoader my="5" /> : undefined}
       data={type === 'regular' ? chats : filteredChats}
       render={renderItem}
       keyExtractor={keyExtractor}
