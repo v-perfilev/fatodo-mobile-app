@@ -102,7 +102,7 @@ const GroupList = () => {
       loading={loading}
       sorting={sorting}
       ListEmptyComponent={<GroupListStub />}
-      refresh={refresh}
+      refresh={!sorting && refresh}
       data={groups}
       renderItem={renderDraggableItem}
       keyExtractor={keyExtractor}

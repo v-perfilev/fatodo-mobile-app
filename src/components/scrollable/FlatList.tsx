@@ -17,10 +17,11 @@ export type FlatListProps<T> = Partial<IFlatListProps<T>> & {
   render: (info: ListRenderItemInfo<T>, onLayout?: (event: LayoutChangeEvent) => void) => ReactElement;
   keyExtractor?: (item: T) => string;
   fixedLength?: number;
+  notFullHeight?: boolean;
 };
 
 const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<any>) => {
-  const {data, render, keyExtractor, fixedLength, contentContainerStyle} = props;
+  const {data, render, keyExtractor, fixedLength, contentContainerStyle, notFullHeight} = props;
   const lengthMap = useRef<Map<string, number>>(new Map());
 
   const getItemLength = useCallback(
@@ -79,7 +80,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
     [getItemLength, getItemOffset],
   );
 
-  const style: StyleProp<ViewStyle> = {minHeight: '100%'};
+  const style: StyleProp<ViewStyle> = {minHeight: notFullHeight ? undefined : '100%'};
 
   return (
     <Animated.FlatList

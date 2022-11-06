@@ -21,7 +21,8 @@ const DraggableList = React.forwardRef((props: DraggableListProps<any>, ref: For
       updateCellsBatchingPeriod={20}
       onEndReachedThreshold={2}
       {...props}
-      containerStyle={[style, containerStyle]}
+      containerStyle={[containerStyle]}
+      contentContainerStyle={style}
       data={data}
       renderItem={renderItem}
       keyExtractor={keyExtractor}

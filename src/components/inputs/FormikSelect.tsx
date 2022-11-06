@@ -46,6 +46,7 @@ const FormikSelect = (props: FormikSelectProps) => {
           maxToRenderPerBatch={100}
           updateCellsBatchingPeriod={10}
           onEndReachedThreshold={4}
+          notFullHeight
         />
       </ScrollView>
     ),
