@@ -1,11 +1,11 @@
 import React, {useCallback} from 'react';
-import FVStack from '../../../components/boxes/FVStack';
-import FHStack from '../../../components/boxes/FHStack';
-import {useAppSelector} from '../../../store/store';
-import Bullet from '../../../components/surfaces/Bullet';
-import InfoSelectors from '../../../store/info/infoSelectors';
-import {FilterUtils} from '../../../shared/utils/FilterUtils';
-import {CalendarReminder} from '../../../models/Reminder';
+import FVStack from '../src/components/boxes/FVStack';
+import FHStack from '../src/components/boxes/FHStack';
+import {useAppSelector} from '../src/store/store';
+import Bullet from '../src/components/surfaces/Bullet';
+import InfoSelectors from '../src/store/info/infoSelectors';
+import {FilterUtils} from '../src/shared/utils/FilterUtils';
+import {CalendarReminder} from '../src/models/Reminder';
 
 type CalendarViewDateRemindersProps = {
   reminders: CalendarReminder[];

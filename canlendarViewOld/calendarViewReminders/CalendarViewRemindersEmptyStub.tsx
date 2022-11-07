@@ -1,5 +1,5 @@
 import React from 'react';
-import StubBox from '../../../../components/surfaces/StubBox';
+import StubBox from '../../src/components/surfaces/StubBox';
 import {useTranslation} from 'react-i18next';
 
 const CalendarViewRemindersEmptyStub = () => {

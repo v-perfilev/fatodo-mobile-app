@@ -1,10 +1,10 @@
 import React, {Dispatch, memo, SetStateAction} from 'react';
-import FVStack from '../../../components/boxes/FVStack';
+import FVStack from '../src/components/boxes/FVStack';
 import CalendarViewMonthName from './CalendarViewMonthName';
 import CalendarViewWeekDays from './CalendarViewWeekDays';
 import CalendarViewMonth from './CalendarViewMonthDates';
-import {CalendarDate, CalendarItem, CalendarMonth} from '../../../models/Calendar';
-import Separator from '../../../components/layouts/Separator';
+import {CalendarDate, CalendarItem, CalendarMonth} from '../src/models/Calendar';
+import Separator from '../src/components/layouts/Separator';
 import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
 
 type CalendarViewContentProps = {

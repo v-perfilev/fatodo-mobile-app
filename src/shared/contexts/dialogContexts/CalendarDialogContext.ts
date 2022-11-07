@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {useContext} from 'react';
-import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
+import {CalendarMonth} from '../../../models/Calendar';
 
 interface CalendarDialogState {
-  showSelectMonthDialog: (month: CalendarMonth, selectMonth: (month: CalendarItem) => void) => void;
+  showSelectMonthDialog: (month: CalendarMonth, selectMonth: (month: CalendarMonth) => void) => void;
 }
 
 export const CalendarDialogContext = React.createContext<CalendarDialogState>(null);

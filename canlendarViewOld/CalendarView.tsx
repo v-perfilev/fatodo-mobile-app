@@ -1,14 +1,14 @@
 import React, {memo, MutableRefObject, ReactElement, RefObject, useCallback, useEffect, useRef, useState} from 'react';
-import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
+import {CalendarUtils} from '../src/shared/utils/CalendarUtils';
+import {CalendarItem, CalendarMonth} from '../src/models/Calendar';
 import {Dimensions, ListRenderItemInfo, NativeScrollEvent, NativeSyntheticEvent, ScrollView} from 'react-native';
-import FlatList, {FlatListType} from '../../../components/scrollable/FlatList';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
+import FlatList, {FlatListType} from '../src/components/scrollable/FlatList';
+import {useAppDispatch, useAppSelector} from '../src/store/store';
 import CalendarViewContainer from './CalendarViewContainer';
-import FBox from '../../../components/boxes/FBox';
-import {CalendarActions} from '../../../store/calendar/calendarActions';
+import FBox from '../src/components/boxes/FBox';
+import {CalendarActions} from '../src/store/calendar/calendarActions';
 import CalendarViewHeader from './CalendarViewHeader';
-import CalendarSelectors from '../../../store/calendar/calendarSelectors';
+import CalendarSelectors from '../src/store/calendar/calendarSelectors';
 import {useIsFocused} from '@react-navigation/native';
 
 const width = Dimensions.get('window').width;

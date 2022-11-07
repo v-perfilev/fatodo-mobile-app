@@ -1,15 +1,16 @@
 import React, {memo, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
+import {CalendarMonth} from '../../../models/Calendar';
 import DateTimePicker from '../../../components/inputs/DateTimePicker';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
 import ModalDialog from '../../../components/modals/ModalDialog';
 import GhostButton from '../../../components/controls/GhostButton';
 import FBox from '../../../components/boxes/FBox';
+import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 
 export type CalendarSelectMonthDialogProps = {
   month: CalendarMonth;
-  selectMonth: (month: CalendarItem) => void;
+  selectMonth: (month: CalendarMonth) => void;
   show: boolean;
   close: () => void;
 };
@@ -26,8 +27,11 @@ const CalendarSelectMonthDialog = ({month, selectMonth, show, close}: CalendarSe
   const [value, setValue] = useState<Date>();
 
   const handleSelect = (): void => {
-    const calendarItem: CalendarItem = {year: value.getFullYear(), month: value.getMonth()};
-    selectMonth(calendarItem);
+    const year = value.getFullYear();
+    const month = value.getMonth();
+    const key = CalendarUtils.buildMonthKey(year, month);
+    const calendarMonth: CalendarMonth = {year, month, key};
+    selectMonth(calendarMonth);
     close();
   };
 

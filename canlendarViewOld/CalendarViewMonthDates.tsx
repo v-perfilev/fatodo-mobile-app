@@ -1,7 +1,7 @@
 import React, {Dispatch, memo, SetStateAction, useCallback, useMemo} from 'react';
-import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {CalendarDate, CalendarMonth} from '../../../models/Calendar';
-import FHStack from '../../../components/boxes/FHStack';
+import {CalendarUtils} from '../src/shared/utils/CalendarUtils';
+import {CalendarDate, CalendarMonth} from '../src/models/Calendar';
+import FHStack from '../src/components/boxes/FHStack';
 import CalendarViewDate from './CalendarViewDate';
 import {Box} from 'native-base';
 

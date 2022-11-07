@@ -3,12 +3,30 @@ import {CalendarReminder} from '../../models/Reminder';
 import {CalendarDate, CalendarItem, CalendarMonth} from '../../models/Calendar';
 
 export class CalendarUtils {
-  public static generateCurrentCalendarMonth = (): CalendarMonth => {
+  public static generateCurrentCalendarDate = (): CalendarDate => {
     const now = moment();
     const year = now.year();
     const month = now.month();
+    const date = now.date();
+    return {year, month, date};
+  };
+
+  public static generateMonthCalendarDate = (value: CalendarMonth): CalendarDate => {
+    const now = moment();
+    const currentYear = now.year();
+    const currentMonth = now.month();
+    const currentDate = now.date();
+    const year = value.year;
+    const month = value.month;
+    const isCurrentMonth = year === currentYear && month === currentMonth;
+    return isCurrentMonth ? {year, month, date: currentDate} : {year, month, date: 1};
+  };
+
+  public static generateDateCalendarMonth = (value: CalendarDate): CalendarMonth => {
+    const year = value.year;
+    const month = value.month;
     const key = CalendarUtils.buildMonthKey(year, month);
-    return {key, year, month};
+    return {year, month, key};
   };
 
   public static generateAllCalendarMonths = (): CalendarMonth[] => {
@@ -39,8 +57,18 @@ export class CalendarUtils {
     return moment({year, month, d: 10});
   };
 
-  public static getNowDate = (isCurrentMonth = true): CalendarDate => {
-    return {date: new Date().getDate(), isCurrentMonth};
+  public static getWeekCountInMonth = (year: number, month: number): number => {
+    const monthFirstDate = moment({year, month, d: 1});
+    const monthLastDate = moment({year, month, d: monthFirstDate.daysInMonth()});
+    return monthLastDate.week() - monthFirstDate.week() + 1;
+  };
+
+  public static isCurrentDate = (value: CalendarDate): boolean => {
+    const now = moment();
+    const year = now.year();
+    const month = now.month();
+    const date = now.date();
+    return value.year === year && value.month === month && value.date === date;
   };
 
   public static getOnePageDates = (year: number, month: number): CalendarDate[] => {
@@ -53,23 +81,26 @@ export class CalendarUtils {
     const daysInMonth = monthMoment.daysInMonth();
     const daysPreviousInMonth = previousMonthMoment.daysInMonth();
 
-    const dates: CalendarDate[] = [];
+    const calendarDates: CalendarDate[] = [];
     for (let i = 1; i < firstDateDay; i++) {
-      const date: CalendarDate = {date: daysPreviousInMonth - firstDateDay + i + 1, isCurrentMonth: false};
-      dates.push(date);
+      const date = daysPreviousInMonth - firstDateDay + i + 1;
+      const calendarDate: CalendarDate = {year, month, date, isCurrentMonth: false};
+      calendarDates.push(calendarDate);
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
-      const date: CalendarDate = {date: i, isCurrentMonth: true};
-      dates.push(date);
+      const date = i;
+      const calendarDate: CalendarDate = {year, month, date, isCurrentMonth: true};
+      calendarDates.push(calendarDate);
     }
 
     for (let i = lastDateDay + 1; i <= 7; i++) {
-      const date: CalendarDate = {date: i - lastDateDay, isCurrentMonth: false};
-      dates.push(date);
+      const date = i - lastDateDay;
+      const calendarDate: CalendarDate = {year, month, date, isCurrentMonth: false};
+      calendarDates.push(calendarDate);
     }
 
-    return dates;
+    return calendarDates;
   };
 
   public static extractRemindersGroupIds = (reminders: CalendarReminder[]): string[] => {

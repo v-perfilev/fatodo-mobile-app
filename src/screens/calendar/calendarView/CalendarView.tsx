@@ -1,31 +1,47 @@
-import React, {memo, useRef, useState} from 'react';
+import React, {memo, ReactElement, useMemo, useState} from 'react';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {CalendarMonth} from '../../../models/Calendar';
-import {Dimensions} from 'react-native';
+import {CalendarDate} from '../../../models/Calendar';
 import CalendarViewHeader from './CalendarViewHeader';
-import CalendarViewMonthName from './CalendarViewMonthName';
-import FVStack from '../../../components/boxes/FVStack';
-import Separator from '../../../components/layouts/Separator';
 import CalendarViewPan from './calendarViewPan/CalendarViewPan';
+import Animated from 'react-native-reanimated';
+import CalendarViewControl from './CalendarViewControl';
+import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
 
-const width = Dimensions.get('window').width;
-const months = CalendarUtils.generateAllCalendarMonths();
-const monthKeys = months.map((r) => r.key);
-const getInitialMonth = (): CalendarMonth => CalendarUtils.generateCurrentCalendarMonth();
-const getInitialIndex = (month: CalendarMonth): number => monthKeys.indexOf(month.key);
+const MONTH_NAME_HEIGHT = 40;
+const WEEKDAYS_HEIGHT = 40;
+const DATE_HEIGHT = 65;
+const PADDINGS_HEIGHT = 10;
 
 const CalendarView = () => {
-  const initialMonth = useRef<CalendarMonth>(getInitialMonth());
-  const [activeMonth] = useState<CalendarMonth>(initialMonth.current);
+  const [date, setDate] = useState<CalendarDate>(CalendarUtils.generateCurrentCalendarDate());
+
+  const weekCount = useMemo<number>(() => {
+    return CalendarUtils.getWeekCountInMonth(date.year, date.month);
+  }, [date.year, date.month]);
+
+  const minControlHeight = useMemo<number>(() => {
+    return PADDINGS_HEIGHT + MONTH_NAME_HEIGHT + WEEKDAYS_HEIGHT + DATE_HEIGHT;
+  }, []);
+
+  const maxControlHeight = useMemo<number>(() => {
+    return PADDINGS_HEIGHT + MONTH_NAME_HEIGHT + WEEKDAYS_HEIGHT + DATE_HEIGHT * weekCount;
+  }, [weekCount]);
+
+  const control = (rate: Animated.SharedValue<number>): ReactElement => (
+    <CalendarViewControl
+      monthNameHeight={MONTH_NAME_HEIGHT}
+      weekDaysHeight={WEEKDAYS_HEIGHT}
+      dateHeight={DATE_HEIGHT}
+      {...{rate, date, setDate}}
+    />
+  );
+
+  const content = <CalendarViewReminders {...{date}} />;
 
   return (
     <>
-      <CalendarViewHeader month={activeMonth} selectMonth={console.log} />
-      <FVStack smallSpace grow>
-        <CalendarViewMonthName month={activeMonth} selectMonth={console.log} />
-        <Separator />
-        <CalendarViewPan minControlHeight={50} maxControlHeight={500} />
-      </FVStack>
+      <CalendarViewHeader {...{date, setDate}} />
+      <CalendarViewPan {...{control, content, minControlHeight, maxControlHeight}} />
     </>
   );
 };

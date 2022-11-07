@@ -1,9 +1,9 @@
 import React, {useCallback, useMemo} from 'react';
-import Header from '../../../components/layouts/Header';
-import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
-import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import ActiveDateIcon from '../../../components/icons/ActiveDateIcon';
-import IconButton from '../../../components/controls/IconButton';
+import Header from '../src/components/layouts/Header';
+import {CalendarItem, CalendarMonth} from '../src/models/Calendar';
+import {CalendarUtils} from '../src/shared/utils/CalendarUtils';
+import ActiveDateIcon from '../src/components/icons/ActiveDateIcon';
+import IconButton from '../src/components/controls/IconButton';
 
 type CalendarViewHeaderProps = {
   activeMonth: CalendarMonth;

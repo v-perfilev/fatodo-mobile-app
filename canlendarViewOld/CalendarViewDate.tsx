@@ -1,13 +1,13 @@
 import React, {Dispatch, memo, SetStateAction, useCallback} from 'react';
 import {Text, useColorModeValue} from 'native-base';
-import PaperBox from '../../../components/surfaces/PaperBox';
-import FVStack from '../../../components/boxes/FVStack';
-import FHStack from '../../../components/boxes/FHStack';
-import PressableButton from '../../../components/controls/PressableButton';
-import {CalendarDate, CalendarMonth} from '../../../models/Calendar';
+import PaperBox from '../src/components/surfaces/PaperBox';
+import FVStack from '../src/components/boxes/FVStack';
+import FHStack from '../src/components/boxes/FHStack';
+import PressableButton from '../src/components/controls/PressableButton';
+import {CalendarDate, CalendarMonth} from '../src/models/Calendar';
 import CalendarViewDateReminders from './CalendarViewDateReminders';
-import {useAppSelector} from '../../../store/store';
-import CalendarSelectors from '../../../store/calendar/calendarSelectors';
+import {useAppSelector} from '../src/store/store';
+import CalendarSelectors from '../src/store/calendar/calendarSelectors';
 import {ColorType} from 'native-base/lib/typescript/components/types';
 
 type CalendarViewDateProps = {

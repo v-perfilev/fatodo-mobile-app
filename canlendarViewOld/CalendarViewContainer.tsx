@@ -1,11 +1,11 @@
 import React, {memo, MutableRefObject, useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {useAppDispatch} from '../../../store/store';
-import {CalendarDate, CalendarItem, CalendarMonth} from '../../../models/Calendar';
+import {useAppDispatch} from '../src/store/store';
+import {CalendarDate, CalendarItem, CalendarMonth} from '../src/models/Calendar';
 import {ScrollView} from 'react-native';
-import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {CalendarActions} from '../../../store/calendar/calendarActions';
-import RefreshableScrollView from '../../../components/scrollable/RefreshableScrollView';
-import FBox from '../../../components/boxes/FBox';
+import {CalendarUtils} from '../src/shared/utils/CalendarUtils';
+import {CalendarActions} from '../src/store/calendar/calendarActions';
+import RefreshableScrollView from '../src/components/scrollable/RefreshableScrollView';
+import FBox from '../src/components/boxes/FBox';
 import CalendarViewContent from './CalendarViewContent';
 
 type CalendarViewContainerProps = {

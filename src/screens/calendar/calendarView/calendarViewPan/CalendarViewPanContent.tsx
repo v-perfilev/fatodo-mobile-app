@@ -1,31 +1,36 @@
-import {Box, Text} from 'native-base';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, ReactElement, SetStateAction} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 
 type CalendarViewPanContentProps = {
-  translateY: Animated.SharedValue<number>;
+  content: ReactElement;
+  height: Animated.SharedValue<number>;
+  translate: Animated.SharedValue<number>;
   setContentHeight: Dispatch<SetStateAction<number>>;
 };
 
-const CalendarViewPanContent = ({translateY, setContentHeight}: CalendarViewPanContentProps) => {
-  const style = useAnimatedStyle(() => ({
-    transform: [{translateY: translateY.value}],
-  }));
-
+const CalendarViewPanContent = ({content, height, translate, setContentHeight}: CalendarViewPanContentProps) => {
   const handleLayout = (e: LayoutChangeEvent): void => {
     const height = e.nativeEvent.layout.height;
     setContentHeight(height);
   };
 
+  const outerStyle = useAnimatedStyle(() => ({
+    height: height.value,
+    overflow: 'hidden',
+  }));
+
+  const innerStyle = useAnimatedStyle(() => ({
+    minHeight: height.value,
+    transform: [{translateY: translate.value}],
+  }));
+
   return (
-    <Box overflow="hidden">
-      <Animated.View style={style} onLayout={handleLayout}>
-        {Array.from({length: 100}).map((_, i) => (
-          <Text key={i}>{i}</Text>
-        ))}
+    <Animated.View style={outerStyle}>
+      <Animated.View style={innerStyle} onLayout={handleLayout}>
+        {content}
       </Animated.View>
-    </Box>
+    </Animated.View>
   );
 };
 

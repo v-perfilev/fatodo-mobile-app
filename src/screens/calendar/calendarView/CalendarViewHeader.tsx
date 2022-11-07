@@ -1,29 +1,28 @@
 import React, {useCallback, useMemo} from 'react';
 import Header from '../../../components/layouts/Header';
-import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
+import {CalendarDate} from '../../../models/Calendar';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import ActiveDateIcon from '../../../components/icons/ActiveDateIcon';
 import IconButton from '../../../components/controls/IconButton';
 
 type CalendarViewHeaderProps = {
-  month: CalendarMonth;
-  selectMonth: (month: CalendarItem) => void;
+  date: CalendarDate;
+  setDate: (month: CalendarDate) => void;
 };
 
-const CalendarViewHeader = ({month, selectMonth}: CalendarViewHeaderProps) => {
+const CalendarViewHeader = ({date, setDate}: CalendarViewHeaderProps) => {
   const isCurrentMonth = useMemo<boolean>(() => {
-    const currentMonth = CalendarUtils.generateCurrentCalendarMonth();
-    return currentMonth.key === month.key;
-  }, [month]);
+    return CalendarUtils.isCurrentDate(date);
+  }, [date]);
 
-  const goToCurrentMonth = useCallback((): void => {
-    const currentMonth = CalendarUtils.generateCurrentCalendarMonth();
-    selectMonth(currentMonth);
-  }, [selectMonth]);
+  const goToCurrentDate = useCallback((): void => {
+    const currentDate = CalendarUtils.generateCurrentCalendarDate();
+    setDate(currentDate);
+  }, [setDate]);
 
   return (
     <Header showAvatar hideGoBack>
-      {!isCurrentMonth && <IconButton size="xl" p="2" icon={<ActiveDateIcon />} onPress={goToCurrentMonth} />}
+      {!isCurrentMonth && <IconButton size="xl" p="2" icon={<ActiveDateIcon />} onPress={goToCurrentDate} />}
     </Header>
   );
 };

@@ -1,14 +1,14 @@
 import React, {useCallback} from 'react';
 import {CalendarReminder} from '../../../../models/Reminder';
+import InfoSelectors from '../../../../store/info/infoSelectors';
+import {useAppSelector} from '../../../../store/store';
+import Bullet from '../../../../components/surfaces/Bullet';
 import GroupLink from '../../../../components/links/GroupLink';
 import ItemLink from '../../../../components/links/ItemLink';
-import {useAppSelector} from '../../../../store/store';
-import InfoSelectors from '../../../../store/info/infoSelectors';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Box, Text} from 'native-base';
-import FVStack from '../../../../components/boxes/FVStack';
-import Bullet from '../../../../components/surfaces/Bullet';
 import FCenter from '../../../../components/boxes/FCenter';
+import FVStack from '../../../../components/boxes/FVStack';
 import DateView from '../../../../components/views/DateView';
 
 type CalendarViewReminderItemProps = {

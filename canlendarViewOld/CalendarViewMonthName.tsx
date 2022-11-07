@@ -1,16 +1,16 @@
 import React, {memo, useCallback, useMemo} from 'react';
-import FHStack from '../../../components/boxes/FHStack';
+import FHStack from '../src/components/boxes/FHStack';
 import {Spinner, Text} from 'native-base';
-import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {CalendarItem, CalendarMonth} from '../../../models/Calendar';
-import PressableButton from '../../../components/controls/PressableButton';
-import {useCalendarDialogContext} from '../../../shared/contexts/dialogContexts/CalendarDialogContext';
-import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
+import {CalendarUtils} from '../src/shared/utils/CalendarUtils';
+import {CalendarItem, CalendarMonth} from '../src/models/Calendar';
+import PressableButton from '../src/components/controls/PressableButton';
+import {useCalendarDialogContext} from '../src/shared/contexts/dialogContexts/CalendarDialogContext';
+import ArrowDownIcon from '../src/components/icons/ArrowDownIcon';
 import {useTranslation} from 'react-i18next';
-import {DateFormatters} from '../../../shared/utils/DateFormatters';
-import {useAppSelector} from '../../../store/store';
-import CalendarSelectors from '../../../store/calendar/calendarSelectors';
-import FBox from '../../../components/boxes/FBox';
+import {DateFormatters} from '../src/shared/utils/DateFormatters';
+import {useAppSelector} from '../src/store/store';
+import CalendarSelectors from '../src/store/calendar/calendarSelectors';
+import FBox from '../src/components/boxes/FBox';
 
 type CalendarViewMonthNameProps = {
   month: CalendarMonth;

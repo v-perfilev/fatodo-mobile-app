@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ReactElement, useState} from 'react';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {
   cancelAnimation,
@@ -10,9 +10,12 @@ import Animated, {
 } from 'react-native-reanimated';
 import CalendarViewPanContent from './CalendarViewPanContent';
 import CalendarViewPanControl from './CalendarViewPanControl';
-import {LayoutChangeEvent, StyleSheet} from 'react-native';
+import {LayoutChangeEvent, StatusBar, StyleSheet, useWindowDimensions} from 'react-native';
+import {HEADER_HEIGHT, TAB_HEIGHT} from '../../../../constants';
 
 type CalendarViewPanProps = {
+  control: (rate: Animated.SharedValue<number>) => ReactElement;
+  content: ReactElement;
   minControlHeight: number;
   maxControlHeight: number;
 };
@@ -25,8 +28,10 @@ type PanContext = {
 
 const GESTURE_THRESHOLD = 50;
 
-const CalendarViewPan = ({minControlHeight, maxControlHeight}: CalendarViewPanProps) => {
-  const [containerHeight, setContainerHeight] = useState<number>(0);
+const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}: CalendarViewPanProps) => {
+  const {height} = useWindowDimensions();
+  const initialContainerHeight = height - StatusBar.currentHeight - HEADER_HEIGHT - TAB_HEIGHT;
+  const [containerHeight, setContainerHeight] = useState<number>(initialContainerHeight);
   const [contentHeight, setContentHeight] = useState<number>(0);
 
   const handleLayout = (e: LayoutChangeEvent): void => {
@@ -34,23 +39,36 @@ const CalendarViewPan = ({minControlHeight, maxControlHeight}: CalendarViewPanPr
     setContainerHeight(height);
   };
 
+  const controlHeight = useSharedValue(maxControlHeight);
+  const contentTranslation = useSharedValue(0);
+
   /*
-  CONTROL HEIGHT
+  CONTROL VALUES
    */
 
-  const controlHeight = useSharedValue(maxControlHeight);
   const clampedControlHeight = useDerivedValue(() => {
     return Math.min(Math.max(controlHeight.value, minControlHeight), maxControlHeight);
   });
 
+  const clampedControlRate = useDerivedValue(() => {
+    const possibleDiff = maxControlHeight - minControlHeight;
+    const currentDiff = controlHeight.value - minControlHeight;
+    const rate = currentDiff / possibleDiff;
+    return Math.min(Math.max(rate, 0), 1);
+  });
+
   /*
-  CONTENT TRANSLATION
+  CONTENT VALUES
    */
 
-  const contentTranslation = useSharedValue(0);
   const clampedContentTranslation = useDerivedValue(() => {
+    const canScroll = contentHeight + minControlHeight > containerHeight;
     const maxTranslation = containerHeight - minControlHeight - contentHeight;
-    return Math.max(Math.min(contentTranslation.value, 0), maxTranslation);
+    return canScroll ? Math.max(Math.min(contentTranslation.value, 0), maxTranslation) : 0;
+  });
+
+  const clampedContentHeight = useDerivedValue(() => {
+    return containerHeight - Math.min(Math.max(controlHeight.value, minControlHeight), maxControlHeight);
   });
 
   /*
@@ -94,7 +112,7 @@ const CalendarViewPan = ({minControlHeight, maxControlHeight}: CalendarViewPanPr
           : minControlHeight;
 
       if (shouldChangeControlHeight) {
-        controlHeight.value = withSpring(finalControlHeight, {velocity: event.velocityY, damping: 100});
+        controlHeight.value = withSpring(finalControlHeight, {velocity: event.velocityY, overshootClamping: true});
       } else {
         contentTranslation.value = withDecay({velocity: event.velocityY});
       }
@@ -104,8 +122,12 @@ const CalendarViewPan = ({minControlHeight, maxControlHeight}: CalendarViewPanPr
   return (
     <PanGestureHandler onGestureEvent={panGestureEvent}>
       <Animated.View style={styles.container} onLayout={handleLayout}>
-        <CalendarViewPanControl height={clampedControlHeight} />
-        <CalendarViewPanContent translateY={clampedContentTranslation} setContentHeight={setContentHeight} />
+        <CalendarViewPanControl rate={clampedControlRate} {...{control}} />
+        <CalendarViewPanContent
+          height={clampedContentHeight}
+          translate={clampedContentTranslation}
+          {...{content, setContentHeight}}
+        />
       </Animated.View>
     </PanGestureHandler>
   );
