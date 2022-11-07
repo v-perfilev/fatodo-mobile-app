@@ -77,6 +77,10 @@ const DateTimePicker = ({value, setValue, mode, minDate, maxDate}: DateTimePicke
     setValue(dataValue);
   }, []);
 
+  useEffect(() => {
+    value && setDataValue(value);
+  }, [value]);
+
   const textColor = useColorModeValue(theme.colors.gray['600'], theme.colors.gray['300']);
 
   return (
