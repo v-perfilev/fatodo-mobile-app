@@ -4,9 +4,11 @@ import {View} from 'native-base';
 
 type CollapsibleProps = PropsWithChildren<{
   show: boolean;
+  min?: number;
+  max?: number;
 }>;
 
-const Collapsible = ({show, children}: CollapsibleProps) => {
+const Collapsible = ({show, min = 0, max, children}: CollapsibleProps) => {
   const [collapsed, setCollapsed] = useState<boolean>(!show);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ const Collapsible = ({show, children}: CollapsibleProps) => {
     }
   }, [show]);
 
-  const style: StyleProp<ViewStyle> = {height: collapsed ? 0 : undefined, overflow: 'hidden'};
+  const style: StyleProp<ViewStyle> = {height: collapsed ? min : max, overflow: 'hidden'};
 
   return <View style={style}>{children}</View>;
 };
