@@ -2,12 +2,13 @@ import React, {ReactElement} from 'react';
 import Animated from 'react-native-reanimated';
 
 type CalendarViewPanControlProps = {
-  control: (rate: Animated.SharedValue<number>) => ReactElement;
+  control: (height: Animated.SharedValue<number>, rate: Animated.SharedValue<number>) => ReactElement;
+  height: Animated.SharedValue<number>;
   rate: Animated.SharedValue<number>;
 };
 
-const CalendarViewPanControl = ({control, rate}: CalendarViewPanControlProps) => {
-  return <>{control(rate)}</>;
+const CalendarViewPanControl = ({control, height, rate}: CalendarViewPanControlProps) => {
+  return <>{control(height, rate)}</>;
 };
 
 export default CalendarViewPanControl;

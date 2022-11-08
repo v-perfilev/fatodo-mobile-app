@@ -9,6 +9,7 @@ export const WS_ROOT_TOPIC = '/user/topic/root';
 // TIMEOUTS
 export const API_TIMEOUT = 60 * 1000;
 export const SAME_DATE_TIMEOUT = 5 * 1000;
+export const MARK_AS_READ_TIMEOUT = 1000;
 export const FLAT_LIST_REFRESH_TIMEOUT = 5 * 1000;
 
 // AUTHORIZATION
@@ -54,7 +55,6 @@ export const SMALL_SPACE = 1;
 export const CONTACTS_FILTER_HEIGHT = 50;
 
 // CHATS
-export const TIMEOUT_BEFORE_MARK_AS_READ = 1000;
 export const CHATS_FILTER_HEIGHT = 50;
 export const CHATS_INPUT_HEIGHT = 50;
 
@@ -62,6 +62,10 @@ export const CHATS_INPUT_HEIGHT = 50;
 export const COMMENTS_INPUT_HEIGHT = 50;
 
 // CALENDAR
+export const CALENDAR_TITLE_HEIGHT = 40;
+export const CALENDAR_WEEKDAYS_HEIGHT = 40;
+export const CALENDAR_DATE_HEIGHT = 65;
+export const CALENDAR_MARGIN_HEIGHT = 12;
 export const CALENDAR_LOAD_INDENT = 5;
 
 // BUILDERS

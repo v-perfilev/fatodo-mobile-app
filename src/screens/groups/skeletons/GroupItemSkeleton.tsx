@@ -9,10 +9,10 @@ const GroupItemSkeleton = () => {
   return (
     <FVStack h={`${ITEM_SKELETON_HEIGHT}px`} px="4" py="5" space="4">
       <FHStack alignItems="center">
-        <FBox flex="1" flexGrow="1">
+        <FBox>
           <Skeleton w="90%" h="16px" rounded="xl" />
         </FBox>
-        <FBox flex="0">
+        <FBox grow={false}>
           <Skeleton w="25px" h="25px" rounded="full" />
         </FBox>
       </FHStack>

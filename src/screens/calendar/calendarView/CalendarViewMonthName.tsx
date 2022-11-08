@@ -11,14 +11,14 @@ import {DateFormatters} from '../../../shared/utils/DateFormatters';
 import {useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import FBox from '../../../components/boxes/FBox';
+import {CALENDAR_TITLE_HEIGHT} from '../../../constants';
 
 type CalendarViewMonthNameProps = {
-  height: number;
   date: CalendarDate;
   setDate: (month: CalendarDate) => void;
 };
 
-const CalendarViewMonthName = ({height, date, setDate}: CalendarViewMonthNameProps) => {
+const CalendarViewMonthName = ({date, setDate}: CalendarViewMonthNameProps) => {
   const month = useMemo<CalendarMonth>(() => CalendarUtils.generateDateCalendarMonth(date), [date.year, date.month]);
   const loadingSelector = useCallback(CalendarSelectors.makeLoadingSelector(), []);
   const loading = useAppSelector((state) => loadingSelector(state, month.key));
@@ -47,7 +47,7 @@ const CalendarViewMonthName = ({height, date, setDate}: CalendarViewMonthNamePro
   );
 
   return (
-    <FHStack position="relative" height={`${height}px`} justifyContent="center" alignItems="center">
+    <FHStack height={`${CALENDAR_TITLE_HEIGHT}px`} justifyContent="center" alignItems="center">
       <PressableButton onPress={handleMonthClick}>
         <FHStack smallSpace alignItems="center">
           <Text fontSize="16" fontWeight="bold" color="gray.400">

@@ -11,7 +11,6 @@ import IncomingRequestListItem from './IncomingRequestListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {useIsFocused} from '@react-navigation/native';
 import Separator from '../../../components/layouts/Separator';
-import FBox from '../../../components/boxes/FBox';
 import ContactListSkeleton from '../skeletons/ContactListSkeleton';
 
 const IncomingRequestList = () => {
@@ -47,18 +46,16 @@ const IncomingRequestList = () => {
   }, [isFocused]);
 
   return (
-    <FBox>
-      <CollapsableRefreshableFlatList
-        loading={loading}
-        loadingPlaceholder={<ContactListSkeleton />}
-        ListEmptyComponent={<IncomingRequestListStub />}
-        ItemSeparatorComponent={Separator}
-        data={incomingRequests}
-        render={renderItem}
-        keyExtractor={keyExtractor}
-        refresh={refresh}
-      />
-    </FBox>
+    <CollapsableRefreshableFlatList
+      loading={loading}
+      loadingPlaceholder={<ContactListSkeleton />}
+      ListEmptyComponent={<IncomingRequestListStub />}
+      ItemSeparatorComponent={Separator}
+      data={incomingRequests}
+      render={renderItem}
+      keyExtractor={keyExtractor}
+      refresh={refresh}
+    />
   );
 };
 

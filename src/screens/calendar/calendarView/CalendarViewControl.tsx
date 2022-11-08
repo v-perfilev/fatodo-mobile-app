@@ -1,30 +1,20 @@
 import React, {Dispatch, SetStateAction, useMemo, useState} from 'react';
-import Animated, {runOnJS, useDerivedValue} from 'react-native-reanimated';
+import Animated, {runOnJS, useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
 import {CalendarDate, CalendarMode, CalendarWeek} from '../../../models/Calendar';
 import CalendarViewWeekDays from './CalendarViewWeekDays';
 import Separator from '../../../components/layouts/Separator';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import FVStack from '../../../components/boxes/FVStack';
 import CalendarViewWeek from './CalendarViewWeek';
 import CalendarViewMonthName from './CalendarViewMonthName';
 
 type CalendarViewControlProps = {
+  height: Animated.SharedValue<number>;
   rate: Animated.SharedValue<number>;
   date: CalendarDate;
   setDate: Dispatch<SetStateAction<CalendarDate>>;
-  monthNameHeight: number;
-  weekDaysHeight: number;
-  dateHeight: number;
 };
 
-const CalendarViewControl = ({
-  rate,
-  date,
-  setDate,
-  monthNameHeight,
-  weekDaysHeight,
-  dateHeight,
-}: CalendarViewControlProps) => {
+const CalendarViewControl = ({height, rate, date, setDate}: CalendarViewControlProps) => {
   const [mode, setMode] = useState<CalendarMode>('month');
 
   const weeks = useMemo<CalendarWeek[]>(() => {
@@ -40,17 +30,22 @@ const CalendarViewControl = ({
     runOnJS(setMode)(rate.value === 0 ? 'week' : 'month');
   });
 
+  const style = useAnimatedStyle(() => ({
+    height: height.value,
+    overflow: 'hidden',
+  }));
+
   return (
-    <FVStack>
-      <CalendarViewMonthName height={monthNameHeight} {...{date, setDate}} />
+    <Animated.View style={style}>
+      <CalendarViewMonthName date={date} setDate={setDate} />
       <Separator />
-      <CalendarViewWeekDays height={weekDaysHeight} />
+      <CalendarViewWeekDays />
       <Separator mb={1} />
       {weeks.map((week, index) => (
-        <CalendarViewWeek {...{rate, week, date, setDate, dateHeight}} key={index} />
+        <CalendarViewWeek rate={rate} week={week} date={date} setDate={setDate} key={index} />
       ))}
       <Separator mt={1} />
-    </FVStack>
+    </Animated.View>
   );
 };
 

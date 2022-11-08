@@ -6,11 +6,12 @@ import CalendarViewPan from './calendarViewPan/CalendarViewPan';
 import Animated from 'react-native-reanimated';
 import CalendarViewControl from './CalendarViewControl';
 import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
-
-const MONTH_NAME_HEIGHT = 40;
-const WEEKDAYS_HEIGHT = 40;
-const DATE_HEIGHT = 65;
-const PADDINGS_HEIGHT = 10;
+import {
+  CALENDAR_DATE_HEIGHT,
+  CALENDAR_MARGIN_HEIGHT,
+  CALENDAR_TITLE_HEIGHT,
+  CALENDAR_WEEKDAYS_HEIGHT,
+} from '../../../constants';
 
 const CalendarView = () => {
   const [date, setDate] = useState<CalendarDate>(CalendarUtils.generateCurrentCalendarDate());
@@ -20,28 +21,28 @@ const CalendarView = () => {
   }, [date.year, date.month]);
 
   const minControlHeight = useMemo<number>(() => {
-    return PADDINGS_HEIGHT + MONTH_NAME_HEIGHT + WEEKDAYS_HEIGHT + DATE_HEIGHT;
+    return CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT + CALENDAR_DATE_HEIGHT;
   }, []);
 
   const maxControlHeight = useMemo<number>(() => {
-    return PADDINGS_HEIGHT + MONTH_NAME_HEIGHT + WEEKDAYS_HEIGHT + DATE_HEIGHT * weekCount;
+    return CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT + CALENDAR_DATE_HEIGHT * weekCount;
   }, [weekCount]);
 
-  const control = (rate: Animated.SharedValue<number>): ReactElement => (
-    <CalendarViewControl
-      monthNameHeight={MONTH_NAME_HEIGHT}
-      weekDaysHeight={WEEKDAYS_HEIGHT}
-      dateHeight={DATE_HEIGHT}
-      {...{rate, date, setDate}}
-    />
+  const control = (height: Animated.SharedValue<number>, rate: Animated.SharedValue<number>): ReactElement => (
+    <CalendarViewControl height={height} rate={rate} date={date} setDate={setDate} />
   );
 
-  const content = <CalendarViewReminders {...{date}} />;
+  const content = <CalendarViewReminders date={date} />;
 
   return (
     <>
-      <CalendarViewHeader {...{date, setDate}} />
-      <CalendarViewPan {...{control, content, minControlHeight, maxControlHeight}} />
+      <CalendarViewHeader date={date} setDate={setDate} />
+      <CalendarViewPan
+        control={control}
+        content={content}
+        minControlHeight={minControlHeight}
+        maxControlHeight={maxControlHeight}
+      />
     </>
   );
 };

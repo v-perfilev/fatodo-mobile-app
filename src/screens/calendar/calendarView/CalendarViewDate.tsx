@@ -30,7 +30,7 @@ const CalendarViewDate = ({date, isActiveDate, setActiveDate}: CalendarViewDateP
   const color = useColorModeValue(calcColor('white', 'gray.500', 'gray.500'), 'gray.300');
 
   return (
-    <FBox grow p="1">
+    <FBox p="1">
       <PressableButton onPress={handlePress}>
         <PaperBox h="100%" bg={bg} borderRadius="lg" borderWidth="0">
           <FVStack>

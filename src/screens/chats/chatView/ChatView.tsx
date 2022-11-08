@@ -2,7 +2,7 @@ import React, {memo, ReactElement, useCallback, useMemo, useRef} from 'react';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
-import {CHATS_INPUT_HEIGHT, HEADER_HEIGHT, TIMEOUT_BEFORE_MARK_AS_READ} from '../../../constants';
+import {CHATS_INPUT_HEIGHT, HEADER_HEIGHT, MARK_AS_READ_TIMEOUT} from '../../../constants';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import ChatViewStub from './ChatViewStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -83,7 +83,7 @@ const ChatView = ({chat, containerLoading}: ChatViewProps) => {
       const timerId = setTimeout(() => {
         dispatch(ChatActions.markMessageAsReadThunk(message));
         unreadTimersRef.current.delete(message.id);
-      }, TIMEOUT_BEFORE_MARK_AS_READ);
+      }, MARK_AS_READ_TIMEOUT);
       unreadTimersRef.current.set(message.id, timerId);
     },
     [chat?.id, account, unreadTimersRef.current],

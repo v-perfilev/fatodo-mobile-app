@@ -6,12 +6,13 @@ type FBoxProps = IBoxProps & {
 };
 
 const FBox = React.forwardRef((props: FBoxProps, ref: ForwardedRef<typeof Box>) => {
-  const {grow, children, ...otherProps} = props;
+  const {grow = true, children, ...otherProps} = props;
 
+  const flex = grow ? 1 : 0;
   const flexGrow = grow ? 1 : 0;
 
   return (
-    <Box flex={1} flexGrow={flexGrow} {...props} ref={ref} {...otherProps}>
+    <Box flex={flex} flexGrow={flexGrow} {...props} ref={ref} {...otherProps}>
       {children}
     </Box>
   );

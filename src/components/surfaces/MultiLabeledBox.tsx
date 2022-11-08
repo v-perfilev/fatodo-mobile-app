@@ -26,7 +26,7 @@ type MultiLabeledBoxProps = ITextProps & {
 
 const MultiLabeledBoxLabel = ({label, ...props}: MultiLabeledBoxLabelProps) => {
   return (
-    <FBox>
+    <FBox grow={false}>
       <Text {...props} fontWeight="bold" color="gray.500" mr="1">
         {label}:
       </Text>
