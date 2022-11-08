@@ -1,20 +1,20 @@
 import React, {Dispatch, memo, SetStateAction} from 'react';
-import {CalendarDate} from '../../../models/Calendar';
-import FHStack from '../../../components/boxes/FHStack';
-import PressableButton from '../../../components/controls/PressableButton';
-import PaperBox from '../../../components/surfaces/PaperBox';
-import FVStack from '../../../components/boxes/FVStack';
+import {CalendarDate} from '../../../../models/Calendar';
+import FHStack from '../../../../components/boxes/FHStack';
+import PressableButton from '../../../../components/controls/PressableButton';
+import PaperBox from '../../../../components/surfaces/PaperBox';
+import FVStack from '../../../../components/boxes/FVStack';
 import {Text, useColorModeValue} from 'native-base';
-import FBox from '../../../components/boxes/FBox';
+import FBox from '../../../../components/boxes/FBox';
 import {ColorType} from 'native-base/lib/typescript/components/types';
 
-type CalendarViewDateProps = {
+type CalendarViewWeekDateProps = {
   date: CalendarDate;
   isActiveDate: boolean;
   setActiveDate: Dispatch<SetStateAction<CalendarDate>>;
 };
 
-const CalendarViewDate = ({date, isActiveDate, setActiveDate}: CalendarViewDateProps) => {
+const CalendarViewWeekDate = ({date, isActiveDate, setActiveDate}: CalendarViewWeekDateProps) => {
   const handlePress = (): void => {
     date.isCurrentMonth && setActiveDate(date);
   };
@@ -46,4 +46,4 @@ const CalendarViewDate = ({date, isActiveDate, setActiveDate}: CalendarViewDateP
   );
 };
 
-export default memo(CalendarViewDate);
+export default memo(CalendarViewWeekDate);

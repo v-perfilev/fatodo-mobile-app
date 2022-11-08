@@ -13,12 +13,12 @@ import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import FBox from '../../../components/boxes/FBox';
 import {CALENDAR_TITLE_HEIGHT} from '../../../constants';
 
-type CalendarViewMonthNameProps = {
+type CalendarViewTitleProps = {
   date: CalendarDate;
-  setDate: (month: CalendarDate) => void;
+  setDate: (date: CalendarDate) => void;
 };
 
-const CalendarViewMonthName = ({date, setDate}: CalendarViewMonthNameProps) => {
+const CalendarViewTitle = ({date, setDate}: CalendarViewTitleProps) => {
   const month = useMemo<CalendarMonth>(() => CalendarUtils.generateDateCalendarMonth(date), [date.year, date.month]);
   const loadingSelector = useCallback(CalendarSelectors.makeLoadingSelector(), []);
   const loading = useAppSelector((state) => loadingSelector(state, month.key));
@@ -61,4 +61,4 @@ const CalendarViewMonthName = ({date, setDate}: CalendarViewMonthNameProps) => {
   );
 };
 
-export default memo(CalendarViewMonthName);
+export default memo(CalendarViewTitle);

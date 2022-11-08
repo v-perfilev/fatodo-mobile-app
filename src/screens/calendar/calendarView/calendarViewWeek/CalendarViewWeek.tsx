@@ -1,9 +1,9 @@
 import React, {Dispatch, SetStateAction, useCallback, useMemo} from 'react';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
-import {CalendarDate, CalendarWeek} from '../../../models/Calendar';
-import FHStack from '../../../components/boxes/FHStack';
-import CalendarViewDate from './CalendarViewDate';
-import {CALENDAR_DATE_HEIGHT} from '../../../constants';
+import {CalendarDate, CalendarWeek} from '../../../../models/Calendar';
+import FHStack from '../../../../components/boxes/FHStack';
+import CalendarViewDate from './CalendarViewWeekDate';
+import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
 
 type CalendarViewWeekProps = {
   rate: Animated.SharedValue<number>;

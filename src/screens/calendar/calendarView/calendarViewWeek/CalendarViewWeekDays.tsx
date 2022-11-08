@@ -1,10 +1,10 @@
 import React, {memo, useMemo} from 'react';
-import FHStack from '../../../components/boxes/FHStack';
-import FBox from '../../../components/boxes/FBox';
-import {DateUtils} from '../../../shared/utils/DateUtils';
+import FHStack from '../../../../components/boxes/FHStack';
+import FBox from '../../../../components/boxes/FBox';
+import {DateUtils} from '../../../../shared/utils/DateUtils';
 import {Text} from 'native-base';
 import {useTranslation} from 'react-i18next';
-import {CALENDAR_WEEKDAYS_HEIGHT} from '../../../constants';
+import {CALENDAR_WEEKDAYS_HEIGHT} from '../../../../constants';
 
 const CalendarViewWeekDays = () => {
   const {i18n} = useTranslation();

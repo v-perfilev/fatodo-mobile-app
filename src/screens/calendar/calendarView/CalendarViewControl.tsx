@@ -1,11 +1,11 @@
 import React, {Dispatch, SetStateAction, useMemo, useState} from 'react';
 import Animated, {runOnJS, useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
 import {CalendarDate, CalendarMode, CalendarWeek} from '../../../models/Calendar';
-import CalendarViewWeekDays from './CalendarViewWeekDays';
 import Separator from '../../../components/layouts/Separator';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import CalendarViewWeek from './CalendarViewWeek';
-import CalendarViewMonthName from './CalendarViewMonthName';
+import CalendarViewWeek from './calendarViewWeek/CalendarViewWeek';
+import CalendarViewTitle from './CalendarViewTitle';
+import CalendarViewWeekDays from './calendarViewWeek/CalendarViewWeekDays';
 
 type CalendarViewControlProps = {
   height: Animated.SharedValue<number>;
@@ -37,7 +37,7 @@ const CalendarViewControl = ({height, rate, date, setDate}: CalendarViewControlP
 
   return (
     <Animated.View style={style}>
-      <CalendarViewMonthName date={date} setDate={setDate} />
+      <CalendarViewTitle date={date} setDate={setDate} />
       <Separator />
       <CalendarViewWeekDays />
       <Separator mb={1} />
