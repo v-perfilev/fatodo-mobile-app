@@ -4,9 +4,9 @@ import FHStack from '../../../../components/boxes/FHStack';
 import PressableButton from '../../../../components/controls/PressableButton';
 import PaperBox from '../../../../components/surfaces/PaperBox';
 import FVStack from '../../../../components/boxes/FVStack';
-import {Text, useColorModeValue} from 'native-base';
-import FBox from '../../../../components/boxes/FBox';
+import {Box, Text, useColorModeValue} from 'native-base';
 import {ColorType} from 'native-base/lib/typescript/components/types';
+import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
 
 type CalendarViewWeekDateProps = {
   date: CalendarDate;
@@ -30,7 +30,7 @@ const CalendarViewWeekDate = ({date, isActiveDate, setActiveDate}: CalendarViewW
   const color = useColorModeValue(calcColor('white', 'gray.500', 'gray.500'), 'gray.300');
 
   return (
-    <FBox p="1">
+    <Box width={`${100 / 7}%`} height={CALENDAR_DATE_HEIGHT} p="1">
       <PressableButton onPress={handlePress}>
         <PaperBox h="100%" bg={bg} borderRadius="lg" borderWidth="0">
           <FVStack>
@@ -42,7 +42,7 @@ const CalendarViewWeekDate = ({date, isActiveDate, setActiveDate}: CalendarViewW
           </FVStack>
         </PaperBox>
       </PressableButton>
-    </FBox>
+    </Box>
   );
 };
 

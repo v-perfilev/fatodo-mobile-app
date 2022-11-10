@@ -1,5 +1,5 @@
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
-import React, {Dispatch, ReactElement, SetStateAction} from 'react';
+import React, {Dispatch, memo, ReactElement, SetStateAction} from 'react';
 import {LayoutChangeEvent} from 'react-native';
 
 type CalendarViewPanContentProps = {
@@ -34,4 +34,4 @@ const CalendarViewPanContent = ({content, height, translate, setContentHeight}: 
   );
 };
 
-export default CalendarViewPanContent;
+export default memo(CalendarViewPanContent);

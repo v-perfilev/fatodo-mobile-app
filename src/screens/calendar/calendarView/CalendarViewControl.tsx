@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {memo, useMemo, useState} from 'react';
 import Animated, {runOnJS, useDerivedValue} from 'react-native-reanimated';
 import {CalendarMode} from '../../../models/Calendar';
 import CalendarViewTitle from './CalendarViewTitle';
@@ -21,7 +21,7 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
 
   const control = useMemo(() => {
     return mode === 'month' ? monthList : weekList;
-  }, [mode, monthList, weekList]);
+  }, [mode]);
 
   return (
     <>
@@ -31,4 +31,4 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
   );
 };
 
-export default CalendarViewControl;
+export default memo(CalendarViewControl);

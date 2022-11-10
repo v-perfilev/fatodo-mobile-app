@@ -12,7 +12,7 @@ const FBox = React.forwardRef((props: FBoxProps, ref: ForwardedRef<typeof Box>) 
   const flexGrow = grow ? 1 : 0;
 
   return (
-    <Box flex={flex} flexGrow={flexGrow} {...props} ref={ref} {...otherProps}>
+    <Box display="flex" flex={flex} flexGrow={flexGrow} {...props} ref={ref} {...otherProps}>
       {children}
     </Box>
   );

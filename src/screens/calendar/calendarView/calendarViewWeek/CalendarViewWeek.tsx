@@ -1,11 +1,11 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {memo, useCallback, useMemo} from 'react';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import {CalendarDate, CalendarWeek} from '../../../../models/Calendar';
-import FHStack from '../../../../components/boxes/FHStack';
 import CalendarViewDate from './CalendarViewWeekDate';
 import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
+import FBox from '../../../../components/boxes/FBox';
 
 type CalendarViewWeekProps = {
   rate: Animated.SharedValue<number>;
@@ -28,6 +28,7 @@ const CalendarViewWeek = ({rate, week}: CalendarViewWeekProps) => {
   );
 
   const style = useAnimatedStyle(() => ({
+    width: '100%',
     height: isActiveWeek ? CALENDAR_DATE_HEIGHT : CALENDAR_DATE_HEIGHT * rate.value,
     maxHeight: CALENDAR_DATE_HEIGHT,
     opacity: isActiveWeek ? 1 : rate.value,
@@ -36,13 +37,13 @@ const CalendarViewWeek = ({rate, week}: CalendarViewWeekProps) => {
 
   return (
     <Animated.View style={style}>
-      <FHStack grow px={1}>
+      <FBox flexDirection="row" px={1}>
         {week.map((weekDate, index) => (
           <CalendarViewDate date={weekDate} isActiveDate={isActiveDate(weekDate)} setActiveDate={setDate} key={index} />
         ))}
-      </FHStack>
+      </FBox>
     </Animated.View>
   );
 };
 
-export default CalendarViewWeek;
+export default memo(CalendarViewWeek);

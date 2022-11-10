@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {memo, ReactElement} from 'react';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 
 type CalendarViewPanControlProps = {
@@ -16,4 +16,4 @@ const CalendarViewPanControl = ({control, height, rate}: CalendarViewPanControlP
   return <Animated.View style={style}>{control(rate)}</Animated.View>;
 };
 
-export default CalendarViewPanControl;
+export default memo(CalendarViewPanControl);

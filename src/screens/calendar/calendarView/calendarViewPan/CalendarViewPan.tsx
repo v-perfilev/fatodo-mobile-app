@@ -32,43 +32,33 @@ const GESTURE_THRESHOLD = 50;
 const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}: CalendarViewPanProps) => {
   const {height} = useWindowDimensions();
   const initialContainerHeight = height - StatusBar.currentHeight - HEADER_HEIGHT - TAB_HEIGHT;
-  const [containerHeight, setContainerHeight] = useState<number>(initialContainerHeight);
-  const [contentHeight, setContentHeight] = useState<number>(0);
+  const [containerHeightState, setContainerHeightState] = useState<number>(initialContainerHeight);
+  const [contentHeightState, setContentHeightState] = useState<number>(0);
 
   const handleLayout = (e: LayoutChangeEvent): void => {
     const height = e.nativeEvent.layout.height;
-    setContainerHeight(height);
+    setContainerHeightState(height);
   };
 
+  const rate = useSharedValue(1);
   const controlHeight = useSharedValue(maxControlHeight);
   const contentTranslation = useSharedValue(0);
 
   /*
-  CONTROL VALUES
+  DERIVED VALUES
    */
 
-  const clampedControlHeight = useDerivedValue(() => {
-    return Math.min(Math.max(controlHeight.value, minControlHeight), maxControlHeight);
+  const contentHeight = useDerivedValue(() => {
+    return containerHeightState - controlHeight.value;
   });
 
-  const clampedControlRate = useDerivedValue(() => {
-    const possibleDiff = maxControlHeight - minControlHeight;
-    const currentDiff = controlHeight.value - minControlHeight;
-    const rate = currentDiff / possibleDiff;
-    return Math.min(Math.max(rate, 0), 1);
-  });
-
-  /*
-  CONTENT VALUES
-   */
-
-  const clampedContentHeight = useDerivedValue(() => {
-    return containerHeight - Math.min(Math.max(controlHeight.value, minControlHeight), maxControlHeight);
+  const clampedRate = useDerivedValue(() => {
+    return Math.min(Math.max(rate.value, 0), 1);
   });
 
   const clampedContentTranslation = useDerivedValue(() => {
-    const canScroll = contentHeight + minControlHeight > containerHeight;
-    const maxTranslation = containerHeight - minControlHeight - contentHeight;
+    const canScroll = contentHeightState + minControlHeight > containerHeightState;
+    const maxTranslation = containerHeightState - minControlHeight - contentHeightState;
     return canScroll ? Math.max(Math.min(contentTranslation.value, 0), maxTranslation) : 0;
   });
 
@@ -78,68 +68,73 @@ const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}:
 
   const panGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, PanContext>({
     onStart: (_, context) => {
-      context.controlHeight = clampedControlHeight.value;
+      context.controlHeight = controlHeight.value;
       context.contentTranslation = clampedContentTranslation.value;
       context.prevTranslation = 0;
       cancelAnimation(contentTranslation);
     },
     onActive: (event, context) => {
-      const isMinControlHeight = clampedControlHeight.value === minControlHeight;
-      const isMaxControlHeight = clampedControlHeight.value === maxControlHeight;
+      const isMinControlHeight = controlHeight.value === minControlHeight;
+      const isMaxControlHeight = controlHeight.value === maxControlHeight;
       const isScrollDown = event.translationY - context.prevTranslation > 0;
 
       context.prevTranslation = event.translationY;
 
       if ((isMaxControlHeight && isScrollDown) || (isMinControlHeight && !isScrollDown)) {
-        context.controlHeight = clampedControlHeight.value - event.translationY;
+        context.controlHeight = controlHeight.value - event.translationY;
         contentTranslation.value = event.translationY + context.contentTranslation;
       } else {
         context.contentTranslation = clampedContentTranslation.value - event.translationY;
         controlHeight.value = event.translationY + context.controlHeight;
+        rate.value = (controlHeight.value - minControlHeight) / (maxControlHeight - minControlHeight);
       }
     },
     onEnd: (event) => {
       const middleContentHeight = (maxControlHeight - minControlHeight) / 2 + minControlHeight;
       const shouldChangeControlHeight =
-        clampedControlHeight.value !== minControlHeight && clampedControlHeight.value !== maxControlHeight;
+        controlHeight.value !== minControlHeight && controlHeight.value !== maxControlHeight;
 
       const finalControlHeight =
         event.translationY > GESTURE_THRESHOLD
           ? maxControlHeight
           : event.translationY < -GESTURE_THRESHOLD
           ? minControlHeight
-          : clampedControlHeight.value > middleContentHeight
+          : controlHeight.value > middleContentHeight
           ? maxControlHeight
           : minControlHeight;
+      const finalRate = finalControlHeight === maxControlHeight ? 1 : 0;
 
       if (shouldChangeControlHeight) {
         controlHeight.value = withSpring(finalControlHeight, {velocity: event.velocityY, overshootClamping: true});
+        rate.value = withSpring(finalRate, {velocity: event.velocityY, overshootClamping: true});
       } else {
         contentTranslation.value = withDecay({velocity: event.velocityY});
       }
     },
     onFail: (event) => {
       const middleContentHeight = (maxControlHeight - minControlHeight) / 2 + minControlHeight;
-      const finalControlHeight = clampedControlHeight.value > middleContentHeight ? maxControlHeight : minControlHeight;
+      const finalControlHeight = controlHeight.value > middleContentHeight ? maxControlHeight : minControlHeight;
+      const finalRate = finalControlHeight === maxControlHeight ? 1 : 0;
       controlHeight.value = withSpring(finalControlHeight, {velocity: event.velocityY, overshootClamping: true});
+      rate.value = withSpring(finalRate, {velocity: event.velocityY, overshootClamping: true});
     },
   });
 
   useEffect(() => {
-    if (clampedContentHeight.value !== minControlHeight) {
-      controlHeight.value = withTiming(maxControlHeight, {duration: 100});
+    if (controlHeight.value !== minControlHeight) {
+      controlHeight.value = withTiming(maxControlHeight, {duration: 300});
     }
   }, [maxControlHeight]);
 
   return (
     <PanGestureHandler onGestureEvent={panGestureEvent}>
       <Animated.View style={styles.container} onLayout={handleLayout}>
-        <CalendarViewPanControl height={clampedControlHeight} rate={clampedControlRate} control={control} />
+        <CalendarViewPanControl height={controlHeight} rate={clampedRate} control={control} />
         <CalendarViewPanContent
-          height={clampedContentHeight}
+          height={contentHeight}
           translate={clampedContentTranslation}
           content={content}
-          setContentHeight={setContentHeight}
+          setContentHeight={setContentHeightState}
         />
       </Animated.View>
     </PanGestureHandler>

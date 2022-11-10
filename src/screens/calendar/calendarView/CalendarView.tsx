@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
+import React, {ReactElement, useCallback, useMemo} from 'react';
 import CalendarViewHeader from './CalendarViewHeader';
 import CalendarViewPan from './calendarViewPan/CalendarViewPan';
 import Animated from 'react-native-reanimated';
@@ -20,10 +20,6 @@ const CalendarView = () => {
   const weekCount = useMemo<number>(() => {
     return CalendarUtils.getWeekCountInMonth(date);
   }, [date.year, date.month]);
-
-  useEffect(() => {
-    console.log(weekCount);
-  }, [weekCount]);
 
   const minControlHeight = useMemo<number>(() => {
     return CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT + CALENDAR_DATE_HEIGHT;
