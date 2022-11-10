@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import {CalendarDate} from '../../../../models/Calendar';
 import FHStack from '../../../../components/boxes/FHStack';
 import PressableButton from '../../../../components/controls/PressableButton';
@@ -7,20 +7,25 @@ import FVStack from '../../../../components/boxes/FVStack';
 import {Box, Text, useColorModeValue} from 'native-base';
 import {ColorType} from 'native-base/lib/typescript/components/types';
 import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
+import {CalendarActions} from '../../../../store/calendar/calendarActions';
+import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 
 type CalendarViewWeekDateProps = {
   date: CalendarDate;
-  isActiveDate: boolean;
-  setActiveDate: (date: CalendarDate) => void;
 };
 
-const CalendarViewWeekDate = ({date, isActiveDate, setActiveDate}: CalendarViewWeekDateProps) => {
+const CalendarViewWeekDate = ({date}: CalendarViewWeekDateProps) => {
+  const dispatch = useAppDispatch();
+  const isActiveDateSelector = useCallback(CalendarSelectors.makeIsActiveDateSelector(), []);
+  const isActive = useAppSelector((state) => isActiveDateSelector(state, date.date));
+
   const handlePress = (): void => {
-    setActiveDate(date);
+    dispatch(CalendarActions.selectDate(date));
   };
 
   const calcColor = (activeColor: ColorType, currentColor: ColorType, otherColor: ColorType): ColorType => {
-    return isActiveDate && date.isCurrentMonth ? activeColor : date.isCurrentMonth ? currentColor : otherColor;
+    return isActive && date.isCurrentMonth ? activeColor : date.isCurrentMonth ? currentColor : otherColor;
   };
 
   const bg = useColorModeValue(

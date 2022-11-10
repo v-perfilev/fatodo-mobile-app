@@ -4,7 +4,7 @@ import NotificationService from '../../services/NotificationService';
 import {InfoActions} from '../info/infoActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
-import {CalendarMonth} from '../../models/Calendar';
+import {CalendarDate, CalendarMonth} from '../../models/Calendar';
 import {CALENDAR_LOAD_INDENT} from '../../constants';
 import calendarSlice from './calendarSlice';
 
@@ -15,13 +15,26 @@ export class CalendarActions {
     dispatch(calendarSlice.actions.reset());
   };
 
+  static selectDate = (date: CalendarDate) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setDateIndex(date));
+  };
+
+  static selectMonth = (monthIndex: number) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setMonthIndex(monthIndex));
+  };
+
+  static selectWeek = (weekIndex: number) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setWeekIndex(weekIndex));
+  };
+
   static handleMonthThunk = createAsyncThunk<void, CalendarMonth, AsyncThunkConfig>(
     PREFIX + 'handleMonth',
     async (month, thunkAPI) => {
       const {loadingKeys, loadedKeys} = thunkAPI.getState().calendar;
-      const actualKeyLoaded = loadingKeys.includes(month.key) || loadedKeys.includes(month.key);
+      const key = CalendarUtils.buildMonthKey(month);
+      const actualKeyLoaded = loadingKeys.includes(key) || loadedKeys.includes(key);
       let missingMonths = CalendarUtils.generateCalendarMonths(month, CALENDAR_LOAD_INDENT);
-      const missingKeys = missingMonths.map((r) => r.key);
+      const missingKeys = missingMonths.map(CalendarUtils.buildMonthKey);
       const keysToLoad = missingKeys
         .filter((key) => !loadedKeys.includes(key))
         .filter((key) => !loadingKeys.includes(key));

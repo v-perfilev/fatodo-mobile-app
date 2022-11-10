@@ -3,8 +3,20 @@ import {CalendarState} from './calendarType';
 import {CalendarActions} from './calendarActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
+import {CalendarUtils} from '../../shared/utils/CalendarUtils';
+import {CalendarDate} from '../../models/Calendar';
+
+const date = CalendarUtils.getCurrentDate();
+const monthIndex = CalendarUtils.getMonthIndexByDate(date);
+const weekIndex = CalendarUtils.getWeekIndexByDate(date);
+const dayIndex = CalendarUtils.getDayIndexByDate(date);
+const dateIndex = date.date;
 
 const initialState: CalendarState = {
+  monthIndex,
+  weekIndex,
+  dayIndex,
+  dateIndex,
   reminders: [],
   loadingKeys: [],
   loadedKeys: [],
@@ -17,6 +29,30 @@ const calendarSlice = createSlice({
   reducers: {
     reset: (state: CalendarState) => {
       Object.assign(state, initialState);
+    },
+
+    setDateIndex: (state: CalendarState, action: PayloadAction<CalendarDate>) => {
+      const date = action.payload;
+      state.monthIndex = CalendarUtils.getMonthIndexByDate(date);
+      state.weekIndex = CalendarUtils.getWeekIndexByDate(date);
+      state.dayIndex = CalendarUtils.getDayIndexByDate(date);
+      state.dateIndex = date.date;
+    },
+
+    setMonthIndex: (state: CalendarState, action: PayloadAction<number>) => {
+      const date = CalendarUtils.generateMonthDateByIndexes(action.payload, state.dateIndex);
+      state.monthIndex = CalendarUtils.getMonthIndexByDate(date);
+      state.weekIndex = CalendarUtils.getWeekIndexByDate(date);
+      state.dayIndex = CalendarUtils.getDayIndexByDate(date);
+      state.dateIndex = date.date;
+    },
+
+    setWeekIndex: (state: CalendarState, action: PayloadAction<number>) => {
+      const date = CalendarUtils.generateWeekDateByIndexes(action.payload, state.dayIndex);
+      state.monthIndex = CalendarUtils.getMonthIndexByDate(date);
+      state.weekIndex = CalendarUtils.getWeekIndexByDate(date);
+      state.dayIndex = CalendarUtils.getDayIndexByDate(date);
+      state.dateIndex = date.date;
     },
 
     addLoadingKeys: (state: CalendarState, action: PayloadAction<string[]>) => {

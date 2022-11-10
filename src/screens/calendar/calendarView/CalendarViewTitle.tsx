@@ -8,15 +8,16 @@ import {useCalendarDialogContext} from '../../../shared/contexts/dialogContexts/
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import {useTranslation} from 'react-i18next';
 import {DateFormatters} from '../../../shared/utils/DateFormatters';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import FBox from '../../../components/boxes/FBox';
 import {CALENDAR_TITLE_HEIGHT} from '../../../constants';
-import {useCalendarContext} from '../../../shared/contexts/CalendarContext';
+import {CalendarActions} from '../../../store/calendar/calendarActions';
 
 const CalendarViewTitle = () => {
-  const {date, setDate} = useCalendarContext();
-  const month = useMemo<CalendarMonth>(() => CalendarUtils.getMonthByDate(date), [date.year, date.month]);
+  const dispatch = useAppDispatch();
+  const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
+  const month = useMemo<CalendarMonth>(() => CalendarUtils.getCalendarDate(monthIndex), [monthIndex]);
   const monthKey = useMemo<string>(() => CalendarUtils.buildMonthKey(month), [month]);
   const loadingSelector = useCallback(CalendarSelectors.makeLoadingSelector(), []);
   const loading = useAppSelector((state) => loadingSelector(state, monthKey));
@@ -24,14 +25,14 @@ const CalendarViewTitle = () => {
   const {i18n} = useTranslation();
 
   const monthWithYear = useMemo(() => {
-    const monthMoment = CalendarUtils.getMonthMoment(month);
-    const monthWithYear = DateFormatters.formatDate(monthMoment.toDate(), undefined, undefined, 'MONTH_YEAR');
+    const date = CalendarUtils.getMonthDate(month);
+    const monthWithYear = DateFormatters.formatDate(date, undefined, undefined, 'MONTH_YEAR');
     return monthWithYear.toUpperCase();
   }, [month, i18n.language]);
 
   const setMonth = useCallback((month: CalendarMonth) => {
-    const newDate = CalendarUtils.getDateByMonth(month);
-    setDate(newDate);
+    const monthIndex = CalendarUtils.getMonthIndexByMonth(month);
+    dispatch(CalendarActions.selectMonth(monthIndex));
   }, []);
 
   const handleMonthClick = (): void => {

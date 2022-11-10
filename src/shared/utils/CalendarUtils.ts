@@ -15,21 +15,15 @@ export class CalendarUtils {
     return {year, month, date};
   };
 
-  public static getDateByMonth = (value: CalendarMonth): CalendarDate => {
-    const now = moment();
-    const currentYear = now.year();
-    const currentMonth = now.month();
-    const currentDate = now.date();
-    const year = value.year;
-    const month = value.month;
-    const isCurrentMonth = year === currentYear && month === currentMonth;
-    return isCurrentMonth ? {year, month, date: currentDate} : {year, month, date: 1};
-  };
-
   public static getMonthByDate = (value: CalendarDate): CalendarMonth => {
     const year = value.year;
     const month = value.month;
     return {year, month};
+  };
+
+  public static getMonthIndexByMonth = (value: CalendarMonth): number => {
+    const dateMoment = moment({year: value.year, month: value.month, date: 1});
+    return dateMoment.diff(CalendarConstants.firstDate, 'month');
   };
 
   public static getMonthIndexByDate = (value: CalendarDate): number => {
@@ -42,19 +36,47 @@ export class CalendarUtils {
     return dateMoment.diff(CalendarConstants.firstDate, 'week');
   };
 
+  public static getDayIndexByDate = (value: CalendarDate): number => {
+    const dateMoment = moment({year: value.year, month: value.month, date: value.date});
+    return dateMoment.day() + 1;
+  };
+
+  public static getCalendarDate = (monthIndex: number, dateIndex = 1): CalendarDate => {
+    const dateMoment = CalendarConstants.firstDate
+      .clone()
+      .add(monthIndex, 'month')
+      .add(dateIndex - 1, 'day');
+    const year = dateMoment.year();
+    const month = dateMoment.month();
+    const date = dateMoment.date();
+    return {year, month, date};
+  };
+
+  public static getWeekCountInMonth = (monthIndex: number): number => {
+    const dateMoment = CalendarConstants.firstDate.clone().add(monthIndex, 'month');
+    const year = dateMoment.year();
+    const month = dateMoment.month();
+    const momentDate = moment({year, month, date: 1});
+    const monthFirstDate = {year, month, date: 1};
+    const monthLastDate = {year, month, date: momentDate.daysInMonth()};
+    return CalendarUtils.getWeekIndexByDate(monthLastDate) - CalendarUtils.getWeekIndexByDate(monthFirstDate) + 1;
+  };
+
   /*
   GENERATORS
    */
 
-  public static generateFirstMonthDate = (index: number): CalendarDate => {
-    const dateMoment = CalendarConstants.firstDate.clone().add(index, 'month');
+  public static generateMonthDateByIndexes = (monthIndex: number, dateIndex: number): CalendarDate => {
+    const dateMoment = CalendarConstants.firstDate.clone().add(monthIndex, 'month');
     const year = dateMoment.year();
     const month = dateMoment.month();
-    return {year, month, date: 1};
+    const date = dateMoment.daysInMonth() >= dateIndex ? dateIndex : 1;
+    return {year, month, date};
   };
 
-  public static generateFirstWeekDate = (index: number): CalendarDate => {
-    const dateMoment = CalendarConstants.firstDate.clone().add(index, 'week');
+  public static generateWeekDateByIndexes = (weekIndex: number, dayIndex: number): CalendarDate => {
+    const dateMoment = CalendarConstants.firstDate.clone().add(weekIndex, 'week');
+    // TODO handle dayIndex
     const year = dateMoment.year();
     const month = dateMoment.month();
     const date = dateMoment.date();
@@ -147,19 +169,10 @@ export class CalendarUtils {
     return year + '_' + month;
   };
 
-  public static getMonthMoment = (value: CalendarMonth): moment.Moment => {
+  public static getMonthDate = (value: CalendarMonth): Date => {
     const year = value.year;
     const month = value.month;
-    return moment({year, month, d: 10});
-  };
-
-  public static getWeekCountInMonth = (value: CalendarMonth): number => {
-    const year = value.year;
-    const month = value.month;
-    const momentDate = moment({year, month, date: 1});
-    const monthFirstDate = {year, month, date: 1};
-    const monthLastDate = {year, month, date: momentDate.daysInMonth()};
-    return CalendarUtils.getWeekIndexByDate(monthLastDate) - CalendarUtils.getWeekIndexByDate(monthFirstDate) + 1;
+    return moment({year, month, d: 10}).toDate();
   };
 
   public static isCurrentDate = (value: CalendarDate): boolean => {

@@ -3,23 +3,28 @@ import Header from '../../../components/layouts/Header';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import ActiveDateIcon from '../../../components/icons/ActiveDateIcon';
 import IconButton from '../../../components/controls/IconButton';
-import {useCalendarContext} from '../../../shared/contexts/CalendarContext';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
+import {CalendarActions} from '../../../store/calendar/calendarActions';
+import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 
 const CalendarViewHeader = () => {
-  const {date, setDate} = useCalendarContext();
+  const dispatch = useAppDispatch();
+  const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
+  const dateIndex = useAppSelector(CalendarSelectors.dateIndex);
 
-  const isCurrentMonth = useMemo<boolean>(() => {
+  const isCurrentDate = useMemo<boolean>(() => {
+    const date = CalendarUtils.getCalendarDate(monthIndex, dateIndex);
     return CalendarUtils.isCurrentDate(date);
-  }, [date]);
+  }, [monthIndex, dateIndex]);
 
   const goToCurrentDate = useCallback((): void => {
     const currentDate = CalendarUtils.getCurrentDate();
-    setDate(currentDate);
+    dispatch(CalendarActions.selectDate(currentDate));
   }, []);
 
   return (
     <Header showAvatar hideGoBack>
-      {!isCurrentMonth && <IconButton size="xl" p="2" icon={<ActiveDateIcon />} onPress={goToCurrentDate} />}
+      {!isCurrentDate && <IconButton size="xl" p="2" icon={<ActiveDateIcon />} onPress={goToCurrentDate} />}
     </Header>
   );
 };
