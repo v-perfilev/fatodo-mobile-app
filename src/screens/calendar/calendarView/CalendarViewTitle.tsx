@@ -2,7 +2,7 @@ import React, {memo, useCallback, useMemo} from 'react';
 import FHStack from '../../../components/boxes/FHStack';
 import {Spinner, Text} from 'native-base';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {CalendarDate, CalendarMonth} from '../../../models/Calendar';
+import {CalendarMonth} from '../../../models/Calendar';
 import PressableButton from '../../../components/controls/PressableButton';
 import {useCalendarDialogContext} from '../../../shared/contexts/dialogContexts/CalendarDialogContext';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
@@ -12,27 +12,25 @@ import {useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import FBox from '../../../components/boxes/FBox';
 import {CALENDAR_TITLE_HEIGHT} from '../../../constants';
+import {useCalendarContext} from '../../../shared/contexts/CalendarContext';
 
-type CalendarViewTitleProps = {
-  date: CalendarDate;
-  setDate: (date: CalendarDate) => void;
-};
-
-const CalendarViewTitle = ({date, setDate}: CalendarViewTitleProps) => {
-  const month = useMemo<CalendarMonth>(() => CalendarUtils.generateDateCalendarMonth(date), [date.year, date.month]);
+const CalendarViewTitle = () => {
+  const {date, setDate} = useCalendarContext();
+  const month = useMemo<CalendarMonth>(() => CalendarUtils.getMonthByDate(date), [date.year, date.month]);
+  const monthKey = useMemo<string>(() => CalendarUtils.buildMonthKey(month), [month]);
   const loadingSelector = useCallback(CalendarSelectors.makeLoadingSelector(), []);
-  const loading = useAppSelector((state) => loadingSelector(state, month.key));
+  const loading = useAppSelector((state) => loadingSelector(state, monthKey));
   const {showSelectMonthDialog} = useCalendarDialogContext();
   const {i18n} = useTranslation();
 
   const monthWithYear = useMemo(() => {
-    const monthMoment = CalendarUtils.getMonthMoment(month.year, month.month);
+    const monthMoment = CalendarUtils.getMonthMoment(month);
     const monthWithYear = DateFormatters.formatDate(monthMoment.toDate(), undefined, undefined, 'MONTH_YEAR');
     return monthWithYear.toUpperCase();
   }, [month, i18n.language]);
 
   const setMonth = useCallback((month: CalendarMonth) => {
-    const newDate = CalendarUtils.generateMonthCalendarDate(month);
+    const newDate = CalendarUtils.getDateByMonth(month);
     setDate(newDate);
   }, []);
 

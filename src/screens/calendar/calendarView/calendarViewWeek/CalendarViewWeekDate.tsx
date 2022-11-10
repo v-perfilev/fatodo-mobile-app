@@ -1,4 +1,4 @@
-import React, {Dispatch, memo, SetStateAction} from 'react';
+import React, {memo} from 'react';
 import {CalendarDate} from '../../../../models/Calendar';
 import FHStack from '../../../../components/boxes/FHStack';
 import PressableButton from '../../../../components/controls/PressableButton';
@@ -11,12 +11,12 @@ import {ColorType} from 'native-base/lib/typescript/components/types';
 type CalendarViewWeekDateProps = {
   date: CalendarDate;
   isActiveDate: boolean;
-  setActiveDate: Dispatch<SetStateAction<CalendarDate>>;
+  setActiveDate: (date: CalendarDate) => void;
 };
 
 const CalendarViewWeekDate = ({date, isActiveDate, setActiveDate}: CalendarViewWeekDateProps) => {
   const handlePress = (): void => {
-    date.isCurrentMonth && setActiveDate(date);
+    setActiveDate(date);
   };
 
   const calcColor = (activeColor: ColorType, currentColor: ColorType, otherColor: ColorType): ColorType => {

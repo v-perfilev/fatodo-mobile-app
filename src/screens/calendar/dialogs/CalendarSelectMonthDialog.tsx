@@ -6,7 +6,6 @@ import OutlinedButton from '../../../components/controls/OutlinedButton';
 import ModalDialog from '../../../components/modals/ModalDialog';
 import GhostButton from '../../../components/controls/GhostButton';
 import FBox from '../../../components/boxes/FBox';
-import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 
 export type CalendarSelectMonthDialogProps = {
   month: CalendarMonth;
@@ -29,9 +28,7 @@ const CalendarSelectMonthDialog = ({month, selectMonth, show, close}: CalendarSe
   const handleSelect = (): void => {
     const year = value.getFullYear();
     const month = value.getMonth();
-    const key = CalendarUtils.buildMonthKey(year, month);
-    const calendarMonth: CalendarMonth = {year, month, key};
-    selectMonth(calendarMonth);
+    selectMonth({year, month});
     close();
   };
 

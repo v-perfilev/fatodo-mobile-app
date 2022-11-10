@@ -1,24 +1,24 @@
-import React, {Dispatch, SetStateAction, useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import {CalendarDate, CalendarWeek} from '../../../../models/Calendar';
 import FHStack from '../../../../components/boxes/FHStack';
 import CalendarViewDate from './CalendarViewWeekDate';
 import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
+import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
+import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 
 type CalendarViewWeekProps = {
   rate: Animated.SharedValue<number>;
   week: CalendarWeek;
-  date: CalendarDate;
-  setDate: Dispatch<SetStateAction<CalendarDate>>;
 };
 
-const CalendarViewWeek = ({rate, week, date, setDate}: CalendarViewWeekProps) => {
+const CalendarViewWeek = ({rate, week}: CalendarViewWeekProps) => {
+  const {date, setDate, weekIndex} = useCalendarContext();
+
   const isActiveWeek = useMemo<boolean>(() => {
-    return week
-      .filter((d) => d.isCurrentMonth)
-      .map((d) => d.date)
-      .includes(date.date);
-  }, [date]);
+    const currentWeekIndex = CalendarUtils.getWeekIndexByDate(week[0]);
+    return weekIndex === currentWeekIndex;
+  }, [weekIndex]);
 
   const isActiveDate = useCallback(
     (weekDate: CalendarDate) => {

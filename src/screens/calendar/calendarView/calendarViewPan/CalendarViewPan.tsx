@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from 'react';
+import React, {memo, ReactElement, useEffect, useState} from 'react';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {
   cancelAnimation,
@@ -15,7 +15,7 @@ import {LayoutChangeEvent, StatusBar, StyleSheet, useWindowDimensions} from 'rea
 import {HEADER_HEIGHT, TAB_HEIGHT} from '../../../../constants';
 
 type CalendarViewPanProps = {
-  control: (height: Animated.SharedValue<number>, rate: Animated.SharedValue<number>) => ReactElement;
+  control: (rate: Animated.SharedValue<number>) => ReactElement;
   content: ReactElement;
   minControlHeight: number;
   maxControlHeight: number;
@@ -118,6 +118,11 @@ const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}:
         contentTranslation.value = withDecay({velocity: event.velocityY});
       }
     },
+    onFail: (event) => {
+      const middleContentHeight = (maxControlHeight - minControlHeight) / 2 + minControlHeight;
+      const finalControlHeight = clampedControlHeight.value > middleContentHeight ? maxControlHeight : minControlHeight;
+      controlHeight.value = withSpring(finalControlHeight, {velocity: event.velocityY, overshootClamping: true});
+    },
   });
 
   useEffect(() => {
@@ -147,4 +152,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CalendarViewPan;
+export default memo(CalendarViewPan);

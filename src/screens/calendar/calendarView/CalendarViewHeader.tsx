@@ -1,24 +1,21 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {memo, useCallback, useMemo} from 'react';
 import Header from '../../../components/layouts/Header';
-import {CalendarDate} from '../../../models/Calendar';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import ActiveDateIcon from '../../../components/icons/ActiveDateIcon';
 import IconButton from '../../../components/controls/IconButton';
+import {useCalendarContext} from '../../../shared/contexts/CalendarContext';
 
-type CalendarViewHeaderProps = {
-  date: CalendarDate;
-  setDate: (month: CalendarDate) => void;
-};
+const CalendarViewHeader = () => {
+  const {date, setDate} = useCalendarContext();
 
-const CalendarViewHeader = ({date, setDate}: CalendarViewHeaderProps) => {
   const isCurrentMonth = useMemo<boolean>(() => {
     return CalendarUtils.isCurrentDate(date);
   }, [date]);
 
   const goToCurrentDate = useCallback((): void => {
-    const currentDate = CalendarUtils.generateCurrentCalendarDate();
+    const currentDate = CalendarUtils.getCurrentDate();
     setDate(currentDate);
-  }, [setDate]);
+  }, []);
 
   return (
     <Header showAvatar hideGoBack>
@@ -27,4 +24,4 @@ const CalendarViewHeader = ({date, setDate}: CalendarViewHeaderProps) => {
   );
 };
 
-export default CalendarViewHeader;
+export default memo(CalendarViewHeader);

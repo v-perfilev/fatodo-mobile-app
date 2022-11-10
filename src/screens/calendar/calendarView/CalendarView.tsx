@@ -1,6 +1,4 @@
-import React, {memo, ReactElement, useMemo, useState} from 'react';
-import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {CalendarDate} from '../../../models/Calendar';
+import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
 import CalendarViewHeader from './CalendarViewHeader';
 import CalendarViewPan from './calendarViewPan/CalendarViewPan';
 import Animated from 'react-native-reanimated';
@@ -12,13 +10,20 @@ import {
   CALENDAR_TITLE_HEIGHT,
   CALENDAR_WEEKDAYS_HEIGHT,
 } from '../../../constants';
+import withCalendarContext from '../../../shared/hocs/withCalendarContext';
+import {useCalendarContext} from '../../../shared/contexts/CalendarContext';
+import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 
 const CalendarView = () => {
-  const [date, setDate] = useState<CalendarDate>(CalendarUtils.generateCurrentCalendarDate());
+  const {date} = useCalendarContext();
 
   const weekCount = useMemo<number>(() => {
-    return CalendarUtils.getWeekCountInMonth(date.year, date.month);
+    return CalendarUtils.getWeekCountInMonth(date);
   }, [date.year, date.month]);
+
+  useEffect(() => {
+    console.log(weekCount);
+  }, [weekCount]);
 
   const minControlHeight = useMemo<number>(() => {
     return CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT + CALENDAR_DATE_HEIGHT;
@@ -28,15 +33,13 @@ const CalendarView = () => {
     return CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT + CALENDAR_DATE_HEIGHT * weekCount;
   }, [weekCount]);
 
-  const control = (height: Animated.SharedValue<number>, rate: Animated.SharedValue<number>): ReactElement => (
-    <CalendarViewControl height={height} rate={rate} date={date} setDate={setDate} />
-  );
+  const control = useCallback((rate: Animated.SharedValue<number>) => <CalendarViewControl rate={rate} />, []);
 
-  const content = <CalendarViewReminders date={date} />;
+  const content = useMemo<ReactElement>(() => <CalendarViewReminders />, []);
 
   return (
     <>
-      <CalendarViewHeader date={date} setDate={setDate} />
+      <CalendarViewHeader />
       <CalendarViewPan
         control={control}
         content={content}
@@ -46,4 +49,4 @@ const CalendarView = () => {
     </>
   );
 };
-export default memo(CalendarView);
+export default withCalendarContext(CalendarView);

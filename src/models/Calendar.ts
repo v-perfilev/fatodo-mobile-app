@@ -1,15 +1,11 @@
 export type CalendarMode = 'month' | 'week';
 
-export interface CalendarItem {
+export interface CalendarMonth {
   year: number;
   month: number;
 }
 
-export interface CalendarMonth extends CalendarItem {
-  key: string;
-}
-
-export interface CalendarDate extends CalendarItem {
+export interface CalendarDate extends CalendarMonth {
   date: number;
   isCurrentMonth?: boolean;
 }
