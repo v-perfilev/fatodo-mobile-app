@@ -1,5 +1,3 @@
-export type CalendarMode = 'month' | 'week';
-
 export interface CalendarMonth {
   year: number;
   month: number;

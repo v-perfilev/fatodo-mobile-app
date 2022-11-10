@@ -9,20 +9,20 @@ import {useAppSelector} from '../../../../store/store';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 
 type CalendarViewWeekProps = {
-  rate: Animated.SharedValue<number>;
   week: CalendarWeek;
+  rate?: Animated.SharedValue<number>;
 };
 
-const CalendarViewWeek = ({rate, week}: CalendarViewWeekProps) => {
+const CalendarViewWeek = ({week, rate}: CalendarViewWeekProps) => {
   const weekIndex = useMemo<number>(() => CalendarUtils.getWeekIndexByDate(week[0]), []);
   const isActiveWeekSelector = useCallback(CalendarSelectors.makeIsActiveWeekSelector(), []);
   const isActiveWeek = useAppSelector((state) => isActiveWeekSelector(state, weekIndex));
 
   const style = useAnimatedStyle(() => ({
     width: '100%',
-    height: isActiveWeek ? CALENDAR_DATE_HEIGHT : CALENDAR_DATE_HEIGHT * rate.value,
+    height: isActiveWeek || !rate ? CALENDAR_DATE_HEIGHT : CALENDAR_DATE_HEIGHT * rate.value,
     maxHeight: CALENDAR_DATE_HEIGHT,
-    opacity: isActiveWeek ? 1 : rate.value,
+    opacity: isActiveWeek || !rate ? 1 : rate.value,
     overflow: 'hidden',
   }));
 

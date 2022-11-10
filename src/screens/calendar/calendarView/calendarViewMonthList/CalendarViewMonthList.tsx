@@ -12,12 +12,11 @@ import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import {CalendarActions} from '../../../../store/calendar/calendarActions';
 
 type CalendarViewMonthListProps = {
+  indent: number;
   rate: Animated.SharedValue<number>;
 };
 
-const MONTH_INDENT = 1;
-
-const CalendarViewMonthList = ({rate}: CalendarViewMonthListProps) => {
+const CalendarViewMonthList = ({indent, rate}: CalendarViewMonthListProps) => {
   const dispatch = useAppDispatch();
   const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
   const {width} = useWindowDimensions();
@@ -27,7 +26,7 @@ const CalendarViewMonthList = ({rate}: CalendarViewMonthListProps) => {
   }, []);
 
   const control = useMemo<ReactElement>(() => {
-    const indexes = ArrayUtils.range(monthIndex - MONTH_INDENT, monthIndex + MONTH_INDENT);
+    const indexes = ArrayUtils.range(monthIndex - indent, monthIndex + indent);
     return (
       <FBox position="relative" grow>
         {indexes.map((index) => (
@@ -37,7 +36,7 @@ const CalendarViewMonthList = ({rate}: CalendarViewMonthListProps) => {
         ))}
       </FBox>
     );
-  }, [monthIndex, width]);
+  }, [monthIndex, indent, width]);
 
   return (
     <CalendarViewControlPan

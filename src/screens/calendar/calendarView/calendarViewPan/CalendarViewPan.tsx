@@ -81,12 +81,13 @@ const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}:
       context.prevTranslation = event.translationY;
 
       if ((isMaxControlHeight && isScrollDown) || (isMinControlHeight && !isScrollDown)) {
-        context.controlHeight = controlHeight.value - event.translationY;
         contentTranslation.value = event.translationY + context.contentTranslation;
+        context.controlHeight = controlHeight.value - event.translationY;
       } else {
-        context.contentTranslation = clampedContentTranslation.value - event.translationY;
-        controlHeight.value = event.translationY + context.controlHeight;
+        const clampControlHeight = (value: number) => Math.min(Math.max(value, minControlHeight), maxControlHeight);
+        controlHeight.value = clampControlHeight(event.translationY + context.controlHeight);
         rate.value = (controlHeight.value - minControlHeight) / (maxControlHeight - minControlHeight);
+        context.contentTranslation = clampedContentTranslation.value - event.translationY;
       }
     },
     onEnd: (event) => {
