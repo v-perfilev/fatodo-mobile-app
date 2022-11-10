@@ -15,12 +15,6 @@ export class CalendarUtils {
     return {year, month, date};
   };
 
-  public static getMonthByDate = (value: CalendarDate): CalendarMonth => {
-    const year = value.year;
-    const month = value.month;
-    return {year, month};
-  };
-
   public static getMonthIndexByMonth = (value: CalendarMonth): number => {
     const dateMoment = moment({year: value.year, month: value.month, date: 1});
     return dateMoment.diff(CalendarConstants.firstDate, 'month');
@@ -38,7 +32,8 @@ export class CalendarUtils {
 
   public static getDayIndexByDate = (value: CalendarDate): number => {
     const dateMoment = moment({year: value.year, month: value.month, date: value.date});
-    return dateMoment.day() + 1;
+    const day = dateMoment.day();
+    return day === 0 ? 7 : day;
   };
 
   public static getCalendarDate = (monthIndex: number, dateIndex = 1): CalendarDate => {
@@ -75,8 +70,10 @@ export class CalendarUtils {
   };
 
   public static generateWeekDateByIndexes = (weekIndex: number, dayIndex: number): CalendarDate => {
-    const dateMoment = CalendarConstants.firstDate.clone().add(weekIndex, 'week');
-    // TODO handle dayIndex
+    const dateMoment = CalendarConstants.firstDate
+      .clone()
+      .add(weekIndex, 'week')
+      .add(dayIndex - 1, 'day');
     const year = dateMoment.year();
     const month = dateMoment.month();
     const date = dateMoment.date();
@@ -124,6 +121,20 @@ export class CalendarUtils {
       calendarDates.push(calendarDate);
     }
 
+    return calendarDates;
+  };
+
+  public static generateWeekDates = (index: number): CalendarDate[] => {
+    const dateMoment = CalendarConstants.firstDate.clone().add(index, 'week');
+    const calendarDates: CalendarDate[] = [];
+    while (calendarDates.length < 7) {
+      const year = dateMoment.year();
+      const month = dateMoment.month();
+      const date = dateMoment.date();
+      const calendarDate: CalendarDate = {year, month, date};
+      calendarDates.push(calendarDate);
+      dateMoment.add(1, 'day');
+    }
     return calendarDates;
   };
 

@@ -4,24 +4,32 @@ import Separator from '../../../../components/layouts/Separator';
 import CalendarViewWeekDays from '../calendarViewWeek/CalendarViewWeekDays';
 import CalendarViewWeek from '../calendarViewWeek/CalendarViewWeek';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
+import {useAppSelector} from '../../../../store/store';
+import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
+import FBox from '../../../../components/boxes/FBox';
 
 type CalendarViewWeekListItemProps = {
   weekIndex: number;
 };
 
 const CalendarViewWeekListItem = ({weekIndex}: CalendarViewWeekListItemProps) => {
+  const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
+
   const week = useMemo<CalendarWeek>(() => {
-    // TODO
-    return CalendarUtils.generateMonthDates(weekIndex).slice(0, 7);
-  }, []);
+    const weekDates = CalendarUtils.generateWeekDates(weekIndex);
+    weekDates.forEach((d) => {
+      d.isCurrentMonth = CalendarUtils.getMonthIndexByDate(d) === monthIndex;
+    });
+    return weekDates;
+  }, [monthIndex]);
 
   return (
     <>
-      <Separator />
       <CalendarViewWeekDays />
-      <Separator mb={1} />
-      <CalendarViewWeek week={week} />
-      <Separator mt={1} />
+      <Separator />
+      <FBox my={1}>
+        <CalendarViewWeek week={week} />
+      </FBox>
     </>
   );
 };

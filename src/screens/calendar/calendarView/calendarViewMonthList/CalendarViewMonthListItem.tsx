@@ -5,6 +5,7 @@ import CalendarViewWeekDays from '../calendarViewWeek/CalendarViewWeekDays';
 import CalendarViewWeek from '../calendarViewWeek/CalendarViewWeek';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
 import Animated from 'react-native-reanimated';
+import FBox from '../../../../components/boxes/FBox';
 
 type CalendarViewMonthListItemProps = {
   monthIndex: number;
@@ -23,13 +24,13 @@ const CalendarViewMonthListItem = ({monthIndex, rate}: CalendarViewMonthListItem
 
   return (
     <>
-      <Separator />
       <CalendarViewWeekDays />
-      <Separator mb={1} />
-      {weeks.map((week, index) => (
-        <CalendarViewWeek rate={rate} week={week} key={index} />
-      ))}
-      <Separator mt={1} />
+      <Separator />
+      <FBox my={1}>
+        {weeks.map((week, index) => (
+          <CalendarViewWeek rate={rate} week={week} key={index} />
+        ))}
+      </FBox>
     </>
   );
 };

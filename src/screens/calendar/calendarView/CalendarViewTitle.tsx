@@ -24,7 +24,7 @@ const CalendarViewTitle = () => {
   const {showSelectMonthDialog} = useCalendarDialogContext();
   const {i18n} = useTranslation();
 
-  const monthWithYear = useMemo(() => {
+  const monthWithYear = useMemo<string>(() => {
     const date = CalendarUtils.getMonthDate(month);
     const monthWithYear = DateFormatters.formatDate(date, undefined, undefined, 'MONTH_YEAR');
     return monthWithYear.toUpperCase();

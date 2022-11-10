@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useEffect, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useEffect, useState} from 'react';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {
   cancelAnimation,
@@ -35,10 +35,10 @@ const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}:
   const [containerHeightState, setContainerHeightState] = useState<number>(initialContainerHeight);
   const [contentHeightState, setContentHeightState] = useState<number>(0);
 
-  const handleLayout = (e: LayoutChangeEvent): void => {
+  const handleLayout = useCallback((e: LayoutChangeEvent): void => {
     const height = e.nativeEvent.layout.height;
     setContainerHeightState(height);
-  };
+  }, []);
 
   const rate = useSharedValue(1);
   const controlHeight = useSharedValue(maxControlHeight);
