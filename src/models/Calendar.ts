@@ -8,4 +8,17 @@ export interface CalendarDate extends CalendarMonth {
   isCurrentMonth?: boolean;
 }
 
-export type CalendarWeek = CalendarDate[];
+export type CalendarWeek = {
+  dates: CalendarDate[];
+  index?: number;
+};
+
+export type CalendarMonthParams = {
+  monthIndex: number;
+  freeze: boolean;
+};
+
+export type CalendarWeekParams = {
+  weekIndex: number;
+  freeze: boolean;
+};

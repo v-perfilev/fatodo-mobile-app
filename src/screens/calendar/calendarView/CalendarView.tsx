@@ -2,7 +2,6 @@ import React, {ReactElement, useCallback, useMemo} from 'react';
 import CalendarViewHeader from './CalendarViewHeader';
 import CalendarViewPan from './calendarViewPan/CalendarViewPan';
 import Animated from 'react-native-reanimated';
-import CalendarViewControl from './CalendarViewControl';
 import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
 import {
   CALENDAR_DATE_HEIGHT,
@@ -13,6 +12,7 @@ import {
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
+import CalendarViewControl from './calendarViewControl/CalendarViewControl';
 
 const CalendarView = () => {
   const monthIndex = useAppSelector(CalendarSelectors.monthIndex);

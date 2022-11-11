@@ -69,7 +69,7 @@ export class ArrayUtils {
     return arrayCopy;
   };
 
-  public static range = (start: number, end: number, max = Number.MAX_VALUE, min = 0): number[] => {
+  public static range = (start: number, end: number, max = Number.MAX_VALUE, min = -Number.MAX_VALUE): number[] => {
     const clampedStart = Math.max(start, min);
     const clampedEnd = Math.min(end, max);
     return Array.from(Array(clampedEnd - clampedStart + 1).keys()).map((x) => x + clampedStart);

@@ -1,21 +1,23 @@
 import React, {memo, useCallback} from 'react';
 import {CalendarDate} from '../../../../models/Calendar';
 import FHStack from '../../../../components/boxes/FHStack';
-import PressableButton from '../../../../components/controls/PressableButton';
 import PaperBox from '../../../../components/surfaces/PaperBox';
 import FVStack from '../../../../components/boxes/FVStack';
-import {Box, Text, useColorModeValue} from 'native-base';
+import {Text, useColorModeValue} from 'native-base';
 import {ColorType} from 'native-base/lib/typescript/components/types';
 import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {CalendarActions} from '../../../../store/calendar/calendarActions';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
+import Animated, {useAnimatedStyle} from 'react-native-reanimated';
+import PressableButton from '../../../../components/controls/PressableButton';
 
 type CalendarViewWeekDateProps = {
   date: CalendarDate;
+  rate?: Animated.SharedValue<number>;
 };
 
-const CalendarViewWeekDate = ({date}: CalendarViewWeekDateProps) => {
+const CalendarViewWeekDate = ({date, rate}: CalendarViewWeekDateProps) => {
   const dispatch = useAppDispatch();
   const isActiveDateSelector = useCallback(CalendarSelectors.makeIsActiveDateSelector(), []);
   const isActive = useAppSelector((state) => isActiveDateSelector(state, date.date));
@@ -34,10 +36,16 @@ const CalendarViewWeekDate = ({date}: CalendarViewWeekDateProps) => {
   );
   const color = useColorModeValue(calcColor('white', 'gray.500', 'gray.500'), 'gray.300');
 
+  const style = useAnimatedStyle(() => ({
+    width: `${100 / 7}%`,
+    height: !rate ? CALENDAR_DATE_HEIGHT : CALENDAR_DATE_HEIGHT * rate.value,
+    padding: 4,
+  }));
+
   return (
-    <Box width={`${100 / 7}%`} height={CALENDAR_DATE_HEIGHT} p="1">
-      <PressableButton onPress={handlePress}>
-        <PaperBox h="100%" bg={bg} borderRadius="lg" borderWidth="0">
+    <Animated.View style={style}>
+      <PressableButton height="100%" onPress={handlePress}>
+        <PaperBox height="100%" borderRadius="lg" borderWidth="0" bg={bg}>
           <FVStack>
             <FHStack justifyContent="flex-end">
               <Text fontSize="14" fontWeight="bold" color={color}>
@@ -47,8 +55,12 @@ const CalendarViewWeekDate = ({date}: CalendarViewWeekDateProps) => {
           </FVStack>
         </PaperBox>
       </PressableButton>
-    </Box>
+    </Animated.View>
   );
 };
 
-export default memo(CalendarViewWeekDate);
+const propsAreEqual = (prevProps: CalendarViewWeekDateProps, nextProps: CalendarViewWeekDateProps): boolean => {
+  return prevProps.date.isCurrentMonth === nextProps.date.isCurrentMonth;
+};
+
+export default memo(CalendarViewWeekDate, propsAreEqual);

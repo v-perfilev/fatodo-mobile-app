@@ -4,7 +4,6 @@ import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withSpring,
   withTiming,
@@ -15,10 +14,11 @@ import {CALENDAR_SCROLL_INDENT} from '../../../../constants';
 import FHStack from '../../../../components/boxes/FHStack';
 
 type CalendarViewControlPanProps = {
-  control: ReactElement;
+  list: ReactElement;
   index: number;
   setIndex: (index: number) => void;
-  length: number;
+  canScrollLeft: boolean;
+  canScrollRight: boolean;
 };
 
 type PanContext = {
@@ -27,32 +27,35 @@ type PanContext = {
 
 const GESTURE_THRESHOLD = 50;
 
-const CalendarViewControlPan = ({control, index, setIndex, length}: CalendarViewControlPanProps) => {
+const CalendarViewControlPan = ({
+  list,
+  index,
+  setIndex,
+  canScrollLeft,
+  canScrollRight,
+}: CalendarViewControlPanProps) => {
   const {width} = useWindowDimensions();
 
   const localIndex = useSharedValue(index);
   const translateX = useSharedValue(-width * index);
 
-  const clampedTranslateX = useDerivedValue(() => {
-    const maxTranslateX = -width * (length - 1);
-    return Math.max(Math.min(translateX.value, 0), maxTranslateX);
-  });
-
   const panGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, PanContext>({
     onStart: (_, context) => {
-      context.translateX = clampedTranslateX.value;
+      context.translateX = translateX.value;
       cancelAnimation(translateX);
     },
     onActive: (event, context) => {
-      translateX.value = event.translationX + context.translateX;
+      if ((event.translationX > 0 && canScrollLeft) || (event.translationX < 0 && canScrollRight)) {
+        translateX.value = context.translateX + event.translationX;
+      }
     },
     onEnd: (event) => {
       const finalTranslateX =
-        event.translationX > GESTURE_THRESHOLD
-          ? Math.ceil(clampedTranslateX.value / width) * width
-          : event.translationX < -GESTURE_THRESHOLD
-          ? Math.floor(clampedTranslateX.value / width) * width
-          : Math.round(clampedTranslateX.value / width) * width;
+        event.translationX > GESTURE_THRESHOLD && canScrollLeft
+          ? Math.ceil(translateX.value / width) * width
+          : event.translationX < -GESTURE_THRESHOLD && canScrollRight
+          ? Math.floor(translateX.value / width) * width
+          : Math.round(translateX.value / width) * width;
       translateX.value = withSpring(finalTranslateX, {velocity: event.velocityX, overshootClamping: true});
 
       const newIndex = Math.abs(Math.round(finalTranslateX / width));
@@ -60,7 +63,7 @@ const CalendarViewControlPan = ({control, index, setIndex, length}: CalendarView
       runOnJS(setIndex)(newIndex);
     },
     onFail: (event) => {
-      const finalTranslateX = Math.round(clampedTranslateX.value / width) * width;
+      const finalTranslateX = Math.round(translateX.value / width) * width;
       translateX.value = withSpring(finalTranslateX, {velocity: event.velocityX, overshootClamping: true});
 
       const newIndex = Math.abs(Math.round(finalTranslateX / width));
@@ -76,18 +79,19 @@ const CalendarViewControlPan = ({control, index, setIndex, length}: CalendarView
       const shouldAnimateScroll = Math.abs(index - localIndex.value) < CALENDAR_SCROLL_INDENT;
       const newTranslateX = -index * width;
       translateX.value = shouldAnimateScroll ? withTiming(newTranslateX, {duration: 200}) : newTranslateX;
+      localIndex.value = index;
     }
   }, [index]);
 
   const style = useAnimatedStyle(() => ({
-    transform: [{translateX: clampedTranslateX.value}],
+    transform: [{translateX: translateX.value}],
   }));
 
   return (
-    <PanGestureHandler onGestureEvent={panGestureEvent} activeOffsetX={[-5, 5]} activeOffsetY={[-5, 5]}>
+    <PanGestureHandler onGestureEvent={panGestureEvent}>
       <Animated.View style={[styles.container, style]}>
-        <FHStack width={width * length} height="100%">
-          {control}
+        <FHStack width={Number.MAX_VALUE} height="100%">
+          {list}
         </FHStack>
       </Animated.View>
     </PanGestureHandler>

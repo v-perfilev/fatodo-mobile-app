@@ -3,7 +3,7 @@ import {CalendarState} from './calendarType';
 import {CalendarActions} from './calendarActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
-import {CalendarUtils} from '../../shared/utils/CalendarUtils';
+import {CalendarConstants, CalendarUtils} from '../../shared/utils/CalendarUtils';
 import {CalendarDate} from '../../models/Calendar';
 
 const date = CalendarUtils.getCurrentDate();
@@ -11,12 +11,18 @@ const monthIndex = CalendarUtils.getMonthIndexByDate(date);
 const weekIndex = CalendarUtils.getWeekIndexByDate(date);
 const dayIndex = CalendarUtils.getDayIndexByDate(date);
 const dateIndex = date.date;
+const baseIndex = CalendarConstants.maxWeekIndex;
+const monthBaseIndex = baseIndex - monthIndex;
+const weekBaseIndex = baseIndex - weekIndex;
 
 const initialState: CalendarState = {
   monthIndex,
   weekIndex,
   dayIndex,
   dateIndex,
+  baseIndex,
+  monthBaseIndex,
+  weekBaseIndex,
   reminders: [],
   loadingKeys: [],
   loadedKeys: [],
@@ -53,6 +59,18 @@ const calendarSlice = createSlice({
       state.weekIndex = CalendarUtils.getWeekIndexByDate(date);
       state.dayIndex = CalendarUtils.getDayIndexByDate(date);
       state.dateIndex = date.date;
+    },
+
+    setBaseIndex: (state: CalendarState, action: PayloadAction<number>) => {
+      state.baseIndex = action.payload;
+    },
+
+    setMonthBaseIndex: (state: CalendarState, action: PayloadAction<number>) => {
+      state.monthBaseIndex = action.payload;
+    },
+
+    setWeekBaseIndex: (state: CalendarState, action: PayloadAction<number>) => {
+      state.weekBaseIndex = action.payload;
     },
 
     addLoadingKeys: (state: CalendarState, action: PayloadAction<string[]>) => {

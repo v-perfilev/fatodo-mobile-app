@@ -106,18 +106,11 @@ const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}:
       const finalRate = finalControlHeight === maxControlHeight ? 1 : 0;
 
       if (shouldChangeControlHeight) {
-        controlHeight.value = withSpring(finalControlHeight, {velocity: event.velocityY, overshootClamping: true});
-        rate.value = withSpring(finalRate, {velocity: event.velocityY, overshootClamping: true});
+        controlHeight.value = withSpring(finalControlHeight, {overshootClamping: true});
+        rate.value = withSpring(finalRate, {overshootClamping: true});
       } else {
         contentTranslation.value = withDecay({velocity: event.velocityY});
       }
-    },
-    onFail: (event) => {
-      const middleContentHeight = (maxControlHeight - minControlHeight) / 2 + minControlHeight;
-      const finalControlHeight = controlHeight.value > middleContentHeight ? maxControlHeight : minControlHeight;
-      const finalRate = finalControlHeight === maxControlHeight ? 1 : 0;
-      controlHeight.value = withSpring(finalControlHeight, {velocity: event.velocityY, overshootClamping: true});
-      rate.value = withSpring(finalRate, {velocity: event.velocityY, overshootClamping: true});
     },
   });
 
@@ -128,7 +121,7 @@ const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}:
   }, [maxControlHeight]);
 
   return (
-    <PanGestureHandler onGestureEvent={panGestureEvent}>
+    <PanGestureHandler onGestureEvent={panGestureEvent} failOffsetX={[-10, 10]} activeOffsetY={[-10, 10]}>
       <Animated.View style={styles.container} onLayout={handleLayout}>
         <CalendarViewPanControl height={controlHeight} rate={clampedRate} control={control} />
         <CalendarViewPanContent

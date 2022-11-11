@@ -17,13 +17,19 @@ class CalendarSelectors {
 
   static dateIndex = createSelector(getCalendarState, (state) => state.dateIndex as number);
 
-  static shouldLoad = createSelector(getCalendarState, (state) => state.shouldLoad as boolean);
+  static baseIndex = createSelector(getCalendarState, (state) => state.baseIndex as number);
 
-  static makeIsActiveDateSelector = () =>
-    createSelector([getCalendarState, getSecondNumberParam], (state, date) => (state.dateIndex === date) as boolean);
+  static monthBaseIndex = createSelector(getCalendarState, (state) => state.monthBaseIndex as number);
+
+  static weekBaseIndex = createSelector(getCalendarState, (state) => state.weekBaseIndex as number);
+
+  static shouldLoad = createSelector(getCalendarState, (state) => state.shouldLoad as boolean);
 
   static makeIsActiveWeekSelector = () =>
     createSelector([getCalendarState, getSecondNumberParam], (state, week) => (state.weekIndex === week) as boolean);
+
+  static makeIsActiveDateSelector = () =>
+    createSelector([getCalendarState, getSecondNumberParam], (state, date) => (state.dateIndex === date) as boolean);
 
   static makeLoadingSelector = () =>
     createSelector([getCalendarState, getMonthKey], (state, key) => state.loadingKeys.includes(key) as boolean);
