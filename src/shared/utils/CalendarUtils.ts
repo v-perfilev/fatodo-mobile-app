@@ -174,9 +174,10 @@ export class CalendarUtils {
   UTILS
    */
 
-  public static buildMonthKey = (value: CalendarMonth): string => {
-    const year = value.year;
-    const month = value.month;
+  public static buildMonthKey = (monthIndex: number): string => {
+    const date = CalendarUtils.getCalendarDate(monthIndex);
+    const year = date.year;
+    const month = date.month;
     return year + '_' + month;
   };
 

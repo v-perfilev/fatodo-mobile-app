@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useMemo} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
 import CalendarViewHeader from './CalendarViewHeader';
 import CalendarViewPan from './calendarViewPan/CalendarViewPan';
 import Animated from 'react-native-reanimated';
@@ -10,14 +10,19 @@ import {
   CALENDAR_WEEKDAYS_HEIGHT,
 } from '../../../constants';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import CalendarViewControl from './calendarViewControl/CalendarViewControl';
+import {CalendarActions} from '../../../store/calendar/calendarActions';
+import {useIsFocused} from '@react-navigation/native';
 
 const CALENDAR_BASE_HEIGHT = CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT;
 
 const CalendarView = () => {
+  const dispatch = useAppDispatch();
+  const isFocused = useIsFocused();
   const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
+  const shouldLoad = useAppSelector(CalendarSelectors.shouldLoad);
 
   const weekCount = useMemo<number>(() => {
     return CalendarUtils.getWeekCountInMonth(monthIndex);
@@ -38,6 +43,14 @@ const CalendarView = () => {
   const content = useMemo<ReactElement>(() => {
     return <CalendarViewReminders />;
   }, []);
+
+  useEffect(() => {
+    dispatch(CalendarActions.handleMonthThunk(monthIndex));
+  }, [monthIndex]);
+
+  useEffect(() => {
+    isFocused && shouldLoad && dispatch(CalendarActions.handleMonthThunk(monthIndex));
+  }, [isFocused, shouldLoad]);
 
   return (
     <>

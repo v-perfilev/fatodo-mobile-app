@@ -7,9 +7,9 @@ import GroupLink from '../../../../components/links/GroupLink';
 import ItemLink from '../../../../components/links/ItemLink';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Box, Text} from 'native-base';
-import FCenter from '../../../../components/boxes/FCenter';
 import FVStack from '../../../../components/boxes/FVStack';
 import DateView from '../../../../components/views/DateView';
+import FBox from '../../../../components/boxes/FBox';
 
 type CalendarViewReminderItemProps = {
   reminder: CalendarReminder;
@@ -27,12 +27,10 @@ const CalendarViewReminderItem = ({reminder}: CalendarViewReminderItemProps) => 
   const date = new Date(reminder.date);
 
   return (
-    <FHStack grow defaultSpace alignItems="center">
-      <Box>
-        <FCenter justifyContent="center" alignItems="center">
-          {bulletView}
-        </FCenter>
-      </Box>
+    <FHStack defaultSpace alignItems="center">
+      <FBox grow={false} height="15px">
+        {bulletView}
+      </FBox>
       <FVStack grow>
         <Text fontSize="16" fontWeight="bold" isTruncated>
           {itemView}
