@@ -8,14 +8,15 @@ import CalendarViewWeekDays from '../calendarViewWeek/CalendarViewWeekDays';
 import Separator from '../../../../components/layouts/Separator';
 import {useWindowDimensions} from 'react-native';
 
-type CalendarViewControlProps = {
+type CalendarViewControlMonthProps = {
   monthIndex: number;
-  index: number;
+  baseIndex: number;
+  weekIndex: number;
   freeze: boolean;
   rate: Animated.SharedValue<number>;
 };
 
-const CalendarViewControlMonth = ({monthIndex, index, rate}: CalendarViewControlProps) => {
+const CalendarViewControlMonth = ({monthIndex, baseIndex, weekIndex, freeze, rate}: CalendarViewControlMonthProps) => {
   const {width} = useWindowDimensions();
 
   const weeks = useMemo<CalendarWeek[]>(() => {
@@ -24,14 +25,14 @@ const CalendarViewControlMonth = ({monthIndex, index, rate}: CalendarViewControl
     while (monthDates.length) {
       const dates = monthDates.splice(0, 7);
       const weekIndex = CalendarUtils.getWeekIndexByDate(dates[0]);
-      weeks.push({dates, index: weekIndex});
+      weeks.push({dates, weekIndex: weekIndex});
     }
     return weeks;
   }, []);
 
   const monthStyle = useAnimatedStyle(() => ({
     position: 'absolute',
-    left: width * index,
+    left: width * baseIndex,
     display: rate.value === 0 ? 'none' : 'flex',
     width,
   }));
@@ -42,15 +43,31 @@ const CalendarViewControlMonth = ({monthIndex, index, rate}: CalendarViewControl
       <Separator />
       <FBox my={1}>
         {weeks.map((week, index) => (
-          <CalendarViewWeek dates={week.dates} rate={rate} key={index} />
+          <CalendarViewWeek
+            dates={week.dates}
+            isActiveWeek={week.weekIndex === weekIndex}
+            freeze={freeze}
+            rate={rate}
+            key={index}
+          />
         ))}
       </FBox>
     </Animated.View>
   );
 };
 
-const propsAreEqual = (prevProps: CalendarViewControlProps, nextProps: CalendarViewControlProps): boolean => {
-  return nextProps.freeze || (prevProps.monthIndex === nextProps.monthIndex && prevProps.index === nextProps.index);
+const propsAreEqual = (prevProps: CalendarViewControlMonthProps, nextProps: CalendarViewControlMonthProps): boolean => {
+  if (nextProps.freeze) {
+    return true;
+  } else if (prevProps.freeze && !nextProps.freeze) {
+    return false;
+  } else {
+    return (
+      prevProps.monthIndex === nextProps.monthIndex &&
+      prevProps.baseIndex === nextProps.baseIndex &&
+      prevProps.weekIndex === nextProps.weekIndex
+    );
+  }
 };
 
 export default memo(CalendarViewControlMonth, propsAreEqual);

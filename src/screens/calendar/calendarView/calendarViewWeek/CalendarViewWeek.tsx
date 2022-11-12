@@ -1,22 +1,21 @@
-import React, {memo, useCallback, useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import {CalendarDate} from '../../../../models/Calendar';
 import CalendarViewDate from './CalendarViewWeekDate';
 import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
 import FBox from '../../../../components/boxes/FBox';
-import {useAppSelector} from '../../../../store/store';
-import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
-import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
 
 type CalendarViewWeekProps = {
   dates: CalendarDate[];
+  isActiveWeek?: boolean;
+  freeze?: boolean;
   rate?: Animated.SharedValue<number>;
 };
 
-const CalendarViewWeek = ({dates, rate}: CalendarViewWeekProps) => {
-  const weekIndex = useMemo<number>(() => CalendarUtils.getWeekIndexByDate(dates[0]), []);
-  const isActiveWeekSelector = useCallback(CalendarSelectors.makeIsActiveWeekSelector(), []);
-  const isActiveWeek = useAppSelector((state) => isActiveWeekSelector(state, weekIndex));
+const CalendarViewWeek = ({dates, isActiveWeek, rate}: CalendarViewWeekProps) => {
+  const dateRate = useMemo<Animated.SharedValue<number>>(() => {
+    return !isActiveWeek ? rate : undefined;
+  }, [isActiveWeek]);
 
   const style = useAnimatedStyle(() => ({
     width: '100%',
@@ -30,11 +29,24 @@ const CalendarViewWeek = ({dates, rate}: CalendarViewWeekProps) => {
     <Animated.View style={style}>
       <FBox flexDirection="row" px={1}>
         {dates.map((date, index) => (
-          <CalendarViewDate date={date} rate={isActiveWeek ? undefined : rate} key={index} />
+          <CalendarViewDate date={date} rate={dateRate} key={index} />
         ))}
       </FBox>
     </Animated.View>
   );
 };
 
-export default memo(CalendarViewWeek);
+const propsAreEqual = (prevProps: CalendarViewWeekProps, nextProps: CalendarViewWeekProps): boolean => {
+  if (nextProps.freeze) {
+    return true;
+  } else if (prevProps.freeze && !nextProps.freeze) {
+    return false;
+  } else {
+    return (
+      JSON.stringify(prevProps.dates) === JSON.stringify(nextProps.dates) &&
+      prevProps.isActiveWeek === nextProps.isActiveWeek
+    );
+  }
+};
+
+export default memo(CalendarViewWeek, propsAreEqual);

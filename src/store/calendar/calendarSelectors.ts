@@ -2,12 +2,14 @@ import {createSelector} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {StoreUtils} from '../../shared/utils/StoreUtils';
 import {CalendarReminder} from '../../models/Reminder';
-import {CalendarMode} from '../../models/Calendar';
+import {CalendarDate, CalendarMode} from '../../models/Calendar';
+import {CalendarUtils} from '../../shared/utils/CalendarUtils';
 
 const getCalendarState = (state: RootState) => state.calendar;
 const getMonthKey = (_: any, monthKey: string) => monthKey;
-const getSecondNumberParam = (_: any, param: number) => param;
-const getThirdNumberParam = (_: any, __: any, param: number) => param;
+const getCalendarDate = (_: any, date: CalendarDate) => date;
+const getWeekIndex = (_: any, weekIndex: number) => weekIndex;
+const getDateIndex = (_: any, __: any, param: number) => param;
 
 class CalendarSelectors {
   static mode = createSelector(getCalendarState, (state) => state.mode as CalendarMode);
@@ -29,19 +31,20 @@ class CalendarSelectors {
   static shouldLoad = createSelector(getCalendarState, (state) => state.shouldLoad as boolean);
 
   static makeIsActiveWeekSelector = () =>
-    createSelector([getCalendarState, getSecondNumberParam], (state, week) => (state.weekIndex === week) as boolean);
+    createSelector([getCalendarState, getWeekIndex], (state, week) => (state.weekIndex === week) as boolean);
 
   static makeIsActiveDateSelector = () =>
-    createSelector([getCalendarState, getSecondNumberParam], (state, date) => (state.dateIndex === date) as boolean);
+    createSelector(
+      [getCalendarState, getCalendarDate],
+      (state, date) =>
+        (state.dateIndex === date.date && state.monthIndex === CalendarUtils.getMonthIndexByMonth(date)) as boolean,
+    );
 
   static makeLoadingSelector = () =>
     createSelector([getCalendarState, getMonthKey], (state, key) => state.loadingKeys.includes(key) as boolean);
 
   static makeRemindersSelector = () =>
-    createSelector([getCalendarState, getMonthKey, getThirdNumberParam], (state, monthKey, date) => {
-      if (!date) {
-        return undefined;
-      }
+    createSelector([getCalendarState, getMonthKey, getDateIndex], (state, monthKey, date) => {
       const reminders = StoreUtils.getValue(state.reminders, monthKey, []) as CalendarReminder[];
       return reminders.filter((r) => new Date(r.date).getDate() === date);
     });

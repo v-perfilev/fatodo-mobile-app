@@ -5,21 +5,24 @@ export interface CalendarMonth {
 
 export interface CalendarDate extends CalendarMonth {
   date: number;
-  isCurrentMonth?: boolean;
+  isActiveMonth?: boolean;
+  isActiveWeek?: boolean;
 }
 
 export type CalendarWeek = {
   dates: CalendarDate[];
-  index?: number;
+  weekIndex?: number;
 };
 
 export type CalendarMonthParams = {
   monthIndex: number;
+  baseIndex: number;
   freeze: boolean;
 };
 
 export type CalendarWeekParams = {
   weekIndex: number;
+  baseIndex: number;
   freeze: boolean;
 };
 

@@ -111,7 +111,7 @@ export class CalendarUtils {
 
     for (let i = 1; i <= daysInMonth; i++) {
       const date = i;
-      const calendarDate: CalendarDate = {year, month, date, isCurrentMonth: true};
+      const calendarDate: CalendarDate = {year, month, date, isActiveMonth: true};
       calendarDates.push(calendarDate);
     }
 

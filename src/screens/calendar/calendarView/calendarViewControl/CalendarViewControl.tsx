@@ -9,7 +9,7 @@ import {CalendarMode} from '../../../../models/Calendar';
 import Separator from '../../../../components/layouts/Separator';
 import {usePreviousValue} from '../../../../shared/hooks/usePreviousValue';
 import {CalendarConstants} from '../../../../shared/utils/CalendarUtils';
-import CalendarViewControlContainer from './CalendarViewControlContainer';
+import CalendarViewControlList from './CalendarViewControlList';
 
 type CalendarViewControlProps = {
   rate: Animated.SharedValue<number>;
@@ -92,7 +92,7 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
         canScrollLeft={canScrollLeft}
         canScrollRight={canScrollRight}
       >
-        <CalendarViewControlContainer rate={rate} />
+        <CalendarViewControlList rate={rate} />
       </CalendarViewControlPan>
       <Separator />
     </>

@@ -1,51 +1,70 @@
-import React, {memo} from 'react';
+import React, {memo, useMemo} from 'react';
 import Animated from 'react-native-reanimated';
 import FBox from '../../../../components/boxes/FBox';
 import {CalendarMonthParams, CalendarWeekParams} from '../../../../models/Calendar';
-import CalendarViewControlMonth from './CalendarViewControlMonth';
 import {useAppSelector} from '../../../../store/store';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import CalendarViewControlWeek from './CalendarViewControlWeek';
+import {usePreviousValue} from '../../../../shared/hooks/usePreviousValue';
+import {ArrayUtils} from '../../../../shared/utils/ArrayUtils';
+import CalendarViewControlMonth from './CalendarViewControlMonth';
 
 type CalendarViewControlListProps = {
-  monthParams: CalendarMonthParams[];
-  weekParams: CalendarWeekParams[];
   rate: Animated.SharedValue<number>;
 };
 
-const CalendarViewControlList = ({monthParams, weekParams, rate}: CalendarViewControlListProps) => {
+const LIST_INDENT = 1;
+
+const CalendarViewControlList = ({rate}: CalendarViewControlListProps) => {
+  const mode = useAppSelector(CalendarSelectors.mode);
+  const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
+  const weekIndex = useAppSelector(CalendarSelectors.weekIndex);
   const monthBaseIndex = useAppSelector(CalendarSelectors.monthBaseIndex);
   const weekBaseIndex = useAppSelector(CalendarSelectors.weekBaseIndex);
+  const prevMode = usePreviousValue(mode);
+
+  const monthParams = useMemo<CalendarMonthParams[]>(() => {
+    const indent = mode === 'month' || mode !== prevMode ? LIST_INDENT : 0;
+    return ArrayUtils.range(-indent, indent).map((i) => ({
+      monthIndex: monthIndex + i,
+      baseIndex: monthBaseIndex + monthIndex + i,
+      freeze: i !== 0,
+    }));
+  }, [monthIndex, monthBaseIndex, mode]);
+
+  const weekParams = useMemo<CalendarWeekParams[]>(() => {
+    const indent = mode === 'week' || mode !== prevMode ? LIST_INDENT : 0;
+    return ArrayUtils.range(-indent, indent).map((i) => ({
+      weekIndex: weekIndex + i,
+      baseIndex: weekBaseIndex + weekIndex + i,
+      freeze: i !== 0,
+    }));
+  }, [weekIndex, weekBaseIndex, mode]);
 
   return (
     <FBox position="relative" grow>
-      {monthParams.map(({monthIndex, freeze}) => (
+      {monthParams.map(({monthIndex, baseIndex, freeze}) => (
         <CalendarViewControlMonth
           monthIndex={monthIndex}
-          index={monthBaseIndex + monthIndex}
+          baseIndex={baseIndex}
+          weekIndex={weekIndex}
           freeze={freeze}
           rate={rate}
-          key={monthIndex}
+          key={`month_${monthIndex}`}
         />
       ))}
-      {weekParams.map(({weekIndex, freeze}) => (
+      {weekParams.map(({weekIndex, baseIndex, freeze}) => (
         <CalendarViewControlWeek
           weekIndex={weekIndex}
-          index={weekBaseIndex + weekIndex}
+          baseIndex={baseIndex}
+          monthIndex={monthIndex}
           freeze={freeze}
           rate={rate}
-          key={weekIndex}
+          key={`week_${weekIndex}`}
         />
       ))}
     </FBox>
   );
 };
 
-const propsAreEqual = (prevProps: CalendarViewControlListProps, nextProps: CalendarViewControlListProps): boolean => {
-  return (
-    JSON.stringify(prevProps.monthParams) === JSON.stringify(nextProps.monthParams) &&
-    JSON.stringify(prevProps.weekParams) === JSON.stringify(nextProps.weekParams)
-  );
-};
-
-export default memo(CalendarViewControlList, propsAreEqual);
+export default memo(CalendarViewControlList);

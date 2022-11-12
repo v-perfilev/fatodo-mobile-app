@@ -20,14 +20,14 @@ type CalendarViewWeekDateProps = {
 const CalendarViewWeekDate = ({date, rate}: CalendarViewWeekDateProps) => {
   const dispatch = useAppDispatch();
   const isActiveDateSelector = useCallback(CalendarSelectors.makeIsActiveDateSelector(), []);
-  const isActive = useAppSelector((state) => isActiveDateSelector(state, date.date));
+  const isActive = useAppSelector((state) => isActiveDateSelector(state, date));
 
   const handlePress = (): void => {
     dispatch(CalendarActions.selectDate(date));
   };
 
   const calcColor = (activeColor: ColorType, currentColor: ColorType, otherColor: ColorType): ColorType => {
-    return isActive && date.isCurrentMonth ? activeColor : date.isCurrentMonth ? currentColor : otherColor;
+    return isActive && date.isActiveMonth ? activeColor : date.isActiveMonth ? currentColor : otherColor;
   };
 
   const bg = useColorModeValue(
@@ -59,10 +59,4 @@ const CalendarViewWeekDate = ({date, rate}: CalendarViewWeekDateProps) => {
   );
 };
 
-const propsAreEqual = (prevProps: CalendarViewWeekDateProps, nextProps: CalendarViewWeekDateProps): boolean => {
-  return prevProps.date.isCurrentMonth === nextProps.date.isCurrentMonth;
-};
-
-// TODO fix bug with memorization
-// export default memo(CalendarViewWeekDate, propsAreEqual);
 export default memo(CalendarViewWeekDate);
