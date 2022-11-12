@@ -14,6 +14,8 @@ import {useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import CalendarViewControl from './calendarViewControl/CalendarViewControl';
 
+const CALENDAR_BASE_HEIGHT = CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT;
+
 const CalendarView = () => {
   const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
 
@@ -22,16 +24,20 @@ const CalendarView = () => {
   }, [monthIndex]);
 
   const minControlHeight = useMemo<number>(() => {
-    return CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT + CALENDAR_DATE_HEIGHT;
+    return CALENDAR_BASE_HEIGHT + CALENDAR_DATE_HEIGHT;
   }, []);
 
   const maxControlHeight = useMemo<number>(() => {
-    return CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT + CALENDAR_DATE_HEIGHT * weekCount;
+    return CALENDAR_BASE_HEIGHT + CALENDAR_DATE_HEIGHT * weekCount;
   }, [weekCount]);
 
-  const control = useCallback((rate: Animated.SharedValue<number>) => <CalendarViewControl rate={rate} />, []);
+  const control = useCallback((rate: Animated.SharedValue<number>) => {
+    return <CalendarViewControl rate={rate} />;
+  }, []);
 
-  const content = useMemo<ReactElement>(() => <CalendarViewReminders />, []);
+  const content = useMemo<ReactElement>(() => {
+    return <CalendarViewReminders />;
+  }, []);
 
   return (
     <>

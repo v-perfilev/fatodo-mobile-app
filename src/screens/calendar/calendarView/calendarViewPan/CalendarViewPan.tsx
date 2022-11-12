@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useCallback, useEffect, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {
   cancelAnimation,
@@ -28,12 +28,17 @@ type PanContext = {
 };
 
 const GESTURE_THRESHOLD = 50;
+const BASE_HEIGHT = StatusBar.currentHeight + HEADER_HEIGHT + TAB_HEIGHT;
 
 const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}: CalendarViewPanProps) => {
   const {height} = useWindowDimensions();
-  const initialContainerHeight = height - StatusBar.currentHeight - HEADER_HEIGHT - TAB_HEIGHT;
-  const [containerHeightState, setContainerHeightState] = useState<number>(initialContainerHeight);
+  const [containerHeightState, setContainerHeightState] = useState<number>(height - BASE_HEIGHT);
   const [contentHeightState, setContentHeightState] = useState<number>(0);
+
+  const contentHeightThreshold = useMemo<number>(
+    () => containerHeightState - minControlHeight,
+    [contentHeightState, minControlHeight],
+  );
 
   const handleLayout = useCallback((e: LayoutChangeEvent): void => {
     const height = e.nativeEvent.layout.height;
@@ -125,10 +130,11 @@ const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}:
       <Animated.View style={styles.container} onLayout={handleLayout}>
         <CalendarViewPanControl height={controlHeight} rate={clampedRate} control={control} />
         <CalendarViewPanContent
+          content={content}
+          contentHeightThreshold={contentHeightThreshold}
+          setContentHeight={setContentHeightState}
           height={contentHeight}
           translate={clampedContentTranslation}
-          content={content}
-          setContentHeight={setContentHeightState}
         />
       </Animated.View>
     </PanGestureHandler>

@@ -63,4 +63,6 @@ const propsAreEqual = (prevProps: CalendarViewWeekDateProps, nextProps: Calendar
   return prevProps.date.isCurrentMonth === nextProps.date.isCurrentMonth;
 };
 
-export default memo(CalendarViewWeekDate, propsAreEqual);
+// TODO fix bug with memorization
+// export default memo(CalendarViewWeekDate, propsAreEqual);
+export default memo(CalendarViewWeekDate);
