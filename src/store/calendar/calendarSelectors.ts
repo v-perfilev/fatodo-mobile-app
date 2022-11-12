@@ -2,6 +2,7 @@ import {createSelector} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {StoreUtils} from '../../shared/utils/StoreUtils';
 import {CalendarReminder} from '../../models/Reminder';
+import {CalendarMode} from '../../models/Calendar';
 
 const getCalendarState = (state: RootState) => state.calendar;
 const getMonthKey = (_: any, monthKey: string) => monthKey;
@@ -9,6 +10,8 @@ const getSecondNumberParam = (_: any, param: number) => param;
 const getThirdNumberParam = (_: any, __: any, param: number) => param;
 
 class CalendarSelectors {
+  static mode = createSelector(getCalendarState, (state) => state.mode as CalendarMode);
+
   static monthIndex = createSelector(getCalendarState, (state) => state.monthIndex as number);
 
   static weekIndex = createSelector(getCalendarState, (state) => state.weekIndex as number);

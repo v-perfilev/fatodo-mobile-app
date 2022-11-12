@@ -22,3 +22,5 @@ export type CalendarWeekParams = {
   weekIndex: number;
   freeze: boolean;
 };
+
+export type CalendarMode = 'month' | 'week';

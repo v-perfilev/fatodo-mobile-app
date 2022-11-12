@@ -4,7 +4,7 @@ import NotificationService from '../../services/NotificationService';
 import {InfoActions} from '../info/infoActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
-import {CalendarDate, CalendarMonth} from '../../models/Calendar';
+import {CalendarDate, CalendarMode, CalendarMonth} from '../../models/Calendar';
 import {CALENDAR_LOAD_INDENT} from '../../constants';
 import calendarSlice from './calendarSlice';
 
@@ -15,6 +15,10 @@ export class CalendarActions {
     dispatch(calendarSlice.actions.reset());
   };
 
+  static setMode = (mode: CalendarMode) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setMode(mode));
+  };
+
   static selectDate = (date: CalendarDate) => (dispatch: AppDispatch) => {
     dispatch(calendarSlice.actions.setDateIndex(date));
   };
@@ -23,8 +27,16 @@ export class CalendarActions {
     dispatch(calendarSlice.actions.setMonthIndex(monthIndex));
   };
 
+  static selectMonthByBaseIndex = (baseIndex: number) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setMonthIndexByBaseIndex(baseIndex));
+  };
+
   static selectWeek = (weekIndex: number) => (dispatch: AppDispatch) => {
     dispatch(calendarSlice.actions.setWeekIndex(weekIndex));
+  };
+
+  static selectWeekByBaseIndex = (baseIndex: number) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setWeekIndexByBaseIndex(baseIndex));
   };
 
   static setBaseIndex = (index: number) => (dispatch: AppDispatch) => {

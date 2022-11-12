@@ -1,6 +1,8 @@
 import {CalendarReminder} from '../../models/Reminder';
+import {CalendarMode} from '../../models/Calendar';
 
 export type CalendarState = {
+  mode: CalendarMode;
   monthIndex: number;
   weekIndex: number;
   dayIndex: number;

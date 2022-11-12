@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useEffect} from 'react';
+import React, {memo, PropsWithChildren, useEffect} from 'react';
 import Animated, {
   cancelAnimation,
   runOnJS,
@@ -13,13 +13,12 @@ import {StyleSheet, useWindowDimensions} from 'react-native';
 import {CALENDAR_SCROLL_INDENT} from '../../../../constants';
 import FHStack from '../../../../components/boxes/FHStack';
 
-type CalendarViewControlPanProps = {
-  list: ReactElement;
+type CalendarViewControlPanProps = PropsWithChildren<{
   index: number;
   setIndex: (index: number) => void;
   canScrollLeft: boolean;
   canScrollRight: boolean;
-};
+}>;
 
 type PanContext = {
   translateX: number;
@@ -28,11 +27,11 @@ type PanContext = {
 const GESTURE_THRESHOLD = 50;
 
 const CalendarViewControlPan = ({
-  list,
   index,
   setIndex,
   canScrollLeft,
   canScrollRight,
+  children,
 }: CalendarViewControlPanProps) => {
   const {width} = useWindowDimensions();
 
@@ -91,7 +90,7 @@ const CalendarViewControlPan = ({
     <PanGestureHandler onGestureEvent={panGestureEvent}>
       <Animated.View style={[styles.container, style]}>
         <FHStack width={Number.MAX_VALUE} height="100%">
-          {list}
+          {children}
         </FHStack>
       </Animated.View>
     </PanGestureHandler>
@@ -104,4 +103,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(CalendarViewControlPan);
+const propsAreEqual = (prevProps: CalendarViewControlPanProps, nextProps: CalendarViewControlPanProps): boolean => {
+  return (
+    prevProps.index === nextProps.index &&
+    prevProps.setIndex === nextProps.setIndex &&
+    prevProps.canScrollLeft === nextProps.canScrollLeft &&
+    prevProps.canScrollRight === nextProps.canScrollRight
+  );
+};
+
+export default memo(CalendarViewControlPan, propsAreEqual);
