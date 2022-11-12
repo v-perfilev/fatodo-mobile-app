@@ -29,7 +29,6 @@ const CalendarViewPanContent = ({
     const shouldUpdateLessThanThreshold = roundedHeight <= roundedThreshold && prevHeight.current > roundedThreshold;
 
     if (heightChanged && (shouldUpdateMoreThanThreshold || shouldUpdateLessThanThreshold)) {
-      console.log(roundedHeight, roundedThreshold);
       setContentHeight(height);
     }
 

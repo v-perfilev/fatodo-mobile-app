@@ -9,7 +9,7 @@ import CalendarViewControlWeek from './CalendarViewControlWeek';
 
 type CalendarViewControlListProps = {
   monthParams: CalendarMonthParams[];
-  weekParams?: CalendarWeekParams[];
+  weekParams: CalendarWeekParams[];
   rate: Animated.SharedValue<number>;
 };
 

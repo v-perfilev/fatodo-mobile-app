@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Animated, {runOnJS, useDerivedValue} from 'react-native-reanimated';
 import CalendarViewTitle from '../CalendarViewTitle';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
@@ -10,6 +10,7 @@ import {CalendarMonthParams, CalendarWeekParams} from '../../../../models/Calend
 import CalendarViewControlList from './CalendarViewControlList';
 import Separator from '../../../../components/layouts/Separator';
 import {usePreviousValue} from '../../../../shared/hooks/usePreviousValue';
+import {CalendarConstants} from '../../../../shared/utils/CalendarUtils';
 
 type CalendarViewControlProps = {
   rate: Animated.SharedValue<number>;
@@ -37,6 +38,14 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
     },
     [baseIndex, monthIndex, weekIndex, mode],
   );
+
+  const canScrollLeft = useMemo<boolean>(() => {
+    return mode === 'month' ? monthIndex > 0 : weekIndex > 0;
+  }, [mode, monthIndex, weekIndex]);
+
+  const canScrollRight = useMemo<boolean>(() => {
+    return mode === 'month' ? monthIndex < CalendarConstants.maxMonthIndex : weekIndex < CalendarConstants.maxWeekIndex;
+  }, [mode, monthIndex, weekIndex]);
 
   const monthParams = useMemo<CalendarMonthParams[]>(() => {
     const indent = mode === 'month' || mode !== prevMode ? LIST_INDENT : 0;
@@ -99,10 +108,16 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
     <>
       <CalendarViewTitle />
       <Separator />
-      <CalendarViewControlPan list={list} index={baseIndex} setIndex={setBaseIndex} canScrollLeft canScrollRight />
+      <CalendarViewControlPan
+        list={list}
+        index={baseIndex}
+        setIndex={setBaseIndex}
+        canScrollLeft={canScrollLeft}
+        canScrollRight={canScrollRight}
+      />
       <Separator />
     </>
   );
 };
 
-export default memo(CalendarViewControl);
+export default CalendarViewControl;
