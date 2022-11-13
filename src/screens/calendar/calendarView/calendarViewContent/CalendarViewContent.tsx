@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {memo, Ref, useCallback, useEffect, useMemo, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import {CalendarActions} from '../../../../store/calendar/calendarActions';
@@ -7,11 +7,16 @@ import CalendarViewContentList from './CalendarViewContentList';
 import CalendarViewHorizontalPan, {
   CalendarViewHorizontalPanMethods,
 } from '../calendarViewPan/CalendarViewHorizontalPan';
+import {PanGestureHandler} from 'react-native-gesture-handler';
 
-const CalendarViewContent = () => {
+type CalendarViewContentProps = {
+  contentPanRef: Ref<PanGestureHandler>;
+};
+
+const CalendarViewContent = ({contentPanRef}: CalendarViewContentProps) => {
   const dispatch = useAppDispatch();
   const dateIndex = useAppSelector(CalendarSelectors.dateIndex);
-  const controlPanRef = useRef<CalendarViewHorizontalPanMethods>();
+  const imperativePanRef = useRef<CalendarViewHorizontalPanMethods>();
 
   const setDateIndex = useCallback((index: number) => {
     const date = CalendarUtils.getDateByDateIndex(index);
@@ -27,7 +32,7 @@ const CalendarViewContent = () => {
   }, [dateIndex]);
 
   useEffect(() => {
-    controlPanRef.current.scrollToIndex(dateIndex);
+    imperativePanRef.current?.scrollToIndex(dateIndex);
   }, [dateIndex]);
 
   return (
@@ -36,7 +41,8 @@ const CalendarViewContent = () => {
       setIndex={setDateIndex}
       canScrollLeft={canScrollLeft}
       canScrollRight={canScrollRight}
-      controlPanRef={controlPanRef}
+      imperativePanRef={imperativePanRef}
+      horizontalPanRef={contentPanRef}
     >
       <CalendarViewContentList />
     </CalendarViewHorizontalPan>

@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
+import React, {ReactElement, useCallback, useEffect, useMemo, useRef} from 'react';
 import CalendarViewHeader from './CalendarViewHeader';
 import CalendarViewPan from './calendarViewPan/CalendarViewPan';
 import Animated from 'react-native-reanimated';
@@ -15,6 +15,7 @@ import CalendarViewControl from './calendarViewControl/CalendarViewControl';
 import {CalendarActions} from '../../../store/calendar/calendarActions';
 import {useIsFocused} from '@react-navigation/native';
 import CalendarViewContent from './calendarViewContent/CalendarViewContent';
+import {PanGestureHandler} from 'react-native-gesture-handler';
 
 const CALENDAR_BASE_HEIGHT = CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT;
 
@@ -23,6 +24,9 @@ const CalendarView = () => {
   const isFocused = useIsFocused();
   const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
   const shouldLoad = useAppSelector(CalendarSelectors.shouldLoad);
+  const rootPanRef = useRef<PanGestureHandler>();
+  const contentPanRef = useRef<PanGestureHandler>();
+  const controlPanRef = useRef<PanGestureHandler>();
 
   const weekCount = useMemo<number>(() => {
     return CalendarUtils.getWeekCountInMonth(monthIndex);
@@ -37,11 +41,11 @@ const CalendarView = () => {
   }, [weekCount]);
 
   const control = useCallback((rate: Animated.SharedValue<number>) => {
-    return <CalendarViewControl rate={rate} />;
+    return <CalendarViewControl rate={rate} controlPanRef={controlPanRef} />;
   }, []);
 
   const content = useMemo<ReactElement>(() => {
-    return <CalendarViewContent />;
+    return <CalendarViewContent contentPanRef={contentPanRef} />;
   }, []);
 
   useEffect(() => {
@@ -60,6 +64,9 @@ const CalendarView = () => {
         content={content}
         minControlHeight={minControlHeight}
         maxControlHeight={maxControlHeight}
+        rootPanRef={rootPanRef}
+        controlPanRef={controlPanRef}
+        contentPanRef={contentPanRef}
       />
     </>
   );

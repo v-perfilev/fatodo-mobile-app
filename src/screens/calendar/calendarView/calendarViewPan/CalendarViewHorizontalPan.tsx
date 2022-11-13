@@ -18,7 +18,8 @@ type CalendarViewHorizontalPanProps = PropsWithChildren<{
   setIndex: (index: number) => void;
   canScrollLeft: boolean;
   canScrollRight: boolean;
-  controlPanRef?: Ref<CalendarViewHorizontalPanMethods>;
+  imperativePanRef?: Ref<CalendarViewHorizontalPanMethods>;
+  horizontalPanRef?: Ref<PanGestureHandler>;
 }>;
 
 export type CalendarViewHorizontalPanMethods = {
@@ -36,7 +37,8 @@ const CalendarViewHorizontalPan = ({
   setIndex,
   canScrollLeft,
   canScrollRight,
-  controlPanRef,
+  imperativePanRef,
+  horizontalPanRef,
   children,
 }: CalendarViewHorizontalPanProps) => {
   const {width} = useWindowDimensions();
@@ -55,7 +57,7 @@ const CalendarViewHorizontalPan = ({
     localIndex.value = index;
   }, []);
 
-  useImperativeHandle(controlPanRef, (): CalendarViewHorizontalPanMethods => ({scrollToIndex}), [scrollToIndex]);
+  useImperativeHandle(imperativePanRef, (): CalendarViewHorizontalPanMethods => ({scrollToIndex}), [scrollToIndex]);
 
   /*
   Gesture handlers
@@ -91,7 +93,12 @@ const CalendarViewHorizontalPan = ({
   }));
 
   return (
-    <PanGestureHandler onGestureEvent={panGestureEvent}>
+    <PanGestureHandler
+      onGestureEvent={panGestureEvent}
+      activeOffsetX={[-10, 10]}
+      failOffsetY={[-10, 10]}
+      ref={horizontalPanRef}
+    >
       <Animated.View style={[styles.container, style]}>
         <FHStack width={Number.MAX_VALUE} height="100%">
           {children}

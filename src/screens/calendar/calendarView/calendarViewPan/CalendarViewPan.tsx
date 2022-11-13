@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {memo, ReactElement, Ref, useCallback, useEffect, useMemo, useState} from 'react';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {
   cancelAnimation,
@@ -19,6 +19,9 @@ type CalendarViewPanProps = {
   content: ReactElement;
   minControlHeight: number;
   maxControlHeight: number;
+  rootPanRef?: Ref<PanGestureHandler>;
+  controlPanRef?: Ref<PanGestureHandler>;
+  contentPanRef?: Ref<PanGestureHandler>;
 };
 
 type PanContext = {
@@ -30,7 +33,15 @@ type PanContext = {
 const GESTURE_THRESHOLD = 50;
 const BASE_HEIGHT = StatusBar.currentHeight + HEADER_HEIGHT + TAB_HEIGHT;
 
-const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}: CalendarViewPanProps) => {
+const CalendarViewPan = ({
+  control,
+  content,
+  minControlHeight,
+  maxControlHeight,
+  rootPanRef,
+  controlPanRef,
+  contentPanRef,
+}: CalendarViewPanProps) => {
   const {height} = useWindowDimensions();
   const [containerHeightState, setContainerHeightState] = useState<number>(height - BASE_HEIGHT);
   const [contentHeightState, setContentHeightState] = useState<number>(0);
@@ -132,7 +143,13 @@ const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}:
   }, [maxControlHeight]);
 
   return (
-    <PanGestureHandler onGestureEvent={panGestureEvent} failOffsetX={[-10, 10]} activeOffsetY={[-10, 10]}>
+    <PanGestureHandler
+      onGestureEvent={panGestureEvent}
+      failOffsetX={[-10, 10]}
+      activeOffsetY={[-10, 10]}
+      ref={rootPanRef}
+      waitFor={[controlPanRef, contentPanRef]}
+    >
       <Animated.View style={styles.container} onLayout={handleLayout}>
         <CalendarViewPanControl height={controlHeight} rate={clampedRate} control={control} />
         <CalendarViewPanContent
