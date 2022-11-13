@@ -208,4 +208,10 @@ export class CalendarConstants {
     month: CalendarConstants.lastDate.month(),
     date: CalendarConstants.lastDate.date(),
   });
+
+  public static maxDateIndex = CalendarUtils.getDateIndexByDate({
+    year: CalendarConstants.lastDate.year(),
+    month: CalendarConstants.lastDate.month(),
+    date: CalendarConstants.lastDate.date(),
+  });
 }

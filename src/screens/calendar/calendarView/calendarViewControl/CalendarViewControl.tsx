@@ -3,13 +3,15 @@ import Animated, {runOnJS, useDerivedValue} from 'react-native-reanimated';
 import CalendarViewTitle from '../CalendarViewTitle';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
-import CalendarViewControlPan, {CalendarViewControlPanMethods} from '../calendarViewControlPan/CalendarViewControlPan';
 import {CalendarActions} from '../../../../store/calendar/calendarActions';
 import {CalendarMode} from '../../../../models/Calendar';
 import Separator from '../../../../components/layouts/Separator';
 import {usePreviousValue} from '../../../../shared/hooks/usePreviousValue';
 import {CalendarConstants} from '../../../../shared/utils/CalendarUtils';
 import CalendarViewControlList from './CalendarViewControlList';
+import CalendarViewHorizontalPan, {
+  CalendarViewHorizontalPanMethods,
+} from '../calendarViewPan/CalendarViewHorizontalPan';
 
 type CalendarViewControlProps = {
   rate: Animated.SharedValue<number>;
@@ -24,7 +26,7 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
   const prevBaseIndex = usePreviousValue(baseIndex);
   const prevMonthIndex = usePreviousValue(monthIndex);
   const prevWeekIndex = usePreviousValue(weekIndex);
-  const controlPanRef = useRef<CalendarViewControlPanMethods>();
+  const controlPanRef = useRef<CalendarViewHorizontalPanMethods>();
 
   const setBaseIndex = useCallback(
     (index: number) => {
@@ -91,7 +93,7 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
     <>
       <CalendarViewTitle />
       <Separator />
-      <CalendarViewControlPan
+      <CalendarViewHorizontalPan
         index={baseIndex}
         setIndex={setBaseIndex}
         canScrollLeft={canScrollLeft}
@@ -99,7 +101,7 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
         controlPanRef={controlPanRef}
       >
         <CalendarViewControlList rate={rate} />
-      </CalendarViewControlPan>
+      </CalendarViewHorizontalPan>
       <Separator />
     </>
   );

@@ -13,15 +13,15 @@ import {StyleSheet, useWindowDimensions} from 'react-native';
 import {CALENDAR_SCROLL_INDENT} from '../../../../constants';
 import FHStack from '../../../../components/boxes/FHStack';
 
-type CalendarViewControlPanProps = PropsWithChildren<{
+type CalendarViewHorizontalPanProps = PropsWithChildren<{
   index: number;
   setIndex: (index: number) => void;
   canScrollLeft: boolean;
   canScrollRight: boolean;
-  controlPanRef?: Ref<CalendarViewControlPanMethods>;
+  controlPanRef?: Ref<CalendarViewHorizontalPanMethods>;
 }>;
 
-export type CalendarViewControlPanMethods = {
+export type CalendarViewHorizontalPanMethods = {
   scrollToIndex: (index: number) => void;
 };
 
@@ -31,14 +31,14 @@ type PanContext = {
 
 const GESTURE_THRESHOLD = 50;
 
-const CalendarViewControlPan = ({
+const CalendarViewHorizontalPan = ({
   index,
   setIndex,
   canScrollLeft,
   canScrollRight,
   controlPanRef,
   children,
-}: CalendarViewControlPanProps) => {
+}: CalendarViewHorizontalPanProps) => {
   const {width} = useWindowDimensions();
 
   const localIndex = useSharedValue(index);
@@ -55,7 +55,7 @@ const CalendarViewControlPan = ({
     localIndex.value = index;
   }, []);
 
-  useImperativeHandle(controlPanRef, (): CalendarViewControlPanMethods => ({scrollToIndex}), [scrollToIndex]);
+  useImperativeHandle(controlPanRef, (): CalendarViewHorizontalPanMethods => ({scrollToIndex}), [scrollToIndex]);
 
   /*
   Gesture handlers
@@ -104,10 +104,14 @@ const CalendarViewControlPan = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexGrow: 1,
   },
 });
 
-const propsAreEqual = (prevProps: CalendarViewControlPanProps, nextProps: CalendarViewControlPanProps): boolean => {
+const propsAreEqual = (
+  prevProps: CalendarViewHorizontalPanProps,
+  nextProps: CalendarViewHorizontalPanProps,
+): boolean => {
   return (
     prevProps.index === nextProps.index &&
     prevProps.setIndex === nextProps.setIndex &&
@@ -116,4 +120,4 @@ const propsAreEqual = (prevProps: CalendarViewControlPanProps, nextProps: Calend
   );
 };
 
-export default memo(CalendarViewControlPan, propsAreEqual);
+export default memo(CalendarViewHorizontalPan, propsAreEqual);

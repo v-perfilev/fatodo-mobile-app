@@ -29,4 +29,9 @@ export type CalendarWeekParams = {
   freeze: boolean;
 };
 
+export type CalendarContentParams = {
+  dateIndex: number;
+  freeze: boolean;
+};
+
 export type CalendarMode = 'month' | 'week';

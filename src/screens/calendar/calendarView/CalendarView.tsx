@@ -2,7 +2,6 @@ import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
 import CalendarViewHeader from './CalendarViewHeader';
 import CalendarViewPan from './calendarViewPan/CalendarViewPan';
 import Animated from 'react-native-reanimated';
-import CalendarViewReminders from './calendarViewReminders/CalendarViewReminders';
 import {
   CALENDAR_DATE_HEIGHT,
   CALENDAR_MARGIN_HEIGHT,
@@ -15,6 +14,7 @@ import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import CalendarViewControl from './calendarViewControl/CalendarViewControl';
 import {CalendarActions} from '../../../store/calendar/calendarActions';
 import {useIsFocused} from '@react-navigation/native';
+import CalendarViewContent from './calendarViewContent/CalendarViewContent';
 
 const CALENDAR_BASE_HEIGHT = CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT;
 
@@ -41,7 +41,7 @@ const CalendarView = () => {
   }, []);
 
   const content = useMemo<ReactElement>(() => {
-    return <CalendarViewReminders />;
+    return <CalendarViewContent />;
   }, []);
 
   useEffect(() => {

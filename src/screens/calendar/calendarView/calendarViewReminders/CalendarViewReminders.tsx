@@ -7,9 +7,12 @@ import FVStack from '../../../../components/boxes/FVStack';
 import {CalendarDate} from '../../../../models/Calendar';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
 
-const CalendarViewReminders = () => {
+type CalendarViewRemindersProps = {
+  dateIndex: number;
+};
+
+const CalendarViewReminders = ({dateIndex}: CalendarViewRemindersProps) => {
   const remindersSelector = useCallback(CalendarSelectors.makeDateRemindersSelector(), []);
-  const dateIndex = useAppSelector(CalendarSelectors.dateIndex);
   const date = useMemo<CalendarDate>(() => CalendarUtils.getDateByDateIndex(dateIndex), [dateIndex]);
   const reminders = useAppSelector((state) => remindersSelector(state, date));
   const showEmptyStub = reminders?.length === 0;
