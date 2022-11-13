@@ -11,11 +11,11 @@ import FVStack from '../../../../components/boxes/FVStack';
 import DateView from '../../../../components/views/DateView';
 import FBox from '../../../../components/boxes/FBox';
 
-type CalendarViewReminderItemProps = {
+type CalendarViewRemindersItemProps = {
   reminder: CalendarReminder;
 };
 
-const CalendarViewReminderItem = ({reminder}: CalendarViewReminderItemProps) => {
+const CalendarViewRemindersItem = ({reminder}: CalendarViewRemindersItemProps) => {
   const groupSelector = useCallback(InfoSelectors.makeGroupSelector(), []);
   const itemSelector = useCallback(InfoSelectors.makeItemSelector(), []);
   const group = useAppSelector((state) => groupSelector(state, reminder.parentId));
@@ -40,7 +40,7 @@ const CalendarViewReminderItem = ({reminder}: CalendarViewReminderItemProps) => 
         </Text>
       </FVStack>
       <Box>
-        <Text color="gray.500" fontSize="xs">
+        <Text color="gray.400" fontSize="xs">
           <DateView date={date} timeFormat="FULL" />
         </Text>
       </Box>
@@ -48,4 +48,4 @@ const CalendarViewReminderItem = ({reminder}: CalendarViewReminderItemProps) => 
   );
 };
 
-export default CalendarViewReminderItem;
+export default CalendarViewRemindersItem;

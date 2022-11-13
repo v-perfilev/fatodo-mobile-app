@@ -16,7 +16,7 @@ import {HEADER_HEIGHT, TAB_HEIGHT} from '../../../../constants';
 
 type CalendarViewPanProps = {
   control: (rate: Animated.SharedValue<number>) => ReactElement;
-  content: ReactElement;
+  content: (setHeight: (height: number) => void, translate: Animated.SharedValue<number>) => ReactElement;
   minControlHeight: number;
   maxControlHeight: number;
   rootPanRef?: Ref<PanGestureHandler>;
@@ -46,6 +46,10 @@ const CalendarViewPan = ({
   const [containerHeightState, setContainerHeightState] = useState<number>(height - BASE_HEIGHT);
   const [contentHeightState, setContentHeightState] = useState<number>(0);
 
+  const rate = useSharedValue(1);
+  const controlHeight = useSharedValue(maxControlHeight);
+  const contentTranslation = useSharedValue(0);
+
   const contentHeightThreshold = useMemo<number>(
     () => containerHeightState - minControlHeight,
     [contentHeightState, minControlHeight],
@@ -56,9 +60,10 @@ const CalendarViewPan = ({
     setContainerHeightState(height);
   }, []);
 
-  const rate = useSharedValue(1);
-  const controlHeight = useSharedValue(maxControlHeight);
-  const contentTranslation = useSharedValue(0);
+  const handleContentHeightChange = useCallback((height: number): void => {
+    contentTranslation.value = 0;
+    setContentHeightState(height);
+  }, []);
 
   /*
   DERIVED VALUES
@@ -155,7 +160,7 @@ const CalendarViewPan = ({
         <CalendarViewPanContent
           content={content}
           contentHeightThreshold={contentHeightThreshold}
-          setContentHeight={setContentHeightState}
+          setContentHeight={handleContentHeightChange}
           height={contentHeight}
           translate={clampedContentTranslation}
         />

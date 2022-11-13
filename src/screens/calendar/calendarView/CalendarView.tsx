@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import CalendarViewHeader from './CalendarViewHeader';
 import CalendarViewPan from './calendarViewPan/CalendarViewPan';
 import Animated from 'react-native-reanimated';
@@ -44,8 +44,8 @@ const CalendarView = () => {
     return <CalendarViewControl rate={rate} controlPanRef={controlPanRef} />;
   }, []);
 
-  const content = useMemo<ReactElement>(() => {
-    return <CalendarViewContent contentPanRef={contentPanRef} />;
+  const content = useCallback((setHeight: (height: number) => void, translate: Animated.SharedValue<number>) => {
+    return <CalendarViewContent setHeight={setHeight} translate={translate} contentPanRef={contentPanRef} />;
   }, []);
 
   useEffect(() => {

@@ -1,11 +1,10 @@
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
-import React, {Dispatch, memo, ReactElement, SetStateAction, useRef} from 'react';
-import {LayoutChangeEvent} from 'react-native';
+import React, {memo, ReactElement, useCallback, useRef} from 'react';
 
 type CalendarViewPanContentProps = {
-  content: ReactElement;
+  content: (setHeight: (height: number) => void, translate: Animated.SharedValue<number>) => ReactElement;
   contentHeightThreshold: number;
-  setContentHeight: Dispatch<SetStateAction<number>>;
+  setContentHeight: (height: number) => void;
   height: Animated.SharedValue<number>;
   translate: Animated.SharedValue<number>;
 };
@@ -19,39 +18,30 @@ const CalendarViewPanContent = ({
 }: CalendarViewPanContentProps) => {
   const prevHeight = useRef<number>(0);
 
-  const handleLayout = (e: LayoutChangeEvent): void => {
-    const height = e.nativeEvent.layout.height;
-    const roundedHeight = Math.round(height);
-    const roundedThreshold = Math.round(contentHeightThreshold);
+  const setHeight = useCallback(
+    (height: number): void => {
+      const roundedHeight = Math.round(height);
+      const roundedThreshold = Math.round(contentHeightThreshold);
 
-    const heightChanged = height !== prevHeight.current;
-    const shouldUpdateMoreThanThreshold = roundedHeight > roundedThreshold;
-    const shouldUpdateLessThanThreshold = roundedHeight <= roundedThreshold && prevHeight.current > roundedThreshold;
+      const heightChanged = height !== prevHeight.current;
+      const shouldUpdateMoreThanThreshold = roundedHeight > roundedThreshold;
+      const shouldUpdateLessThanThreshold = roundedHeight <= roundedThreshold && prevHeight.current > roundedThreshold;
 
-    if (heightChanged && (shouldUpdateMoreThanThreshold || shouldUpdateLessThanThreshold)) {
-      setContentHeight(height);
-    }
+      if (heightChanged && (shouldUpdateMoreThanThreshold || shouldUpdateLessThanThreshold)) {
+        setContentHeight(height);
+      }
 
-    prevHeight.current = roundedHeight;
-  };
+      prevHeight.current = roundedHeight;
+    },
+    [contentHeightThreshold],
+  );
 
   const outerStyle = useAnimatedStyle(() => ({
     height: height.value,
     overflow: 'hidden',
   }));
 
-  const innerStyle = useAnimatedStyle(() => ({
-    minHeight: height.value,
-    transform: [{translateY: translate.value}],
-  }));
-
-  return (
-    <Animated.View style={outerStyle}>
-      <Animated.View style={innerStyle} onLayout={handleLayout}>
-        {content}
-      </Animated.View>
-    </Animated.View>
-  );
+  return <Animated.View style={outerStyle}>{content(setHeight, translate)}</Animated.View>;
 };
 
 export default memo(CalendarViewPanContent);

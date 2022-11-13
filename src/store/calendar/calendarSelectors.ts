@@ -61,7 +61,7 @@ class CalendarSelectors {
     createSelector([getCalendarState, getCalendarDate], (state, date) => {
       const monthKey = CalendarUtils.buildMonthKeyByItem(date);
       const reminders = StoreUtils.getValue(state.reminders, monthKey, []) as CalendarReminder[];
-      return reminders.filter((r) => new Date(r.date).getDate() === date.date);
+      return reminders.filter((r) => new Date(r.date).getDate() === date.date) as CalendarReminder[];
     });
 }
 

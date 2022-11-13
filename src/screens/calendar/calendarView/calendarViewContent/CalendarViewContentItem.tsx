@@ -1,20 +1,28 @@
 import React, {memo, useEffect, useRef} from 'react';
 import CalendarViewReminders from '../calendarViewReminders/CalendarViewReminders';
-import CentredSpinner from '../../../../components/surfaces/CentredSpinner';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import {useWindowDimensions} from 'react-native';
 
 type CalendarViewContentItemProps = {
   dateIndex: number;
   freeze: boolean;
+  setHeight: (height: number) => void;
+  translate: Animated.SharedValue<number>;
 };
 
-const CalendarViewContentItem = ({dateIndex, freeze}: CalendarViewContentItemProps) => {
+const CalendarViewContentItem = ({dateIndex, freeze, setHeight, translate}: CalendarViewContentItemProps) => {
   const {width} = useWindowDimensions();
   const loaded = useRef<boolean>(false);
+  const storedHeight = useRef<number>(0);
+
+  const handleHeightChange = (height: number) => {
+    storedHeight.current = height;
+    setHeight(height);
+  };
 
   useEffect(() => {
     !freeze && (loaded.current = true);
+    !freeze && setHeight(storedHeight.current);
   }, [freeze]);
 
   const monthStyle = useAnimatedStyle(() => ({
@@ -26,13 +34,11 @@ const CalendarViewContentItem = ({dateIndex, freeze}: CalendarViewContentItemPro
 
   return (
     <Animated.View style={monthStyle}>
-      {!freeze || loaded ? <CalendarViewReminders dateIndex={dateIndex} /> : <CentredSpinner />}
+      {(!freeze || loaded) && (
+        <CalendarViewReminders dateIndex={dateIndex} setHeight={handleHeightChange} translate={translate} />
+      )}
     </Animated.View>
   );
 };
 
-const propsAreEqual = (prevProps: CalendarViewContentItemProps, nextProps: CalendarViewContentItemProps): boolean => {
-  return !prevProps.freeze || nextProps.freeze;
-};
-
-export default memo(CalendarViewContentItem, propsAreEqual);
+export default memo(CalendarViewContentItem);

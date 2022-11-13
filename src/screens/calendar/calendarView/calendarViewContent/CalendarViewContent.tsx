@@ -8,12 +8,15 @@ import CalendarViewHorizontalPan, {
   CalendarViewHorizontalPanMethods,
 } from '../calendarViewPan/CalendarViewHorizontalPan';
 import {PanGestureHandler} from 'react-native-gesture-handler';
+import Animated from 'react-native-reanimated';
 
 type CalendarViewContentProps = {
+  setHeight: (height: number) => void;
+  translate: Animated.SharedValue<number>;
   contentPanRef: Ref<PanGestureHandler>;
 };
 
-const CalendarViewContent = ({contentPanRef}: CalendarViewContentProps) => {
+const CalendarViewContent = ({setHeight, translate, contentPanRef}: CalendarViewContentProps) => {
   const dispatch = useAppDispatch();
   const dateIndex = useAppSelector(CalendarSelectors.dateIndex);
   const imperativePanRef = useRef<CalendarViewHorizontalPanMethods>();
@@ -44,7 +47,7 @@ const CalendarViewContent = ({contentPanRef}: CalendarViewContentProps) => {
       imperativePanRef={imperativePanRef}
       horizontalPanRef={contentPanRef}
     >
-      <CalendarViewContentList />
+      <CalendarViewContentList setHeight={setHeight} translate={translate} />
     </CalendarViewHorizontalPan>
   );
 };
