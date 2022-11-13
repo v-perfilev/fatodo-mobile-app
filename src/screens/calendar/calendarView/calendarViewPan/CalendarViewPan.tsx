@@ -111,8 +111,14 @@ const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}:
       const finalRate = finalControlHeight === maxControlHeight ? 1 : 0;
 
       if (shouldChangeControlHeight) {
-        controlHeight.value = withSpring(finalControlHeight, {overshootClamping: true});
-        rate.value = withSpring(finalRate, {overshootClamping: true});
+        controlHeight.value = withSpring(finalControlHeight, {
+          velocity: event.velocityY,
+          overshootClamping: true,
+        });
+        rate.value = withSpring(finalRate, {
+          velocity: event.velocityY / (maxControlHeight - minControlHeight),
+          overshootClamping: true,
+        });
       } else {
         contentTranslation.value = withDecay({velocity: event.velocityY});
       }
