@@ -7,7 +7,7 @@ import {CalendarConstants, CalendarUtils} from '../../shared/utils/CalendarUtils
 import {CalendarDate, CalendarMode} from '../../models/Calendar';
 
 const date = CalendarUtils.getCurrentDate();
-const monthIndex = CalendarUtils.getMonthIndexByDate(date);
+const monthIndex = CalendarUtils.getMonthIndexByItem(date);
 const weekIndex = CalendarUtils.getWeekIndexByDate(date);
 const dayIndex = CalendarUtils.getDayIndexByDate(date);
 const dateIndex = date.date;
@@ -44,7 +44,7 @@ const calendarSlice = createSlice({
 
     setDateIndex: (state: CalendarState, action: PayloadAction<CalendarDate>) => {
       const date = action.payload;
-      state.monthIndex = CalendarUtils.getMonthIndexByDate(date);
+      state.monthIndex = CalendarUtils.getMonthIndexByItem(date);
       state.weekIndex = CalendarUtils.getWeekIndexByDate(date);
       state.dayIndex = CalendarUtils.getDayIndexByDate(date);
       state.dateIndex = date.date;
@@ -52,7 +52,7 @@ const calendarSlice = createSlice({
 
     setMonthIndex: (state: CalendarState, action: PayloadAction<number>) => {
       const date = CalendarUtils.generateMonthDateByIndexes(action.payload, state.dateIndex);
-      state.monthIndex = CalendarUtils.getMonthIndexByDate(date);
+      state.monthIndex = CalendarUtils.getMonthIndexByItem(date);
       state.weekIndex = CalendarUtils.getWeekIndexByDate(date);
       state.dayIndex = CalendarUtils.getDayIndexByDate(date);
       state.dateIndex = date.date;
@@ -61,7 +61,7 @@ const calendarSlice = createSlice({
     setMonthIndexByBaseIndex: (state: CalendarState, action: PayloadAction<number>) => {
       const monthIndex = state.monthIndex + action.payload - state.baseIndex;
       const date = CalendarUtils.generateMonthDateByIndexes(monthIndex, state.dateIndex);
-      state.monthIndex = CalendarUtils.getMonthIndexByDate(date);
+      state.monthIndex = CalendarUtils.getMonthIndexByItem(date);
       state.weekIndex = CalendarUtils.getWeekIndexByDate(date);
       state.dayIndex = CalendarUtils.getDayIndexByDate(date);
       state.dateIndex = date.date;
@@ -69,7 +69,7 @@ const calendarSlice = createSlice({
 
     setWeekIndex: (state: CalendarState, action: PayloadAction<number>) => {
       const date = CalendarUtils.generateWeekDateByIndexes(action.payload, state.dayIndex);
-      state.monthIndex = CalendarUtils.getMonthIndexByDate(date);
+      state.monthIndex = CalendarUtils.getMonthIndexByItem(date);
       state.weekIndex = CalendarUtils.getWeekIndexByDate(date);
       state.dayIndex = CalendarUtils.getDayIndexByDate(date);
       state.dateIndex = date.date;
@@ -78,7 +78,7 @@ const calendarSlice = createSlice({
     setWeekIndexByBaseIndex: (state: CalendarState, action: PayloadAction<number>) => {
       const weekIndex = state.weekIndex + action.payload - state.baseIndex;
       const date = CalendarUtils.generateWeekDateByIndexes(weekIndex, state.dayIndex);
-      state.monthIndex = CalendarUtils.getMonthIndexByDate(date);
+      state.monthIndex = CalendarUtils.getMonthIndexByItem(date);
       state.weekIndex = CalendarUtils.getWeekIndexByDate(date);
       state.dayIndex = CalendarUtils.getDayIndexByDate(date);
       state.dateIndex = date.date;

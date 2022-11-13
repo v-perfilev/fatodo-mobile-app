@@ -27,7 +27,7 @@ const CalendarViewReminderItem = ({reminder}: CalendarViewReminderItemProps) => 
   const date = new Date(reminder.date);
 
   return (
-    <FHStack defaultSpace alignItems="center">
+    <FHStack defaultSpace alignItems="center" py="1">
       <FBox grow={false} height="15px">
         {bulletView}
       </FBox>

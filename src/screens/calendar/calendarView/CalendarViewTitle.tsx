@@ -16,10 +16,9 @@ import {CalendarActions} from '../../../store/calendar/calendarActions';
 
 const CalendarViewTitle = () => {
   const dispatch = useAppDispatch();
-  const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
-  const monthKey = useMemo<string>(() => CalendarUtils.buildMonthKey(monthIndex), [monthIndex]);
   const loadingSelector = useCallback(CalendarSelectors.makeLoadingSelector(), []);
-  const loading = useAppSelector((state) => loadingSelector(state, monthKey));
+  const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
+  const loading = useAppSelector((state) => loadingSelector(state, monthIndex));
   const {showSelectMonthDialog} = useCalendarDialogContext();
   const {i18n} = useTranslation();
 
@@ -31,7 +30,7 @@ const CalendarViewTitle = () => {
   }, [monthIndex, i18n.language]);
 
   const setMonth = useCallback((month: CalendarMonth) => {
-    const monthIndex = CalendarUtils.getMonthIndexByMonth(month);
+    const monthIndex = CalendarUtils.getMonthIndexByItem(month);
     dispatch(CalendarActions.selectMonth(monthIndex));
   }, []);
 

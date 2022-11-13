@@ -9,13 +9,11 @@ import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 
 const CalendarViewHeader = () => {
   const dispatch = useAppDispatch();
-  const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
-  const dateIndex = useAppSelector(CalendarSelectors.dateIndex);
+  const date = useAppSelector(CalendarSelectors.date);
 
   const isCurrentDate = useMemo<boolean>(() => {
-    const date = CalendarUtils.getCalendarDate(monthIndex, dateIndex);
     return CalendarUtils.isCurrentDate(date);
-  }, [monthIndex, dateIndex]);
+  }, [date]);
 
   const goToCurrentDate = useCallback((): void => {
     const currentDate = CalendarUtils.getCurrentDate();

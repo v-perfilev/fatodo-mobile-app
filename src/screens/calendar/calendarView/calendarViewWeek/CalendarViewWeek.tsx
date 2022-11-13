@@ -12,7 +12,7 @@ type CalendarViewWeekProps = {
   rate?: Animated.SharedValue<number>;
 };
 
-const CalendarViewWeek = ({dates, isActiveWeek, rate}: CalendarViewWeekProps) => {
+const CalendarViewWeek = ({dates, isActiveWeek, freeze, rate}: CalendarViewWeekProps) => {
   const dateRate = useMemo<Animated.SharedValue<number>>(() => {
     return !isActiveWeek ? rate : undefined;
   }, [isActiveWeek]);
@@ -28,8 +28,8 @@ const CalendarViewWeek = ({dates, isActiveWeek, rate}: CalendarViewWeekProps) =>
   return (
     <Animated.View style={style}>
       <FBox flexDirection="row" px={1}>
-        {dates.map((date, index) => (
-          <CalendarViewDate date={date} rate={dateRate} key={index} />
+        {dates.map((date) => (
+          <CalendarViewDate date={date} freeze={freeze} rate={dateRate} key={`date_${date.month}_${date.date}`} />
         ))}
       </FBox>
     </Animated.View>
@@ -39,8 +39,6 @@ const CalendarViewWeek = ({dates, isActiveWeek, rate}: CalendarViewWeekProps) =>
 const propsAreEqual = (prevProps: CalendarViewWeekProps, nextProps: CalendarViewWeekProps): boolean => {
   if (nextProps.freeze) {
     return true;
-  } else if (prevProps.freeze && !nextProps.freeze) {
-    return false;
   } else {
     return (
       JSON.stringify(prevProps.dates) === JSON.stringify(nextProps.dates) &&

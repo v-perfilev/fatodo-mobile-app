@@ -7,6 +7,9 @@ import FBox from '../../../../components/boxes/FBox';
 import CalendarViewWeekDays from '../calendarViewWeek/CalendarViewWeekDays';
 import Separator from '../../../../components/layouts/Separator';
 import {useWindowDimensions} from 'react-native';
+import {useAppSelector} from '../../../../store/store';
+import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
+import {cloneDeep} from 'lodash';
 
 type CalendarViewControlMonthProps = {
   monthIndex: number;
@@ -18,8 +21,9 @@ type CalendarViewControlMonthProps = {
 
 const CalendarViewControlMonth = ({monthIndex, baseIndex, weekIndex, freeze, rate}: CalendarViewControlMonthProps) => {
   const {width} = useWindowDimensions();
+  const reminders = useAppSelector(CalendarSelectors.reminders);
 
-  const weeks = useMemo<CalendarWeek[]>(() => {
+  const monthWeeks = useMemo<CalendarWeek[]>(() => {
     const monthDates = CalendarUtils.generateMonthDates(monthIndex);
     const weeks: CalendarWeek[] = [];
     while (monthDates.length) {
@@ -29,6 +33,18 @@ const CalendarViewControlMonth = ({monthIndex, baseIndex, weekIndex, freeze, rat
     }
     return weeks;
   }, []);
+
+  const weeks = useMemo<CalendarWeek[]>(() => {
+    const enrichedMonthWeeks = monthWeeks.map((week) => {
+      week.dates = week.dates.map((date) => {
+        const monthKey = CalendarUtils.buildMonthKeyByItem(date);
+        date.reminders = reminders.get(monthKey)?.filter((r) => new Date(r.date).getDate() === date.date);
+        return date;
+      });
+      return week;
+    });
+    return cloneDeep(enrichedMonthWeeks);
+  }, [reminders]);
 
   const monthStyle = useAnimatedStyle(() => ({
     position: 'absolute',
@@ -59,8 +75,6 @@ const CalendarViewControlMonth = ({monthIndex, baseIndex, weekIndex, freeze, rat
 const propsAreEqual = (prevProps: CalendarViewControlMonthProps, nextProps: CalendarViewControlMonthProps): boolean => {
   if (nextProps.freeze) {
     return true;
-  } else if (prevProps.freeze && !nextProps.freeze) {
-    return false;
   } else {
     return (
       prevProps.monthIndex === nextProps.monthIndex &&

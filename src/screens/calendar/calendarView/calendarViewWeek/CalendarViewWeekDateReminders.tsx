@@ -1,0 +1,55 @@
+import React, {memo, useCallback} from 'react';
+import FVStack from '../../../../components/boxes/FVStack';
+import FHStack from '../../../../components/boxes/FHStack';
+import {useAppSelector} from '../../../../store/store';
+import Bullet from '../../../../components/surfaces/Bullet';
+import InfoSelectors from '../../../../store/info/infoSelectors';
+import {FilterUtils} from '../../../../shared/utils/FilterUtils';
+import {CalendarReminder} from '../../../../models/Reminder';
+import {Box} from 'native-base';
+
+type CalendarViewDateRemindersProps = {
+  reminders: CalendarReminder[];
+  isActiveDate?: boolean;
+};
+
+const CalendarViewWeekDateReminders = ({reminders, isActiveDate}: CalendarViewDateRemindersProps) => {
+  const groupsSelector = useCallback(InfoSelectors.makeGroupsSelector(), []);
+  const groupIds = reminders.map((r) => r.parentId).filter(FilterUtils.uniqueFilter);
+  const groups = useAppSelector((state) => groupsSelector(state, groupIds));
+
+  const reminderColors = reminders
+    .map((reminder) => groups.find((g) => g.id === reminder.parentId))
+    .filter(FilterUtils.notUndefinedFilter)
+    .map((g) => g.color);
+
+  // const reminderColorsToShow = reminderColors.slice(0, 3);
+  const reminderColorsToShow = [
+    ...reminderColors,
+    ...reminderColors,
+    ...reminderColors,
+    ...reminderColors,
+    ...reminderColors,
+  ].slice(0, 3);
+  // const showDots = reminderColors.length > 3;
+  const showDots = true;
+
+  return (
+    <FVStack grow space="4px">
+      {reminderColorsToShow.map((color, index) => (
+        <Bullet inverted={isActiveDate} color={color} size="4px" fullWidth key={index} />
+      ))}
+      {showDots && (
+        <FHStack space="6px" justifyContent="center">
+          {Array.from({length: 3}).map((_, index) => (
+            <Box width="5px">
+              <Bullet inverted={isActiveDate} size="5px" key={index} />
+            </Box>
+          ))}
+        </FHStack>
+      )}
+    </FVStack>
+  );
+};
+
+export default memo(CalendarViewWeekDateReminders);

@@ -56,9 +56,9 @@ export class CalendarActions {
     PREFIX + 'handleMonth',
     async (monthIndex, thunkAPI) => {
       const {loadingKeys, loadedKeys} = thunkAPI.getState().calendar;
-      const key = CalendarUtils.buildMonthKey(monthIndex);
+      const key = CalendarUtils.buildMonthKeyByIndex(monthIndex);
       const keysToLoad = ArrayUtils.range(monthIndex - CALENDAR_LOAD_INDENT, monthIndex + CALENDAR_LOAD_INDENT)
-        .map(CalendarUtils.buildMonthKey)
+        .map(CalendarUtils.buildMonthKeyByIndex)
         .filter((key) => !loadedKeys.includes(key))
         .filter((key) => !loadingKeys.includes(key));
       const actualKeyLoaded = loadingKeys.includes(key) || loadedKeys.includes(key);

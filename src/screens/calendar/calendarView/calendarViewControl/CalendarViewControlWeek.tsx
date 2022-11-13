@@ -8,6 +8,8 @@ import Separator from '../../../../components/layouts/Separator';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import {useWindowDimensions} from 'react-native';
 import {cloneDeep} from 'lodash';
+import {useAppSelector} from '../../../../store/store';
+import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 
 type CalendarViewControlWeekProps = {
   weekIndex: number;
@@ -19,6 +21,7 @@ type CalendarViewControlWeekProps = {
 
 const CalendarViewControlWeek = ({weekIndex, baseIndex, monthIndex, freeze, rate}: CalendarViewControlWeekProps) => {
   const {width} = useWindowDimensions();
+  const reminders = useAppSelector(CalendarSelectors.reminders);
 
   const weekDates = useMemo<CalendarDate[]>(() => {
     return CalendarUtils.generateWeekDates(weekIndex);
@@ -26,12 +29,14 @@ const CalendarViewControlWeek = ({weekIndex, baseIndex, monthIndex, freeze, rate
 
   const dates = useMemo<CalendarDate[]>(() => {
     const enrichedWeekDates = weekDates.map((date) => {
-      const dateMonthIndex = CalendarUtils.getMonthIndexByDate(date);
+      const dateMonthIndex = CalendarUtils.getMonthIndexByItem(date);
+      const monthKey = CalendarUtils.buildMonthKeyByItem(date);
       date.isActiveMonth = monthIndex === dateMonthIndex;
+      date.reminders = reminders.get(monthKey)?.filter((r) => new Date(r.date).getDate() === date.date);
       return date;
     });
     return cloneDeep(enrichedWeekDates);
-  }, [monthIndex]);
+  }, [monthIndex, reminders]);
 
   const weekStyle = useAnimatedStyle(() => ({
     position: 'absolute',
@@ -54,8 +59,6 @@ const CalendarViewControlWeek = ({weekIndex, baseIndex, monthIndex, freeze, rate
 const propsAreEqual = (prevProps: CalendarViewControlWeekProps, nextProps: CalendarViewControlWeekProps): boolean => {
   if (nextProps.freeze) {
     return true;
-  } else if (prevProps.freeze && !nextProps.freeze) {
-    return false;
   } else {
     return (
       prevProps.weekIndex === nextProps.weekIndex &&

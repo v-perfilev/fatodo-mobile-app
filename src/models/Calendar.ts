@@ -1,3 +1,5 @@
+import {CalendarReminder} from './Reminder';
+
 export interface CalendarMonth {
   year: number;
   month: number;
@@ -7,6 +9,7 @@ export interface CalendarDate extends CalendarMonth {
   date: number;
   isActiveMonth?: boolean;
   isActiveWeek?: boolean;
+  reminders?: CalendarReminder[];
 }
 
 export type CalendarWeek = {

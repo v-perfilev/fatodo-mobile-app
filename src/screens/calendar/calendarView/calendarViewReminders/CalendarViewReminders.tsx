@@ -1,17 +1,14 @@
-import React, {memo, useCallback, useMemo} from 'react';
+import React, {memo, useCallback} from 'react';
 import CalendarViewRemindersEmptyStub from './CalendarViewRemindersEmptyStub';
 import CalendarViewReminderItem from './CalendarViewReminderItem';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import {useAppSelector} from '../../../../store/store';
 import FVStack from '../../../../components/boxes/FVStack';
-import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
 
 const CalendarViewReminders = () => {
-  const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
-  const dateIndex = useAppSelector(CalendarSelectors.dateIndex);
-  const monthKey = useMemo<string>(() => CalendarUtils.buildMonthKey(monthIndex), [monthIndex]);
-  const remindersSelector = useCallback(CalendarSelectors.makeRemindersSelector(), []);
-  const reminders = useAppSelector((state) => remindersSelector(state, monthKey, dateIndex));
+  const remindersSelector = useCallback(CalendarSelectors.makeDateRemindersSelector(), []);
+  const date = useAppSelector(CalendarSelectors.date);
+  const reminders = useAppSelector((state) => remindersSelector(state, date));
   const showEmptyStub = reminders?.length === 0;
   const showReminders = reminders?.length > 0;
 
@@ -19,7 +16,7 @@ const CalendarViewReminders = () => {
     <>
       {showEmptyStub && <CalendarViewRemindersEmptyStub />}
       {showReminders && (
-        <FVStack grow px="3" py="2">
+        <FVStack grow px="3" py="1">
           {reminders.map((reminder, index) => (
             <CalendarViewReminderItem reminder={reminder} key={index} />
           ))}

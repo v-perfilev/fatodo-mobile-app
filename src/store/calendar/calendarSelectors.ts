@@ -6,10 +6,8 @@ import {CalendarDate, CalendarMode} from '../../models/Calendar';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
 
 const getCalendarState = (state: RootState) => state.calendar;
-const getMonthKey = (_: any, monthKey: string) => monthKey;
 const getCalendarDate = (_: any, date: CalendarDate) => date;
-const getWeekIndex = (_: any, weekIndex: number) => weekIndex;
-const getDateIndex = (_: any, __: any, param: number) => param;
+const getIndex = (_: any, index: number) => index;
 
 class CalendarSelectors {
   static mode = createSelector(getCalendarState, (state) => state.mode as CalendarMode);
@@ -20,8 +18,6 @@ class CalendarSelectors {
 
   static dayIndex = createSelector(getCalendarState, (state) => state.dayIndex as number);
 
-  static dateIndex = createSelector(getCalendarState, (state) => state.dateIndex as number);
-
   static baseIndex = createSelector(getCalendarState, (state) => state.baseIndex as number);
 
   static monthBaseIndex = createSelector(getCalendarState, (state) => state.monthBaseIndex as number);
@@ -30,23 +26,43 @@ class CalendarSelectors {
 
   static shouldLoad = createSelector(getCalendarState, (state) => state.shouldLoad as boolean);
 
+  static date = createSelector(
+    getCalendarState,
+    (state) => CalendarUtils.getCalendarDate(state.monthIndex, state.dateIndex) as CalendarDate,
+  );
+
+  static reminders = createSelector(
+    getCalendarState,
+    (state) => new Map(state.reminders) as Map<string, CalendarReminder[]>,
+  );
+
   static makeIsActiveWeekSelector = () =>
-    createSelector([getCalendarState, getWeekIndex], (state, week) => (state.weekIndex === week) as boolean);
+    createSelector([getCalendarState, getIndex], (state, week) => (state.weekIndex === week) as boolean);
 
   static makeIsActiveDateSelector = () =>
     createSelector(
       [getCalendarState, getCalendarDate],
       (state, date) =>
-        (state.dateIndex === date.date && state.monthIndex === CalendarUtils.getMonthIndexByMonth(date)) as boolean,
+        (state.dateIndex === date.date && state.monthIndex === CalendarUtils.getMonthIndexByItem(date)) as boolean,
     );
 
   static makeLoadingSelector = () =>
-    createSelector([getCalendarState, getMonthKey], (state, key) => state.loadingKeys.includes(key) as boolean);
+    createSelector([getCalendarState, getIndex], (state, index) => {
+      const key = CalendarUtils.buildMonthKeyByIndex(index);
+      return state.loadingKeys.includes(key) as boolean;
+    });
 
-  static makeRemindersSelector = () =>
-    createSelector([getCalendarState, getMonthKey, getDateIndex], (state, monthKey, date) => {
+  static makeDateRemindersSelector = () =>
+    createSelector([getCalendarState, getCalendarDate], (state, date) => {
+      const monthKey = CalendarUtils.buildMonthKeyByItem(date);
       const reminders = StoreUtils.getValue(state.reminders, monthKey, []) as CalendarReminder[];
-      return reminders.filter((r) => new Date(r.date).getDate() === date);
+      return reminders.filter((r) => new Date(r.date).getDate() === date.date);
+    });
+
+  static makeMonthRemindersSelector = () =>
+    createSelector([getCalendarState, getIndex], (state, monthIndex) => {
+      const monthKey = CalendarUtils.buildMonthKeyByIndex(monthIndex);
+      return StoreUtils.getValue(state.reminders, monthKey, []) as CalendarReminder[];
     });
 }
 

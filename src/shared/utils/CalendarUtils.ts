@@ -15,13 +15,8 @@ export class CalendarUtils {
     return {year, month, date};
   };
 
-  public static getMonthIndexByMonth = (value: CalendarMonth): number => {
+  public static getMonthIndexByItem = (value: CalendarMonth): number => {
     const dateMoment = moment({year: value.year, month: value.month, date: 1});
-    return dateMoment.diff(CalendarConstants.firstDate, 'month');
-  };
-
-  public static getMonthIndexByDate = (value: CalendarDate): number => {
-    const dateMoment = moment({year: value.year, month: value.month, date: value.date});
     return dateMoment.diff(CalendarConstants.firstDate, 'month');
   };
 
@@ -138,18 +133,6 @@ export class CalendarUtils {
     return calendarDates;
   };
 
-  public static generateCalendarMonths = (value: CalendarMonth, indent = 3): CalendarMonth[] => {
-    const centralMoment = moment({year: value.year, month: value.month});
-    const routes: CalendarMonth[] = [];
-    for (let i = -indent; i <= indent; i++) {
-      const m = centralMoment.clone().add(i, 'month');
-      const year = m.year();
-      const month = m.month();
-      routes.push({year, month});
-    }
-    return routes;
-  };
-
   /*
   REMINDERS
    */
@@ -174,7 +157,13 @@ export class CalendarUtils {
   UTILS
    */
 
-  public static buildMonthKey = (monthIndex: number): string => {
+  public static buildMonthKeyByItem = (value: CalendarMonth): string => {
+    const year = value.year;
+    const month = value.month;
+    return year + '_' + month;
+  };
+
+  public static buildMonthKeyByIndex = (monthIndex: number): string => {
     const date = CalendarUtils.getCalendarDate(monthIndex);
     const year = date.year;
     const month = date.month;
@@ -201,10 +190,9 @@ export class CalendarConstants {
 
   public static readonly lastDate = moment({year: 2100, month: 11, date: 31});
 
-  public static maxMonthIndex = CalendarUtils.getMonthIndexByDate({
+  public static maxMonthIndex = CalendarUtils.getMonthIndexByItem({
     year: CalendarConstants.lastDate.year(),
     month: CalendarConstants.lastDate.month(),
-    date: CalendarConstants.lastDate.date(),
   });
 
   public static maxWeekIndex = CalendarUtils.getWeekIndexByDate({
