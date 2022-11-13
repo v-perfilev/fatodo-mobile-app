@@ -4,16 +4,8 @@ import {CalendarDate, CalendarMonth} from '../../models/Calendar';
 
 export class CalendarUtils {
   /*
-  GETTERS
+  Index getters
    */
-
-  public static getCurrentDate = (): CalendarDate => {
-    const now = moment();
-    const year = now.year();
-    const month = now.month();
-    const date = now.date();
-    return {year, month, date};
-  };
 
   public static getMonthIndexByItem = (value: CalendarMonth): number => {
     const dateMoment = moment({year: value.year, month: value.month, date: 1});
@@ -25,55 +17,61 @@ export class CalendarUtils {
     return dateMoment.diff(CalendarConstants.firstDate, 'week');
   };
 
-  public static getDayIndexByDate = (value: CalendarDate): number => {
+  public static getDateIndexByDate = (value: CalendarDate): number => {
     const dateMoment = moment({year: value.year, month: value.month, date: value.date});
-    const day = dateMoment.day();
-    return day === 0 ? 7 : day;
+    return dateMoment.diff(CalendarConstants.firstDate, 'day');
   };
 
-  public static getCalendarDate = (monthIndex: number, dateIndex = 1): CalendarDate => {
-    const dateMoment = CalendarConstants.firstDate
-      .clone()
-      .add(monthIndex, 'month')
-      .add(dateIndex - 1, 'day');
+  /*
+   CalendarDate getters
+   */
+
+  public static getCurrentDate = (): CalendarDate => {
+    const now = moment();
+    const year = now.year();
+    const month = now.month();
+    const date = now.date();
+    return {year, month, date};
+  };
+
+  public static addIndexesToDate = (value: CalendarDate, count: number, unit: 'month' | 'week'): CalendarDate => {
+    const dateMoment = moment({year: value.year, month: value.month, date: value.date}).add(count, unit);
     const year = dateMoment.year();
     const month = dateMoment.month();
     const date = dateMoment.date();
     return {year, month, date};
   };
 
-  public static getWeekCountInMonth = (monthIndex: number): number => {
+  public static getDateByDateIndex = (dateIndex: number): CalendarDate => {
+    const dateMoment = CalendarConstants.firstDate.clone().add(dateIndex, 'day');
+    const year = dateMoment.year();
+    const month = dateMoment.month();
+    const date = dateMoment.date();
+    return {year, month, date};
+  };
+
+  public static getDateByMonthIndex = (monthIndex: number): CalendarDate => {
     const dateMoment = CalendarConstants.firstDate.clone().add(monthIndex, 'month');
     const year = dateMoment.year();
     const month = dateMoment.month();
-    const momentDate = moment({year, month, date: 1});
-    const monthFirstDate = {year, month, date: 1};
-    const monthLastDate = {year, month, date: momentDate.daysInMonth()};
-    return CalendarUtils.getWeekIndexByDate(monthLastDate) - CalendarUtils.getWeekIndexByDate(monthFirstDate) + 1;
+    const date = dateMoment.date();
+    return {year, month, date};
+  };
+
+  /*
+   CalendarMonth getters
+   */
+
+  public static getMonthByMonthIndex = (monthIndex: number): CalendarMonth => {
+    const dateMoment = CalendarConstants.firstDate.clone().add(monthIndex, 'month');
+    const year = dateMoment.year();
+    const month = dateMoment.month();
+    return {year, month};
   };
 
   /*
   GENERATORS
    */
-
-  public static generateMonthDateByIndexes = (monthIndex: number, dateIndex: number): CalendarDate => {
-    const dateMoment = CalendarConstants.firstDate.clone().add(monthIndex, 'month');
-    const year = dateMoment.year();
-    const month = dateMoment.month();
-    const date = dateMoment.daysInMonth() >= dateIndex ? dateIndex : 1;
-    return {year, month, date};
-  };
-
-  public static generateWeekDateByIndexes = (weekIndex: number, dayIndex: number): CalendarDate => {
-    const dateMoment = CalendarConstants.firstDate
-      .clone()
-      .add(weekIndex, 'week')
-      .add(dayIndex - 1, 'day');
-    const year = dateMoment.year();
-    const month = dateMoment.month();
-    const date = dateMoment.date();
-    return {year, month, date};
-  };
 
   public static generateMonthDates = (index: number): CalendarDate[] => {
     const dateMoment = CalendarConstants.firstDate.clone().add(index, 'month');
@@ -164,7 +162,7 @@ export class CalendarUtils {
   };
 
   public static buildMonthKeyByIndex = (monthIndex: number): string => {
-    const date = CalendarUtils.getCalendarDate(monthIndex);
+    const date = CalendarUtils.getDateByMonthIndex(monthIndex);
     const year = date.year;
     const month = date.month;
     return year + '_' + month;
@@ -182,6 +180,16 @@ export class CalendarUtils {
     const month = now.month();
     const date = now.date();
     return value.year === year && value.month === month && value.date === date;
+  };
+
+  public static getWeekCountInMonth = (monthIndex: number): number => {
+    const dateMoment = CalendarConstants.firstDate.clone().add(monthIndex, 'month');
+    const year = dateMoment.year();
+    const month = dateMoment.month();
+    const momentDate = moment({year, month, date: 1});
+    const monthFirstDate = {year, month, date: 1};
+    const monthLastDate = {year, month, date: momentDate.daysInMonth()};
+    return CalendarUtils.getWeekIndexByDate(monthLastDate) - CalendarUtils.getWeekIndexByDate(monthFirstDate) + 1;
   };
 }
 

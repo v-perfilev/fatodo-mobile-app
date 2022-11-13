@@ -4,7 +4,7 @@ import NotificationService from '../../services/NotificationService';
 import {InfoActions} from '../info/infoActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
-import {CalendarDate, CalendarMode} from '../../models/Calendar';
+import {CalendarDate, CalendarMode, CalendarMonth} from '../../models/Calendar';
 import {CALENDAR_LOAD_INDENT} from '../../constants';
 import calendarSlice from './calendarSlice';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
@@ -20,24 +20,20 @@ export class CalendarActions {
     dispatch(calendarSlice.actions.setMode(mode));
   };
 
-  static selectDate = (date: CalendarDate) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setDateIndex(date));
+  static setDate = (date: CalendarDate) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setDate(date));
   };
 
-  static selectMonth = (monthIndex: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setMonthIndex(monthIndex));
+  static setMonth = (date: CalendarMonth) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setMonth(date));
   };
 
-  static selectMonthByBaseIndex = (baseIndex: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setMonthIndexByBaseIndex(baseIndex));
+  static setMonthByControlIndex = (baseIndex: number) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setMonthByControlIndex(baseIndex));
   };
 
-  static selectWeek = (weekIndex: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setWeekIndex(weekIndex));
-  };
-
-  static selectWeekByBaseIndex = (baseIndex: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setWeekIndexByBaseIndex(baseIndex));
+  static setWeekByControlIndex = (baseIndex: number) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setWeekByControlIndex(baseIndex));
   };
 
   static setBaseIndex = (index: number) => (dispatch: AppDispatch) => {

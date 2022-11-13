@@ -1,0 +1,57 @@
+import React, {memo, useMemo} from 'react';
+import Animated from 'react-native-reanimated';
+import FBox from '../../../../components/boxes/FBox';
+import {CalendarMonthParams, CalendarWeekParams} from '../../../../models/Calendar';
+import {useAppSelector} from '../../../../store/store';
+import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
+import CalendarViewControlWeek from './CalendarViewControlWeek';
+import {usePreviousValue} from '../../../../shared/hooks/usePreviousValue';
+import {ArrayUtils} from '../../../../shared/utils/ArrayUtils';
+import CalendarViewControlMonth from './CalendarViewContentItem';
+
+type CalendarViewControlListProps = {
+  rate: Animated.SharedValue<number>;
+};
+
+const LIST_INDENT = 1;
+
+const CalendarViewContentList = ({rate}: CalendarViewControlListProps) => {
+  const mode = useAppSelector(CalendarSelectors.mode);
+  const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
+
+  const weekParams = useMemo<CalendarWeekParams[]>(() => {
+    const indent = mode === 'week' || mode !== prevMode ? LIST_INDENT : 0;
+    return ArrayUtils.range(-indent, indent).map((i) => ({
+      weekIndex: weekIndex + i,
+      baseIndex: weekBaseIndex + weekIndex + i,
+      freeze: i !== 0,
+    }));
+  }, [weekIndex, weekBaseIndex, mode]);
+
+  return (
+    <FBox position="relative" grow>
+      {monthParams.map(({monthIndex, baseIndex, freeze}) => (
+        <CalendarViewControlMonth
+          monthIndex={monthIndex}
+          baseIndex={baseIndex}
+          weekIndex={weekIndex}
+          freeze={freeze}
+          rate={rate}
+          key={`month_${monthIndex}`}
+        />
+      ))}
+      {weekParams.map(({weekIndex, baseIndex, freeze}) => (
+        <CalendarViewControlWeek
+          weekIndex={weekIndex}
+          baseIndex={baseIndex}
+          monthIndex={monthIndex}
+          freeze={freeze}
+          rate={rate}
+          key={`week_${weekIndex}`}
+        />
+      ))}
+    </FBox>
+  );
+};
+
+export default memo(CalendarViewContentList);

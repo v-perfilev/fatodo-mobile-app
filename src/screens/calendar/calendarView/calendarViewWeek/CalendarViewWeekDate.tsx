@@ -26,7 +26,7 @@ const CalendarViewWeekDate = ({date, freeze, rate}: CalendarViewWeekDateProps) =
   const loaded = useRef<boolean>(false);
 
   const handlePress = (): void => {
-    dispatch(CalendarActions.selectDate(date));
+    dispatch(CalendarActions.setDate(date));
   };
 
   const calcColor = (activeColor: ColorType, currentColor: ColorType, otherColor: ColorType): ColorType => {

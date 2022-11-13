@@ -9,13 +9,13 @@ import {CalendarMode} from '../../../../models/Calendar';
 import Separator from '../../../../components/layouts/Separator';
 import {usePreviousValue} from '../../../../shared/hooks/usePreviousValue';
 import {CalendarConstants} from '../../../../shared/utils/CalendarUtils';
-import CalendarViewControlList from './CalendarViewControlList';
+import CalendarViewControlList from './CalendarViewContentList';
 
 type CalendarViewControlProps = {
   rate: Animated.SharedValue<number>;
 };
 
-const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
+const CalendarViewContent = ({rate}: CalendarViewControlProps) => {
   const dispatch = useAppDispatch();
   const mode = useAppSelector(CalendarSelectors.mode);
   const baseIndex = useAppSelector(CalendarSelectors.baseIndex);
@@ -105,4 +105,4 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
   );
 };
 
-export default memo(CalendarViewControl);
+export default memo(CalendarViewContent);
