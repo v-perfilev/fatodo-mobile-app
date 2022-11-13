@@ -1,9 +1,9 @@
-import React, {memo, useCallback, useEffect, useMemo} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useRef} from 'react';
 import Animated, {runOnJS, useDerivedValue} from 'react-native-reanimated';
 import CalendarViewTitle from '../CalendarViewTitle';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
-import CalendarViewControlPan from '../calendarViewControlPan/CalendarViewControlPan';
+import CalendarViewControlPan, {CalendarViewControlPanMethods} from '../calendarViewControlPan/CalendarViewControlPan';
 import {CalendarActions} from '../../../../store/calendar/calendarActions';
 import {CalendarMode} from '../../../../models/Calendar';
 import Separator from '../../../../components/layouts/Separator';
@@ -24,6 +24,7 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
   const prevBaseIndex = usePreviousValue(baseIndex);
   const prevMonthIndex = usePreviousValue(monthIndex);
   const prevWeekIndex = usePreviousValue(weekIndex);
+  const controlPanRef = useRef<CalendarViewControlPanMethods>();
 
   const setBaseIndex = useCallback(
     (index: number) => {
@@ -69,10 +70,14 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
 
   useEffect(() => {
     if (baseIndex === prevBaseIndex && monthIndex !== prevMonthIndex && mode === 'month') {
-      dispatch(CalendarActions.setBaseIndex(baseIndex + monthIndex - prevMonthIndex));
+      const newBaseIndex = baseIndex + monthIndex - prevMonthIndex;
+      controlPanRef.current.scrollToIndex(newBaseIndex);
+      dispatch(CalendarActions.setBaseIndex(newBaseIndex));
     }
     if (baseIndex === prevBaseIndex && weekIndex !== prevWeekIndex && mode === 'week') {
-      dispatch(CalendarActions.setBaseIndex(baseIndex + weekIndex - prevWeekIndex));
+      const newBaseIndex = baseIndex + weekIndex - prevWeekIndex;
+      controlPanRef.current.scrollToIndex(newBaseIndex);
+      dispatch(CalendarActions.setBaseIndex(newBaseIndex));
     }
     if (baseIndex === prevBaseIndex && monthIndex !== prevMonthIndex && mode === 'week') {
       dispatch(CalendarActions.setMonthBaseIndex(baseIndex - monthIndex));
@@ -91,6 +96,7 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
         setIndex={setBaseIndex}
         canScrollLeft={canScrollLeft}
         canScrollRight={canScrollRight}
+        controlPanRef={controlPanRef}
       >
         <CalendarViewControlList rate={rate} />
       </CalendarViewControlPan>

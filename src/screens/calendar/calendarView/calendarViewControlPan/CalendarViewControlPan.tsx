@@ -1,4 +1,4 @@
-import React, {memo, PropsWithChildren, useEffect} from 'react';
+import React, {memo, PropsWithChildren, Ref, useCallback, useImperativeHandle} from 'react';
 import Animated, {
   cancelAnimation,
   runOnJS,
@@ -18,7 +18,12 @@ type CalendarViewControlPanProps = PropsWithChildren<{
   setIndex: (index: number) => void;
   canScrollLeft: boolean;
   canScrollRight: boolean;
+  controlPanRef?: Ref<CalendarViewControlPanMethods>;
 }>;
+
+export type CalendarViewControlPanMethods = {
+  scrollToIndex: (index: number) => void;
+};
 
 type PanContext = {
   translateX: number;
@@ -31,12 +36,30 @@ const CalendarViewControlPan = ({
   setIndex,
   canScrollLeft,
   canScrollRight,
+  controlPanRef,
   children,
 }: CalendarViewControlPanProps) => {
   const {width} = useWindowDimensions();
 
   const localIndex = useSharedValue(index);
   const translateX = useSharedValue(-width * index);
+
+  /*
+  Imperative handlers
+   */
+
+  const scrollToIndex = useCallback((index: number): void => {
+    const shouldAnimateScroll = Math.abs(index - localIndex.value) < CALENDAR_SCROLL_INDENT;
+    const newTranslateX = -index * width;
+    translateX.value = shouldAnimateScroll ? withTiming(newTranslateX, {duration: 200}) : newTranslateX;
+    localIndex.value = index;
+  }, []);
+
+  useImperativeHandle(controlPanRef, (): CalendarViewControlPanMethods => ({scrollToIndex}), [scrollToIndex]);
+
+  /*
+  Gesture handlers
+   */
 
   const panGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, PanContext>({
     onStart: (_, context) => {
@@ -61,26 +84,7 @@ const CalendarViewControlPan = ({
       localIndex.value = newIndex;
       runOnJS(setIndex)(newIndex);
     },
-    onFail: (event) => {
-      const finalTranslateX = Math.round(translateX.value / width) * width;
-      translateX.value = withSpring(finalTranslateX, {velocity: event.velocityX, overshootClamping: true});
-
-      const newIndex = Math.abs(Math.round(finalTranslateX / width));
-      if (newIndex !== localIndex.value) {
-        localIndex.value = newIndex;
-        runOnJS(setIndex)(newIndex);
-      }
-    },
   });
-
-  useEffect(() => {
-    if (index !== localIndex.value) {
-      const shouldAnimateScroll = Math.abs(index - localIndex.value) < CALENDAR_SCROLL_INDENT;
-      const newTranslateX = -index * width;
-      translateX.value = shouldAnimateScroll ? withTiming(newTranslateX, {duration: 200}) : newTranslateX;
-      localIndex.value = index;
-    }
-  }, [index]);
 
   const style = useAnimatedStyle(() => ({
     transform: [{translateX: translateX.value}],
