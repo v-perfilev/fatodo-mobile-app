@@ -1,7 +1,6 @@
-import React, {memo, useMemo} from 'react';
+import React, {memo, Suspense, useMemo} from 'react';
 import {CalendarDate} from '../../../../models/Calendar';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
-import CalendarViewWeek from '../calendarViewWeek/CalendarViewWeek';
 import FBox from '../../../../components/boxes/FBox';
 import CalendarViewWeekDays from '../calendarViewWeek/CalendarViewWeekDays';
 import Separator from '../../../../components/layouts/Separator';
@@ -10,6 +9,9 @@ import {useWindowDimensions} from 'react-native';
 import {cloneDeep} from 'lodash';
 import {useAppSelector} from '../../../../store/store';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
+import CentredSpinner from '../../../../components/surfaces/CentredSpinner';
+
+const CalendarViewWeek = React.lazy(() => import('../calendarViewWeek/CalendarViewWeek'));
 
 type CalendarViewControlWeekProps = {
   weekIndex: number;
@@ -43,15 +45,18 @@ const CalendarViewControlWeek = ({weekIndex, baseIndex, monthIndex, freeze, rate
     left: width * baseIndex,
     display: rate.value === 0 ? 'flex' : 'none',
     width,
+    height: '100%',
   }));
 
   return (
     <Animated.View style={weekStyle}>
       <CalendarViewWeekDays />
       <Separator />
-      <FBox my={1}>
-        <CalendarViewWeek dates={dates} freeze={freeze} />
-      </FBox>
+      <Suspense fallback={<CentredSpinner />}>
+        <FBox my={1}>
+          <CalendarViewWeek dates={dates} freeze={freeze} />
+        </FBox>
+      </Suspense>
     </Animated.View>
   );
 };

@@ -1,8 +1,7 @@
-import React, {memo, useMemo} from 'react';
+import React, {memo, Suspense, useMemo} from 'react';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import {CalendarWeek} from '../../../../models/Calendar';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
-import CalendarViewWeek from '../calendarViewWeek/CalendarViewWeek';
 import FBox from '../../../../components/boxes/FBox';
 import CalendarViewWeekDays from '../calendarViewWeek/CalendarViewWeekDays';
 import Separator from '../../../../components/layouts/Separator';
@@ -10,6 +9,9 @@ import {useWindowDimensions} from 'react-native';
 import {useAppSelector} from '../../../../store/store';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import {cloneDeep} from 'lodash';
+import CentredSpinner from '../../../../components/surfaces/CentredSpinner';
+
+const CalendarViewWeek = React.lazy(() => import('../calendarViewWeek/CalendarViewWeek'));
 
 type CalendarViewControlMonthProps = {
   monthIndex: number;
@@ -51,23 +53,26 @@ const CalendarViewControlMonth = ({monthIndex, baseIndex, weekIndex, freeze, rat
     left: width * baseIndex,
     display: rate.value === 0 ? 'none' : 'flex',
     width,
+    height: '100%',
   }));
 
   return (
     <Animated.View style={monthStyle}>
       <CalendarViewWeekDays />
       <Separator />
-      <FBox my={1}>
-        {weeks.map((week, index) => (
-          <CalendarViewWeek
-            dates={week.dates}
-            isActiveWeek={week.weekIndex === weekIndex}
-            freeze={freeze}
-            rate={rate}
-            key={index}
-          />
-        ))}
-      </FBox>
+      <Suspense fallback={<CentredSpinner />}>
+        <FBox my={1}>
+          {weeks.map((week, index) => (
+            <CalendarViewWeek
+              dates={week.dates}
+              isActiveWeek={week.weekIndex === weekIndex}
+              freeze={freeze}
+              rate={rate}
+              key={index}
+            />
+          ))}
+        </FBox>
+      </Suspense>
     </Animated.View>
   );
 };
