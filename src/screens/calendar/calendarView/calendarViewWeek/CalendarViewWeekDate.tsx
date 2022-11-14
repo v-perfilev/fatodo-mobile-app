@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {memo, Suspense, useCallback, useEffect, useMemo, useRef} from 'react';
 import {CalendarDate} from '../../../../models/Calendar';
 import PaperBox from '../../../../components/surfaces/PaperBox';
 import {Text, useColorMode} from 'native-base';
@@ -7,7 +7,8 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {CalendarActions} from '../../../../store/calendar/calendarActions';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import PressableButton from '../../../../components/controls/PressableButton';
-import CalendarViewWeekDateReminders from './CalendarViewWeekDateReminders';
+
+const CalendarViewWeekDateReminders = React.lazy(() => import('./CalendarViewWeekDateReminders'));
 
 type CalendarViewWeekDateProps = {
   date: CalendarDate;
@@ -57,7 +58,9 @@ const CalendarViewWeekDate = ({date, freeze}: CalendarViewWeekDateProps) => {
           {date.date}
         </Text>
         {(!freeze || loaded) && date.reminders?.length > 0 && (
-          <CalendarViewWeekDateReminders reminders={date.reminders} isActiveDate={isActive} />
+          <Suspense>
+            <CalendarViewWeekDateReminders reminders={date.reminders} isActiveDate={isActive} />
+          </Suspense>
         )}
       </PaperBox>
     </PressableButton>

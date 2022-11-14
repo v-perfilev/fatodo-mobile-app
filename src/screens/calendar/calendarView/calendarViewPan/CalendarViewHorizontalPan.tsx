@@ -32,6 +32,30 @@ type PanContext = {
 
 const GESTURE_THRESHOLD = 50;
 
+const calcActiveParams = (translationX: number, canScrollLeft: boolean, canScrollRight: boolean): [boolean] => {
+  'worklet';
+  const shouldTranslate = (translationX > 0 && canScrollLeft) || (translationX < 0 && canScrollRight);
+  return [shouldTranslate];
+};
+
+const calcEndParams = (
+  translationX: number,
+  translateX: number,
+  width: number,
+  canScrollLeft: boolean,
+  canScrollRight: boolean,
+): [number, number] => {
+  'worklet';
+  const finalTranslateX =
+    translationX > GESTURE_THRESHOLD && canScrollLeft
+      ? Math.ceil(translateX / width) * width
+      : translationX < -GESTURE_THRESHOLD && canScrollRight
+      ? Math.floor(translateX / width) * width
+      : Math.round(translationX / width) * width;
+  const index = Math.abs(Math.round(finalTranslateX / width));
+  return [finalTranslateX, index];
+};
+
 const CalendarViewHorizontalPan = ({
   index,
   setIndex,
@@ -69,22 +93,22 @@ const CalendarViewHorizontalPan = ({
       cancelAnimation(translateX);
     },
     onActive: (event, context) => {
-      if ((event.translationX > 0 && canScrollLeft) || (event.translationX < 0 && canScrollRight)) {
+      const [shouldTranslate] = calcActiveParams(event.translationX, canScrollLeft, canScrollRight);
+      if (shouldTranslate) {
         translateX.value = context.translateX + event.translationX;
       }
     },
     onEnd: (event) => {
-      const finalTranslateX =
-        event.translationX > GESTURE_THRESHOLD && canScrollLeft
-          ? Math.ceil(translateX.value / width) * width
-          : event.translationX < -GESTURE_THRESHOLD && canScrollRight
-          ? Math.floor(translateX.value / width) * width
-          : Math.round(translateX.value / width) * width;
+      const [finalTranslateX, index] = calcEndParams(
+        event.translationX,
+        translateX.value,
+        width,
+        canScrollLeft,
+        canScrollRight,
+      );
       translateX.value = withSpring(finalTranslateX, {velocity: event.velocityX, overshootClamping: true});
-
-      const newIndex = Math.abs(Math.round(finalTranslateX / width));
-      localIndex.value = newIndex;
-      runOnJS(setIndex)(newIndex);
+      localIndex.value = index;
+      runOnJS(setIndex)(index);
     },
   });
 

@@ -1,5 +1,5 @@
 import React, {memo, Suspense} from 'react';
-import {Box, Divider} from 'native-base';
+import {Box} from 'native-base';
 import CentredSpinner from '../../../../components/surfaces/CentredSpinner';
 import FVStack from '../../../../components/boxes/FVStack';
 import {CalendarReminder} from '../../../../models/Reminder';
