@@ -66,6 +66,14 @@ const calendarSlice = createSlice({
       state.dateIndex !== newDateIndex && (state.dateIndex = newDateIndex);
       state.weekIndex !== newWeekIndex && (state.weekIndex = newWeekIndex);
       state.monthIndex !== newMonthIndex && (state.monthIndex = newMonthIndex);
+
+      if (state.mode === 'month') {
+        const newWeekControlIndex = state.controlIndex - state.weekIndex;
+        state.weekControlIndex !== newWeekControlIndex && (state.weekControlIndex = newWeekControlIndex);
+      } else {
+        const newMonthControlIndex = state.controlIndex - state.monthIndex;
+        state.monthControlIndex !== newMonthControlIndex && (state.monthControlIndex = newMonthControlIndex);
+      }
     },
 
     setDateByControlIndex: (state: CalendarState, action: PayloadAction<number>) => {
@@ -82,16 +90,14 @@ const calendarSlice = createSlice({
       state.dateIndex !== newDateIndex && (state.dateIndex = newDateIndex);
       state.weekIndex !== newWeekIndex && (state.weekIndex = newWeekIndex);
       state.monthIndex !== newMonthIndex && (state.monthIndex = newMonthIndex);
-    },
 
-    setMonthControlIndex: (state: CalendarState, action: PayloadAction<number>) => {
-      const newMonthControlIndex = action.payload;
-      state.monthControlIndex !== newMonthControlIndex && (state.monthControlIndex = newMonthControlIndex);
-    },
-
-    setWeekControlIndex: (state: CalendarState, action: PayloadAction<number>) => {
-      const newWeekControlIndex = action.payload;
-      state.weekControlIndex !== newWeekControlIndex && (state.weekControlIndex = newWeekControlIndex);
+      if (state.mode === 'month') {
+        const newWeekControlIndex = state.controlIndex - state.weekIndex;
+        state.weekControlIndex !== newWeekControlIndex && (state.weekControlIndex = newWeekControlIndex);
+      } else {
+        const newMonthControlIndex = state.controlIndex - state.monthIndex;
+        state.monthControlIndex !== newMonthControlIndex && (state.monthControlIndex = newMonthControlIndex);
+      }
     },
 
     addLoadingKeys: (state: CalendarState, action: PayloadAction<string[]>) => {

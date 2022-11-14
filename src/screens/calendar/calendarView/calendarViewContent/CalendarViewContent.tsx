@@ -18,6 +18,10 @@ const CalendarViewContent = ({setHeight, translate}: CalendarViewContentProps) =
   const dispatch = useAppDispatch();
   const dateIndex = useAppSelector(CalendarSelectors.dateIndex);
 
+  const initialDateIndex = useMemo(() => {
+    return dateIndex;
+  }, []);
+
   const setDateIndex = useCallback((index: number) => {
     const date = CalendarUtils.getDateByDateIndex(index);
     dispatch(CalendarActions.setDate(date));
@@ -37,7 +41,7 @@ const CalendarViewContent = ({setHeight, translate}: CalendarViewContentProps) =
 
   return (
     <CalendarViewHorizontalPan
-      index={dateIndex}
+      index={initialDateIndex}
       setIndex={setDateIndex}
       canScrollLeft={canScrollLeft}
       canScrollRight={canScrollRight}

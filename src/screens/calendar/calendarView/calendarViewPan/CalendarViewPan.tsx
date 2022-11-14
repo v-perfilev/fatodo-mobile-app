@@ -28,7 +28,7 @@ type PanContext = {
   prevContentTranslationY: number;
 };
 
-const GESTURE_THRESHOLD = 50;
+const GESTURE_THRESHOLD = 30;
 const BASE_HEIGHT = StatusBar.currentHeight + HEADER_HEIGHT + TAB_HEIGHT;
 
 const calcActiveParams = (
@@ -170,8 +170,8 @@ const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}:
   return (
     <PanGestureHandler
       onGestureEvent={panGestureEvent}
-      failOffsetX={[-10, 10]}
-      activeOffsetY={[-10, 10]}
+      failOffsetX={[-5, 5]}
+      activeOffsetY={[-5, 5]}
       waitFor={[controlPanRef, contentPanRef]}
     >
       <Animated.View style={styles.container} onLayout={handleLayout}>

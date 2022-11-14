@@ -25,13 +25,13 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
   const weekIndex = useAppSelector(CalendarSelectors.weekIndex);
   const controlIndexesToIgnore = useRef<number[]>([]);
 
-  const setControlIndex = useCallback(
-    (index: number) => {
-      controlIndexesToIgnore.current.push(index);
-      dispatch(CalendarActions.setDateByControlIndex(index));
-    },
-    [mode],
-  );
+  const initialControlIndex = useMemo(() => {
+    return controlIndex;
+  }, []);
+
+  const setControlIndex = useCallback((index: number) => {
+    dispatch(CalendarActions.setDateByControlIndex(index));
+  }, []);
 
   const canScrollLeft = useMemo<boolean>(() => {
     return mode === 'month' ? monthIndex > 0 : weekIndex > 0;
@@ -63,18 +63,12 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
       : imperativeControlPanRef.current.scrollToIndex(controlIndex);
   }, [controlIndex]);
 
-  useEffect(() => {
-    mode === 'month'
-      ? dispatch(CalendarActions.setWeekControlIndex(controlIndex - weekIndex))
-      : dispatch(CalendarActions.setMonthControlIndex(controlIndex - monthIndex));
-  }, [controlIndex, monthIndex, weekIndex]);
-
   return (
     <>
       <CalendarViewTitle />
       <Separator />
       <CalendarViewHorizontalPan
-        index={controlIndex}
+        index={initialControlIndex}
         setIndex={setControlIndex}
         canScrollLeft={canScrollLeft}
         canScrollRight={canScrollRight}

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {CalendarDate} from '../../../../models/Calendar';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
 import FBox from '../../../../components/boxes/FBox';
@@ -38,4 +38,4 @@ const CalendarViewControlWeek = ({weekIndex, monthIndex, freeze}: CalendarViewCo
   );
 };
 
-export default CalendarViewControlWeek;
+export default memo(CalendarViewControlWeek);

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import {CalendarWeek} from '../../../../models/Calendar';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
@@ -64,4 +64,4 @@ const CalendarViewControlMonth = ({monthIndex, weekIndex, freeze, rate}: Calenda
   );
 };
 
-export default CalendarViewControlMonth;
+export default memo(CalendarViewControlMonth);

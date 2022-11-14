@@ -33,15 +33,6 @@ class CalendarSelectors {
 
   static shouldLoad = createSelector(getCalendarState, (state) => state.shouldLoad as boolean);
 
-  static loading = createSelector(getCalendarState, (state) => {
-    if (state.loadingKeys.length === 0) {
-      return false;
-    }
-    const month = CalendarUtils.getMonthByMonthIndex(state.monthIndex);
-    const key = CalendarUtils.buildMonthKeyByItem(month);
-    return state.loadingKeys.includes(key) as boolean;
-  });
-
   static reminders = createSelector(
     getCalendarState,
     (state) => new Map(state.reminders) as Map<string, CalendarReminder[]>,

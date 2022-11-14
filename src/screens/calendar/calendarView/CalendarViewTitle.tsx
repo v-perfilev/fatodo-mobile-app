@@ -1,12 +1,11 @@
 import React, {memo, useCallback, useMemo} from 'react';
-import {Spinner, Text} from 'native-base';
+import {Text} from 'native-base';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarMonth} from '../../../models/Calendar';
 import {useCalendarDialogContext} from '../../../shared/contexts/dialogContexts/CalendarDialogContext';
 import {useTranslation} from 'react-i18next';
 import {DateFormatters} from '../../../shared/utils/DateFormatters';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import FBox from '../../../components/boxes/FBox';
 import {CALENDAR_TITLE_HEIGHT} from '../../../constants';
 import {CalendarActions} from '../../../store/calendar/calendarActions';
 import FHStack from '../../../components/boxes/FHStack';
@@ -17,7 +16,6 @@ import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 const CalendarViewTitle = () => {
   const dispatch = useAppDispatch();
   const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
-  const loading = useAppSelector(CalendarSelectors.loading);
   const {showSelectMonthDialog} = useCalendarDialogContext();
   const {i18n} = useTranslation();
 
@@ -40,12 +38,6 @@ const CalendarViewTitle = () => {
     showSelectMonthDialog(month, setMonth);
   };
 
-  const loader = (
-    <FBox position="absolute" right="3" h="100%" justifyContent="center">
-      <Spinner size={25} />
-    </FBox>
-  );
-
   return (
     <FHStack height={`${CALENDAR_TITLE_HEIGHT}px`} justifyContent="center" alignItems="center">
       <PressableButton onPress={handleMonthClick}>
@@ -56,7 +48,6 @@ const CalendarViewTitle = () => {
           <ArrowDownIcon color="primary.500" size="lg" />
         </FHStack>
       </PressableButton>
-      {loading && loader}
     </FHStack>
   );
 };

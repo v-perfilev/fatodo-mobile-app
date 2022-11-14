@@ -28,14 +28,6 @@ export class CalendarActions {
     dispatch(calendarSlice.actions.setDateByControlIndex(controlIndex));
   };
 
-  static setMonthControlIndex = (index: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setMonthControlIndex(index));
-  };
-
-  static setWeekControlIndex = (index: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setWeekControlIndex(index));
-  };
-
   static handleMonthThunk = createAsyncThunk<void, number, AsyncThunkConfig>(
     PREFIX + 'handleMonth',
     async (monthIndex, thunkAPI) => {

@@ -30,7 +30,7 @@ type PanContext = {
   translateX: number;
 };
 
-const GESTURE_THRESHOLD = 50;
+const GESTURE_THRESHOLD = 10;
 
 const calcActiveParams = (translationX: number, canScrollLeft: boolean, canScrollRight: boolean): [boolean] => {
   'worklet';
@@ -119,8 +119,8 @@ const CalendarViewHorizontalPan = ({
   return (
     <PanGestureHandler
       onGestureEvent={panGestureEvent}
-      activeOffsetX={[-10, 10]}
-      failOffsetY={[-10, 10]}
+      activeOffsetX={[-5, 5]}
+      failOffsetY={[-5, 5]}
       ref={horizontalPanRef}
     >
       <Animated.View style={[styles.container, style]}>
