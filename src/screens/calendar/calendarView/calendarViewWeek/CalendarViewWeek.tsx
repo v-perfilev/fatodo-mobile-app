@@ -9,11 +9,11 @@ type CalendarViewWeekProps = {
   freeze: boolean;
 };
 
-const CalendarViewWeek = ({dates, freeze}: CalendarViewWeekProps) => {
+const CalendarViewWeek = ({dates}: CalendarViewWeekProps) => {
   return (
     <FBox flexDirection="row" width="100%" height={CALENDAR_DATE_HEIGHT} px={1} overflow="hidden">
       {dates.map((date) => (
-        <CalendarViewDate date={date} freeze={freeze} key={`date_${date.month}_${date.date}`} />
+        <CalendarViewDate date={date} key={`date_${date.month}_${date.date}`} />
       ))}
     </FBox>
   );

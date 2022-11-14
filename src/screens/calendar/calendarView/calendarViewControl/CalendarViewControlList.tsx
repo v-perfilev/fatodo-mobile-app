@@ -4,10 +4,10 @@ import FBox from '../../../../components/boxes/FBox';
 import {CalendarMonthParams, CalendarWeekParams} from '../../../../models/Calendar';
 import {useAppSelector} from '../../../../store/store';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
-import CalendarViewControlWeek from './CalendarViewControlWeek';
 import {usePreviousValue} from '../../../../shared/hooks/usePreviousValue';
 import {ArrayUtils} from '../../../../shared/utils/ArrayUtils';
-import CalendarViewControlMonth from './CalendarViewControlMonth';
+import CalendarViewControlMonthWithDays from './CalendarViewControlMonthWithDays';
+import CalendarViewControlWeekWithDays from './CalendarViewControlWeekWithDays';
 
 type CalendarViewControlListProps = {
   rate: Animated.SharedValue<number>;
@@ -44,7 +44,7 @@ const CalendarViewControlList = ({rate}: CalendarViewControlListProps) => {
   return (
     <FBox position="relative" grow>
       {monthParams.map(({monthIndex, baseIndex, freeze}) => (
-        <CalendarViewControlMonth
+        <CalendarViewControlMonthWithDays
           monthIndex={monthIndex}
           baseIndex={baseIndex}
           weekIndex={weekIndex}
@@ -54,7 +54,7 @@ const CalendarViewControlList = ({rate}: CalendarViewControlListProps) => {
         />
       ))}
       {weekParams.map(({weekIndex, baseIndex, freeze}) => (
-        <CalendarViewControlWeek
+        <CalendarViewControlWeekWithDays
           weekIndex={weekIndex}
           baseIndex={baseIndex}
           monthIndex={monthIndex}

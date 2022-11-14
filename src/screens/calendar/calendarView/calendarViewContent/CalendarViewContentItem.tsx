@@ -12,7 +12,6 @@ type CalendarViewContentItemProps = {
 
 const CalendarViewContentItem = ({dateIndex, freeze, setHeight, translate}: CalendarViewContentItemProps) => {
   const {width} = useWindowDimensions();
-  const loaded = useRef<boolean>(false);
   const storedHeight = useRef<number>(0);
 
   const handleHeightChange = (height: number) => {
@@ -21,7 +20,6 @@ const CalendarViewContentItem = ({dateIndex, freeze, setHeight, translate}: Cale
   };
 
   useEffect(() => {
-    !freeze && (loaded.current = true);
     !freeze && setHeight(storedHeight.current);
   }, [freeze]);
 
@@ -34,9 +32,7 @@ const CalendarViewContentItem = ({dateIndex, freeze, setHeight, translate}: Cale
 
   return (
     <Animated.View style={monthStyle}>
-      {(!freeze || loaded) && (
-        <CalendarViewReminders dateIndex={dateIndex} setHeight={handleHeightChange} translate={translate} />
-      )}
+      <CalendarViewReminders dateIndex={dateIndex} setHeight={handleHeightChange} translate={translate} />
     </Animated.View>
   );
 };
