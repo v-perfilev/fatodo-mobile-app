@@ -1,5 +1,5 @@
 import React from 'react';
-import {IBoxProps, Text} from 'native-base';
+import {Box, IBoxProps, Text} from 'native-base';
 import FCenter from '../boxes/FCenter';
 import {StyleProp} from 'react-native';
 
@@ -11,9 +11,11 @@ const StubBox = ({inverted, children, ...props}: StubBoxProps) => {
   const containerStyle: StyleProp<any> = {scaleY: inverted ? -1 : 1};
   return (
     <FCenter style={containerStyle} grow {...props}>
-      <Text fontSize="16" fontWeight="bold" color="gray.400">
-        {children}
-      </Text>
+      <Box maxWidth="60%">
+        <Text fontSize="16" fontWeight="bold" color="gray.400" textAlign="center">
+          {children}
+        </Text>
+      </Box>
     </FCenter>
   );
 };
