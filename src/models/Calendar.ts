@@ -8,7 +8,6 @@ export interface CalendarMonth {
 export interface CalendarDate extends CalendarMonth {
   date: number;
   isActiveMonth?: boolean;
-  isActiveWeek?: boolean;
   reminders?: CalendarReminder[];
 }
 

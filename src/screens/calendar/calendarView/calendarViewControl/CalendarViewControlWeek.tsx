@@ -53,7 +53,7 @@ const CalendarViewControlWeek = ({weekIndex, baseIndex, monthIndex, freeze, rate
       <CalendarViewWeekDays />
       <Separator />
       <Suspense fallback={<CentredSpinner />}>
-        <FBox my={1}>
+        <FBox py={1}>
           <CalendarViewWeek dates={dates} freeze={freeze} />
         </FBox>
       </Suspense>

@@ -27,12 +27,12 @@ const CalendarViewWeekDateReminders = ({reminders, isActiveDate}: CalendarViewDa
   const showDots = reminderColors.length > 3;
 
   return (
-    <FVStack grow space="4px">
+    <FVStack space={2}>
       {reminderColorsToShow.map((color, index) => (
         <Bullet inverted={isActiveDate} color={color} size="4px" fullWidth key={index} />
       ))}
       {showDots && (
-        <FHStack space="6px" justifyContent="center">
+        <FHStack space={2} justifyContent="center">
           {Array.from({length: 3}).map((_, index) => (
             <Box width="5px" key={index}>
               <Bullet inverted={isActiveDate} size="5px" />

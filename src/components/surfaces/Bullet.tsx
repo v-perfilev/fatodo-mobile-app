@@ -12,7 +12,7 @@ type BulletProps = {
 };
 
 const Bullet = ({color, size = '10px', fullWidth, inverted}: BulletProps) => {
-  const bgColor = !inverted && color ? LINEAR_GRADIENT : inverted ? 'gray.200' : 'gray.400';
+  const bgColor = !inverted && color ? LINEAR_GRADIENT : inverted ? 'gray.100' : 'gray.400';
   const width = fullWidth ? '100%' : size;
 
   return <Box width={width} height={size} borderRadius={size} bg={bgColor} />;

@@ -10,6 +10,7 @@ import {useAppSelector} from '../../../../store/store';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import {cloneDeep} from 'lodash';
 import CentredSpinner from '../../../../components/surfaces/CentredSpinner';
+import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
 
 const CalendarViewWeek = React.lazy(() => import('../calendarViewWeek/CalendarViewWeek'));
 
@@ -48,6 +49,12 @@ const CalendarViewControlMonth = ({monthIndex, baseIndex, weekIndex, freeze, rat
     return cloneDeep(enrichedMonthWeeks);
   }, [reminders]);
 
+  const activeWeek = useMemo<number>(() => {
+    let week = 0;
+    weeks.forEach((w, index) => w.weekIndex === weekIndex && (week = index));
+    return week;
+  }, [weekIndex]);
+
   const monthStyle = useAnimatedStyle(() => ({
     position: 'absolute',
     left: width * baseIndex,
@@ -56,21 +63,22 @@ const CalendarViewControlMonth = ({monthIndex, baseIndex, weekIndex, freeze, rat
     height: '100%',
   }));
 
+  const datesStyle = useAnimatedStyle(() => ({
+    height: weeks.length * CALENDAR_DATE_HEIGHT,
+    transform: [{translateY: (rate.value - 1) * activeWeek * CALENDAR_DATE_HEIGHT}],
+  }));
+
   return (
     <Animated.View style={monthStyle}>
       <CalendarViewWeekDays />
       <Separator />
       <Suspense fallback={<CentredSpinner />}>
-        <FBox my={1}>
-          {weeks.map((week, index) => (
-            <CalendarViewWeek
-              dates={week.dates}
-              isActiveWeek={week.weekIndex === weekIndex}
-              freeze={freeze}
-              rate={rate}
-              key={index}
-            />
-          ))}
+        <FBox py={1} overflow="hidden">
+          <Animated.View style={datesStyle}>
+            {weeks.map((week, index) => (
+              <CalendarViewWeek dates={week.dates} freeze={freeze} key={index} />
+            ))}
+          </Animated.View>
         </FBox>
       </Suspense>
     </Animated.View>
