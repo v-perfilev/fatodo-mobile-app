@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, Ref, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useEffect, useMemo, useState} from 'react';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {
   cancelAnimation,
@@ -13,15 +13,13 @@ import CalendarViewPanContent from './CalendarViewPanContent';
 import CalendarViewPanControl from './CalendarViewPanControl';
 import {LayoutChangeEvent, StatusBar, StyleSheet, useWindowDimensions} from 'react-native';
 import {HEADER_HEIGHT, TAB_HEIGHT} from '../../../../constants';
+import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 
 type CalendarViewPanProps = {
   control: (rate: Animated.SharedValue<number>) => ReactElement;
   content: (setHeight: (height: number) => void, translate: Animated.SharedValue<number>) => ReactElement;
   minControlHeight: number;
   maxControlHeight: number;
-  rootPanRef?: Ref<PanGestureHandler>;
-  controlPanRef?: Ref<PanGestureHandler>;
-  contentPanRef?: Ref<PanGestureHandler>;
 };
 
 type PanContext = {
@@ -75,15 +73,8 @@ const clamp = (value: number, min: number, max: number): number => {
   return Math.min(Math.max(value, min), max);
 };
 
-const CalendarViewPan = ({
-  control,
-  content,
-  minControlHeight,
-  maxControlHeight,
-  rootPanRef,
-  controlPanRef,
-  contentPanRef,
-}: CalendarViewPanProps) => {
+const CalendarViewPan = ({control, content, minControlHeight, maxControlHeight}: CalendarViewPanProps) => {
+  const {controlPanRef, contentPanRef} = useCalendarContext();
   const {height} = useWindowDimensions();
   const [containerHeightState, setContainerHeightState] = useState<number>(height - BASE_HEIGHT);
   const [contentHeightState, setContentHeightState] = useState<number>(0);
@@ -181,7 +172,6 @@ const CalendarViewPan = ({
       onGestureEvent={panGestureEvent}
       failOffsetX={[-10, 10]}
       activeOffsetY={[-10, 10]}
-      ref={rootPanRef}
       waitFor={[controlPanRef, contentPanRef]}
     >
       <Animated.View style={styles.container} onLayout={handleLayout}>

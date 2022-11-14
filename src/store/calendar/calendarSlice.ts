@@ -4,7 +4,7 @@ import {CalendarActions} from './calendarActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
 import {CalendarConstants, CalendarUtils} from '../../shared/utils/CalendarUtils';
-import {CalendarDate, CalendarMode, CalendarMonth} from '../../models/Calendar';
+import {CalendarDate, CalendarMode} from '../../models/Calendar';
 
 const date = CalendarUtils.getCurrentDate();
 const monthIndex = CalendarUtils.getMonthIndexByItem(date);
@@ -45,56 +45,53 @@ const calendarSlice = createSlice({
     },
 
     setDate: (state: CalendarState, action: PayloadAction<CalendarDate>) => {
-      const date = action.payload;
-      state.dateIndex = CalendarUtils.getDateIndexByDate(date);
+      let date = action.payload;
+      if (date.date === 0) {
+        const currentDate = CalendarUtils.getDateByDateIndex(state.dateIndex);
+        date = {...date, date: currentDate.date};
+      }
+
+      const newDateIndex = CalendarUtils.getDateIndexByDate(date);
       const newWeekIndex = CalendarUtils.getWeekIndexByDate(date);
-      state.weekIndex !== newWeekIndex && (state.weekIndex = newWeekIndex);
       const newMonthIndex = CalendarUtils.getMonthIndexByItem(date);
+
+      if (newMonthIndex !== state.monthIndex && state.mode === 'month') {
+        const newControlIndex = state.controlIndex + newMonthIndex - state.monthIndex;
+        state.controlIndex !== newControlIndex && (state.controlIndex = newControlIndex);
+      } else if (newWeekIndex !== state.weekIndex && state.mode === 'week') {
+        const newControlIndex = state.controlIndex + newWeekIndex - state.weekIndex;
+        state.controlIndex !== newControlIndex && (state.controlIndex = newControlIndex);
+      }
+
+      state.dateIndex !== newDateIndex && (state.dateIndex = newDateIndex);
+      state.weekIndex !== newWeekIndex && (state.weekIndex = newWeekIndex);
       state.monthIndex !== newMonthIndex && (state.monthIndex = newMonthIndex);
     },
 
-    setMonth: (state: CalendarState, action: PayloadAction<CalendarMonth>) => {
+    setDateByControlIndex: (state: CalendarState, action: PayloadAction<number>) => {
+      const newControlIndex = action.payload;
+      const count = newControlIndex - state.controlIndex;
       const baseDate = CalendarUtils.getDateByDateIndex(state.dateIndex);
-      const date = {...action.payload, date: baseDate.date};
-      state.dateIndex = CalendarUtils.getDateIndexByDate(date);
+      const date = CalendarUtils.addIndexesToDate(baseDate, count, state.mode);
+
+      const newDateIndex = CalendarUtils.getDateIndexByDate(date);
       const newWeekIndex = CalendarUtils.getWeekIndexByDate(date);
-      state.weekIndex !== newWeekIndex && (state.weekIndex = newWeekIndex);
       const newMonthIndex = CalendarUtils.getMonthIndexByItem(date);
+
+      state.controlIndex !== newControlIndex && (state.controlIndex = newControlIndex);
+      state.dateIndex !== newDateIndex && (state.dateIndex = newDateIndex);
+      state.weekIndex !== newWeekIndex && (state.weekIndex = newWeekIndex);
       state.monthIndex !== newMonthIndex && (state.monthIndex = newMonthIndex);
     },
 
-    setMonthByControlIndex: (state: CalendarState, action: PayloadAction<number>) => {
-      const count = action.payload - state.controlIndex;
-      const baseDate = CalendarUtils.getDateByDateIndex(state.dateIndex);
-      const date = CalendarUtils.addIndexesToDate(baseDate, count, 'month');
-      state.dateIndex = CalendarUtils.getDateIndexByDate(date);
-      const newWeekIndex = CalendarUtils.getWeekIndexByDate(date);
-      state.weekIndex !== newWeekIndex && (state.weekIndex = newWeekIndex);
-      const newMonthIndex = CalendarUtils.getMonthIndexByItem(date);
-      state.monthIndex !== newMonthIndex && (state.monthIndex = newMonthIndex);
+    setMonthControlIndex: (state: CalendarState, action: PayloadAction<number>) => {
+      const newMonthControlIndex = action.payload;
+      state.monthControlIndex !== newMonthControlIndex && (state.monthControlIndex = newMonthControlIndex);
     },
 
-    setWeekByControlIndex: (state: CalendarState, action: PayloadAction<number>) => {
-      const count = action.payload - state.controlIndex;
-      const baseDate = CalendarUtils.getDateByDateIndex(state.dateIndex);
-      const date = CalendarUtils.addIndexesToDate(baseDate, count, 'week');
-      state.dateIndex = CalendarUtils.getDateIndexByDate(date);
-      const newWeekIndex = CalendarUtils.getWeekIndexByDate(date);
-      state.weekIndex !== newWeekIndex && (state.weekIndex = newWeekIndex);
-      const newMonthIndex = CalendarUtils.getMonthIndexByItem(date);
-      state.monthIndex !== newMonthIndex && (state.monthIndex = newMonthIndex);
-    },
-
-    setBaseIndex: (state: CalendarState, action: PayloadAction<number>) => {
-      state.controlIndex = action.payload;
-    },
-
-    setMonthBaseIndex: (state: CalendarState, action: PayloadAction<number>) => {
-      state.monthControlIndex = action.payload;
-    },
-
-    setWeekBaseIndex: (state: CalendarState, action: PayloadAction<number>) => {
-      state.weekControlIndex = action.payload;
+    setWeekControlIndex: (state: CalendarState, action: PayloadAction<number>) => {
+      const newWeekControlIndex = action.payload;
+      state.weekControlIndex !== newWeekControlIndex && (state.weekControlIndex = newWeekControlIndex);
     },
 
     addLoadingKeys: (state: CalendarState, action: PayloadAction<string[]>) => {

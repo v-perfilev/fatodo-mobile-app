@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useMemo} from 'react';
+import React, {memo} from 'react';
 import Header from '../../../components/layouts/Header';
 import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import ActiveDateIcon from '../../../components/icons/ActiveDateIcon';
@@ -11,15 +11,13 @@ const CalendarViewHeader = () => {
   const dispatch = useAppDispatch();
   const dateIndex = useAppSelector(CalendarSelectors.dateIndex);
 
-  const isCurrentDate = useMemo<boolean>(() => {
-    const date = CalendarUtils.getDateByDateIndex(dateIndex);
-    return CalendarUtils.isCurrentDate(date);
-  }, [dateIndex]);
+  const date = CalendarUtils.getDateByDateIndex(dateIndex);
+  const isCurrentDate = CalendarUtils.isCurrentDate(date);
 
-  const goToCurrentDate = useCallback((): void => {
+  const goToCurrentDate = (): void => {
     const currentDate = CalendarUtils.getCurrentDate();
     dispatch(CalendarActions.setDate(currentDate));
-  }, []);
+  };
 
   return (
     <Header showAvatar hideGoBack>

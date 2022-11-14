@@ -15,11 +15,11 @@ class CalendarSelectors {
 
   static mode = createSelector(getCalendarState, (state) => state.mode as CalendarMode);
 
-  static baseIndex = createSelector(getCalendarState, (state) => state.controlIndex as number);
+  static controlIndex = createSelector(getCalendarState, (state) => state.controlIndex as number);
 
-  static monthBaseIndex = createSelector(getCalendarState, (state) => state.monthControlIndex as number);
+  static monthControlIndex = createSelector(getCalendarState, (state) => state.monthControlIndex as number);
 
-  static weekBaseIndex = createSelector(getCalendarState, (state) => state.weekControlIndex as number);
+  static weekControlIndex = createSelector(getCalendarState, (state) => state.weekControlIndex as number);
 
   /*
   Common

@@ -1,4 +1,4 @@
-import React, {memo, Ref, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useRef} from 'react';
 import Animated, {runOnJS, useDerivedValue} from 'react-native-reanimated';
 import CalendarViewTitle from '../CalendarViewTitle';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
@@ -6,36 +6,29 @@ import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import {CalendarActions} from '../../../../store/calendar/calendarActions';
 import {CalendarMode} from '../../../../models/Calendar';
 import Separator from '../../../../components/layouts/Separator';
-import {usePreviousValue} from '../../../../shared/hooks/usePreviousValue';
 import {CalendarConstants} from '../../../../shared/utils/CalendarUtils';
 import CalendarViewControlList from './CalendarViewControlList';
-import CalendarViewHorizontalPan, {
-  CalendarViewHorizontalPanMethods,
-} from '../calendarViewPan/CalendarViewHorizontalPan';
-import {PanGestureHandler} from 'react-native-gesture-handler';
+import CalendarViewHorizontalPan from '../calendarViewPan/CalendarViewHorizontalPan';
+import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
+import {ArrayUtils} from '../../../../shared/utils/ArrayUtils';
 
 type CalendarViewControlProps = {
   rate: Animated.SharedValue<number>;
-  controlPanRef?: Ref<PanGestureHandler>;
 };
 
-const CalendarViewControl = ({rate, controlPanRef}: CalendarViewControlProps) => {
+const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
+  const {controlPanRef, imperativeControlPanRef} = useCalendarContext();
   const dispatch = useAppDispatch();
   const mode = useAppSelector(CalendarSelectors.mode);
-  const baseIndex = useAppSelector(CalendarSelectors.baseIndex);
+  const controlIndex = useAppSelector(CalendarSelectors.controlIndex);
   const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
   const weekIndex = useAppSelector(CalendarSelectors.weekIndex);
-  const prevBaseIndex = usePreviousValue(baseIndex);
-  const prevMonthIndex = usePreviousValue(monthIndex);
-  const prevWeekIndex = usePreviousValue(weekIndex);
-  const imperativePanRef = useRef<CalendarViewHorizontalPanMethods>();
+  const controlIndexesToIgnore = useRef<number[]>([]);
 
-  const setBaseIndex = useCallback(
+  const setControlIndex = useCallback(
     (index: number) => {
-      mode === 'month'
-        ? dispatch(CalendarActions.setMonthByControlIndex(index))
-        : dispatch(CalendarActions.setWeekByControlIndex(index));
-      dispatch(CalendarActions.setBaseIndex(index));
+      controlIndexesToIgnore.current.push(index);
+      dispatch(CalendarActions.setDateByControlIndex(index));
     },
     [mode],
   );
@@ -65,42 +58,27 @@ const CalendarViewControl = ({rate, controlPanRef}: CalendarViewControlProps) =>
   });
 
   useEffect(() => {
-    if (baseIndex !== prevBaseIndex && monthIndex === prevMonthIndex && weekIndex === prevWeekIndex) {
-      mode === 'month'
-        ? dispatch(CalendarActions.setWeekBaseIndex(baseIndex - weekIndex))
-        : dispatch(CalendarActions.setMonthBaseIndex(baseIndex - monthIndex));
-    }
-  }, [baseIndex]);
+    controlIndexesToIgnore.current.includes(controlIndex)
+      ? (controlIndexesToIgnore.current = ArrayUtils.deleteValue(controlIndexesToIgnore.current, controlIndex))
+      : imperativeControlPanRef.current.scrollToIndex(controlIndex);
+  }, [controlIndex]);
 
   useEffect(() => {
-    if (baseIndex === prevBaseIndex && monthIndex !== prevMonthIndex && mode === 'month') {
-      const newBaseIndex = baseIndex + monthIndex - prevMonthIndex;
-      imperativePanRef.current?.scrollToIndex(newBaseIndex);
-      dispatch(CalendarActions.setBaseIndex(newBaseIndex));
-    }
-    if (baseIndex === prevBaseIndex && weekIndex !== prevWeekIndex && mode === 'week') {
-      const newBaseIndex = baseIndex + weekIndex - prevWeekIndex;
-      imperativePanRef.current?.scrollToIndex(newBaseIndex);
-      dispatch(CalendarActions.setBaseIndex(newBaseIndex));
-    }
-    if (baseIndex === prevBaseIndex && monthIndex !== prevMonthIndex && mode === 'week') {
-      dispatch(CalendarActions.setMonthBaseIndex(baseIndex - monthIndex));
-    }
-    if (baseIndex === prevBaseIndex && weekIndex !== prevWeekIndex && mode === 'month') {
-      dispatch(CalendarActions.setWeekBaseIndex(baseIndex - weekIndex));
-    }
-  }, [monthIndex, weekIndex]);
+    mode === 'month'
+      ? dispatch(CalendarActions.setWeekControlIndex(controlIndex - weekIndex))
+      : dispatch(CalendarActions.setMonthControlIndex(controlIndex - monthIndex));
+  }, [controlIndex, monthIndex, weekIndex]);
 
   return (
     <>
       <CalendarViewTitle />
       <Separator />
       <CalendarViewHorizontalPan
-        index={baseIndex}
-        setIndex={setBaseIndex}
+        index={controlIndex}
+        setIndex={setControlIndex}
         canScrollLeft={canScrollLeft}
         canScrollRight={canScrollRight}
-        imperativePanRef={imperativePanRef}
+        imperativePanRef={imperativeControlPanRef}
         horizontalPanRef={controlPanRef}
       >
         <CalendarViewControlList rate={rate} />

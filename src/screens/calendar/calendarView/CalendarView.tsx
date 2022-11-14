@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import CalendarViewHeader from './CalendarViewHeader';
 import CalendarViewPan from './calendarViewPan/CalendarViewPan';
 import Animated from 'react-native-reanimated';
@@ -15,7 +15,8 @@ import CalendarViewControl from './calendarViewControl/CalendarViewControl';
 import {CalendarActions} from '../../../store/calendar/calendarActions';
 import {useIsFocused} from '@react-navigation/native';
 import CalendarViewContent from './calendarViewContent/CalendarViewContent';
-import {PanGestureHandler} from 'react-native-gesture-handler';
+import {flowRight} from 'lodash';
+import withCalendar from '../../../shared/hocs/withCalendar';
 
 const CALENDAR_BASE_HEIGHT = CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT;
 
@@ -24,9 +25,6 @@ const CalendarView = () => {
   const isFocused = useIsFocused();
   const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
   const shouldLoad = useAppSelector(CalendarSelectors.shouldLoad);
-  const rootPanRef = useRef<PanGestureHandler>();
-  const contentPanRef = useRef<PanGestureHandler>();
-  const controlPanRef = useRef<PanGestureHandler>();
 
   const weekCount = useMemo<number>(() => {
     return CalendarUtils.getWeekCountInMonth(monthIndex);
@@ -41,11 +39,11 @@ const CalendarView = () => {
   }, [weekCount]);
 
   const control = useCallback((rate: Animated.SharedValue<number>) => {
-    return <CalendarViewControl rate={rate} controlPanRef={controlPanRef} />;
+    return <CalendarViewControl rate={rate} />;
   }, []);
 
   const content = useCallback((setHeight: (height: number) => void, translate: Animated.SharedValue<number>) => {
-    return <CalendarViewContent setHeight={setHeight} translate={translate} contentPanRef={contentPanRef} />;
+    return <CalendarViewContent setHeight={setHeight} translate={translate} />;
   }, []);
 
   useEffect(() => {
@@ -64,11 +62,8 @@ const CalendarView = () => {
         content={content}
         minControlHeight={minControlHeight}
         maxControlHeight={maxControlHeight}
-        rootPanRef={rootPanRef}
-        controlPanRef={controlPanRef}
-        contentPanRef={contentPanRef}
       />
     </>
   );
 };
-export default CalendarView;
+export default flowRight([withCalendar])(CalendarView);

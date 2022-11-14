@@ -4,7 +4,7 @@ import NotificationService from '../../services/NotificationService';
 import {InfoActions} from '../info/infoActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
-import {CalendarDate, CalendarMode, CalendarMonth} from '../../models/Calendar';
+import {CalendarDate, CalendarMode} from '../../models/Calendar';
 import {CALENDAR_LOAD_INDENT} from '../../constants';
 import calendarSlice from './calendarSlice';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
@@ -24,28 +24,16 @@ export class CalendarActions {
     dispatch(calendarSlice.actions.setDate(date));
   };
 
-  static setMonth = (date: CalendarMonth) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setMonth(date));
+  static setDateByControlIndex = (controlIndex: number) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setDateByControlIndex(controlIndex));
   };
 
-  static setMonthByControlIndex = (baseIndex: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setMonthByControlIndex(baseIndex));
+  static setMonthControlIndex = (index: number) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setMonthControlIndex(index));
   };
 
-  static setWeekByControlIndex = (baseIndex: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setWeekByControlIndex(baseIndex));
-  };
-
-  static setBaseIndex = (index: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setBaseIndex(index));
-  };
-
-  static setMonthBaseIndex = (index: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setMonthBaseIndex(index));
-  };
-
-  static setWeekBaseIndex = (index: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setWeekBaseIndex(index));
+  static setWeekControlIndex = (index: number) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setWeekControlIndex(index));
   };
 
   static handleMonthThunk = createAsyncThunk<void, number, AsyncThunkConfig>(

@@ -51,7 +51,7 @@ const calcEndParams = (
       ? Math.ceil(translateX / width) * width
       : translationX < -GESTURE_THRESHOLD && canScrollRight
       ? Math.floor(translateX / width) * width
-      : Math.round(translationX / width) * width;
+      : Math.round(translateX / width) * width;
   const index = Math.abs(Math.round(finalTranslateX / width));
   return [finalTranslateX, index];
 };

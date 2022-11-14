@@ -19,8 +19,8 @@ const CalendarViewControlList = ({rate}: CalendarViewControlListProps) => {
   const mode = useAppSelector(CalendarSelectors.mode);
   const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
   const weekIndex = useAppSelector(CalendarSelectors.weekIndex);
-  const monthBaseIndex = useAppSelector(CalendarSelectors.monthBaseIndex);
-  const weekBaseIndex = useAppSelector(CalendarSelectors.weekBaseIndex);
+  const monthBaseIndex = useAppSelector(CalendarSelectors.monthControlIndex);
+  const weekBaseIndex = useAppSelector(CalendarSelectors.weekControlIndex);
   const prevMode = usePreviousValue(mode);
 
   const monthParams = useMemo<CalendarMonthParams[]>(() => {

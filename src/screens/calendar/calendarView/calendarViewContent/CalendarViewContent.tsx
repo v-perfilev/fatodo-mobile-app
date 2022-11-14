@@ -1,25 +1,22 @@
-import React, {memo, Ref, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {memo, useCallback, useEffect, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import {CalendarActions} from '../../../../store/calendar/calendarActions';
 import {CalendarConstants, CalendarUtils} from '../../../../shared/utils/CalendarUtils';
 import CalendarViewContentList from './CalendarViewContentList';
-import CalendarViewHorizontalPan, {
-  CalendarViewHorizontalPanMethods,
-} from '../calendarViewPan/CalendarViewHorizontalPan';
-import {PanGestureHandler} from 'react-native-gesture-handler';
+import CalendarViewHorizontalPan from '../calendarViewPan/CalendarViewHorizontalPan';
 import Animated from 'react-native-reanimated';
+import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 
 type CalendarViewContentProps = {
   setHeight: (height: number) => void;
   translate: Animated.SharedValue<number>;
-  contentPanRef: Ref<PanGestureHandler>;
 };
 
-const CalendarViewContent = ({setHeight, translate, contentPanRef}: CalendarViewContentProps) => {
+const CalendarViewContent = ({setHeight, translate}: CalendarViewContentProps) => {
+  const {contentPanRef, imperativeContentPanRef} = useCalendarContext();
   const dispatch = useAppDispatch();
   const dateIndex = useAppSelector(CalendarSelectors.dateIndex);
-  const imperativePanRef = useRef<CalendarViewHorizontalPanMethods>();
 
   const setDateIndex = useCallback((index: number) => {
     const date = CalendarUtils.getDateByDateIndex(index);
@@ -35,7 +32,7 @@ const CalendarViewContent = ({setHeight, translate, contentPanRef}: CalendarView
   }, [dateIndex]);
 
   useEffect(() => {
-    imperativePanRef.current?.scrollToIndex(dateIndex);
+    imperativeContentPanRef.current?.scrollToIndex(dateIndex);
   }, [dateIndex]);
 
   return (
@@ -44,7 +41,7 @@ const CalendarViewContent = ({setHeight, translate, contentPanRef}: CalendarView
       setIndex={setDateIndex}
       canScrollLeft={canScrollLeft}
       canScrollRight={canScrollRight}
-      imperativePanRef={imperativePanRef}
+      imperativePanRef={imperativeContentPanRef}
       horizontalPanRef={contentPanRef}
     >
       <CalendarViewContentList setHeight={setHeight} translate={translate} />

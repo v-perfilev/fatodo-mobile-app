@@ -32,7 +32,8 @@ const CalendarViewTitle = () => {
   }, [month, i18n.language]);
 
   const setMonth = useCallback((month: CalendarMonth) => {
-    dispatch(CalendarActions.setMonth(month));
+    const date = {...month, date: 0};
+    dispatch(CalendarActions.setDate(date));
   }, []);
 
   const handleMonthClick = (): void => {
