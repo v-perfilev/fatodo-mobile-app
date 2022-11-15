@@ -1,27 +1,27 @@
-import React, {memo, useCallback, useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {Text} from 'native-base';
-import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
 import {CalendarMonth} from '../../../models/Calendar';
 import {useCalendarDialogContext} from '../../../shared/contexts/dialogContexts/CalendarDialogContext';
 import {useTranslation} from 'react-i18next';
-import {DateFormatters} from '../../../shared/utils/DateFormatters';
-import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {CALENDAR_TITLE_HEIGHT} from '../../../constants';
-import {CalendarActions} from '../../../store/calendar/calendarActions';
 import FHStack from '../../../components/boxes/FHStack';
 import PressableButton from '../../../components/controls/PressableButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
-import CalendarSelectors from '../../../store/calendar/calendarSelectors';
+import {useCalendarContext} from '../../../shared/contexts/CalendarContext';
+import {CalendarUtils} from '../../../shared/utils/CalendarUtils';
+import {DateFormatters} from '../../../shared/utils/DateFormatters';
+import {useForceUpdate} from '../../../shared/hooks/useForceUpdate';
+import {runOnJS, useDerivedValue} from 'react-native-reanimated';
 
 const CalendarViewTitle = () => {
-  const dispatch = useAppDispatch();
-  const monthIndex = useAppSelector(CalendarSelectors.monthIndex);
+  const {monthIndex, setDate} = useCalendarContext();
   const {showSelectMonthDialog} = useCalendarDialogContext();
   const {i18n} = useTranslation();
+  const forceUpdate = useForceUpdate();
 
   const month = useMemo<CalendarMonth>(() => {
-    return CalendarUtils.getMonthByMonthIndex(monthIndex);
-  }, [monthIndex]);
+    return CalendarUtils.getMonthByMonthIndex(monthIndex.value);
+  }, [monthIndex.value]);
 
   const monthWithYear = useMemo<string>(() => {
     const monthDate = CalendarUtils.getMonthDate(month);
@@ -29,14 +29,14 @@ const CalendarViewTitle = () => {
     return monthWithYear.toUpperCase();
   }, [month, i18n.language]);
 
-  const setMonth = useCallback((month: CalendarMonth) => {
-    const date = {...month, date: 0};
-    dispatch(CalendarActions.setDate(date));
-  }, []);
-
   const handleMonthClick = (): void => {
+    const setMonth = (month: CalendarMonth) => setDate({...month, date: 0});
     showSelectMonthDialog(month, setMonth);
   };
+
+  useDerivedValue(() => {
+    runOnJS(forceUpdate)(monthIndex.value);
+  });
 
   return (
     <FHStack height={`${CALENDAR_TITLE_HEIGHT}px`} justifyContent="center" alignItems="center">

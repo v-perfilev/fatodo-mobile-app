@@ -18,13 +18,13 @@ export type CalendarWeek = {
 
 export type CalendarMonthParams = {
   monthIndex: number;
-  baseIndex: number;
+  controlIndex: number;
   freeze: boolean;
 };
 
 export type CalendarWeekParams = {
   weekIndex: number;
-  baseIndex: number;
+  controlIndex: number;
   freeze: boolean;
 };
 

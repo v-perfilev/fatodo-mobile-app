@@ -1,58 +1,79 @@
-import React, {memo, Suspense, useCallback, useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {CalendarDate} from '../../../../models/Calendar';
 import PaperBox from '../../../../components/surfaces/PaperBox';
-import {Text, useColorMode} from 'native-base';
-import {ColorType} from 'native-base/lib/typescript/components/types';
-import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import {CalendarActions} from '../../../../store/calendar/calendarActions';
-import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
+import {Text, useColorMode, useTheme} from 'native-base';
 import PressableButton from '../../../../components/controls/PressableButton';
-
-const CalendarViewWeekDateReminders = React.lazy(() => import('./CalendarViewWeekDateReminders'));
+import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
+import Animated, {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
+import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
+import CalendarViewWeekDateReminders from './CalendarViewWeekDateReminders';
 
 type CalendarViewWeekDateProps = {
   date: CalendarDate;
 };
 
+const AnimatedText = Animated.createAnimatedComponent(Text);
+
 const CalendarViewWeekDate = ({date}: CalendarViewWeekDateProps) => {
-  const dispatch = useAppDispatch();
+  const {dateIndex, setDate} = useCalendarContext();
+  const theme = useTheme();
   const {colorMode} = useColorMode();
-  const isActiveDateSelector = useCallback(CalendarSelectors.makeIsActiveDateSelector(), []);
-  const isActive = useAppSelector((state) => isActiveDateSelector(state, date));
+
+  const white = theme.colors.white;
+  const primary300 = theme.colors.primary['300'];
+  const primary900 = theme.colors.primary['900'];
+  const gray50 = theme.colors.gray['50'];
+  const gray200 = theme.colors.gray['200'];
+  const gray300 = theme.colors.gray['300'];
+  const gray500 = theme.colors.gray['500'];
+  const gray700 = theme.colors.gray['700'];
+  const gray800 = theme.colors.gray['800'];
+
+  const index = useMemo<number>(() => {
+    return CalendarUtils.getDateIndexByDate(date);
+  }, [date]);
 
   const handlePress = (): void => {
-    dispatch(CalendarActions.setDate(date));
+    setDate(date);
   };
 
-  const calcColor = (activeColor: ColorType, currentColor: ColorType, otherColor: ColorType): ColorType => {
-    if (isActive && date.isActiveMonth) {
-      return activeColor;
-    } else if (date.isActiveMonth) {
-      return currentColor;
-    } else {
-      return otherColor;
-    }
-  };
-
-  const color = useMemo<ColorType>(() => {
-    return colorMode === 'light' ? calcColor('white', 'gray.500', 'gray.500') : 'gray.300';
-  }, [colorMode, isActive, date.isActiveMonth]);
-
-  const bg = useMemo<ColorType>(() => {
+  const {activeColor, inactiveColor} = useMemo(() => {
     return colorMode === 'light'
-      ? calcColor('primary.300', 'gray.50', 'gray.200')
-      : calcColor('primary.900', 'gray.700', 'gray.800');
-  }, [colorMode, isActive, date.isActiveMonth]);
+      ? {activeColor: white, inactiveColor: gray500}
+      : {activeColor: gray300, inactiveColor: gray300};
+  }, [colorMode]);
+
+  const {activeDateBg, activeMonthBg, inactiveMonthBg} = useMemo(() => {
+    return colorMode === 'light'
+      ? {activeDateBg: primary300, activeMonthBg: gray50, inactiveMonthBg: gray200}
+      : {activeDateBg: primary900, activeMonthBg: gray700, inactiveMonthBg: gray800};
+  }, [colorMode]);
+
+  const isActive = useDerivedValue(() => {
+    return dateIndex.value === index;
+  });
+
+  const fontStyle = useAnimatedStyle(() => ({
+    color: isActive.value ? activeColor : inactiveColor,
+  }));
+
+  const bgStyle = useAnimatedStyle(() => ({
+    width: '100%',
+    height: '100%',
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+    backgroundColor: isActive.value ? activeDateBg : date.isActiveMonth ? activeMonthBg : inactiveMonthBg,
+  }));
 
   return (
     <PressableButton flexGrow="1" flexBasis="1" margin="1" onPress={handlePress}>
-      <PaperBox height="100%" borderRadius="lg" borderWidth="0" overflow="hidden" bg={bg}>
-        <Text fontSize="14" fontWeight="bold" color={color} textAlign="right">
-          {date.date}
-        </Text>
-        <Suspense>
+      <PaperBox px="0" py="0" borderRadius="lg" borderWidth="0" overflow="hidden">
+        <Animated.View style={bgStyle}>
+          <AnimatedText style={fontStyle} fontSize="14" fontWeight="bold" textAlign="right">
+            {date.date}
+          </AnimatedText>
           <CalendarViewWeekDateReminders reminders={date.reminders} isActiveDate={isActive} />
-        </Suspense>
+        </Animated.View>
       </PaperBox>
     </PressableButton>
   );

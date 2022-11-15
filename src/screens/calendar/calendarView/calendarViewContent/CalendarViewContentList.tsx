@@ -1,11 +1,11 @@
 import React, {memo, useMemo} from 'react';
 import FBox from '../../../../components/boxes/FBox';
 import {CalendarContentParams} from '../../../../models/Calendar';
-import {useAppSelector} from '../../../../store/store';
-import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import {ArrayUtils} from '../../../../shared/utils/ArrayUtils';
 import CalendarViewContentItem from './CalendarViewContentItem';
-import Animated from 'react-native-reanimated';
+import Animated, {runOnJS, useDerivedValue} from 'react-native-reanimated';
+import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
+import {useForceUpdate} from '../../../../shared/hooks/useForceUpdate';
 
 type CalendarViewContentListProps = {
   setHeight: (height: number) => void;
@@ -15,14 +15,19 @@ type CalendarViewContentListProps = {
 const LIST_INDENT = 1;
 
 const CalendarViewContentList = ({setHeight, translate}: CalendarViewContentListProps) => {
-  const dateIndex = useAppSelector(CalendarSelectors.dateIndex);
+  const {dateIndex} = useCalendarContext();
+  const forceUpdate = useForceUpdate();
 
   const dateParams = useMemo<CalendarContentParams[]>(() => {
     return ArrayUtils.range(-LIST_INDENT, LIST_INDENT).map((i) => ({
-      dateIndex: dateIndex + i,
+      dateIndex: dateIndex.value + i,
       freeze: i !== 0,
     }));
-  }, [dateIndex]);
+  }, [dateIndex.value]);
+
+  useDerivedValue(() => {
+    runOnJS(forceUpdate)(dateIndex.value);
+  });
 
   return (
     <FBox position="relative" grow>

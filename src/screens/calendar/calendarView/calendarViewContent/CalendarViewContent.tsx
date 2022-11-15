@@ -1,8 +1,5 @@
-import React, {memo, useCallback, useEffect, useMemo} from 'react';
-import {useAppDispatch, useAppSelector} from '../../../../store/store';
-import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
-import {CalendarActions} from '../../../../store/calendar/calendarActions';
-import {CalendarConstants, CalendarUtils} from '../../../../shared/utils/CalendarUtils';
+import React, {memo, useCallback} from 'react';
+import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
 import CalendarViewContentList from './CalendarViewContentList';
 import CalendarViewHorizontalPan from '../calendarViewPan/CalendarViewHorizontalPan';
 import Animated from 'react-native-reanimated';
@@ -14,37 +11,20 @@ type CalendarViewContentProps = {
 };
 
 const CalendarViewContent = ({setHeight, translate}: CalendarViewContentProps) => {
-  const {contentPanRef, imperativeContentPanRef} = useCalendarContext();
-  const dispatch = useAppDispatch();
-  const dateIndex = useAppSelector(CalendarSelectors.dateIndex);
-
-  const initialDateIndex = useMemo(() => {
-    return dateIndex;
-  }, []);
+  const {contentPanRef, imperativeContentPanRef, dateIndex, canScrollContentLeft, canScrollContentRight, setDate} =
+    useCalendarContext();
 
   const setDateIndex = useCallback((index: number) => {
     const date = CalendarUtils.getDateByDateIndex(index);
-    dispatch(CalendarActions.setDate(date));
+    setDate(date);
   }, []);
-
-  const canScrollLeft = useMemo<boolean>(() => {
-    return dateIndex > 0;
-  }, [dateIndex]);
-
-  const canScrollRight = useMemo<boolean>(() => {
-    return dateIndex < CalendarConstants.maxDateIndex;
-  }, [dateIndex]);
-
-  useEffect(() => {
-    imperativeContentPanRef.current?.scrollToIndex(dateIndex);
-  }, [dateIndex]);
 
   return (
     <CalendarViewHorizontalPan
-      index={initialDateIndex}
+      index={dateIndex}
       setIndex={setDateIndex}
-      canScrollLeft={canScrollLeft}
-      canScrollRight={canScrollRight}
+      canScrollLeft={canScrollContentLeft}
+      canScrollRight={canScrollContentRight}
       imperativePanRef={imperativeContentPanRef}
       horizontalPanRef={contentPanRef}
     >

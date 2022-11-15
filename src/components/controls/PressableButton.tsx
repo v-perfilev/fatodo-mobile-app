@@ -7,7 +7,7 @@ type PressableButtonProps = IPressableProps;
 const PressableButton = React.forwardRef((props: PressableButtonProps, ref: any) => {
   const {children, ...other} = props;
   return (
-    <Pressable {...other} _disabled={{opacity: 0.4}} _pressed={{opacity: 0.7}} ref={ref}>
+    <Pressable _disabled={{opacity: 0.4}} _pressed={{opacity: 0.8}} {...other} ref={ref}>
       {children}
     </Pressable>
   );

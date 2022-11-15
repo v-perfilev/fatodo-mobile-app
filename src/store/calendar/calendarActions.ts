@@ -4,7 +4,6 @@ import NotificationService from '../../services/NotificationService';
 import {InfoActions} from '../info/infoActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
-import {CalendarDate, CalendarMode} from '../../models/Calendar';
 import {CALENDAR_LOAD_INDENT} from '../../constants';
 import calendarSlice from './calendarSlice';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
@@ -14,18 +13,6 @@ const PREFIX = 'calendar/';
 export class CalendarActions {
   static reset = () => (dispatch: AppDispatch) => {
     dispatch(calendarSlice.actions.reset());
-  };
-
-  static setMode = (mode: CalendarMode) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setMode(mode));
-  };
-
-  static setDate = (date: CalendarDate) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setDate(date));
-  };
-
-  static setDateByControlIndex = (controlIndex: number) => (dispatch: AppDispatch) => {
-    dispatch(calendarSlice.actions.setDateByControlIndex(controlIndex));
   };
 
   static handleMonthThunk = createAsyncThunk<void, number, AsyncThunkConfig>(

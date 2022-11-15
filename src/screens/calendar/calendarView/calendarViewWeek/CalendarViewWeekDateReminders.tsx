@@ -7,10 +7,11 @@ import InfoSelectors from '../../../../store/info/infoSelectors';
 import {FilterUtils} from '../../../../shared/utils/FilterUtils';
 import {CalendarReminder} from '../../../../models/Reminder';
 import {Box} from 'native-base';
+import Animated from 'react-native-reanimated';
 
 type CalendarViewDateRemindersProps = {
   reminders: CalendarReminder[];
-  isActiveDate?: boolean;
+  isActiveDate: Animated.SharedValue<boolean>;
 };
 
 const CalendarViewWeekDateReminders = ({reminders, isActiveDate}: CalendarViewDateRemindersProps) => {

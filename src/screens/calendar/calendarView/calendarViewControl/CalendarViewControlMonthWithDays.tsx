@@ -9,16 +9,16 @@ import CentredSpinner from '../../../../components/surfaces/CentredSpinner';
 const CalendarViewControlMonth = React.lazy(() => import('./CalendarViewControlMonth'));
 
 type CalendarViewControlMonthWithDaysProps = {
+  controlIndex: number;
   monthIndex: number;
-  baseIndex: number;
   weekIndex: number;
   freeze: boolean;
   rate: Animated.SharedValue<number>;
 };
 
 const CalendarViewControlMonthWithDays = ({
+  controlIndex,
   monthIndex,
-  baseIndex,
   weekIndex,
   freeze,
   rate,
@@ -27,7 +27,7 @@ const CalendarViewControlMonthWithDays = ({
 
   const monthStyle = useAnimatedStyle(() => ({
     position: 'absolute',
-    left: width * baseIndex,
+    left: width * controlIndex,
     display: rate.value === 0 ? 'none' : 'flex',
     width,
     height: '100%',
@@ -53,7 +53,7 @@ const propsAreEqual = (
   } else {
     return (
       prevProps.monthIndex === nextProps.monthIndex &&
-      prevProps.baseIndex === nextProps.baseIndex &&
+      prevProps.controlIndex === nextProps.controlIndex &&
       prevProps.weekIndex === nextProps.weekIndex
     );
   }
