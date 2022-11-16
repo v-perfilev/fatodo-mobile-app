@@ -10,7 +10,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import {StyleSheet, useWindowDimensions} from 'react-native';
-import {CALENDAR_SCROLL_INDENT} from '../../../../constants';
 import FHStack from '../../../../components/boxes/FHStack';
 
 type CalendarViewHorizontalPanProps = PropsWithChildren<{
@@ -23,7 +22,7 @@ type CalendarViewHorizontalPanProps = PropsWithChildren<{
 }>;
 
 export type CalendarViewHorizontalPanMethods = {
-  scrollToIndex: (index: number) => void;
+  scrollToIndex: (index: number, animate?: boolean) => void;
 };
 
 type PanContext = {
@@ -73,10 +72,9 @@ const CalendarViewHorizontalPan = ({
   Imperative handlers
    */
 
-  const scrollToIndex = useCallback((newIndex: number): void => {
-    const shouldAnimateScroll = Math.abs(newIndex - index.value) < CALENDAR_SCROLL_INDENT;
-    const newTranslateX = -newIndex * width;
-    translateX.value = shouldAnimateScroll ? withTiming(newTranslateX, {duration: 200}) : newTranslateX;
+  const scrollToIndex = useCallback((index: number, animate?: boolean): void => {
+    const newTranslateX = -index * width;
+    translateX.value = animate ? withTiming(newTranslateX, {duration: 200}) : newTranslateX;
   }, []);
 
   useImperativeHandle(imperativePanRef, (): CalendarViewHorizontalPanMethods => ({scrollToIndex}), [scrollToIndex]);
@@ -136,16 +134,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const propsAreEqual = (
-  prevProps: CalendarViewHorizontalPanProps,
-  nextProps: CalendarViewHorizontalPanProps,
-): boolean => {
-  return (
-    prevProps.index === nextProps.index &&
-    prevProps.setIndex === nextProps.setIndex &&
-    prevProps.canScrollLeft === nextProps.canScrollLeft &&
-    prevProps.canScrollRight === nextProps.canScrollRight
-  );
-};
-
-export default memo(CalendarViewHorizontalPan, propsAreEqual);
+export default memo(CalendarViewHorizontalPan);

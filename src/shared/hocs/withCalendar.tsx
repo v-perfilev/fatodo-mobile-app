@@ -3,7 +3,7 @@ import {flowRight} from 'lodash';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {CalendarViewHorizontalPanMethods} from '../../screens/calendar/calendarView/calendarViewPan/CalendarViewHorizontalPan';
 import {CalendarContext} from '../contexts/CalendarContext';
-import {useSharedValue, withTiming} from 'react-native-reanimated';
+import {useSharedValue} from 'react-native-reanimated';
 import {CalendarDate, CalendarMode} from '../../models/Calendar';
 import {CalendarConstants, CalendarUtils} from '../utils/CalendarUtils';
 import {
@@ -12,35 +12,33 @@ import {
   CALENDAR_TITLE_HEIGHT,
   CALENDAR_WEEKDAYS_HEIGHT,
 } from '../../constants';
+import {CalendarViewPanMethods} from '../../screens/calendar/calendarView/calendarViewPan/CalendarViewPan';
 
 const initialDate = CalendarUtils.getCurrentDate();
 const initialControlIndex = CalendarConstants.maxWeekIndex;
-const initialMonthIndex = CalendarUtils.getMonthIndexByItem(initialDate);
-const initialWeekIndex = CalendarUtils.getWeekIndexByDate(initialDate);
-const initialDateIndex = CalendarUtils.getDateIndexByDate(initialDate);
 
 const CALENDAR_BASE_HEIGHT = CALENDAR_MARGIN_HEIGHT + CALENDAR_TITLE_HEIGHT + CALENDAR_WEEKDAYS_HEIGHT;
-const initialWeekCount = CalendarUtils.getWeekCountInMonth(initialMonthIndex);
+const initialWeekCount = CalendarUtils.getWeekCountInMonth(initialDate.monthIndex);
 
 const initialMinControlHeight = CALENDAR_BASE_HEIGHT + CALENDAR_DATE_HEIGHT;
 const initialMaxControlHeight = CALENDAR_BASE_HEIGHT + CALENDAR_DATE_HEIGHT * initialWeekCount;
 
 const withCalendar = (Component: ComponentType) => (props: any) => {
   // pans
+  const imperativePanRef = useRef<CalendarViewPanMethods>();
   const controlPanRef = useRef<PanGestureHandler>();
   const contentPanRef = useRef<PanGestureHandler>();
   const imperativeControlPanRef = useRef<CalendarViewHorizontalPanMethods>();
   const imperativeContentPanRef = useRef<CalendarViewHorizontalPanMethods>();
   // control
-  const controlHeight = useSharedValue<number>(initialMaxControlHeight);
   const minControlHeight = useSharedValue<number>(initialMinControlHeight);
   const maxControlHeight = useSharedValue<number>(initialMaxControlHeight);
   // values
   const mode = useSharedValue<CalendarMode>('month');
   const controlIndex = useSharedValue<number>(initialControlIndex);
-  const monthIndex = useSharedValue<number>(initialMonthIndex);
-  const weekIndex = useSharedValue<number>(initialWeekIndex);
-  const dateIndex = useSharedValue<number>(initialDateIndex);
+  const monthIndex = useSharedValue<number>(initialDate.monthIndex);
+  const weekIndex = useSharedValue<number>(initialDate.weekIndex);
+  const dateIndex = useSharedValue<number>(initialDate.dateIndex);
   // borders
   const canScrollControlLeft = useSharedValue<boolean>(true);
   const canScrollControlRight = useSharedValue<boolean>(true);
@@ -54,9 +52,7 @@ const withCalendar = (Component: ComponentType) => (props: any) => {
   const recalculateControlHeight = (monthIndex: number) => {
     const weekCount = CalendarUtils.getWeekCountInMonth(monthIndex);
     const newMaxControlHeight = CALENDAR_BASE_HEIGHT + CALENDAR_DATE_HEIGHT * weekCount;
-    if (controlHeight.value !== minControlHeight.value && maxControlHeight.value !== newMaxControlHeight) {
-      controlHeight.value = withTiming(newMaxControlHeight, {duration: 300});
-    }
+    imperativePanRef.current?.setMaxControlHeight(newMaxControlHeight);
     maxControlHeight.value = newMaxControlHeight;
   };
 
@@ -68,9 +64,10 @@ const withCalendar = (Component: ComponentType) => (props: any) => {
     canScrollContentRight.value = dateIndex < CalendarConstants.maxDateIndex;
   };
 
-  const scrollOnChange = (controlIndex: number, dateIndex: number) => {
-    imperativeControlPanRef.current.scrollToIndex(controlIndex);
-    imperativeContentPanRef.current.scrollToIndex(dateIndex);
+  const scrollOnChange = (newControlIndex: number, newDateIndex: number, previousDateIndex: number) => {
+    const animate = Math.abs(newDateIndex - previousDateIndex) < 5;
+    imperativeControlPanRef.current?.scrollToIndex(newControlIndex);
+    imperativeContentPanRef.current?.scrollToIndex(newDateIndex, animate);
   };
 
   const setMode = useCallback((newMode: CalendarMode) => {
@@ -83,25 +80,23 @@ const withCalendar = (Component: ComponentType) => (props: any) => {
       newDate = {...newDate, date: currentDate.date};
     }
 
-    const newDateIndex = CalendarUtils.getDateIndexByDate(newDate);
-    const newWeekIndex = CalendarUtils.getWeekIndexByDate(newDate);
-    const newMonthIndex = CalendarUtils.getMonthIndexByItem(newDate);
+    const date = CalendarUtils.enrichDate(newDate);
 
     let newControlIndex = controlIndex.value;
-    if (newMonthIndex !== monthIndex.value && mode.value === 'month') {
-      newControlIndex = controlIndex.value + newMonthIndex - monthIndex.value;
-    } else if (newWeekIndex !== weekIndex.value && mode.value === 'week') {
-      newControlIndex = controlIndex.value + newWeekIndex - weekIndex.value;
+    if (date.monthIndex !== monthIndex.value && mode.value === 'month') {
+      newControlIndex = controlIndex.value + date.monthIndex - monthIndex.value;
+    } else if (date.weekIndex !== weekIndex.value && mode.value === 'week') {
+      newControlIndex = controlIndex.value + date.weekIndex - weekIndex.value;
     }
 
-    controlIndex.value = newControlIndex;
-    dateIndex.value = newDateIndex;
-    weekIndex.value = newWeekIndex;
-    monthIndex.value = newMonthIndex;
+    recalculateControlHeight(date.monthIndex);
+    scrollOnChange(newControlIndex, date.dateIndex, dateIndex.value);
+    recalculateBorders(mode.value, date.monthIndex, date.weekIndex, date.dateIndex);
 
-    recalculateControlHeight(newMonthIndex);
-    scrollOnChange(newControlIndex, newDateIndex);
-    recalculateBorders(mode.value, newMonthIndex, newWeekIndex, newDateIndex);
+    controlIndex.value = newControlIndex;
+    dateIndex.value = date.dateIndex;
+    weekIndex.value = date.weekIndex;
+    monthIndex.value = date.monthIndex;
   }, []);
 
   const setDateByControlIndex = useCallback((newControlIndex: number) => {
@@ -109,27 +104,23 @@ const withCalendar = (Component: ComponentType) => (props: any) => {
     const baseDate = CalendarUtils.getDateByDateIndex(dateIndex.value);
     const date = CalendarUtils.addIndexesToDate(baseDate, count, mode.value);
 
-    const newDateIndex = CalendarUtils.getDateIndexByDate(date);
-    const newWeekIndex = CalendarUtils.getWeekIndexByDate(date);
-    const newMonthIndex = CalendarUtils.getMonthIndexByItem(date);
+    recalculateControlHeight(date.monthIndex);
+    scrollOnChange(newControlIndex, date.dateIndex, dateIndex.value);
+    recalculateBorders(mode.value, date.monthIndex, date.weekIndex, date.dateIndex);
 
     controlIndex.value = newControlIndex;
-    dateIndex.value = newDateIndex;
-    weekIndex.value = newWeekIndex;
-    monthIndex.value = newMonthIndex;
-
-    recalculateControlHeight(newMonthIndex);
-    scrollOnChange(newControlIndex, newDateIndex);
-    recalculateBorders(mode.value, newMonthIndex, newWeekIndex, newDateIndex);
+    dateIndex.value = date.dateIndex;
+    weekIndex.value = date.weekIndex;
+    monthIndex.value = date.monthIndex;
   }, []);
 
   const value = useMemo(
     () => ({
+      imperativePanRef,
       controlPanRef,
       contentPanRef,
       imperativeControlPanRef,
       imperativeContentPanRef,
-      controlHeight,
       minControlHeight,
       maxControlHeight,
       mode,

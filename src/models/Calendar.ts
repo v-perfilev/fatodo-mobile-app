@@ -7,25 +7,29 @@ export interface CalendarMonth {
 
 export interface CalendarDate extends CalendarMonth {
   date: number;
-  isActiveMonth?: boolean;
+}
+
+export interface CalendarEnrichedDate extends CalendarMonth {
+  date: number;
+  monthIndex: number;
+  weekIndex: number;
+  dateIndex: number;
   reminders?: CalendarReminder[];
 }
 
 export type CalendarWeek = {
-  dates: CalendarDate[];
-  weekIndex?: number;
+  dates: CalendarEnrichedDate[];
+  weekIndex: number;
 };
 
 export type CalendarMonthParams = {
   monthIndex: number;
   controlIndex: number;
-  freeze: boolean;
 };
 
 export type CalendarWeekParams = {
   weekIndex: number;
   controlIndex: number;
-  freeze: boolean;
 };
 
 export type CalendarContentParams = {

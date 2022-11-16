@@ -5,25 +5,21 @@ import ActiveDateIcon from '../../../components/icons/ActiveDateIcon';
 import IconButton from '../../../components/controls/IconButton';
 import {useCalendarContext} from '../../../shared/contexts/CalendarContext';
 import Animated, {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
-import {CalendarDate} from '../../../models/Calendar';
+import {CalendarEnrichedDate} from '../../../models/Calendar';
 
 const CalendarViewHeader = () => {
   const {dateIndex, setDate} = useCalendarContext();
 
-  const currentDate = useMemo<CalendarDate>(() => {
+  const currentDate = useMemo<CalendarEnrichedDate>(() => {
     return CalendarUtils.getCurrentDate();
   }, []);
-
-  const currentDateIndex = useMemo<number>(() => {
-    return CalendarUtils.getDateIndexByDate(currentDate);
-  }, [currentDate]);
 
   const goToCurrentDate = (): void => {
     setDate(currentDate);
   };
 
   const isCurrentDate = useDerivedValue(() => {
-    return dateIndex.value === currentDateIndex;
+    return dateIndex.value === currentDate.dateIndex;
   });
 
   const buttonStyle = useAnimatedStyle(() => ({

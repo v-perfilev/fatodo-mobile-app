@@ -25,7 +25,6 @@ const CalendarViewControlList = ({rate}: CalendarViewControlListProps) => {
     return ArrayUtils.range(-indent, indent).map((i) => ({
       monthIndex: monthIndex.value + i,
       controlIndex: controlIndex.value + i,
-      freeze: i !== 0,
     }));
   }, [controlIndex.value, monthIndex.value, mode.value]);
 
@@ -34,7 +33,6 @@ const CalendarViewControlList = ({rate}: CalendarViewControlListProps) => {
     return ArrayUtils.range(-indent, indent).map((i) => ({
       weekIndex: weekIndex.value + i,
       controlIndex: controlIndex.value + i,
-      freeze: i !== 0,
     }));
   }, [controlIndex.value, weekIndex.value, mode.value]);
 
@@ -44,22 +42,18 @@ const CalendarViewControlList = ({rate}: CalendarViewControlListProps) => {
 
   return (
     <FBox position="relative" grow>
-      {monthParams.map(({monthIndex, controlIndex, freeze}) => (
+      {monthParams.map(({monthIndex, controlIndex}) => (
         <CalendarViewControlMonthWithDays
           monthIndex={monthIndex}
           controlIndex={controlIndex}
-          weekIndex={weekIndex.value}
-          freeze={freeze}
           rate={rate}
           key={`month_${monthIndex}`}
         />
       ))}
-      {weekParams.map(({weekIndex, controlIndex, freeze}) => (
+      {weekParams.map(({weekIndex, controlIndex}) => (
         <CalendarViewControlWeekWithDays
           weekIndex={weekIndex}
           controlIndex={controlIndex}
-          monthIndex={monthIndex.value}
-          freeze={freeze}
           rate={rate}
           key={`week_${weekIndex}`}
         />

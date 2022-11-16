@@ -66,7 +66,6 @@ export const CALENDAR_TITLE_HEIGHT = 40;
 export const CALENDAR_WEEKDAYS_HEIGHT = 40;
 export const CALENDAR_DATE_HEIGHT = 65;
 export const CALENDAR_MARGIN_HEIGHT = 12;
-export const CALENDAR_SCROLL_INDENT = 5;
 export const CALENDAR_LOAD_INDENT = 5;
 
 // BUILDERS

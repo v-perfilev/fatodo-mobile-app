@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useCallback, useMemo, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useImperativeHandle, useMemo, useState} from 'react';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {
   cancelAnimation,
@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
   withDecay,
   withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import CalendarViewPanContent from './CalendarViewPanContent';
 import CalendarViewPanControl from './CalendarViewPanControl';
@@ -17,6 +18,10 @@ import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 type CalendarViewPanProps = {
   control: (rate: Animated.SharedValue<number>) => ReactElement;
   content: (setHeight: (height: number) => void, translate: Animated.SharedValue<number>) => ReactElement;
+};
+
+export type CalendarViewPanMethods = {
+  setMaxControlHeight: (newMaxControlHeight: number) => void;
 };
 
 type PanContext = {
@@ -71,13 +76,14 @@ const clamp = (value: number, min: number, max: number): number => {
 };
 
 const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
-  const {controlPanRef, contentPanRef, controlHeight, minControlHeight, maxControlHeight} = useCalendarContext();
+  const {imperativePanRef, controlPanRef, contentPanRef, minControlHeight, maxControlHeight} = useCalendarContext();
   const {height} = useWindowDimensions();
   const [containerHeightState, setContainerHeightState] = useState<number>(height - BASE_HEIGHT);
   const [contentHeightState, setContentHeightState] = useState<number>(0);
 
-  const contentTranslate = useSharedValue(0);
-  const rate = useSharedValue(1);
+  const controlHeight = useSharedValue<number>(maxControlHeight.value);
+  const contentTranslate = useSharedValue<number>(0);
+  const rate = useSharedValue<number>(1);
 
   const contentHeightThreshold = useMemo<number>(
     () => containerHeightState - minControlHeight.value,
@@ -95,7 +101,7 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
   }, []);
 
   /*
-  DERIVED VALUES
+  Derived values
    */
 
   const contentHeight = useDerivedValue(() => {
@@ -111,6 +117,18 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
     const maxTranslate = containerHeightState - minControlHeight.value - contentHeightState;
     return canScroll ? clamp(contentTranslate.value, 0, maxTranslate) : 0;
   });
+
+  /*
+  Imperative handlers
+   */
+
+  const setMaxControlHeight = useCallback((newMaxControlHeight: number): void => {
+    if (controlHeight.value !== minControlHeight.value && controlHeight.value !== newMaxControlHeight) {
+      controlHeight.value = withTiming(newMaxControlHeight, {duration: 200});
+    }
+  }, []);
+
+  useImperativeHandle(imperativePanRef, (): CalendarViewPanMethods => ({setMaxControlHeight}), [setMaxControlHeight]);
 
   /*
   GESTURE HANDLER
