@@ -1,8 +1,9 @@
-import React, {memo, PropsWithChildren, Ref, useCallback, useImperativeHandle} from 'react';
+import React, {memo, PropsWithChildren, Ref} from 'react';
 import Animated, {
   cancelAnimation,
   runOnJS,
   useAnimatedGestureHandler,
+  useAnimatedReaction,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
@@ -17,13 +18,8 @@ type CalendarViewHorizontalPanProps = PropsWithChildren<{
   setIndex: (index: number) => void;
   canScrollLeft: Animated.SharedValue<boolean>;
   canScrollRight: Animated.SharedValue<boolean>;
-  imperativePanRef?: Ref<CalendarViewHorizontalPanMethods>;
-  horizontalPanRef?: Ref<PanGestureHandler>;
+  horizontalPanRef: Ref<PanGestureHandler>;
 }>;
-
-export type CalendarViewHorizontalPanMethods = {
-  scrollToIndex: (index: number, animate?: boolean) => void;
-};
 
 type PanContext = {
   translateX: number;
@@ -60,24 +56,29 @@ const CalendarViewHorizontalPan = ({
   setIndex,
   canScrollLeft,
   canScrollRight,
-  imperativePanRef,
   horizontalPanRef,
   children,
 }: CalendarViewHorizontalPanProps) => {
   const {width} = useWindowDimensions();
 
+  const localIndex = useSharedValue(index.value);
   const translateX = useSharedValue(-width * index.value);
 
   /*
-  Imperative handlers
+  Effects
    */
 
-  const scrollToIndex = useCallback((index: number, animate?: boolean): void => {
-    const newTranslateX = -index * width;
-    translateX.value = animate ? withTiming(newTranslateX, {duration: 200}) : newTranslateX;
-  }, []);
-
-  useImperativeHandle(imperativePanRef, (): CalendarViewHorizontalPanMethods => ({scrollToIndex}), [scrollToIndex]);
+  useAnimatedReaction(
+    () => index.value,
+    (next, prev) => {
+      if (prev && next !== prev && next !== localIndex.value) {
+        const animate = Math.abs(next - prev) < 5;
+        const newTranslateX = -next * width;
+        translateX.value = animate ? withTiming(newTranslateX, {duration: 400}) : newTranslateX;
+        localIndex.value = next;
+      }
+    },
+  );
 
   /*
   Gesture handlers
@@ -103,6 +104,7 @@ const CalendarViewHorizontalPan = ({
         canScrollRight.value,
       );
       translateX.value = withSpring(finalTranslateX, {velocity: event.velocityX, overshootClamping: true});
+      localIndex.value = index;
       runOnJS(setIndex)(index);
     },
   });

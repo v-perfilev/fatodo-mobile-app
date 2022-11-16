@@ -11,8 +11,7 @@ type CalendarViewContentProps = {
 };
 
 const CalendarViewContent = ({setHeight, translate}: CalendarViewContentProps) => {
-  const {contentPanRef, imperativeContentPanRef, dateIndex, canScrollContentLeft, canScrollContentRight, setDate} =
-    useCalendarContext();
+  const {contentPanRef, dateIndex, canScrollContentLeft, canScrollContentRight, setDate} = useCalendarContext();
 
   const setDateIndex = useCallback((index: number) => {
     const date = CalendarUtils.getDateByDateIndex(index);
@@ -25,7 +24,6 @@ const CalendarViewContent = ({setHeight, translate}: CalendarViewContentProps) =
       setIndex={setDateIndex}
       canScrollLeft={canScrollContentLeft}
       canScrollRight={canScrollContentRight}
-      imperativePanRef={imperativeContentPanRef}
       horizontalPanRef={contentPanRef}
     >
       <CalendarViewContentList setHeight={setHeight} translate={translate} />

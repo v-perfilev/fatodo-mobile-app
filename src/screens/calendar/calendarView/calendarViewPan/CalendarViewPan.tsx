@@ -1,27 +1,24 @@
-import React, {memo, ReactElement, useCallback, useImperativeHandle, useMemo, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useMemo, useState} from 'react';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
 import Animated, {
   cancelAnimation,
   useAnimatedGestureHandler,
+  useAnimatedReaction,
   useDerivedValue,
   useSharedValue,
   withDecay,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import CalendarViewPanContent from './CalendarViewPanContent';
 import CalendarViewPanControl from './CalendarViewPanControl';
 import {LayoutChangeEvent, StatusBar, StyleSheet, useWindowDimensions} from 'react-native';
 import {HEADER_HEIGHT, TAB_HEIGHT} from '../../../../constants';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
+import CalendarViewPanContent from './CalendarViewPanContent';
 
 type CalendarViewPanProps = {
   control: (rate: Animated.SharedValue<number>) => ReactElement;
   content: (setHeight: (height: number) => void, translate: Animated.SharedValue<number>) => ReactElement;
-};
-
-export type CalendarViewPanMethods = {
-  setMaxControlHeight: (newMaxControlHeight: number) => void;
 };
 
 type PanContext = {
@@ -76,7 +73,7 @@ const clamp = (value: number, min: number, max: number): number => {
 };
 
 const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
-  const {imperativePanRef, controlPanRef, contentPanRef, minControlHeight, maxControlHeight} = useCalendarContext();
+  const {controlPanRef, contentPanRef, minControlHeight, maxControlHeight} = useCalendarContext();
   const {height} = useWindowDimensions();
   const [containerHeightState, setContainerHeightState] = useState<number>(height - BASE_HEIGHT);
   const [contentHeightState, setContentHeightState] = useState<number>(0);
@@ -87,7 +84,7 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
 
   const contentHeightThreshold = useMemo<number>(
     () => containerHeightState - minControlHeight.value,
-    [contentHeightState, minControlHeight],
+    [contentHeightState],
   );
 
   const handleLayout = useCallback((e: LayoutChangeEvent): void => {
@@ -119,16 +116,18 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
   });
 
   /*
-  Imperative handlers
+  Effects
    */
 
-  const setMaxControlHeight = useCallback((newMaxControlHeight: number): void => {
-    if (controlHeight.value !== minControlHeight.value && controlHeight.value !== newMaxControlHeight) {
-      controlHeight.value = withTiming(newMaxControlHeight, {duration: 200});
-    }
-  }, []);
-
-  useImperativeHandle(imperativePanRef, (): CalendarViewPanMethods => ({setMaxControlHeight}), [setMaxControlHeight]);
+  useAnimatedReaction(
+    () => maxControlHeight.value,
+    (next, prev) => {
+      if (next !== prev && controlHeight.value !== minControlHeight.value) {
+        cancelAnimation(controlHeight);
+        controlHeight.value = withTiming(next, {duration: 200});
+      }
+    },
+  );
 
   /*
   GESTURE HANDLER

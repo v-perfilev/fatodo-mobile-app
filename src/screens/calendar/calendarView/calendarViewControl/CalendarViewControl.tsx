@@ -11,15 +11,8 @@ type CalendarViewControlProps = {
 };
 
 const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
-  const {
-    controlPanRef,
-    imperativeControlPanRef,
-    controlIndex,
-    setMode,
-    setDateByControlIndex,
-    canScrollControlLeft,
-    canScrollControlRight,
-  } = useCalendarContext();
+  const {controlPanRef, controlIndex, setMode, setDateByControlIndex, canScrollControlLeft, canScrollControlRight} =
+    useCalendarContext();
   const controlIndexesToIgnore = useRef<number[]>([]);
 
   const setControlIndex = useCallback((index: number) => {
@@ -44,7 +37,6 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
         setIndex={setControlIndex}
         canScrollLeft={canScrollControlLeft}
         canScrollRight={canScrollControlRight}
-        imperativePanRef={imperativeControlPanRef}
         horizontalPanRef={controlPanRef}
       >
         <CalendarViewControlList rate={rate} />
