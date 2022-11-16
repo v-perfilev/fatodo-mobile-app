@@ -1,13 +1,9 @@
 import React, {memo, ReactNode} from 'react';
 import {BottomTabNavigationProp, createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import TabNavigatorBar from '../components/layouts/TabNavigatorBar';
-import GroupNavigator, {GroupParamList} from './GroupNavigator';
-import ContactNavigator from './ContactNavigator';
 import GroupsIcon from '../components/icons/GroupsIcon';
 import ContactsIcon from '../components/icons/ContactsIcon';
 import ChatsIcon from '../components/icons/ChatsIcon';
-import ChatList from '../screens/chats/chatList/ChatList';
-import EventList from '../screens/events/eventList/EventList';
 import {useAppSelector} from '../store/store';
 import EventsSelectors from '../store/events/eventsSelectors';
 import ChatsSelectors from '../store/chats/chatsSelectors';
@@ -17,7 +13,11 @@ import {NavigationProps} from './RootNavigator';
 import CommonSelectors from '../store/common/commonSelectors';
 import BellIcon from '../components/icons/BellIcon';
 import {flowRight} from 'lodash';
+import GroupNavigator, {GroupParamList} from './GroupNavigator';
 import CalendarView from '../screens/calendar/calendarView/CalendarView';
+import EventList from '../screens/events/eventList/EventList';
+import ChatList from '../screens/chats/chatList/ChatList';
+import ContactNavigator from './ContactNavigator';
 
 export type TabParamList = {
   Groups: NavigationProps<GroupParamList>;
@@ -50,12 +50,10 @@ const TabNavigator = () => {
   const incomingRequestCount = useAppSelector(ContactsSelectors.incomingRequestCount);
   const freeze = useAppSelector(CommonSelectors.freeze);
 
-  // TODO set Groups as default route
   return (
     <Tab.Navigator
       screenOptions={{headerShown: false, freezeOnBlur: freeze}}
-      // initialRouteName="Groups"
-      initialRouteName="Calendar"
+      initialRouteName="Groups"
       backBehavior="initialRoute"
       tabBar={TabNavigatorBar}
     >
