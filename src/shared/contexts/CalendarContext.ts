@@ -4,25 +4,26 @@ import Animated from 'react-native-reanimated';
 import {CalendarDate, CalendarMode} from '../../models/Calendar';
 
 export interface CalendarState {
-  // pans
+  // Pans
   controlPanRef: MutableRefObject<PanGestureHandler>;
   contentPanRef: MutableRefObject<PanGestureHandler>;
-  // control
+  // Control
   minControlHeight: Animated.SharedValue<number>;
   maxControlHeight: Animated.SharedValue<number>;
-  // values
+  // Values
+  rate: Animated.SharedValue<number>;
+  translate: Animated.SharedValue<number>;
   mode: Animated.SharedValue<CalendarMode>;
   controlIndex: Animated.SharedValue<number>;
   monthIndex: Animated.SharedValue<number>;
   weekIndex: Animated.SharedValue<number>;
   dateIndex: Animated.SharedValue<number>;
-  // borders
+  // Borders
   canScrollControlLeft: Animated.SharedValue<boolean>;
   canScrollControlRight: Animated.SharedValue<boolean>;
   canScrollContentLeft: Animated.SharedValue<boolean>;
   canScrollContentRight: Animated.SharedValue<boolean>;
-  // setters
-  setMode: (mode: CalendarMode) => void;
+  // Setters
   setDate: (date: CalendarDate) => void;
   setDateByControlIndex: (controlIndex: number) => void;
 }

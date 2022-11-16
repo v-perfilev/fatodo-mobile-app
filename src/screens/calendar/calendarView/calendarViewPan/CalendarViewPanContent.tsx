@@ -1,12 +1,12 @@
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import React, {memo, ReactElement, useCallback, useRef} from 'react';
+import AnimatedBox from '../../../../components/animated/AnimatedBox';
 
 type CalendarViewPanContentProps = {
-  content: (setHeight: (height: number) => void, translate: Animated.SharedValue<number>) => ReactElement;
+  content: (setHeight: (height: number) => void) => ReactElement;
   contentHeightThreshold: number;
   setContentHeight: (height: number) => void;
   height: Animated.SharedValue<number>;
-  translate: Animated.SharedValue<number>;
 };
 
 const CalendarViewPanContent = ({
@@ -14,7 +14,6 @@ const CalendarViewPanContent = ({
   setContentHeight,
   contentHeightThreshold,
   height,
-  translate,
 }: CalendarViewPanContentProps) => {
   const prevHeight = useRef<number>(0);
 
@@ -36,12 +35,15 @@ const CalendarViewPanContent = ({
     [contentHeightThreshold],
   );
 
-  const outerStyle = useAnimatedStyle(() => ({
+  const style = useAnimatedStyle(() => ({
     height: height.value,
-    overflow: 'hidden',
   }));
 
-  return <Animated.View style={outerStyle}>{content(setHeight, translate)}</Animated.View>;
+  return (
+    <AnimatedBox style={style} overflow="hidden">
+      {content(setHeight)}
+    </AnimatedBox>
+  );
 };
 
 export default memo(CalendarViewPanContent);

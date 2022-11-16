@@ -5,7 +5,7 @@ import {PushNotificationData} from '../../models/PushNotification';
 export class NavigationUtils {
   public static navigate = <K extends keyof RootParamList, T extends RootParamList>(screen: K, params: T[K]): void => {
     if (navigationRef.isReady()) {
-      navigationRef.navigate<K>(screen, params);
+      navigationRef.navigate<any>(screen, params);
     } else {
       setTimeout(() => NavigationUtils.navigate(screen, params), 100);
     }

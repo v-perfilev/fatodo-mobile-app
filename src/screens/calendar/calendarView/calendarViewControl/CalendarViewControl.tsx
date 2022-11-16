@@ -1,17 +1,13 @@
 import React, {memo, useCallback, useRef} from 'react';
-import Animated, {runOnJS, useDerivedValue} from 'react-native-reanimated';
 import CalendarViewTitle from '../CalendarViewTitle';
 import Separator from '../../../../components/layouts/Separator';
 import CalendarViewHorizontalPan from '../calendarViewPan/CalendarViewHorizontalPan';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 import CalendarViewControlList from './CalendarViewControlList';
+import CalendarViewControlDays from './CalendarViewControlDays';
 
-type CalendarViewControlProps = {
-  rate: Animated.SharedValue<number>;
-};
-
-const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
-  const {controlPanRef, controlIndex, setMode, setDateByControlIndex, canScrollControlLeft, canScrollControlRight} =
+const CalendarViewControl = () => {
+  const {controlPanRef, controlIndex, setDateByControlIndex, canScrollControlLeft, canScrollControlRight} =
     useCalendarContext();
   const controlIndexesToIgnore = useRef<number[]>([]);
 
@@ -20,17 +16,11 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
     setDateByControlIndex(index);
   }, []);
 
-  useDerivedValue(() => {
-    if (rate.value === 0) {
-      runOnJS(setMode)('week');
-    } else if (rate.value === 1) {
-      runOnJS(setMode)('month');
-    }
-  });
-
   return (
     <>
       <CalendarViewTitle />
+      <Separator />
+      <CalendarViewControlDays />
       <Separator />
       <CalendarViewHorizontalPan
         index={controlIndex}
@@ -39,7 +29,7 @@ const CalendarViewControl = ({rate}: CalendarViewControlProps) => {
         canScrollRight={canScrollControlRight}
         horizontalPanRef={controlPanRef}
       >
-        <CalendarViewControlList rate={rate} />
+        <CalendarViewControlList />
       </CalendarViewHorizontalPan>
       <Separator />
     </>

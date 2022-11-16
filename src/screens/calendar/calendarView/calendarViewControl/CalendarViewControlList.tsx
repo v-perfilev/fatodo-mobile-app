@@ -1,62 +1,46 @@
 import React, {memo, useMemo} from 'react';
-import Animated, {runOnJS, useDerivedValue} from 'react-native-reanimated';
-import FBox from '../../../../components/boxes/FBox';
+import {runOnJS, useDerivedValue} from 'react-native-reanimated';
 import {CalendarMonthParams, CalendarWeekParams} from '../../../../models/Calendar';
-import {usePreviousValue} from '../../../../shared/hooks/usePreviousValue';
 import {ArrayUtils} from '../../../../shared/utils/ArrayUtils';
-import CalendarViewControlMonthWithDays from './CalendarViewControlMonthWithDays';
-import CalendarViewControlWeekWithDays from './CalendarViewControlWeekWithDays';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 import {useForceUpdate} from '../../../../shared/hooks/useForceUpdate';
-
-type CalendarViewControlListProps = {
-  rate: Animated.SharedValue<number>;
-};
+import FBox from '../../../../components/boxes/FBox';
+import CalendarViewControlMonth from './CalendarViewControlMonth';
+import CalendarViewControlWeek from './CalendarViewControlWeek';
 
 const LIST_INDENT = 1;
 
-const CalendarViewControlList = ({rate}: CalendarViewControlListProps) => {
+const CalendarViewControlList = () => {
   const {mode, controlIndex, monthIndex, weekIndex} = useCalendarContext();
-  const prevMode = usePreviousValue(mode.value);
   const forceUpdate = useForceUpdate();
 
   const monthParams = useMemo<CalendarMonthParams[]>(() => {
-    const indent = mode.value === 'month' || mode !== prevMode ? LIST_INDENT : 0;
+    const indent = mode.value === 'month' ? LIST_INDENT : 0;
     return ArrayUtils.range(-indent, indent).map((i) => ({
       monthIndex: monthIndex.value + i,
       controlIndex: controlIndex.value + i,
     }));
-  }, [controlIndex.value, monthIndex.value, mode.value]);
+  }, [monthIndex.value]);
 
   const weekParams = useMemo<CalendarWeekParams[]>(() => {
-    const indent = mode.value === 'week' || mode !== prevMode ? LIST_INDENT : 0;
+    const indent = mode.value === 'week' ? LIST_INDENT : 0;
     return ArrayUtils.range(-indent, indent).map((i) => ({
       weekIndex: weekIndex.value + i,
       controlIndex: controlIndex.value + i,
     }));
-  }, [controlIndex.value, weekIndex.value, mode.value]);
+  }, [weekIndex.value]);
 
   useDerivedValue(() => {
-    runOnJS(forceUpdate)(mode.value, controlIndex.value, monthIndex.value, weekIndex.value);
+    runOnJS(forceUpdate)(monthIndex.value, weekIndex.value);
   });
 
   return (
-    <FBox position="relative" grow>
+    <FBox position="relative">
       {monthParams.map(({monthIndex, controlIndex}) => (
-        <CalendarViewControlMonthWithDays
-          monthIndex={monthIndex}
-          controlIndex={controlIndex}
-          rate={rate}
-          key={`month_${monthIndex}`}
-        />
+        <CalendarViewControlMonth monthIndex={monthIndex} controlIndex={controlIndex} key={`month_${monthIndex}`} />
       ))}
       {weekParams.map(({weekIndex, controlIndex}) => (
-        <CalendarViewControlWeekWithDays
-          weekIndex={weekIndex}
-          controlIndex={controlIndex}
-          rate={rate}
-          key={`week_${weekIndex}`}
-        />
+        <CalendarViewControlWeek weekIndex={weekIndex} controlIndex={controlIndex} key={`week_${weekIndex}`} />
       ))}
     </FBox>
   );

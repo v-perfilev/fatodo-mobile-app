@@ -1,19 +1,22 @@
 import React, {memo, ReactElement} from 'react';
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
+import AnimatedBox from '../../../../components/animated/AnimatedBox';
 
 type CalendarViewPanControlProps = {
-  control: (rate: Animated.SharedValue<number>) => ReactElement;
+  control: ReactElement;
   height: Animated.SharedValue<number>;
-  rate: Animated.SharedValue<number>;
 };
 
-const CalendarViewPanControl = ({control, height, rate}: CalendarViewPanControlProps) => {
+const CalendarViewPanControl = ({control, height}: CalendarViewPanControlProps) => {
   const style = useAnimatedStyle(() => ({
     height: height.value,
-    overflow: 'hidden',
   }));
 
-  return <Animated.View style={style}>{control(rate)}</Animated.View>;
+  return (
+    <AnimatedBox style={style} overflow="hidden">
+      {control}
+    </AnimatedBox>
+  );
 };
 
 export default memo(CalendarViewPanControl);

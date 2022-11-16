@@ -3,8 +3,11 @@ import {CalendarState} from './calendarType';
 import {CalendarActions} from './calendarActions';
 import {CalendarReminder} from '../../models/Reminder';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
+import {CalendarEnrichedDate} from '../../models/Calendar';
+import {CalendarUtils} from '../../shared/utils/CalendarUtils';
 
 const initialState: CalendarState = {
+  date: CalendarUtils.getCurrentDate(),
   reminders: [],
   loadingKeys: [],
   loadedKeys: [],
@@ -17,6 +20,10 @@ const calendarSlice = createSlice({
   reducers: {
     reset: (state: CalendarState) => {
       Object.assign(state, initialState);
+    },
+
+    setDate: (state: CalendarState, action: PayloadAction<CalendarEnrichedDate>) => {
+      state.date = action.payload;
     },
 
     addLoadingKeys: (state: CalendarState, action: PayloadAction<string[]>) => {

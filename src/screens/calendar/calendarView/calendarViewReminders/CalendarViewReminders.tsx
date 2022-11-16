@@ -4,17 +4,19 @@ import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import {useAppSelector} from '../../../../store/store';
 import {CalendarDate} from '../../../../models/Calendar';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
-import Animated, {useAnimatedStyle} from 'react-native-reanimated';
+import {useAnimatedStyle} from 'react-native-reanimated';
 import {useWindowDimensions} from 'react-native';
 import CalendarViewRemindersList from './CalendarViewRemindersList';
+import AnimatedBox from '../../../../components/animated/AnimatedBox';
+import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 
 type CalendarViewRemindersProps = {
   dateIndex: number;
   setHeight: (height: number) => void;
-  translate: Animated.SharedValue<number>;
 };
 
-const CalendarViewReminders = ({dateIndex, setHeight, translate}: CalendarViewRemindersProps) => {
+const CalendarViewReminders = ({dateIndex, setHeight}: CalendarViewRemindersProps) => {
+  const {translate} = useCalendarContext();
   const {width} = useWindowDimensions();
   const remindersSelector = useCallback(CalendarSelectors.makeDateRemindersSelector(), []);
   const date = useMemo<CalendarDate>(() => CalendarUtils.getDateByDateIndex(dateIndex), [dateIndex]);
@@ -26,18 +28,16 @@ const CalendarViewReminders = ({dateIndex, setHeight, translate}: CalendarViewRe
 
   const style = useAnimatedStyle(() => ({
     transform: [{translateY: translate.value}],
-    width,
-    minHeight: '100%',
   }));
 
   return (
-    <Animated.View style={style}>
+    <AnimatedBox style={style} width={width} minHeight="100%">
       {reminders?.length === 0 ? (
         <CalendarViewRemindersEmptyStub />
       ) : (
         <CalendarViewRemindersList reminders={reminders} setHeight={setHeight} />
       )}
-    </Animated.View>
+    </AnimatedBox>
   );
 };
 

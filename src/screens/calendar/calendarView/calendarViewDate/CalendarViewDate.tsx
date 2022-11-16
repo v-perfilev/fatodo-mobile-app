@@ -1,23 +1,24 @@
-import React, {memo, useMemo} from 'react';
+import React, {memo, useEffect, useMemo, useState} from 'react';
 import {CalendarEnrichedDate} from '../../../../models/Calendar';
-import PaperBox from '../../../../components/surfaces/PaperBox';
-import {Text, useColorMode, useTheme} from 'native-base';
+import {Box, useColorMode, useTheme} from 'native-base';
 import PressableButton from '../../../../components/controls/PressableButton';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
-import Animated, {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
-import CalendarViewWeekDateReminders from './CalendarViewWeekDateReminders';
+import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
+import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
+import AnimatedBox from '../../../../components/animated/AnimatedBox';
+import AnimatedText from '../../../../components/animated/AnimatedText';
+import CalendarViewDateReminders from './CalendarViewDateReminders';
 
-type CalendarViewWeekDateProps = {
+type CalendarViewDateProps = {
   date: CalendarEnrichedDate;
   activeMonthIndex?: number;
 };
 
-const AnimatedText = Animated.createAnimatedComponent(Text);
-
-const CalendarViewWeekDate = ({date, activeMonthIndex}: CalendarViewWeekDateProps) => {
+const CalendarViewDate = ({date, activeMonthIndex}: CalendarViewDateProps) => {
   const {monthIndex, dateIndex, setDate} = useCalendarContext();
   const theme = useTheme();
   const {colorMode} = useColorMode();
+  const [rendered, setRendered] = useState<boolean>();
 
   const white = theme.colors.white;
   const primary300 = theme.colors.primary['300'];
@@ -45,6 +46,10 @@ const CalendarViewWeekDate = ({date, activeMonthIndex}: CalendarViewWeekDateProp
       : {activeDateBg: primary900, activeMonthBg: gray700, inactiveMonthBg: gray800};
   }, [colorMode]);
 
+  useEffect(() => {
+    setRendered(true);
+  }, []);
+
   const isActiveDate = useDerivedValue(() => {
     return dateIndex.value === date.dateIndex;
   });
@@ -60,27 +65,23 @@ const CalendarViewWeekDate = ({date, activeMonthIndex}: CalendarViewWeekDateProp
   const bgStyle = useAnimatedStyle(() => ({
     width: '100%',
     height: '100%',
-    paddingHorizontal: 4,
-    paddingVertical: 2,
     backgroundColor: isActiveDate.value ? activeDateBg : isActiveMonth.value ? activeMonthBg : inactiveMonthBg,
   }));
 
   return (
-    <PressableButton flexGrow="1" flexBasis="1" margin="1" onPress={handlePress}>
-      <PaperBox px="0" py="0" borderRadius="lg" borderWidth="0" overflow="hidden">
-        <Animated.View style={bgStyle}>
+    <Box width={`${100 / 7}%`} height={CALENDAR_DATE_HEIGHT}>
+      <PressableButton margin="1" onPress={handlePress}>
+        <AnimatedBox style={bgStyle} px="1" py="0.5" borderRadius="lg" overflow="hidden">
           <AnimatedText style={fontStyle} fontSize="14" fontWeight="bold" textAlign="right">
             {date.date}
           </AnimatedText>
-          <CalendarViewWeekDateReminders reminders={date.reminders} isActiveDate={isActiveDate} />
-        </Animated.View>
-      </PaperBox>
-    </PressableButton>
+          {rendered && date.reminders.length > 0 && (
+            <CalendarViewDateReminders reminders={date.reminders} isActiveDate={isActiveDate} />
+          )}
+        </AnimatedBox>
+      </PressableButton>
+    </Box>
   );
 };
 
-const propsAreEqual = (prevProps: CalendarViewWeekDateProps, nextProps: CalendarViewWeekDateProps): boolean => {
-  return JSON.stringify(prevProps.date) === JSON.stringify(nextProps.date);
-};
-
-export default memo(CalendarViewWeekDate, propsAreEqual);
+export default memo(CalendarViewDate);

@@ -14,7 +14,7 @@ type CalendarViewDateRemindersProps = {
   isActiveDate: Animated.SharedValue<boolean>;
 };
 
-const CalendarViewWeekDateReminders = ({reminders, isActiveDate}: CalendarViewDateRemindersProps) => {
+const CalendarViewDateReminders = ({reminders, isActiveDate}: CalendarViewDateRemindersProps) => {
   const groupsSelector = useCallback(InfoSelectors.makeGroupsSelector(), []);
   const groupIds = reminders.map((r) => r.parentId).filter(FilterUtils.uniqueFilter);
   const groups = useAppSelector((state) => groupsSelector(state, groupIds));
@@ -45,4 +45,4 @@ const CalendarViewWeekDateReminders = ({reminders, isActiveDate}: CalendarViewDa
   );
 };
 
-export default memo(CalendarViewWeekDateReminders);
+export default memo(CalendarViewDateReminders);

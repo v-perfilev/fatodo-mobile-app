@@ -1,7 +1,8 @@
 import React, {memo, ReactElement, useCallback, useMemo, useState} from 'react';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
-import Animated, {
+import {
   cancelAnimation,
+  runOnJS,
   useAnimatedGestureHandler,
   useAnimatedReaction,
   useDerivedValue,
@@ -11,14 +12,15 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import CalendarViewPanControl from './CalendarViewPanControl';
-import {LayoutChangeEvent, StatusBar, StyleSheet, useWindowDimensions} from 'react-native';
+import {LayoutChangeEvent, StatusBar, useWindowDimensions} from 'react-native';
 import {HEADER_HEIGHT, TAB_HEIGHT} from '../../../../constants';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 import CalendarViewPanContent from './CalendarViewPanContent';
+import AnimatedBox from '../../../../components/animated/AnimatedBox';
 
 type CalendarViewPanProps = {
-  control: (rate: Animated.SharedValue<number>) => ReactElement;
-  content: (setHeight: (height: number) => void, translate: Animated.SharedValue<number>) => ReactElement;
+  control: ReactElement;
+  content: (setHeight: (height: number) => void) => ReactElement;
 };
 
 type PanContext = {
@@ -73,14 +75,15 @@ const clamp = (value: number, min: number, max: number): number => {
 };
 
 const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
-  const {controlPanRef, contentPanRef, minControlHeight, maxControlHeight} = useCalendarContext();
+  const {controlPanRef, contentPanRef, minControlHeight, maxControlHeight, rate, translate} = useCalendarContext();
   const {height} = useWindowDimensions();
   const [containerHeightState, setContainerHeightState] = useState<number>(height - BASE_HEIGHT);
   const [contentHeightState, setContentHeightState] = useState<number>(0);
 
   const controlHeight = useSharedValue<number>(maxControlHeight.value);
-  const contentTranslate = useSharedValue<number>(0);
-  const rate = useSharedValue<number>(1);
+
+  const localRate = useSharedValue<number>(1);
+  const localTranslate = useSharedValue<number>(0);
 
   const contentHeightThreshold = useMemo<number>(
     () => containerHeightState - minControlHeight.value,
@@ -93,7 +96,7 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
   }, []);
 
   const handleContentHeightChange = useCallback((height: number): void => {
-    contentTranslate.value = 0;
+    localTranslate.value = 0;
     setContentHeightState(height);
   }, []);
 
@@ -105,26 +108,31 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
     return containerHeightState - controlHeight.value;
   });
 
-  const clampedRate = useDerivedValue(() => {
-    return clamp(rate.value, 0, 1);
+  useDerivedValue(() => {
+    rate.value = clamp(localRate.value, 0, 1);
   });
 
-  const clampedContentTranslate = useDerivedValue(() => {
+  useDerivedValue(() => {
     const canScroll = contentHeightState + minControlHeight.value > containerHeightState;
     const maxTranslate = containerHeightState - minControlHeight.value - contentHeightState;
-    return canScroll ? clamp(contentTranslate.value, 0, maxTranslate) : 0;
+    translate.value = canScroll ? clamp(localTranslate.value, 0, maxTranslate) : 0;
   });
 
   /*
   Effects
    */
 
+  const updateHeight = (next: number): void => {
+    requestAnimationFrame(() => {
+      controlHeight.value = withTiming(next);
+    });
+  };
+
   useAnimatedReaction(
     () => maxControlHeight.value,
     (next, prev) => {
-      if (next !== prev && controlHeight.value !== minControlHeight.value) {
-        cancelAnimation(controlHeight);
-        controlHeight.value = withTiming(next, {duration: 200});
+      if (prev && next !== prev && controlHeight.value !== minControlHeight.value) {
+        runOnJS(updateHeight)(next);
       }
     },
   );
@@ -136,9 +144,9 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
   const panGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, PanContext>({
     onStart: (_, context) => {
       context.controlHeight = controlHeight.value;
-      context.contentTranslateY = clampedContentTranslate.value;
+      context.contentTranslateY = translate.value;
       context.prevContentTranslationY = 0;
-      cancelAnimation(contentTranslate);
+      cancelAnimation(localTranslate);
     },
     onActive: (event, context) => {
       const [shouldTranslate] = calcActiveParams(
@@ -149,7 +157,7 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
         maxControlHeight.value,
       );
       if (shouldTranslate) {
-        contentTranslate.value = event.translationY + context.contentTranslateY;
+        localTranslate.value = event.translationY + context.contentTranslateY;
         context.controlHeight = controlHeight.value - event.translationY;
       } else {
         controlHeight.value = clamp(
@@ -157,8 +165,9 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
           minControlHeight.value,
           maxControlHeight.value,
         );
-        rate.value = (controlHeight.value - minControlHeight.value) / (maxControlHeight.value - minControlHeight.value);
-        context.contentTranslateY = clampedContentTranslate.value - event.translationY;
+        localRate.value =
+          (controlHeight.value - minControlHeight.value) / (maxControlHeight.value - minControlHeight.value);
+        context.contentTranslateY = translate.value - event.translationY;
       }
       context.prevContentTranslationY = event.translationY;
     },
@@ -171,9 +180,9 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
       );
       if (shouldChangeControlHeight) {
         controlHeight.value = withSpring(finalControlHeight, {velocity: event.velocityY, overshootClamping: true});
-        rate.value = withSpring(finalRate, {velocity: event.velocityY / heightDiff, overshootClamping: true});
+        localRate.value = withSpring(finalRate, {velocity: event.velocityY / heightDiff, overshootClamping: true});
       } else {
-        contentTranslate.value = withDecay({velocity: event.velocityY});
+        localTranslate.value = withDecay({velocity: event.velocityY});
       }
     },
   });
@@ -185,24 +194,17 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
       activeOffsetY={[-5, 5]}
       waitFor={[controlPanRef, contentPanRef]}
     >
-      <Animated.View style={styles.container} onLayout={handleLayout}>
-        <CalendarViewPanControl height={controlHeight} rate={clampedRate} control={control} />
+      <AnimatedBox flex="1" onLayout={handleLayout}>
+        <CalendarViewPanControl control={control} height={controlHeight} />
         <CalendarViewPanContent
           content={content}
           contentHeightThreshold={contentHeightThreshold}
           setContentHeight={handleContentHeightChange}
           height={contentHeight}
-          translate={clampedContentTranslate}
         />
-      </Animated.View>
+      </AnimatedBox>
     </PanGestureHandler>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default memo(CalendarViewPan);

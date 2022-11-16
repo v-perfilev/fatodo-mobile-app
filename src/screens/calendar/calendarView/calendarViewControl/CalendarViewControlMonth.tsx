@@ -1,66 +1,71 @@
-import React, {memo, useMemo} from 'react';
-import Animated, {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
-import {CalendarWeek} from '../../../../models/Calendar';
+import React, {lazy, memo, Suspense, useMemo} from 'react';
+import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
+import {CalendarEnrichedDate} from '../../../../models/Calendar';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
-import FBox from '../../../../components/boxes/FBox';
 import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
-import CalendarViewWeek from '../calendarViewWeek/CalendarViewWeek';
 import CalendarSelectors from '../../../../store/calendar/calendarSelectors';
 import {useAppSelector} from '../../../../store/store';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 import {cloneDeep} from 'lodash';
+import {StoreUtils} from '../../../../shared/utils/StoreUtils';
+import {CalendarReminder} from '../../../../models/Reminder';
+import {useWindowDimensions} from 'react-native';
+import AnimatedBox from '../../../../components/animated/AnimatedBox';
+import CentredSpinner from '../../../../components/surfaces/CentredSpinner';
+
+const CalendarViewDate = lazy(() => import('../calendarViewDate/CalendarViewDate'));
 
 type CalendarViewControlMonthProps = {
   monthIndex: number;
-  rate: Animated.SharedValue<number>;
+  controlIndex: number;
 };
 
-const CalendarViewControlMonth = ({monthIndex, rate}: CalendarViewControlMonthProps) => {
-  const {weekIndex} = useCalendarContext();
+const CalendarViewControlMonth = ({monthIndex, controlIndex}: CalendarViewControlMonthProps) => {
+  const {mode, weekIndex, rate} = useCalendarContext();
+  const {width} = useWindowDimensions();
   const reminders = useAppSelector(CalendarSelectors.reminders);
 
-  const monthWeeks = useMemo<CalendarWeek[]>(() => {
-    const monthDates = CalendarUtils.generateMonthDates(monthIndex);
-    const weeks: CalendarWeek[] = [];
-    while (monthDates.length) {
-      const dates = monthDates.splice(0, 7);
-      const weekIndex = CalendarUtils.getWeekIndexByDate(dates[0]);
-      weeks.push({dates, weekIndex: weekIndex});
-    }
-    return weeks;
+  const monthDates = useMemo<CalendarEnrichedDate[]>(() => {
+    return CalendarUtils.generateMonthDates(monthIndex);
   }, []);
 
-  const weeks = useMemo<CalendarWeek[]>(() => {
-    const weeksWithReminders = monthWeeks.map((week) => {
-      week.dates = week.dates.map((date) => {
-        const monthKey = CalendarUtils.buildMonthKeyByItem(date);
-        date.reminders = reminders.get(monthKey)?.filter((r) => new Date(r.date).getDate() === date.date) || [];
-        return date;
-      });
-      return week;
+  const dates = useMemo<CalendarEnrichedDate[]>(() => {
+    const datesWithReminders = monthDates.map((date) => {
+      const monthKey = CalendarUtils.buildMonthKeyByItem(date);
+      const monthReminders = StoreUtils.getValue(reminders, monthKey, []) as CalendarReminder[];
+      date.reminders = monthReminders.filter((r) => new Date(r.date).getDate() === date.date);
+      return date;
     });
-    return cloneDeep(weeksWithReminders);
+    return cloneDeep(datesWithReminders);
   }, [reminders]);
 
   const activeWeek = useDerivedValue(() => {
-    let week = 0;
-    weeks.forEach((w, index) => w.weekIndex === weekIndex.value && (week = index));
-    return week;
+    const index = dates.filter((d, index) => index % 7 === 0).findIndex((d) => d.weekIndex === weekIndex.value);
+    return index > 0 ? index : 0;
   });
 
-  const datesStyle = useAnimatedStyle(() => ({
-    height: weeks.length * CALENDAR_DATE_HEIGHT,
+  const style = useAnimatedStyle(() => ({
+    display: mode.value === 'month' ? 'flex' : 'none',
     transform: [{translateY: (rate.value - 1) * activeWeek.value * CALENDAR_DATE_HEIGHT}],
   }));
 
   return (
-    <FBox py={1} overflow="hidden">
-      <Animated.View style={datesStyle}>
-        {weeks.map((week, index) => (
-          <CalendarViewWeek dates={week.dates} activeMonthIndex={monthIndex} key={index} />
+    <AnimatedBox
+      style={style}
+      position="absolute"
+      left={width * controlIndex}
+      width={width}
+      height="100%"
+      flexDirection="row"
+      flexWrap="wrap"
+      p="1"
+    >
+      <Suspense fallback={<CentredSpinner />}>
+        {dates.map((date) => (
+          <CalendarViewDate date={date} activeMonthIndex={monthIndex} key={`month_date_${date.dateIndex}`} />
         ))}
-      </Animated.View>
-    </FBox>
+      </Suspense>
+    </AnimatedBox>
   );
 };
 

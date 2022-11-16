@@ -2,19 +2,18 @@ import {createSelector} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {StoreUtils} from '../../shared/utils/StoreUtils';
 import {CalendarReminder} from '../../models/Reminder';
-import {CalendarDate} from '../../models/Calendar';
+import {CalendarDate, CalendarEnrichedDate} from '../../models/Calendar';
 import {CalendarUtils} from '../../shared/utils/CalendarUtils';
 
 const getCalendarState = (state: RootState) => state.calendar;
 const getCalendarDate = (_: any, date: CalendarDate) => date;
 
 class CalendarSelectors {
+  static date = createSelector(getCalendarState, (state) => state.date as CalendarEnrichedDate);
+
   static shouldLoad = createSelector(getCalendarState, (state) => state.shouldLoad as boolean);
 
-  static reminders = createSelector(
-    getCalendarState,
-    (state) => new Map(state.reminders) as Map<string, CalendarReminder[]>,
-  );
+  static reminders = createSelector(getCalendarState, (state) => state.reminders);
 
   static makeDateRemindersSelector = () =>
     createSelector([getCalendarState, getCalendarDate], (state, date) => {

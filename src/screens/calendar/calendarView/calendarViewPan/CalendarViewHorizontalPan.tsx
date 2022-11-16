@@ -10,8 +10,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {PanGestureHandler, PanGestureHandlerGestureEvent} from 'react-native-gesture-handler';
-import {StyleSheet, useWindowDimensions} from 'react-native';
-import FHStack from '../../../../components/boxes/FHStack';
+import {useWindowDimensions} from 'react-native';
+import AnimatedBox from '../../../../components/animated/AnimatedBox';
 
 type CalendarViewHorizontalPanProps = PropsWithChildren<{
   index: Animated.SharedValue<number>;
@@ -72,9 +72,9 @@ const CalendarViewHorizontalPan = ({
     () => index.value,
     (next, prev) => {
       if (prev && next !== prev && next !== localIndex.value) {
-        const animate = Math.abs(next - prev) < 5;
+        const shouldAnimate = Math.abs(next - prev) < 7;
         const newTranslateX = -next * width;
-        translateX.value = animate ? withTiming(newTranslateX, {duration: 400}) : newTranslateX;
+        translateX.value = shouldAnimate ? withTiming(newTranslateX) : newTranslateX;
         localIndex.value = next;
       }
     },
@@ -110,6 +110,7 @@ const CalendarViewHorizontalPan = ({
   });
 
   const style = useAnimatedStyle(() => ({
+    flex: 1,
     transform: [{translateX: translateX.value}],
   }));
 
@@ -120,20 +121,11 @@ const CalendarViewHorizontalPan = ({
       failOffsetY={[-5, 5]}
       ref={horizontalPanRef}
     >
-      <Animated.View style={[styles.container, style]}>
-        <FHStack width={Number.MAX_VALUE} height="100%">
-          {children}
-        </FHStack>
-      </Animated.View>
+      <AnimatedBox flex="1" flexGrow="1" overflow="hidden">
+        <AnimatedBox style={style}>{children}</AnimatedBox>
+      </AnimatedBox>
     </PanGestureHandler>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexGrow: 1,
-  },
-});
 
 export default memo(CalendarViewHorizontalPan);

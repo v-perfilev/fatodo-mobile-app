@@ -1,12 +1,10 @@
-import React, {memo, Suspense} from 'react';
+import React, {memo} from 'react';
 import {Box} from 'native-base';
-import CentredSpinner from '../../../../components/surfaces/CentredSpinner';
 import FVStack from '../../../../components/boxes/FVStack';
 import {CalendarReminder} from '../../../../models/Reminder';
 import {LayoutChangeEvent} from 'react-native';
 import Separator from '../../../../components/layouts/Separator';
-
-const CalendarViewRemindersItem = React.lazy(() => import('./CalendarViewRemindersItem'));
+import CalendarViewRemindersItem from './CalendarViewRemindersItem';
 
 type CalendarViewRemindersListProps = {
   reminders: CalendarReminder[];
@@ -20,18 +18,16 @@ const CalendarViewRemindersList = ({reminders, setHeight}: CalendarViewReminders
   };
 
   return (
-    <Suspense fallback={<CentredSpinner />}>
-      <Box px="3" py="2" onLayout={handleLayout}>
-        <FVStack space="2">
-          {reminders.map((reminder, index) => (
-            <Box key={index}>
-              {index !== 0 && <Separator />}
-              <CalendarViewRemindersItem reminder={reminder} />
-            </Box>
-          ))}
-        </FVStack>
-      </Box>
-    </Suspense>
+    <Box px="3" py="2" onLayout={handleLayout}>
+      <FVStack space="2">
+        {reminders.map((reminder, index) => (
+          <Box key={index}>
+            {index !== 0 && <Separator />}
+            <CalendarViewRemindersItem reminder={reminder} />
+          </Box>
+        ))}
+      </FVStack>
+    </Box>
   );
 };
 

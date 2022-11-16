@@ -1,22 +1,20 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import CalendarViewHeader from './CalendarViewHeader';
-import Animated, {runOnJS, useDerivedValue} from 'react-native-reanimated';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import CalendarSelectors from '../../../store/calendar/calendarSelectors';
 import {useIsFocused} from '@react-navigation/native';
 import {flowRight} from 'lodash';
 import withCalendar from '../../../shared/hocs/withCalendar';
-import {useCalendarContext} from '../../../shared/contexts/CalendarContext';
 import {CalendarActions} from '../../../store/calendar/calendarActions';
 import CalendarViewControl from './calendarViewControl/CalendarViewControl';
 import CalendarViewPan from './calendarViewPan/CalendarViewPan';
 import CalendarViewContent from './calendarViewContent/CalendarViewContent';
 
 const CalendarView = () => {
-  const {monthIndex} = useCalendarContext();
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
   const shouldLoad = useAppSelector(CalendarSelectors.shouldLoad);
+  const date = useAppSelector(CalendarSelectors.date);
 
   /*
   Effects
@@ -27,23 +25,21 @@ const CalendarView = () => {
   };
 
   useEffect(() => {
-    isFocused && shouldLoad && loadReminders(monthIndex.value);
+    isFocused && shouldLoad && loadReminders(date.monthIndex);
   }, [isFocused, shouldLoad]);
 
-  useDerivedValue(() => {
-    runOnJS(loadReminders)(monthIndex.value);
-  });
+  useEffect(() => {
+    loadReminders(date.monthIndex);
+  }, [date.monthIndex]);
 
   /*
   Layout
    */
 
-  const control = useCallback((rate: Animated.SharedValue<number>) => {
-    return <CalendarViewControl rate={rate} />;
-  }, []);
+  const control = useMemo(() => <CalendarViewControl />, []);
 
-  const content = useCallback((setHeight: (height: number) => void, translate: Animated.SharedValue<number>) => {
-    return <CalendarViewContent setHeight={setHeight} translate={translate} />;
+  const content = useCallback((setHeight: (height: number) => void) => {
+    return <CalendarViewContent setHeight={setHeight} />;
   }, []);
 
   return (

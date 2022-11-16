@@ -7,12 +7,17 @@ import {CalendarUtils} from '../../shared/utils/CalendarUtils';
 import {CALENDAR_LOAD_INDENT} from '../../constants';
 import calendarSlice from './calendarSlice';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
+import {CalendarEnrichedDate} from '../../models/Calendar';
 
 const PREFIX = 'calendar/';
 
 export class CalendarActions {
   static reset = () => (dispatch: AppDispatch) => {
     dispatch(calendarSlice.actions.reset());
+  };
+
+  static setDate = (date: CalendarEnrichedDate) => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.setDate(date));
   };
 
   static handleMonthThunk = createAsyncThunk<void, number, AsyncThunkConfig>(
