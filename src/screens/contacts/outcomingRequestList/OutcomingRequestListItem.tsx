@@ -36,7 +36,7 @@ const OutcomingRequestListItem = ({request}: OutcomingRequestListItemProps) => {
   ];
 
   return (
-    <FHStack grow p="2" defaultSpace alignItems="center">
+    <FHStack grow px="3" py="2" defaultSpace alignItems="center">
       <FHStack grow>
         <UserView user={user} withUsername picSize="md" />
       </FHStack>
