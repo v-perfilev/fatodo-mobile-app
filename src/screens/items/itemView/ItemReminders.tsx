@@ -3,9 +3,9 @@ import {useTranslation} from 'react-i18next';
 import LabeledBox from '../../../components/surfaces/LabeledBox';
 import ReminderView from '../../../components/views/ReminderView';
 import ChipBox from '../../../components/surfaces/ChipBox';
-import FHStack from '../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
+import FContainer from '../../../components/boxes/FContainer';
 
 const ItemReminders = () => {
   const {t} = useTranslation();
@@ -13,13 +13,13 @@ const ItemReminders = () => {
 
   return (
     <LabeledBox label={t('item:labels.reminders')}>
-      <FHStack space="2">
+      <FContainer itemM="1">
         {reminders.map((reminder, index) => (
           <ChipBox key={index}>
             <ReminderView reminder={reminder} />
           </ChipBox>
         ))}
-      </FHStack>
+      </FContainer>
     </LabeledBox>
   );
 };
