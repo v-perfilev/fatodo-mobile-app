@@ -1,14 +1,14 @@
 import React from 'react';
 import {Box, IBoxProps, Text} from 'native-base';
 import FCenter from '../boxes/FCenter';
-import {StyleProp} from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
 
 type StubBoxProps = IBoxProps & {
   inverted?: boolean;
 };
 
 const StubBox = ({inverted, children, ...props}: StubBoxProps) => {
-  const containerStyle: StyleProp<any> = {scaleY: inverted ? -1 : 1};
+  const containerStyle: StyleProp<ViewStyle> = {transform: [{scaleY: inverted ? -1 : 1}]};
   return (
     <FCenter style={containerStyle} grow {...props}>
       <Box maxWidth="60%">
