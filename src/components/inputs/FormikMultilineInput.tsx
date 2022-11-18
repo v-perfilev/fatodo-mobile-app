@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
-import {FormControl, TextArea} from 'native-base';
-import {INPUT_FONT_SIZE} from '../../constants';
+import {FormControl, TextArea, useColorMode} from 'native-base';
+import {INPUT_FONT_SIZE, INPUT_MIN_HEIGHT} from '../../constants';
 import {flowRight} from 'lodash';
 import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
 
@@ -8,6 +8,7 @@ type FormikMultilineInputProps = FormikInputProps;
 
 const FormikMultilineInput = (props: FormikMultilineInputProps) => {
   const {label, placeholder, value, error, isTouched, isError, isDisabled, onChange, onBlur} = props;
+  const {colorMode} = useColorMode();
 
   return (
     <FormControl isInvalid={isTouched && isError} isDisabled={isDisabled}>
@@ -15,11 +16,12 @@ const FormikMultilineInput = (props: FormikMultilineInputProps) => {
       <TextArea
         placeholder={placeholder}
         fontSize={INPUT_FONT_SIZE}
+        height={INPUT_MIN_HEIGHT * 3}
+        totalLines={20}
+        keyboardAppearance={colorMode}
         onChangeText={onChange}
         onBlur={onBlur}
         value={value}
-        h={120}
-        totalLines={20}
         autoCompleteType={undefined}
         borderRadius="xl"
       />

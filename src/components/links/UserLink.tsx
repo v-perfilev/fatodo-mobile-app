@@ -3,7 +3,7 @@ import {User} from '../../models/User';
 import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import {useNavigation} from '@react-navigation/native';
-import {RootNavigationProp} from '../../navigators/RootNavigator';
+import {ProtectedNavigationProp} from '../../navigators/ProtectedNavigator';
 import {Text} from 'native-base';
 
 type UserLinkProps = {
@@ -12,7 +12,7 @@ type UserLinkProps = {
 };
 
 export const UserLink = ({user, color = 'primary.500'}: UserLinkProps) => {
-  const navigation = useNavigation<RootNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const isAnotherUser = account.id !== user.id;
 

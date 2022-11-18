@@ -9,7 +9,7 @@ import EventsSelectors from '../store/events/eventsSelectors';
 import ChatsSelectors from '../store/chats/chatsSelectors';
 import ContactsSelectors from '../store/contacts/contactsSelectors';
 import CalendarIcon from '../components/icons/CalendarIcon';
-import {NavigationProps} from './RootNavigator';
+import {NavigationProps} from './ProtectedNavigator';
 import CommonSelectors from '../store/common/commonSelectors';
 import BellIcon from '../components/icons/BellIcon';
 import {flowRight} from 'lodash';

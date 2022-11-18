@@ -17,7 +17,7 @@ import {useAppSelector} from '../../../../store/store';
 import PressableButton from '../../../../components/controls/PressableButton';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
-import {RootNavigationProp} from '../../../../navigators/RootNavigator';
+import {ProtectedNavigationProp} from '../../../../navigators/ProtectedNavigator';
 
 type GroupItemProps = IBoxProps & {
   item: Item;
@@ -28,7 +28,7 @@ type GroupItemProps = IBoxProps & {
 const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
   const commentThreadSelector = useCallback(InfoSelectors.makeCommentThreadSelector(), []);
   const commentThread = useAppSelector((state) => commentThreadSelector(state, item.id));
-  const rootNavigation = useNavigation<RootNavigationProp>();
+  const rootNavigation = useNavigation<ProtectedNavigationProp>();
   const groupNavigation = useNavigation<GroupNavigationProp>();
 
   const goToItemView = (): void => groupNavigation.navigate('ItemView', {group, item});

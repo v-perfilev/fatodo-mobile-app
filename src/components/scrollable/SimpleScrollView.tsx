@@ -15,6 +15,7 @@ const SimpleScrollView = ({containerStyle, children, ...props}: SimpleScrollView
       keyboardShouldPersistTaps="handled"
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
+      bounces={false}
       {...props}
     >
       {children}

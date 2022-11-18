@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
-import {FormControl, IFormControlProps, Input} from 'native-base';
+import {FormControl, IFormControlProps, Input, useColorMode} from 'native-base';
 import {FormikProps} from 'formik';
-import {INPUT_FONT_SIZE} from '../../constants';
+import {INPUT_FONT_SIZE, INPUT_MIN_HEIGHT} from '../../constants';
 import UserService from '../../services/UserService';
 
 type FormikUserInputProps = IFormControlProps &
@@ -15,6 +15,7 @@ type FormikUserInputProps = IFormControlProps &
 const FormikUserInput = (props: FormikUserInputProps) => {
   const {name, userName, label, placeholder} = props;
   const {values, errors, touched, handleChange, handleBlur, setFieldValue} = props;
+  const {colorMode} = useColorMode();
 
   const value = values[name];
   const isTouched = name in touched;
@@ -35,6 +36,8 @@ const FormikUserInput = (props: FormikUserInputProps) => {
         type="text"
         autoCapitalize="none"
         fontSize={INPUT_FONT_SIZE}
+        minHeight={`${INPUT_MIN_HEIGHT}px`}
+        keyboardAppearance={colorMode}
         placeholder={placeholder}
         onChangeText={handleChange(name)}
         onBlur={handleBlur(name)}

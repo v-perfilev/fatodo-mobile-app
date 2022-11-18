@@ -11,7 +11,7 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContainers/withItemContainer';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {useNavigation} from '@react-navigation/native';
-import {RootNavigationProp} from '../../../navigators/RootNavigator';
+import {ProtectedNavigationProp} from '../../../navigators/ProtectedNavigator';
 import {CornerButton} from '../../../models/CornerButton';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
@@ -29,7 +29,7 @@ type ItemViewProps = WithItemProps;
 
 const ItemView = ({group, item, containerLoading}: ItemViewProps) => {
   const {t, i18n} = useTranslation();
-  const navigation = useNavigation<RootNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const reminders = useAppSelector(ItemSelectors.reminders);
 

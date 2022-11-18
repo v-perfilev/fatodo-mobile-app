@@ -3,7 +3,7 @@ import './shared/axios';
 import 'text-encoding';
 
 import React from 'react';
-import {LogBox, Platform} from 'react-native';
+import {LogBox} from 'react-native';
 import {flowRight} from 'lodash';
 import {bindActionCreators} from 'redux';
 import {setupAxiosInterceptors} from './shared/axios';
@@ -13,18 +13,15 @@ import withNavigationContainer from './shared/hocs/withNavigationContainer';
 import withGestureHandler from './shared/hocs/withGestureHandler';
 import withDialogs from './shared/hocs/withDialogs/withDialogs';
 import withSnackDisplay from './shared/hocs/withSnackDisplay';
-import {store, useAppSelector} from './store/store';
-import AuthSelectors from './store/auth/authSelectors';
-import AuthNavigator from './navigators/AuthNavigator';
+import {store} from './store/store';
 import {SnackActions} from './store/snack/snackActions';
 import {AuthActions} from './store/auth/authActions';
 import withWsClient from './shared/hocs/withWs/withWsClient';
 import Notifications from './shared/push/notifications';
 import NotificationsRemote from './shared/push/notificationsRemote';
 import withRootContainer from './shared/hocs/withContainers/withRootContainer';
-import DrawerNavigator from './navigators/DrawerNavigator';
 import ColoredStatusBar from './components/layouts/ColoredStatusBar';
-import FBox from './components/boxes/FBox';
+import RootNavigator from './navigators/RootNavigator';
 
 // ignore some warnings
 const ignoredLogPatterns = [
@@ -59,16 +56,11 @@ type AppProps = {
 };
 
 const App = ({ready}: AppProps) => {
-  const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
-
-  const safeAreaBottom = Platform.OS === 'ios' ? 5 : true;
-
   return (
-    <FBox safeAreaTop safeAreaBottom={safeAreaBottom}>
+    <>
       <ColoredStatusBar />
-      {ready && isAuthenticated && <DrawerNavigator />}
-      {ready && !isAuthenticated && <AuthNavigator />}
-    </FBox>
+      {ready && <RootNavigator />}
+    </>
   );
 };
 

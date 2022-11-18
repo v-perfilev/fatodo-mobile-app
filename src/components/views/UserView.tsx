@@ -8,7 +8,7 @@ import FHStack from '../boxes/FHStack';
 import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import {useNavigation} from '@react-navigation/native';
-import {RootNavigationProp} from '../../navigators/RootNavigator';
+import {ProtectedNavigationProp} from '../../navigators/ProtectedNavigator';
 import PressableButton from '../controls/PressableButton';
 
 type UserViewProps = {
@@ -23,7 +23,7 @@ type UserViewProps = {
 export const UserView = (props: UserViewProps) => {
   const {user, picSize = 'xs'} = props;
   const {withUserPic = true, withUsername, withPaperBox, withInvertedBorder} = props;
-  const navigation = useNavigation<RootNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const isAnotherUser = account.id !== user?.id;
 

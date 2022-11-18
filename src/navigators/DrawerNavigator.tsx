@@ -1,6 +1,6 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import RootNavigator from './RootNavigator';
+import ProtectedNavigator from './ProtectedNavigator';
 import withDrawer from '../shared/hocs/withDrawer';
 import Sidebar from '../components/layouts/Sidebar';
 import {flowRight} from 'lodash';
@@ -10,12 +10,13 @@ import {Box} from 'native-base';
 import AccountForm from '../screens/account/accountForm/AccountForm';
 import AccountSettingsForm from '../screens/account/accountSettingsForm/AccountSettingsForm';
 import AccountChangePasswordForm from '../screens/account/accountChangePasswordForm/AccountChangePasswordForm';
+import withSafeArea from '../shared/hocs/withSafeArea';
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   const isActive = useAppSelector(AuthSelectors.isActive);
-  const MainComponent = isActive ? RootNavigator : Box;
+  const MainComponent = isActive ? ProtectedNavigator : Box;
 
   return (
     <Drawer.Navigator
@@ -30,4 +31,4 @@ const DrawerNavigator = () => {
   );
 };
 
-export default flowRight([memo, withDrawer])(DrawerNavigator);
+export default flowRight([withSafeArea, withDrawer])(DrawerNavigator);

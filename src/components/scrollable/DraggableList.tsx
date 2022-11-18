@@ -27,7 +27,9 @@ const DraggableList = React.forwardRef((props: DraggableListProps<any>, ref: For
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       onDragEnd={handleDragEnd}
+      showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
+      bounces={false}
       removeClippedSubviews={Platform.OS === 'android'}
       ref={ref}
     />

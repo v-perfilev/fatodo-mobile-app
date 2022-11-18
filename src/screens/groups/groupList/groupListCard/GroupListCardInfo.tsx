@@ -12,7 +12,7 @@ import FHStack from '../../../../components/boxes/FHStack';
 import CommentsIcon from '../../../../components/icons/CommentsIcon';
 import InfoSelectors from '../../../../store/info/infoSelectors';
 import {useAppSelector} from '../../../../store/store';
-import {RootNavigationProp} from '../../../../navigators/RootNavigator';
+import {ProtectedNavigationProp} from '../../../../navigators/ProtectedNavigator';
 
 type GroupListCardHeaderProps = {
   group: Group;
@@ -24,7 +24,7 @@ const GroupListCardInfo = ({group, items, itemsCount}: GroupListCardHeaderProps)
   const commentThreadSelector = useCallback(InfoSelectors.makeCommentThreadSelector(), []);
   const commentThread = useAppSelector((state) => commentThreadSelector(state, group.id));
   const {t} = useTranslation();
-  const rootNavigation = useNavigation<RootNavigationProp>();
+  const rootNavigation = useNavigation<ProtectedNavigationProp>();
   const groupNavigation = useNavigation<GroupNavigationProp>();
 
   const goToGroupView = (): void => groupNavigation.navigate('GroupView', {group});

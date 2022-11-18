@@ -50,7 +50,7 @@ const GroupViewHeaderArchivedToggler = ({setShowArchived}: GroupViewHeaderArchiv
           {t('group:actions.active')}
         </Text>
       </Animated.View>
-      <Switch mt="4" isChecked={!localShowArchived} onToggle={toggleShowArchived} />
+      <Switch mt="4" size="sm" isChecked={!localShowArchived} onToggle={toggleShowArchived} />
     </FVStack>
   );
 };

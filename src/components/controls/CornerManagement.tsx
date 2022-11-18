@@ -2,8 +2,8 @@ import {Box} from 'native-base';
 import {Animated, StyleProp, ViewStyle} from 'react-native';
 import {CornerButton} from '../../models/CornerButton';
 import React, {memo, RefObject, useEffect, useRef, useState} from 'react';
-import {SharedValue, useSharedValue} from 'react-native-reanimated';
 import IconButton from './IconButton';
+import {SharedValue, useSharedValue} from 'react-native-reanimated';
 import CompositeAnimation = Animated.CompositeAnimation;
 
 type CornerManagementProps = {
@@ -123,14 +123,20 @@ const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementPro
     <>
       <Box zIndex="100" position="absolute" bottom="8px" right="8px">
         {mainButtons.map((button, index) => (
-          <Animated.View key={index} style={[{translateY: mainPositionValues[index].current}, viewStyle]}>
+          <Animated.View
+            style={[{transform: [{translateY: mainPositionValues[index].current}]}, viewStyle]}
+            key={index}
+          >
             <CornerManagementButton button={button} />
           </Animated.View>
         ))}
       </Box>
       <Box zIndex="100" position="absolute" bottom="8px" right="68px">
         {addButtons.map((button, index) => (
-          <Animated.View key={index} style={[{translateY: additionalPositionValues[index].current}, viewStyle]}>
+          <Animated.View
+            style={[{transform: [{translateY: additionalPositionValues[index].current}]}, viewStyle]}
+            key={index}
+          >
             <CornerManagementButton button={button} />
           </Animated.View>
         ))}

@@ -1,8 +1,10 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import SignIn from '../screens/auth/signIn/SignIn';
 import SignUp from '../screens/auth/signUp/SignUp';
 import ForgotPassword from '../screens/auth/forgotPassword/ForgotPassword';
+import {flowRight} from 'lodash';
+import withSafeArea from '../shared/hocs/withSafeArea';
 
 type AuthParamList = {
   SignIn: undefined;
@@ -24,4 +26,4 @@ const AuthNavigator = () => {
   );
 };
 
-export default memo(AuthNavigator);
+export default flowRight([withSafeArea])(AuthNavigator);

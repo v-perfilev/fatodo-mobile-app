@@ -1,57 +1,29 @@
 import React, {memo} from 'react';
-import {Chat} from '../models/Chat';
-import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
-import ChatView from '../screens/chats/chatView/ChatView';
-import TabNavigator, {TabParamList} from './TabNavigator';
-import CommentList from '../screens/comments/commentList/CommentList';
-import {ColorScheme} from '../shared/themes/ThemeFactory';
-import {User} from '../models/User';
-import UserView from '../screens/user/userView/UserView';
-import {flowRight} from 'lodash';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {useAppSelector} from '../store/store';
+import AuthSelectors from '../store/auth/authSelectors';
+import AuthNavigator from './AuthNavigator';
+import DrawerNavigator from './DrawerNavigator';
 
-export type NavigationProps<ParamList> = {
-  screen: keyof ParamList;
-  params: ParamList[keyof ParamList];
-};
-
-type ChatRouteProps = {
-  chat?: Chat;
-  chatId?: string;
-};
-
-type CommentsRouteProps = {
-  targetId: string;
-  colorScheme?: ColorScheme;
-};
-
-type UserRouteProps = {
-  user?: User;
-  userId?: string;
-};
-
-export type RootParamList = {
-  HomeTabs: NavigationProps<TabParamList>;
-  ChatView: ChatRouteProps;
-  CommentList: CommentsRouteProps;
-  UserView: UserRouteProps;
-  withChat: ChatRouteProps;
-  withComments: CommentsRouteProps;
-  withUser: UserRouteProps;
+type RootParamList = {
+  Public: undefined;
+  Protected: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootParamList>();
 
-export type RootNavigationProp = NativeStackNavigationProp<RootParamList>;
-
 const RootNavigator = () => {
+  const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
+
   return (
-    <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_bottom'}} initialRouteName={'HomeTabs'}>
-      <Stack.Screen name="HomeTabs" component={TabNavigator} />
-      <Stack.Screen name="ChatView" component={ChatView} />
-      <Stack.Screen name="CommentList" component={CommentList} />
-      <Stack.Screen name="UserView" component={UserView} />
+    <Stack.Navigator screenOptions={{headerShown: false, animation: 'none'}}>
+      {isAuthenticated ? (
+        <Stack.Screen name="Protected" component={DrawerNavigator} />
+      ) : (
+        <Stack.Screen name="Public" component={AuthNavigator} />
+      )}
     </Stack.Navigator>
   );
 };
 
-export default flowRight([memo])(RootNavigator);
+export default memo(RootNavigator);

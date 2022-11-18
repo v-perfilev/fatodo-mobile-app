@@ -45,6 +45,7 @@ export const COMMENT_SKELETON_HEIGHT = 74;
 export const IMAGE_SIZE = 500;
 
 // FORMS
+export const INPUT_MIN_HEIGHT = 45;
 export const INPUT_FONT_SIZE = 13;
 
 // SPACES

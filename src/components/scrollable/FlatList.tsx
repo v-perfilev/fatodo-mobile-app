@@ -96,6 +96,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
       keyExtractor={keyExtractor}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
+      bounces={false}
       removeClippedSubviews={Platform.OS === 'android'}
       ref={ref}
     />

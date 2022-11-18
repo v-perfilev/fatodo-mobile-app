@@ -2,7 +2,7 @@ import React, {ComponentType, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useDelayedState} from '../../hooks/useDelayedState';
-import {RootNavigationProp, RootParamList} from '../../../navigators/RootNavigator';
+import {ProtectedNavigationProp, ProtectedParamList} from '../../../navigators/ProtectedNavigator';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {CommentsActions} from '../../../store/comments/commentsActions';
 import {ColorScheme} from '../../themes/ThemeFactory';
@@ -15,9 +15,9 @@ export type WithCommentsProps = {
 
 const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (props: any) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<RootNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProp>();
   const [containerLoading, setContainerLoading] = useDelayedState(true, 500);
-  const route = useRoute<RouteProp<RootParamList, 'withComments'>>();
+  const route = useRoute<RouteProp<ProtectedParamList, 'withComments'>>();
   const routeTargetId = route.params.targetId;
   const routeColorScheme = route.params.colorScheme;
   const targetId = useAppSelector(CommentsSelectors.targetId);

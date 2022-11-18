@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
-import {FormControl, Input} from 'native-base';
-import {INPUT_FONT_SIZE} from '../../constants';
+import {FormControl, Input, useColorMode} from 'native-base';
+import {INPUT_FONT_SIZE, INPUT_MIN_HEIGHT} from '../../constants';
 import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
 import {flowRight} from 'lodash';
 
@@ -8,6 +8,7 @@ type FormikTextInputProps = FormikInputProps;
 
 const FormikTextInput = (props: FormikTextInputProps) => {
   const {label, placeholder, value, error, isTouched, isError, isDisabled, onChange, onBlur} = props;
+  const {colorMode} = useColorMode();
 
   return (
     <FormControl isInvalid={isTouched && isError} isDisabled={isDisabled}>
@@ -16,6 +17,8 @@ const FormikTextInput = (props: FormikTextInputProps) => {
         type="text"
         autoCapitalize="none"
         fontSize={INPUT_FONT_SIZE}
+        minHeight={`${INPUT_MIN_HEIGHT}px`}
+        keyboardAppearance={colorMode}
         placeholder={placeholder}
         onChangeText={onChange}
         onBlur={onBlur}

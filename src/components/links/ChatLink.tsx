@@ -6,7 +6,7 @@ import {ChatUtils} from '../../shared/utils/ChatUtils';
 import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import InfoSelectors from '../../store/info/infoSelectors';
-import {RootNavigationProp} from '../../navigators/RootNavigator';
+import {ProtectedNavigationProp} from '../../navigators/ProtectedNavigator';
 
 type ChatLinkProps = PropsWithChildren<{
   chat: ChatInfo;
@@ -15,7 +15,7 @@ type ChatLinkProps = PropsWithChildren<{
 
 export const ChatLink = ({chat, color = 'primary.500', children}: ChatLinkProps) => {
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
-  const navigation = useNavigation<RootNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProp>();
   const memberIds = chat.members.map((m) => m.userId);
   const account = useAppSelector(AuthSelectors.account);
   const users = useAppSelector((state) => usersSelector(state, memberIds));

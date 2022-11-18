@@ -18,7 +18,7 @@ import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {useNavigation} from '@react-navigation/native';
-import {RootNavigationProp} from '../../../navigators/RootNavigator';
+import {ProtectedNavigationProp} from '../../../navigators/ProtectedNavigator';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
 import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
 import PlusIcon from '../../../components/icons/PlusIcon';
@@ -43,7 +43,7 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
   const account = useAppSelector(AuthSelectors.account);
   const items = useAppSelector((state) => itemsSelector(state, showArchived));
   const allItemsLoaded = useAppSelector((state) => allItemsLoadedSelector(state, showArchived));
-  const rootNavigation = useNavigation<RootNavigationProp>();
+  const rootNavigation = useNavigation<ProtectedNavigationProp>();
   const groupNavigation = useNavigation<GroupNavigationProp>();
 
   const listRef = useRef<FlatListType>();

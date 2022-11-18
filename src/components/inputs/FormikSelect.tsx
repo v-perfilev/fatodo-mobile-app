@@ -7,6 +7,7 @@ import {Dimensions, ListRenderItemInfo} from 'react-native';
 import FlatList from '../scrollable/FlatList';
 import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
 import {flowRight} from 'lodash';
+import {INPUT_MIN_HEIGHT} from '../../constants';
 
 type FormikSelectProps = FormikInputProps;
 
@@ -74,7 +75,7 @@ const FormikSelect = (props: FormikSelectProps) => {
         trigger={(triggerProps) => (
           <PressableButton {...filterPropsIfDisabled(triggerProps)}>
             <PaperBox
-              h="45px"
+              minHeight={`${INPUT_MIN_HEIGHT}px`}
               justifyContent="center"
               px="3"
               borderColor={borderColor}
