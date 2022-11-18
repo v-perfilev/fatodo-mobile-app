@@ -1,5 +1,4 @@
 import {CheckIcon, Flex, FormControl, useColorModeValue} from 'native-base';
-import PressableButton from '../controls/PressableButton';
 import ClearableTextInput from './ClearableTextInput';
 import React, {useMemo, useState} from 'react';
 import DateTimePicker from './DateTimePicker';
@@ -59,9 +58,13 @@ const DateTimeSelect = ({label, setResult, mode, minimumDate}: DateTimeSelectPro
     <>
       <FormControl>
         {<FormControl.Label>{label}</FormControl.Label>}
-        <PressableButton onPress={openPicker}>
-          <ClearableTextInput type="text" value={formattedValue} onChangeText={handleChangeText} editable={false} />
-        </PressableButton>
+        <ClearableTextInput
+          type="text"
+          value={formattedValue}
+          onChangeText={handleChangeText}
+          onPressIn={openPicker}
+          editable={false}
+        />
       </FormControl>
 
       {show && (

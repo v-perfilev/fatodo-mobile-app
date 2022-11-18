@@ -1,7 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {Flex, FormControl, IFormControlProps, useColorModeValue, useTheme} from 'native-base';
 import {FormikProps} from 'formik';
-import PressableButton from '../controls/PressableButton';
 import {DateUtils} from '../../shared/utils/DateUtils';
 import ClearableTextInput from './ClearableTextInput';
 import DatePicker from 'react-native-date-picker';
@@ -10,6 +9,7 @@ import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import {UserAccount} from '../../models/User';
 import {DateFormatters} from '../../shared/utils/DateFormatters';
+import {Platform} from 'react-native';
 
 type FormikDateTimePickerMode = 'date' | 'time';
 
@@ -79,6 +79,7 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
   };
 
   const textColor = useColorModeValue(theme.colors.gray['600'], theme.colors.gray['300']);
+  const iosTextColor = useColorModeValue('black', 'white');
 
   const picker = (
     <Flex alignItems="center">
@@ -88,7 +89,7 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
         mode={mode}
         locale={locale}
         is24hourSource="locale"
-        textColor={textColor}
+        textColor={Platform.OS === 'android' ? textColor : iosTextColor}
         fadeToColor="none"
       />
     </Flex>
@@ -98,15 +99,14 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
     <FormControl isInvalid={isTouched && isError} {...props}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
 
-      <PressableButton onPress={openPicker}>
-        <ClearableTextInput
-          type="text"
-          onChangeText={handleInputChange}
-          onBlur={handleBlur(name)}
-          value={formattedValue}
-          editable={false}
-        />
-      </PressableButton>
+      <ClearableTextInput
+        type="text"
+        onChangeText={handleInputChange}
+        onBlur={handleBlur(name)}
+        onPressIn={openPicker}
+        value={formattedValue}
+        editable={false}
+      />
 
       <ConfirmationDialog open={show} onAgree={onAgree} onDisagree={onDisagree} title={label} content={picker} />
 

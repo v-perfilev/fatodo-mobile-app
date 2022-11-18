@@ -5,6 +5,7 @@ import {DateUtils} from '../../shared/utils/DateUtils';
 import {UserAccount} from '../../models/User';
 import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
+import {Platform} from 'react-native';
 
 type PickMode = 'fullDate' | 'shortDate' | 'monthWithYear' | 'time';
 
@@ -81,7 +82,8 @@ const DateTimePicker = ({value, setValue, mode, minDate, maxDate}: DateTimePicke
     value && setDataValue(value);
   }, [value]);
 
-  const textColor = useColorModeValue(theme.colors.gray['600'], theme.colors.gray['300']);
+  const androidTextColor = useColorModeValue(theme.colors.gray['600'], theme.colors.gray['300']);
+  const iosTextColor = useColorModeValue('black', 'white');
 
   return (
     <Box width={width} overflow={overflow}>
@@ -92,7 +94,7 @@ const DateTimePicker = ({value, setValue, mode, minDate, maxDate}: DateTimePicke
           mode={pickerMode}
           locale={localeMode}
           is24hourSource="locale"
-          textColor={textColor}
+          textColor={Platform.OS === 'android' ? androidTextColor : iosTextColor}
           fadeToColor="none"
           minimumDate={minDate}
           maximumDate={maxDate}

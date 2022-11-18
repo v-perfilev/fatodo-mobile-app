@@ -7,7 +7,7 @@ const GhostButton = React.forwardRef((props: GhostButtonProps, ref: any) => {
   const {children, ...other} = props;
 
   return (
-    <Button {...other} borderRadius={0} variant="ghost" _pressed={{opacity: 0.7}} ref={ref}>
+    <Button {...other} borderRadius="xl" variant="ghost" _pressed={{opacity: 0.7}} ref={ref}>
       {children}
     </Button>
   );
