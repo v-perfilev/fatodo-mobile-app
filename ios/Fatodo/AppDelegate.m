@@ -5,6 +5,8 @@
 #import <React/RCTRootView.h>
 // Import RNSplashScreen
 #import "RNSplashScreen.h"
+// Import Firebase
+#import <Firebase.h>
 // Import Notifications
 #import <UserNotifications/UserNotifications.h>
 #import <RNCPushNotificationIOS.h>
@@ -36,6 +38,9 @@ static void InitializeFlipper(UIApplication *application) {
   InitializeFlipper(application);
 #endif
 
+  // Configure Firebase
+  [FIRApp configure];
+
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"Fatodo"
@@ -52,6 +57,7 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
   // Set the splash screen to show by default.
   [RNSplashScreen show];
   // Define UNUserNotificationCenter
