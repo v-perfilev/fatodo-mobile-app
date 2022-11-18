@@ -30,7 +30,7 @@ const ChatEditMessageDialog = ({message, show, close}: ChatEditMessageDialogProp
       .catch(() => stopSubmitting());
   };
 
-  const content = <ChatEditMessageForm message={message} request={request} cancel={close} />;
+  const content = message && <ChatEditMessageForm message={message} request={request} cancel={close} />;
 
   return <ModalDialog open={show} close={close} title={t('chat:editMessage.title')} content={content} size="xl" />;
 };

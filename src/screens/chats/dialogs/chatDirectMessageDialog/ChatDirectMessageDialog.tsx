@@ -30,7 +30,7 @@ const ChatDirectMessageDialog = ({user, show, close}: ChatDirectMessageDialogPro
       .catch(() => stopSubmitting());
   };
 
-  const content = <ChatDirectMessageForm user={user} request={request} cancel={close} />;
+  const content = user && <ChatDirectMessageForm user={user} request={request} cancel={close} />;
 
   return <ModalDialog open={show} close={close} title={t('chat:directMessage.title')} content={content} size="xl" />;
 };

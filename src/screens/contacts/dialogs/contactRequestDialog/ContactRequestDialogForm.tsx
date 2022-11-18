@@ -7,8 +7,6 @@ import FormikMultilineInput from '../../../../components/inputs/FormikMultilineI
 import {User, UserAccount} from '../../../../models/User';
 import * as Yup from 'yup';
 import {userValidator} from '../../../../shared/validators';
-import {useAppSelector} from '../../../../store/store';
-import AuthSelectors from '../../../../store/auth/authSelectors';
 import {ContactRequestDTO} from '../../../../models/dto/ContactRequestDTO';
 import GhostButton from '../../../../components/controls/GhostButton';
 import FormikUserInput from '../../../../components/inputs/FormikUserInput';
@@ -33,13 +31,13 @@ const validationSchema = (account: UserAccount) =>
   });
 
 type ContactRequestDialogFormProps = {
+  account: UserAccount;
   request: (dto: ContactRequestDTO, stopSubmitting: () => void) => void;
   cancel: () => void;
 };
 
-const ContactRequestDialogForm = ({request, cancel}: ContactRequestDialogFormProps) => {
+const ContactRequestDialogForm = ({account, request, cancel}: ContactRequestDialogFormProps) => {
   const {t} = useTranslation();
-  const account = useAppSelector(AuthSelectors.account);
 
   const handleSubmit = (values: ContactRequestFormValues, helpers: FormikHelpers<ContactRequestFormValues>) => {
     const dto: ContactRequestDTO = {recipientId: values.user.id, message: values.message};

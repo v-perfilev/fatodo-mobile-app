@@ -29,7 +29,7 @@ const ChatRenameDialog = ({chat, show, close}: ChatRenameDialogProps) => {
       .catch(() => stopSubmitting());
   };
 
-  const content = <ChatRenameForm chat={chat} request={request} cancel={close} />;
+  const content = chat && <ChatRenameForm chat={chat} request={request} cancel={close} />;
 
   return <ModalDialog open={show} close={close} title={t('chat:renameChat.title')} content={content} />;
 };

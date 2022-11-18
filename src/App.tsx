@@ -3,7 +3,7 @@ import './shared/axios';
 import 'text-encoding';
 
 import React from 'react';
-import {LogBox} from 'react-native';
+import {LogBox, Platform} from 'react-native';
 import {flowRight} from 'lodash';
 import {bindActionCreators} from 'redux';
 import {setupAxiosInterceptors} from './shared/axios';
@@ -24,6 +24,7 @@ import NotificationsRemote from './shared/push/notificationsRemote';
 import withRootContainer from './shared/hocs/withContainers/withRootContainer';
 import DrawerNavigator from './navigators/DrawerNavigator';
 import ColoredStatusBar from './components/layouts/ColoredStatusBar';
+import FBox from './components/boxes/FBox';
 
 // ignore some warnings
 const ignoredLogPatterns = [
@@ -60,12 +61,14 @@ type AppProps = {
 const App = ({ready}: AppProps) => {
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
 
+  const safeAreaBottom = Platform.OS === 'ios' ? 5 : true;
+
   return (
-    <>
+    <FBox safeAreaTop safeAreaBottom={safeAreaBottom}>
       <ColoredStatusBar />
       {ready && isAuthenticated && <DrawerNavigator />}
       {ready && !isAuthenticated && <AuthNavigator />}
-    </>
+    </FBox>
   );
 };
 

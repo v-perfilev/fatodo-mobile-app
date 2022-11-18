@@ -30,7 +30,7 @@ const CommentEditDialog = ({comment, show, close}: CommentEditDialogProps) => {
       .catch(() => stopSubmitting());
   };
 
-  const content = <CommentEditForm comment={comment} request={request} cancel={close} />;
+  const content = comment && <CommentEditForm comment={comment} request={request} cancel={close} />;
 
   return <ModalDialog open={show} close={close} title={t('comment:editComment.title')} content={content} size="xl" />;
 };
