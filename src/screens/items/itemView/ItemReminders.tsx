@@ -12,8 +12,8 @@ const ItemReminders = () => {
   const reminders = useAppSelector(ItemSelectors.reminders);
 
   return (
-    <LabeledBox label={t('item:labels.reminders')}>
-      <FContainer itemM="1">
+    <LabeledBox isVertical label={t('item:labels.reminders')}>
+      <FContainer mt="0.5" itemM="1">
         {reminders.map((reminder, index) => (
           <ChipBox key={index}>
             <ReminderView reminder={reminder} />
