@@ -22,17 +22,19 @@ const calcMode = (mode: PickMode): 'time' | 'date' => (mode === 'time' ? 'time' 
 const calcWidth = (mode: PickMode): string => {
   let width;
   if (mode === 'shortDate') {
-    width = '215px';
+    width = Platform.OS === 'android' ? '215px' : '180px';
   } else if (mode === 'monthWithYear') {
-    width = '190px';
+    width = Platform.OS === 'android' ? '190px' : '220px';
   }
   return width;
 };
 
 const calcMarginLeft = (mode: PickMode): string => {
   let marginLeft;
-  if (mode === 'monthWithYear') {
-    marginLeft = '-80px';
+  if (mode === 'shortDate') {
+    marginLeft = Platform.OS === 'android' ? '0px' : '-15px';
+  } else if (mode === 'monthWithYear') {
+    marginLeft = Platform.OS === 'android' ? '-80px' : '-70px';
   }
   return marginLeft;
 };
@@ -71,7 +73,7 @@ const DateTimePicker = ({value, setValue, mode, minDate, maxDate}: DateTimePicke
 
   const handleDateChange = (date: Date): void => {
     setValue(date);
-    setDataValue(dataValue);
+    setDataValue(date);
   };
 
   useEffect(() => {
