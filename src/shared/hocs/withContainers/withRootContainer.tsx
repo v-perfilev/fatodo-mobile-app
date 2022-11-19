@@ -33,8 +33,9 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
 
   const getAppStatusSubscription = (): NativeEventSubscription => {
     return AppState.addEventListener('change', (state) => {
+      console.log('change', state);
       const isActive = state === 'active';
-      const isInactive = state === 'inactive';
+      const isInactive = state === 'inactive' || state === 'background';
       isActive && dispatch(AuthActions.setIsActive(true));
       isInactive && dispatch(AuthActions.setIsActive(false));
     });
@@ -72,7 +73,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   }, [account]);
 
   useLayoutEffect(() => {
-    ready && SplashScreen.hide();
+    ready && setTimeout(() => SplashScreen.hide(), 500);
   }, [ready]);
 
   return <Component ready={ready} {...props} />;

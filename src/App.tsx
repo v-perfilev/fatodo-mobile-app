@@ -1,6 +1,7 @@
 import './shared/i18n';
 import './shared/axios';
 import 'text-encoding';
+import 'react-native-gesture-handler';
 
 import React from 'react';
 import {LogBox} from 'react-native';

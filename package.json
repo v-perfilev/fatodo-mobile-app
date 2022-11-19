@@ -1,5 +1,5 @@
 {
-  "name": "fatodoapp",
+  "name": "fatodo",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -33,15 +33,15 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",
-    "native-base": "^3.4.17",
+    "native-base": "^3.4.22",
     "qs": "^6.11.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
     "react-i18next": "^11.17.0",
-    "react-native": "^0.68.3",
+    "react-native": "0.70.6",
     "react-native-date-picker": "^4.2.5",
     "react-native-draggable-flatlist": "^3.1.2",
-    "react-native-gesture-handler": "^2.6.2",
+    "react-native-gesture-handler": "^2.8.0",
     "react-native-image-crop-picker": "^0.37.3",
     "react-native-keychain": "^8.1.1",
     "react-native-linear-gradient": "^2.6.2",
@@ -81,7 +81,7 @@
     "eslint": "^7.32.0",
     "jest": "^27.5.1",
     "metro-react-native-babel-preset": "^0.71.0",
-    "react-test-renderer": "17.0.2",
+    "react-test-renderer": "18.1.0",
     "typescript": "^4.5.5"
   },
   "jest": {
