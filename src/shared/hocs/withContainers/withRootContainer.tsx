@@ -33,7 +33,6 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
 
   const getAppStatusSubscription = (): NativeEventSubscription => {
     return AppState.addEventListener('change', (state) => {
-      console.log('change', state);
       const isActive = state === 'active';
       const isInactive = state === 'inactive' || state === 'background';
       isActive && dispatch(AuthActions.setIsActive(true));
