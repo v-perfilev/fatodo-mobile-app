@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:914624356550:android:daa05931d361fe57e3f7c7",
+        "mobilesdk_app_id": "1:914624356550:android:25c3075894cb7249e3f7c7",
         "android_client_info": {
           "package_name": "com.fatodo"
         }
@@ -29,6 +29,13 @@
             {
               "client_id": "914624356550-26u19gr0if8tl6no53cms82g06lugaii.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "914624356550-lomb6053r0ccv9b7dv65e53uh6u75oqf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fatodoapp"
+              }
             }
           ]
         }
