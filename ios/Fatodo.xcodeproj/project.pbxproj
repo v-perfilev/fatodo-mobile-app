@@ -197,6 +197,7 @@
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				4E62BDF20514810D028A5FBF /* [CP] Copy Pods Resources */,
+				E0B5B5E7A3A60619744CF6E1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -220,6 +221,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				ADC9DDC32298B72B3CF5DC8E /* [CP] Copy Pods Resources */,
 				EB494DEA7C44A7467B99E93C /* [CP-User] [RNFB] Core Configuration */,
+				80F4F664B2CD7EADB1FA9B51 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -348,6 +350,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Fatodo-FatodoTests/Pods-Fatodo-FatodoTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		80F4F664B2CD7EADB1FA9B51 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Fatodo/Pods-Fatodo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Fatodo/Pods-Fatodo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Fatodo/Pods-Fatodo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A130D646172E58E1D159D8F2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -385,6 +404,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Fatodo/Pods-Fatodo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E0B5B5E7A3A60619744CF6E1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Fatodo-FatodoTests/Pods-Fatodo-FatodoTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Fatodo-FatodoTests/Pods-Fatodo-FatodoTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Fatodo-FatodoTests/Pods-Fatodo-FatodoTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EB494DEA7C44A7467B99E93C /* [CP-User] [RNFB] Core Configuration */ = {
@@ -586,7 +622,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -651,7 +687,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
