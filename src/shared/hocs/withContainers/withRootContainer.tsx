@@ -34,7 +34,9 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   const getAppStatusSubscription = (): NativeEventSubscription => {
     return AppState.addEventListener('change', (state) => {
       const isActive = state === 'active';
-      dispatch(AuthActions.setIsActive(isActive));
+      const isInactive = state === 'inactive';
+      isActive && dispatch(AuthActions.setIsActive(true));
+      isInactive && dispatch(AuthActions.setIsActive(false));
     });
   };
 

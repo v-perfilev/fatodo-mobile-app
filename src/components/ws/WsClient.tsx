@@ -50,6 +50,8 @@ const WsClient = ({active, url, topics, onMessage, debug}: WsClientProps) => {
   };
 
   const disconnect = (): void => {
+    console.info('Disconnecting from WebSocket');
+    setConnected(false);
     const onDisconnect = onDisconnected('Disconnected from WebSocket');
     stompClient.current?.disconnect(onDisconnect, headers);
   };
