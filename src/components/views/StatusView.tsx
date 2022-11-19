@@ -10,14 +10,16 @@ import FCenter from '../boxes/FCenter';
 import FHStack from '../boxes/FHStack';
 import {useTranslation} from 'react-i18next';
 import {IColors} from 'native-base/lib/typescript/theme/base/colors';
+import {ColorScheme} from '../../shared/themes/ThemeFactory';
 
 type StatusViewProps = IIconProps & {
   statusType: ItemStatusType;
+  colorScheme?: ColorScheme;
   fontColor?: IColors;
   withoutText?: boolean;
 };
 
-const StatusView = ({statusType, fontSize, fontColor, withoutText, ...props}: StatusViewProps) => {
+const StatusView = ({statusType, colorScheme, fontSize, fontColor, withoutText, ...props}: StatusViewProps) => {
   const {t, i18n} = useTranslation();
 
   const getIcon = (): ReactElement => {
@@ -33,7 +35,11 @@ const StatusView = ({statusType, fontSize, fontColor, withoutText, ...props}: St
     }
   };
 
-  const icon = React.cloneElement(getIcon(), {...props, color: 'primary.500', mt: !withoutText ? 0.5 : undefined});
+  const icon = React.cloneElement(getIcon(), {
+    ...props,
+    color: `${colorScheme || 'primary'}.500`,
+    mt: !withoutText ? 0.5 : undefined,
+  });
   const text = useMemo(() => t('common:statuses.' + statusType), [statusType, i18n.language]);
 
   const onlyIcon = <FCenter>{icon}</FCenter>;

@@ -10,10 +10,12 @@ import AuthSelectors from '../../store/auth/authSelectors';
 import {useNavigation} from '@react-navigation/native';
 import {ProtectedNavigationProp} from '../../navigators/ProtectedNavigator';
 import PressableButton from '../controls/PressableButton';
+import {ColorScheme} from '../../shared/themes/ThemeFactory';
 
 type UserViewProps = {
   user: User;
   picSize?: ISizes | number | string;
+  colorScheme?: ColorScheme;
   withUserPic?: boolean;
   withUsername?: boolean;
   withPaperBox?: boolean;
@@ -21,7 +23,7 @@ type UserViewProps = {
 };
 
 export const UserView = (props: UserViewProps) => {
-  const {user, picSize = 'xs'} = props;
+  const {user, picSize = 'xs', colorScheme} = props;
   const {withUserPic = true, withUsername, withPaperBox, withInvertedBorder} = props;
   const navigation = useNavigation<ProtectedNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
@@ -32,7 +34,13 @@ export const UserView = (props: UserViewProps) => {
   let result = (
     <FHStack space="2" alignItems="center">
       {withUserPic && (
-        <UrlPic file={user?.imageFilename} size={picSize} border={1} invertedBorder={withInvertedBorder} />
+        <UrlPic
+          file={user?.imageFilename}
+          size={picSize}
+          colorScheme={colorScheme}
+          border={1}
+          invertedBorder={withInvertedBorder}
+        />
       )}
       {withUsername && <Text fontSize="sm">{user?.username}</Text>}
     </FHStack>

@@ -49,21 +49,27 @@ const GroupItemMenu = ({group, item, canEdit}: GroupItemMenuProps) => {
   };
 
   const menuItems: MenuItemProps[] = [
-    {action: goToItemView, icon: <EyeIcon color="primary.500" />, text: t('group:actions.view')},
+    {action: goToItemView, icon: <EyeIcon color={`${group.color}.500`} />, text: t('group:actions.view')},
     {
       action: toggleArchived,
-      icon: item.archived ? <PackageUpIcon color="primary.500" /> : <PackageDownIcon color="primary.500" />,
+      icon: item.archived ? (
+        <PackageUpIcon color={`${group.color}.500`} />
+      ) : (
+        <PackageDownIcon color={`${group.color}.500`} />
+      ),
       text: item.archived ? t('group:actions.removeFromArchive') : t('group:actions.moveToArchive'),
       loading: archivedLoading,
       disabled: archivedLoading,
       hidden: !canEdit,
     },
-    {action: goToItemEdit, icon: <EditIcon color="primary.500" />, text: t('group:actions.edit')},
+    {action: goToItemEdit, icon: <EditIcon color={`${group.color}.500`} />, text: t('group:actions.edit')},
     {action: openItemDeleteDialog, icon: <DeleteIcon color="error.500" />, text: t('group:actions.delete')},
   ];
 
   return (
-    <Menu trigger={(triggerProps) => <IconButton icon={<DotsVerticalIcon />} {...triggerProps} />}>
+    <Menu
+      trigger={(triggerProps) => <IconButton icon={<DotsVerticalIcon />} colorScheme={group.color} {...triggerProps} />}
+    >
       {menuItems.map((itemProps, index) => (
         <MenuItem {...itemProps} key={index} />
       ))}

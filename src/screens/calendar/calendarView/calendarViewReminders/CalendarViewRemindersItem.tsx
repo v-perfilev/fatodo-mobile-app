@@ -21,7 +21,7 @@ const CalendarViewRemindersItem = ({reminder}: CalendarViewRemindersItemProps) =
   const group = useAppSelector((state) => groupSelector(state, reminder.parentId));
   const item = useAppSelector((state) => itemSelector(state, reminder.targetId));
 
-  const bulletView = <Bullet color={group?.color} size="15px" />;
+  const bulletView = <Bullet colorScheme={group?.color} size="15px" />;
   const groupView = group ? <GroupLink group={group} color="gray.400" /> : null;
   const itemView = item ? <ItemLink item={item} /> : null;
   const date = new Date(reminder.date);

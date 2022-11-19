@@ -17,6 +17,12 @@ export const additionalPalette = {
   success: SUCCESS_COLOR,
   warning: WARNING_COLOR,
   error: ERROR_COLOR,
+  // COLOR
+  turquoise: TURQUOISE_COLOR,
+  yellow: YELLOW_COLOR,
+  purple: PURPLE_COLOR,
+  green: GREEN_COLOR,
+  blue: BLUE_COLOR,
 };
 
 export const turquoisePalette = {

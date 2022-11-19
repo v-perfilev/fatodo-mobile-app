@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import UrlPic from '../../../../components/surfaces/UrlPic';
 import GroupListCardMenuButton from './GroupListCardMenuButton';
-import {LINEAR_GRADIENT} from '../../../../shared/themes/ThemeFactory';
+import {LINEAR_GRADIENT_FUNC, ThemeFactory} from '../../../../shared/themes/ThemeFactory';
 import {Group} from '../../../../models/Group';
 import FHStack from '../../../../components/boxes/FHStack';
 import GroupListCardDragButton from './GroupListCardDragButton';
@@ -21,12 +21,13 @@ type GroupListCardHeaderProps = {
 
 const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHeaderProps) => {
   const navigation = useNavigation<GroupNavigationProp>();
+  const theme = ThemeFactory.getTheme(group.color);
 
   const goToGroupView = (): void => !sorting && navigation.navigate('GroupView', {group});
 
   const bg = useColorModeValue(LIGHT_BG, DARK_BG);
   const bgOpacity = useColorModeValue(0.2, 0.3);
-  const titleColor = useColorModeValue('primary.500', 'gray.100');
+  const titleColor = useColorModeValue(theme.colors.primary['500'], 'gray.100');
 
   return (
     <PressableButton onPress={goToGroupView}>
@@ -41,19 +42,27 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
         justifyContent="center"
         bg={sorting ? bg : undefined}
       >
-        <Box position="absolute" left="0" right="0" top="0" bottom="0" bg={LINEAR_GRADIENT} opacity={bgOpacity} />
+        <Box
+          position="absolute"
+          left="0"
+          right="0"
+          top="0"
+          bottom="0"
+          bg={LINEAR_GRADIENT_FUNC(theme)}
+          opacity={bgOpacity}
+        />
         <FHStack defaultSpace alignItems="center">
-          {group?.imageFilename && <UrlPic file={group.imageFilename} size="9" border={1} />}
+          {group?.imageFilename && <UrlPic file={group.imageFilename} colorScheme={group.color} size="9" border={1} />}
           <Text fontSize="lg" color={titleColor} isTruncated>
             {group.title}
           </Text>
           <FHStack grow smallSpace alignItems="center" justifyContent="flex-end">
             {sorting ? (
-              <GroupListCardDragButton drag={drag} />
+              <GroupListCardDragButton drag={drag} colorScheme={group.color} />
             ) : (
               <>
-                <GroupListCardCollapseButton group={group} collapsed={collapsed} />
-                <GroupListCardMenuButton group={group} />
+                <GroupListCardCollapseButton group={group} collapsed={collapsed} colorScheme={group.color} />
+                <GroupListCardMenuButton group={group} colorScheme={group.color} />
               </>
             )}
           </FHStack>

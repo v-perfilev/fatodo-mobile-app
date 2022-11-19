@@ -42,12 +42,20 @@ const GroupListCardInfo = ({group, items, itemsCount}: GroupListCardHeaderProps)
     <FHStack defaultSpace h="45px" px="4" my="1" alignItems="center">
       <GroupListCardAvatars group={group} />
       <FHStack grow justifyContent="center">
-        {showButtonToGroupView && <LinkButton onPress={goToGroupView}>{t('group:actions.showAll')}</LinkButton>}
-        {showButtonToCreateItem && <LinkButton onPress={goToItemCreate}>{t('group:actions.createItem')}</LinkButton>}
+        {showButtonToGroupView && (
+          <LinkButton colorScheme={group.color} onPress={goToGroupView}>
+            {t('group:actions.showAll')}
+          </LinkButton>
+        )}
+        {showButtonToCreateItem && (
+          <LinkButton colorScheme={group.color} onPress={goToItemCreate}>
+            {t('group:actions.createItem')}
+          </LinkButton>
+        )}
       </FHStack>
-      <BoxWithIcon icon={<ItemsIcon color="primary.500" size="md" />} text={itemsCount || 0} />
+      <BoxWithIcon icon={<ItemsIcon color={`${group.color}.500`} size="md" />} text={itemsCount || 0} />
       <BoxWithIcon
-        icon={<CommentsIcon color="primary.500" size="md" />}
+        icon={<CommentsIcon color={`${group.color}.500`} size="md" />}
         text={commentThread?.count || 0}
         onPress={goToComments}
       />

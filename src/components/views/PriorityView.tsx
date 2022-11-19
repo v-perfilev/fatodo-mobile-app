@@ -8,14 +8,23 @@ import HighPriorityIcon from '../icons/HighPriorityIcon';
 import FCenter from '../boxes/FCenter';
 import FHStack from '../boxes/FHStack';
 import {IColors} from 'native-base/lib/typescript/theme/base/colors';
+import {ColorScheme} from '../../shared/themes/ThemeFactory';
 
 type PriorityViewProps = IIconProps & {
   priority: ItemPriorityType;
+  colorScheme?: ColorScheme;
   fontColor?: IColors;
   withoutText?: boolean;
 };
 
-export const PriorityView = ({priority, fontSize, fontColor, withoutText, ...props}: PriorityViewProps) => {
+export const PriorityView = ({
+  priority,
+  colorScheme,
+  fontSize,
+  fontColor,
+  withoutText,
+  ...props
+}: PriorityViewProps) => {
   const {t, i18n} = useTranslation();
 
   const getIcon = (priority: ItemPriorityType): ReactElement => {
@@ -23,7 +32,7 @@ export const PriorityView = ({priority, fontSize, fontColor, withoutText, ...pro
       case 'LOW':
         return <LowPriorityIcon color="gray.500" />;
       case 'NORMAL':
-        return <NormalPriorityIcon color="primary.500" />;
+        return <NormalPriorityIcon color={`${colorScheme || 'primary'}.500`} />;
       case 'HIGH':
         return <HighPriorityIcon color="error.500" />;
     }

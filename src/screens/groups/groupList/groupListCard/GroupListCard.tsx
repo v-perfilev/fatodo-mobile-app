@@ -6,7 +6,6 @@ import {Group} from '../../../../models/Group';
 import {useAppSelector} from '../../../../store/store';
 import GroupsSelectors from '../../../../store/groups/groupsSelectors';
 import Collapsible from '../../../../components/layouts/Collapsilble';
-import withThemeProvider from '../../../../shared/hocs/withThemeProvider';
 import {flowRight} from 'lodash';
 
 type GroupListCardProps = IBoxProps & {
@@ -35,4 +34,4 @@ const GroupListCard = ({group, sorting, drag, ...props}: GroupListCardProps) => 
   );
 };
 
-export default flowRight([withThemeProvider, memo])(GroupListCard);
+export default flowRight([memo])(GroupListCard);

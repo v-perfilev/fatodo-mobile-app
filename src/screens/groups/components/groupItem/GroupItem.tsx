@@ -56,16 +56,16 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
         </FHStack>
         <FHStack grow justifyContent="space-between" alignItems="center">
           <FHStack space="2">
-            <TypeView type={item.type} fontSize="12" fontColor="gray.400" />
-            <PriorityView priority={item.priority} fontSize="12" fontColor="gray.400" />
-            <StatusView statusType={item.status} fontSize="12" fontColor="gray.400" />
+            <TypeView type={item.type} fontSize="12" colorScheme={group.color} fontColor="gray.400" />
+            <PriorityView priority={item.priority} fontSize="12" colorScheme={group.color} fontColor="gray.400" />
+            <StatusView statusType={item.status} fontSize="12" colorScheme={group.color} fontColor="gray.400" />
           </FHStack>
           <FHStack defaultSpace>
             {item.remindersCount > 0 && (
-              <BoxWithIcon icon={<AlarmIcon color="primary.500" size="md" />} text={item.remindersCount} />
+              <BoxWithIcon icon={<AlarmIcon color={`${group.color}.500`} size="md" />} text={item.remindersCount} />
             )}
             <BoxWithIcon
-              icon={<CommentsIcon color="primary.500" size="md" />}
+              icon={<CommentsIcon color={`${group.color}.500`} size="md" />}
               text={commentThread?.count || 0}
               onPress={goToComments}
             />

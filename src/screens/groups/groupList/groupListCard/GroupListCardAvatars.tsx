@@ -13,7 +13,7 @@ const GroupListCardAvatars = ({group}: GroupListCardAvatarsProps) => {
   const userIds = group.members.map((user) => user.userId);
   const users = useAppSelector((state) => usersSelector(state, userIds));
 
-  return <AvatarGroup users={users} />;
+  return <AvatarGroup users={users} colorScheme={group.color} />;
 };
 
 export default GroupListCardAvatars;

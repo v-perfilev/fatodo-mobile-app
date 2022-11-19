@@ -4,13 +4,15 @@ import {User} from '../../models/User';
 import {AVATARS_IN_CARD} from '../../constants';
 import UserView from '../views/UserView';
 import FHStack from '../boxes/FHStack';
+import {ColorScheme} from '../../shared/themes/ThemeFactory';
 
 type AvatarGroupProps = {
   users: User[];
+  colorScheme?: ColorScheme;
   withInvertedBorder?: boolean;
 };
 
-const AvatarGroup = ({users, withInvertedBorder}: AvatarGroupProps) => {
+const AvatarGroup = ({users, colorScheme, withInvertedBorder}: AvatarGroupProps) => {
   const usersToShow = users.slice(0, AVATARS_IN_CARD);
   const moreThanLimit = users.length > AVATARS_IN_CARD ? users.length - AVATARS_IN_CARD : 0;
 
@@ -19,7 +21,7 @@ const AvatarGroup = ({users, withInvertedBorder}: AvatarGroupProps) => {
       <FHStack ml="3">
         {usersToShow.map((user, index) => (
           <Box ml="-3" key={index}>
-            <UserView user={user} picSize="9" withInvertedBorder={withInvertedBorder} />
+            <UserView user={user} picSize="9" colorScheme={colorScheme} withInvertedBorder={withInvertedBorder} />
           </Box>
         ))}
       </FHStack>

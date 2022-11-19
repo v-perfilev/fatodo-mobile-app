@@ -9,14 +9,16 @@ import NoteIcon from '../icons/NoteIcon';
 import FCenter from '../boxes/FCenter';
 import FHStack from '../boxes/FHStack';
 import {IColors} from 'native-base/lib/typescript/theme/base/colors';
+import {ColorScheme} from '../../shared/themes/ThemeFactory';
 
 type TypeViewProps = IIconProps & {
   type: ItemType;
+  colorScheme?: ColorScheme;
   fontColor?: IColors;
   withoutText?: boolean;
 };
 
-export const TypeView = ({type, fontSize, fontColor, withoutText, ...props}: TypeViewProps) => {
+export const TypeView = ({type, fontSize, colorScheme, fontColor, withoutText, ...props}: TypeViewProps) => {
   const {t, i18n} = useTranslation();
 
   const getIcon = (): ReactElement => {
@@ -32,7 +34,11 @@ export const TypeView = ({type, fontSize, fontColor, withoutText, ...props}: Typ
     }
   };
 
-  const icon = React.cloneElement(getIcon(), {...props, color: 'primary.500', mt: !withoutText ? 0.5 : undefined});
+  const icon = React.cloneElement(getIcon(), {
+    ...props,
+    color: `${colorScheme || 'primary'}.500`,
+    mt: !withoutText ? 0.5 : undefined,
+  });
   const text = useMemo(() => t('common:types.' + type), [type, i18n.language]);
 
   const onlyIcon = <FCenter>{icon}</FCenter>;

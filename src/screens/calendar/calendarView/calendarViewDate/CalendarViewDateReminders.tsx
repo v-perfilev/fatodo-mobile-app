@@ -8,6 +8,7 @@ import {FilterUtils} from '../../../../shared/utils/FilterUtils';
 import {CalendarReminder} from '../../../../models/Reminder';
 import {Box} from 'native-base';
 import Animated from 'react-native-reanimated';
+import {Platform} from 'react-native';
 
 type CalendarViewDateRemindersProps = {
   reminders: CalendarReminder[];
@@ -28,12 +29,12 @@ const CalendarViewDateReminders = ({reminders, isActiveDate}: CalendarViewDateRe
   const showDots = reminderColors.length > 3;
 
   return (
-    <FVStack space={2}>
+    <FVStack space={Platform.OS === 'android' ? 2 : 1}>
       {reminderColorsToShow.map((color, index) => (
-        <Bullet inverted={isActiveDate} color={color} size="4px" fullWidth key={index} />
+        <Bullet inverted={isActiveDate} colorScheme={color} size="4px" fullWidth key={index} />
       ))}
       {showDots && (
-        <FHStack space={2} justifyContent="center">
+        <FHStack space={Platform.OS === 'android' ? 2 : 1} justifyContent="center">
           {Array.from({length: 3}).map((_, index) => (
             <Box width="5px" key={index}>
               <Bullet inverted={isActiveDate} size="5px" />

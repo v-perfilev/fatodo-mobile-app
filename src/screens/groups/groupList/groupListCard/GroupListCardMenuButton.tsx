@@ -14,8 +14,9 @@ import {useGroupDialogContext} from '../../../../shared/contexts/dialogContexts/
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import IconButton from '../../../../components/controls/IconButton';
+import {IIconButtonProps} from 'native-base';
 
-type GroupListCardMenuButtonProps = {
+type GroupListCardMenuButtonProps = IIconButtonProps & {
   group: Group;
 };
 
@@ -39,18 +40,18 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
   const menuItems: MenuItemProps[] = [
     {
       action: goToItemCreate,
-      icon: <PlusIcon color="primary.500" />,
+      icon: <PlusIcon color={`${group.color}.500`} />,
       text: t('group:actions.createItem'),
       hidden: !canEdit,
     },
     {
       action: goToGroupView,
-      icon: <EyeIcon color="primary.500" />,
+      icon: <EyeIcon color={`${group.color}.500`} />,
       text: t('group:actions.view'),
     },
     {
       action: goToGroupEdit,
-      icon: <EditIcon color="primary.500" />,
+      icon: <EditIcon color={`${group.color}.500`} />,
       text: t('group:actions.edit'),
       hidden: !canAdmin,
     },
@@ -63,7 +64,9 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
   ];
 
   return (
-    <Menu trigger={(triggerProps) => <IconButton {...triggerProps} icon={<DotsVerticalIcon />} />}>
+    <Menu
+      trigger={(triggerProps) => <IconButton {...triggerProps} colorScheme={group.color} icon={<DotsVerticalIcon />} />}
+    >
       {menuItems.map((itemProps, index) => (
         <MenuItem {...itemProps} key={index} />
       ))}
