@@ -14,10 +14,12 @@ import CommonSelectors from '../store/common/commonSelectors';
 import BellIcon from '../components/icons/BellIcon';
 import {flowRight} from 'lodash';
 import GroupNavigator, {GroupParamList} from './GroupNavigator';
-import CalendarView from '../screens/calendar/calendarView/CalendarView';
-import EventList from '../screens/events/eventList/EventList';
-import ChatList from '../screens/chats/chatList/ChatList';
-import ContactNavigator from './ContactNavigator';
+import LazyLoader from '../components/layouts/LazyLoader';
+
+const CalendarView = React.lazy(() => import('../screens/calendar/calendarView/CalendarView'));
+const EventList = React.lazy(() => import('../screens/events/eventList/EventList'));
+const ChatList = React.lazy(() => import('../screens/chats/chatList/ChatList'));
+const ContactNavigator = React.lazy(() => import('./ContactNavigator'));
 
 export type TabParamList = {
   Groups: NavigationProps<GroupParamList>;
@@ -44,6 +46,30 @@ const groupsIcon = ({color, size}: TabIconProps): ReactNode => <GroupsIcon color
 const chatsIcon = ({color, size}: TabIconProps): ReactNode => <ChatsIcon color={color} size={size - 1} />;
 const contactsIcon = ({color, size}: TabIconProps): ReactNode => <ContactsIcon color={color} size={size} />;
 
+const CalendarViewWithLoader = () => (
+  <LazyLoader fatodoLoader>
+    <CalendarView />
+  </LazyLoader>
+);
+
+const EventListWithLoader = () => (
+  <LazyLoader fatodoLoader>
+    <EventList />
+  </LazyLoader>
+);
+
+const ChatListWithLoader = () => (
+  <LazyLoader fatodoLoader>
+    <ChatList />
+  </LazyLoader>
+);
+
+const ContactNavigatorWithLoader = () => (
+  <LazyLoader fatodoLoader>
+    <ContactNavigator />
+  </LazyLoader>
+);
+
 const TabNavigator = () => {
   const unreadEventCount = useAppSelector(EventsSelectors.unreadCount);
   const unreadMessageCount = useAppSelector(ChatsSelectors.unreadCount);
@@ -57,21 +83,21 @@ const TabNavigator = () => {
       backBehavior="initialRoute"
       tabBar={TabNavigatorBar}
     >
-      <Tab.Screen name="Calendar" component={CalendarView} options={{tabBarIcon: calendarIcon}} />
+      <Tab.Screen name="Calendar" component={CalendarViewWithLoader} options={{tabBarIcon: calendarIcon}} />
       <Tab.Screen
         name="Events"
-        component={EventList}
+        component={EventListWithLoader}
         options={{tabBarIcon: eventsIcon, tabBarBadge: unreadEventCount}}
       />
       <Tab.Screen name="Groups" component={GroupNavigator} options={{tabBarIcon: groupsIcon}} />
       <Tab.Screen
         name="Chats"
-        component={ChatList}
+        component={ChatListWithLoader}
         options={{tabBarIcon: chatsIcon, tabBarBadge: unreadMessageCount}}
       />
       <Tab.Screen
         name="Contacts"
-        component={ContactNavigator}
+        component={ContactNavigatorWithLoader}
         options={{tabBarIcon: contactsIcon, tabBarBadge: incomingRequestCount}}
       />
     </Tab.Navigator>

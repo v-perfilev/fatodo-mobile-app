@@ -42,7 +42,7 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
   );
 
   const height = TAB_HEIGHT;
-  const size = Platform.OS === 'android' ? 7 : 8;
+  const size = Platform.OS === 'android' ? 7 : 9;
 
   return (
     <Pressable height={height} flex="1" p="1" onPress={onPress}>
@@ -60,10 +60,8 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
 };
 
 const TabNavigatorBar = ({state, descriptors, navigation}: TabNavigatorBarProps) => {
-  const height = TAB_HEIGHT;
-
   return (
-    <FVStack safeAreaBottom height={height}>
+    <FVStack safeAreaBottom height={TAB_HEIGHT}>
       <Separator />
       <FHStack grow>
         {state.routes.map((route, index) => (

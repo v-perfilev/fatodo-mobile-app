@@ -8,9 +8,7 @@ import withCalendar from '../../../shared/hocs/withCalendar';
 import {CalendarActions} from '../../../store/calendar/calendarActions';
 import CalendarViewControl from './calendarViewControl/CalendarViewControl';
 import CalendarViewContent from './calendarViewContent/CalendarViewContent';
-import LazyLoader from '../../../components/layouts/LazyLoader';
-
-const CalendarViewPan = React.lazy(() => import('./calendarViewPan/CalendarViewPan'));
+import CalendarViewPan from './calendarViewPan/CalendarViewPan';
 
 const CalendarView = () => {
   const dispatch = useAppDispatch();
@@ -47,9 +45,7 @@ const CalendarView = () => {
   return (
     <>
       <CalendarViewHeader />
-      <LazyLoader>
-        <CalendarViewPan control={control} content={content} />
-      </LazyLoader>
+      <CalendarViewPan control={control} content={content} />
     </>
   );
 };
