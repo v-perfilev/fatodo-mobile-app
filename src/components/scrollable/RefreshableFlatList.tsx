@@ -44,12 +44,13 @@ const RefreshableFlatList = React.forwardRef((props: RefreshableFlatListProps, r
           {previousNode}
           <ConditionalSpinner loading={loading} loadingPlaceholder={loadingPlaceholder} style={loaderStyle}>
             <RefreshableContainer refresh={refresh} parentScrollY={scrollY} inverted={inverted}>
-              {({refresher}: RefreshableContainerChildrenProps) => (
+              {({refresher, panRef}: RefreshableContainerChildrenProps) => (
                 <FlatList
                   ListHeaderComponent={refresher}
                   onScroll={handleEventScroll}
                   ref={ref}
                   inverted={inverted}
+                  simultaneousHandlers={panRef}
                   {...otherProps}
                 />
               )}

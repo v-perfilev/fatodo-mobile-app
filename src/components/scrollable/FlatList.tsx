@@ -10,15 +10,20 @@ import {
   ViewStyle,
 } from 'react-native';
 import {DEFAULT_FLAT_LIST_ITEM_HEIGHT} from '../../constants';
+import {FlatList as GestureFlatList} from 'react-native-gesture-handler';
+import {NativeViewGestureHandlerProps} from 'react-native-gesture-handler/src/handlers/NativeViewGestureHandler';
 
 export type FlatListType = RNFlatList;
 
-export type FlatListProps<T> = Partial<IFlatListProps<T>> & {
-  render: (info: ListRenderItemInfo<T>, onLayout?: (event: LayoutChangeEvent) => void) => ReactElement;
-  keyExtractor?: (item: T) => string;
-  fixedLength?: number;
-  notFullHeight?: boolean;
-};
+export type FlatListProps<T> = Partial<IFlatListProps<T>> &
+  NativeViewGestureHandlerProps & {
+    render: (info: ListRenderItemInfo<T>, onLayout?: (event: LayoutChangeEvent) => void) => ReactElement;
+    keyExtractor?: (item: T) => string;
+    fixedLength?: number;
+    notFullHeight?: boolean;
+  };
+
+const AnimatedGestureFlatList = Animated.createAnimatedComponent<any>(GestureFlatList);
 
 const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<any>) => {
   const {data, render, keyExtractor, fixedLength, contentContainerStyle, notFullHeight} = props;
@@ -83,7 +88,7 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
   const style: StyleProp<ViewStyle> = {minHeight: notFullHeight ? undefined : '100%'};
 
   return (
-    <Animated.FlatList
+    <AnimatedGestureFlatList
       initialNumToRender={20}
       maxToRenderPerBatch={20}
       updateCellsBatchingPeriod={10}
@@ -102,5 +107,4 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
     />
   );
 });
-
 export default memo(FlatList);

@@ -47,13 +47,14 @@ const CollapsableRefreshableFlatList = React.forwardRef((props: CollapsableRefre
           {previousNode}
           <ConditionalSpinner loading={loading} loadingPlaceholder={loadingPlaceholder} style={loaderStyle}>
             <RefreshableContainer refresh={refresh} parentScrollY={scrollY} inverted={inverted}>
-              {({refresher}: RefreshableContainerChildrenProps) => (
+              {({refresher, panRef}: RefreshableContainerChildrenProps) => (
                 <FlatList
                   ListHeaderComponent={refresher}
                   onScroll={handleEventScroll}
                   onMomentumScrollEnd={handleEventSnap}
                   ref={RefUtils.merge(ref, collapsableRef)}
                   inverted={inverted}
+                  simultaneousHandlers={panRef}
                   {...otherProps}
                 />
               )}
