@@ -41,12 +41,12 @@ const GroupViewHeaderArchivedToggler = ({setShowArchived}: GroupViewHeaderArchiv
   return (
     <FVStack w="60px" alignItems="center">
       <Animated.View style={[textStyle, archivedTextAnimatedStyle]}>
-        <Text fontWeight="bold" color="gray.400" fontSize="sm">
+        <Text fontWeight="bold" color="gray.400" fontSize="xs">
           {t('group:actions.archived')}
         </Text>
       </Animated.View>
       <Animated.View style={[textStyle, activeTextAnimatedStyle]}>
-        <Text fontWeight="bold" color="gray.400" fontSize="sm">
+        <Text fontWeight="bold" color="gray.400" fontSize="xs">
           {t('group:actions.active')}
         </Text>
       </Animated.View>

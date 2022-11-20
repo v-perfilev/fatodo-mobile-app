@@ -22,15 +22,21 @@ const withWsClient = (Component: ComponentType) => (props: any) => {
 
   const onMessage = (msg: WsEvent<any>): void => {
     msg.payload = JSON.parse(msg.payload);
-    wsStateHandler.current.handleMessage(msg);
-    wsEventHandler.current.handleMessage(msg);
-    !isActive && wsPushHandler.current.handleMessage(msg);
+    wsStateHandler.current?.handleMessage(msg);
+    wsEventHandler.current?.handleMessage(msg);
+    !isActive && wsPushHandler.current?.handleMessage(msg);
   };
 
   useEffect(() => {
-    wsStateHandler.current = new WsStateHandler(dispatch, account);
-    wsEventHandler.current = new WsEventHandler(dispatch, account);
-    wsPushHandler.current = new WsPushHandler(dispatch, t);
+    if (account) {
+      wsStateHandler.current = new WsStateHandler(dispatch, account);
+      wsEventHandler.current = new WsEventHandler(dispatch, account);
+      wsPushHandler.current = new WsPushHandler(dispatch, t);
+    } else {
+      wsStateHandler.current = undefined;
+      wsEventHandler.current = undefined;
+      wsPushHandler.current = undefined;
+    }
   }, [account]);
 
   return (
