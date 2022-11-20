@@ -66,9 +66,9 @@ const CommentListItemReactions = ({comment, isOwnComment}: CommentListItemReacti
     const onPress = handlePress(r);
 
     const iconWithCount = (
-      <FHStack h="20px" smallSpace alignItems="center">
+      <FHStack h="20px" space="1" alignItems="center">
         {count > 0 && (
-          <Text color="gray.500" fontSize="xs">
+          <Text color="gray.500" fontSize="sm">
             {count}
           </Text>
         )}
@@ -86,7 +86,7 @@ const CommentListItemReactions = ({comment, isOwnComment}: CommentListItemReacti
   };
 
   return (
-    <FVStack mt="1.5" smallSpace>
+    <FVStack mt="1.5" space="1">
       {Array.from(reactionMap.keys()).map(reaction)}
     </FVStack>
   );

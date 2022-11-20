@@ -19,11 +19,11 @@ const CommentListItemReference = ({reference}: CommentListItemReferenceProps) =>
   const date = new Date(reference.createdAt);
 
   return (
-    <FHStack smallSpace>
-      <Text color="gray.400" fontWeight="bold" fontSize="2xs">
+    <FHStack space="1">
+      <Text color="gray.400" fontWeight="bold" fontSize="xs">
         {t('comment:list.reference')}:
       </Text>
-      <Text fontWeight="bold" fontSize="2xs">
+      <Text color="gray.400" fontWeight="bold" fontSize="xs">
         {user?.username}, <DateView date={date} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
       </Text>
     </FHStack>

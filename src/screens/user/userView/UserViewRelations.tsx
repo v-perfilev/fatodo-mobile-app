@@ -11,8 +11,8 @@ const UserViewGroups = () => {
   const relations = useAppSelector(UserSelectors.relations);
 
   return (
-    <FVStack defaultSpace>
-      <Text color="secondary.500" fontSize="md" fontWeight="bold">
+    <FVStack space="3">
+      <Text color="secondary.500" fontWeight="bold">
         {t('user:commonContacts.header')}: {relations.length}
       </Text>
       {relations.length === 0 && <Text color="gray.400">{t('user:commonContacts.noCommonContacts')}</Text>}

@@ -19,7 +19,7 @@ const UserView = ({user, containerLoading}: UserViewProps) => {
       <UserViewHeader />
       <ConditionalSpinner loading={containerLoading}>
         <SimpleScrollView>
-          <FVStack defaultSpace>
+          <FVStack space="3">
             <UserFullView user={user} withoutUsername />
             <Separator bg="secondary.500" />
             <UserViewControl user={user} />

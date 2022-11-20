@@ -72,7 +72,7 @@ const CalendarViewDate = ({date, activeMonthIndex}: CalendarViewDateProps) => {
     <Box width={`${100 / 7}%`} height={CALENDAR_DATE_HEIGHT}>
       <PressableButton margin="1" onPress={handlePress}>
         <AnimatedBox style={bgStyle} px="1" py="0.5" borderRadius="lg" overflow="hidden">
-          <AnimatedText style={fontStyle} fontSize="14" fontWeight="bold" textAlign="right">
+          <AnimatedText style={fontStyle} fontSize="md" fontWeight="bold" textAlign="right">
             {date.date}
           </AnimatedText>
           {rendered && date.reminders.length > 0 && (

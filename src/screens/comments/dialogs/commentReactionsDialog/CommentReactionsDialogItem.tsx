@@ -12,7 +12,7 @@ type CommentReactionsDialogItemProps = {
 
 const CommentReactionsDialogItem = ({reaction, user}: CommentReactionsDialogItemProps) => {
   return (
-    <FHStack grow defaultSpace alignItems="center">
+    <FHStack grow space="3" alignItems="center">
       <ReactionView reactionType={reaction.type} color="primary.500" />
       <UserView user={user} withUsername withUserPic picSize="sm" />
     </FHStack>

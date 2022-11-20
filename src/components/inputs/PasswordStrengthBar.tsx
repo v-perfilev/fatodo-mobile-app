@@ -30,7 +30,7 @@ export const PasswordStrengthBar = ({password}: PasswordStrengthBardProps) => {
   }
 
   return (
-    <FHStack w="100%" h="6px" smallSpace justifyContent="space-between">
+    <FHStack w="100%" h="6px" space="1" justifyContent="space-between">
       {subItems}
     </FHStack>
   );

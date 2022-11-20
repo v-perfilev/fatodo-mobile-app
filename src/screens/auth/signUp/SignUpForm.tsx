@@ -87,7 +87,7 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
       onSubmit={handleClickOnSubmit}
     >
       {(formikProps) => (
-        <FVStack w="100%" defaultSpace>
+        <FVStack w="100%" space="3">
           <FormikTextInput name="email" label={t('account:fields.email.label')} isDisabled={loading} {...formikProps} />
           <FormikTextInput
             name="username"

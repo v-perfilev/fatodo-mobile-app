@@ -17,7 +17,7 @@ const AvatarGroup = ({users, colorScheme, withInvertedBorder}: AvatarGroupProps)
   const moreThanLimit = users.length > AVATARS_IN_CARD ? users.length - AVATARS_IN_CARD : 0;
 
   return (
-    <FHStack smallSpace alignItems="center">
+    <FHStack space="1" alignItems="center">
       <FHStack ml="3">
         {usersToShow.map((user, index) => (
           <Box ml="-3" key={index}>

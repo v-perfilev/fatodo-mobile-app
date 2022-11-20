@@ -10,6 +10,7 @@ import Separator from './Separator';
 import {useTranslation} from 'react-i18next';
 import FVStack from '../boxes/FVStack';
 import {TAB_HEIGHT} from '../../constants';
+import {Platform} from 'react-native';
 
 type TabNavigatorBarProps = BottomTabBarProps;
 
@@ -40,12 +41,15 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
     </Badge>
   );
 
+  const height = TAB_HEIGHT;
+  const size = Platform.OS === 'android' ? 7 : 8;
+
   return (
-    <Pressable height={TAB_HEIGHT} flex="1" p="1" onPress={onPress}>
+    <Pressable height={height} flex="1" p="1" onPress={onPress}>
       <FVStack grow justifyContent="center" alignItems="center">
         <FCenter flex="1" flexGrow="1">
           {showBadgeNode && badgeNode}
-          {icon({focused: isFocused, color, size: 7})}
+          {icon({focused: isFocused, color, size})}
         </FCenter>
         <Text fontSize="2xs" color={color} isTruncated>
           {t('routes.' + routeName)}
@@ -56,9 +60,10 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
 };
 
 const TabNavigatorBar = ({state, descriptors, navigation}: TabNavigatorBarProps) => {
+  const height = TAB_HEIGHT;
+
   return (
-    // <FVStack safeAreaBottom h={TAB_HEIGHT}>
-    <FVStack height={TAB_HEIGHT}>
+    <FVStack safeAreaBottom height={height}>
       <Separator />
       <FHStack grow>
         {state.routes.map((route, index) => (

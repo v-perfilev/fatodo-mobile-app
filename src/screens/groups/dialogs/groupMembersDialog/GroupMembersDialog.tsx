@@ -71,10 +71,10 @@ const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEdi
   }, [group, deletedMemberIds]);
 
   const content = (
-    <FVStack defaultSpace>
+    <FVStack space="3">
       <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={filterUsersToShow} />
       {usersToShow.length > 0 && (
-        <FVStack defaultSpace>
+        <FVStack space="3">
           {usersToShow.map((user) => (
             <GroupMembersDialogMember
               group={group}

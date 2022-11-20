@@ -33,7 +33,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
       <Box mt="1.5">{user && <UserView user={user} picSize="sm" />}</Box>
       <FVStack
         shrink
-        smallSpace
+        space="1"
         minW="60%"
         borderWidth="1"
         borderColor={isRead ? bg : 'primary.500'}
@@ -43,13 +43,13 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
         pr="2"
         py="1.5"
       >
-        <FHStack defaultSpace alignItems="center">
-          <FHStack grow defaultSpace alignItems="center">
+        <FHStack space="3" alignItems="center">
+          <FHStack grow space="3" alignItems="center">
             <Text color="primary.500" fontWeight="bold">
               {user?.username}
             </Text>
           </FHStack>
-          <Text color="gray.400" fontWeight="bold" fontSize="2xs">
+          <Text color="gray.400" fontWeight="bold" fontSize="xs">
             <DateView date={date} timeFormat="FULL" />
           </Text>
           <ChatViewMessageMenu message={message} isOutcoming={false} />

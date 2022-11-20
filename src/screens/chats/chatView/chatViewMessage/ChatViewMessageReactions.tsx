@@ -69,9 +69,9 @@ const ChatViewMessageReactions = ({message, isOutcoming}: ChatViewMessageReactio
     const onPress = handlePress(r);
 
     const iconWithCount = (
-      <FHStack h="20px" smallSpace reversed alignItems="center">
+      <FHStack h="20px" space="1" reversed alignItems="center">
         {count > 0 && (
-          <Text color="gray.500" fontSize="xs">
+          <Text color="gray.500" fontSize="sm">
             {count}
           </Text>
         )}
@@ -89,7 +89,7 @@ const ChatViewMessageReactions = ({message, isOutcoming}: ChatViewMessageReactio
   };
 
   return (
-    <FVStack mt="1.5" smallSpace>
+    <FVStack mt="1.5" space="1">
       {Array.from(reactionMap.keys()).map(reaction)}
     </FVStack>
   );

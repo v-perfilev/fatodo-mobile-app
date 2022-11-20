@@ -27,15 +27,15 @@ const CalendarViewRemindersItem = ({reminder}: CalendarViewRemindersItemProps) =
   const date = new Date(reminder.date);
 
   return (
-    <FHStack defaultSpace alignItems="center" py="1">
+    <FHStack space="3" alignItems="center" py="1">
       <FBox grow={false} height="15px">
         {bulletView}
       </FBox>
       <FVStack grow>
-        <Text fontSize="16" fontWeight="bold" isTruncated>
+        <Text fontSize="lg" fontWeight="bold" isTruncated>
           {itemView}
         </Text>
-        <Text fontSize="14" fontWeight="bold" isTruncated>
+        <Text fontSize="sm" fontWeight="bold" isTruncated>
           {groupView}
         </Text>
       </FVStack>

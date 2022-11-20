@@ -113,7 +113,7 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
       onSubmit={handleSubmit}
     >
       {(formikProps) => (
-        <FVStack defaultSpace>
+        <FVStack space="3">
           <FormikTextInput
             name="title"
             label={t('item:fields.title.label')}
@@ -126,7 +126,7 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
             isDisabled={formikProps.isSubmitting}
             {...formikProps}
           />
-          <FHStack defaultSpace>
+          <FHStack space="3">
             <FHStack grow basis>
               <FormikTypeInput
                 name="type"
@@ -144,7 +144,7 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
               />
             </FHStack>
           </FHStack>
-          <FHStack defaultSpace>
+          <FHStack space="3">
             <FHStack grow basis>
               <FormikDateTimePicker
                 mode="time"
@@ -173,7 +173,7 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
 
           <FormikRemindersInput name="reminders" label={t('item:fields.reminders.label')} {...formikProps} />
 
-          <FHStack defaultSpace mt="3" justifyContent="flex-end">
+          <FHStack space="3" mt="3" justifyContent="flex-end">
             <GhostButton colorScheme="secondary" size="md" isDisabled={formikProps.isSubmitting} onPress={cancel}>
               {t('item:actions.cancel')}
             </GhostButton>

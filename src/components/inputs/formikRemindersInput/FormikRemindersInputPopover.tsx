@@ -42,7 +42,7 @@ const FormikRemindersInputPopover = ({show, handleClose}: FormikRemindersInputPo
         </Modal.Header>
         <Box w="100%" h="3px" bg={LINEAR_GRADIENT} />
         <Modal.Body bg={bg}>
-          <FVStack defaultSpace position="relative" width="100%" minH="225" alignItems="center">
+          <FVStack space="3" position="relative" width="100%" minH="225" alignItems="center">
             {periodicity === 'ONCE' && <FormikRemindersInputOnce setReminder={setReminder} />}
             {periodicity === 'DAILY' && <FormikRemindersInputDaily setReminder={setReminder} />}
             {periodicity === 'WEEKLY' && <FormikRemindersInputWeekly setReminder={setReminder} />}

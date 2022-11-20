@@ -84,7 +84,7 @@ const ContactNavigator = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <FHStack smallSpace mt="3px">
+        <FHStack space="1" mt="3px">
           <Text color="primary.500">{t(`contact:${props.route.key}.title`)}</Text>
           {renderBadge(props.route)}
         </FHStack>

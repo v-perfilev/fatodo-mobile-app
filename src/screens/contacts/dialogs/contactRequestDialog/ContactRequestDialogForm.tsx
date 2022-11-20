@@ -52,7 +52,7 @@ const ContactRequestDialogForm = ({account, request, cancel}: ContactRequestDial
       onSubmit={handleSubmit}
     >
       {(formikProps) => (
-        <FVStack grow defaultSpace>
+        <FVStack grow space="3">
           <FormikUserInput
             name="usernameOrEmail"
             userName="user"
@@ -66,7 +66,7 @@ const ContactRequestDialogForm = ({account, request, cancel}: ContactRequestDial
             isDisabled={formikProps.isSubmitting}
             {...formikProps}
           />
-          <FHStack defaultSpace justifyContent="flex-end">
+          <FHStack space="3" justifyContent="flex-end">
             <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
               {t('contact:addContact.cancel')}
             </GhostButton>

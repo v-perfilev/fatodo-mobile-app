@@ -80,7 +80,7 @@ const GroupForm = ({group, request, cancel}: GroupFormProps) => {
       onSubmit={handleSubmit}
     >
       {(formikProps) => (
-        <FVStack grow defaultSpace>
+        <FVStack grow space="3">
           <FormikTextInput
             name="title"
             label={t('group:fields.title.label')}
@@ -101,7 +101,7 @@ const GroupForm = ({group, request, cancel}: GroupFormProps) => {
             crop
             {...formikProps}
           />
-          <FHStack defaultSpace justifyContent="flex-end">
+          <FHStack space="3" justifyContent="flex-end">
             <GhostButton colorScheme="secondary" size="md" isDisabled={formikProps.isSubmitting} onPress={cancel}>
               {t('group:actions.cancel')}
             </GhostButton>

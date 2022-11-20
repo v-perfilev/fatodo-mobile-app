@@ -53,7 +53,7 @@ const ChatDirectMessageForm = ({user, request, cancel}: ChatDirectMessageFormPro
       onSubmit={handleSubmit}
     >
       {(formikProps) => (
-        <FVStack grow defaultSpace>
+        <FVStack grow space="3">
           <FormikTextInput
             name="username"
             label={t('chat:directMessage.fields.username.label')}
@@ -66,7 +66,7 @@ const ChatDirectMessageForm = ({user, request, cancel}: ChatDirectMessageFormPro
             isDisabled={formikProps.isSubmitting}
             {...formikProps}
           />
-          <FHStack defaultSpace justifyContent="flex-end">
+          <FHStack space="3" justifyContent="flex-end">
             <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
               {t('chat:directMessage.cancel')}
             </GhostButton>

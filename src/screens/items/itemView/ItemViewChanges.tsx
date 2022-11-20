@@ -22,21 +22,21 @@ const ItemViewChanges = () => {
   };
 
   const labeledBox = (label: string, text: string): ReactElement => (
-    <LabeledBox label={label} color="gray.500" fontSize="xs">
+    <LabeledBox label={label} color="gray.500" fontSize="sm">
       {text}
     </LabeledBox>
   );
 
   return (
-    <FVStack defaultSpace>
+    <FVStack space="3">
       {creator && (
-        <FHStack defaultSpace flexWrap="wrap">
+        <FHStack space="3" flexWrap="wrap">
           {labeledBox(t('item:labels.createdBy'), creator.username)}
           {labeledBox(t('item:labels.createdAt'), formatDate(item.createdAt))}
         </FHStack>
       )}
       {updater && item.createdAt !== item.lastModifiedAt && (
-        <FHStack defaultSpace flexWrap="wrap">
+        <FHStack space="3" flexWrap="wrap">
           {labeledBox(t('item:labels.updatedBy'), updater.username)}
           {labeledBox(t('item:labels.createdAt'), formatDate(item.lastModifiedAt))}
         </FHStack>

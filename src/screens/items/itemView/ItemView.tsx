@@ -61,7 +61,7 @@ const ItemView = ({group, item, containerLoading}: ItemViewProps) => {
       <ItemViewHeader account={account} />
       <ConditionalSpinner loading={containerLoading}>
         <SimpleScrollView>
-          <FVStack defaultSpace>
+          <FVStack space="3">
             <MultiLabeledBox items={labeledItems} />
             <Separator bg="primary.500" />
             <ItemViewDescription />

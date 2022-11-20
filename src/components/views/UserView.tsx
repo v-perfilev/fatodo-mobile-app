@@ -42,7 +42,7 @@ export const UserView = (props: UserViewProps) => {
           invertedBorder={withInvertedBorder}
         />
       )}
-      {withUsername && <Text fontSize="sm">{user?.username}</Text>}
+      {withUsername && <Text>{user?.username}</Text>}
     </FHStack>
   );
 

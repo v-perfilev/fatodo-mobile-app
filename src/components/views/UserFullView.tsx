@@ -26,7 +26,7 @@ export const UserFullView = ({user, account, withoutUsername}: UserFullViewProps
   );
 
   return (
-    <FVStack defaultSpace>
+    <FVStack space="3">
       <FCenter>
         <UrlPic size="2xl" file={user.imageFilename} border={1} />
       </FCenter>

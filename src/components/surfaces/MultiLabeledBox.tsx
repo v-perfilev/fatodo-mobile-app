@@ -54,13 +54,13 @@ const MultiLabeledBox = ({items, ...props}: MultiLabeledBoxProps) => {
   const filteredItems = items.filter((i) => i.value || i.showNotSet);
 
   return (
-    <FHStack defaultSpace>
-      <FVStack defaultSpace>
+    <FHStack space="3">
+      <FVStack space="3">
         {filteredItems.map((item, index) => (
           <MultiLabeledBoxLabel label={item.label} key={index} {...props} />
         ))}
       </FVStack>
-      <FVStack defaultSpace>
+      <FVStack space="3">
         {filteredItems.map((item, index) => (
           <MultiLabeledBoxValue value={item.value} showNotSet={item.showNotSet} key={index} {...props} />
         ))}

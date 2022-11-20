@@ -1,6 +1,5 @@
 import React, {memo} from 'react';
 import {FormControl, Input, useColorMode} from 'native-base';
-import {INPUT_FONT_SIZE, INPUT_MIN_HEIGHT} from '../../constants';
 import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
 import {flowRight} from 'lodash';
 
@@ -16,14 +15,11 @@ const FormikTextInput = (props: FormikTextInputProps) => {
       <Input
         type="text"
         autoCapitalize="none"
-        fontSize={INPUT_FONT_SIZE}
-        minHeight={`${INPUT_MIN_HEIGHT}px`}
         keyboardAppearance={colorMode}
         placeholder={placeholder}
         onChangeText={onChange}
         onBlur={onBlur}
         value={value}
-        borderRadius="xl"
       />
       {isTouched && <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>}
     </FormControl>

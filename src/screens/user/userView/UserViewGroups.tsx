@@ -11,8 +11,8 @@ const UserViewGroups = () => {
   const groups = useAppSelector(UserSelectors.groups);
 
   return (
-    <FVStack defaultSpace>
-      <Text color="secondary.500" fontSize="md" fontWeight="bold">
+    <FVStack space="3">
+      <Text color="secondary.500" fontWeight="bold">
         {t('user:commonGroups.header')}: {groups.length}
       </Text>
       {groups.length === 0 && <Text color="gray.400">{t('user:commonGroups.noCommonGroups')}</Text>}

@@ -57,7 +57,7 @@ const AccountChangePasswordForm = () => {
           onSubmit={handleSubmit}
         >
           {(formikProps) => (
-            <FVStack defaultSpace>
+            <FVStack space="3">
               <FormikPasswordInput
                 name="oldPassword"
                 label={t('account:fields.oldPassword.label')}
@@ -72,7 +72,7 @@ const AccountChangePasswordForm = () => {
               />
               <PasswordStrengthBar password={formikProps.values.newPassword} />
 
-              <FHStack defaultSpace mt="3" justifyContent="flex-end">
+              <FHStack space="3" mt="3" justifyContent="flex-end">
                 <OutlinedButton
                   colorScheme="primary"
                   size="md"

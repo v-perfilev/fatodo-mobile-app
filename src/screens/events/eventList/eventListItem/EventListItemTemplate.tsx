@@ -22,10 +22,10 @@ const EventListItemTemplate = ({image, title, content, message, date, loading}: 
   const messageBg = useColorModeValue('gray.100', 'gray.700');
 
   const template = (
-    <FHStack grow px="2" py="4" defaultSpace alignItems="flex-start">
+    <FHStack grow px="2" py="4" space="3" alignItems="flex-start">
       {image}
       <FVStack grow space="2">
-        <FHStack grow defaultSpace alignItems="center">
+        <FHStack grow space="3" alignItems="center">
           <FHStack grow>
             <Text color={titleColor} fontWeight="bold">
               {title}

@@ -41,9 +41,9 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
   const background = useColorModeValue(LIGHT_BG, DARK_BG);
 
   return (
-    <FHStack h={HEADER_HEIGHT} smallSpace bg={background} px="2" alignItems="center">
+    <FHStack h={HEADER_HEIGHT} space="1" bg={background} px="2" alignItems="center">
       {!hideGoBack && canGoBack && <IconButton size="2xl" icon={<ArrowBackIcon />} onPress={goBack} />}
-      <FHStack defaultSpace alignItems="center">
+      <FHStack space="3" alignItems="center">
         {showAvatar && (
           <PressableButton onPress={toggleDrawer}>
             <UserView user={accountToUser(account)} withUserPic picSize="43px" />
@@ -57,7 +57,7 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
           </Text>
         )}
       </FHStack>
-      <FHStack grow h="100%" smallSpace alignItems="center" justifyContent="flex-end">
+      <FHStack grow h="100%" space="1" alignItems="center" justifyContent="flex-end">
         {children}
       </FHStack>
     </FHStack>

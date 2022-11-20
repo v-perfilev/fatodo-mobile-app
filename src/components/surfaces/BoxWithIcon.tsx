@@ -11,9 +11,11 @@ type BoxWithIconProps = IPressableProps & {
 
 const BoxWithIcon = ({icon, onPress, text}: BoxWithIconProps) => {
   const content = (
-    <FHStack smallSpace alignItems="center">
+    <FHStack space="1" alignItems="center">
       {icon}
-      <Text color="gray.400">{text}</Text>
+      <Text fontSize="sm" color="gray.400">
+        {text}
+      </Text>
     </FHStack>
   );
 

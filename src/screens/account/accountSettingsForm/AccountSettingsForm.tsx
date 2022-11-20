@@ -106,7 +106,7 @@ const AccountSettingsForm = () => {
       <SimpleScrollView>
         <Formik initialValues={values} validationSchema={valSchema} onSubmit={handleSubmit} enableReinitialize>
           {(formikProps) => (
-            <FVStack defaultSpace>
+            <FVStack space="3">
               <FormikLanguageInput
                 name="language"
                 label={t('account:fields.language.label')}
@@ -132,7 +132,7 @@ const AccountSettingsForm = () => {
                 {...formikProps}
               />
 
-              <FHStack defaultSpace mt="3" justifyContent="flex-end">
+              <FHStack space="3" mt="3" justifyContent="flex-end">
                 <OutlinedButton
                   colorScheme="primary"
                   size="md"

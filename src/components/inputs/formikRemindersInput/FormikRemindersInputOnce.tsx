@@ -51,7 +51,7 @@ const FormikRemindersInputOnce = ({setReminder}: FormikRemindersInputOnceProps) 
   }, [time, date]);
 
   return (
-    <FVStack w="100%" h="100%" defaultSpace>
+    <FVStack w="100%" h="100%" space="3">
       <DateTimeSelect
         label={t('common:reminders.fields.time')}
         mode="time"

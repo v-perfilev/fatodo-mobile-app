@@ -43,14 +43,14 @@ const ChatEditMessageForm = ({message, request, cancel}: ChatEditMessageFormProp
       onSubmit={handleSubmit}
     >
       {(formikProps) => (
-        <FVStack grow defaultSpace>
+        <FVStack grow space="3">
           <FormikMultilineInput
             name="text"
             label={t('chat:editMessage.fields.text.label')}
             isDisabled={formikProps.isSubmitting}
             {...formikProps}
           />
-          <FHStack defaultSpace justifyContent="flex-end">
+          <FHStack space="3" justifyContent="flex-end">
             <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
               {t('chat:editMessage.cancel')}
             </GhostButton>

@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {FormControl, IFormControlProps, Input, useColorMode} from 'native-base';
 import {FormikProps} from 'formik';
-import {INPUT_FONT_SIZE, INPUT_MIN_HEIGHT} from '../../constants';
 import UserService from '../../services/UserService';
 
 type FormikUserInputProps = IFormControlProps &
@@ -35,8 +34,6 @@ const FormikUserInput = (props: FormikUserInputProps) => {
       <Input
         type="text"
         autoCapitalize="none"
-        fontSize={INPUT_FONT_SIZE}
-        minHeight={`${INPUT_MIN_HEIGHT}px`}
         keyboardAppearance={colorMode}
         placeholder={placeholder}
         onChangeText={handleChange(name)}

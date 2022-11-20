@@ -60,12 +60,12 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
 
   return (
     <DrawerContentScrollView contentContainerStyle={[flexStyle, {backgroundColor}]}>
-      <FVStack grow mx="3" my="4" space="6" defaultSpace>
+      <FVStack grow mx="3" my="4" space="6">
         <UserFullView user={accountToUser(account)} account={account} />
 
         <Separator bg="secondary.500" />
 
-        <FVStack flex="1" flexGrow="1" defaultSpace flexShrink="1">
+        <FVStack flex="1" flexGrow="1" space="3" flexShrink="1">
           <GhostButton justifyContent="flex-start" onPress={goToAccountForm}>
             {t('routes.AccountForm')}
           </GhostButton>

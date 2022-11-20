@@ -25,7 +25,7 @@ const ForgotPassword = () => {
             <Logo withText />
           </FCenter>
           <ForgotPasswordForm onSuccess={goToSignIn} />
-          <FVStack smallSpace>
+          <FVStack space="1">
             <LinkButton onPress={goToSignIn}>{t('account:login.header')}</LinkButton>
           </FVStack>
         </FVStack>

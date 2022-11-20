@@ -43,6 +43,7 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
   const handleSend = (): void => {
     setMessageBody('');
     setUpdater('');
+    clearReference();
     dispatch(CommentsActions.sendCommentThunk({targetId, dto}));
   };
 
@@ -53,21 +54,20 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
     <FHStack
       position="absolute"
       zIndex="200"
-      w="100%"
-      h={COMMENTS_INPUT_HEIGHT}
+      width="100%"
+      height={COMMENTS_INPUT_HEIGHT}
       bottom="0"
       space="2"
       px="2"
-      py={reference ? 1 : 2}
       alignItems="center"
       borderTopWidth="1"
       borderTopColor={borderBg}
       bgColor={bg}
     >
-      <FVStack grow px="2" pb={reference ? 1 : 0}>
+      <FVStack grow px="2">
         {reference && <CommentListControlReference reference={reference} clearReference={clearReference} />}
         <ClearableTextInput
-          h={reference ? '21px' : '36px'}
+          minHeight="0"
           p="0"
           variant="unstyled"
           placeholderTextColor="gray.400"

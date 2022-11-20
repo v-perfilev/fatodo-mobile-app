@@ -22,14 +22,14 @@ const ChatViewMessageOutcoming = ({message}: ChatViewMessageOutcomingProps) => {
   return (
     <FHStack space="2" width="90%" ml="10%" justifyContent="flex-end">
       <ChatViewMessageReactions message={message} isOutcoming />
-      <FVStack shrink smallSpace minW="60%" borderRadius="xl" backgroundColor={bg} pl="3" pr="2" py="1.5">
-        <FHStack defaultSpace alignItems="center">
-          <FHStack grow defaultSpace alignItems="center">
+      <FVStack shrink space="1" minW="60%" borderRadius="xl" backgroundColor={bg} pl="3" pr="2" py="1.5">
+        <FHStack space="3" alignItems="center">
+          <FHStack grow space="3" alignItems="center">
             <Text color="primary.500" fontWeight="bold">
               {t('salutations.you')}
             </Text>
           </FHStack>
-          <Text color="gray.400" fontWeight="bold" fontSize="2xs">
+          <Text color="gray.400" fontWeight="bold" fontSize="xs">
             <DateView date={date} timeFormat="FULL" />
           </Text>
           <ChatViewMessageMenu message={message} isOutcoming />

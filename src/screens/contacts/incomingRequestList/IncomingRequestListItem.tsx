@@ -49,7 +49,7 @@ const IncomingRequestListItem = ({request}: IncomingRequestListItemProps) => {
   ];
 
   return (
-    <FHStack grow px="3" py="2" defaultSpace alignItems="center">
+    <FHStack grow px="3" py="2" space="3" alignItems="center">
       <FHStack grow>
         <UserView user={user} withUsername picSize="md" />
       </FHStack>

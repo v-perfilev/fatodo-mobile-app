@@ -77,10 +77,10 @@ const UsersSelect: FC<Props> = ({allowedIds, setUserIds}: Props) => {
   }, [users, selectedIds, filter]);
 
   return (
-    <FVStack defaultSpace>
+    <FVStack space="3">
       <ClearableTextInput placeholder={t('inputs.search')} onChangeText={handleFilterChange} />
       {usersToShow.length > 0 && (
-        <FVStack defaultSpace>
+        <FVStack space="3">
           {usersToShow.map((user, index) => (
             <UsersSelectItem
               user={user}

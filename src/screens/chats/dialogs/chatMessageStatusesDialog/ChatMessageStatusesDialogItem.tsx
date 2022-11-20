@@ -9,7 +9,7 @@ type ChatMessageStatusesDialogItemProps = {
 
 const ChatMessageStatusesDialogItem = ({user}: ChatMessageStatusesDialogItemProps) => {
   return (
-    <FHStack grow defaultSpace alignItems="center">
+    <FHStack grow space="3" alignItems="center">
       <UserView user={user} withUsername withUserPic picSize="sm" />
     </FHStack>
   );

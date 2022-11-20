@@ -1,3 +1,5 @@
+import {Platform} from 'react-native';
+
 export const IS_DEVELOPMENT = __DEV__;
 
 // API
@@ -24,7 +26,7 @@ export const BASE_URL = 'http://75.119.154.167';
 export const HEADER_HEIGHT = 55;
 export const REFRESH_HEIGHT = 150;
 export const MAX_REFRESH_HEIGHT = 200;
-export const TAB_HEIGHT = 50;
+export const TAB_HEIGHT = Platform.OS === 'android' ? 50 : 60;
 
 // LIST
 export const DEFAULT_FLAT_LIST_ITEM_HEIGHT = 100;
@@ -34,23 +36,18 @@ export const AVATARS_IN_CARD = 3;
 
 // SKELETONS
 export const GROUP_ITEM_SKELETONS_COUNT = 5;
-export const ITEM_SKELETON_HEIGHT = 118;
-export const EVENT_SKELETON_HEIGHT = 127;
+export const ITEM_SKELETON_HEIGHT = 122;
+export const EVENT_SKELETON_HEIGHT = 136;
 export const CONTACT_SKELETON_HEIGHT = 64;
 export const CHAT_SKELETON_HEIGHT = 64;
-export const MESSAGE_SKELETON_HEIGHT = 74;
-export const COMMENT_SKELETON_HEIGHT = 74;
+export const MESSAGE_SKELETON_HEIGHT = 80;
+export const COMMENT_SKELETON_HEIGHT = 80;
 
 // IMAGES
 export const IMAGE_SIZE = 500;
 
 // FORMS
 export const INPUT_MIN_HEIGHT = 45;
-export const INPUT_FONT_SIZE = 13;
-
-// SPACES
-export const DEFAULT_SPACE = 3;
-export const SMALL_SPACE = 1;
 
 // CONTACTS
 export const CONTACTS_FILTER_HEIGHT = 50;

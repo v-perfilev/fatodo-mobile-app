@@ -35,7 +35,7 @@ const FormikRemindersInputWeekly = ({setReminder}: FormikRemindersInputWeeklyPro
   }, [time, days]);
 
   return (
-    <FVStack w="100%" h="100%" defaultSpace>
+    <FVStack w="100%" h="100%" space="3">
       <DateTimeSelect label={t('common:reminders.fields.time')} mode="time" setResult={setTime} />
       <DaysSelect label={t('common:reminders.fields.weekdays')} days={days} setDays={setDays} />
     </FVStack>

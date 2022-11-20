@@ -57,10 +57,10 @@ const ChatMessageStatusesDialog = ({message, show, close}: ChatMessageStatusesDi
   }, [message?.statuses, users]);
 
   const content = (
-    <FVStack defaultSpace>
+    <FVStack space="3">
       <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={filterStatusesToShow} />
       {statusesToShow.length > 0 && (
-        <FVStack defaultSpace>
+        <FVStack space="3">
           {statusesToShow.map((status) => (
             <ChatMessageStatusesDialogItem user={status.user} key={status.user.id} />
           ))}

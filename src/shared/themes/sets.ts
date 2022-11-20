@@ -9,6 +9,7 @@ import {
   WARNING_COLOR,
   YELLOW_COLOR,
 } from './colors';
+import {INPUT_MIN_HEIGHT} from '../../constants';
 
 // PALETTES
 
@@ -106,7 +107,27 @@ export const fonts = {
 
 // COMPONENTS
 
-export const components = {};
+export const components = {
+  Text: {
+    defaultProps: {
+      fontSize: 'md',
+    },
+  },
+  TextArea: {
+    defaultProps: {
+      fontSize: 'md',
+      borderRadius: 'xl',
+      height: INPUT_MIN_HEIGHT * 3,
+    },
+  },
+  Input: {
+    defaultProps: {
+      fontSize: 'md',
+      borderRadius: 'xl',
+      minHeight: INPUT_MIN_HEIGHT,
+    },
+  },
+};
 
 // CONFIGS
 

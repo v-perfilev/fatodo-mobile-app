@@ -25,7 +25,7 @@ const PermissionSelect = ({permission, setPermission}: PermissionSelectProps) =>
   };
 
   return (
-    <FVStack smallSpace>
+    <FVStack space="1">
       <PermissionSelectItem title={t('group:roles.read')} active={permission === 'READ'} onPress={selectRead} />
       <PermissionSelectItem title={t('group:roles.edit')} active={permission === 'EDIT'} onPress={selectEdit} />
       <PermissionSelectItem title={t('group:roles.admin')} active={permission === 'ADMIN'} onPress={selectAdmin} />

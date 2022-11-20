@@ -14,7 +14,7 @@ type UsersSelectInputProps = {
 const UsersSelectItem = ({user, isSelected, toggleSelected}: UsersSelectInputProps) => {
   return (
     <FHStack grow alignItems="center">
-      <FHStack grow smallSpace alignItems="center">
+      <FHStack grow space="1" alignItems="center">
         <UrlPic file={user.imageFilename} size="sm" border={1} />
         <Text isTruncated>{user.username}</Text>
       </FHStack>

@@ -55,7 +55,7 @@ const ImageUploadButtons = ({image, setImage, crop, loading, setLoading}: ImageU
   };
 
   return (
-    <FHStack defaultSpace>
+    <FHStack space="3">
       <OutlinedButton size="sm" onPress={selectImage} isLoading={loading}>
         {image ? t('common:imageUpload.buttons.update') : t('common:imageUpload.buttons.upload')}
       </OutlinedButton>

@@ -46,10 +46,10 @@ const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersD
   }, [chat, users]);
 
   const content = (
-    <FVStack defaultSpace>
+    <FVStack space="3">
       <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={filterUsersToShow} />
       {usersToShow.length > 0 && (
-        <FVStack defaultSpace>
+        <FVStack space="3">
           {usersToShow.map((user) => (
             <ChatMembersDialogMember chat={chat} user={user} key={user.id} />
           ))}

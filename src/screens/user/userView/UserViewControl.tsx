@@ -64,7 +64,7 @@ const UserViewControl = ({user}: UserViewControlProps) => {
   };
 
   return (
-    <FVStack defaultSpace>
+    <FVStack space="3">
       {!isContact && !isOutcomingRequest && !isIncomingRequest && (
         <OutlinedButton
           colorScheme="primary"

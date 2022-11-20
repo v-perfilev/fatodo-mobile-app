@@ -42,8 +42,8 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
     <PressableButton onPress={goToItemView}>
       <FVStack p="4" space="2" {...props}>
         <FHStack grow justifyContent="space-between" alignItems="center">
-          <FHStack defaultSpace alignItems="center">
-            <Text fontSize="16" numberOfLines={2} isTruncated>
+          <FHStack space="3" alignItems="center">
+            <Text numberOfLines={2} isTruncated>
               {item.title}
             </Text>
           </FHStack>
@@ -56,11 +56,11 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
         </FHStack>
         <FHStack grow justifyContent="space-between" alignItems="center">
           <FHStack space="2">
-            <TypeView type={item.type} fontSize="12" colorScheme={group.color} fontColor="gray.400" />
-            <PriorityView priority={item.priority} fontSize="12" colorScheme={group.color} fontColor="gray.400" />
-            <StatusView statusType={item.status} fontSize="12" colorScheme={group.color} fontColor="gray.400" />
+            <TypeView type={item.type} fontSize="xs" colorScheme={group.color} fontColor="gray.400" />
+            <PriorityView priority={item.priority} fontSize="xs" colorScheme={group.color} fontColor="gray.400" />
+            <StatusView statusType={item.status} fontSize="xs" colorScheme={group.color} fontColor="gray.400" />
           </FHStack>
-          <FHStack defaultSpace>
+          <FHStack space="3">
             {item.remindersCount > 0 && (
               <BoxWithIcon icon={<AlarmIcon color={`${group.color}.500`} size="md" />} text={item.remindersCount} />
             )}

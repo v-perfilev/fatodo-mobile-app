@@ -39,7 +39,7 @@ const GroupListCardInfo = ({group, items, itemsCount}: GroupListCardHeaderProps)
   const showButtonToCreateItem = itemsCount === 0;
 
   return (
-    <FHStack defaultSpace h="45px" px="4" my="1" alignItems="center">
+    <FHStack space="3" h="45px" px="4" my="1" alignItems="center">
       <GroupListCardAvatars group={group} />
       <FHStack grow justifyContent="center">
         {showButtonToGroupView && (

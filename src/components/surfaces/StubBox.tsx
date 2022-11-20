@@ -12,7 +12,7 @@ const StubBox = ({inverted, children, ...props}: StubBoxProps) => {
   return (
     <FCenter style={containerStyle} grow {...props}>
       <Box maxWidth="60%">
-        <Text fontSize="16" fontWeight="bold" color="gray.400" textAlign="center">
+        <Text fontSize="md" fontWeight="bold" color="gray.400" textAlign="center">
           {children}
         </Text>
       </Box>

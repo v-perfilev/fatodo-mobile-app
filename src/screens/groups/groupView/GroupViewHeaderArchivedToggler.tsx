@@ -1,7 +1,7 @@
 import React, {Dispatch, memo, SetStateAction, useEffect, useRef, useState} from 'react';
 import {Switch, Text} from 'native-base';
 import FVStack from '../../../components/boxes/FVStack';
-import {Animated, StyleProp, ViewStyle} from 'react-native';
+import {Animated, Platform, StyleProp, ViewStyle} from 'react-native';
 import {useTranslation} from 'react-i18next';
 
 type GroupViewHeaderArchivedTogglerProps = {
@@ -41,16 +41,21 @@ const GroupViewHeaderArchivedToggler = ({setShowArchived}: GroupViewHeaderArchiv
   return (
     <FVStack w="60px" alignItems="center">
       <Animated.View style={[textStyle, archivedTextAnimatedStyle]}>
-        <Text fontWeight="bold" color="gray.400" fontSize="12">
+        <Text fontWeight="bold" color="gray.400" fontSize="sm">
           {t('group:actions.archived')}
         </Text>
       </Animated.View>
       <Animated.View style={[textStyle, activeTextAnimatedStyle]}>
-        <Text fontWeight="bold" color="gray.400" fontSize="12">
+        <Text fontWeight="bold" color="gray.400" fontSize="sm">
           {t('group:actions.active')}
         </Text>
       </Animated.View>
-      <Switch mt="4" size="sm" isChecked={!localShowArchived} onToggle={toggleShowArchived} />
+      <Switch
+        mt="4"
+        size={Platform.OS === 'android' ? 'md' : 'sm'}
+        isChecked={!localShowArchived}
+        onToggle={toggleShowArchived}
+      />
     </FVStack>
   );
 };

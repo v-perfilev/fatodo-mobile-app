@@ -51,12 +51,12 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
           bg={LINEAR_GRADIENT_FUNC(theme)}
           opacity={bgOpacity}
         />
-        <FHStack defaultSpace alignItems="center">
+        <FHStack space="3" alignItems="center">
           {group?.imageFilename && <UrlPic file={group.imageFilename} colorScheme={group.color} size="9" border={1} />}
           <Text fontSize="lg" color={titleColor} isTruncated>
             {group.title}
           </Text>
-          <FHStack grow smallSpace alignItems="center" justifyContent="flex-end">
+          <FHStack grow space="1" alignItems="center" justifyContent="flex-end">
             {sorting ? (
               <GroupListCardDragButton drag={drag} colorScheme={group.color} />
             ) : (

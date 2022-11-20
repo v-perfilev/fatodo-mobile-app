@@ -13,7 +13,7 @@ const ChatListMessageOutcoming = ({message}: ChatListMessageOutcomingProps) => {
   const {t} = useTranslation();
 
   return (
-    <FHStack smallSpace>
+    <FHStack space="1">
       <Text color="gray.400" fontWeight="bold" fontSize="xs">
         {t('salutations.you')}:
       </Text>

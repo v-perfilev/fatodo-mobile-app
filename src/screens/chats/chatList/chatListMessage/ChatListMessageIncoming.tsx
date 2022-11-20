@@ -17,7 +17,7 @@ const ChatListMessageIncoming = ({message}: ChatListMessageIncomingProps) => {
   const user = useAppSelector((state) => userSelector(state, message.userId));
 
   return (
-    <FHStack smallSpace>
+    <FHStack space="1">
       <Text color="gray.400" fontWeight="bold" fontSize="xs">
         {user?.username}:
       </Text>

@@ -41,14 +41,14 @@ const ChatRenameForm = ({chat, request, cancel}: ChatRenameFormProps) => {
       onSubmit={handleSubmit}
     >
       {(formikProps) => (
-        <FVStack grow defaultSpace>
+        <FVStack grow space="3">
           <FormikTextInput
             name="text"
             label={t('chat:renameChat.fields.title.label')}
             isDisabled={formikProps.isSubmitting}
             {...formikProps}
           />
-          <FHStack defaultSpace justifyContent="flex-end">
+          <FHStack space="3" justifyContent="flex-end">
             <GhostButton colorScheme="secondary" isDisabled={formikProps.isSubmitting} onPress={cancel}>
               {t('chat:renameChat.cancel')}
             </GhostButton>

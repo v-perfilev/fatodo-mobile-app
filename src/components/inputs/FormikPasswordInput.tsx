@@ -3,7 +3,6 @@ import {FormControl, Input, useColorMode} from 'native-base';
 import VisibleOffIcon from '../icons/VisibleOffIcon';
 import {GestureResponderEvent} from 'react-native';
 import VisibleOnIcon from '../icons/VisibleOnIcon';
-import {INPUT_FONT_SIZE, INPUT_MIN_HEIGHT} from '../../constants';
 import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
 import {flowRight} from 'lodash';
 
@@ -32,14 +31,11 @@ const FormikPasswordInput = (props: FormikPasswordInputProps) => {
         type={showPassword ? 'text' : 'password'}
         autoCapitalize="none"
         placeholder={placeholder}
-        fontSize={INPUT_FONT_SIZE}
-        minHeight={`${INPUT_MIN_HEIGHT}px`}
         keyboardAppearance={colorMode}
         onChangeText={onChange}
         onBlur={onBlur}
         value={value}
         InputRightElement={InputRightElement}
-        borderRadius="xl"
       />
       {isTouched && <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>}
     </FormControl>

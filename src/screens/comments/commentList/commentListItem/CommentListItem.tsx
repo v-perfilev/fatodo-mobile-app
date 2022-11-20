@@ -37,14 +37,14 @@ const CommentListItem = ({comment, setReference}: CommentListItemProps) => {
         {user && <UserView user={user} picSize="sm" />}
         <CommentListItemReactions comment={comment} isOwnComment={isOwnComment} />
       </FVStack>
-      <FVStack grow smallSpace backgroundColor={bg} px="2" py="1.5" borderRadius="xl">
-        <FHStack defaultSpace alignItems="center">
-          <FHStack grow defaultSpace alignItems="center">
+      <FVStack grow space="1" backgroundColor={bg} px="2" py="1.5" borderRadius="xl">
+        <FHStack space="3" alignItems="center">
+          <FHStack grow space="3" alignItems="center">
             <Text color="primary.500" fontWeight="bold">
               {user?.username}
             </Text>
           </FHStack>
-          <Text color="gray.400" fontWeight="bold" fontSize="2xs">
+          <Text color="gray.400" fontWeight="bold" fontSize="xs">
             <DateView date={date} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
           </Text>
           <CommentListItemReferenceButton comment={comment} setReference={setReference} />

@@ -13,7 +13,7 @@ const ChipBox = ({children, closeAction, ...props}: ChipBoxProps) => {
 
   return (
     <PaperBox {...props} bg={chipBg} px="2" py="1" borderRadius="xl" borderWidth="0" flexDir="row" alignItems="center">
-      <Text fontWeight="bold" fontSize="xs">
+      <Text fontWeight="bold" fontSize="sm">
         {children}
       </Text>
       {closeAction && <IconButton icon={<CloseIcon />} size="sm" p="1" ml="1" onPress={closeAction} />}

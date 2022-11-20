@@ -41,8 +41,8 @@ const CalendarViewTitle = () => {
   return (
     <FHStack height={`${CALENDAR_TITLE_HEIGHT}px`} justifyContent="center" alignItems="center">
       <PressableButton onPress={handleMonthClick}>
-        <FHStack smallSpace alignItems="center">
-          <Text fontSize="16" fontWeight="bold" color="gray.400">
+        <FHStack space="1" alignItems="center">
+          <Text fontSize="lg" fontWeight="bold" color="gray.400">
             {monthWithYear}
           </Text>
           <ArrowDownIcon color="primary.500" size="lg" />

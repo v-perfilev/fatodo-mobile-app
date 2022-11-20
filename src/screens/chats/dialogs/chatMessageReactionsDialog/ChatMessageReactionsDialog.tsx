@@ -57,10 +57,10 @@ const ChatMessageReactionsDialog = ({message, show, close}: ChatMessageReactions
   }, [message?.reactions, users]);
 
   const content = (
-    <FVStack defaultSpace>
+    <FVStack space="3">
       <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={filterReactionsToShow} />
       {reactionsToShow.length > 0 && (
-        <FVStack defaultSpace>
+        <FVStack space="3">
           {reactionsToShow.map((reaction) => (
             <ChatMessageReactionsDialogItem reaction={reaction.reaction} user={reaction.user} key={reaction.user.id} />
           ))}

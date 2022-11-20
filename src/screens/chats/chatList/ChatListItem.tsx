@@ -46,12 +46,12 @@ const ChatListItem = ({chat}: ChatListItemProps) => {
 
   return (
     <PressableButton onPress={goToChat}>
-      <FHStack px="3" py="2" grow defaultSpace>
+      <FHStack px="3" py="2" grow space="3">
         {pic}
         <FHStack grow>
           <FVStack grow alignItems="stretch" justifyContent="center">
-            <FHStack smallSpace alignItems="center">
-              <FHStack grow smallSpace alignItems="center">
+            <FHStack space="2" alignItems="center">
+              <FHStack grow space="2" alignItems="center">
                 <Text color="primary.500" fontWeight="bold">
                   {title}
                 </Text>
