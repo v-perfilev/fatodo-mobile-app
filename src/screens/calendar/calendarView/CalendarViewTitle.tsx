@@ -1,6 +1,6 @@
 import React, {memo, useMemo} from 'react';
 import {Text} from 'native-base';
-import {CalendarMonth} from '../../../models/Calendar';
+import {CalendarDate, CalendarMonth} from '../../../models/Calendar';
 import {useCalendarDialogContext} from '../../../shared/contexts/dialogContexts/CalendarDialogContext';
 import {useTranslation} from 'react-i18next';
 import {CALENDAR_TITLE_HEIGHT} from '../../../constants';
@@ -14,8 +14,8 @@ import {useForceUpdate} from '../../../shared/hooks/useForceUpdate';
 import {runOnJS, useDerivedValue} from 'react-native-reanimated';
 
 const CalendarViewTitle = () => {
-  const {monthIndex, setDate} = useCalendarContext();
-  const {showSelectMonthDialog} = useCalendarDialogContext();
+  const {dateIndex, monthIndex, setDate} = useCalendarContext();
+  const {showSelectDateDialog} = useCalendarDialogContext();
   const {i18n} = useTranslation();
   const forceUpdate = useForceUpdate();
 
@@ -30,8 +30,9 @@ const CalendarViewTitle = () => {
   }, [month, i18n.language]);
 
   const handleMonthClick = (): void => {
-    const setMonth = (month: CalendarMonth) => setDate({...month, date: 0});
-    showSelectMonthDialog(month, setMonth);
+    const date = CalendarUtils.getDateByDateIndex(dateIndex.value);
+    const selectDate = (selectedDate: CalendarDate) => setDate(selectedDate);
+    showSelectDateDialog(date, selectDate);
   };
 
   useDerivedValue(() => {

@@ -7,7 +7,7 @@ import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import {Platform} from 'react-native';
 
-type PickMode = 'fullDate' | 'shortDate' | 'monthWithYear' | 'time';
+type PickMode = 'fullDate' | 'shortDate' | 'time';
 
 type DateTimePickerProps = {
   value?: Date;
@@ -23,8 +23,6 @@ const calcWidth = (mode: PickMode): string => {
   let width;
   if (mode === 'shortDate') {
     width = Platform.OS === 'android' ? '215px' : '180px';
-  } else if (mode === 'monthWithYear') {
-    width = Platform.OS === 'android' ? '190px' : '220px';
   }
   return width;
 };
@@ -33,8 +31,6 @@ const calcMarginLeft = (mode: PickMode): string => {
   let marginLeft;
   if (mode === 'shortDate') {
     marginLeft = Platform.OS === 'android' ? '0px' : '-15px';
-  } else if (mode === 'monthWithYear') {
-    marginLeft = Platform.OS === 'android' ? '-80px' : '-70px';
   }
   return marginLeft;
 };
@@ -43,8 +39,6 @@ const calcOverflow = (mode: PickMode): string => {
   let overflow;
   if (mode === 'shortDate') {
     overflow = 'hidden';
-  } else if (mode === 'monthWithYear') {
-    overflow = 'hidden';
   }
   return overflow;
 };
@@ -52,9 +46,7 @@ const calcOverflow = (mode: PickMode): string => {
 const calcLocale = (mode: PickMode, account: UserAccount) => {
   const timeFormat = account.info.timeFormat;
   let locale = account.info.language.toLowerCase();
-  if (mode === 'monthWithYear' && locale.startsWith('en')) {
-    locale = 'en_GB';
-  } else if (mode === 'time') {
+  if (mode === 'time') {
     locale = timeFormat === 'H12' ? 'en_US' : 'en_GB';
   }
   return locale;
