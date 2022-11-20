@@ -1,4 +1,4 @@
-import React, {lazy, memo, useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
 import {CalendarEnrichedDate} from '../../../../models/Calendar';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
@@ -12,8 +12,7 @@ import {CalendarReminder} from '../../../../models/Reminder';
 import {useWindowDimensions} from 'react-native';
 import AnimatedBox from '../../../../components/animated/AnimatedBox';
 import LazyLoader from '../../../../components/layouts/LazyLoader';
-
-const CalendarViewDate = lazy(() => import('../calendarViewDate/CalendarViewDate'));
+import CalendarViewDate from '../calendarViewDate/CalendarViewDate';
 
 type CalendarViewControlMonthProps = {
   monthIndex: number;

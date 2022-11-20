@@ -11,24 +11,22 @@ import CalendarViewControlWeek from './CalendarViewControlWeek';
 const LIST_INDENT = 1;
 
 const CalendarViewControlList = () => {
-  const {mode, controlIndex, monthIndex, weekIndex} = useCalendarContext();
+  const {controlIndex, monthIndex, weekIndex} = useCalendarContext();
   const forceUpdate = useForceUpdate();
 
   const monthParams = useMemo<CalendarMonthParams[]>(() => {
-    const indent = mode.value === 'month' ? LIST_INDENT : 0;
-    return ArrayUtils.range(-indent, indent).map((i) => ({
+    return ArrayUtils.range(-LIST_INDENT, LIST_INDENT).map((i) => ({
       monthIndex: monthIndex.value + i,
       controlIndex: controlIndex.value + i,
     }));
-  }, [monthIndex.value]);
+  }, [monthIndex.value, controlIndex.value]);
 
   const weekParams = useMemo<CalendarWeekParams[]>(() => {
-    const indent = mode.value === 'week' ? LIST_INDENT : 0;
-    return ArrayUtils.range(-indent, indent).map((i) => ({
+    return ArrayUtils.range(-LIST_INDENT, LIST_INDENT).map((i) => ({
       weekIndex: weekIndex.value + i,
       controlIndex: controlIndex.value + i,
     }));
-  }, [weekIndex.value]);
+  }, [weekIndex.value, controlIndex.value]);
 
   useDerivedValue(() => {
     runOnJS(forceUpdate)(monthIndex.value, weekIndex.value);

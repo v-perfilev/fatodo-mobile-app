@@ -1,4 +1,4 @@
-import React, {lazy, memo, useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {CalendarEnrichedDate} from '../../../../models/Calendar';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
 import {useAppSelector} from '../../../../store/store';
@@ -11,8 +11,7 @@ import {useWindowDimensions} from 'react-native';
 import AnimatedBox from '../../../../components/animated/AnimatedBox';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 import LazyLoader from '../../../../components/layouts/LazyLoader';
-
-const CalendarViewDate = lazy(() => import('../calendarViewDate/CalendarViewDate'));
+import CalendarViewDate from '../calendarViewDate/CalendarViewDate';
 
 type CalendarViewControlWeekProps = {
   weekIndex: number;
