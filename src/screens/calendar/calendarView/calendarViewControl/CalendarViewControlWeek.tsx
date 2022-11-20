@@ -1,4 +1,4 @@
-import React, {lazy, memo, Suspense, useMemo} from 'react';
+import React, {lazy, memo, useMemo} from 'react';
 import {CalendarEnrichedDate} from '../../../../models/Calendar';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
 import {useAppSelector} from '../../../../store/store';
@@ -10,7 +10,7 @@ import {useAnimatedStyle} from 'react-native-reanimated';
 import {useWindowDimensions} from 'react-native';
 import AnimatedBox from '../../../../components/animated/AnimatedBox';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
-import CentredSpinner from '../../../../components/surfaces/CentredSpinner';
+import LazyLoader from '../../../../components/layouts/LazyLoader';
 
 const CalendarViewDate = lazy(() => import('../calendarViewDate/CalendarViewDate'));
 
@@ -44,21 +44,12 @@ const CalendarViewControlWeek = ({weekIndex, controlIndex}: CalendarViewControlW
   }));
 
   return (
-    <AnimatedBox
-      style={style}
-      position="absolute"
-      left={width * controlIndex}
-      width={width}
-      height="100%"
-      flexDirection="row"
-      flexWrap="wrap"
-      p="1"
-    >
-      <Suspense fallback={<CentredSpinner />}>
+    <AnimatedBox style={style} position="absolute" left={width * controlIndex} width={width} height="100%" p="1">
+      <LazyLoader flexDirection="row" flexWrap="wrap">
         {dates.map((date) => (
           <CalendarViewDate date={date} key={`week_date_${date.dateIndex}`} />
         ))}
-      </Suspense>
+      </LazyLoader>
     </AnimatedBox>
   );
 };

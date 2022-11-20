@@ -72,7 +72,7 @@ const CalendarViewHorizontalPan = ({
     () => index.value,
     (next, prev) => {
       if (prev && next !== prev && next !== localIndex.value) {
-        const shouldAnimate = Math.abs(next - prev) < 7;
+        const shouldAnimate = Math.abs(next - prev) < 2;
         const newTranslateX = -next * width;
         translateX.value = shouldAnimate ? withTiming(newTranslateX) : newTranslateX;
         localIndex.value = next;

@@ -1,4 +1,4 @@
-import React, {lazy, memo, Suspense, useMemo} from 'react';
+import React, {lazy, memo, useMemo} from 'react';
 import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
 import {CalendarEnrichedDate} from '../../../../models/Calendar';
 import {CalendarUtils} from '../../../../shared/utils/CalendarUtils';
@@ -11,7 +11,7 @@ import {StoreUtils} from '../../../../shared/utils/StoreUtils';
 import {CalendarReminder} from '../../../../models/Reminder';
 import {useWindowDimensions} from 'react-native';
 import AnimatedBox from '../../../../components/animated/AnimatedBox';
-import CentredSpinner from '../../../../components/surfaces/CentredSpinner';
+import LazyLoader from '../../../../components/layouts/LazyLoader';
 
 const CalendarViewDate = lazy(() => import('../calendarViewDate/CalendarViewDate'));
 
@@ -50,21 +50,12 @@ const CalendarViewControlMonth = ({monthIndex, controlIndex}: CalendarViewContro
   }));
 
   return (
-    <AnimatedBox
-      style={style}
-      position="absolute"
-      left={width * controlIndex}
-      width={width}
-      height="100%"
-      flexDirection="row"
-      flexWrap="wrap"
-      p="1"
-    >
-      <Suspense fallback={<CentredSpinner />}>
+    <AnimatedBox style={style} position="absolute" left={width * controlIndex} width={width} height="100%" p="1">
+      <LazyLoader flexDirection="row" flexWrap="wrap">
         {dates.map((date) => (
           <CalendarViewDate date={date} activeMonthIndex={monthIndex} key={`month_date_${date.dateIndex}`} />
         ))}
-      </Suspense>
+      </LazyLoader>
     </AnimatedBox>
   );
 };

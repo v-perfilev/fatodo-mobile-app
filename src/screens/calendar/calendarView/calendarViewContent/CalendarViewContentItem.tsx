@@ -1,7 +1,7 @@
-import React, {lazy, memo, Suspense, useEffect, useRef} from 'react';
+import React, {lazy, memo, useEffect, useRef} from 'react';
 import {useWindowDimensions} from 'react-native';
 import {Box} from 'native-base';
-import CentredSpinner from '../../../../components/surfaces/CentredSpinner';
+import LazyLoader from '../../../../components/layouts/LazyLoader';
 
 const CalendarViewReminders = lazy(() => import('../calendarViewReminders/CalendarViewReminders'));
 
@@ -25,9 +25,9 @@ const CalendarViewContentItem = ({dateIndex, setHeight}: CalendarViewContentItem
 
   return (
     <Box position="absolute" left={width * dateIndex} width={width} height="100%">
-      <Suspense fallback={<CentredSpinner />}>
+      <LazyLoader>
         <CalendarViewReminders dateIndex={dateIndex} setHeight={handleHeightChange} />
-      </Suspense>
+      </LazyLoader>
     </Box>
   );
 };

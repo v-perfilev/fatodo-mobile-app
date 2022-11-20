@@ -12,11 +12,12 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 import CalendarViewPanControl from './CalendarViewPanControl';
-import {LayoutChangeEvent, StatusBar, useWindowDimensions} from 'react-native';
+import {LayoutChangeEvent, useWindowDimensions} from 'react-native';
 import {HEADER_HEIGHT, TAB_HEIGHT} from '../../../../constants';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 import CalendarViewPanContent from './CalendarViewPanContent';
 import AnimatedBox from '../../../../components/animated/AnimatedBox';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type CalendarViewPanProps = {
   control: ReactElement;
@@ -30,7 +31,7 @@ type PanContext = {
 };
 
 const GESTURE_THRESHOLD = 30;
-const BASE_HEIGHT = StatusBar.currentHeight + HEADER_HEIGHT + TAB_HEIGHT;
+const BASE_HEIGHT = HEADER_HEIGHT + TAB_HEIGHT;
 
 const calcActiveParams = (
   translationY: number,
@@ -76,8 +77,10 @@ const clamp = (value: number, min: number, max: number): number => {
 
 const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
   const {controlPanRef, contentPanRef, minControlHeight, maxControlHeight, rate, translate} = useCalendarContext();
+  const insets = useSafeAreaInsets();
   const {height} = useWindowDimensions();
-  const [containerHeightState, setContainerHeightState] = useState<number>(height - BASE_HEIGHT);
+  const verticalInsets = insets.top + insets.bottom;
+  const [containerHeightState, setContainerHeightState] = useState<number>(height - verticalInsets - BASE_HEIGHT);
   const [contentHeightState, setContentHeightState] = useState<number>(0);
 
   const controlHeight = useSharedValue<number>(maxControlHeight.value);
