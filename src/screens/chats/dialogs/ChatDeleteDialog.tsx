@@ -10,7 +10,7 @@ export type ChatDeleteDialogProps = {
   chat: Chat;
   show: boolean;
   close: () => void;
-  onSuccess: () => void;
+  onSuccess?: () => void;
 };
 
 export const defaultChatDeleteDialogProps: Readonly<ChatDeleteDialogProps> = {

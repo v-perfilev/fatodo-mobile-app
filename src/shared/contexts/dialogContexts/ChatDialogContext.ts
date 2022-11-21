@@ -9,14 +9,14 @@ interface ChatDialogState {
   showChatCreateDialog: () => void;
   showChatMembersDialog: (chat: Chat) => void;
   showChatRenameDialog: (chat: Chat) => void;
-  showChatClearDialog: (chat: Chat) => void;
-  showChatLeaveDialog: (chat: Chat, onSuccess: () => void) => void;
-  showChatDeleteDialog: (chat: Chat, onSuccess: () => void) => void;
+  showChatClearDialog: (chat: Chat, onSuccess?: () => void) => void;
+  showChatLeaveDialog: (chat: Chat, onSuccess?: () => void) => void;
+  showChatDeleteDialog: (chat: Chat, onSuccess?: () => void) => void;
   showDirectMessageDialog: (user: User) => void;
   showMessageReactionsDialog: (message: Message) => void;
   showMessageReadStatusesDialog: (message: Message) => void;
   showMessageEditDialog: (message: Message) => void;
-  showMessageDeleteDialog: (message: Message) => void;
+  showMessageDeleteDialog: (message: Message, onSuccess?: () => void) => void;
 }
 
 export const ChatDialogContext = React.createContext<ChatDialogState>(null);

@@ -105,21 +105,21 @@ const withChatDialogs = (Component: ComponentType) => (props: any) => {
     setDialogProps(ChatDialogs.RENAME, props);
   }, []);
 
-  const showChatClearDialog = useCallback((chat: Chat): void => {
+  const showChatClearDialog = useCallback((chat: Chat, onSuccess?: () => void): void => {
     const show = true;
     const close = (): void => clearDialogProps(ChatDialogs.CLEAR);
-    const props: ChatClearDialogProps = {chat, show, close};
+    const props: ChatClearDialogProps = {chat, show, close, onSuccess};
     setDialogProps(ChatDialogs.CLEAR, props);
   }, []);
 
-  const showChatLeaveDialog = useCallback((chat: Chat, onSuccess: () => void): void => {
+  const showChatLeaveDialog = useCallback((chat: Chat, onSuccess?: () => void): void => {
     const show = true;
     const close = (): void => clearDialogProps(ChatDialogs.LEAVE);
     const props: ChatLeaveDialogProps = {chat, show, close, onSuccess};
     setDialogProps(ChatDialogs.LEAVE, props);
   }, []);
 
-  const showChatDeleteDialog = useCallback((chat: Chat, onSuccess: () => void): void => {
+  const showChatDeleteDialog = useCallback((chat: Chat, onSuccess?: () => void): void => {
     const show = true;
     const close = (): void => clearDialogProps(ChatDialogs.DELETE);
     const props: ChatDeleteDialogProps = {chat, show, close, onSuccess};
@@ -154,10 +154,10 @@ const withChatDialogs = (Component: ComponentType) => (props: any) => {
     setDialogProps(ChatDialogs.MESSAGE_EDIT, props);
   }, []);
 
-  const showMessageDeleteDialog = useCallback((message: Message): void => {
+  const showMessageDeleteDialog = useCallback((message: Message, onSuccess?: () => void): void => {
     const show = true;
     const close = (): void => clearDialogProps(ChatDialogs.MESSAGE_DELETE);
-    const props: ChatDeleteMessageDialogProps = {message, show, close};
+    const props: ChatDeleteMessageDialogProps = {message, show, close, onSuccess};
     setDialogProps(ChatDialogs.MESSAGE_DELETE, props);
   }, []);
 

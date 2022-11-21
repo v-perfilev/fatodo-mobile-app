@@ -10,15 +10,17 @@ export type ChatDeleteMessageDialogProps = {
   message: Message;
   show: boolean;
   close: () => void;
+  onSuccess?: () => void;
 };
 
 export const defaultChatDeleteMessageDialogProps: Readonly<ChatDeleteMessageDialogProps> = {
   message: null,
   show: false,
   close: (): void => null,
+  onSuccess: (): void => null,
 };
 
-const ChatDeleteMessageDialog = ({message, show, close}: ChatDeleteMessageDialogProps) => {
+const ChatDeleteMessageDialog = ({message, show, close, onSuccess = () => null}: ChatDeleteMessageDialogProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const [loading, setLoading] = useDelayedState(false);
@@ -28,6 +30,7 @@ const ChatDeleteMessageDialog = ({message, show, close}: ChatDeleteMessageDialog
     dispatch(ChatActions.deleteMessageThunk(message))
       .unwrap()
       .then(() => {
+        onSuccess();
         close();
       })
       .finally(() => setLoading(false));

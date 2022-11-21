@@ -10,15 +10,17 @@ export type ChatClearDialogProps = {
   chat: Chat;
   show: boolean;
   close: () => void;
+  onSuccess?: () => void;
 };
 
 export const defaultChatClearDialogProps: Readonly<ChatClearDialogProps> = {
   chat: null,
   show: false,
   close: () => null,
+  onSuccess: () => null,
 };
 
-const ChatClearDialog = ({chat, show, close}: ChatClearDialogProps) => {
+const ChatClearDialog = ({chat, show, close, onSuccess = () => null}: ChatClearDialogProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const [loading, setLoading] = useDelayedState(false);
@@ -28,6 +30,7 @@ const ChatClearDialog = ({chat, show, close}: ChatClearDialogProps) => {
     dispatch(ChatActions.clearChatThunk(chat))
       .unwrap()
       .then(() => {
+        onSuccess();
         close();
       })
       .finally(() => setLoading(false));
