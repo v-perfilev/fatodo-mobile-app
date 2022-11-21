@@ -127,6 +127,12 @@ export const components = {
       minHeight: INPUT_MIN_HEIGHT,
     },
   },
+  Button: {
+    defaultProps: {
+      size: 'md',
+      borderRadius: 'xl',
+    },
+  },
 };
 
 // CONFIGS

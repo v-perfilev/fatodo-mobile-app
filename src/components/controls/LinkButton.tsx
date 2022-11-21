@@ -7,7 +7,7 @@ const LinkButton = React.forwardRef((props: LinkButtonProps, ref: any) => {
   const {children, ...other} = props;
 
   return (
-    <Button {...other} variant="link" _pressed={{opacity: 0.7}} ref={ref}>
+    <Button variant="link" size="lg" px="3" py="1" _pressed={{opacity: 0.7}} {...other} ref={ref}>
       {children}
     </Button>
   );

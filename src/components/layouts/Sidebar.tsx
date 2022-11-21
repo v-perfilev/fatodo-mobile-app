@@ -19,7 +19,7 @@ import {useColorModeValue} from 'native-base';
 import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
 import {accountToUser} from '../../models/User';
 
-const flexStyle: StyleProp<ViewStyle> = {flexGrow: 1};
+const flexStyle: StyleProp<ViewStyle> = {flex: 1, flexGrow: 1, paddingTop: 0};
 
 const Sidebar = ({navigation}: DrawerContentComponentProps) => {
   const dispatch = useAppDispatch();
@@ -59,7 +59,7 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
   const backgroundColor = useColorModeValue(LIGHT_BG, DARK_BG);
 
   return (
-    <DrawerContentScrollView contentContainerStyle={[flexStyle, {backgroundColor}]}>
+    <DrawerContentScrollView bounces={false} contentContainerStyle={[flexStyle, {backgroundColor}]}>
       <FVStack grow mx="3" my="4" space="6">
         <UserFullView user={accountToUser(account)} account={account} />
 
