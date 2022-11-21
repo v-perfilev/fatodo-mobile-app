@@ -9,7 +9,6 @@ import {flowRight} from 'lodash';
 import {bindActionCreators} from 'redux';
 import {setupAxiosInterceptors} from './shared/axios';
 import withStore from './shared/hocs/withStore';
-import withNativeBase from './shared/hocs/withNativeBase';
 import withNavigationContainer from './shared/hocs/withNavigationContainer';
 import withGestureHandler from './shared/hocs/withGestureHandler';
 import withDialogs from './shared/hocs/withDialogs/withDialogs';
@@ -68,7 +67,6 @@ const App = ({ready}: AppProps) => {
 export default flowRight([
   withStore,
   withGestureHandler,
-  withNativeBase,
   withNavigationContainer,
   withSnackDisplay,
   withWsClient,

@@ -1,21 +1,43 @@
-import React, {ComponentType, memo} from 'react';
+import React, {ComponentType, memo, useEffect, useState} from 'react';
 import {createNavigationContainerRef, DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {ProtectedParamList} from '../../navigators/ProtectedNavigator';
 import {flowRight} from 'lodash';
-import {useColorModeValue} from 'native-base';
+import {ColorMode, useColorMode} from 'native-base';
 import {DARK_BG, LIGHT_BG} from '../themes/colors';
+import {RootThemeProvider} from '../themes/ThemeProvider';
 
 export const navigationRef = createNavigationContainerRef<ProtectedParamList>();
 
 const withNavigationContainer = (Component: ComponentType) => (props: any) => {
-  const background = useColorModeValue(LIGHT_BG, DARK_BG);
+  const [colorMode, setColorMode] = useState<ColorMode>();
+  const background = colorMode === 'light' ? LIGHT_BG : DARK_BG;
   const theme = {...DefaultTheme, colors: {...DefaultTheme.colors, background}};
 
   return (
     <NavigationContainer theme={theme} ref={navigationRef}>
-      <Component {...props} />
+      <Component {...props} setColorMode={setColorMode} />
     </NavigationContainer>
   );
 };
 
-export default flowRight([memo, withNavigationContainer]);
+const withNativeBase = (Component: ComponentType) => (props: any) => {
+  return (
+    <RootThemeProvider>
+      <Component {...props} />
+    </RootThemeProvider>
+  );
+};
+
+const withColorModeUpdater =
+  (Component: ComponentType) =>
+  ({setColorMode, ...props}: any) => {
+    const {colorMode} = useColorMode();
+
+    useEffect(() => {
+      setColorMode(colorMode);
+    }, [colorMode]);
+
+    return <Component {...props} />;
+  };
+
+export default flowRight([memo, withNavigationContainer, withNativeBase, withColorModeUpdater]);
