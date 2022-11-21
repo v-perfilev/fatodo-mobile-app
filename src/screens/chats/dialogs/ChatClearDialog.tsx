@@ -27,9 +27,7 @@ const ChatClearDialog = ({chat, show, close}: ChatClearDialogProps) => {
     setLoading(true);
     dispatch(ChatActions.clearChatThunk(chat))
       .unwrap()
-      .then(() => {
-        close();
-      })
+      .then(() => close())
       .finally(() => setLoading(false));
   };
 

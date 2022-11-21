@@ -40,10 +40,10 @@ const withCommentDialogs = (Component: ComponentType) => (props: any) => {
     setDialogProps(CommentDialogs.EDIT, props);
   }, []);
 
-  const showCommentDeleteDialog = useCallback((comment: Comment, onSuccess?: () => void): void => {
+  const showCommentDeleteDialog = useCallback((comment: Comment): void => {
     const show = true;
     const close = (): void => clearDialogProps(CommentDialogs.DELETE);
-    const props: CommentDeleteDialogProps = {comment, show, close, onSuccess};
+    const props: CommentDeleteDialogProps = {comment, show, close};
     setDialogProps(CommentDialogs.DELETE, props);
   }, []);
 

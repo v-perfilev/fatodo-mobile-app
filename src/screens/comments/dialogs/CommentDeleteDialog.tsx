@@ -10,17 +10,15 @@ export type CommentDeleteDialogProps = {
   comment: Comment;
   show: boolean;
   close: () => void;
-  onSuccess?: () => void;
 };
 
 export const defaultCommentDeleteDialogProps: Readonly<CommentDeleteDialogProps> = {
   comment: null,
   show: false,
   close: (): void => null,
-  onSuccess: (): void => null,
 };
 
-const CommentDeleteDialog = ({comment, show, close, onSuccess = () => null}: CommentDeleteDialogProps) => {
+const CommentDeleteDialog = ({comment, show, close}: CommentDeleteDialogProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const [loading, setLoading] = useDelayedState(false);
@@ -29,10 +27,7 @@ const CommentDeleteDialog = ({comment, show, close, onSuccess = () => null}: Com
     setLoading(true);
     dispatch(CommentsActions.deleteCommentThunk(comment))
       .unwrap()
-      .then(() => {
-        onSuccess();
-        close();
-      })
+      .then(() => close())
       .finally(() => setLoading(false));
   };
 

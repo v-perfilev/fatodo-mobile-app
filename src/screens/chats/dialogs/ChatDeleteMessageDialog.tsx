@@ -27,9 +27,7 @@ const ChatDeleteMessageDialog = ({message, show, close}: ChatDeleteMessageDialog
     setLoading(true);
     dispatch(ChatActions.deleteMessageThunk(message))
       .unwrap()
-      .then(() => {
-        close();
-      })
+      .then(() => close())
       .finally(() => setLoading(false));
   };
 
