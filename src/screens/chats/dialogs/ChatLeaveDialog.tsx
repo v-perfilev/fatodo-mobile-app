@@ -10,7 +10,7 @@ export type ChatLeaveDialogProps = {
   chat: Chat;
   show: boolean;
   close: () => void;
-  onSuccess?: () => void;
+  onSuccess: () => void;
 };
 
 export const defaultChatLeaveDialogProps: Readonly<ChatLeaveDialogProps> = {
