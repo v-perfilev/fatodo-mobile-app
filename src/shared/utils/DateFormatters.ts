@@ -2,6 +2,7 @@ import moment from 'moment';
 import {tz} from 'moment-timezone';
 import {DateFormat, TimeFormat, UserAccount} from '../../models/User';
 import {FilterUtils} from './FilterUtils';
+import {DateUtils} from './DateUtils';
 
 export type TimeFormatType = 'FULL';
 export type DateFormatType = 'FULL' | 'SHORT' | 'MONTH_YEAR' | 'DEPENDS_ON_DAY';
@@ -81,16 +82,18 @@ export class DateFormatters {
     }
     if (dateFormatType === 'DEPENDS_ON_DAY') {
       formatArray.push(DateFormats.getDependsOnDayFormat(date, dateFormat));
-      moment.locale('en');
+      DateUtils.resetLocale('en');
     } else if (dateFormatType === 'FULL') {
       formatArray.push(DateFormats.getFullDateFormat(dateFormat));
-      moment.locale('en');
+      DateUtils.resetLocale('en');
     } else if (dateFormatType === 'SHORT') {
       formatArray.push(DateFormats.getShortDateFormat(dateFormat));
-      moment.locale('en');
+      DateUtils.resetLocale('en');
     } else if (dateFormatType === 'MONTH_YEAR') {
+      DateUtils.resetLocale();
       formatArray.push(DateFormats.getMonthYearFormat());
     }
+    DateUtils.resetLocale();
     const formatter = formatArray.filter(FilterUtils.notUndefinedFilter).join(', ');
     return moment(date).format(formatter);
   };
