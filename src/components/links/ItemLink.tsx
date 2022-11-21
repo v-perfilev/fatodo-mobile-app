@@ -5,20 +5,20 @@ import {ItemInfo} from '../../models/Item';
 import {TabNavigationProp} from '../../navigators/TabNavigator';
 
 type ItemLinkProps = {
-  item: ItemInfo;
+  item?: ItemInfo;
   color?: string;
 };
 
 export const ItemLink = ({item, color = 'primary.500'}: ItemLinkProps) => {
   const navigation = useNavigation<TabNavigationProp>();
 
-  const goToItem = (): void => navigation.navigate('Groups', {screen: 'ItemView', params: {itemId: item.id}});
+  const goToItem = (): void => navigation.navigate('Groups', {screen: 'ItemView', params: {itemId: item?.id}});
 
-  return (
+  return item ? (
     <Text color={color} onPress={goToItem}>
       {item.title}
     </Text>
-  );
+  ) : undefined;
 };
 
 export default ItemLink;

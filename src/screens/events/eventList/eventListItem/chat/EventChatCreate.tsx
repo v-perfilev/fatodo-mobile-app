@@ -2,7 +2,7 @@ import withEventChat, {WithEventChatProps} from '../../../../../shared/hocs/with
 import EventListItemTemplate from '../EventListItemTemplate';
 import UserLink from '../../../../../components/links/UserLink';
 import {Trans, useTranslation} from 'react-i18next';
-import React, {ReactElement} from 'react';
+import React from 'react';
 import ChatLink from '../../../../../components/links/ChatLink';
 import EventListItemUsers from '../EventListItemUsers';
 import UserView from '../../../../../components/views/UserView';
@@ -12,10 +12,6 @@ const EventChatCreate = ({user, chat, users, date}: WithEventChatProps) => {
 
   const title = t('event:chat.create.title');
 
-  const User = (): ReactElement => (user ? <UserLink user={user} /> : null);
-  const Chat = (): ReactElement => (chat ? <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink> : null);
-  const Users = (): ReactElement => (users ? <EventListItemUsers users={users} /> : null);
-
   const image = <UserView user={user} picSize="md" />;
 
   const context = user?.gender;
@@ -23,7 +19,11 @@ const EventChatCreate = ({user, chat, users, date}: WithEventChatProps) => {
     <Trans
       i18nKey="event:chat.create.content"
       context={context}
-      components={{user: <User />, chat: <Chat />, users: <Users />}}
+      components={{
+        user: <UserLink user={user} />,
+        chat: <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink>,
+        users: <EventListItemUsers users={users} />,
+      }}
     />
   );
 

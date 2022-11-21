@@ -4,12 +4,12 @@ import UserLink from '../../../../components/links/UserLink';
 import {User} from '../../../../models/User';
 
 type EventListItemUsers = {
-  users: User[];
+  users?: User[];
 };
 
 const EventListItemUsers = ({users}: EventListItemUsers) => (
   <>
-    {users.map((u, index) => (
+    {users?.map((u, index) => (
       <Text key={index}>
         {index > 0 && <>, </>}
         <UserLink user={u} />

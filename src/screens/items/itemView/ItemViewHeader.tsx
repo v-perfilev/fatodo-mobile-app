@@ -11,9 +11,7 @@ import {useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import Header from '../../../components/layouts/Header';
-import Menu, {MenuItem, MenuItemProps} from '../../../components/controls/Menu';
-import DotsVerticalIcon from '../../../components/icons/DotsVerticalIcon';
-import IconButton from '../../../components/controls/IconButton';
+import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../components/controls/Menu';
 
 type ItemViewMenuProps = {
   account: UserAccount;
@@ -48,7 +46,7 @@ const ItemViewHeader = ({account}: ItemViewMenuProps) => {
 
   return (
     <Header title={item?.title}>
-      <Menu trigger={(triggerProps) => <IconButton {...triggerProps} size="2xl" icon={<DotsVerticalIcon />} />}>
+      <Menu trigger={MenuTrigger()}>
         {menuElements.map((itemProps, index) => (
           <MenuItem {...itemProps} key={index} />
         ))}

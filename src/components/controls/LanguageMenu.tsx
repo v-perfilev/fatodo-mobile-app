@@ -26,18 +26,19 @@ const LanguageMenuItem = ({name, code, onChange}: LanguageMenuItemProps) => {
   return <MenuItem action={changeLanguage} text={name} />;
 };
 
+const LanguageMenuTrigger = (language: string) => (triggerProps: any) =>
+  (
+    <LinkButton leftIcon={<LanguageIcon />} {...triggerProps}>
+      {language}
+    </LinkButton>
+  );
+
 const LanguageMenu = ({onChange}: LanguageMenuProps) => {
   const languageCode = LanguageUtils.getLanguage();
   const language = languages.find((l) => l.code === languageCode).name;
 
   return (
-    <Menu
-      trigger={(triggerProps) => (
-        <LinkButton leftIcon={<LanguageIcon />} {...triggerProps}>
-          {language}
-        </LinkButton>
-      )}
-    >
+    <Menu trigger={LanguageMenuTrigger(language)}>
       {languages.map((lang) => (
         <LanguageMenuItem name={lang.name} code={lang.code} onChange={onChange} key={lang.code} />
       ))}

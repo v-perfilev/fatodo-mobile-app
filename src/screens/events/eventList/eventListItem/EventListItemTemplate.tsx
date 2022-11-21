@@ -35,10 +35,10 @@ const EventListItemTemplate = ({image, title, content, message, date, loading}: 
             <DateView date={dateToShow} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
           </Text>
         </FHStack>
-        <Text>{content}</Text>
+        <Text fontSize="sm">{content}</Text>
         {message && (
           <PaperBox mt="2" px="2" py="1" borderRadius="xl" borderWidth="0" bg={messageBg}>
-            <Text numberOfLines={3} isTruncated>
+            <Text fontSize="sm" numberOfLines={3} isTruncated>
               {message}
             </Text>
           </PaperBox>

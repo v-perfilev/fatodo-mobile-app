@@ -1,13 +1,11 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import Menu, {MenuItem, MenuItemProps} from '../../../../components/controls/Menu';
-import PressableButton from '../../../../components/controls/PressableButton';
+import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
 import {Message} from '../../../../models/Message';
 import {useChatDialogContext} from '../../../../shared/contexts/dialogContexts/ChatDialogContext';
 import EyeIcon from '../../../../components/icons/EyeIcon';
 import EditIcon from '../../../../components/icons/EditIcon';
 import DeleteIcon from '../../../../components/icons/DeleteIcon';
-import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
 import ReactionsIcon from '../../../../components/icons/ReactionsIcon';
 
 type ChatViewMessageMenuProps = {
@@ -62,13 +60,7 @@ const ChatViewMessageMenu = ({message, isOutcoming}: ChatViewMessageMenuProps) =
   ];
 
   return (
-    <Menu
-      trigger={(triggerProps) => (
-        <PressableButton {...triggerProps}>
-          <DotsVerticalIcon color="primary.500" size="md" />
-        </PressableButton>
-      )}
-    >
+    <Menu trigger={MenuTrigger('md')}>
       {menuItems.map((itemProps, index) => (
         <MenuItem {...itemProps} key={index} />
       ))}

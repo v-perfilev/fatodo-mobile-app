@@ -5,20 +5,20 @@ import {Text} from 'native-base';
 import {TabNavigationProp} from '../../navigators/TabNavigator';
 
 type GroupLinkProps = {
-  group: GroupInfo;
+  group?: GroupInfo;
   color?: string;
 };
 
 export const GroupLink = ({group, color = 'primary.500'}: GroupLinkProps) => {
   const navigation = useNavigation<TabNavigationProp>();
 
-  const goToGroup = (): void => navigation.navigate('Groups', {screen: 'GroupView', params: {groupId: group.id}});
+  const goToGroup = (): void => navigation.navigate('Groups', {screen: 'GroupView', params: {groupId: group?.id}});
 
-  return (
+  return group ? (
     <Text color={color} onPress={goToGroup}>
       {group.title}
     </Text>
-  );
+  ) : undefined;
 };
 
 export default GroupLink;

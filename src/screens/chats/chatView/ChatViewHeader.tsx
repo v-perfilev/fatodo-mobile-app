@@ -1,8 +1,7 @@
 import React, {useCallback, useMemo} from 'react';
 import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
 import Header from '../../../components/layouts/Header';
-import Menu, {MenuItem, MenuItemProps} from '../../../components/controls/Menu';
-import DotsVerticalIcon from '../../../components/icons/DotsVerticalIcon';
+import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../components/controls/Menu';
 import {useTranslation} from 'react-i18next';
 import MembersIcon from '../../../components/icons/MembersIcon';
 import UserPlusIcon from '../../../components/icons/UserPlusIcon';
@@ -16,7 +15,6 @@ import {useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import ChatSelectors from '../../../store/chat/chatSelectors';
-import IconButton from '../../../components/controls/IconButton';
 
 const ChatViewHeader = () => {
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
@@ -96,7 +94,7 @@ const ChatViewHeader = () => {
 
   return (
     <Header title={title}>
-      <Menu trigger={(triggerProps) => <IconButton {...triggerProps} size="2xl" icon={<DotsVerticalIcon />} />}>
+      <Menu trigger={MenuTrigger()}>
         {menuItems.map((itemProps, index) => (
           <MenuItem {...itemProps} key={index} />
         ))}

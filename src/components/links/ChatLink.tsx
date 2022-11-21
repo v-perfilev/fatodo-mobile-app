@@ -9,25 +9,25 @@ import InfoSelectors from '../../store/info/infoSelectors';
 import {ProtectedNavigationProp} from '../../navigators/ProtectedNavigator';
 
 type ChatLinkProps = PropsWithChildren<{
-  chat: ChatInfo;
+  chat?: ChatInfo;
   color?: string;
 }>;
 
 export const ChatLink = ({chat, color = 'primary.500', children}: ChatLinkProps) => {
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const navigation = useNavigation<ProtectedNavigationProp>();
-  const memberIds = chat.members.map((m) => m.userId);
+  const memberIds = chat?.members.map((m) => m.userId) || [];
   const account = useAppSelector(AuthSelectors.account);
   const users = useAppSelector((state) => usersSelector(state, memberIds));
-  const title = children || ChatUtils.getTitle(chat, users, account);
+  const title = children || chat ? ChatUtils.getTitle(chat, users, account) : undefined;
 
-  const goToChat = (): void => navigation.navigate('ChatView', {chatId: chat.id});
+  const goToChat = (): void => navigation.navigate('ChatView', {chatId: chat?.id});
 
-  return (
+  return chat ? (
     <Text color={color} onPress={goToChat}>
       {title}
     </Text>
-  );
+  ) : null;
 };
 
 export default ChatLink;

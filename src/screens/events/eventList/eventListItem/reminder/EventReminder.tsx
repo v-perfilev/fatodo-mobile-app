@@ -1,6 +1,6 @@
 import withEventReminder, {WithEventReminderProps} from '../../../../../shared/hocs/withEvents/withEventReminder';
 import {Trans, useTranslation} from 'react-i18next';
-import React, {ReactElement} from 'react';
+import React from 'react';
 import GroupLink from '../../../../../components/links/GroupLink';
 import ItemLink from '../../../../../components/links/ItemLink';
 import EventListItemTemplate from '../EventListItemTemplate';
@@ -12,12 +12,14 @@ const EventReminder = ({group, item, date}: WithEventReminderProps) => {
 
   const title = t('event:reminder.title');
 
-  const Group = (): ReactElement => (group ? <GroupLink group={group} /> : null);
-  const Item = (): ReactElement => (item ? <ItemLink item={item} /> : null);
-
   const image = <IconPic icon={<AlarmIcon />} size="md" />;
 
-  const content = <Trans i18nKey="event:reminder.content" components={{group: <Group />, item: <Item />}} />;
+  const content = (
+    <Trans
+      i18nKey="event:reminder.content"
+      components={{group: <GroupLink group={group} />, item: <ItemLink item={item} />}}
+    />
+  );
 
   const loading = !group || !item;
 

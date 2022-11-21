@@ -1,6 +1,6 @@
 import withEventComment, {WithEventCommentProps} from '../../../../../shared/hocs/withEvents/withEventComment';
 import {Trans, useTranslation} from 'react-i18next';
-import React, {ReactElement} from 'react';
+import React from 'react';
 import UserLink from '../../../../../components/links/UserLink';
 import EventListItemTemplate from '../EventListItemTemplate';
 import GroupLink from '../../../../../components/links/GroupLink';
@@ -11,10 +11,6 @@ const EventCommentReaction = ({user, group, item, comment, reaction, date}: With
   const {t} = useTranslation();
 
   const title = t('event:comment.reaction.title');
-
-  const User = (): ReactElement => (user ? <UserLink user={user} /> : null);
-  const Group = (): ReactElement => (group ? <GroupLink group={group} /> : null);
-  const Item = (): ReactElement => (item ? <ItemLink item={item} /> : null);
 
   const image = <UserReactionView user={user} size="md" reactionType={reaction} />;
 
@@ -27,7 +23,7 @@ const EventCommentReaction = ({user, group, item, comment, reaction, date}: With
       <Trans
         i18nKey="event:comment.add.contentWithItem"
         context={context}
-        components={{user: <User />, item: <Item />}}
+        components={{user: <UserLink user={user} />, item: <ItemLink item={item} />}}
       />
     );
   } else if (group) {
@@ -35,7 +31,7 @@ const EventCommentReaction = ({user, group, item, comment, reaction, date}: With
       <Trans
         i18nKey="event:comment.add.contentWithGroup"
         context={context}
-        components={{user: <User />, group: <Group />}}
+        components={{user: <UserLink user={user} />, group: <GroupLink group={group} />}}
       />
     );
   }

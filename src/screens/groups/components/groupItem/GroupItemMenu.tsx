@@ -3,18 +3,16 @@ import {Item} from '../../../../models/Item';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
 import {Group} from '../../../../models/Group';
-import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
 import {useAppDispatch} from '../../../../store/store';
 import {useTranslation} from 'react-i18next';
 import {useItemDialogContext} from '../../../../shared/contexts/dialogContexts/ItemDialogContext';
 import {GroupActions} from '../../../../store/group/groupActions';
-import Menu, {MenuItem, MenuItemProps} from '../../../../components/controls/Menu';
+import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
 import EyeIcon from '../../../../components/icons/EyeIcon';
 import PackageUpIcon from '../../../../components/icons/PackageUpIcon';
 import PackageDownIcon from '../../../../components/icons/PackageDownIcon';
 import EditIcon from '../../../../components/icons/EditIcon';
 import DeleteIcon from '../../../../components/icons/DeleteIcon';
-import IconButton from '../../../../components/controls/IconButton';
 
 type GroupItemMenuProps = {
   group: Group;
@@ -67,9 +65,7 @@ const GroupItemMenu = ({group, item, canEdit}: GroupItemMenuProps) => {
   ];
 
   return (
-    <Menu
-      trigger={(triggerProps) => <IconButton icon={<DotsVerticalIcon />} colorScheme={group.color} {...triggerProps} />}
-    >
+    <Menu trigger={MenuTrigger('lg', group.color)}>
       {menuItems.map((itemProps, index) => (
         <MenuItem {...itemProps} key={index} />
       ))}

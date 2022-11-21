@@ -13,10 +13,8 @@ import {useAppSelector} from '../../../store/store';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import Header from '../../../components/layouts/Header';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import Menu, {MenuItem, MenuItemProps} from '../../../components/controls/Menu';
-import DotsVerticalIcon from '../../../components/icons/DotsVerticalIcon';
+import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../components/controls/Menu';
 import GroupViewHeaderArchivedToggler from './GroupViewHeaderArchivedToggler';
-import IconButton from '../../../components/controls/IconButton';
 
 type GroupViewHeaderProps = {
   setShowArchived: Dispatch<SetStateAction<boolean>>;
@@ -81,7 +79,7 @@ const GroupViewHeader = ({setShowArchived}: GroupViewHeaderProps) => {
   return (
     <Header title={group?.title} imageFilename={group?.imageFilename}>
       <GroupViewHeaderArchivedToggler setShowArchived={setShowArchived} />
-      <Menu trigger={(triggerProps) => <IconButton {...triggerProps} size="2xl" icon={<DotsVerticalIcon />} />}>
+      <Menu trigger={MenuTrigger()}>
         {menuElements.map((itemProps, index) => (
           <MenuItem {...itemProps} key={index} />
         ))}

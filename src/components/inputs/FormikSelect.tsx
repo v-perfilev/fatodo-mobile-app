@@ -24,9 +24,30 @@ const FormikSelectItem = ({option, options, setCurrent}: FormikSelectItemProps) 
   return <MenuItem action={select}>{wrappedContent}</MenuItem>;
 };
 
+const FormikSelectTrigger =
+  (option: string | ReactElement, borderColor?: string, isDisabled?: boolean) => (triggerProps: any) => {
+    const filterPropsIfDisabled = (props: any): any => (!isDisabled ? props : undefined);
+
+    return (
+      <PressableButton {...filterPropsIfDisabled(triggerProps)}>
+        <PaperBox
+          minHeight={`${INPUT_MIN_HEIGHT}px`}
+          justifyContent="center"
+          px="3"
+          borderColor={borderColor}
+          borderRadius="xl"
+          opacity={isDisabled ? 0.5 : undefined}
+        >
+          {option}
+        </PaperBox>
+      </PressableButton>
+    );
+  };
+
 const FormikSelect = (props: FormikSelectProps) => {
   const {label, options, value, error, isTouched, isError, setValue, isDisabled} = props;
   const [current, setCurrent] = useState<any>(value);
+  const borderColor = useColorModeValue('gray.400', 'gray.600');
 
   const listHeight = useMemo<number>(() => Math.floor(Dimensions.get('window').height / 2), []);
   const data = useMemo<string[]>(() => Array.from(options.keys()), [options]);
@@ -64,31 +85,10 @@ const FormikSelect = (props: FormikSelectProps) => {
     }
   }, [value]);
 
-  const filterPropsIfDisabled = (props: any): any => (!isDisabled ? props : undefined);
-
-  const borderColor = useColorModeValue('gray.400', 'gray.600');
-
   return (
     <FormControl isInvalid={isTouched && isError} isDisabled={isDisabled}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
-      <Menu
-        trigger={(triggerProps) => (
-          <PressableButton {...filterPropsIfDisabled(triggerProps)}>
-            <PaperBox
-              minHeight={`${INPUT_MIN_HEIGHT}px`}
-              justifyContent="center"
-              px="3"
-              borderColor={borderColor}
-              borderRadius="xl"
-              opacity={isDisabled ? 0.5 : undefined}
-            >
-              {options.get(current)}
-            </PaperBox>
-          </PressableButton>
-        )}
-      >
-        {flatList}
-      </Menu>
+      <Menu trigger={FormikSelectTrigger(options.get(current), borderColor, isDisabled)}>{flatList}</Menu>
       {isTouched && <FormControl.ErrorMessage>{error}</FormControl.ErrorMessage>}
     </FormControl>
   );

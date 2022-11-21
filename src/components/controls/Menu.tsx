@@ -3,6 +3,9 @@ import {GestureResponderEvent} from 'react-native';
 import {Menu as NbMenu, Text} from 'native-base';
 import CentredSpinner from '../surfaces/CentredSpinner';
 import FHStack from '../boxes/FHStack';
+import IconButton from './IconButton';
+import DotsVerticalIcon from '../icons/DotsVerticalIcon';
+import {ColorScheme} from '../../shared/themes/ThemeFactory';
 
 export type MenuProps = PropsWithChildren<{
   trigger: (_props: any, state: {open: boolean}) => JSX.Element;
@@ -16,6 +19,11 @@ export type MenuItemProps = PropsWithChildren<{
   disabled?: boolean;
   hidden?: boolean;
 }>;
+
+export const MenuTrigger =
+  (size = '2xl', colorScheme?: ColorScheme) =>
+  (triggerProps: any) =>
+    <IconButton {...triggerProps} size={size} colorScheme={colorScheme} icon={<DotsVerticalIcon />} />;
 
 export const MenuItem = ({action, icon, text, children, loading, disabled, hidden = false}: MenuItemProps) => {
   return (

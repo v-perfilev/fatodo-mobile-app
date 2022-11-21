@@ -1,5 +1,5 @@
 import React from 'react';
-import Menu, {MenuItem, MenuItemProps} from '../../../../components/controls/Menu';
+import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
@@ -8,12 +8,10 @@ import PlusIcon from '../../../../components/icons/PlusIcon';
 import EyeIcon from '../../../../components/icons/EyeIcon';
 import EditIcon from '../../../../components/icons/EditIcon';
 import DeleteIcon from '../../../../components/icons/DeleteIcon';
-import DotsVerticalIcon from '../../../../components/icons/DotsVerticalIcon';
 import {Group} from '../../../../models/Group';
 import {useGroupDialogContext} from '../../../../shared/contexts/dialogContexts/GroupDialogContext';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
-import IconButton from '../../../../components/controls/IconButton';
 import {IIconButtonProps} from 'native-base';
 
 type GroupListCardMenuButtonProps = IIconButtonProps & {
@@ -64,9 +62,7 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
   ];
 
   return (
-    <Menu
-      trigger={(triggerProps) => <IconButton {...triggerProps} colorScheme={group.color} icon={<DotsVerticalIcon />} />}
-    >
+    <Menu trigger={MenuTrigger('lg', group.color)}>
       {menuItems.map((itemProps, index) => (
         <MenuItem {...itemProps} key={index} />
       ))}

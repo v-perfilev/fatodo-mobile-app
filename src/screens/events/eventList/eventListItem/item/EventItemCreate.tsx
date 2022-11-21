@@ -1,6 +1,6 @@
 import withEventItem, {WithEventItemProps} from '../../../../../shared/hocs/withEvents/withEventItem';
 import {Trans, useTranslation} from 'react-i18next';
-import React, {ReactElement} from 'react';
+import React from 'react';
 import UserLink from '../../../../../components/links/UserLink';
 import GroupLink from '../../../../../components/links/GroupLink';
 import ItemLink from '../../../../../components/links/ItemLink';
@@ -12,10 +12,6 @@ const EventItemCreate = ({user, group, item, date}: WithEventItemProps) => {
 
   const title = t('event:item.create.title');
 
-  const User = (): ReactElement => (user ? <UserLink user={user} /> : null);
-  const Group = (): ReactElement => (group ? <GroupLink group={group} /> : null);
-  const Item = (): ReactElement => (item ? <ItemLink item={item} /> : null);
-
   const image = <UserView user={user} picSize="md" />;
 
   const context = user?.gender;
@@ -23,7 +19,7 @@ const EventItemCreate = ({user, group, item, date}: WithEventItemProps) => {
     <Trans
       i18nKey="event:item.create.content"
       context={context}
-      components={{user: <User />, group: <Group />, item: <Item />}}
+      components={{user: <UserLink user={user} />, group: <GroupLink group={group} />, item: <ItemLink item={item} />}}
     />
   );
 
