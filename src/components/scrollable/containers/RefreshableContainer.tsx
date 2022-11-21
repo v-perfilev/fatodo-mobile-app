@@ -195,7 +195,7 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
       onGestureEvent={handleGestureEvent}
       onEnded={handleGestureEnded}
       onCancelled={handleGestureEnded}
-      activeOffsetY={inverted ? -10 : 10}
+      activeOffsetY={inverted ? -20 : 20}
       ref={panRef}
     >
       {content}

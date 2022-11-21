@@ -1,6 +1,6 @@
-import React, {memo, useEffect, useMemo, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {CalendarEnrichedDate} from '../../../../models/Calendar';
-import {Box, useColorMode, useTheme} from 'native-base';
+import {Box, useColorModeValue, useTheme} from 'native-base';
 import PressableButton from '../../../../components/controls/PressableButton';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
@@ -17,7 +17,6 @@ type CalendarViewDateProps = {
 const CalendarViewDate = ({date, activeMonthIndex}: CalendarViewDateProps) => {
   const {monthIndex, dateIndex, setDate} = useCalendarContext();
   const theme = useTheme();
-  const {colorMode} = useColorMode();
   const [rendered, setRendered] = useState<boolean>();
 
   const white = theme.colors.white;
@@ -30,21 +29,19 @@ const CalendarViewDate = ({date, activeMonthIndex}: CalendarViewDateProps) => {
   const gray700 = theme.colors.gray['700'];
   const gray800 = theme.colors.gray['800'];
 
+  const {activeColor, inactiveColor} = useColorModeValue(
+    {activeColor: white, inactiveColor: gray500},
+    {activeColor: gray300, inactiveColor: gray300},
+  );
+
+  const {activeDateBg, activeMonthBg, inactiveMonthBg} = useColorModeValue(
+    {activeDateBg: primary300, activeMonthBg: gray50, inactiveMonthBg: gray200},
+    {activeDateBg: primary900, activeMonthBg: gray700, inactiveMonthBg: gray800},
+  );
+
   const handlePress = (): void => {
     setDate(date);
   };
-
-  const {activeColor, inactiveColor} = useMemo(() => {
-    return colorMode === 'light'
-      ? {activeColor: white, inactiveColor: gray500}
-      : {activeColor: gray300, inactiveColor: gray300};
-  }, [colorMode]);
-
-  const {activeDateBg, activeMonthBg, inactiveMonthBg} = useMemo(() => {
-    return colorMode === 'light'
-      ? {activeDateBg: primary300, activeMonthBg: gray50, inactiveMonthBg: gray200}
-      : {activeDateBg: primary900, activeMonthBg: gray700, inactiveMonthBg: gray800};
-  }, [colorMode]);
 
   useEffect(() => {
     setRendered(true);

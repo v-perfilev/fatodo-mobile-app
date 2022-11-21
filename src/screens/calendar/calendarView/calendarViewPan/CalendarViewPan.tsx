@@ -193,8 +193,8 @@ const CalendarViewPan = ({control, content}: CalendarViewPanProps) => {
   return (
     <PanGestureHandler
       onGestureEvent={panGestureEvent}
-      failOffsetX={[-5, 5]}
-      activeOffsetY={[-5, 5]}
+      failOffsetX={[-20, 20]}
+      activeOffsetY={[-20, 20]}
       waitFor={[controlPanRef, contentPanRef]}
     >
       <AnimatedBox flex="1" onLayout={handleLayout}>

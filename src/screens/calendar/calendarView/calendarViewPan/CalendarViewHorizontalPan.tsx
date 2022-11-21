@@ -117,8 +117,8 @@ const CalendarViewHorizontalPan = ({
   return (
     <PanGestureHandler
       onGestureEvent={panGestureEvent}
-      activeOffsetX={[-5, 5]}
-      failOffsetY={[-5, 5]}
+      activeOffsetX={[-20, 20]}
+      failOffsetY={[-20, 20]}
       ref={horizontalPanRef}
     >
       <AnimatedBox flex="1" flexGrow="1" overflow="hidden">
