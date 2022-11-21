@@ -99,7 +99,7 @@ const groupsSlice = createSlice({
       const map = new Map(action.payload);
       const groupIds = Array.from(map.keys());
       const itemsFunc = (id: string): Item[] => map.get(id);
-      state.items = StoreUtils.setMultipleValuesFunc(state.itemsCount, groupIds, itemsFunc);
+      state.items = StoreUtils.setMultipleValuesFunc(state.items, groupIds, itemsFunc);
     },
 
     removeItems: (state: GroupsState, action: PayloadAction<string>) => {
@@ -124,18 +124,18 @@ const groupsSlice = createSlice({
     },
 
     removeItemsCount: (state: GroupsState, action: PayloadAction<string>) => {
-      state.itemsCount = StoreUtils.deleteValue(state.items, action.payload);
+      state.itemsCount = StoreUtils.deleteValue(state.itemsCount, action.payload);
     },
 
     setItemsLoading: (state: GroupsState, action: PayloadAction<[string, boolean][]>) => {
       const map = new Map(action.payload);
       const groupIds = Array.from(map.keys());
       const loadingFunc = (id: string): boolean => map.get(id);
-      state.itemsLoading = StoreUtils.setMultipleValuesFunc(state.itemsCount, groupIds, loadingFunc);
+      state.itemsLoading = StoreUtils.setMultipleValuesFunc(state.itemsLoading, groupIds, loadingFunc);
     },
 
     removeItemsLoading: (state: GroupsState, action: PayloadAction<string>) => {
-      state.itemsLoading = StoreUtils.deleteValue(state.items, action.payload);
+      state.itemsLoading = StoreUtils.deleteValue(state.itemsLoading, action.payload);
     },
 
     initializeCollapsed: (state: GroupsState, action: PayloadAction<string[]>) => {

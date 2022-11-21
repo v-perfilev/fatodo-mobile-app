@@ -56,11 +56,11 @@ const ImageUploadButtons = ({image, setImage, crop, loading, setLoading}: ImageU
 
   return (
     <FHStack space="3">
-      <OutlinedButton size="sm" onPress={selectImage} isLoading={loading}>
+      <OutlinedButton onPress={selectImage} isLoading={loading}>
         {image ? t('common:imageUpload.buttons.update') : t('common:imageUpload.buttons.upload')}
       </OutlinedButton>
       {image?.filename && (
-        <OutlinedButton size="sm" colorScheme="secondary" isDisabled={loading} onPress={clearImage}>
+        <OutlinedButton colorScheme="secondary" isDisabled={loading} onPress={clearImage}>
           {t('common:imageUpload.buttons.clear')}
         </OutlinedButton>
       )}
