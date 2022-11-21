@@ -20,16 +20,20 @@ type UserViewProps = {
   withUsername?: boolean;
   withPaperBox?: boolean;
   withInvertedBorder?: boolean;
+  onPressCallBack?: () => void;
 };
 
 export const UserView = (props: UserViewProps) => {
   const {user, picSize = 'xs', colorScheme} = props;
-  const {withUserPic = true, withUsername, withPaperBox, withInvertedBorder} = props;
+  const {withUserPic = true, withUsername, withPaperBox, withInvertedBorder, onPressCallBack} = props;
   const navigation = useNavigation<ProtectedNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const isAnotherUser = account.id !== user?.id;
 
-  const goToUser = (): void => navigation.navigate('UserView', {user});
+  const goToUser = (): void => {
+    onPressCallBack?.();
+    navigation.navigate('UserView', {user});
+  };
 
   let result = (
     <FHStack space="2" alignItems="center">

@@ -62,7 +62,7 @@ const ChatMessageStatusesDialog = ({message, show, close}: ChatMessageStatusesDi
       {statusesToShow.length > 0 && (
         <FVStack space="3">
           {statusesToShow.map((status) => (
-            <ChatMessageStatusesDialogItem user={status.user} key={status.user.id} />
+            <ChatMessageStatusesDialogItem user={status.user} close={close} key={status.user.id} />
           ))}
         </FVStack>
       )}

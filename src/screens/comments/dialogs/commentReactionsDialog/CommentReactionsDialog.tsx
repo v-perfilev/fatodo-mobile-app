@@ -62,7 +62,12 @@ const CommentReactionsDialog = ({comment, show, close}: CommentReactionsDialogPr
       {reactionsToShow.length > 0 && (
         <FVStack space="3">
           {reactionsToShow.map((reaction) => (
-            <CommentReactionsDialogItem reaction={reaction.reaction} user={reaction.user} key={reaction.user.id} />
+            <CommentReactionsDialogItem
+              reaction={reaction.reaction}
+              user={reaction.user}
+              close={close}
+              key={reaction.user.id}
+            />
           ))}
         </FVStack>
       )}

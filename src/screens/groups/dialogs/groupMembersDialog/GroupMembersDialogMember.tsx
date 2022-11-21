@@ -14,14 +14,21 @@ import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import {GroupActions} from '../../../../store/group/groupActions';
 
-type Props = {
+type GroupMembersDialogMemberProps = {
   group: Group;
   user: GroupUser;
   switchToEditMember: (user: GroupUser) => void;
   onDelete: (userId: string) => void;
+  close: () => void;
 };
 
-const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: Props) => {
+const GroupMembersDialogMember = ({
+  group,
+  user,
+  switchToEditMember,
+  onDelete,
+  close,
+}: GroupMembersDialogMemberProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
@@ -80,7 +87,7 @@ const GroupMembersDialogMember = ({group, user, switchToEditMember, onDelete}: P
   return (
     <FHStack>
       <FHStack grow space="1" alignItems="center">
-        <UserView user={user} withUsername withUserPic picSize="sm" />
+        <UserView user={user} withUsername withUserPic picSize="sm" onPressCallBack={close} />
         <PermissionView permission={user.permission} />
       </FHStack>
       <ControlMenu menu={menuElements} />

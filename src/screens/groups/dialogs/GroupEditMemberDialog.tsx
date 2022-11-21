@@ -49,7 +49,7 @@ const GroupEditMemberDialog: FC<Props> = ({group, user, show, close}: Props) => 
 
   const content = group && user && (
     <FVStack space="3">
-      <UserView user={user} withUsername />
+      <UserView user={user} withUsername onPressCallBack={close} />
       <PermissionSelect permission={permission} setPermission={setPermission} />
     </FVStack>
   );

@@ -81,6 +81,7 @@ const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEdi
               user={user}
               switchToEditMember={switchToEditMember}
               onDelete={onMemberDelete}
+              close={close}
               key={user.userId}
             />
           ))}

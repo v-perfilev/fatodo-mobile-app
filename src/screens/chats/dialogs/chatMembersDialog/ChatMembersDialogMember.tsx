@@ -14,9 +14,10 @@ import IconButton from '../../../../components/controls/IconButton';
 type ChatMembersDialogMemberProps = {
   chat: Chat;
   user: User;
+  close: () => void;
 };
 
-const ChatMembersDialogMember = ({chat, user}: ChatMembersDialogMemberProps) => {
+const ChatMembersDialogMember = ({chat, user, close}: ChatMembersDialogMemberProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
@@ -51,7 +52,7 @@ const ChatMembersDialogMember = ({chat, user}: ChatMembersDialogMemberProps) => 
   return (
     <FHStack>
       <FHStack grow space="1" alignItems="center">
-        <UserView user={user} withUsername withUserPic picSize="sm" />
+        <UserView user={user} withUsername withUserPic picSize="sm" onPressCallBack={close} />
       </FHStack>
       {chat && !chat.isDirect && user.id !== account.id && (
         <IconButton colorScheme="error" size="md" p="2" icon={<UserMinusIcon />} onPress={switchRemovingConfirmation} />

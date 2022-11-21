@@ -62,7 +62,12 @@ const ChatMessageReactionsDialog = ({message, show, close}: ChatMessageReactions
       {reactionsToShow.length > 0 && (
         <FVStack space="3">
           {reactionsToShow.map((reaction) => (
-            <ChatMessageReactionsDialogItem reaction={reaction.reaction} user={reaction.user} key={reaction.user.id} />
+            <ChatMessageReactionsDialogItem
+              reaction={reaction.reaction}
+              user={reaction.user}
+              close={close}
+              key={reaction.user.id}
+            />
           ))}
         </FVStack>
       )}

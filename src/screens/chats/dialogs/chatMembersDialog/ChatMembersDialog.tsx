@@ -51,7 +51,7 @@ const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersD
       {usersToShow.length > 0 && (
         <FVStack space="3">
           {usersToShow.map((user) => (
-            <ChatMembersDialogMember chat={chat} user={user} key={user.id} />
+            <ChatMembersDialogMember chat={chat} user={user} close={close} key={user.id} />
           ))}
         </FVStack>
       )}

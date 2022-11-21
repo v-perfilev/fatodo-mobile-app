@@ -8,13 +8,14 @@ import {CommentReaction} from '../../../../models/Comment';
 type CommentReactionsDialogItemProps = {
   reaction: CommentReaction;
   user: User;
+  close: () => void;
 };
 
-const CommentReactionsDialogItem = ({reaction, user}: CommentReactionsDialogItemProps) => {
+const CommentReactionsDialogItem = ({reaction, user, close}: CommentReactionsDialogItemProps) => {
   return (
     <FHStack grow space="3" alignItems="center">
       <ReactionView reactionType={reaction.type} color="primary.500" />
-      <UserView user={user} withUsername withUserPic picSize="sm" />
+      <UserView user={user} withUsername withUserPic picSize="sm" onPressCallBack={close} />
     </FHStack>
   );
 };
