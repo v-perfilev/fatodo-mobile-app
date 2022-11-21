@@ -30,7 +30,7 @@ const GroupLeaveDialog = ({group, show, close, onSuccess = () => null}: GroupLea
     dispatch(GroupsActions.leaveGroupThunk(group.id))
       .unwrap()
       .then(() => {
-        onSuccess();
+        onSuccess?.();
         close();
       })
       .finally(() => setLoading(false));

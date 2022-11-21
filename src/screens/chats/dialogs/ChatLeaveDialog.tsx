@@ -30,7 +30,7 @@ const ChatLeaveDialog = ({chat, show, close, onSuccess = () => null}: ChatLeaveD
     dispatch(ChatActions.leaveChatThunk(chat))
       .unwrap()
       .then(() => {
-        onSuccess();
+        onSuccess?.();
         close();
       })
       .finally(() => setLoading(false));

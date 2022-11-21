@@ -30,7 +30,7 @@ const GroupDeleteDialog = ({group, show, close, onSuccess = () => null}: GroupDe
     dispatch(GroupsActions.removeGroupThunk(group.id))
       .unwrap()
       .then(() => {
-        onSuccess();
+        onSuccess?.();
         close();
       })
       .finally(() => setLoading(false));
