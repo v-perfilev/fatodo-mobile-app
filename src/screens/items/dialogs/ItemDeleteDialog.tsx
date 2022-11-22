@@ -30,7 +30,7 @@ const ItemDeleteDialog = ({item, close, onSuccess = () => null}: ItemDeleteDialo
     dispatch(GroupActions.removeItemThunk(item))
       .unwrap()
       .then(() => {
-        onSuccess?.();
+        onSuccess();
         close();
       })
       .finally(() => setLoading(false));

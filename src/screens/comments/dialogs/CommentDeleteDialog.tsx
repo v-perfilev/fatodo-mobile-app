@@ -30,7 +30,7 @@ const CommentDeleteDialog = ({comment, show, close, onSuccess = () => null}: Com
     dispatch(CommentsActions.deleteCommentThunk(comment))
       .unwrap()
       .then(() => {
-        onSuccess?.();
+        onSuccess();
         close();
       })
       .finally(() => setLoading(false));

@@ -30,7 +30,7 @@ const ChatDeleteDialog = ({chat, show, close, onSuccess = () => null}: ChatDelet
     dispatch(ChatActions.deleteChatThunk(chat))
       .unwrap()
       .then(() => {
-        onSuccess?.();
+        onSuccess();
         close();
       })
       .finally(() => setLoading(false));

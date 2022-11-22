@@ -30,7 +30,7 @@ const ChatClearDialog = ({chat, show, close, onSuccess = () => null}: ChatClearD
     dispatch(ChatActions.clearChatThunk(chat))
       .unwrap()
       .then(() => {
-        onSuccess?.();
+        onSuccess();
         close();
       })
       .finally(() => setLoading(false));

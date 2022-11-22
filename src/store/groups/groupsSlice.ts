@@ -50,7 +50,9 @@ const groupsSlice = createSlice({
     removeGroup: (state: GroupsState, action: PayloadAction<string>) => {
       const groupId = action.payload;
       const group = state.groups.find((g) => g.id === groupId);
-      state.groups = ArrayUtils.deleteValueWithId(state.groups, group);
+      if (group) {
+        state.groups = ArrayUtils.deleteValueWithId(state.groups, group);
+      }
     },
 
     setMembers: (state: GroupsState, action: PayloadAction<GroupMember[]>) => {
