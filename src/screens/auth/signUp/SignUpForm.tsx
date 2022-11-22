@@ -54,7 +54,7 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
   };
 
   const handleSubmit = (): void => {
-    const language = i18n.language;
+    const language = i18n.language.toUpperCase();
     const timezone = DateUtils.getTimezone();
 
     const dto: RegistrationDTO = {

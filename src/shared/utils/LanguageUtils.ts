@@ -6,14 +6,12 @@ export class LanguageUtils {
   public static getLanguage = (): string => i18n.language;
 
   public static setLanguage = (code: string): void => {
-    i18n.changeLanguage(code?.toLowerCase()).finally();
+    DateUtils.resetLocale(code);
+    i18n.changeLanguage(code).finally();
   };
 
   public static setLanguageFromUser = (account: UserAccount): void => {
     const code = account?.info?.language?.toLowerCase();
-    if (code) {
-      DateUtils.resetLocale(code);
-      LanguageUtils.setLanguage(code);
-    }
+    code && LanguageUtils.setLanguage(code);
   };
 }

@@ -20,7 +20,7 @@ const LanguageMenuItem = ({name, code, onChange}: LanguageMenuItemProps) => {
   const changeLanguage = (): void => {
     DateUtils.resetLocale(code);
     LanguageUtils.setLanguage(code);
-    onChange && onChange(code);
+    onChange?.(code);
   };
 
   return <MenuItem action={changeLanguage} text={name} />;
