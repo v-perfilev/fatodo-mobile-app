@@ -22,7 +22,7 @@ export interface GroupFormValues {
 
 const defaultGroupFormValues: Readonly<GroupFormValues> = {
   title: '',
-  color: 'yellow',
+  color: 'turquoise',
   imageFilename: null,
   imageContent: null,
 };
