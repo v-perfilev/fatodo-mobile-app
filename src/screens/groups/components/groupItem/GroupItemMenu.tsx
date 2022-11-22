@@ -30,10 +30,6 @@ const GroupItemMenu = ({group, item, canEdit}: GroupItemMenuProps) => {
   const goToItemView = (): void => navigation.navigate('ItemView', {group, item});
   const goToItemEdit = (): void => navigation.navigate('ItemEdit', {group, item});
 
-  const deleteItem = (item: Item): void => {
-    dispatch(GroupActions.removeItemThunk(item));
-  };
-
   const toggleArchived = (): void => {
     setArchivedLoading(true);
     dispatch(GroupActions.updateItemArchivedThunk(item))
@@ -42,8 +38,7 @@ const GroupItemMenu = ({group, item, canEdit}: GroupItemMenuProps) => {
   };
 
   const openItemDeleteDialog = (): void => {
-    const onSuccess = (): void => deleteItem(item);
-    showItemDeleteDialog(item, onSuccess);
+    showItemDeleteDialog(item);
   };
 
   const menuItems: MenuItemProps[] = [
