@@ -5,8 +5,8 @@ import {MESSAGE_SKELETON_HEIGHT} from '../../../constants';
 
 const MessageOutcomingSkeleton = () => {
   return (
-    <FHStack w="100%" h={`${MESSAGE_SKELETON_HEIGHT}px`} p="2" justifyContent="flex-end" space="3" alignItems="center">
-      <Skeleton w="70%" h="60px" rounded="xl" />
+    <FHStack w="100%" h={`${MESSAGE_SKELETON_HEIGHT}px`} px="2" justifyContent="flex-end" alignItems="center">
+      <Skeleton w="70%" h="69px" rounded="xl" />
     </FHStack>
   );
 };
