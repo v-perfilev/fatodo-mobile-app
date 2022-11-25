@@ -15,8 +15,9 @@ export const axiosDefault = axios.create();
 export const axiosIgnore404 = axios.create();
 
 const retryDelay = axiosRetry.exponentialDelay;
-axiosRetry(axiosDefault, {retryDelay});
-axiosRetry(axiosIgnore404, {retryDelay});
+const retryCondition = (error: AxiosError) => !error.response && error.config.method.toLowerCase() === 'get';
+axiosRetry(axiosDefault, {retryDelay, retryCondition});
+axiosRetry(axiosIgnore404, {retryDelay, retryCondition});
 
 interface SetupAxiosActions {
   onUnauthenticated: () => void;
