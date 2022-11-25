@@ -37,57 +37,78 @@ const eventsSlice = createSlice({
 
     removeChatEvents: (state: EventsState, action: PayloadAction<string>) => {
       const chatId = action.payload;
-      state.events = state.events.filter((event) => event.chatEvent?.chatId === chatId);
+      state.events = state.events.filter((event) => {
+        const shouldFilter = event.chatEvent?.chatId === chatId;
+        return !shouldFilter;
+      });
     },
 
     removeChatReactionEvents: (state: EventsState, action: PayloadAction<[string, string]>) => {
       const [messageId, userId] = action.payload;
-      state.events = state.events.filter(
-        (event) =>
-          event.chatEvent?.messageId === messageId && event.chatEvent?.userId === userId && event.chatEvent?.reaction,
-      );
+      state.events = state.events.filter((event) => {
+        const shouldFilter =
+          event.chatEvent?.messageId === messageId && event.chatEvent?.userId === userId && event.chatEvent?.reaction;
+        return !shouldFilter;
+      });
     },
 
     removeCommentReactionEvents: (state: EventsState, action: PayloadAction<[string, string]>) => {
       const [commentId, userId] = action.payload;
-      state.events = state.events.filter(
-        (event) =>
+      state.events = state.events.filter((event) => {
+        const shouldFilter =
           event.commentEvent?.commentId === commentId &&
           event.commentEvent?.userId === userId &&
-          event.commentEvent?.reaction,
-      );
+          event.commentEvent?.reaction;
+        return !shouldFilter;
+      });
     },
 
     removeItemEvents: (state: EventsState, action: PayloadAction<string>) => {
       const itemId = action.payload;
-      state.events = state.events.filter((event) => event.itemEvent?.itemId === itemId);
+      state.events = state.events.filter((event) => {
+        const shouldFilter = event.itemEvent?.itemId === itemId;
+        return !shouldFilter;
+      });
     },
 
     removeGroupEvents: (state: EventsState, action: PayloadAction<string>) => {
       const groupId = action.payload;
-      state.events = state.events.filter((event) => event.itemEvent?.groupId === groupId);
+      state.events = state.events.filter((event) => {
+        const shouldFilter = event.itemEvent?.groupId === groupId;
+        return !shouldFilter;
+      });
     },
 
     removeCommentEvents: (state: EventsState, action: PayloadAction<string>) => {
       const targetId = action.payload;
-      state.events = state.events.filter((event) => event.commentEvent?.targetId === targetId);
+      state.events = state.events.filter((event) => {
+        const shouldFilter = event.commentEvent?.targetId === targetId;
+        return !shouldFilter;
+      });
     },
 
     removeContactEvents: (state: EventsState, action: PayloadAction<string>) => {
       const userId = action.payload;
-      state.events = state.events.filter(
-        (event) => event.contactEvent?.firstUserId === userId || event.contactEvent?.secondUserId === userId,
-      );
+      state.events = state.events.filter((event) => {
+        const shouldFilter = event.contactEvent?.firstUserId === userId || event.contactEvent?.secondUserId === userId;
+        return !shouldFilter;
+      });
     },
 
     removeReminderEventsByItemId: (state: EventsState, action: PayloadAction<string>) => {
       const itemId = action.payload;
-      state.events = state.events.filter((event) => event.reminderEvent?.itemId === itemId);
+      state.events = state.events.filter((event) => {
+        const shouldFilter = event.reminderEvent?.itemId === itemId;
+        return !shouldFilter;
+      });
     },
 
     removeReminderEventsByGroupId: (state: EventsState, action: PayloadAction<string>) => {
       const groupId = action.payload;
-      state.events = state.events.filter((event) => event.reminderEvent?.groupId === groupId);
+      state.events = state.events.filter((event) => {
+        const shouldFilter = event.reminderEvent?.groupId === groupId;
+        return !shouldFilter;
+      });
     },
 
     calculateAllLoaded: (state: EventsState, action: PayloadAction<number>) => {
