@@ -3,7 +3,7 @@ import {AppDispatch, AsyncThunkConfig} from '../store';
 import NotificationService from '../../services/NotificationService';
 import {InfoActions} from '../info/infoActions';
 import {CalendarReminder} from '../../models/Reminder';
-import {CalendarUtils} from '../../shared/utils/CalendarUtils';
+import {CalendarConstants, CalendarUtils} from '../../shared/utils/CalendarUtils';
 import {CALENDAR_LOAD_INDENT} from '../../constants';
 import calendarSlice from './calendarSlice';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
@@ -26,6 +26,7 @@ export class CalendarActions {
       const {loadingKeys, loadedKeys} = thunkAPI.getState().calendar;
       const key = CalendarUtils.buildMonthKeyByIndex(monthIndex);
       const keysToLoad = ArrayUtils.range(monthIndex - CALENDAR_LOAD_INDENT, monthIndex + CALENDAR_LOAD_INDENT)
+        .filter((index) => index >= 0 && index <= CalendarConstants.maxMonthIndex)
         .map(CalendarUtils.buildMonthKeyByIndex)
         .filter((key) => !loadedKeys.includes(key))
         .filter((key) => !loadingKeys.includes(key));
