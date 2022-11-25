@@ -10,6 +10,7 @@ import AuthSelectors from '../../store/auth/authSelectors';
 import {UserAccount} from '../../models/User';
 import {DateFormatters} from '../../shared/utils/DateFormatters';
 import {Platform} from 'react-native';
+import PressableButton from '../controls/PressableButton';
 
 type FormikDateTimePickerMode = 'date' | 'time';
 
@@ -99,14 +100,15 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
     <FormControl isInvalid={isTouched && isError} {...props}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
 
-      <ClearableTextInput
-        type="text"
-        onChangeText={handleInputChange}
-        onBlur={handleBlur(name)}
-        onPressIn={openPicker}
-        value={formattedValue}
-        editable={false}
-      />
+      <PressableButton onPress={openPicker}>
+        <ClearableTextInput
+          type="text"
+          onChangeText={handleInputChange}
+          onBlur={handleBlur(name)}
+          value={formattedValue}
+          editable={false}
+        />
+      </PressableButton>
 
       <ConfirmationDialog open={show} onAgree={onAgree} onDisagree={onDisagree} title={label} content={picker} />
 

@@ -34,7 +34,7 @@ export class ItemActions {
       const response = await ItemService.getItem(itemId);
       const itemUserIds = [response.data.createdBy, response.data.lastModifiedBy];
       thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
-      thunkAPI.dispatch(ItemActions.fetchRemindersThunk(itemId));
+      await thunkAPI.dispatch(ItemActions.fetchRemindersThunk(itemId));
       await thunkAPI.dispatch(ItemActions.fetchGroupThunk(response.data.groupId));
       return response.data;
     },

@@ -8,6 +8,7 @@ import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import IconButton from '../controls/IconButton';
 import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
+import PressableButton from '../controls/PressableButton';
 
 type DateTimeSelectMode = 'fullDate' | 'shortDate' | 'time';
 
@@ -38,7 +39,9 @@ const DateTimeSelect = ({label, setResult, mode, minimumDate}: DateTimeSelectPro
     return value ? formatValue(value, account, mode) : undefined;
   }, [value]);
 
-  const openPicker = (): void => setShow(true);
+  const openPicker = (): void => {
+    setShow(true);
+  };
 
   const closePicker = (): void => {
     setResult(value);
@@ -58,13 +61,9 @@ const DateTimeSelect = ({label, setResult, mode, minimumDate}: DateTimeSelectPro
     <>
       <FormControl>
         {<FormControl.Label>{label}</FormControl.Label>}
-        <ClearableTextInput
-          type="text"
-          value={formattedValue}
-          onChangeText={handleChangeText}
-          onPressIn={openPicker}
-          editable={false}
-        />
+        <PressableButton onPress={openPicker}>
+          <ClearableTextInput type="text" value={formattedValue} onChangeText={handleChangeText} editable={false} />
+        </PressableButton>
       </FormControl>
 
       {show && (
