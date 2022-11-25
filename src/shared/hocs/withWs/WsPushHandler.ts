@@ -11,7 +11,7 @@ import {Message, MessageReaction} from '../../../models/Message';
 import {ContactRequest} from '../../../models/Contact';
 import {Comment, CommentReaction} from '../../../models/Comment';
 import ItemService from '../../../services/ItemService';
-import {CalendarReminder} from '../../../models/Reminder';
+import {ReminderInfo} from '../../../models/Reminder';
 
 type HandlerFunc = (msg: WsEvent<any>) => void;
 
@@ -175,12 +175,12 @@ export class WsPushHandler {
   REMINDER
    */
 
-  private handleReminderEvent = (msg: WsEvent<CalendarReminder>): void => {
-    const itemIds = [msg.payload.targetId];
+  private handleReminderEvent = (msg: WsEvent<ReminderInfo>): void => {
+    const itemIds = [msg.payload.itemId];
     ItemService.getItemInfoByIds(itemIds).then((response) => {
       const title = this.t('reminder');
       const body = response.data.map((i) => i.title).join(', ');
-      const data: PushNotificationData = {itemId: msg.payload.targetId};
+      const data: PushNotificationData = {itemId: msg.payload.itemId};
       Notifications.showLocal(title, body, data, 'reminder');
     });
   };

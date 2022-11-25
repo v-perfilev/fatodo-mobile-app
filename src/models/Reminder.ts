@@ -11,6 +11,11 @@ export interface Reminder {
   monthDays?: number[];
 }
 
+export interface ReminderInfo {
+  groupId: string;
+  itemId: string;
+}
+
 export interface CalendarReminder {
   parentId: string;
   targetId: string;

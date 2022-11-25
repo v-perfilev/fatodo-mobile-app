@@ -9,7 +9,7 @@ import {Chat, ChatMember} from '../../../models/Chat';
 import {MessageReaction} from '../../../models/Message';
 import {ContactRelation, ContactRequest} from '../../../models/Contact';
 import {Comment, CommentReaction} from '../../../models/Comment';
-import {CalendarReminder} from '../../../models/Reminder';
+import {ReminderInfo} from '../../../models/Reminder';
 import {UserAccount} from '../../../models/User';
 
 type HandlerFunc = (msg: WsEvent<any>) => void;
@@ -374,8 +374,8 @@ export class WsEventHandler {
   REMINDER
    */
 
-  private handleReminderEvent = (msg: WsEvent<CalendarReminder>): void => {
-    const reminderEvent: ReminderEvent = {groupId: msg.payload.parentId, itemId: msg.payload.targetId};
+  private handleReminderEvent = (msg: WsEvent<ReminderInfo>): void => {
+    const reminderEvent: ReminderEvent = {groupId: msg.payload.groupId, itemId: msg.payload.itemId};
     const event: Event = {type: EventType.REMINDER, reminderEvent, date: msg.date};
     this.dispatch(EventsActions.addEvent(event, false));
   };
