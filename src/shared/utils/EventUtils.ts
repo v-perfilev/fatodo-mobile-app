@@ -94,7 +94,9 @@ export class EventUtils {
   };
 
   private static extractItemEventUserIds = (itemEvent: ItemEvent): string[] => {
-    return [itemEvent.userId, ...itemEvent.userIds];
+    const userIds = [itemEvent.userId];
+    itemEvent.userIds && userIds.push(...itemEvent.userIds);
+    return userIds;
   };
 
   private static extractCommentEventUserIds = (commentEvent: CommentEvent): string[] => {
@@ -102,7 +104,9 @@ export class EventUtils {
   };
 
   private static extractChatEventUserIds = (chatEvent: ChatEvent): string[] => {
-    return [chatEvent.userId, ...chatEvent.userIds];
+    const userIds = [chatEvent.userId];
+    chatEvent.userIds && userIds.push(...chatEvent.userIds);
+    return userIds;
   };
 
   private static extractItemEventGroupIds(itemEvent: ItemEvent) {
