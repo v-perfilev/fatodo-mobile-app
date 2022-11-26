@@ -19,7 +19,6 @@ import {Badge, Text, useColorModeValue, useTheme} from 'native-base';
 import Header from '../components/layouts/Header';
 import ContactsSelectors from '../store/contacts/contactsSelectors';
 import {useAppSelector} from '../store/store';
-import FBox from '../components/boxes/FBox';
 import {HEADER_HEIGHT} from '../constants';
 import PressableButton from '../components/controls/PressableButton';
 import {ContactInfo} from '../models/Contact';
@@ -68,9 +67,13 @@ const ContactNavigator = () => {
   const indicatorColor = theme.colors.secondary['500'];
   const indicatorStyle = {backgroundColor: indicatorColor, height: 3};
   const tabBarStyle: StyleProp<ViewStyle> = {
+    flex: 1,
     shadowOffset: {width: 0, height: 0},
     justifyContent: 'center',
+    marginLeft: -theme.space['2'],
+    marginRight: -theme.space['2'],
     backgroundColor: bg,
+    overflow: 'hidden',
   };
 
   const renderTabBarItem = (props: TabBarItemProps<ContactRoute>): ReactElement => {
@@ -98,16 +101,14 @@ const ContactNavigator = () => {
 
   const renderTabBar = (props: TabBarProps): ReactElement => {
     return (
-      <Header showAvatar hideGoBack hideTitle>
-        <FBox ml="1" mr="-2" overflow="hidden">
-          <TabBar
-            style={tabBarStyle}
-            indicatorStyle={indicatorStyle}
-            renderIndicator={renderIndicator}
-            renderTabBarItem={renderTabBarItem}
-            {...props}
-          />
-        </FBox>
+      <Header hideGoBack hideTitle>
+        <TabBar
+          style={tabBarStyle}
+          indicatorStyle={indicatorStyle}
+          renderIndicator={renderIndicator}
+          renderTabBarItem={renderTabBarItem}
+          {...props}
+        />
       </Header>
     );
   };

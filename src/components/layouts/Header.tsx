@@ -33,6 +33,7 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
   const isFocused = useIsFocused();
   const route = useRoute();
 
+  const showStandardItems = showAvatar || showLogo || !hideTitle;
   const label = title || t('routes.' + route.name);
 
   const goBack = useCallback(() => navigation.goBack(), [isFocused]);
@@ -43,20 +44,22 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
   return (
     <FHStack h={HEADER_HEIGHT} space="1" bg={background} px="2" alignItems="center">
       {!hideGoBack && canGoBack && <IconButton size="2xl" icon={<ArrowBackIcon />} onPress={goBack} />}
-      <FHStack space="3" alignItems="center">
-        {showAvatar && (
-          <PressableButton onPress={toggleDrawer}>
-            <UserView user={accountToUser(account)} withUserPic picSize="43px" />
-          </PressableButton>
-        )}
-        {showLogo && <Logo size={10} />}
-        {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="43px" border="1" />}
-        {!hideTitle && (
-          <Text fontWeight="400" fontSize="xl" lineHeight="xl" color="primary.500" isTruncated>
-            {label}
-          </Text>
-        )}
-      </FHStack>
+      {showStandardItems && (
+        <FHStack space="3" alignItems="center">
+          {showAvatar && (
+            <PressableButton onPress={toggleDrawer}>
+              <UserView user={accountToUser(account)} withUserPic picSize="43px" />
+            </PressableButton>
+          )}
+          {showLogo && <Logo size={10} />}
+          {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="43px" border="1" />}
+          {!hideTitle && (
+            <Text fontWeight="400" fontSize="xl" lineHeight="xl" color="primary.500" isTruncated>
+              {label}
+            </Text>
+          )}
+        </FHStack>
+      )}
       <FHStack grow h="100%" space="1" alignItems="center" justifyContent="flex-end">
         {children}
       </FHStack>

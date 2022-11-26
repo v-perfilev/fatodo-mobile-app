@@ -74,11 +74,11 @@ const TabNavigator = () => {
   const unreadEventCount = useAppSelector(EventsSelectors.unreadCount);
   const unreadMessageCount = useAppSelector(ChatsSelectors.unreadCount);
   const incomingRequestCount = useAppSelector(ContactsSelectors.incomingRequestCount);
-  const freeze = useAppSelector(CommonSelectors.freeze);
+  const freezeOnBlur = useAppSelector(CommonSelectors.freeze);
 
   return (
     <Tab.Navigator
-      screenOptions={{headerShown: false, freezeOnBlur: freeze}}
+      screenOptions={{headerShown: false, freezeOnBlur}}
       initialRouteName="Groups"
       backBehavior="initialRoute"
       tabBar={TabNavigatorBar}
