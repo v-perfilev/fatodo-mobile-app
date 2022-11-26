@@ -29,9 +29,10 @@ const ContactList = () => {
   const isFocused = useIsFocused();
   const {showContactRequestDialog} = useContactDialogContext();
   const relations = useAppSelector(ContactsSelectors.relations);
+  const relationsInitialized = useAppSelector(ContactsSelectors.relationsInitialized);
   const userIds = relations.map((r) => r.secondUserId);
   const users = useAppSelector((state) => usersSelector(state, userIds));
-  const [loading, setLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState(!relationsInitialized);
   const [filter, setFilter] = useState<string>('');
   const [relationsToShow, setRelationsToShow] = useState<ContactRelation[]>([]);
 

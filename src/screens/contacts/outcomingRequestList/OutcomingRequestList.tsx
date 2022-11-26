@@ -17,7 +17,8 @@ const OutcomingRequestList = () => {
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
   const outcomingRequests = useAppSelector(ContactsSelectors.outcomingRequests);
-  const [loading, setLoading] = useDelayedState();
+  const outcomingRequestsInitialized = useAppSelector(ContactsSelectors.outcomingRequestsInitialized);
+  const [loading, setLoading] = useDelayedState(!outcomingRequestsInitialized);
 
   const refresh = async (): Promise<void> => {
     await dispatch(ContactsActions.fetchOutcomingRequestsThunk());

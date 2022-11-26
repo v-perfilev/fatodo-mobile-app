@@ -22,6 +22,18 @@ class ContactsSelectors {
   static outcomingRequests = createSelector(getContactsState, (state) => state.outcomingRequests as ContactRequest[]);
 
   static incomingRequests = createSelector(getContactsState, (state) => state.incomingRequests as ContactRequest[]);
+
+  static relationsInitialized = createSelector(getContactsState, (state) => state.relationsInitialized as boolean);
+
+  static outcomingRequestsInitialized = createSelector(
+    getContactsState,
+    (state) => state.outcomingRequestsInitialized as boolean,
+  );
+
+  static incomingRequestsInitialized = createSelector(
+    getContactsState,
+    (state) => state.incomingRequestsInitialized as boolean,
+  );
 }
 
 export default ContactsSelectors;

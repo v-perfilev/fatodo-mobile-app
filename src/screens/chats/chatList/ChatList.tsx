@@ -35,11 +35,12 @@ const ChatList = () => {
   const isFocused = useIsFocused();
   const {showChatCreateDialog} = useChatDialogContext();
   const chats = useAppSelector(ChatsSelectors.chats);
+  const chatsInitialized = useAppSelector(ChatsSelectors.chatsInitialized);
   const allLoaded = useAppSelector(ChatsSelectors.allLoaded);
   const filteredChats = useAppSelector(ChatsSelectors.filteredChats);
   const [type, setType] = useState<ControlType>('regular');
   const [filter, setFilter] = useState<string>('');
-  const [loading, setLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState(!chatsInitialized);
   const [filterLoading, setFilterLoading] = useDelayedState();
   const [filterLoadCounter, setFilterLoadCounter] = useState<number>(0);
   const listRef = useRef<FlatListType>();

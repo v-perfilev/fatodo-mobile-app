@@ -14,6 +14,7 @@ const initialState: ChatsState = {
   unreadCount: 0,
   unreadMap: [],
   allLoaded: false,
+  chatsInitialized: false,
 };
 
 const chatsSlice = createSlice({
@@ -93,6 +94,10 @@ const chatsSlice = createSlice({
     calculateAllLoaded: (state: ChatsState, action: PayloadAction<number>) => {
       state.allLoaded = state.chats.length === action.payload;
     },
+
+    setChatsInitialized: (state: ChatsState, action: PayloadAction<boolean>) => {
+      state.chatsInitialized = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
@@ -108,6 +113,7 @@ const chatsSlice = createSlice({
     builder.addCase(ChatsActions.fetchChatsThunk.fulfilled, (state, action) => {
       chatsSlice.caseReducers.setChats(state, {...action, payload: action.payload.data});
       chatsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
+      chatsSlice.caseReducers.setChatsInitialized(state, {...action, payload: true});
     });
 
     /*

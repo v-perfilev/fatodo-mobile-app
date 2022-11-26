@@ -38,6 +38,8 @@ class GroupsSelectors {
       [getGroupsState, getGroupId],
       (state, groupId) => StoreUtils.getValue(state.itemsLoading, groupId, false) as boolean,
     );
+
+  static groupsInitialized = createSelector(getGroupsState, (state) => state.groupsInitialized as boolean);
 }
 
 export default GroupsSelectors;

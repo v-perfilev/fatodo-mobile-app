@@ -29,8 +29,9 @@ const GroupList = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<GroupNavigationProp>();
   const groups = useAppSelector(GroupsSelectors.groups);
+  const groupsInitialized = useAppSelector(GroupsSelectors.groupsInitialized);
   const [sorting, setSorting] = useState<boolean>(false);
-  const [loading, setLoading] = useDelayedState();
+  const [loading, setLoading] = useDelayedState(!groupsInitialized);
   const listRef = useRef<FlatListType>();
 
   const goToGroupCreate = useCallback(() => navigation.navigate('GroupCreate'), []);
@@ -77,7 +78,7 @@ const GroupList = () => {
    */
 
   useEffect(() => {
-    dispatch(GroupsActions.fetchGroupsThunk()).finally(() => setLoading(false));
+    !groupsInitialized && dispatch(GroupsActions.fetchGroupsThunk()).finally(() => setLoading(false));
   }, []);
 
   const buttons = useMemo<CornerButton[]>(

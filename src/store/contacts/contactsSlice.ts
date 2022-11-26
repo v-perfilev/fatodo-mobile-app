@@ -11,6 +11,9 @@ const initialState: ContactsState = {
   relations: [],
   outcomingRequests: [],
   incomingRequests: [],
+  relationsInitialized: false,
+  incomingRequestsInitialized: false,
+  outcomingRequestsInitialized: false,
 };
 
 const contactsSlice = createSlice({
@@ -77,6 +80,18 @@ const contactsSlice = createSlice({
     setOutcomingRequestCount: (state: ContactsState, action: PayloadAction<number>) => {
       state.outcomingRequestCount = action.payload;
     },
+
+    setRelationsInitialized: (state: ContactsState, action: PayloadAction<boolean>) => {
+      state.relationsInitialized = action.payload;
+    },
+
+    setIncomingRequestsInitialized: (state: ContactsState, action: PayloadAction<boolean>) => {
+      state.incomingRequestsInitialized = action.payload;
+    },
+
+    setOutcomingRequestsInitialized: (state: ContactsState, action: PayloadAction<boolean>) => {
+      state.outcomingRequestsInitialized = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
@@ -95,6 +110,7 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.fetchRelationsThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.setRelations(state, action);
+      contactsSlice.caseReducers.setRelationsInitialized(state, {...action, payload: true});
     });
 
     /*
@@ -102,6 +118,7 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.fetchIncomingRequestsThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.setIncomingRequests(state, action);
+      contactsSlice.caseReducers.setIncomingRequestsInitialized(state, {...action, payload: true});
     });
 
     /*
@@ -109,6 +126,7 @@ const contactsSlice = createSlice({
     */
     builder.addCase(ContactsActions.fetchOutcomingRequestsThunk.fulfilled, (state, action) => {
       contactsSlice.caseReducers.setOutcomingRequests(state, action);
+      contactsSlice.caseReducers.setOutcomingRequestsInitialized(state, {...action, payload: true});
     });
 
     /*

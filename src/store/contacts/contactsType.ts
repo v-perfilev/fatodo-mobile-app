@@ -7,4 +7,7 @@ export type ContactsState = {
   relations: ContactRelation[];
   outcomingRequests: ContactRequest[];
   incomingRequests: ContactRequest[];
+  relationsInitialized: boolean;
+  outcomingRequestsInitialized: boolean;
+  incomingRequestsInitialized: boolean;
 };

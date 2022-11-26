@@ -20,6 +20,8 @@ class ChatsSelectors {
       [getChatsState, getChatId],
       (state, chatId) => StoreUtils.getValue(state.unreadMap, chatId, []) as string[],
     );
+
+  static chatsInitialized = createSelector(getChatsState, (state) => state.chatsInitialized as boolean);
 }
 
 export default ChatsSelectors;

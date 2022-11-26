@@ -15,6 +15,7 @@ const initialState: GroupsState = {
   itemsCount: [],
   itemsLoading: [],
   itemsCollapsed: [],
+  groupsInitialized: false,
 };
 
 const groupsSlice = createSlice({
@@ -155,6 +156,10 @@ const groupsSlice = createSlice({
     removeCollapsed: (state: GroupsState, action: PayloadAction<string>) => {
       state.itemsCollapsed = StoreUtils.deleteValue(state.itemsCollapsed, action.payload);
     },
+
+    setGroupsInitialized: (state: GroupsState, action: PayloadAction<boolean>) => {
+      state.groupsInitialized = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
@@ -173,6 +178,7 @@ const groupsSlice = createSlice({
       const groupIds = action.payload.map((g) => g.id);
       groupsSlice.caseReducers.setGroups(state, action);
       groupsSlice.caseReducers.initializeCollapsed(state, {...action, payload: groupIds});
+      groupsSlice.caseReducers.setGroupsInitialized(state, {...action, payload: true});
     });
 
     /*

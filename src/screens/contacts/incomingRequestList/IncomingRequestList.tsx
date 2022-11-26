@@ -17,7 +17,8 @@ const IncomingRequestList = () => {
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
   const incomingRequests = useAppSelector(ContactsSelectors.incomingRequests);
-  const [loading, setLoading] = useDelayedState();
+  const incomingRequestsInitialized = useAppSelector(ContactsSelectors.incomingRequestsInitialized);
+  const [loading, setLoading] = useDelayedState(!incomingRequestsInitialized);
 
   const refresh = useCallback(async (): Promise<void> => {
     await dispatch(ContactsActions.fetchIncomingRequestsThunk());
