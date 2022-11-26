@@ -24,6 +24,10 @@ export class EventsActions {
     dispatch(eventsSlice.actions.removeChatReactionEvents([messageId, userId]));
   };
 
+  static removeCommentEvent = (commentId: string) => async (dispatch: AppDispatch) => {
+    dispatch(eventsSlice.actions.removeCommentEvent(commentId));
+  };
+
   static removeCommentReactionEvents = (commentId: string, userId: string) => async (dispatch: AppDispatch) => {
     dispatch(eventsSlice.actions.removeCommentReactionEvents([commentId, userId]));
   };

@@ -79,6 +79,14 @@ const eventsSlice = createSlice({
       });
     },
 
+    removeCommentEvent: (state: EventsState, action: PayloadAction<string>) => {
+      const commentId = action.payload;
+      state.events = state.events.filter((event) => {
+        const shouldFilter = event.commentEvent?.commentId === commentId;
+        return !shouldFilter;
+      });
+    },
+
     removeCommentEvents: (state: EventsState, action: PayloadAction<string>) => {
       const targetId = action.payload;
       state.events = state.events.filter((event) => {

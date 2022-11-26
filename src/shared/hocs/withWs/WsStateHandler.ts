@@ -97,6 +97,8 @@ export class WsStateHandler {
         return this.handleCommentCreateEvent;
       case 'COMMENT_UPDATE':
         return this.handleCommentUpdateEvent;
+      case 'COMMENT_DELETE':
+        return this.handleCommentDeleteEvent;
       case 'COMMENT_REACTION':
         return this.handleCommentReactionEvent;
       // FALLBACK
@@ -295,6 +297,10 @@ export class WsStateHandler {
 
   private handleCommentUpdateEvent = (msg: WsEvent<Comment>): void => {
     this.dispatch(CommentsActions.updateComment(msg.payload));
+  };
+
+  private handleCommentDeleteEvent = (msg: WsEvent<Comment>): void => {
+    this.dispatch(CommentsActions.deleteComment(msg.payload));
   };
 
   private handleCommentReactionEvent = (msg: WsEvent<CommentReaction>): void => {

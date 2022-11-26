@@ -27,6 +27,10 @@ export class CommentsActions {
     dispatch(commentsSlice.actions.setComments([comment]));
   };
 
+  static deleteComment = (comment: Comment) => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.setComments([comment]));
+  };
+
   static updateCommentReaction = (commentReaction: CommentReaction) => async (dispatch: AppDispatch) => {
     dispatch(commentsSlice.actions.setCommentReaction(commentReaction));
   };

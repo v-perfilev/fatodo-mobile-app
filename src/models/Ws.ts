@@ -51,6 +51,11 @@ export type WsContactEventType =
   | 'CONTACT_DELETE_OUTCOMING'
   | 'CONTACT_DELETE';
 
-export type WsCommentEventType = 'COMMENT_CREATE' | 'COMMENT_UPDATE' | 'COMMENT_REACTION' | 'COMMENT_REACTION_INCOMING';
+export type WsCommentEventType =
+  | 'COMMENT_CREATE'
+  | 'COMMENT_UPDATE'
+  | 'COMMENT_DELETE'
+  | 'COMMENT_REACTION'
+  | 'COMMENT_REACTION_INCOMING';
 
 export type WsReminderEventType = 'REMINDER';

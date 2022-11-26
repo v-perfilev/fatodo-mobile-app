@@ -83,6 +83,8 @@ export class WsEventHandler {
       // COMMENT
       case 'COMMENT_CREATE':
         return this.handleCommentCreateEvent;
+      case 'COMMENT_DELETE':
+        return this.handleCommentDeleteEvent;
       case 'COMMENT_REACTION_INCOMING':
         return this.handleCommentReactionIncomingEvent;
       // REMINDER
@@ -355,6 +357,13 @@ export class WsEventHandler {
     const event: Event = {type: EventType.COMMENT_CREATE, commentEvent, date: msg.date};
     const isOwnEvent = this.account.id === userId;
     this.dispatch(EventsActions.addEvent(event, isOwnEvent));
+  };
+
+  private handleCommentDeleteEvent = (msg: WsEvent<Comment>): void => {
+    const comment = msg.payload;
+    if (comment.isDeleted) {
+      this.dispatch(EventsActions.removeCommentEvent(comment.id));
+    }
   };
 
   private handleCommentReactionIncomingEvent = (msg: WsEvent<CommentReaction>): void => {
