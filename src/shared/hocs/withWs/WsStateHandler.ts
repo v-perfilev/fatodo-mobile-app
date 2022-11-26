@@ -86,10 +86,8 @@ export class WsStateHandler {
         return this.handleContactAcceptIncomingEvent;
       case 'CONTACT_ACCEPT_OUTCOMING':
         return this.handleContactAcceptOutcomingEvent;
-      case 'CONTACT_DELETE_INCOMING':
-        return this.handleContactDeleteIncomingEvent;
-      case 'CONTACT_DELETE_OUTCOMING':
-        return this.handleContactDeleteOutcomingEvent;
+      case 'CONTACT_DECLINE':
+        return this.handleContactDeclineEvent;
       case 'CONTACT_DELETE':
         return this.handleContactDeleteEvent;
       // COMMENT
@@ -270,11 +268,8 @@ export class WsStateHandler {
     this.dispatch(ContactsActions.acceptOutcomingRequest(msg.payload.recipientId));
   };
 
-  private handleContactDeleteIncomingEvent = (msg: WsEvent<ContactRequest>): void => {
+  private handleContactDeclineEvent = (msg: WsEvent<ContactRequest>): void => {
     this.dispatch(ContactsActions.removeIncomingRequest(msg.payload.requesterId));
-  };
-
-  private handleContactDeleteOutcomingEvent = (msg: WsEvent<ContactRequest>): void => {
     this.dispatch(ContactsActions.removeOutcomingRequest(msg.payload.recipientId));
   };
 
