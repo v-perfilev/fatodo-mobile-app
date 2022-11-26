@@ -23,6 +23,7 @@ import {HEADER_HEIGHT} from '../constants';
 import PressableButton from '../components/controls/PressableButton';
 import {ContactInfo} from '../models/Contact';
 import {DARK_BG, LIGHT_BG} from '../shared/themes/colors';
+import FBox from '../components/boxes/FBox';
 
 type TabBarProps = SceneRendererProps & {navigationState: NavigationState<ContactRoute>};
 
@@ -35,7 +36,7 @@ type ContactRoute = Route & {
 const initialLayout = {width: Dimensions.get('window').width};
 
 const buildRoutes = (info: ContactInfo): ContactRoute[] => [
-  {key: 'relations', count: info.relationCount, maxCount: 999, showBadgeAlways: true},
+  {key: 'relations', count: info.relationCount, maxCount: 99, showBadgeAlways: true},
   {key: 'incoming', count: info.incomingRequestCount, maxCount: 9, showBadgeAlways: false},
   {key: 'outcoming', count: info.outcomingRequestCount, maxCount: 9, showBadgeAlways: false},
 ];
@@ -62,19 +63,11 @@ const ContactNavigator = () => {
     ) : null;
   };
 
-  const bg = useColorModeValue(LIGHT_BG, DARK_BG);
+  const backgroundColor = useColorModeValue(LIGHT_BG, DARK_BG);
 
   const indicatorColor = theme.colors.secondary['500'];
   const indicatorStyle = {backgroundColor: indicatorColor, height: 3};
-  const tabBarStyle: StyleProp<ViewStyle> = {
-    flex: 1,
-    shadowOffset: {width: 0, height: 0},
-    justifyContent: 'center',
-    marginLeft: -theme.space['2'],
-    marginRight: -theme.space['2'],
-    backgroundColor: bg,
-    overflow: 'hidden',
-  };
+  const tabBarStyle: StyleProp<ViewStyle> = {backgroundColor};
 
   const renderTabBarItem = (props: TabBarItemProps<ContactRoute>): ReactElement => {
     return (
@@ -88,7 +81,9 @@ const ContactNavigator = () => {
         alignItems="center"
       >
         <FHStack space="1" mt="3px">
-          <Text color="primary.500">{t(`contact:${props.route.key}.title`)}</Text>
+          <Text fontSize="sm" fontWeight="bold" color="primary.500">
+            {t(`contact:${props.route.key}.title`)}
+          </Text>
           {renderBadge(props.route)}
         </FHStack>
       </PressableButton>
@@ -102,13 +97,15 @@ const ContactNavigator = () => {
   const renderTabBar = (props: TabBarProps): ReactElement => {
     return (
       <Header hideGoBack hideTitle>
-        <TabBar
-          style={tabBarStyle}
-          indicatorStyle={indicatorStyle}
-          renderIndicator={renderIndicator}
-          renderTabBarItem={renderTabBarItem}
-          {...props}
-        />
+        <FBox mx="-2" mb="0.5" overflow="hidden">
+          <TabBar
+            style={tabBarStyle}
+            indicatorStyle={indicatorStyle}
+            renderIndicator={renderIndicator}
+            renderTabBarItem={renderTabBarItem}
+            {...props}
+          />
+        </FBox>
       </Header>
     );
   };
