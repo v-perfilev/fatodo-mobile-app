@@ -9,6 +9,7 @@ import {ColorScheme} from '../../shared/themes/ThemeFactory';
 
 export type MenuProps = PropsWithChildren<{
   trigger: (_props: any, state: {open: boolean}) => JSX.Element;
+  menuItems?: MenuItemProps[];
 }>;
 
 export type MenuItemProps = PropsWithChildren<{
@@ -40,12 +41,17 @@ export const MenuItem = ({action, icon, text, children, loading, disabled, hidde
   );
 };
 
-const Menu = ({trigger, children}: MenuProps) => {
-  return (
+const Menu = ({trigger, menuItems, children}: MenuProps) => {
+  const showMenu = children || menuItems?.map((menuElement) => !menuElement.hidden).length > 0;
+
+  return showMenu ? (
     <NbMenu defaultIsOpen={false} trigger={trigger} borderRadius="xl" p="0" overflow="hidden">
       {children}
+      {menuItems?.map((itemProps, index) => (
+        <MenuItem {...itemProps} key={index} />
+      ))}
     </NbMenu>
-  );
+  ) : null;
 };
 
 export default Menu;

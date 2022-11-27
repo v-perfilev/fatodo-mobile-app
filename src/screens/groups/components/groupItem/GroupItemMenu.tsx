@@ -7,7 +7,7 @@ import {useAppDispatch} from '../../../../store/store';
 import {useTranslation} from 'react-i18next';
 import {useItemDialogContext} from '../../../../shared/contexts/dialogContexts/ItemDialogContext';
 import {GroupActions} from '../../../../store/group/groupActions';
-import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
+import Menu, {MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
 import EyeIcon from '../../../../components/icons/EyeIcon';
 import PackageUpIcon from '../../../../components/icons/PackageUpIcon';
 import PackageDownIcon from '../../../../components/icons/PackageDownIcon';
@@ -55,17 +55,21 @@ const GroupItemMenu = ({group, item, canEdit}: GroupItemMenuProps) => {
       disabled: archivedLoading,
       hidden: !canEdit,
     },
-    {action: goToItemEdit, icon: <EditIcon color={`${group.color}.500`} />, text: t('group:actions.edit')},
-    {action: openItemDeleteDialog, icon: <DeleteIcon color="error.500" />, text: t('group:actions.delete')},
+    {
+      action: goToItemEdit,
+      icon: <EditIcon color={`${group.color}.500`} />,
+      text: t('group:actions.edit'),
+      hidden: !canEdit,
+    },
+    {
+      action: openItemDeleteDialog,
+      icon: <DeleteIcon color="error.500" />,
+      text: t('group:actions.delete'),
+      hidden: !canEdit,
+    },
   ];
 
-  return (
-    <Menu trigger={MenuTrigger('lg', group.color)}>
-      {menuItems.map((itemProps, index) => (
-        <MenuItem {...itemProps} key={index} />
-      ))}
-    </Menu>
-  );
+  return <Menu trigger={MenuTrigger('lg', group.color)} menuItems={menuItems} />;
 };
 
 export default GroupItemMenu;

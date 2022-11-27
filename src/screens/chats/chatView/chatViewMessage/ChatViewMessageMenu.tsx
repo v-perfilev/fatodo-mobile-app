@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
+import Menu, {MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
 import {Message} from '../../../../models/Message';
 import {useChatDialogContext} from '../../../../shared/contexts/dialogContexts/ChatDialogContext';
 import EyeIcon from '../../../../components/icons/EyeIcon';
@@ -59,13 +59,7 @@ const ChatViewMessageMenu = ({message, isOutcoming}: ChatViewMessageMenuProps) =
     },
   ];
 
-  return (
-    <Menu trigger={MenuTrigger('md')}>
-      {menuItems.map((itemProps, index) => (
-        <MenuItem {...itemProps} key={index} />
-      ))}
-    </Menu>
-  );
+  return <Menu trigger={MenuTrigger('md')} menuItems={menuItems} />;
 };
 
 export default ChatViewMessageMenu;

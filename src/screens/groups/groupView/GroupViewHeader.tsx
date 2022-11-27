@@ -13,7 +13,7 @@ import {useAppSelector} from '../../../store/store';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import Header from '../../../components/layouts/Header';
 import AuthSelectors from '../../../store/auth/authSelectors';
-import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../components/controls/Menu';
+import Menu, {MenuItemProps, MenuTrigger} from '../../../components/controls/Menu';
 import GroupViewHeaderArchivedToggler from './GroupViewHeaderArchivedToggler';
 
 type GroupViewHeaderProps = {
@@ -53,7 +53,7 @@ const GroupViewHeader = ({setShowArchived}: GroupViewHeaderProps) => {
   const canAdmin = group && GroupUtils.canAdmin(account, group);
   const canLeave = group && GroupUtils.canLeave(account, group);
 
-  const menuElements: MenuItemProps[] = [
+  const menuItems: MenuItemProps[] = [
     {icon: <EditIcon color="primary.500" />, action: goToGroupEdit, text: t('group:actions.edit'), hidden: !canAdmin},
     {icon: <MembersIcon color="primary.500" />, action: openGroupMembersDialog, text: t('group:actions.members')},
     {
@@ -79,11 +79,7 @@ const GroupViewHeader = ({setShowArchived}: GroupViewHeaderProps) => {
   return (
     <Header title={group?.title} imageFilename={group?.imageFilename}>
       <GroupViewHeaderArchivedToggler setShowArchived={setShowArchived} />
-      <Menu trigger={MenuTrigger()}>
-        {menuElements.map((itemProps, index) => (
-          <MenuItem {...itemProps} key={index} />
-        ))}
-      </Menu>
+      <Menu trigger={MenuTrigger()} menuItems={menuItems}></Menu>
     </Header>
   );
 };

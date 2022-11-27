@@ -1,5 +1,5 @@
 import React from 'react';
-import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
+import Menu, {MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
@@ -61,13 +61,7 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
     },
   ];
 
-  return (
-    <Menu trigger={MenuTrigger('lg', group.color)}>
-      {menuItems.map((itemProps, index) => (
-        <MenuItem {...itemProps} key={index} />
-      ))}
-    </Menu>
-  );
+  return <Menu trigger={MenuTrigger('lg', group.color)} menuItems={menuItems}></Menu>;
 };
 
 export default GroupListCardMenuButton;

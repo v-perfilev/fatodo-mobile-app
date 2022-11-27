@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import {useTranslation} from 'react-i18next';
-import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
+import Menu, {MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
 import EditIcon from '../../../../components/icons/EditIcon';
 import DeleteIcon from '../../../../components/icons/DeleteIcon';
 import ReactionsIcon from '../../../../components/icons/ReactionsIcon';
@@ -59,13 +59,7 @@ const CommentListItemMenu = ({comment, isOwnComment, setReference}: CommentListI
     },
   ];
 
-  return (
-    <Menu trigger={MenuTrigger('md')}>
-      {menuItems.map((itemProps, index) => (
-        <MenuItem {...itemProps} key={index} />
-      ))}
-    </Menu>
-  );
+  return <Menu trigger={MenuTrigger('md')} menuItems={menuItems} />;
 };
 
 export default CommentListItemMenu;

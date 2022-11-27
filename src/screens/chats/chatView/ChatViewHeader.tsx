@@ -1,7 +1,7 @@
 import React, {useCallback, useMemo} from 'react';
 import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';
 import Header from '../../../components/layouts/Header';
-import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../components/controls/Menu';
+import Menu, {MenuItemProps, MenuTrigger} from '../../../components/controls/Menu';
 import {useTranslation} from 'react-i18next';
 import MembersIcon from '../../../components/icons/MembersIcon';
 import UserPlusIcon from '../../../components/icons/UserPlusIcon';
@@ -94,11 +94,7 @@ const ChatViewHeader = () => {
 
   return (
     <Header title={title}>
-      <Menu trigger={MenuTrigger()}>
-        {menuItems.map((itemProps, index) => (
-          <MenuItem {...itemProps} key={index} />
-        ))}
-      </Menu>
+      <Menu trigger={MenuTrigger()} menuItems={menuItems} />
     </Header>
   );
 };

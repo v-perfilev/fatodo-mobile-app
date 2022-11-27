@@ -11,7 +11,7 @@ import {useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import Header from '../../../components/layouts/Header';
-import Menu, {MenuItem, MenuItemProps, MenuTrigger} from '../../../components/controls/Menu';
+import Menu, {MenuItemProps, MenuTrigger} from '../../../components/controls/Menu';
 
 type ItemViewMenuProps = {
   account: UserAccount;
@@ -34,23 +34,19 @@ const ItemViewHeader = ({account}: ItemViewMenuProps) => {
 
   const canEdit = group && GroupUtils.canAdmin(account, group);
 
-  const menuElements: MenuItemProps[] = [
-    {icon: <EditIcon color="primary.500" />, action: goToItemEdit, text: t('item:actions.edit'), disabled: !canEdit},
+  const menuItems: MenuItemProps[] = [
+    {icon: <EditIcon color="primary.500" />, action: goToItemEdit, text: t('item:actions.edit'), hidden: !canEdit},
     {
       icon: <DeleteIcon color="error.500" />,
       action: openItemDeleteDialog,
       text: t('item:actions.delete'),
-      disabled: !canEdit,
+      hidden: !canEdit,
     },
   ];
 
   return (
     <Header title={item?.title}>
-      <Menu trigger={MenuTrigger()}>
-        {menuElements.map((itemProps, index) => (
-          <MenuItem {...itemProps} key={index} />
-        ))}
-      </Menu>
+      <Menu trigger={MenuTrigger()} menuItems={menuItems} />
     </Header>
   );
 };
