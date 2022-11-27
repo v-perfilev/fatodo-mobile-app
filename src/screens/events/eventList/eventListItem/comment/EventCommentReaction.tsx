@@ -21,7 +21,7 @@ const EventCommentReaction = ({user, group, item, comment, reaction, date}: With
   if (item) {
     content = (
       <Trans
-        i18nKey="event:comment.add.contentWithItem"
+        i18nKey="event:comment.reaction.contentWithItem"
         context={context}
         components={{user: <UserLink user={user} />, item: <ItemLink item={item} />}}
       />
@@ -29,7 +29,7 @@ const EventCommentReaction = ({user, group, item, comment, reaction, date}: With
   } else if (group) {
     content = (
       <Trans
-        i18nKey="event:comment.add.contentWithGroup"
+        i18nKey="event:comment.reaction.contentWithGroup"
         context={context}
         components={{user: <UserLink user={user} />, group: <GroupLink group={group} />}}
       />
