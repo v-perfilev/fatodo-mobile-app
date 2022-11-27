@@ -51,6 +51,7 @@ const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEdi
   const updateUsersToShow = (filter?: string): void => {
     const memberMap = new Map(group.members.map((member) => [member.userId, member]));
     const updatedUsersToShow = users
+      .filter((user) => !deletedMemberIds.includes(user.id))
       .filter((user) => filter === undefined || user.username.includes(filter))
       .map((user) => ({...user, ...memberMap.get(user.id)}));
     setUsersToShow(updatedUsersToShow);
