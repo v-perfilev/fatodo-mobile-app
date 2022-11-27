@@ -43,7 +43,7 @@ const GroupMembersDialog = ({group, show, close, switchToAddMembers, switchToEdi
 
   const conditionalClose = (): void => {
     if (deletedMemberIds.length >= 0) {
-      setDeletedMemberIds([]);
+      setTimeout(() => setDeletedMemberIds([]), 1000);
     }
     close();
   };

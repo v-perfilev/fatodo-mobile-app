@@ -37,7 +37,7 @@ const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersD
 
   const conditionalClose = (): void => {
     if (deletedMemberIds.length >= 0) {
-      setDeletedMemberIds([]);
+      setTimeout(() => setDeletedMemberIds([]), 1000);
     }
     close();
   };
@@ -61,7 +61,7 @@ const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersD
     if (chat) {
       updateUsersToShow();
     }
-  }, [chat, users]);
+  }, [chat, users, deletedMemberIds]);
 
   const content = (
     <FVStack space="3">
