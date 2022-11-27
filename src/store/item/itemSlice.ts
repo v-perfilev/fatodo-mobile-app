@@ -25,8 +25,20 @@ const itemSlice = createSlice({
       }
     },
 
+    removeGroup: (state: ItemState, action: PayloadAction<string>) => {
+      if (state.group?.id === action.payload) {
+        state.group = undefined;
+      }
+    },
+
     setItem: (state: ItemState, action: PayloadAction<Item>) => {
       state.item = action.payload;
+    },
+
+    removeItem: (state: ItemState, action: PayloadAction<string>) => {
+      if (state.item?.id === action.payload) {
+        state.item = undefined;
+      }
     },
 
     setReminders: (state: ItemState, action: PayloadAction<Reminder[]>) => {

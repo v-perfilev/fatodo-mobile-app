@@ -28,6 +28,14 @@ export class ItemActions {
     dispatch(ItemActions.fetchRemindersThunk(item.id));
   };
 
+  static removeGroup = (groupId: string) => async (dispatch: AppDispatch) => {
+    dispatch(itemSlice.actions.removeGroup(groupId));
+  };
+
+  static removeItem = (groupId: string) => async (dispatch: AppDispatch) => {
+    dispatch(itemSlice.actions.removeItem(groupId));
+  };
+
   static fetchItemThunk = createAsyncThunk<Item, string, AsyncThunkConfig>(
     PREFIX + 'fetchItem',
     async (itemId, thunkAPI) => {

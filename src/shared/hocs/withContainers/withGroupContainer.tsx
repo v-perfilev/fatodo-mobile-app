@@ -29,6 +29,7 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
   const wrongRoute = !routeGroup && !routeGroupId;
 
   const goBack = (): void => navigation.goBack();
+  const goToGroupList = (): void => navigation.navigate('GroupList');
 
   const setGroup = (): void => {
     Promise.all([dispatch(GroupActions.reset()), dispatch(GroupActions.setGroup(routeGroup))]).finally(() =>
@@ -54,6 +55,12 @@ const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props:
       setContainerLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (!group && !containerLoading) {
+      goToGroupList();
+    }
+  }, [group]);
 
   return <Component containerLoading={containerLoading} groupId={groupId} group={group} {...props} />;
 };

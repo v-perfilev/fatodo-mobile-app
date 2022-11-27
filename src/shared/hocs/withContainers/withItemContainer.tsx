@@ -33,6 +33,8 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
   const wrongRoute = !routeGroup && !routeItem && !routeItemId;
 
   const goBack = (): void => navigation.goBack();
+  const goToGroupList = (): void => navigation.navigate('GroupList');
+  const goToGroupView = (): void => navigation.navigate('GroupView', {group});
 
   const setGroupAndItem = (): void => {
     Promise.all([
@@ -60,6 +62,14 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
       setContainerLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (!group && !containerLoading) {
+      goToGroupList();
+    } else if (!item && !containerLoading) {
+      goToGroupView();
+    }
+  }, [group, item]);
 
   return <Component containerLoading={containerLoading} group={group} item={item} {...props} />;
 };

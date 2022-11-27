@@ -131,6 +131,7 @@ export class WsStateHandler {
     const item = msg.payload;
     this.dispatch(GroupsActions.removeItem(item));
     this.dispatch(GroupActions.removeItem(item.id));
+    this.dispatch(ItemActions.removeItem(item.id));
   };
 
   private handleItemGroupCreateEvent = (msg: WsEvent<Group>): void => {
@@ -148,6 +149,8 @@ export class WsStateHandler {
   private handleItemGroupDeleteEvent = (msg: WsEvent<Group>): void => {
     const groupId = msg.payload.id;
     this.dispatch(GroupsActions.removeGroup(groupId));
+    this.dispatch(GroupActions.removeGroup(groupId));
+    this.dispatch(ItemActions.removeGroup(groupId));
   };
 
   private handleItemMemberAddEvent = (msg: WsEvent<GroupMember[]>): void => {
@@ -158,6 +161,7 @@ export class WsStateHandler {
       this.dispatch(GroupsActions.fetchGroupThunk(groupId));
     } else {
       this.dispatch(GroupsActions.addMembers(members));
+      this.dispatch(GroupActions.addMembers(members));
     }
   };
 
@@ -167,8 +171,10 @@ export class WsStateHandler {
     if (memberIds.includes(this.account.id)) {
       const groupId = msg.payload[0].groupId;
       this.dispatch(GroupsActions.removeGroup(groupId));
+      this.dispatch(GroupActions.removeGroup(groupId));
     } else {
       this.dispatch(GroupsActions.removeMembers(members));
+      this.dispatch(GroupActions.removeMembers(members));
     }
   };
 
@@ -177,14 +183,17 @@ export class WsStateHandler {
     if (member.userId === this.account.id) {
       const groupId = msg.payload.groupId;
       this.dispatch(GroupsActions.removeGroup(groupId));
+      this.dispatch(GroupActions.removeGroup(groupId));
     } else {
       this.dispatch(GroupsActions.removeMembers([member]));
+      this.dispatch(GroupActions.removeMembers([member]));
     }
   };
 
   private handleItemMemberRoleEvent = (msg: WsEvent<GroupMember>): void => {
     const member = msg.payload;
     this.dispatch(GroupsActions.updateMembers([member]));
+    this.dispatch(GroupActions.updateMembers([member]));
   };
 
   /*

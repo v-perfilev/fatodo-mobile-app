@@ -22,6 +22,22 @@ export class GroupActions {
     dispatch(groupSlice.actions.setGroup(group));
   };
 
+  static removeGroup = (groupId: string) => async (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.removeGroup(groupId));
+  };
+
+  static addMembers = (members: GroupMember[]) => (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.setMembers(members));
+  };
+
+  static updateMembers = (members: GroupMember[]) => (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.setMembers(members));
+  };
+
+  static removeMembers = (members: GroupMember[]) => (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.removeMembers(members));
+  };
+
   static addItem = (item: Item) => (dispatch: AppDispatch) => {
     dispatch(groupSlice.actions.setItem(item));
   };

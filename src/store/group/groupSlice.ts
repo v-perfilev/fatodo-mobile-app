@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {GroupState} from './groupType';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {Item} from '../../models/Item';
-import {Group} from '../../models/Group';
+import {Group, GroupMember} from '../../models/Group';
 import {GroupActions} from './groupActions';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
 import {ComparatorUtils} from '../../shared/utils/ComparatorUtils';
@@ -26,6 +26,29 @@ const groupSlice = createSlice({
     setGroup: (state: GroupState, action: PayloadAction<Group>) => {
       if (!state.group || state.group.id === action.payload.id) {
         state.group = action.payload;
+      }
+    },
+
+    removeGroup: (state: GroupState, action: PayloadAction<string>) => {
+      if (state.group?.id === action.payload) {
+        state.group = undefined;
+      }
+    },
+
+    setMembers: (state: GroupState, action: PayloadAction<GroupMember[]>) => {
+      const members = action.payload;
+      const groupId = members.length > 0 && members[0].groupId;
+      if (state.group?.id === groupId) {
+        state.group.members = filterMembers([...members, ...state.group.members]);
+      }
+    },
+
+    removeMembers: (state: GroupState, action: PayloadAction<GroupMember[]>) => {
+      const members = action.payload;
+      const groupId = members.length > 0 && members[0].groupId;
+      if (state.group?.id === groupId) {
+        const memberIds = members.map((m) => m.userId);
+        state.group.members = state.group.members.filter((m) => !memberIds.includes(m.userId));
       }
     },
 
@@ -187,6 +210,10 @@ const groupSlice = createSlice({
     });
   },
 });
+
+const filterMembers = (members: GroupMember[]): GroupMember[] => {
+  return members.filter(FilterUtils.uniqueByUserIdFilter);
+};
 
 const filterItems = (items: Item[]): Item[] => {
   return items
