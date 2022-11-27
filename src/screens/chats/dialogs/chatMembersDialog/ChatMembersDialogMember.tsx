@@ -14,10 +14,11 @@ import IconButton from '../../../../components/controls/IconButton';
 type ChatMembersDialogMemberProps = {
   chat: Chat;
   user: User;
+  onDelete: (userId: string) => void;
   close: () => void;
 };
 
-const ChatMembersDialogMember = ({chat, user, close}: ChatMembersDialogMemberProps) => {
+const ChatMembersDialogMember = ({chat, user, onDelete, close}: ChatMembersDialogMemberProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
@@ -32,6 +33,9 @@ const ChatMembersDialogMember = ({chat, user, close}: ChatMembersDialogMemberPro
     setRemovingLoading(true);
     dispatch(ChatActions.removeChatMemberThunk({chat, userId: user.id}))
       .unwrap()
+      .then(() => {
+        onDelete(user.id);
+      })
       .finally(() => {
         setRemovingLoading(false);
         setShowRemovingConfirmation(false);

@@ -33,25 +33,49 @@ const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersD
   const users = useAppSelector((state) => usersSelector(state, memberIds));
   const {t} = useTranslation();
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
+  const [deletedMemberIds, setDeletedMemberIds] = useState<string[]>([]);
 
-  const filterUsersToShow = (text: string): void => {
-    const updatedUsersToShow = users.filter((u) => u.username.includes(text));
+  const conditionalClose = (): void => {
+    if (deletedMemberIds.length >= 0) {
+      setDeletedMemberIds([]);
+    }
+    close();
+  };
+
+  const updateUsersToShow = (filter?: string): void => {
+    const updatedUsersToShow = users
+      .filter((user) => !deletedMemberIds.includes(user.id))
+      .filter((user) => filter === undefined || user.username.includes(filter));
     setUsersToShow(updatedUsersToShow);
+  };
+
+  const handleChange = (value: string): void => {
+    updateUsersToShow(value);
+  };
+
+  const onMemberDelete = (userId: string): void => {
+    setDeletedMemberIds((prevState) => [...prevState, userId]);
   };
 
   useEffect(() => {
     if (chat) {
-      setUsersToShow(users);
+      updateUsersToShow();
     }
   }, [chat, users]);
 
   const content = (
     <FVStack space="3">
-      <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={filterUsersToShow} />
+      <ClearableTextInput placeholder={t('inputs.filter')} onChangeText={handleChange} />
       {usersToShow.length > 0 && (
         <FVStack space="3">
           {usersToShow.map((user) => (
-            <ChatMembersDialogMember chat={chat} user={user} close={close} key={user.id} />
+            <ChatMembersDialogMember
+              chat={chat}
+              user={user}
+              onDelete={onMemberDelete}
+              close={conditionalClose}
+              key={user.id}
+            />
           ))}
         </FVStack>
       )}
@@ -72,7 +96,7 @@ const ChatMembersDialog = ({chat, show, close, switchToAddMembers}: ChatMembersD
   return (
     <ModalDialog
       open={show}
-      close={close}
+      close={conditionalClose}
       title={t('chat:members.title')}
       content={content}
       actions={actions}
