@@ -21,6 +21,7 @@ import {SnackActions} from '../snack/snackActions';
 import {ChatsActions} from '../chats/chatsActions';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {PageableList} from '../../models/PageableList';
+import {ChatRenameDTO} from '../../models/dto/ChatRenameDTO';
 
 const PREFIX = 'chat/';
 
@@ -127,10 +128,10 @@ export class ChatActions {
     },
   );
 
-  static renameChatThunk = createAsyncThunk<void, {chat: Chat; title: string}, AsyncThunkConfig>(
+  static renameChatThunk = createAsyncThunk<void, {chat: Chat; dto: ChatRenameDTO}, AsyncThunkConfig>(
     PREFIX + 'renameChat',
-    async ({chat, title}, thunkAPI) => {
-      await ChatService.renameChat(chat.id, title);
+    async ({chat, dto}, thunkAPI) => {
+      await ChatService.renameChat(chat.id, dto);
       thunkAPI.dispatch(SnackActions.handleCode('chat.renamed', 'info'));
     },
   );

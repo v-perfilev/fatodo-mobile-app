@@ -4,6 +4,7 @@ import {Message, MessageInfo} from '../models/Message';
 import {MessageDTO} from '../models/dto/MessageDTO';
 import axios, {axiosIgnore404} from '../shared/axios';
 import {PageableList} from '../models/PageableList';
+import {ChatRenameDTO} from '../models/dto/ChatRenameDTO';
 
 export default class ChatService {
   private static baseUrl = '/api/chat';
@@ -38,9 +39,9 @@ export default class ChatService {
     return axios.post(url, userIds);
   };
 
-  public static renameChat = (id: string, title: string): AxiosPromise<Chat> => {
+  public static renameChat = (id: string, dto: ChatRenameDTO): AxiosPromise<Chat> => {
     const url = ChatService.baseUrl + '/chat/' + id;
-    return axios.put(url, title);
+    return axios.put(url, dto);
   };
 
   public static getUnreadMessagesMap = (): AxiosPromise<[string, string[]][]> => {

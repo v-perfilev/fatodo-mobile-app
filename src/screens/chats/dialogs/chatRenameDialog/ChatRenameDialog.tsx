@@ -5,6 +5,7 @@ import {useAppDispatch} from '../../../../store/store';
 import ChatRenameForm from './ChatRenameForm';
 import {Chat} from '../../../../models/Chat';
 import {ChatActions} from '../../../../store/chat/chatActions';
+import {ChatRenameDTO} from '../../../../models/dto/ChatRenameDTO';
 
 export type ChatRenameDialogProps = {
   chat: Chat;
@@ -23,7 +24,8 @@ const ChatRenameDialog = ({chat, show, close}: ChatRenameDialogProps) => {
   const {t} = useTranslation();
 
   const request = (title: string, stopSubmitting: () => void): void => {
-    dispatch(ChatActions.renameChatThunk({chat, title}))
+    const dto: ChatRenameDTO = {title};
+    dispatch(ChatActions.renameChatThunk({chat, dto}))
       .unwrap()
       .then(() => close())
       .catch(() => stopSubmitting());
