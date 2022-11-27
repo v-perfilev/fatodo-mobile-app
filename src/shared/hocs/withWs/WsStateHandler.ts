@@ -172,6 +172,7 @@ export class WsStateHandler {
       const groupId = msg.payload[0].groupId;
       this.dispatch(GroupsActions.removeGroup(groupId));
       this.dispatch(GroupActions.removeGroup(groupId));
+      this.dispatch(ItemActions.removeGroup(groupId));
     } else {
       this.dispatch(GroupsActions.removeMembers(members));
       this.dispatch(GroupActions.removeMembers(members));
@@ -184,6 +185,7 @@ export class WsStateHandler {
       const groupId = msg.payload.groupId;
       this.dispatch(GroupsActions.removeGroup(groupId));
       this.dispatch(GroupActions.removeGroup(groupId));
+      this.dispatch(ItemActions.removeGroup(groupId));
     } else {
       this.dispatch(GroupsActions.removeMembers([member]));
       this.dispatch(GroupActions.removeMembers([member]));
@@ -216,6 +218,7 @@ export class WsStateHandler {
       this.dispatch(ChatsActions.fetchChatThunk(chatId));
     } else {
       this.dispatch(ChatsActions.addMembers(msg.payload));
+      this.dispatch(ChatActions.addMembers(msg.payload));
     }
   };
 
@@ -224,8 +227,10 @@ export class WsStateHandler {
     if (memberIds.includes(this.account.id)) {
       const chatId = msg.payload[0].chatId;
       this.dispatch(ChatsActions.removeChat(chatId));
+      this.dispatch(ChatActions.removeChat(chatId));
     } else {
       this.dispatch(ChatsActions.removeMembers(msg.payload));
+      this.dispatch(ChatActions.removeMembers(msg.payload));
     }
   };
 
@@ -233,8 +238,10 @@ export class WsStateHandler {
     if (msg.payload.userId === this.account.id) {
       const chatId = msg.payload.chatId;
       this.dispatch(ChatsActions.removeChat(chatId));
+      this.dispatch(ChatActions.removeChat(chatId));
     } else {
       this.dispatch(ChatsActions.removeMembers([msg.payload]));
+      this.dispatch(ChatActions.removeMembers([msg.payload]));
     }
   };
 

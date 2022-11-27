@@ -50,6 +50,12 @@ const withChatContainer = (Component: ComponentType<WithChatProps>) => (props: a
     }
   }, []);
 
+  useEffect(() => {
+    if (!chat && !containerLoading) {
+      goBack();
+    }
+  }, [chat]);
+
   return <Component containerLoading={containerLoading} chat={chat || routeChat} {...props} />;
 };
 

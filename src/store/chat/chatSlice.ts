@@ -3,7 +3,7 @@ import {ChatState} from './chatType';
 import {ChatItem, Message, MessageReaction, MessageStatus} from '../../models/Message';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
 import {ChatActions} from './chatActions';
-import {Chat} from '../../models/Chat';
+import {Chat, ChatMember} from '../../models/Chat';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
 import {ComparatorUtils} from '../../shared/utils/ComparatorUtils';
 import {DateFormatters} from '../../shared/utils/DateFormatters';
@@ -33,6 +33,30 @@ const chatSlice = createSlice({
     setChat: (state: ChatState, action: PayloadAction<Chat>) => {
       state.chatId = action.payload?.id;
       state.chat = action.payload;
+    },
+
+    removeChat: (state: ChatState, action: PayloadAction<string>) => {
+      if (state.chat?.id === action.payload) {
+        state.chatId = undefined;
+        state.chat = undefined;
+      }
+    },
+
+    setMembers: (state: ChatState, action: PayloadAction<ChatMember[]>) => {
+      const members = action.payload;
+      const chatId = members.length > 0 && members[0].chatId;
+      if (state.chat?.id === chatId) {
+        state.chat.members = filterMembers([...members, ...state.chat.members]);
+      }
+    },
+
+    removeMembers: (state: ChatState, action: PayloadAction<ChatMember[]>) => {
+      const members = action.payload;
+      const chatId = members.length > 0 && members[0].chatId;
+      if (state.chat?.id === chatId) {
+        const memberIds = members.map((m) => m.userId);
+        state.chat.members = state.chat.members.filter((m) => !memberIds.includes(m.userId));
+      }
     },
 
     resetMessages: (state: ChatState) => {
@@ -140,6 +164,10 @@ const chatSlice = createSlice({
     });
   },
 });
+
+const filterMembers = (members: ChatMember[]): ChatMember[] => {
+  return members.filter(FilterUtils.uniqueByUserIdFilter);
+};
 
 const filterMessages = (messages: Message[]): Message[] => {
   return messages.filter(FilterUtils.uniqueByIdOrUserIdAndTextAndDateFilter).sort(ComparatorUtils.createdAtComparator);
