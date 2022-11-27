@@ -30,6 +30,10 @@ export class ChatActions {
     dispatch(chatSlice.actions.removeChat(chatId));
   };
 
+  static updateChat = (chat: Chat) => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.updateChat(chat));
+  };
+
   static addMembers = (members: ChatMember[]) => async (dispatch: AppDispatch) => {
     dispatch(chatSlice.actions.setMembers(members));
   };

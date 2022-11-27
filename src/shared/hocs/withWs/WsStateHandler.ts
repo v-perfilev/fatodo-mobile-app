@@ -208,6 +208,7 @@ export class WsStateHandler {
 
   private handleChatUpdateEvent = (msg: WsEvent<Chat>): void => {
     this.dispatch(ChatsActions.updateChat(msg.payload));
+    this.dispatch(ChatActions.updateChat(msg.payload));
   };
 
   private handleChatMemberAddEvent = (msg: WsEvent<ChatMember[]>): void => {

@@ -35,6 +35,12 @@ const chatSlice = createSlice({
       state.chat = action.payload;
     },
 
+    updateChat: (state: ChatState, action: PayloadAction<Chat>) => {
+      if (state.chat?.id === action.payload?.id) {
+        state.chat = action.payload;
+      }
+    },
+
     removeChat: (state: ChatState, action: PayloadAction<string>) => {
       if (state.chat?.id === action.payload) {
         state.chatId = undefined;
