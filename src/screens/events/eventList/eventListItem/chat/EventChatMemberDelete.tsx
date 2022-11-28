@@ -21,7 +21,7 @@ const EventChatMemberDelete = ({user, chat, users, date}: WithEventChatProps) =>
       context={context}
       components={{
         user: <UserLink user={user} />,
-        chat: <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink>,
+        chat: <ChatLink chat={chat} text={t('event:links.chat')} />,
         users: <EventListItemUsers users={users} />,
       }}
     />

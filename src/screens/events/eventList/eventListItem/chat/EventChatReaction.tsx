@@ -20,7 +20,7 @@ const EventChatReaction = ({user, chat, message, reaction, date}: WithEventChatP
       context={context}
       components={{
         user: <UserLink user={user} />,
-        chat: <ChatLink chat={chat}>{t('event:links.chat')}</ChatLink>,
+        chat: <ChatLink chat={chat} text={t('event:links.chat')} />,
       }}
     />
   );
