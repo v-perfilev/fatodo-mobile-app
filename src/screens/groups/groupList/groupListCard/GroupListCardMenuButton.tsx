@@ -61,7 +61,7 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
     },
   ];
 
-  return <Menu trigger={MenuTrigger('lg', group.color)} menuItems={menuItems}></Menu>;
+  return <Menu trigger={MenuTrigger('lg', group.color)} menuItems={menuItems} />;
 };
 
 export default GroupListCardMenuButton;

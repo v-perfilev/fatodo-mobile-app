@@ -25,7 +25,6 @@ export interface Message extends AbstractAuditing {
   chatId: string;
   userId: string;
   text: string;
-  reference?: Message;
 
   isDeleted: boolean;
   isEvent: boolean;
@@ -73,7 +72,6 @@ export const buildEventMessage = (chatId: string, userId: string, type: EventMes
     chatId,
     userId,
     text: JSON.stringify(params),
-    reference: undefined,
     isDeleted: false,
     isEvent: true,
     statuses: [],

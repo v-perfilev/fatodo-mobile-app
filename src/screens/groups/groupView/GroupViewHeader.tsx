@@ -79,7 +79,7 @@ const GroupViewHeader = ({setShowArchived}: GroupViewHeaderProps) => {
   return (
     <Header title={group?.title} imageFilename={group?.imageFilename}>
       <GroupViewHeaderArchivedToggler setShowArchived={setShowArchived} />
-      <Menu trigger={MenuTrigger()} menuItems={menuItems}></Menu>
+      <Menu trigger={MenuTrigger()} menuItems={menuItems} />
     </Header>
   );
 };
