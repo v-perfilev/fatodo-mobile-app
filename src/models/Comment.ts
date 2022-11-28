@@ -25,14 +25,7 @@ export interface Comment extends AbstractAuditing {
   text: string;
   isDeleted: boolean;
 
-  reference?: ReferenceComment;
-
   reactions: CommentReaction[];
-}
-
-export interface ReferenceComment extends AbstractAuditing {
-  id: string;
-  userId: string;
 }
 
 export interface CommentReaction {

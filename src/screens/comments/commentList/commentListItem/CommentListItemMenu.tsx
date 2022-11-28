@@ -1,26 +1,20 @@
-import React, {Dispatch, SetStateAction} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import Menu, {MenuItemProps, MenuTrigger} from '../../../../components/controls/Menu';
 import EditIcon from '../../../../components/icons/EditIcon';
 import DeleteIcon from '../../../../components/icons/DeleteIcon';
 import ReactionsIcon from '../../../../components/icons/ReactionsIcon';
 import {Comment} from '../../../../models/Comment';
-import ReplyIcon from '../../../../components/icons/ReplyIcon';
 import {useCommentDialogContext} from '../../../../shared/contexts/dialogContexts/CommentDialogContext';
 
 type CommentListItemMenuProps = {
   comment: Comment;
   isOwnComment: boolean;
-  setReference: Dispatch<SetStateAction<Comment>>;
 };
 
-const CommentListItemMenu = ({comment, isOwnComment, setReference}: CommentListItemMenuProps) => {
+const CommentListItemMenu = ({comment, isOwnComment}: CommentListItemMenuProps) => {
   const {t} = useTranslation();
   const {showCommentReactionsDialog, showCommentEditDialog, showCommentDeleteDialog} = useCommentDialogContext();
-
-  const replyToComment = (): void => {
-    setReference(comment);
-  };
 
   const openReactionsDialog = (): void => {
     showCommentReactionsDialog(comment);
@@ -35,11 +29,6 @@ const CommentListItemMenu = ({comment, isOwnComment, setReference}: CommentListI
   };
 
   const menuItems: MenuItemProps[] = [
-    {
-      action: replyToComment,
-      icon: <ReplyIcon color="primary.500" />,
-      text: t('comment:comment.buttons.response'),
-    },
     {
       action: openReactionsDialog,
       icon: <ReactionsIcon color="primary.500" />,

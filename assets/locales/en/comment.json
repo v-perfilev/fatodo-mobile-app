@@ -1,15 +1,10 @@
 {
   "list": {
     "inputPlaceholder": "Type your comment...",
-    "reference": "Response to",
     "commentsNotFound": "No comments yet"
   },
   "comment": {
     "deleted": "Comment deleted",
-    "reference": "Response to",
-    "buttons": {
-      "response": "Answer"
-    },
     "actions": {
       "reactions": "Reactions",
       "edit": "Edit",

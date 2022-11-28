@@ -5,9 +5,7 @@ import ClearableTextInput from '../../../components/inputs/ClearableTextInput';
 import {useTranslation} from 'react-i18next';
 import {CommentDTO} from '../../../models/dto/CommentDTO';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
-import {Comment} from '../../../models/Comment';
 import FVStack from '../../../components/boxes/FVStack';
-import CommentListControlReference from './CommentListControlReference';
 import {COMMENTS_INPUT_HEIGHT} from '../../../constants';
 import SendMessageIcon from '../../../components/icons/SendMessageIcon';
 import {CommentsActions} from '../../../store/comments/commentsActions';
@@ -15,12 +13,7 @@ import {useColorModeValue} from 'native-base';
 import {DARK_BG, LIGHT_BG} from '../../../shared/themes/colors';
 import IconButton from '../../../components/controls/IconButton';
 
-type CommentsViewControlProps = {
-  reference: Comment;
-  clearReference: () => void;
-};
-
-const CommentListControl = ({reference, clearReference}: CommentsViewControlProps) => {
+const CommentListControl = () => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const targetId = useAppSelector(CommentsSelectors.targetId);
@@ -31,7 +24,6 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
 
   const dto: CommentDTO = {
     text: messageBody,
-    referenceId: reference?.id,
   };
 
   const handleTextChange = (text: string): void => {
@@ -43,7 +35,6 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
   const handleSend = (): void => {
     setMessageBody('');
     setUpdater('');
-    clearReference();
     dispatch(CommentsActions.sendCommentThunk({targetId, dto}));
   };
 
@@ -65,7 +56,6 @@ const CommentListControl = ({reference, clearReference}: CommentsViewControlProp
       bgColor={bg}
     >
       <FVStack grow px="2">
-        {reference && <CommentListControlReference reference={reference} clearReference={clearReference} />}
         <ClearableTextInput
           minHeight="0"
           p="0"

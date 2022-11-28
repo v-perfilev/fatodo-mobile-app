@@ -1,4 +1,4 @@
-import React, {memo, ReactElement, useCallback, useMemo, useRef, useState} from 'react';
+import React, {memo, ReactElement, useCallback, useMemo, useRef} from 'react';
 import withCommentsContainer, {WithCommentsProps} from '../../../shared/hocs/withContainers/withCommentsContainer';
 import {Comment} from '../../../models/Comment';
 import {Box} from 'native-base';
@@ -37,11 +37,6 @@ const CommentList = ({containerLoading}: CommentListProps) => {
   const comments = useAppSelector(CommentsSelectors.comments);
   const allLoaded = useAppSelector(CommentsSelectors.allLoaded);
   const loading = useAppSelector(CommentsSelectors.loading);
-  const [reference, setReference] = useState<Comment>();
-
-  const clearReference = (): void => {
-    setReference(null);
-  };
 
   /*
   loaders
@@ -67,7 +62,7 @@ const CommentList = ({containerLoading}: CommentListProps) => {
   const renderItem = useCallback(
     (info: ListRenderItemInfo<Comment>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
       <Box onLayout={onLayout}>
-        <CommentListItem comment={info.item} setReference={setReference} />
+        <CommentListItem comment={info.item} />
       </Box>
     ),
     [],
@@ -95,7 +90,7 @@ const CommentList = ({containerLoading}: CommentListProps) => {
       contentContainerStyle={containerStyle}
       loaderStyle={loaderStyle}
       header={<Header />}
-      nextNode={<CommentListControl reference={reference} clearReference={clearReference} />}
+      nextNode={<CommentListControl />}
       refresh={refresh}
       loading={containerLoading}
       loadingPlaceholder={<CommentListSkeleton />}

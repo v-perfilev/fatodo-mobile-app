@@ -1,15 +1,10 @@
 {
   "list": {
     "inputPlaceholder": "Оставьте свой комментарий...",
-    "reference": "Ответ на",
     "commentsNotFound": "Пока комментариев нет"
   },
   "comment": {
     "deleted": "Комментарий удалён",
-    "reference": "Ответ на",
-    "buttons": {
-      "reference": "Ответить"
-    },
     "actions": {
       "reactions": "Реакции",
       "edit": "Редактировать",
