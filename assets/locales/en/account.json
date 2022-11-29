@@ -100,8 +100,15 @@
       "label": "Image"
     }
   },
+  "deletePermanently": {
+    "title": "Delete account",
+    "text": "If you want to delete your account type \"{{username}}\"",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
   "actions": {
     "save": "Save",
+    "deletePermanently": "Delete account permanently",
     "logout": "Log out"
   }
 }

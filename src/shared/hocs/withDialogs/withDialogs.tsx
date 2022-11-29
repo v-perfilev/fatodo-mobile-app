@@ -9,6 +9,7 @@ import withContactDialogs from './withContactDialogs';
 import withChatDialogs from './withChatDialogs';
 import withCommentDialogs from './withCommentDialogs';
 import withCalendarDialogs from './withCalendarDialogs';
+import withAccountDialogs from './withAccountDialogs';
 
 type ComponentWithProps = {
   component: ComponentType;
@@ -87,6 +88,7 @@ const withDialogs = (Component: ComponentType) => (props: any) => {
 
 export default flowRight([
   withDialogs,
+  withAccountDialogs,
   withGroupDialogs,
   withItemDialogs,
   withContactDialogs,

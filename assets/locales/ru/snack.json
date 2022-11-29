@@ -5,7 +5,8 @@
     "afterForgotPassword": "Сылка для изменения пароля отправлена на Ваш электронный адрес",
     "afterResetPassword": "Пароль изменён, теперь Вы можете войти!",
     "afterChangePassword": "Пароль был изменён",
-    "afterUpdateAccount": "Данные учётной записи изменены"
+    "afterUpdateAccount": "Данные учётной записи изменены",
+    "afterDeleteAccount": "Учётная запись навсегда удалена"
   },
   "image": {
     "tooSmall": "Выбрано слишком маленькое изображение"

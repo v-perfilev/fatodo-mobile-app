@@ -4,7 +4,11 @@ import {IInputProps, Input, useColorMode} from 'native-base';
 import CloseIcon from '../icons/CloseIcon';
 import IconButton from '../controls/IconButton';
 
-const ClearableTextInput = ({value, onChangeText, ...props}: IInputProps) => {
+type ClearableTextInputProps = IInputProps & {
+  isErrorColor?: boolean;
+};
+
+const ClearableTextInput = ({value, onChangeText, isErrorColor, ...props}: ClearableTextInputProps) => {
   const {colorMode} = useColorMode();
   const [updater, setUpdater] = useState<string>(value);
   const [showClearButton, setShowClearButton] = useState<boolean>(false);
@@ -36,12 +40,27 @@ const ClearableTextInput = ({value, onChangeText, ...props}: IInputProps) => {
   return (
     <Input
       {...props}
+      _focus={{
+        borderColor: isErrorColor ? 'error.500' : undefined,
+        backgroundColor: isErrorColor ? 'error.500:alpha.10' : undefined,
+      }}
       type="text"
       autoCapitalize="none"
       keyboardAppearance={colorMode}
       onChangeText={handleChangeText}
       value={updater}
-      InputRightElement={showClearButton && <IconButton size="sm" p="1" icon={<CloseIcon />} mx="2" onPress={clear} />}
+      InputRightElement={
+        showClearButton && (
+          <IconButton
+            colorScheme={isErrorColor ? 'error' : undefined}
+            size="sm"
+            p="1"
+            icon={<CloseIcon />}
+            mx="2"
+            onPress={clear}
+          />
+        )
+      }
     />
   );
 };

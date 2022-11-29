@@ -5,7 +5,8 @@
     "afterForgotPassword": "The link for changing password was sent to your email address",
     "afterResetPassword": "The password was changed, now you can sign in!",
     "afterChangePassword": "Password was changed",
-    "afterUpdateAccount": "Account data updated"
+    "afterUpdateAccount": "Account data updated",
+    "afterDeleteAccount": "Account permanently deleted"
   },
   "image": {
     "tooSmall": "Too small image selected"

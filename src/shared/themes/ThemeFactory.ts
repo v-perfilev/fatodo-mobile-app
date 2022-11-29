@@ -23,6 +23,14 @@ export const LINEAR_GRADIENT = {
   },
 };
 
+export const LINEAR_ERROR_GRADIENT = {
+  linearGradient: {
+    colors: ['error.400', 'error.300'],
+    start: [0, 1],
+    end: [1, 0],
+  },
+};
+
 export const LINEAR_GRADIENT_FUNC = (theme: Theme) => ({
   linearGradient: {
     colors: [theme.colors.primary['400'], theme.colors.primary['300']],

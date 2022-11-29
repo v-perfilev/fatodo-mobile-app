@@ -16,6 +16,9 @@ import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import FormikGenderInput from '../../../components/inputs/FormikGenderInput';
 import ImageUpload from '../../../components/inputs/imageUpload/ImageUpload';
 import {AuthActions} from '../../../store/auth/authActions';
+import Separator from '../../../components/layouts/Separator';
+import SolidButton from '../../../components/controls/SolidButton';
+import {useAccountDialogContext} from '../../../shared/contexts/dialogContexts/AccountDialogContext';
 
 export interface AccountFormValues {
   username: string;
@@ -66,6 +69,7 @@ const validationSchema = (account: UserAccount) =>
 
 const AccountForm = () => {
   const dispatch = useAppDispatch();
+  const {showDeletePermanentlyDialog} = useAccountDialogContext();
   const account = useAppSelector(AuthSelectors.account);
   const navigation = useNavigation();
   const {t} = useTranslation();
@@ -103,56 +107,62 @@ const AccountForm = () => {
     <>
       <Header />
       <SimpleScrollView>
-        <Formik initialValues={values} validationSchema={valSchema} onSubmit={handleSubmit} enableReinitialize>
-          {(formikProps) => (
-            <FVStack space="3">
-              <FormikTextInput
-                name="username"
-                label={t('account:fields.username.label')}
-                isDisabled={formikProps.isSubmitting}
-                {...formikProps}
-              />
-              <FormikTextInput
-                name="firstname"
-                label={t('account:fields.firstname.label')}
-                isDisabled={formikProps.isSubmitting}
-                {...formikProps}
-              />
-              <FormikTextInput
-                name="lastname"
-                label={t('account:fields.lastname.label')}
-                isDisabled={formikProps.isSubmitting}
-                {...formikProps}
-              />
-              <FormikGenderInput
-                name="gender"
-                label={t('account:fields.gender.label')}
-                isDisabled={formikProps.isSubmitting}
-                {...formikProps}
-              />
-              <ImageUpload
-                filenameName="imageFilename"
-                contentName="imageContent"
-                label={t('account:fields.image.label')}
-                preview
-                crop
-                {...formikProps}
-              />
+        <FVStack space={3}>
+          <Formik initialValues={values} validationSchema={valSchema} onSubmit={handleSubmit} enableReinitialize>
+            {(formikProps) => (
+              <FVStack space="3">
+                <FormikTextInput
+                  name="username"
+                  label={t('account:fields.username.label')}
+                  isDisabled={formikProps.isSubmitting}
+                  {...formikProps}
+                />
+                <FormikTextInput
+                  name="firstname"
+                  label={t('account:fields.firstname.label')}
+                  isDisabled={formikProps.isSubmitting}
+                  {...formikProps}
+                />
+                <FormikTextInput
+                  name="lastname"
+                  label={t('account:fields.lastname.label')}
+                  isDisabled={formikProps.isSubmitting}
+                  {...formikProps}
+                />
+                <FormikGenderInput
+                  name="gender"
+                  label={t('account:fields.gender.label')}
+                  isDisabled={formikProps.isSubmitting}
+                  {...formikProps}
+                />
+                <ImageUpload
+                  filenameName="imageFilename"
+                  contentName="imageContent"
+                  label={t('account:fields.image.label')}
+                  preview
+                  crop
+                  {...formikProps}
+                />
 
-              <FHStack space="3" mt="3" justifyContent="flex-end">
-                <OutlinedButton
-                  colorScheme="primary"
-                  size="md"
-                  isLoading={formikProps.isSubmitting}
-                  isDisabled={!formikProps.isValid || formikProps.isSubmitting}
-                  onPress={formikProps.submitForm}
-                >
-                  {t('account:actions.save')}
-                </OutlinedButton>
-              </FHStack>
-            </FVStack>
-          )}
-        </Formik>
+                <FHStack space="3" mt="3" justifyContent="flex-end">
+                  <OutlinedButton
+                    colorScheme="primary"
+                    size="md"
+                    isLoading={formikProps.isSubmitting}
+                    isDisabled={!formikProps.isValid || formikProps.isSubmitting}
+                    onPress={formikProps.submitForm}
+                  >
+                    {t('account:actions.save')}
+                  </OutlinedButton>
+                </FHStack>
+              </FVStack>
+            )}
+          </Formik>
+          <Separator color="primary.500" />
+          <SolidButton colorScheme="error" onPress={showDeletePermanentlyDialog}>
+            {t('account:actions.deletePermanently')}
+          </SolidButton>
+        </FVStack>
       </SimpleScrollView>
     </>
   );
