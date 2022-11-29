@@ -45,5 +45,8 @@
     "LOW": "low",
     "NORMAL": "normal",
     "HIGH": "high"
+  },
+  "links": {
+    "userDeleted": "User deleted"
   }
 }

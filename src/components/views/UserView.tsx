@@ -29,6 +29,7 @@ export const UserView = (props: UserViewProps) => {
   const navigation = useNavigation<ProtectedNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
   const isAnotherUser = account.id !== user?.id;
+  const isNotDeleted = !user?.deleted;
 
   const goToUser = (): void => {
     onPressCallBack?.();
@@ -51,7 +52,7 @@ export const UserView = (props: UserViewProps) => {
   );
 
   result = withPaperBox ? <PaperBox>{result}</PaperBox> : result;
-  result = isAnotherUser ? <PressableButton onPress={goToUser}>{result}</PressableButton> : result;
+  result = isAnotherUser || isNotDeleted ? <PressableButton onPress={goToUser}>{result}</PressableButton> : result;
 
   return result;
 };

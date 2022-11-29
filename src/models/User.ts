@@ -23,6 +23,7 @@ export interface User {
   lastname?: string;
   gender?: Gender;
   imageFilename?: string;
+  deleted?: boolean;
 }
 
 export interface UserInfo {

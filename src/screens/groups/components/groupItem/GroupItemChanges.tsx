@@ -4,6 +4,7 @@ import {Text} from 'native-base';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
 import DateView from '../../../../components/views/DateView';
+import UserLink from '../../../../components/links/UserLink';
 
 type GroupItemChangesProps = {
   item: Item;
@@ -17,7 +18,7 @@ const GroupItemChanges = ({item}: GroupItemChangesProps) => {
 
   return (
     <Text fontSize="xs" color="gray.400">
-      {user?.username} / <DateView date={date} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
+      <UserLink user={user} /> / <DateView date={date} timeFormat="FULL" dateFormat="DEPENDS_ON_DAY" />
     </Text>
   );
 };
