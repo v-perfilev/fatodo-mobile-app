@@ -52,7 +52,7 @@ export const UserView = (props: UserViewProps) => {
   );
 
   result = withPaperBox ? <PaperBox>{result}</PaperBox> : result;
-  result = isAnotherUser || isNotDeleted ? <PressableButton onPress={goToUser}>{result}</PressableButton> : result;
+  result = isAnotherUser && isNotDeleted ? <PressableButton onPress={goToUser}>{result}</PressableButton> : result;
 
   return result;
 };

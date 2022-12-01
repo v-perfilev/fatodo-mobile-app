@@ -47,7 +47,7 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
     console.warn(consoleMsg);
   };
 
-  const enqueueErrorNotification = (message: string): void => {
+  const enqueueErrorSnack = (message: string): void => {
     const snack = new SnackBuilder(message).setVariantColor('error').build();
     enqueueSnack(snack);
   };
@@ -55,10 +55,10 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
   const defaultHandleErrorFeedback = (response: AxiosResponse): void => {
     const status = ResponseUtils.getStatus(response);
     if (status >= 500) {
-      enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('default'));
+      enqueueErrorSnack(TranslationUtils.getFeedbackTranslation('default'));
       logError(response);
     } else if (!status) {
-      enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('connection'));
+      enqueueErrorSnack(TranslationUtils.getFeedbackTranslation('connection'));
       logError(response);
     } else {
       const feedbackCode = ResponseUtils.getFeedbackCode(response);
@@ -70,10 +70,10 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
   const ignore404handleErrorFeedback = (response: AxiosResponse): void => {
     const status = ResponseUtils.getStatus(response);
     if (status >= 500) {
-      enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('default'));
+      enqueueErrorSnack(TranslationUtils.getFeedbackTranslation('default'));
       logError(response);
     } else if (!status) {
-      enqueueErrorNotification(TranslationUtils.getFeedbackTranslation('connection'));
+      enqueueErrorSnack(TranslationUtils.getFeedbackTranslation('connection'));
       logError(response);
     } else if (status !== 404) {
       const feedbackCode = ResponseUtils.getFeedbackCode(response);
