@@ -12,9 +12,10 @@ type ChatLinkProps = {
   chat?: ChatInfo;
   color?: string;
   text?: string;
+  noLink?: boolean;
 };
 
-export const ChatLink = ({chat, color = 'primary.500', text}: ChatLinkProps) => {
+export const ChatLink = ({chat, color = 'primary.500', text, noLink}: ChatLinkProps) => {
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const navigation = useNavigation<ProtectedNavigationProp>();
   const memberIds = chat?.members.map((m) => m.userId) || [];
@@ -25,7 +26,7 @@ export const ChatLink = ({chat, color = 'primary.500', text}: ChatLinkProps) => 
   const goToChat = (): void => navigation.navigate('ChatView', {chatId: chat?.id});
 
   return chat ? (
-    <Text color={color} onPress={goToChat}>
+    <Text color={!noLink ? color : undefined} onPress={!noLink ? goToChat : undefined}>
       {title}
     </Text>
   ) : null;

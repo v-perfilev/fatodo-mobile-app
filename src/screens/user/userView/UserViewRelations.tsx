@@ -12,7 +12,7 @@ const UserViewGroups = () => {
 
   return (
     <FVStack space="3">
-      <Text color="secondary.500" fontWeight="bold">
+      <Text color="primary.500" fontWeight="bold">
         {t('user:commonContacts.header')}: {relations.length}
       </Text>
       {relations.length === 0 && <Text color="gray.400">{t('user:commonContacts.noCommonContacts')}</Text>}

@@ -63,7 +63,7 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
       <FVStack grow mx="3" my="4" space="6">
         <UserFullView user={accountToUser(account)} account={account} />
 
-        <Separator bg="secondary.500" />
+        <Separator bg="primary.500" />
 
         <FVStack flex="1" flexGrow="1" space="3" flexShrink="1">
           <GhostButton justifyContent="flex-start" onPress={goToAccountForm}>

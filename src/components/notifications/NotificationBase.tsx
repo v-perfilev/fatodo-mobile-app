@@ -1,56 +1,56 @@
-import React, {Dispatch, memo, ReactElement, SetStateAction, useEffect, useMemo} from 'react';
+import React, {memo, PropsWithChildren, Ref, useImperativeHandle, useRef} from 'react';
 import {Animated, StyleProp, useWindowDimensions, ViewStyle} from 'react-native';
 
-type NotificationBaseProps = {
-  display: boolean;
-  setDisplay: Dispatch<SetStateAction<boolean>>;
-  children: (props: NotificationBaseChildrenProps) => ReactElement;
+type NotificationBaseProps = PropsWithChildren<{
+  notificationBaseRef: Ref<NotificationBaseMethods>;
+}>;
+
+export type NotificationBaseMethods = {
+  show: () => void;
+  close: () => Promise<void>;
 };
 
-export type NotificationBaseChildrenProps = {
-  close: () => void;
-};
-
-const NotificationBase = ({display, setDisplay, children}: NotificationBaseProps) => {
+const NotificationBase = ({notificationBaseRef, children}: NotificationBaseProps) => {
   const {width} = useWindowDimensions();
 
-  const translateXValue = new Animated.Value(0);
-  const opacityValue = new Animated.Value(1);
+  const translateXValue = useRef(new Animated.Value(0));
+  const opacityValue = useRef(new Animated.Value(1));
 
   const show = () => {
-    Animated.timing(translateXValue, {
+    Animated.timing(translateXValue.current, {
       toValue: 1,
       duration: 400,
       useNativeDriver: true,
     }).start();
   };
 
-  const close = () => {
-    Animated.sequence([
-      Animated.timing(translateXValue, {toValue: 1, duration: 0, useNativeDriver: true}),
-      Animated.timing(opacityValue, {toValue: 0, duration: 300, useNativeDriver: true}),
-      Animated.timing(translateXValue, {toValue: 0, duration: 0, useNativeDriver: true}),
-      Animated.timing(opacityValue, {toValue: 1, duration: 0, useNativeDriver: true}),
-    ]).start(() => setDisplay(false));
-  };
+  const close = (): Promise<void> =>
+    new Promise((resolve) => {
+      Animated.sequence([
+        Animated.timing(opacityValue.current, {toValue: 0, duration: 300, useNativeDriver: true}),
+        Animated.timing(translateXValue.current, {toValue: 0, duration: 0, useNativeDriver: true}),
+        Animated.timing(opacityValue.current, {toValue: 1, duration: 0, useNativeDriver: true}),
+      ]).start(() => resolve());
+    });
 
-  const translateX = translateXValue.interpolate({
+  useImperativeHandle(
+    notificationBaseRef,
+    (): NotificationBaseMethods => ({
+      show,
+      close,
+    }),
+    [],
+  );
+
+  const translateX = translateXValue.current.interpolate({
     inputRange: [0, 1],
     outputRange: [width, 0],
   });
 
-  const opacity = opacityValue.interpolate({
+  const opacity = opacityValue.current.interpolate({
     inputRange: [0, 1],
     outputRange: [0, 1],
   });
-
-  useEffect(() => {
-    display && show();
-    !display && close();
-  }, [display]);
-
-  const childrenProps: NotificationBaseChildrenProps = {close};
-  const childWithProps = useMemo<ReactElement>(() => children(childrenProps), [children, close]);
 
   const absolutePositionStyle: StyleProp<ViewStyle> = {
     zIndex: 100,
@@ -61,11 +61,7 @@ const NotificationBase = ({display, setDisplay, children}: NotificationBaseProps
   };
   const translateStyle = {transform: [{translateX}], opacity};
 
-  return <Animated.View style={[absolutePositionStyle, translateStyle]}>{childWithProps}</Animated.View>;
+  return <Animated.View style={[absolutePositionStyle, translateStyle]}>{children}</Animated.View>;
 };
 
-const propsAreEqual = (prevProps: NotificationBaseProps, nextProps: NotificationBaseProps) => {
-  return prevProps.display === nextProps.display && prevProps.children === nextProps.children;
-};
-
-export default memo(NotificationBase, propsAreEqual);
+export default memo(NotificationBase);

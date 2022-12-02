@@ -10,9 +10,10 @@ import {useTranslation} from 'react-i18next';
 type UserLinkProps = {
   user?: User;
   color?: string;
+  noLink?: boolean;
 };
 
-export const UserLink = ({user, color = 'primary.500'}: UserLinkProps) => {
+export const UserLink = ({user, color = 'primary.500', noLink}: UserLinkProps) => {
   const {t} = useTranslation();
   const navigation = useNavigation<ProtectedNavigationProp>();
   const account = useAppSelector(AuthSelectors.account);
@@ -26,7 +27,10 @@ export const UserLink = ({user, color = 'primary.500'}: UserLinkProps) => {
   }
 
   return user ? (
-    <Text color={isAnotherUser ? color : undefined} onPress={isAnotherUser ? goToUser : undefined}>
+    <Text
+      color={isAnotherUser && !noLink ? color : undefined}
+      onPress={isAnotherUser && !noLink ? goToUser : undefined}
+    >
       {text}
     </Text>
   ) : null;

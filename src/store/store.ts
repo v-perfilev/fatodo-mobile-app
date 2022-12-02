@@ -15,6 +15,7 @@ import userSlice from './user/userSlice';
 import eventsSlice from './events/eventsSlice';
 import calendarSlice from './calendar/calendarSlice';
 import commonSlice from './common/commonSlice';
+import notificationSlice from './notification/notificationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
     groups: groupsSlice.reducer,
     info: infoSlice.reducer,
     item: itemSlice.reducer,
+    notifications: notificationSlice.reducer,
     snack: snackSlice.reducer,
     user: userSlice.reducer,
   },

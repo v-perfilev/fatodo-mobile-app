@@ -21,11 +21,11 @@ const UserView = ({user, containerLoading}: UserViewProps) => {
         <SimpleScrollView>
           <FVStack space="3">
             <UserFullView user={user} withoutUsername />
-            <Separator bg="secondary.500" />
+            <Separator bg="primary.500" />
             <UserViewControl user={user} />
-            <Separator bg="secondary.500" />
+            <Separator bg="primary.500" />
             <UserViewGroups />
-            <Separator bg="secondary.500" />
+            <Separator bg="primary.500" />
             <UserViewRelations />
           </FVStack>
         </SimpleScrollView>

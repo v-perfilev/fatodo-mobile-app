@@ -7,15 +7,16 @@ import {TabNavigationProp} from '../../navigators/TabNavigator';
 type GroupLinkProps = {
   group?: GroupInfo;
   color?: string;
+  noLink?: boolean;
 };
 
-export const GroupLink = ({group, color = 'primary.500'}: GroupLinkProps) => {
+export const GroupLink = ({group, color = 'primary.500', noLink}: GroupLinkProps) => {
   const navigation = useNavigation<TabNavigationProp>();
 
   const goToGroup = (): void => navigation.navigate('Groups', {screen: 'GroupView', params: {groupId: group?.id}});
 
   return group ? (
-    <Text color={color} onPress={goToGroup}>
+    <Text color={!noLink ? color : undefined} onPress={!noLink ? goToGroup : undefined}>
       {group.title}
     </Text>
   ) : undefined;

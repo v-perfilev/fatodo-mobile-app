@@ -1,6 +1,6 @@
 import {ProtectedParamList} from '../../navigators/ProtectedNavigator';
 import {navigationRef} from '../hocs/withNavigationContainer';
-import {PushNotificationData} from '../../models/PushNotification';
+import {Notification} from '../../models/Notification';
 
 export class NavigationUtils {
   public static navigate = <K extends keyof ProtectedParamList, T extends ProtectedParamList>(
@@ -14,7 +14,7 @@ export class NavigationUtils {
     }
   };
 
-  public static handlePushNotification = (data: PushNotificationData): void => {
+  public static handlePushNotification = (data: Notification): void => {
     if (data.groupId) {
       NavigationUtils.navigate('HomeTabs', {
         screen: 'Groups',

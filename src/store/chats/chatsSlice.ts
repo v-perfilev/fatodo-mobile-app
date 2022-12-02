@@ -144,7 +144,7 @@ const chatsSlice = createSlice({
 const filterChats = (chats: Chat[]): Chat[] => {
   return chats
     .filter(FilterUtils.uniqueByIdFilter)
-    .sort((a, b) => ComparatorUtils.createdAtComparator(a.lastMessage, b.lastMessage));
+    .sort((a, b) => ComparatorUtils.createdAtInvertedComparator(a.lastMessage, b.lastMessage));
 };
 
 const filterMembers = (members: ChatMember[]): ChatMember[] => {

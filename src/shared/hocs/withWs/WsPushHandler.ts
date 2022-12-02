@@ -1,27 +1,27 @@
 import {AppDispatch} from '../../../store/store';
 import {WsEvent, WsEventType} from '../../../models/Ws';
 import {Item} from '../../../models/Item';
-import Notifications from '../../push/notifications';
-import {PushNotificationData} from '../../../models/PushNotification';
-import {TFunction} from 'react-i18next';
-import {Group, GroupMember} from '../../../models/Group';
-import UserService from '../../../services/UserService';
-import {Chat} from '../../../models/Chat';
+import {GroupMember} from '../../../models/Group';
+import {Chat, ChatMember} from '../../../models/Chat';
 import {Message, MessageReaction} from '../../../models/Message';
 import {ContactRequest} from '../../../models/Contact';
 import {Comment, CommentReaction} from '../../../models/Comment';
-import ItemService from '../../../services/ItemService';
 import {ReminderInfo} from '../../../models/Reminder';
+import {ChatEvent, CommentEvent, ContactEvent, Event, EventType, ItemEvent, ReminderEvent} from '../../../models/Event';
+import {EventsActions} from '../../../store/events/eventsActions';
+import {UserAccount} from '../../../models/User';
+import {NotificationActions} from '../../../store/notification/notificationActions';
+import {navigationRef} from '../withNavigationContainer';
 
 type HandlerFunc = (msg: WsEvent<any>) => void;
 
 export class WsPushHandler {
   private readonly dispatch: AppDispatch;
-  private readonly t: TFunction;
+  private readonly account: UserAccount;
 
-  constructor(dispatch: AppDispatch, t: TFunction) {
+  constructor(dispatch: AppDispatch, account: UserAccount) {
     this.dispatch = dispatch;
-    this.t = t;
+    this.account = account;
   }
 
   public handleMessage = (msg: WsEvent<any>): void => {
@@ -34,13 +34,13 @@ export class WsPushHandler {
       // ITEM
       case 'ITEM_CREATE':
         return this.handleItemCreateEvent;
-      case 'ITEM_GROUP_CREATE':
-        return this.handleItemGroupCreateEvent;
       case 'ITEM_MEMBER_ADD':
         return this.handleItemMemberAddEvent;
       // CHAT
       case 'CHAT_CREATE':
         return this.handleChatCreateEvent;
+      case 'CHAT_MEMBER_ADD':
+        return this.handleChatMemberAddEvent;
       case 'CHAT_MESSAGE_CREATE':
         return this.handleChatMessageCreateEvent;
       case 'CHAT_REACTION_INCOMING':
@@ -69,27 +69,24 @@ export class WsPushHandler {
    */
 
   private handleItemCreateEvent = (msg: WsEvent<Item>): void => {
-    const title = this.t('item.create');
-    const body = msg.payload.title;
-    const data: PushNotificationData = {itemId: msg.payload.id};
-    Notifications.showLocal(title, body, data, 'item');
-  };
-
-  private handleItemGroupCreateEvent = (msg: WsEvent<Group>): void => {
-    const title = this.t('item.createGroup');
-    const body = msg.payload.title;
-    const data: PushNotificationData = {groupId: msg.payload.id};
-    Notifications.showLocal(title, body, data, 'item');
+    const userId = msg.userId;
+    const groupId = msg.payload.groupId;
+    const itemId = msg.payload.id;
+    const userIds = [] as string[];
+    const itemEvent: ItemEvent = {userId, groupId, itemId, userIds};
+    const event: Event = {type: EventType.ITEM_CREATE, itemEvent, date: msg.date};
+    const isOwnEvent = this.account.id === userId;
+    !isOwnEvent && this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   private handleItemMemberAddEvent = (msg: WsEvent<GroupMember[]>): void => {
+    const userId = msg.userId;
+    const groupId = msg.payload[0].groupId;
     const userIds = msg.payload.map((m) => m.userId);
-    UserService.getAllByIds(userIds).then((response) => {
-      const title = this.t('item.addMembers');
-      const body = response.data.map((u) => u.username).join(', ');
-      const data: PushNotificationData = {groupId: msg.payload[0].groupId};
-      Notifications.showLocal(title, body, data, 'item');
-    });
+    const itemEvent: ItemEvent = {userId, groupId, userIds};
+    const event: Event = {type: EventType.ITEM_MEMBER_ADD, itemEvent, date: msg.date};
+    const isOwnEvent = this.account.id === userId;
+    !isOwnEvent && this.dispatch(EventsActions.addEvent(event, isOwnEvent));
   };
 
   /*
@@ -97,30 +94,44 @@ export class WsPushHandler {
    */
 
   private handleChatCreateEvent = (msg: WsEvent<Chat>): void => {
-    const title = this.t('chat.create');
-    const body = msg.payload.title;
-    const data: PushNotificationData = {chatId: msg.payload.id};
-    Notifications.showLocal(title, body, data, 'chat');
+    const userId = msg.userId;
+    const chatId = msg.payload.id;
+    const userIds = msg.payload.members.map((m) => m.userId).filter((id) => id !== userId);
+    const chatEvent: ChatEvent = {userId, chatId, userIds};
+    const event: Event = {type: EventType.CHAT_CREATE, chatEvent, date: msg.date};
+    const isOwnEvent = this.account.id === userId;
+    !isOwnEvent && this.dispatch(NotificationActions.add(event));
+  };
+
+  private handleChatMemberAddEvent = (msg: WsEvent<ChatMember[]>): void => {
+    const userId = msg.userId;
+    const chatId = msg.payload[0].chatId;
+    const userIds = msg.payload.map((m) => m.userId);
+    const chatEvent: ChatEvent = {userId, chatId, userIds};
+    const event: Event = {type: EventType.CHAT_MEMBER_ADD, chatEvent, date: msg.date};
+    const isOwnEvent = this.account.id === userId;
+    !isOwnEvent && this.dispatch(NotificationActions.add(event));
   };
 
   private handleChatMessageCreateEvent = (msg: WsEvent<Message>): void => {
-    const userIds = [msg.payload.userId];
-    UserService.getAllByIds(userIds).then((response) => {
-      const title = this.t('chat.createMessage') + ': ' + response.data.map((u) => u.username).join(', ');
-      const body = msg.payload.text;
-      const data: PushNotificationData = {chatId: msg.payload.chatId};
-      Notifications.showLocal(title, body, data, 'chat');
-    });
+    const userId = msg.userId;
+    const chatId = msg.payload.chatId;
+    const messageId = msg.payload.id;
+    const chatEvent: ChatEvent = {userId, chatId, messageId};
+    const event: Event = {type: EventType.CHAT_MESSAGE_CREATE, chatEvent, date: msg.date};
+    const isOwnEvent = this.account.id === userId;
+    const shouldDisplay = this.shouldDisplayChatNotification(chatId);
+    !isOwnEvent && shouldDisplay && this.dispatch(NotificationActions.add(event));
   };
 
   private handleChatReactionIncomingEvent = (msg: WsEvent<MessageReaction>): void => {
-    const userIds = [msg.payload.userId];
-    UserService.getAllByIds(userIds).then((response) => {
-      const title = this.t('chat.chatReaction');
-      const body = response.data.map((u) => u.username).join(', ');
-      const data: PushNotificationData = {chatId: msg.payload.chatId};
-      Notifications.showLocal(title, body, data, 'chat');
-    });
+    const userId = msg.userId;
+    const chatId = msg.payload.chatId;
+    const messageId = msg.payload.messageId;
+    const reaction = msg.payload.type;
+    const chatEvent: ChatEvent = {userId, chatId, messageId, reaction};
+    const event: Event = {type: EventType.CHAT_REACTION_INCOMING, chatEvent, date: msg.date};
+    reaction !== 'NONE' && this.dispatch(NotificationActions.add(event));
   };
 
   /*
@@ -128,23 +139,19 @@ export class WsPushHandler {
    */
 
   private handleContactRequestIncomingEvent = (msg: WsEvent<ContactRequest>): void => {
-    const userIds = [msg.payload.requesterId];
-    UserService.getAllByIds(userIds).then((response) => {
-      const title = this.t('contact.request');
-      const body = response.data.map((u) => u.username).join(', ');
-      const data: PushNotificationData = {userId: msg.payload.requesterId};
-      Notifications.showLocal(title, body, data, 'contact');
-    });
+    const firstUserId = msg.payload.requesterId;
+    const secondUserId = msg.payload.recipientId;
+    const contactEvent: ContactEvent = {firstUserId, secondUserId};
+    const event: Event = {type: EventType.CONTACT_REQUEST_INCOMING, contactEvent, date: msg.date};
+    this.dispatch(NotificationActions.add(event));
   };
 
   private handleContactAcceptIncomingEvent = (msg: WsEvent<ContactRequest>): void => {
-    const userIds = [msg.payload.recipientId];
-    UserService.getAllByIds(userIds).then((response) => {
-      const title = this.t('contact.requestAccept');
-      const body = response.data.map((u) => u.username).join(', ');
-      const data: PushNotificationData = {userId: msg.payload.recipientId};
-      Notifications.showLocal(title, body, data, 'contact');
-    });
+    const firstUserId = msg.payload.recipientId;
+    const secondUserId = msg.payload.requesterId;
+    const contactEvent: ContactEvent = {firstUserId, secondUserId};
+    const event: Event = {type: EventType.CONTACT_ACCEPT_INCOMING, contactEvent, date: msg.date};
+    this.dispatch(NotificationActions.add(event));
   };
 
   /*
@@ -152,23 +159,25 @@ export class WsPushHandler {
    */
 
   private handleCommentCreateEvent = (msg: WsEvent<Comment>): void => {
-    const userIds = [msg.payload.userId];
-    UserService.getAllByIds(userIds).then((response) => {
-      const title = this.t('comment.create') + ': ' + response.data.map((u) => u.username).join(', ');
-      const body = msg.payload.text;
-      const data: PushNotificationData = {commentTargetId: msg.payload.targetId};
-      Notifications.showLocal(title, body, data, 'comment');
-    });
+    const userId = msg.userId;
+    const parentId = msg.payload.parentId;
+    const targetId = msg.payload.targetId;
+    const commentId = msg.payload.id;
+    const commentEvent: CommentEvent = {userId, parentId, targetId, commentId};
+    const event: Event = {type: EventType.COMMENT_CREATE, commentEvent, date: msg.date};
+    const isOwnEvent = this.account.id === userId;
+    const shouldDisplay = this.shouldDisplayCommentNotification(targetId);
+    !isOwnEvent && shouldDisplay && this.dispatch(NotificationActions.add(event));
   };
 
   private handleCommentReactionIncomingEvent = (msg: WsEvent<CommentReaction>): void => {
-    const userIds = [msg.payload.userId];
-    UserService.getAllByIds(userIds).then((response) => {
-      const title = this.t('comment.createReaction');
-      const body = response.data.map((u) => u.username).join(', ');
-      const data: PushNotificationData = {commentTargetId: msg.payload.targetId};
-      Notifications.showLocal(title, body, data, 'comment');
-    });
+    const parentId = msg.payload.parentId;
+    const targetId = msg.payload.targetId;
+    const commentId = msg.payload.commentId;
+    const reaction = msg.payload.type;
+    const commentEvent: CommentEvent = {userId: msg.userId, parentId, targetId, commentId, reaction};
+    const event: Event = {type: EventType.COMMENT_REACTION_INCOMING, commentEvent, date: msg.date};
+    reaction !== 'NONE' && this.dispatch(NotificationActions.add(event));
   };
 
   /*
@@ -176,12 +185,24 @@ export class WsPushHandler {
    */
 
   private handleReminderEvent = (msg: WsEvent<ReminderInfo>): void => {
-    const itemIds = [msg.payload.itemId];
-    ItemService.getItemInfoByIds(itemIds).then((response) => {
-      const title = this.t('reminder');
-      const body = response.data.map((i) => i.title).join(', ');
-      const data: PushNotificationData = {itemId: msg.payload.itemId};
-      Notifications.showLocal(title, body, data, 'reminder');
-    });
+    const reminderEvent: ReminderEvent = {groupId: msg.payload.groupId, itemId: msg.payload.itemId};
+    const event: Event = {type: EventType.REMINDER, reminderEvent, date: msg.date};
+    this.dispatch(NotificationActions.add(event));
+  };
+
+  /*
+  DISPLAY CHECKS
+   */
+
+  private shouldDisplayChatNotification = (chatId: string): boolean => {
+    const routeName = navigationRef.getCurrentRoute().name;
+    const routeParams: any = navigationRef.getCurrentRoute().params;
+    return routeName === 'ChatView' && (routeParams?.chat?.id === chatId || routeParams?.chatId === chatId);
+  };
+
+  private shouldDisplayCommentNotification = (targetId: string): boolean => {
+    const routeName = navigationRef.getCurrentRoute().name;
+    const routeParams: any = navigationRef.getCurrentRoute().params;
+    return routeName === 'CommentList' && routeParams?.targetId === targetId;
   };
 }

@@ -1,4 +1,4 @@
-export interface PushNotificationData {
+export interface Notification {
   groupId?: string;
   itemId?: string;
   commentTargetId?: string;

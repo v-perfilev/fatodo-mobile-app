@@ -25,6 +25,9 @@
       "content": "<user/> покинул <chat/>",
       "content_FEMALE": "<user/> покинула <chat/>"
     },
+    "messageCreate": {
+      "title": "Новое сообщение"
+    },
     "reaction": {
       "title": "Реакция в чате",
       "content": "<user/> отреагировал на Ваше собощение в чате <chat/>",
