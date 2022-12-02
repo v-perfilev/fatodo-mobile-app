@@ -4,7 +4,7 @@ import withEventChat, {WithEventChatProps} from '../../../../shared/hocs/withEve
 import UserView from '../../../views/UserView';
 import UserLink from '../../../links/UserLink';
 import ChatLink from '../../../links/ChatLink';
-import EventListItemUsers from '../../../../screens/events/eventList/eventListItem/EventListItemUsers';
+import UserListLInks from '../../../links/UserListLinks';
 import NotificationTemplate from '../../NotificationTemplate';
 import {useNotificationContext} from '../../../../shared/contexts/NotificationContext';
 import {useNavigation} from '@react-navigation/native';
@@ -29,7 +29,7 @@ const NotificationChatCreate = ({user, chat, users}: WithEventChatProps) => {
       components={{
         user: <UserLink user={user} noLink />,
         chat: <ChatLink chat={chat} text={t('event:links.chat')} noLink />,
-        users: <EventListItemUsers users={users} />,
+        users: <UserListLInks users={users} noLink />,
       }}
     />
   );

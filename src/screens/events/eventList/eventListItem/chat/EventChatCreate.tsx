@@ -4,7 +4,7 @@ import UserLink from '../../../../../components/links/UserLink';
 import {Trans, useTranslation} from 'react-i18next';
 import React from 'react';
 import ChatLink from '../../../../../components/links/ChatLink';
-import EventListItemUsers from '../EventListItemUsers';
+import UserListLInks from '../../../../../components/links/UserListLinks';
 import UserView from '../../../../../components/views/UserView';
 
 const EventChatCreate = ({user, chat, users, date}: WithEventChatProps) => {
@@ -22,7 +22,7 @@ const EventChatCreate = ({user, chat, users, date}: WithEventChatProps) => {
       components={{
         user: <UserLink user={user} />,
         chat: <ChatLink chat={chat} text={t('event:links.chat')} />,
-        users: <EventListItemUsers users={users} />,
+        users: <UserListLInks users={users} />,
       }}
     />
   );

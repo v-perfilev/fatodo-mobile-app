@@ -3,7 +3,7 @@ import {Trans, useTranslation} from 'react-i18next';
 import React from 'react';
 import UserLink from '../../../../../components/links/UserLink';
 import GroupLink from '../../../../../components/links/GroupLink';
-import EventListItemUsers from '../EventListItemUsers';
+import UserListLInks from '../../../../../components/links/UserListLinks';
 import EventListItemTemplate from '../EventListItemTemplate';
 import UserView from '../../../../../components/views/UserView';
 
@@ -22,7 +22,7 @@ const EventItemMemberDelete = ({user, group, users, date}: WithEventItemProps) =
       components={{
         user: <UserLink user={user} />,
         group: <GroupLink group={group} />,
-        users: <EventListItemUsers users={users} />,
+        users: <UserListLInks users={users} />,
       }}
     />
   );

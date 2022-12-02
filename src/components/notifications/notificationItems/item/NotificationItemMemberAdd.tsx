@@ -4,7 +4,7 @@ import withEventItem, {WithEventItemProps} from '../../../../shared/hocs/withEve
 import UserView from '../../../views/UserView';
 import UserLink from '../../../links/UserLink';
 import GroupLink from '../../../links/GroupLink';
-import EventListItemUsers from '../../../../screens/events/eventList/eventListItem/EventListItemUsers';
+import UserListLInks from '../../../links/UserListLinks';
 import NotificationTemplate from '../../NotificationTemplate';
 import {useNotificationContext} from '../../../../shared/contexts/NotificationContext';
 import {useNavigation} from '@react-navigation/native';
@@ -29,7 +29,7 @@ const NotificationItemMemberAdd = ({user, group, users}: WithEventItemProps) => 
       components={{
         user: <UserLink user={user} noLink />,
         group: <GroupLink group={group} noLink />,
-        users: <EventListItemUsers users={users} />,
+        users: <UserListLInks users={users} noLink />,
       }}
     />
   );

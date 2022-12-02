@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import UserView from '../../../views/UserView';
 import UserLink from '../../../links/UserLink';
 import ChatLink from '../../../links/ChatLink';
-import EventListItemUsers from '../../../../screens/events/eventList/eventListItem/EventListItemUsers';
+import UserListLInks from '../../../links/UserListLinks';
 import NotificationTemplate from '../../NotificationTemplate';
 import withEventChat, {WithEventChatProps} from '../../../../shared/hocs/withEvents/withEventChat';
 import {useNotificationContext} from '../../../../shared/contexts/NotificationContext';
@@ -29,7 +29,7 @@ const NotificationChatMemberAdd = ({user, chat, users}: WithEventChatProps) => {
       components={{
         user: <UserLink user={user} noLink />,
         chat: <ChatLink chat={chat} text={t('event:links.chat')} noLink />,
-        users: <EventListItemUsers users={users} />,
+        users: <UserListLInks users={users} noLink />,
       }}
     />
   );

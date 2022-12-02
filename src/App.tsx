@@ -22,7 +22,7 @@ import NotificationsRemote from './shared/push/notificationsRemote';
 import withRootContainer from './shared/hocs/withContainers/withRootContainer';
 import ColoredStatusBar from './components/layouts/ColoredStatusBar';
 import RootNavigator from './navigators/RootNavigator';
-import withMessageDisplay from './shared/hocs/withNotificationDisplay';
+import withNotificationDisplay from './shared/hocs/withNotificationDisplay';
 
 // ignore some warnings
 const ignoredLogPatterns = [
@@ -69,7 +69,7 @@ export default flowRight([
   withStore,
   withGestureHandler,
   withNavigationContainer,
-  withMessageDisplay,
+  withNotificationDisplay,
   withSnackDisplay,
   withWsClient,
   withDialogs,

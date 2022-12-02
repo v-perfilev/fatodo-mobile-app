@@ -4,7 +4,7 @@ import React from 'react';
 import UserLink from '../../../../../components/links/UserLink';
 import GroupLink from '../../../../../components/links/GroupLink';
 import EventListItemTemplate from '../EventListItemTemplate';
-import EventListItemUsers from '../EventListItemUsers';
+import UserListLInks from '../../../../../components/links/UserListLinks';
 import UserView from '../../../../../components/views/UserView';
 
 const EventItemMemberAdd = ({user, group, users, date}: WithEventItemProps) => {
@@ -22,7 +22,7 @@ const EventItemMemberAdd = ({user, group, users, date}: WithEventItemProps) => {
       components={{
         user: <UserLink user={user} />,
         group: <GroupLink group={group} />,
-        users: <EventListItemUsers users={users} />,
+        users: <UserListLInks users={users} />,
       }}
     />
   );
