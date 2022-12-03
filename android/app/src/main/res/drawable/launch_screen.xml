@@ -8,6 +8,6 @@
             android:width="150dp"
             android:height="150dp"
             android:drawable="@mipmap/splash_icon"
-            android:gravity="center" />
+            android:gravity="center"/>
 
 </layer-list>

@@ -27,8 +27,8 @@ export class NavigationUtils {
       });
     } else if (data.chatId) {
       NavigationUtils.navigate('ChatView', {chatId: data.chatId});
-    } else if (data.commentTargetId) {
-      NavigationUtils.navigate('CommentList', {targetId: data.commentTargetId});
+    } else if (data.targetId) {
+      NavigationUtils.navigate('CommentList', {targetId: data.targetId});
     } else if (data.userId) {
       NavigationUtils.navigate('UserView', {userId: data.userId});
     }

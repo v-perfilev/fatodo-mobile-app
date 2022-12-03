@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Fatodo</string>
-    <string name="default_firebase_channel_id">fatodo_default_firebase_chanel_id</string>
+    <string name="default_firebase_channel_id">firebase_channel</string>
 </resources>
