@@ -23,6 +23,7 @@ import withRootContainer from './shared/hocs/withContainers/withRootContainer';
 import ColoredStatusBar from './components/layouts/ColoredStatusBar';
 import RootNavigator from './navigators/RootNavigator';
 import withNotificationDisplay from './shared/hocs/withNotificationDisplay';
+import withSound from './shared/hocs/withSound';
 
 // ignore some warnings
 const ignoredLogPatterns = [
@@ -67,6 +68,7 @@ const App = ({ready}: AppProps) => {
 
 export default flowRight([
   withStore,
+  withSound,
   withGestureHandler,
   withNavigationContainer,
   withNotificationDisplay,

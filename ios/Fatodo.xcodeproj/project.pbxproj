@@ -13,6 +13,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		245D061D5CE5D90E651007CC /* Pods_Fatodo_FatodoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D603C645A2DD81D4F822E5A4 /* Pods_Fatodo_FatodoTests.framework */; };
 		361859BA29295ABE0014F0D4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 361859B929295ABE0014F0D4 /* GoogleService-Info.plist */; };
+		3671E53F293B79C900A6115D /* ding.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3671E53E293B79C900A6115D /* ding.mp3 */; };
 		3BDED8AD968646BF8D9D2D94 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3981B7C3F0A1473483627FD9 /* Roboto-Medium.ttf */; };
 		475248D496CA457A9D5FDFFF /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 177E2F9E51884EA68D539E21 /* Roboto-Bold.ttf */; };
 		48F3BCDCD28E4140B4160DCF /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 595CB888C1F7486F8B4421D7 /* Roboto-Regular.ttf */; };
@@ -48,6 +49,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Fatodo/main.m; sourceTree = "<group>"; };
 		177E2F9E51884EA68D539E21 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		361859B929295ABE0014F0D4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3671E53E293B79C900A6115D /* ding.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ding.mp3; sourceTree = "<group>"; };
 		3981B7C3F0A1473483627FD9 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Fatodo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fatodo.debug.xcconfig"; path = "Target Support Files/Pods-Fatodo/Pods-Fatodo.debug.xcconfig"; sourceTree = "<group>"; };
 		50EE7194010746CAA36486A8 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../assets/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				3671E53E293B79C900A6115D /* ding.mp3 */,
 				13B07FAE1A68108700A75B9A /* Fatodo */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* FatodoTests */,
@@ -286,6 +289,7 @@
 				85058F07ABEA4409BB5B80EA /* Roboto-LightItalic.ttf in Resources */,
 				3BDED8AD968646BF8D9D2D94 /* Roboto-Medium.ttf in Resources */,
 				A1C28F709D844621B5AD7CDF /* Roboto-MediumItalic.ttf in Resources */,
+				3671E53F293B79C900A6115D /* ding.mp3 in Resources */,
 				361859BA29295ABE0014F0D4 /* GoogleService-Info.plist in Resources */,
 				48F3BCDCD28E4140B4160DCF /* Roboto-Regular.ttf in Resources */,
 				B4790FE1EA9A4EAF902C612D /* Roboto-RegularItalic.ttf in Resources */,
