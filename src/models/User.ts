@@ -16,16 +16,6 @@ export interface UserAccount {
   info: UserInfo;
 }
 
-export interface User {
-  id: string;
-  username: string;
-  firstname?: string;
-  lastname?: string;
-  gender?: Gender;
-  imageFilename?: string;
-  deleted?: boolean;
-}
-
 export interface UserInfo {
   firstname?: string;
   lastname?: string;
@@ -35,6 +25,16 @@ export interface UserInfo {
   timezone: string;
   timeFormat: TimeFormat;
   dateFormat: DateFormat;
+}
+
+export interface User {
+  id: string;
+  username: string;
+  firstname?: string;
+  lastname?: string;
+  imageFilename?: string;
+  gender?: Gender;
+  deleted?: boolean;
 }
 
 export const accountToUser = (account: UserAccount): User => ({
