@@ -1,6 +1,6 @@
 import {AxiosPromise} from 'axios';
 import {ChangePasswordDTO} from '../models/dto/ChangePasswordDTO';
-import {User, UserAccount} from '../models/User';
+import {User, UserAccount, UserSettings} from '../models/User';
 import axios from '../shared/axios';
 import {ChangeLanguageDTO} from '../models/dto/ChangeLanguageDTO';
 
@@ -33,10 +33,15 @@ export default class UserService {
     return axios.get(url);
   };
 
-  public static updateAccount = (formData: FormData): AxiosPromise<void> => {
-    const url = UserService.baseUrl + '/account';
+  public static updateAccountInfo = (formData: FormData): AxiosPromise<void> => {
+    const url = UserService.baseUrl + '/account/info';
     const config = {headers: {'content-type': 'multipart/form-data'}};
     return axios.put(url, formData, config);
+  };
+
+  public static updateAccountSettings = (settings: UserSettings): AxiosPromise<void> => {
+    const url = UserService.baseUrl + '/account/settings';
+    return axios.put(url, settings);
   };
 
   public static deleteAccountPermanently = (userId: string): AxiosPromise<void> => {

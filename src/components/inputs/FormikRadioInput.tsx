@@ -4,9 +4,9 @@ import FVStack from '../boxes/FVStack';
 import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
 import {flowRight} from 'lodash';
 
-type FormikTextInputProps = FormikInputProps;
+type FormikRadioInputProps = FormikInputProps;
 
-const FormikRadioInput = (props: FormikTextInputProps) => {
+const FormikRadioInput = (props: FormikRadioInputProps) => {
   const {label, options, value, error, isTouched, isError, isDisabled, onChange} = props;
 
   const optionElements = useMemo<ReactElement[]>(
@@ -22,7 +22,7 @@ const FormikRadioInput = (props: FormikTextInputProps) => {
   return (
     <FormControl isInvalid={isTouched && isError} isDisabled={isDisabled}>
       {label && <FormControl.Label>{label}</FormControl.Label>}
-      <Radio.Group name={label} onChange={onChange} value={value}>
+      <Radio.Group name={label} onChange={onChange} value={value} isDisabled={isDisabled}>
         <FVStack space="4" my="2">
           {optionElements}
         </FVStack>

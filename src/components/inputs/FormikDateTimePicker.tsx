@@ -31,8 +31,8 @@ const formatValue = (date: Date, account: UserAccount, mode: FormikDateTimePicke
 };
 
 const calcLocale = (mode: FormikDateTimePickerMode, account: UserAccount) => {
-  const locale = account.info.language;
-  const timeFormat = account.info.timeFormat;
+  const locale = account.settings.language;
+  const timeFormat = account.settings.timeFormat;
   if (mode === 'time') {
     return timeFormat === 'H12' ? 'en_US' : 'en_GB';
   } else {

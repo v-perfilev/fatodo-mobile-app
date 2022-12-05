@@ -20,7 +20,7 @@ const FormikRemindersInputOnce = ({setReminder}: FormikRemindersInputOnceProps) 
   const [date, setDate] = useState<Date>(null);
   const [minimumDate, setMinimumDate] = useState<Date>(null);
 
-  const timezone = account.info.timezone;
+  const timezone = account.settings.timezone;
 
   const updateMinimum = (): void => {
     const now = new Date();

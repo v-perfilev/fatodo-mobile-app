@@ -22,7 +22,7 @@ export const UserFullView = ({user, account, withoutUsername}: UserFullViewProps
       {label: t('account:fields.lastname.label'), value: user.lastname, showNotSet: true},
     ];
     if (account) {
-      items.push({label: t('account:fields.timezone.label'), value: account.info.timezone, showNotSet: true});
+      items.push({label: t('account:fields.timezone.label'), value: account.settings.timezone, showNotSet: true});
     }
     return items;
   }, [user, account, i18n.language]);

@@ -11,7 +11,7 @@ export class LanguageUtils {
   };
 
   public static setLanguageFromUser = (account: UserAccount): void => {
-    const code = account?.info?.language?.toLowerCase();
+    const code = account?.settings?.language?.toLowerCase();
     code && LanguageUtils.setLanguage(code);
   };
 }

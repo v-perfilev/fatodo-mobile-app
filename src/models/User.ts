@@ -14,17 +14,22 @@ export interface UserAccount {
   provider: string;
   authorities: string[];
   info: UserInfo;
+  settings: UserSettings;
 }
 
 export interface UserInfo {
   firstname?: string;
   lastname?: string;
-  imageFilename?: string;
   gender?: Gender;
+  imageFilename?: string;
+}
+
+export interface UserSettings {
   language: Language;
   timezone: string;
   timeFormat: TimeFormat;
   dateFormat: DateFormat;
+  emailReminders: boolean;
 }
 
 export interface User {

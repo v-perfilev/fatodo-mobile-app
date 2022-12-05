@@ -19,7 +19,7 @@ const FormikRemindersInputMonthly = ({setReminder}: FormikRemindersInputMonthlyP
   const [time, setTime] = useState<Date>(null);
   const [dates, setDates] = useState<number[]>([]);
 
-  const timezone = account.info.timezone;
+  const timezone = account.settings.timezone;
 
   const updateReminder = (): void => {
     if (time && dates && dates.length > 0) {

@@ -19,7 +19,7 @@ const FormikRemindersInputWeekly = ({setReminder}: FormikRemindersInputWeeklyPro
   const [time, setTime] = useState<Date>(null);
   const [days, setDays] = useState<number[]>([]);
 
-  const timezone = account.info.timezone;
+  const timezone = account.settings.timezone;
 
   const updateReminder = (): void => {
     if (time && days && days.length > 0) {

@@ -8,7 +8,7 @@ import {Formik, FormikHelpers} from 'formik';
 import FHStack from '../../../components/boxes/FHStack';
 import * as Yup from 'yup';
 import {usernameChangeValidator} from '../../../shared/validators';
-import {DateFormat, dateFormats, Gender, Language, TimeFormat, timeFormats, UserAccount} from '../../../models/User';
+import {Gender, UserAccount} from '../../../models/User';
 import FormikTextInput from '../../../components/inputs/FormikTextInput';
 import {useNavigation} from '@react-navigation/native';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
@@ -20,47 +20,35 @@ import Separator from '../../../components/layouts/Separator';
 import SolidButton from '../../../components/controls/SolidButton';
 import {useAccountDialogContext} from '../../../shared/contexts/dialogContexts/AccountDialogContext';
 
-export interface AccountFormValues {
+export interface AccountMainFormValues {
   username: string;
   firstname: string;
   lastname: string;
-  language: Language;
   gender: Gender;
-  timezone: string;
-  timeFormat: TimeFormat;
-  dateFormat: DateFormat;
   imageFilename?: string;
   imageContent?: Blob;
 }
 
-const defaultAccountFormValues: Readonly<AccountFormValues> = {
+const defaultAccountMainFormValues: Readonly<AccountMainFormValues> = {
   username: '',
   firstname: '',
   lastname: '',
-  language: 'EN',
   gender: null,
-  timezone: '',
-  timeFormat: timeFormats[0],
-  dateFormat: dateFormats[0],
   imageFilename: null,
   imageContent: null,
 };
 
-const initialValues = (account: UserAccount): AccountFormValues =>
+const initialValues = (account: UserAccount): AccountMainFormValues =>
   account
     ? {
         username: account.username,
-        firstname: account.info.firstname,
-        lastname: account.info.lastname,
-        language: account.info.language,
+        firstname: account.info.firstname || '',
+        lastname: account.info.lastname || '',
         gender: account.info.gender,
-        timezone: account.info.timezone,
-        timeFormat: account.info.timeFormat,
-        dateFormat: account.info.dateFormat,
         imageFilename: account.info.imageFilename,
         imageContent: null,
       }
-    : defaultAccountFormValues;
+    : defaultAccountMainFormValues;
 
 const validationSchema = (account: UserAccount) =>
   Yup.object().shape({
@@ -83,21 +71,16 @@ const AccountForm = () => {
     }
   };
 
-  const handleSubmit = (values: AccountFormValues, helpers: FormikHelpers<AccountFormValues>): void => {
+  const handleSubmit = (values: AccountMainFormValues, helpers: FormikHelpers<AccountMainFormValues>): void => {
     const formData = new FormData();
-    addValueToForm(formData, 'id', account.id);
     addValueToForm(formData, 'username', values.username);
     addValueToForm(formData, 'firstname', values.firstname);
     addValueToForm(formData, 'lastname', values.lastname);
-    addValueToForm(formData, 'language', values.language);
     addValueToForm(formData, 'gender', values.gender);
-    addValueToForm(formData, 'timezone', values.timezone);
-    addValueToForm(formData, 'timeFormat', values.timeFormat);
-    addValueToForm(formData, 'dateFormat', values.dateFormat);
     addValueToForm(formData, 'imageFilename', values.imageFilename, !values.imageContent);
     addValueToForm(formData, 'imageContent', values.imageContent);
 
-    dispatch(AuthActions.updateAccountThunk(formData))
+    dispatch(AuthActions.updateAccountInfoThunk(formData))
       .unwrap()
       .then(() => navigation.goBack())
       .finally(() => helpers.setSubmitting(false));

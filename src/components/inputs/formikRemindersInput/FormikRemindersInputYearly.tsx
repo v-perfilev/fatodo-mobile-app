@@ -18,7 +18,7 @@ const FormikRemindersInputYearly = ({setReminder}: FormikRemindersInputYearlyPro
   const [time, setTime] = useState<Date>(null);
   const [date, setDate] = useState<Date>(null);
 
-  const timezone = account.info.timezone;
+  const timezone = account.settings.timezone;
 
   const updateReminder = (): void => {
     if (time && date) {

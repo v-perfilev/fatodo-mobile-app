@@ -14,7 +14,7 @@ type ReminderViewProps = {
 const ReminderView = ({reminder}: ReminderViewProps) => {
   const {t} = useTranslation();
   const account = useAppSelector(AuthSelectors.account);
-  const timezone = account.info.timezone;
+  const timezone = account.settings.timezone;
 
   //need to set locale in moment here cause of bug in material-ui
   DateUtils.resetLocale();

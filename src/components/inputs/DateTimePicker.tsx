@@ -44,8 +44,8 @@ const calcOverflow = (mode: PickMode): string => {
 };
 
 const calcLocale = (mode: PickMode, account: UserAccount) => {
-  const timeFormat = account.info.timeFormat;
-  let locale = account.info.language.toLowerCase();
+  const timeFormat = account.settings.timeFormat;
+  let locale = account.settings.language.toLowerCase();
   if (mode === 'time') {
     locale = timeFormat === 'H12' ? 'en_US' : 'en_GB';
   }

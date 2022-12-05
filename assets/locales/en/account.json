@@ -19,6 +19,9 @@
     "header": "Change password",
     "submit": "Submit"
   },
+  "settings": {
+    "notificationsSubtitle": "Notifications"
+  },
   "fields": {
     "user": {
       "label": "Username / Email",
@@ -95,6 +98,9 @@
     "timezone": {
       "label": "Timezone",
       "required": "Required"
+    },
+    "emailReminders": {
+      "label": "Email reminders"
     },
     "image": {
       "label": "Image"

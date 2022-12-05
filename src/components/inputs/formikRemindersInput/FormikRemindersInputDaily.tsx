@@ -16,7 +16,7 @@ const FormikRemindersInputDaily = ({setReminder}: FormikRemindersInputDailyProps
   const {t} = useTranslation();
   const [time, setTime] = useState<Date>(null);
 
-  const timezone = account.info.timezone;
+  const timezone = account.settings.timezone;
 
   const updateReminder = (): void => {
     if (time) {

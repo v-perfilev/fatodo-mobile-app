@@ -74,8 +74,8 @@ export class DateFormatters {
     timeFormatType?: TimeFormatType,
     dateFormatType?: DateFormatType,
   ): string => {
-    const timeFormat = account?.info.timeFormat || 'H24';
-    const dateFormat = account?.info.dateFormat || 'YMD_DASH';
+    const timeFormat = account?.settings.timeFormat || 'H24';
+    const dateFormat = account?.settings.dateFormat || 'YMD_DASH';
     const formatArray: string[] = [];
     if (timeFormatType) {
       formatArray.push(DateFormats.getTimeFormat(timeFormat));
