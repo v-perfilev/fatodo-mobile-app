@@ -2,7 +2,7 @@ import chatSlice from './chatSlice';
 import {Chat, ChatMember} from '../../models/Chat';
 import ChatService from '../../services/ChatService';
 import {MessageDTO} from '../../models/dto/MessageDTO';
-import {UserAccount} from '../../models/User';
+import {accountToUser, UserAccount} from '../../models/User';
 import {
   buildEventMessage,
   buildMessageFromDTO,
@@ -104,13 +104,30 @@ export class ChatActions {
   });
 
   static markMessageAsReadThunk = createAsyncThunk<void, Message, AsyncThunkConfig>(
-    PREFIX + 'markAsRead',
+    PREFIX + 'markMessageAsRead',
     async (message, thunkAPI) => {
       const account = thunkAPI.getState().auth.account;
       const status = buildMessageStatus(message.chatId, message.id, account.id, 'READ');
       thunkAPI.dispatch(chatSlice.actions.setMessageStatus({status, account}));
       thunkAPI.dispatch(ChatsActions.removeUnreadMessage(message));
       ChatService.markMessageAsRead(message.id);
+    },
+  );
+
+  static markChatAsReadThunk = createAsyncThunk<void, Chat, AsyncThunkConfig>(
+    PREFIX + 'markChatAsRead',
+    async (chat, thunkAPI) => {
+      const account = thunkAPI.getState().auth.account;
+      const messages = thunkAPI.getState().chat.messages;
+      const user = accountToUser(account);
+      messages
+        .filter((message) => !MessageUtils.isReadMessage(message, user))
+        .forEach((message) => {
+          const status = buildMessageStatus(message.chatId, message.id, account.id, 'READ');
+          thunkAPI.dispatch(chatSlice.actions.setMessageStatus({status, account}));
+        });
+      thunkAPI.dispatch(ChatsActions.removeUnreadChat(chat.id));
+      ChatService.markChatAsRead(chat.id);
     },
   );
 

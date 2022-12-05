@@ -14,6 +14,7 @@
     "addMembers": "Add members",
     "renameChat": "Rename chat",
     "cleanChat": "Clean chat",
+    "markAsRead": "Mark all as read",
     "leaveChat": "Leave chat",
     "deleteChat": "Delete chat"
   },

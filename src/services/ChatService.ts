@@ -138,6 +138,11 @@ export default class ChatService {
     return axios.post(url);
   };
 
+  public static markChatAsRead = (chatId: string): AxiosPromise<void> => {
+    const url = ChatService.baseUrl + '/status/' + chatId + '/chat/read';
+    return axios.post(url);
+  };
+
   /*
   InfoController
    */

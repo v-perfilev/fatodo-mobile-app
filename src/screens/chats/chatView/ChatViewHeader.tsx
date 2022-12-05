@@ -11,12 +11,17 @@ import LeaveIcon from '../../../components/icons/LeaveIcon';
 import DeleteIcon from '../../../components/icons/DeleteIcon';
 import {useNavigation} from '@react-navigation/native';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
-import {useAppSelector} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import ChatSelectors from '../../../store/chat/chatSelectors';
+import {ChatActions} from '../../../store/chat/chatActions';
+import EyeIcon from '../../../components/icons/EyeIcon';
+import ChatsSelectors from '../../../store/chats/chatsSelectors';
 
 const ChatViewHeader = () => {
+  const dispatch = useAppDispatch();
+  const unreadMessageIdsSelector = useCallback(ChatsSelectors.makeUnreadMessageIdsSelector(), []);
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const navigation = useNavigation();
   const {t} = useTranslation();
@@ -29,9 +34,14 @@ const ChatViewHeader = () => {
     showChatDeleteDialog,
   } = useChatDialogContext();
   const chat = useAppSelector(ChatSelectors.chat);
+  const unreadMessageIds = useAppSelector((state) => unreadMessageIdsSelector(state, chat?.id));
   const memberIds = chat?.members.map((m) => m.userId);
   const users = useAppSelector((state) => usersSelector(state, memberIds));
   const account = useAppSelector(AuthSelectors.account);
+
+  const showMarkAsRead = useMemo<boolean>(() => {
+    return unreadMessageIds.length > 0;
+  }, [chat, unreadMessageIds]);
 
   const title = useMemo<string>(() => {
     return chat ? ChatUtils.getTitle(chat, users, account) : '';
@@ -51,6 +61,10 @@ const ChatViewHeader = () => {
 
   const cleanChat = (): void => {
     showChatClearDialog(chat);
+  };
+
+  const markAsRead = (): void => {
+    dispatch(ChatActions.markChatAsReadThunk(chat));
   };
 
   const leaveChat = (): void => {
@@ -78,6 +92,12 @@ const ChatViewHeader = () => {
       hidden: chat?.isDirect,
     },
     {action: cleanChat, icon: <BroomIcon color="primary.500" />, text: t('chat:menu.cleanChat')},
+    {
+      action: markAsRead,
+      text: t('chat:menu.markAsRead'),
+      icon: <EyeIcon color="primary.500" />,
+      hidden: !showMarkAsRead,
+    },
     {
       action: leaveChat,
       icon: <LeaveIcon color="primary.500" />,
