@@ -40,7 +40,7 @@ const ChatViewHeader = () => {
   const account = useAppSelector(AuthSelectors.account);
 
   const showMarkAsRead = useMemo<boolean>(() => {
-    return unreadMessageIds.length > 0;
+    return unreadMessageIds?.length > 0;
   }, [chat, unreadMessageIds]);
 
   const title = useMemo<string>(() => {

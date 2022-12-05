@@ -8,23 +8,23 @@ export default class UserService {
   private static baseUrl = '/api/user';
 
   public static getAllByIds = (ids: string[]): AxiosPromise<User[]> => {
-    const url = UserService.baseUrl;
+    const url = UserService.baseUrl + '/info';
     const params = {ids};
     return axios.get(url, {params});
   };
 
   public static getAllByUsernamePart = (usernamePart: string): AxiosPromise<User[]> => {
-    const url = UserService.baseUrl + '/' + usernamePart + '/username-part';
+    const url = UserService.baseUrl + '/info/' + usernamePart + '/username-part';
     return axios.get(url);
   };
 
   public static getByUsername = (username: string): AxiosPromise<User> => {
-    const url = UserService.baseUrl + '/' + username + '/username';
+    const url = UserService.baseUrl + '/info/' + username + '/username';
     return axios.get(url);
   };
 
   public static getByUsernameOrEmail = (user: string): AxiosPromise<User> => {
-    const url = UserService.baseUrl + '/' + user + '/username-or-email';
+    const url = UserService.baseUrl + '/info/' + user + '/username-or-email';
     return axios.get(url);
   };
 
