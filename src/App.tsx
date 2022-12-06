@@ -24,6 +24,7 @@ import ColoredStatusBar from './components/layouts/ColoredStatusBar';
 import RootNavigator from './navigators/RootNavigator';
 import withNotificationDisplay from './shared/hocs/withNotificationDisplay';
 import withSound from './shared/hocs/withSound';
+import withKeyboardAvoiding from './shared/hocs/withKeyboardAvoiding';
 
 // ignore some warnings
 const ignoredLogPatterns = [
@@ -75,5 +76,6 @@ export default flowRight([
   withSnackDisplay,
   withWsClient,
   withDialogs,
+  withKeyboardAvoiding,
   withRootContainer,
 ])(App);
