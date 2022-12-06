@@ -68,7 +68,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   }, [isActive, isAuthenticated]);
 
   useEffect(() => {
-    account && NotificationsRemote.subscribeToFirebase(account.id);
+    account && NotificationsRemote.subscribeToFirebase(account.id).finally();
   }, [account]);
 
   useLayoutEffect(() => {

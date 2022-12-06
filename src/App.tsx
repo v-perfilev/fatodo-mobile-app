@@ -41,7 +41,7 @@ NotificationsRemote.init();
 // setup axios
 const axiosActions = bindActionCreators(
   {
-    logout: AuthActions.logout,
+    logout: AuthActions.logoutThunk,
     enqueueSnack: SnackActions.enqueueSnack,
     handleResponse: SnackActions.handleResponse,
   },

@@ -1,5 +1,6 @@
 import React, {memo, PropsWithChildren, Ref, useImperativeHandle, useRef} from 'react';
-import {Animated, StyleProp, useWindowDimensions, ViewStyle} from 'react-native';
+import {Animated, Platform, StyleProp, useWindowDimensions, ViewStyle} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 type NotificationBaseProps = PropsWithChildren<{
   notificationBaseRef: Ref<NotificationBaseMethods>;
@@ -12,6 +13,7 @@ export type NotificationBaseMethods = {
 
 const NotificationBase = ({notificationBaseRef, children}: NotificationBaseProps) => {
   const {width} = useWindowDimensions();
+  const {top} = useSafeAreaInsets();
 
   const translateXValue = useRef(new Animated.Value(0));
   const opacityValue = useRef(new Animated.Value(1));
@@ -52,16 +54,16 @@ const NotificationBase = ({notificationBaseRef, children}: NotificationBaseProps
     outputRange: [0, 1],
   });
 
-  const absolutePositionStyle: StyleProp<ViewStyle> = {
+  const absolutePositionStyle = (topInset: number): StyleProp<ViewStyle> => ({
     zIndex: 100,
     position: 'absolute',
-    top: 15,
+    top: Platform.OS === 'android' ? 15 : 15 + topInset,
     left: 15,
     right: 15,
-  };
+  });
   const translateStyle = {transform: [{translateX}], opacity};
 
-  return <Animated.View style={[absolutePositionStyle, translateStyle]}>{children}</Animated.View>;
+  return <Animated.View style={[absolutePositionStyle(top), translateStyle]}>{children}</Animated.View>;
 };
 
 export default memo(NotificationBase);

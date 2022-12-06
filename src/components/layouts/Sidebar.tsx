@@ -41,7 +41,7 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
 
   const logout = (): void => {
     toggleDrawer();
-    dispatch(AuthActions.logout());
+    dispatch(AuthActions.logoutThunk());
     dispatch(RootActions.resetState());
   };
 

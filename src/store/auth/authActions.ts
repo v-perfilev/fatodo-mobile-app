@@ -30,12 +30,6 @@ export class AuthActions {
     dispatch(authSlice.actions.setLoading(value));
   };
 
-  static logout = () => (dispatch: AppDispatch) => {
-    SecurityUtils.clearAuthToken();
-    NotificationsRemote.unregisterDeviceFromFirebase();
-    dispatch(authSlice.actions.reset());
-  };
-
   static registerThunk = createAsyncThunk<void, RegistrationDTO, AsyncThunkConfig>(
     PREFIX + 'register',
     async (dto, thunkAPI) => {
@@ -53,6 +47,12 @@ export class AuthActions {
       await thunkAPI.dispatch(AuthActions.fetchAccountThunk());
     },
   );
+
+  static logoutThunk = createAsyncThunk<void, void, AsyncThunkConfig>(PREFIX + 'logout', async (_, thunkAPI) => {
+    const account = thunkAPI.getState().auth.account;
+    NotificationsRemote.unsubscribeFromFirebase(account?.id).finally();
+    thunkAPI.dispatch(authSlice.actions.reset());
+  });
 
   static fetchAccountThunk = createAsyncThunk<UserAccount, void, AsyncThunkConfig>(
     PREFIX + 'fetchAccount',
@@ -111,7 +111,7 @@ export class AuthActions {
     PREFIX + 'deleteAccount',
     async (userId, thunkAPI) => {
       await UserService.deleteAccountPermanently(userId);
-      await thunkAPI.dispatch(AuthActions.logout());
+      await thunkAPI.dispatch(AuthActions.logoutThunk());
       thunkAPI.dispatch(SnackActions.handleCode('auth.afterDeleteAccount', 'info'));
     },
   );

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>914624356550-3n0mnaqst85vfkoommnla62odvvohhp3.apps.googleusercontent.com</string>
+	<string>914624356550-8te188k8slrh3o85llogk0m9hichmd02.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.914624356550-3n0mnaqst85vfkoommnla62odvvohhp3</string>
+	<string>com.googleusercontent.apps.914624356550-8te188k8slrh3o85llogk0m9hichmd02</string>
 	<key>API_KEY</key>
 	<string>AIzaSyD6auBMZsSaUSEUzk1JBSmNBxeNrvtcXBI</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.fatodo</string>
+	<string>app.fatodo.Fatodo</string>
 	<key>PROJECT_ID</key>
 	<string>fatodo</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:914624356550:ios:607cb9b72d23b724e3f7c7</string>
+	<string>1:914624356550:ios:a884337c6b075744e3f7c7</string>
 </dict>
 </plist>

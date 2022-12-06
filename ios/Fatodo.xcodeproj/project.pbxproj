@@ -12,8 +12,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		245D061D5CE5D90E651007CC /* Pods_Fatodo_FatodoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D603C645A2DD81D4F822E5A4 /* Pods_Fatodo_FatodoTests.framework */; };
+		363917F6293EC8AF00D271CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 363917F5293EC8AF00D271CB /* GoogleService-Info.plist */; };
 		3671E53F293B79C900A6115D /* ding.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3671E53E293B79C900A6115D /* ding.mp3 */; };
-		368F8D17293E869B00DDF71E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 368F8D16293E869B00DDF71E /* GoogleService-Info.plist */; };
 		3BDED8AD968646BF8D9D2D94 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3981B7C3F0A1473483627FD9 /* Roboto-Medium.ttf */; };
 		475248D496CA457A9D5FDFFF /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 177E2F9E51884EA68D539E21 /* Roboto-Bold.ttf */; };
 		48F3BCDCD28E4140B4160DCF /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 595CB888C1F7486F8B4421D7 /* Roboto-Regular.ttf */; };
@@ -48,8 +48,9 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Fatodo/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Fatodo/main.m; sourceTree = "<group>"; };
 		177E2F9E51884EA68D539E21 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		363917F5293EC8AF00D271CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3671E53E293B79C900A6115D /* ding.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ding.mp3; sourceTree = "<group>"; };
-		368F8D16293E869B00DDF71E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		368F8D18293E929000DDF71E /* Fatodo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Fatodo.entitlements; path = Fatodo/Fatodo.entitlements; sourceTree = "<group>"; };
 		36B6BBD7293E8109006BBCFF /* FatodoDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = FatodoDebug.entitlements; path = Fatodo/FatodoDebug.entitlements; sourceTree = "<group>"; };
 		3981B7C3F0A1473483627FD9 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Fatodo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Fatodo.debug.xcconfig"; path = "Target Support Files/Pods-Fatodo/Pods-Fatodo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -107,7 +108,8 @@
 		13B07FAE1A68108700A75B9A /* Fatodo */ = {
 			isa = PBXGroup;
 			children = (
-				368F8D16293E869B00DDF71E /* GoogleService-Info.plist */,
+				363917F5293EC8AF00D271CB /* GoogleService-Info.plist */,
+				368F8D18293E929000DDF71E /* Fatodo.entitlements */,
 				36B6BBD7293E8109006BBCFF /* FatodoDebug.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -288,7 +290,7 @@
 				475248D496CA457A9D5FDFFF /* Roboto-Bold.ttf in Resources */,
 				D419A20B124849D8BD1AA53F /* Roboto-BoldItalic.ttf in Resources */,
 				A5547B4A93C247F7845AA262 /* Roboto-Light.ttf in Resources */,
-				368F8D17293E869B00DDF71E /* GoogleService-Info.plist in Resources */,
+				363917F6293EC8AF00D271CB /* GoogleService-Info.plist in Resources */,
 				85058F07ABEA4409BB5B80EA /* Roboto-LightItalic.ttf in Resources */,
 				3BDED8AD968646BF8D9D2D94 /* Roboto-Medium.ttf in Resources */,
 				A1C28F709D844621B5AD7CDF /* Roboto-MediumItalic.ttf in Resources */,
@@ -497,6 +499,7 @@
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-Fatodo-FatodoTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				DEVELOPMENT_TEAM = LXS45ZYGU6;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -514,8 +517,12 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.fatodo.--PRODUCT-NAME-rfc1034identifier-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fatodo.app/Fatodo";
 			};
 			name = Debug;
@@ -525,6 +532,7 @@
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-Fatodo-FatodoTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = LXS45ZYGU6;
 				INFOPLIST_FILE = FatodoTests/Info.plist;
@@ -539,8 +547,12 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.fatodo.--PRODUCT-NAME-rfc1034identifier-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Fatodo.app/Fatodo";
 			};
 			name = Release;
@@ -552,8 +564,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Fatodo/FatodoDebug.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LXS45ZYGU6;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = LXS45ZYGU6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Fatodo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -565,10 +581,16 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = app.fatodo.Fatodo;
 				PRODUCT_NAME = Fatodo;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Fatodo Provisioning Profile";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -579,8 +601,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Fatodo/Fatodo.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LXS45ZYGU6;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = LXS45ZYGU6;
 				INFOPLIST_FILE = Fatodo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -591,9 +618,15 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = app.fatodo.Fatodo;
 				PRODUCT_NAME = Fatodo;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Fatodo Provisioning Profile";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
