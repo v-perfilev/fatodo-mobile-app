@@ -8,7 +8,7 @@ import FHStack from '../boxes/FHStack';
 import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import {useNavigation} from '@react-navigation/native';
-import {ProtectedNavigationProp} from '../../navigators/ProtectedNavigator';
+import {ProtectedNavigationProps} from '../../navigators/ProtectedNavigator';
 import PressableButton from '../controls/PressableButton';
 import {ColorScheme} from '../../shared/themes/ThemeFactory';
 
@@ -26,7 +26,7 @@ type UserViewProps = {
 export const UserView = (props: UserViewProps) => {
   const {user, picSize = 'xs', colorScheme} = props;
   const {withUserPic = true, withUsername, withPaperBox, withInvertedBorder, onPressCallBack} = props;
-  const navigation = useNavigation<ProtectedNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProps>();
   const account = useAppSelector(AuthSelectors.account);
   const isAnotherUser = account.id !== user?.id;
   const isNotDeleted = !user?.deleted;

@@ -14,7 +14,7 @@ import PressableButton from '../../../components/controls/PressableButton';
 import {useNavigation} from '@react-navigation/native';
 import {Badge, Text} from 'native-base';
 import FVStack from '../../../components/boxes/FVStack';
-import {ProtectedNavigationProp} from '../../../navigators/ProtectedNavigator';
+import {ProtectedNavigationProps} from '../../../navigators/ProtectedNavigator';
 import DateView from '../../../components/views/DateView';
 
 type ChatListItemProps = {
@@ -24,7 +24,7 @@ type ChatListItemProps = {
 const ChatListItem = ({chat}: ChatListItemProps) => {
   const unreadMessageIdsSelector = useCallback(ChatsSelectors.makeUnreadMessageIdsSelector(), []);
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
-  const navigation = useNavigation<ProtectedNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProps>();
   const {t} = useTranslation();
   const memberIds = chat.members.map((m) => m.userId);
   const unreadMessageIds = useAppSelector((state) => unreadMessageIdsSelector(state, chat.id));

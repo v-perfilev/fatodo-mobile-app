@@ -35,7 +35,7 @@ export type GroupParamList = {
 
 const Stack = createNativeStackNavigator<GroupParamList>();
 
-export type GroupNavigationProp = NativeStackNavigationProp<GroupParamList>;
+export type GroupNavigationProps = NativeStackNavigationProp<GroupParamList>;
 
 const GroupNavigator = () => {
   return (

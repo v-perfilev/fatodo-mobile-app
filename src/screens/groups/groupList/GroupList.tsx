@@ -6,7 +6,7 @@ import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Group} from '../../../models/Group';
 import {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import {HEADER_HEIGHT} from '../../../constants';
@@ -27,7 +27,7 @@ const loaderStyle: StyleProp<ViewStyle> = {paddingTop};
 
 const GroupList = () => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
   const groups = useAppSelector(GroupsSelectors.groups);
   const groupsInitialized = useAppSelector(GroupsSelectors.groupsInitialized);
   const [sorting, setSorting] = useState<boolean>(false);

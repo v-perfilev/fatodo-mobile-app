@@ -6,7 +6,7 @@ import ForgotPassword from '../screens/auth/forgotPassword/ForgotPassword';
 import {flowRight} from 'lodash';
 import withSafeArea from '../shared/hocs/withSafeArea';
 
-type AuthParamList = {
+export type AuthParamList = {
   SignIn: undefined;
   SignUp: undefined;
   ForgotPassword: undefined;
@@ -14,7 +14,7 @@ type AuthParamList = {
 
 const Stack = createNativeStackNavigator<AuthParamList>();
 
-export type AuthNavigationProp = NativeStackNavigationProp<AuthParamList>;
+export type AuthNavigationProps = NativeStackNavigationProp<AuthParamList>;
 
 const AuthNavigator = () => {
   return (

@@ -3,7 +3,7 @@ import {User} from '../../models/User';
 import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import {useNavigation} from '@react-navigation/native';
-import {ProtectedNavigationProp} from '../../navigators/ProtectedNavigator';
+import {ProtectedNavigationProps} from '../../navigators/ProtectedNavigator';
 import {Text} from 'native-base';
 import {useTranslation} from 'react-i18next';
 
@@ -15,7 +15,7 @@ type UserLinkProps = {
 
 export const UserLink = ({user, color = 'primary.500', noLink}: UserLinkProps) => {
   const {t} = useTranslation();
-  const navigation = useNavigation<ProtectedNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProps>();
   const account = useAppSelector(AuthSelectors.account);
   const isAnotherUser = account.id !== user?.id;
 

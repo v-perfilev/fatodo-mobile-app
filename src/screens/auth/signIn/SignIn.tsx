@@ -4,7 +4,7 @@ import Logo from '../../../components/layouts/Logo';
 import LinkButton from '../../../components/controls/LinkButton';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
-import {AuthNavigationProp} from '../../../navigators/AuthNavigator';
+import {AuthNavigationProps} from '../../../navigators/AuthNavigator';
 import LanguageMenu from '../../../components/controls/LanguageMenu';
 import FCenter from '../../../components/boxes/FCenter';
 import FVStack from '../../../components/boxes/FVStack';
@@ -12,7 +12,7 @@ import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import ColorModeSwitch from '../../../components/controls/ColorModeSwitch';
 
 const SignIn = () => {
-  const navigation = useNavigation<AuthNavigationProp>();
+  const navigation = useNavigation<AuthNavigationProps>();
   const {t} = useTranslation();
 
   const goToForgotPassword = (): void => navigation.navigate('ForgotPassword');

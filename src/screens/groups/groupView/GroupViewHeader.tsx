@@ -6,7 +6,7 @@ import LeaveIcon from '../../../components/icons/LeaveIcon';
 import UserPlusIcon from '../../../components/icons/UserPlusIcon';
 import MembersIcon from '../../../components/icons/MembersIcon';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {useGroupDialogContext} from '../../../shared/contexts/dialogContexts/GroupDialogContext';
 import {useAppSelector} from '../../../store/store';
@@ -21,7 +21,7 @@ type GroupViewHeaderProps = {
 };
 
 const GroupViewHeader = ({setShowArchived}: GroupViewHeaderProps) => {
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
   const {showGroupMembersDialog, showGroupAddMembersDialog, showGroupLeaveDialog, showGroupDeleteDialog} =
     useGroupDialogContext();
   const {t} = useTranslation();

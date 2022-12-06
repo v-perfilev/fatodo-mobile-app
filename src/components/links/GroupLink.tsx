@@ -2,7 +2,7 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {GroupInfo} from '../../models/Group';
 import {Text} from 'native-base';
-import {TabNavigationProp} from '../../navigators/TabNavigator';
+import {TabNavigationProps} from '../../navigators/TabNavigator';
 
 type GroupLinkProps = {
   group?: GroupInfo;
@@ -11,7 +11,7 @@ type GroupLinkProps = {
 };
 
 export const GroupLink = ({group, color = 'primary.500', noLink}: GroupLinkProps) => {
-  const navigation = useNavigation<TabNavigationProp>();
+  const navigation = useNavigation<TabNavigationProps>();
 
   const goToGroup = (): void => navigation.navigate('Groups', {screen: 'GroupView', params: {groupId: group?.id}});
 

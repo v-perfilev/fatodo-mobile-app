@@ -2,7 +2,7 @@ import React, {memo} from 'react';
 import {Box, Text, useColorModeValue} from 'native-base';
 import GroupListCardCollapseButton from './GroupListCardCollapseButton';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../../navigators/GroupNavigator';
 import UrlPic from '../../../../components/surfaces/UrlPic';
 import GroupListCardMenuButton from './GroupListCardMenuButton';
 import {LINEAR_GRADIENT_FUNC, ThemeFactory} from '../../../../shared/themes/ThemeFactory';
@@ -20,7 +20,7 @@ type GroupListCardHeaderProps = {
 };
 
 const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHeaderProps) => {
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
   const theme = ThemeFactory.getTheme(group.color);
 
   const goToGroupView = (): void => !sorting && navigation.navigate('GroupView', {group});

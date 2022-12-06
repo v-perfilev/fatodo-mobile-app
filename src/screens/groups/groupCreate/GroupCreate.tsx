@@ -1,7 +1,7 @@
 import React, {memo} from 'react';
 import GroupForm from '../groupForm/GroupForm';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import {useAppDispatch} from '../../../store/store';
 import {Group} from '../../../models/Group';
 import Header from '../../../components/layouts/Header';
@@ -10,7 +10,7 @@ import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 
 const GroupCreate = () => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
 
   const goBack = (): void => navigation.goBack();
   const goToGroupView = (group: Group): void => navigation.replace('GroupView', {group});

@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import ItemForm from '../itemForm/ItemForm';
@@ -18,7 +18,7 @@ type ItemCreateProps = WithGroupProps;
 
 const ItemCreate = ({group, containerLoading}: ItemCreateProps) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
 
   const goBack = (): void => navigation.goBack();
   const goToItemView = (item: Item): void => navigation.replace('ItemView', {group, item});

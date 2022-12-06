@@ -2,7 +2,7 @@ import React, {ComponentType, useEffect} from 'react';
 import {GroupActions} from '../../../store/group/groupActions';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {GroupNavigationProp, GroupParamList} from '../../../navigators/GroupNavigator';
+import {GroupNavigationProps, GroupParamList} from '../../../navigators/GroupNavigator';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import {Group} from '../../../models/Group';
 import {useDelayedState} from '../../hooks/useDelayedState';
@@ -15,7 +15,7 @@ export type WithGroupProps = {
 
 const withGroupContainer = (Component: ComponentType<WithGroupProps>) => (props: any) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
   const route = useRoute<RouteProp<GroupParamList, 'withGroup'>>();
   const stateGroup = useAppSelector(GroupSelectors.group);
   const [containerLoading, setContainerLoading] = useDelayedState(true, 500);

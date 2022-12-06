@@ -3,7 +3,7 @@ import DeleteIcon from '../../../components/icons/DeleteIcon';
 import EditIcon from '../../../components/icons/EditIcon';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import {UserAccount} from '../../../models/User';
 import {useItemDialogContext} from '../../../shared/contexts/dialogContexts/ItemDialogContext';
@@ -18,7 +18,7 @@ type ItemViewMenuProps = {
 };
 
 const ItemViewHeader = ({account}: ItemViewMenuProps) => {
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
   const {t} = useTranslation();
   const {showItemDeleteDialog} = useItemDialogContext();
   const group = useAppSelector(GroupSelectors.group);

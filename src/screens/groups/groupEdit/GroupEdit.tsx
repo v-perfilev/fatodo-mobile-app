@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import GroupForm from '../groupForm/GroupForm';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {useAppDispatch} from '../../../store/store';
@@ -15,7 +15,7 @@ type GroupEditProps = WithGroupProps;
 
 const GroupEdit = ({group, containerLoading}: GroupEditProps) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
 
   const routes = navigation.getState().routes;
   const isPreviousGroupView = routes[routes.length - 2].name === 'GroupView';

@@ -8,11 +8,11 @@ import UserListLInks from '../../../links/UserListLinks';
 import NotificationTemplate from '../../NotificationTemplate';
 import {useNotificationContext} from '../../../../shared/contexts/NotificationContext';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../../navigators/GroupNavigator';
 
 const NotificationItemMemberAdd = ({user, group, users}: WithEventItemProps) => {
   const {setReady} = useNotificationContext();
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
   const {t} = useTranslation();
 
   const goToGroupView = (): void => navigation.navigate('GroupView', {groupId: group?.id});

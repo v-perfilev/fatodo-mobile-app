@@ -9,12 +9,12 @@ import EventsSelectors from '../store/events/eventsSelectors';
 import ChatsSelectors from '../store/chats/chatsSelectors';
 import ContactsSelectors from '../store/contacts/contactsSelectors';
 import CalendarIcon from '../components/icons/CalendarIcon';
-import {NavigationProps} from './ProtectedNavigator';
 import CommonSelectors from '../store/common/commonSelectors';
 import BellIcon from '../components/icons/BellIcon';
 import {flowRight} from 'lodash';
 import GroupNavigator, {GroupParamList} from './GroupNavigator';
 import LazyLoader from '../components/layouts/LazyLoader';
+import {NavigationProps} from './RootNavigator';
 
 const CalendarView = React.lazy(() => import('../screens/calendar/calendarView/CalendarView'));
 const EventList = React.lazy(() => import('../screens/events/eventList/EventList'));
@@ -38,7 +38,7 @@ type TabIconProps = {
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-export type TabNavigationProp = BottomTabNavigationProp<TabParamList>;
+export type TabNavigationProps = BottomTabNavigationProp<TabParamList>;
 
 const calendarIcon = ({color, size}: TabIconProps): ReactNode => <CalendarIcon color={color} size={size - 1} />;
 const eventsIcon = ({color, size}: TabIconProps): ReactNode => <BellIcon color={color} size={size - 1} />;

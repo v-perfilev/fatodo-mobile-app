@@ -1,6 +1,6 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import ProtectedNavigator from './ProtectedNavigator';
+import ProtectedNavigator, {ProtectedParamList} from './ProtectedNavigator';
 import withDrawer from '../shared/hocs/withDrawer';
 import Sidebar from '../components/layouts/Sidebar';
 import {flowRight} from 'lodash';
@@ -11,8 +11,16 @@ import AccountForm from '../screens/account/accountForm/AccountForm';
 import AccountSettingsForm from '../screens/account/accountSettingsForm/AccountSettingsForm';
 import AccountChangePasswordForm from '../screens/account/accountChangePasswordForm/AccountChangePasswordForm';
 import withSafeArea from '../shared/hocs/withSafeArea';
+import {NavigationProps} from './RootNavigator';
 
-const Drawer = createDrawerNavigator();
+export type DrawerParamList = {
+  Default: NavigationProps<ProtectedParamList>;
+  AccountForm: undefined;
+  AccountSettingsForm: undefined;
+  AccountChangePasswordForm: undefined;
+};
+
+const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const DrawerNavigator = () => {
   const isActive = useAppSelector(AuthSelectors.isActive);

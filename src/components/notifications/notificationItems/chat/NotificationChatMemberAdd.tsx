@@ -8,11 +8,11 @@ import NotificationTemplate from '../../NotificationTemplate';
 import withEventChat, {WithEventChatProps} from '../../../../shared/hocs/withEvents/withEventChat';
 import {useNotificationContext} from '../../../../shared/contexts/NotificationContext';
 import {useNavigation} from '@react-navigation/native';
-import {ProtectedNavigationProp} from '../../../../navigators/ProtectedNavigator';
+import {ProtectedNavigationProps} from '../../../../navigators/ProtectedNavigator';
 
 const NotificationChatMemberAdd = ({user, chat, users}: WithEventChatProps) => {
   const {setReady} = useNotificationContext();
-  const navigation = useNavigation<ProtectedNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProps>();
   const {t} = useTranslation();
 
   const goToChat = (): void => navigation.navigate('ChatView', {chatId: chat?.id});

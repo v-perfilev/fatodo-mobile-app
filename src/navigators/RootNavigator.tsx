@@ -2,12 +2,17 @@ import React, {memo} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useAppSelector} from '../store/store';
 import AuthSelectors from '../store/auth/authSelectors';
-import AuthNavigator from './AuthNavigator';
-import DrawerNavigator from './DrawerNavigator';
+import AuthNavigator, {AuthParamList} from './AuthNavigator';
+import DrawerNavigator, {DrawerParamList} from './DrawerNavigator';
 
-type RootParamList = {
-  Public: undefined;
-  Protected: undefined;
+export type NavigationProps<ParamList> = {
+  screen: keyof ParamList;
+  params: ParamList[keyof ParamList];
+};
+
+export type RootParamList = {
+  Public: NavigationProps<AuthParamList>;
+  Protected: NavigationProps<DrawerParamList>;
 };
 
 const Stack = createNativeStackNavigator<RootParamList>();

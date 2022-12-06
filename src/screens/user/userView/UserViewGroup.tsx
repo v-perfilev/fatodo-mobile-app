@@ -4,7 +4,7 @@ import {Group} from '../../../models/Group';
 import {LINEAR_GRADIENT} from '../../../shared/themes/ThemeFactory';
 import PressableButton from '../../../components/controls/PressableButton';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import FHStack from '../../../components/boxes/FHStack';
 import UrlPic from '../../../components/surfaces/UrlPic';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
@@ -15,7 +15,7 @@ type UserViewGroupProps = {
 };
 
 const UserViewGroup = ({group}: UserViewGroupProps) => {
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
 
   const goToGroupView = (): void => navigation.navigate('GroupView', {group});
 

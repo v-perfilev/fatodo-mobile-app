@@ -3,7 +3,7 @@ import Menu, {MenuItemProps, MenuTrigger} from '../../../../components/controls/
 import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../../navigators/GroupNavigator';
 import PlusIcon from '../../../../components/icons/PlusIcon';
 import EyeIcon from '../../../../components/icons/EyeIcon';
 import EditIcon from '../../../../components/icons/EditIcon';
@@ -21,7 +21,7 @@ type GroupListCardMenuButtonProps = IIconButtonProps & {
 const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
   const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
   const {showGroupDeleteDialog} = useGroupDialogContext();
 
   const canEdit = group && GroupUtils.canEdit(account, group);

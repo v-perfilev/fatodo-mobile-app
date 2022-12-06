@@ -8,11 +8,7 @@ import {ColorScheme} from '../shared/themes/ThemeFactory';
 import {User} from '../models/User';
 import UserView from '../screens/user/userView/UserView';
 import {flowRight} from 'lodash';
-
-export type NavigationProps<ParamList> = {
-  screen: keyof ParamList;
-  params: ParamList[keyof ParamList];
-};
+import {NavigationProps} from './RootNavigator';
 
 type ChatRouteProps = {
   chat?: Chat;
@@ -41,7 +37,7 @@ export type ProtectedParamList = {
 
 const Stack = createNativeStackNavigator<ProtectedParamList>();
 
-export type ProtectedNavigationProp = NativeStackNavigationProp<ProtectedParamList>;
+export type ProtectedNavigationProps = NativeStackNavigationProp<ProtectedParamList>;
 
 const ProtectedNavigator = () => {
   return (

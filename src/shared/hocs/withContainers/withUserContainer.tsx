@@ -2,7 +2,7 @@ import React, {ComponentType, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useDelayedState} from '../../hooks/useDelayedState';
-import {ProtectedNavigationProp, ProtectedParamList} from '../../../navigators/ProtectedNavigator';
+import {ProtectedNavigationProps, ProtectedParamList} from '../../../navigators/ProtectedNavigator';
 import {User} from '../../../models/User';
 import UserSelectors from '../../../store/user/userSelectors';
 import {UserActions} from '../../../store/user/userActions';
@@ -14,7 +14,7 @@ export type WithUserProps = {
 
 const withUserContainer = (Component: ComponentType<WithUserProps>) => (props: any) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<ProtectedNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProps>();
   const [containerLoading, setContainerLoading] = useDelayedState(true, 500);
   const route = useRoute<RouteProp<ProtectedParamList, 'withUser'>>();
   const routeUser = route.params.user;

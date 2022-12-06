@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Item} from '../../../../models/Item';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../../navigators/GroupNavigator';
 import {Group} from '../../../../models/Group';
 import {useAppDispatch} from '../../../../store/store';
 import {useTranslation} from 'react-i18next';
@@ -22,7 +22,7 @@ type GroupItemMenuProps = {
 
 const GroupItemMenu = ({group, item, canEdit}: GroupItemMenuProps) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
   const {t} = useTranslation();
   const {showItemDeleteDialog} = useItemDialogContext();
   const [archivedLoading, setArchivedLoading] = useState<boolean>(false);

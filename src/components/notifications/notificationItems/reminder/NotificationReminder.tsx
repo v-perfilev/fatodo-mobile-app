@@ -8,11 +8,11 @@ import ItemLink from '../../../links/ItemLink';
 import NotificationTemplate from '../../NotificationTemplate';
 import {useNotificationContext} from '../../../../shared/contexts/NotificationContext';
 import {useNavigation} from '@react-navigation/native';
-import {TabNavigationProp} from '../../../../navigators/TabNavigator';
+import {TabNavigationProps} from '../../../../navigators/TabNavigator';
 
 const NotificationReminder = ({group, item}: WithEventReminderProps) => {
   const {setReady} = useNotificationContext();
-  const navigation = useNavigation<TabNavigationProp>();
+  const navigation = useNavigation<TabNavigationProps>();
   const {t} = useTranslation();
 
   const goToItem = (): void => navigation.navigate('Groups', {screen: 'ItemView', params: {itemId: item?.id}});

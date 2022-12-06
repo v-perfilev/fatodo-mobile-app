@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import ConditionalSpinner from '../../../components/surfaces/ConditionalSpinner';
 import {ItemDTO} from '../../../models/dto/ItemDTO';
 import ItemForm from '../itemForm/ItemForm';
@@ -18,7 +18,7 @@ type ItemEditProps = WithItemProps;
 
 const ItemEdit = ({group, item, containerLoading}: ItemEditProps) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<GroupNavigationProp>();
+  const navigation = useNavigation<GroupNavigationProps>();
   const reminders = useAppSelector(ItemSelectors.reminders);
 
   const routes = navigation.getState().routes;

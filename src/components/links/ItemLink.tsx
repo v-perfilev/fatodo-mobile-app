@@ -2,7 +2,7 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Text} from 'native-base';
 import {ItemInfo} from '../../models/Item';
-import {TabNavigationProp} from '../../navigators/TabNavigator';
+import {TabNavigationProps} from '../../navigators/TabNavigator';
 
 type ItemLinkProps = {
   item?: ItemInfo;
@@ -11,7 +11,7 @@ type ItemLinkProps = {
 };
 
 export const ItemLink = ({item, color = 'primary.500', noLink}: ItemLinkProps) => {
-  const navigation = useNavigation<TabNavigationProp>();
+  const navigation = useNavigation<TabNavigationProps>();
 
   const goToItem = (): void => navigation.navigate('Groups', {screen: 'ItemView', params: {itemId: item?.id}});
 

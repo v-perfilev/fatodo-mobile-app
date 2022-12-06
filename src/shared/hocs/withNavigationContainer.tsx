@@ -1,12 +1,12 @@
 import React, {ComponentType, memo, useEffect, useState} from 'react';
 import {createNavigationContainerRef, DefaultTheme, NavigationContainer} from '@react-navigation/native';
-import {ProtectedParamList} from '../../navigators/ProtectedNavigator';
 import {flowRight} from 'lodash';
 import {ColorMode, useColorMode} from 'native-base';
 import {DARK_BG, LIGHT_BG} from '../themes/colors';
 import {RootThemeProvider} from '../themes/ThemeProvider';
+import {RootParamList} from '../../navigators/RootNavigator';
 
-export const navigationRef = createNavigationContainerRef<ProtectedParamList>();
+export const navigationRef = createNavigationContainerRef<RootParamList>();
 
 const withNavigationContainer = (Component: ComponentType) => (props: any) => {
   const [colorMode, setColorMode] = useState<ColorMode>();

@@ -1,6 +1,6 @@
 import React, {memo, useCallback} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {GroupNavigationProp} from '../../../../navigators/GroupNavigator';
+import {GroupNavigationProps} from '../../../../navigators/GroupNavigator';
 import {Item} from '../../../../models/Item';
 import {useTranslation} from 'react-i18next';
 import BoxWithIcon from '../../../../components/surfaces/BoxWithIcon';
@@ -12,7 +12,7 @@ import FHStack from '../../../../components/boxes/FHStack';
 import CommentsIcon from '../../../../components/icons/CommentsIcon';
 import InfoSelectors from '../../../../store/info/infoSelectors';
 import {useAppSelector} from '../../../../store/store';
-import {ProtectedNavigationProp} from '../../../../navigators/ProtectedNavigator';
+import {ProtectedNavigationProps} from '../../../../navigators/ProtectedNavigator';
 
 type GroupListCardHeaderProps = {
   group: Group;
@@ -24,8 +24,8 @@ const GroupListCardInfo = ({group, items, itemsCount}: GroupListCardHeaderProps)
   const commentThreadSelector = useCallback(InfoSelectors.makeCommentThreadSelector(), []);
   const commentThread = useAppSelector((state) => commentThreadSelector(state, group.id));
   const {t} = useTranslation();
-  const rootNavigation = useNavigation<ProtectedNavigationProp>();
-  const groupNavigation = useNavigation<GroupNavigationProp>();
+  const rootNavigation = useNavigation<ProtectedNavigationProps>();
+  const groupNavigation = useNavigation<GroupNavigationProps>();
 
   const goToGroupView = (): void => groupNavigation.navigate('GroupView', {group});
   const goToItemCreate = (): void => groupNavigation.navigate('ItemCreate', {group});

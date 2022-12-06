@@ -8,11 +8,11 @@ import GroupLink from '../../../links/GroupLink';
 import NotificationTemplate from '../../NotificationTemplate';
 import {useNotificationContext} from '../../../../shared/contexts/NotificationContext';
 import {useNavigation} from '@react-navigation/native';
-import {ProtectedNavigationProp} from '../../../../navigators/ProtectedNavigator';
+import {ProtectedNavigationProps} from '../../../../navigators/ProtectedNavigator';
 
 const NotificationCommentReaction = ({user, group, item, reaction}: WithEventCommentProps) => {
   const {setReady} = useNotificationContext();
-  const navigation = useNavigation<ProtectedNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProps>();
   const {t} = useTranslation();
 
   const goToComments = (): void =>

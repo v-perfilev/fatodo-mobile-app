@@ -2,7 +2,7 @@ import React, {ComponentType, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {useDelayedState} from '../../hooks/useDelayedState';
-import {ProtectedNavigationProp, ProtectedParamList} from '../../../navigators/ProtectedNavigator';
+import {ProtectedNavigationProps, ProtectedParamList} from '../../../navigators/ProtectedNavigator';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import {ChatActions} from '../../../store/chat/chatActions';
 import {Chat} from '../../../models/Chat';
@@ -14,7 +14,7 @@ export type WithChatProps = {
 
 const withChatContainer = (Component: ComponentType<WithChatProps>) => (props: any) => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<ProtectedNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProps>();
   const [containerLoading, setContainerLoading] = useDelayedState(true, 500);
   const route = useRoute<RouteProp<ProtectedParamList, 'withChat'>>();
   const routeChat = route.params.chat;

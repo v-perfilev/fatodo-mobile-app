@@ -6,11 +6,11 @@ import UserLink from '../../../links/UserLink';
 import NotificationTemplate from '../../NotificationTemplate';
 import {useNotificationContext} from '../../../../shared/contexts/NotificationContext';
 import {useNavigation} from '@react-navigation/native';
-import {ProtectedNavigationProp} from '../../../../navigators/ProtectedNavigator';
+import {ProtectedNavigationProps} from '../../../../navigators/ProtectedNavigator';
 
 const NotificationContactAccept = ({firstUser, secondUser}: WithEventContactProps) => {
   const {setReady} = useNotificationContext();
-  const navigation = useNavigation<ProtectedNavigationProp>();
+  const navigation = useNavigation<ProtectedNavigationProps>();
   const {t} = useTranslation();
 
   const goToUserView = (): void => navigation.navigate('UserView', {userId: firstUser?.id});
