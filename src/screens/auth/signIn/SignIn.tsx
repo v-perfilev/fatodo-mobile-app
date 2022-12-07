@@ -10,6 +10,7 @@ import FCenter from '../../../components/boxes/FCenter';
 import FVStack from '../../../components/boxes/FVStack';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import ColorModeSwitch from '../../../components/controls/ColorModeSwitch';
+import SocialButtons from './SocialButtons';
 
 const SignIn = () => {
   const navigation = useNavigation<AuthNavigationProps>();
@@ -30,6 +31,7 @@ const SignIn = () => {
             <LinkButton onPress={goToForgotPassword}>{t('account:forgotPassword.header')}</LinkButton>
             <LinkButton onPress={goToSignUp}>{t('account:register.header')}</LinkButton>
           </FVStack>
+          <SocialButtons />
         </FVStack>
       </FCenter>
       <FVStack space="5" pb="5">

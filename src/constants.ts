@@ -3,7 +3,7 @@ import {Platform} from 'react-native';
 export const IS_DEVELOPMENT = __DEV__;
 
 // API
-export const API_URL = __DEV__ ? 'http://75.119.154.167:4000' : 'http://75.119.154.167:4000';
+export const API_URL = __DEV__ ? 'https://fatodo-stage-api.persoff68.com' : 'https://fatodo-stage-api.persoff68.com';
 export const IMAGE_URL = API_URL + '/api/image/store/';
 export const WS_URL = API_URL + '/ws/';
 export const WS_ROOT_TOPIC = '/user/topic/root';
@@ -19,7 +19,7 @@ export const AUTHORIZATION_HEADER = 'authorization';
 export const AUTHORIZATION_PREFIX = 'Bearer ';
 
 // CAPTCHA
-export const BASE_URL = 'http://75.119.154.167';
+export const BASE_URL = 'https://fatodo.app';
 ***REMOVED***
 
 // HEADER AND TAB

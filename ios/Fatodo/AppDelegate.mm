@@ -13,6 +13,9 @@
 // Import Notifications
 #import <UserNotifications/UserNotifications.h>
 #import <RNCPushNotificationIOS.h>
+// Import LinkingManager (needed for OAuth2)
+#import <React/RCTLinkingManager.h>
+
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
@@ -175,11 +178,19 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
    [RNCPushNotificationIOS didReceiveNotificationResponse:response];
 }
 
-//Called when a notification is delivered to a foreground app.
+// Called when a notification is delivered to a foreground app.
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)
 notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
 {
   completionHandler(UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionBadge);
+}
+
+// Needed for opening the app by name
+- (BOOL)application:(UIApplication *)application
+   openURL:(NSURL *)url
+   options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [RCTLinkingManager application:application openURL:url options:options];
 }
 
 @end
