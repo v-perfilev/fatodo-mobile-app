@@ -31,7 +31,7 @@ interface ObservableAxiosRequestConfig extends AxiosRequestConfig {
 
 export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleResponse}: SetupAxiosActions): void => {
   const logSuccess = (request: ObservableAxiosRequestConfig): void => {
-    const method = request.method.toUpperCase();
+    const method = request.method?.toUpperCase();
     const url = request.url;
     const time = new Date().getTime() - request.startTime.getTime();
     const consoleMsg = `Request sent: ${method} ${url}: ${time}ms`;
@@ -39,7 +39,7 @@ export const setupAxiosInterceptors = ({onUnauthenticated, enqueueSnack, handleR
   };
 
   const logError = (response: AxiosResponse): void => {
-    const method = response.request.method.toUpperCase();
+    const method = response.request.method?.toUpperCase();
     const url = response?.data.path || 'unknown path';
     const status = response?.status || 'unknown status';
     const msg = response?.data.message || 'no message';

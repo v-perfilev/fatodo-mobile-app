@@ -1,4 +1,4 @@
-package com.fatodo.newarchitecture;
+package app.fatodo.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.fatodo.BuildConfig;
-import com.fatodo.newarchitecture.components.MainComponentsRegistry;
-import com.fatodo.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import app.fatodo.BuildConfig;
+import app.fatodo.newarchitecture.components.MainComponentsRegistry;
+import app.fatodo.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.fatodo.newarchitecture.components;
+package app.fatodo.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

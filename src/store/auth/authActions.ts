@@ -38,9 +38,19 @@ export class AuthActions {
     },
   );
 
+  static socialLoginThunk = createAsyncThunk<void, string, AsyncThunkConfig>(
+    PREFIX + 'socialLogin',
+    async (token, thunkAPI) => {
+      SecurityUtils.clearAuthToken();
+      await SecurityUtils.saveAuthToken('oauth2', token);
+      await thunkAPI.dispatch(AuthActions.fetchAccountThunk());
+    },
+  );
+
   static authenticateThunk = createAsyncThunk<void, LoginDTO, AsyncThunkConfig>(
     PREFIX + 'authenticate',
     async (dto, thunkAPI) => {
+      SecurityUtils.clearAuthToken();
       const response = await AuthService.authenticate(dto);
       const token = SecurityUtils.parseTokenFromResponse(response);
       await SecurityUtils.saveAuthToken(dto.user, token);
@@ -51,6 +61,7 @@ export class AuthActions {
   static logoutThunk = createAsyncThunk<void, void, AsyncThunkConfig>(PREFIX + 'logout', async (_, thunkAPI) => {
     const account = thunkAPI.getState().auth.account;
     NotificationsRemote.unsubscribeFromFirebase(account?.id).finally();
+    SecurityUtils.clearAuthToken();
     thunkAPI.dispatch(authSlice.actions.reset());
   });
 

@@ -1,4 +1,4 @@
-package com.fatodo.newarchitecture.modules;
+package app.fatodo.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
