@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react';
+import React, {memo, useCallback, useMemo} from 'react';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {useAppSelector} from '../../../../store/store';
@@ -8,6 +8,8 @@ import {FilterUtils} from '../../../../shared/utils/FilterUtils';
 import {CalendarReminder} from '../../../../models/Reminder';
 import {Box} from 'native-base';
 import Animated from 'react-native-reanimated';
+import {ComparatorUtils} from '../../../../shared/utils/ComparatorUtils';
+import {ColorScheme} from '../../../../shared/themes/ThemeFactory';
 
 type CalendarViewDateRemindersProps = {
   reminders: CalendarReminder[];
@@ -19,10 +21,15 @@ const CalendarViewDateReminders = ({reminders, isActiveDate}: CalendarViewDateRe
   const groupIds = reminders.map((r) => r.parentId).filter(FilterUtils.uniqueFilter);
   const groups = useAppSelector((state) => groupsSelector(state, groupIds));
 
-  const reminderColors = reminders
-    .map((reminder) => groups.find((g) => g.id === reminder.parentId))
-    .filter(FilterUtils.notUndefinedFilter)
-    .map((g) => g.color);
+  const reminderColors = useMemo<ColorScheme[]>(
+    () =>
+      reminders
+        .sort(ComparatorUtils.dateComparator)
+        .map((reminder) => groups.find((g) => g.id === reminder.parentId))
+        .filter(FilterUtils.notUndefinedFilter)
+        .map((g) => g.color),
+    [reminders, groups],
+  );
 
   const reminderColorsToShow = reminderColors.slice(0, 3);
   const showDots = reminderColors.length > 3;

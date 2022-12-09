@@ -15,6 +15,7 @@ import UserView from '../views/UserView';
 import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
 import {accountToUser} from '../../models/User';
 import IconButton from '../controls/IconButton';
+import FBox from '../boxes/FBox';
 
 type HeaderProps = PropsWithChildren<{
   title?: string;
@@ -42,10 +43,10 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
   const background = useColorModeValue(LIGHT_BG, DARK_BG);
 
   return (
-    <FHStack h={HEADER_HEIGHT} space="1" bg={background} px="2" alignItems="center">
+    <FHStack height={HEADER_HEIGHT} space="1" bg={background} px="2" alignItems="center">
       {!hideGoBack && canGoBack && <IconButton size="2xl" icon={<ArrowBackIcon />} onPress={goBack} />}
       {showStandardItems && (
-        <FHStack space="3" alignItems="center">
+        <FHStack grow space="3" alignItems="center" overflow="hidden">
           {showAvatar && (
             <PressableButton onPress={toggleDrawer}>
               <UserView user={accountToUser(account)} withUserPic picSize="43px" />
@@ -54,13 +55,15 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
           {showLogo && <Logo size={10} />}
           {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="43px" border="1" />}
           {!hideTitle && (
-            <Text fontWeight="400" fontSize="xl" lineHeight="xl" color="primary.500" isTruncated>
-              {label}
-            </Text>
+            <FBox>
+              <Text fontWeight="400" fontSize="xl" lineHeight="xl" color="primary.500" isTruncated>
+                {label}
+              </Text>
+            </FBox>
           )}
         </FHStack>
       )}
-      <FHStack grow h="100%" space="1" alignItems="center" justifyContent="flex-end">
+      <FHStack grow={!showStandardItems} h="100%" space="1" alignItems="center" justifyContent="flex-end">
         {children}
       </FHStack>
     </FHStack>

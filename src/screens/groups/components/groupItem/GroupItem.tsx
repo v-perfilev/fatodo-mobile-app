@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Item} from '../../../../models/Item';
 import {Box, IBoxProps, Text} from 'native-base';
 import FVStack from '../../../../components/boxes/FVStack';
@@ -18,6 +18,7 @@ import PressableButton from '../../../../components/controls/PressableButton';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProps} from '../../../../navigators/GroupNavigator';
 import {ProtectedNavigationProps} from '../../../../navigators/ProtectedNavigator';
+import {LayoutChangeEvent} from 'react-native';
 
 type GroupItemProps = IBoxProps & {
   item: Item;
@@ -30,6 +31,7 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
   const commentThread = useAppSelector((state) => commentThreadSelector(state, item.id));
   const rootNavigation = useNavigation<ProtectedNavigationProps>();
   const groupNavigation = useNavigation<GroupNavigationProps>();
+  const [maxLineWidth, setMaxLineWidth] = useState<number>(0);
 
   const goToItemView = (): void => groupNavigation.navigate('ItemView', {group, item});
   const goToComments = (): void =>
@@ -38,11 +40,16 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
       colorScheme: group.color,
     });
 
+  const handleOnLayout = (e: LayoutChangeEvent): void => {
+    const width = e.nativeEvent.layout.width;
+    maxLineWidth !== width && setMaxLineWidth(width);
+  };
+
   return (
     <PressableButton onPress={goToItemView}>
-      <FVStack p="4" space="2" {...props}>
-        <FHStack grow justifyContent="space-between" alignItems="center">
-          <FHStack space="3" alignItems="center">
+      <FVStack p="4" space="2" onLayout={handleOnLayout} {...props}>
+        <FHStack space="2" justifyContent="space-between" alignItems="center">
+          <FHStack width={maxLineWidth - 70}>
             <Text numberOfLines={2} isTruncated>
               {item.title}
             </Text>

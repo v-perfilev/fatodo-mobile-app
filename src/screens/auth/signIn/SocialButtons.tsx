@@ -31,7 +31,6 @@ const SocialButtons = () => {
     const regex = new RegExp('socialLogin/(.+)#_=_$');
     const regexArray = regex.exec(url);
     const token = regexArray.length === 2 ? regexArray[1] : undefined;
-    console.log(token);
     token && dispatch(AuthActions.socialLoginThunk(token));
   };
 
