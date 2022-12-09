@@ -10,6 +10,9 @@ import {Box, Text} from 'native-base';
 import FVStack from '../../../../components/boxes/FVStack';
 import DateView from '../../../../components/views/DateView';
 import FBox from '../../../../components/boxes/FBox';
+import {useNavigation} from '@react-navigation/native';
+import {TabNavigationProps} from '../../../../navigators/TabNavigator';
+import PressableButton from '../../../../components/controls/PressableButton';
 
 type CalendarViewRemindersItemProps = {
   reminder: CalendarReminder;
@@ -18,33 +21,38 @@ type CalendarViewRemindersItemProps = {
 const CalendarViewRemindersItem = ({reminder}: CalendarViewRemindersItemProps) => {
   const groupSelector = useCallback(InfoSelectors.makeGroupSelector(), []);
   const itemSelector = useCallback(InfoSelectors.makeItemSelector(), []);
+  const navigation = useNavigation<TabNavigationProps>();
   const group = useAppSelector((state) => groupSelector(state, reminder.parentId));
   const item = useAppSelector((state) => itemSelector(state, reminder.targetId));
 
+  const goToItem = (): void => navigation.navigate('Groups', {screen: 'ItemView', params: {itemId: item?.id}});
+
   const bulletView = <Bullet colorScheme={group?.color} size="15px" />;
-  const groupView = group ? <GroupLink group={group} color="gray.400" /> : null;
-  const itemView = item ? <ItemLink item={item} /> : null;
+  const groupView = group ? <GroupLink group={group} color="gray.400" noLink /> : null;
+  const itemView = item ? <ItemLink item={item} noLink /> : null;
   const date = new Date(reminder.date);
 
   return (
-    <FHStack space="3" alignItems="center" py="1">
-      <FBox grow={false} height="15px">
-        {bulletView}
-      </FBox>
-      <FVStack grow>
-        <Text fontSize="lg" fontWeight="bold" isTruncated>
-          {itemView}
-        </Text>
-        <Text fontSize="sm" fontWeight="bold" isTruncated>
-          {groupView}
-        </Text>
-      </FVStack>
-      <Box>
-        <Text color="gray.400" fontSize="xs">
-          <DateView date={date} timeFormat="FULL" />
-        </Text>
-      </Box>
-    </FHStack>
+    <PressableButton onPress={goToItem}>
+      <FHStack space="3" alignItems="center" py="1">
+        <FBox grow={false} height="15px">
+          {bulletView}
+        </FBox>
+        <FVStack grow>
+          <Text fontSize="lg" fontWeight="bold" isTruncated>
+            {itemView}
+          </Text>
+          <Text fontSize="sm" fontWeight="bold" isTruncated>
+            {groupView}
+          </Text>
+        </FVStack>
+        <Box>
+          <Text color="gray.400" fontSize="xs">
+            <DateView date={date} timeFormat="FULL" />
+          </Text>
+        </Box>
+      </FHStack>
+    </PressableButton>
   );
 };
 

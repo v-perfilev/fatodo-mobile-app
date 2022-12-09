@@ -16,6 +16,7 @@ import {getSystemVersion} from 'react-native-device-info';
 import {Box} from 'native-base';
 
 // Add scaleY back to work around its removal in React Native 0.70.
+// @ts-ignore
 import ViewReactNativeStyleAttributes from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 ViewReactNativeStyleAttributes.scaleY = true;
 
