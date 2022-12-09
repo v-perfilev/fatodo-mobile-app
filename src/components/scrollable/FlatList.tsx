@@ -1,4 +1,4 @@
-import React, {ForwardedRef, memo, ReactElement, useCallback, useRef} from 'react';
+import React, {ForwardedRef, memo, ReactElement, useCallback, useMemo, useRef} from 'react';
 import {IFlatListProps} from 'native-base/lib/typescript/components/basic/FlatList';
 import {
   Animated,
@@ -12,6 +12,12 @@ import {
 import {DEFAULT_FLAT_LIST_ITEM_HEIGHT} from '../../constants';
 import {FlatList as GestureFlatList} from 'react-native-gesture-handler';
 import {NativeViewGestureHandlerProps} from 'react-native-gesture-handler/src/handlers/NativeViewGestureHandler';
+import {getSystemVersion} from 'react-native-device-info';
+import {Box} from 'native-base';
+
+// Add scaleY back to work around its removal in React Native 0.70.
+import ViewReactNativeStyleAttributes from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+ViewReactNativeStyleAttributes.scaleY = true;
 
 export type FlatListType = RNFlatList;
 
@@ -26,8 +32,19 @@ export type FlatListProps<T> = Partial<IFlatListProps<T>> &
 const AnimatedGestureFlatList = Animated.createAnimatedComponent<any>(GestureFlatList);
 
 const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<any>) => {
-  const {data, render, keyExtractor, fixedLength, contentContainerStyle, notFullHeight} = props;
+  const {data, render, keyExtractor, fixedLength, inverted, contentContainerStyle, notFullHeight, ...otherProps} =
+    props;
   const lengthMap = useRef<Map<string, number>>(new Map());
+
+  // WORKAROUND FOR INVERTED LISTS ON ANDROID WITH VERSION >= 11
+  const useFixInverted = useMemo(() => {
+    return inverted && Platform.OS === 'android' && Number(getSystemVersion()) >= 11;
+  }, []);
+
+  // WORKAROUND FOR INVERTED LISTS ON ANDROID WITH VERSION >= 11
+  const useRegularInverted = useMemo(() => {
+    return inverted && !useFixInverted;
+  }, []);
 
   const getItemLength = useCallback(
     (index: number): number => {
@@ -67,12 +84,13 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
   }, []);
 
   const _renderItem = useCallback((info: ListRenderItemInfo<any>): ReactElement => {
+    const style: StyleProp<ViewStyle> = {scaleY: useFixInverted ? -1 : undefined};
     if (fixedLength) {
-      return render(info);
+      return <Box style={style}>{render(info)}</Box>;
     } else {
       const key = keyExtractor(info.item);
       const onLayout = (event: LayoutChangeEvent): void => _onLayout(key, event);
-      return render(info, onLayout);
+      return <Box style={style}>{render(info, onLayout)}</Box>;
     }
   }, []);
 
@@ -85,7 +103,13 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
     [getItemLength, getItemOffset],
   );
 
-  const style: StyleProp<ViewStyle> = {minHeight: notFullHeight ? undefined : '100%'};
+  const style: StyleProp<ViewStyle> = {
+    scaleY: useFixInverted ? -1 : undefined,
+  };
+
+  const contentStyle: StyleProp<ViewStyle> = {
+    minHeight: notFullHeight ? undefined : '100%',
+  };
 
   return (
     <AnimatedGestureFlatList
@@ -93,12 +117,14 @@ const FlatList = React.forwardRef((props: FlatListProps<any>, ref: ForwardedRef<
       maxToRenderPerBatch={20}
       updateCellsBatchingPeriod={10}
       onEndReachedThreshold={1}
-      {...props}
-      contentContainerStyle={[style, contentContainerStyle]}
+      {...otherProps}
+      style={style}
+      contentContainerStyle={[contentStyle, contentContainerStyle]}
       data={data}
       renderItem={_renderItem}
       getItemLayout={_getItemLayout}
       keyExtractor={keyExtractor}
+      inverted={useRegularInverted}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       bounces={false}

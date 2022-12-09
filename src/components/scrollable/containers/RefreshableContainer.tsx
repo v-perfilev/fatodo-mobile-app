@@ -1,9 +1,10 @@
-import {Animated, Easing, NativeScrollEvent, NativeSyntheticEvent, StyleProp, ViewStyle} from 'react-native';
+import {Animated, Easing, NativeScrollEvent, NativeSyntheticEvent, Platform, StyleProp, ViewStyle} from 'react-native';
 import React, {memo, MutableRefObject, ReactElement, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlerCommon';
 import {FLAT_LIST_REFRESH_TIMEOUT, MAX_REFRESH_HEIGHT, REFRESH_HEIGHT} from '../../../constants';
 import Refresher from '../Refresher';
+import {getSystemVersion} from 'react-native-device-info';
 
 export type RefreshableContainerChildrenProps = {
   refresher: ReactElement;
@@ -38,6 +39,16 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
     outputRange: [0, inverted ? -REFRESH_HEIGHT : REFRESH_HEIGHT],
     extrapolate: 'clamp',
   });
+
+  // WORKAROUND FOR INVERTED LISTS ON ANDROID WITH VERSION >= 11
+  const useFixInverted = useMemo(() => {
+    return inverted && Platform.OS === 'android' && Number(getSystemVersion()) >= 11;
+  }, []);
+
+  // WORKAROUND FOR INVERTED LISTS ON ANDROID WITH VERSION >= 11
+  const useRegularInverted = useMemo(() => {
+    return inverted && !useFixInverted;
+  }, []);
 
   /*
   scrollY handlers
@@ -159,8 +170,8 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
       <Refresher
         refreshing={refreshing.current}
         extraScrollY={extraScrollY.current}
-        pt={!inverted ? MAX_REFRESH_HEIGHT - REFRESH_HEIGHT : undefined}
-        pb={inverted ? MAX_REFRESH_HEIGHT - REFRESH_HEIGHT : undefined}
+        pt={!useRegularInverted ? MAX_REFRESH_HEIGHT - REFRESH_HEIGHT : undefined}
+        pb={useRegularInverted ? MAX_REFRESH_HEIGHT - REFRESH_HEIGHT : undefined}
       />
     ),
     [],
