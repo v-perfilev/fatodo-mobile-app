@@ -15,6 +15,8 @@ class CalendarSelectors {
 
   static reminders = createSelector(getCalendarState, (state) => state.reminders);
 
+  static loading = createSelector(getCalendarState, (state) => (state.loadingKeys.length > 0) as boolean);
+
   static makeDateRemindersSelector = () =>
     createSelector([getCalendarState, getCalendarDate], (state, date) => {
       const monthKey = CalendarUtils.buildMonthKeyByItem(date);

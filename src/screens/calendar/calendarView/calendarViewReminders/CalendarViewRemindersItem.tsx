@@ -28,7 +28,7 @@ const CalendarViewRemindersItem = ({reminder}: CalendarViewRemindersItemProps) =
   const goToItem = (): void => navigation.navigate('Groups', {screen: 'ItemView', params: {itemId: item?.id}});
 
   const bulletView = <Bullet colorScheme={group?.color} size="15px" />;
-  const groupView = group ? <GroupLink group={group} color="gray.400" noLink /> : null;
+  const groupView = group ? <GroupLink group={group} noLink /> : null;
   const itemView = item ? <ItemLink item={item} noLink /> : null;
   const date = new Date(reminder.date);
 
@@ -39,10 +39,10 @@ const CalendarViewRemindersItem = ({reminder}: CalendarViewRemindersItemProps) =
           {bulletView}
         </FBox>
         <FVStack grow>
-          <Text fontSize="lg" fontWeight="bold" isTruncated>
+          <Text color="primary.500" fontSize="md" fontWeight="bold" isTruncated>
             {itemView}
           </Text>
-          <Text fontSize="sm" fontWeight="bold" isTruncated>
+          <Text color="gray.400" fontSize="sm" fontWeight="bold" isTruncated>
             {groupView}
           </Text>
         </FVStack>

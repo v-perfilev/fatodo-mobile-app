@@ -23,7 +23,7 @@ const CalendarViewDateReminders = ({reminders, isActiveDate}: CalendarViewDateRe
 
   const reminderColors = useMemo<ColorScheme[]>(
     () =>
-      reminders
+      [...reminders]
         .sort(ComparatorUtils.dateComparator)
         .map((reminder) => groups.find((g) => g.id === reminder.parentId))
         .filter(FilterUtils.notUndefinedFilter)
