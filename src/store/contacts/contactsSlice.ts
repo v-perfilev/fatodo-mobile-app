@@ -44,7 +44,6 @@ const contactsSlice = createSlice({
     },
 
     setIncomingRequests: (state: ContactsState, action: PayloadAction<ContactRequest[]>) => {
-      console.log(action.payload);
       state.incomingRequests = filterIncomingRequests(action.payload);
       state.incomingRequestCount = state.incomingRequests.length;
     },

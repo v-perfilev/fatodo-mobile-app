@@ -11,6 +11,7 @@ import {AppState, NativeEventSubscription} from 'react-native';
 import {RootActions} from '../../../store/rootActions';
 import SplashScreen from 'react-native-splash-screen';
 import {flowRight} from 'lodash';
+import {navigationRef} from '../withNavigationContainer';
 
 export type WithRootProps = {
   ready: boolean;
@@ -51,7 +52,12 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   };
 
   const reset = (): void => {
+    if (navigationRef.getRootState()) {
+      !isAuthenticated && navigationRef.reset({index: 0, routes: [{name: 'Public'}]});
+      isAuthenticated && navigationRef.reset({index: 0, routes: [{name: 'Protected'}]});
+    }
     dispatch(RootActions.resetState());
+    SplashScreen.show();
   };
 
   useEffect(() => {
@@ -64,8 +70,9 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   }, []);
 
   useEffect(() => {
-    reset();
+    !isActive && reset();
     isActive && isAuthenticated && refresh();
+    isActive && isAuthenticated && SplashScreen.hide();
   }, [isActive, isAuthenticated]);
 
   useEffect(() => {
