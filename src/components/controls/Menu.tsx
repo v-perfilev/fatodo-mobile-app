@@ -42,7 +42,7 @@ export const MenuItem = ({action, icon, text, children, loading, disabled, hidde
 };
 
 const Menu = ({trigger, menuItems, children}: MenuProps) => {
-  const showMenu = children || menuItems?.map((menuElement) => !menuElement.hidden).length > 0;
+  const showMenu = children || menuItems?.filter((menuElement) => !menuElement.hidden).length > 0;
 
   return showMenu ? (
     <NbMenu defaultIsOpen={false} trigger={trigger} borderRadius="xl" p="0" overflow="hidden">

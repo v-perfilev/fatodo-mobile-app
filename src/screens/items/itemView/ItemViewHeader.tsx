@@ -9,7 +9,6 @@ import {UserAccount} from '../../../models/User';
 import {useItemDialogContext} from '../../../shared/contexts/dialogContexts/ItemDialogContext';
 import {useAppSelector} from '../../../store/store';
 import ItemSelectors from '../../../store/item/itemSelectors';
-import GroupSelectors from '../../../store/group/groupSelectors';
 import Header from '../../../components/layouts/Header';
 import Menu, {MenuItemProps, MenuTrigger} from '../../../components/controls/Menu';
 
@@ -21,7 +20,7 @@ const ItemViewHeader = ({account}: ItemViewMenuProps) => {
   const navigation = useNavigation<GroupNavigationProps>();
   const {t} = useTranslation();
   const {showItemDeleteDialog} = useItemDialogContext();
-  const group = useAppSelector(GroupSelectors.group);
+  const group = useAppSelector(ItemSelectors.group);
   const item = useAppSelector(ItemSelectors.item);
 
   const goToGroupView = (): void => navigation.navigate('GroupView', {group});

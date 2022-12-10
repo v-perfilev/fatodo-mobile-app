@@ -14,7 +14,7 @@ class NotificationsRemote {
           status === firebase.messaging.AuthorizationStatus.AUTHORIZED ||
           status === firebase.messaging.AuthorizationStatus.PROVISIONAL;
         if (enabled) {
-          console.log('Authorization status is', status);
+          console.info('Authorization status is', status);
         }
       });
   };

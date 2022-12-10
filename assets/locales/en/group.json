@@ -67,7 +67,7 @@
   "editMember": {
     "title": "Edit group member",
     "buttons": {
-      "send": "Edit member",
+      "send": "Edit",
       "cancel": "Cancel"
     }
   },

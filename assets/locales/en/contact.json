@@ -31,6 +31,10 @@
     "send": "Send request",
     "cancel": "Cancel"
   },
+  "removeContact": {
+    "title": "Remove contact",
+    "text": "Are you sure you want to remove \"{{username}}\" from contact list?"
+  },
   "actions": {
     "addContact": "Add contact"
   }

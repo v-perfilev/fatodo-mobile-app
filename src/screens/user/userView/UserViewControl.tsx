@@ -15,6 +15,7 @@ import UserCancelIcon from '../../../components/icons/UserCancelIcon';
 import UserWaitIcon from '../../../components/icons/UserWaitIcon';
 import UserMinusIcon from '../../../components/icons/UserMinusIcon';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
+import {useContactDialogContext} from '../../../shared/contexts/dialogContexts/ContactDialogContext';
 
 type UserViewControlProps = {
   user: User;
@@ -24,6 +25,7 @@ const UserViewControl = ({user}: UserViewControlProps) => {
   const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const {showDirectMessageDialog} = useChatDialogContext();
+  const {showContactRemoveDialog} = useContactDialogContext();
   const [loading, setLoading] = useDelayedState(false);
   const relations = useAppSelector(ContactsSelectors.relations);
   const outcomingRequests = useAppSelector(ContactsSelectors.outcomingRequests);
@@ -54,9 +56,8 @@ const UserViewControl = ({user}: UserViewControlProps) => {
     dispatch(ContactsActions.declineIncomingRequestThunk(user.id)).then(() => setLoading(false));
   };
 
-  const removeContact = (): void => {
-    setLoading(true);
-    dispatch(ContactsActions.removeRelationThunk(user.id)).then(() => setLoading(false));
+  const showRemoveDialog = (): void => {
+    showContactRemoveDialog(user);
   };
 
   const openDirectMessageDialog = (): void => {
@@ -115,7 +116,7 @@ const UserViewControl = ({user}: UserViewControlProps) => {
           colorScheme="secondary"
           leftIcon={<UserMinusIcon size="md" />}
           isDisabled={loading}
-          onPress={removeContact}
+          onPress={showRemoveDialog}
         >
           {t('user:actions.removeContact')}
         </OutlinedButton>

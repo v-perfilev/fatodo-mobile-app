@@ -57,7 +57,6 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
       isAuthenticated && navigationRef.reset({index: 0, routes: [{name: 'Protected'}]});
     }
     dispatch(RootActions.resetState());
-    SplashScreen.show();
   };
 
   useEffect(() => {
@@ -72,7 +71,6 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   useEffect(() => {
     !isActive && reset();
     isActive && isAuthenticated && refresh();
-    isActive && isAuthenticated && SplashScreen.hide();
   }, [isActive, isAuthenticated]);
 
   useEffect(() => {
