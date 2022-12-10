@@ -50,8 +50,8 @@ export class WsPushHandler {
       // CONTACT
       case 'CONTACT_REQUEST_INCOMING':
         return this.handleContactRequestIncomingEvent;
-      case 'CONTACT_ACCEPT_INCOMING':
-        return this.handleContactAcceptIncomingEvent;
+      case 'CONTACT_ACCEPT_OUTCOMING':
+        return this.handleContactAcceptOutcomingEvent;
       // COMMENT
       case 'COMMENT_CREATE':
         return this.handleCommentCreateEvent;
@@ -167,11 +167,11 @@ export class WsPushHandler {
     this.sounds.playDing();
   };
 
-  private handleContactAcceptIncomingEvent = (msg: WsEvent<ContactRequest>): void => {
+  private handleContactAcceptOutcomingEvent = (msg: WsEvent<ContactRequest>): void => {
     const firstUserId = msg.payload.recipientId;
     const secondUserId = msg.payload.requesterId;
     const contactEvent: ContactEvent = {firstUserId, secondUserId};
-    const event: Event = {type: EventType.CONTACT_ACCEPT_INCOMING, contactEvent, date: msg.date};
+    const event: Event = {type: EventType.CONTACT_ACCEPT_OUTCOMING, contactEvent, date: msg.date};
     this.dispatch(NotificationActions.add(event));
     this.sounds.playDing();
   };
