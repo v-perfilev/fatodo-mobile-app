@@ -249,7 +249,7 @@ export class WsStateHandler {
   private handleChatMessageCreateEvent = (msg: WsEvent<Message>): void => {
     this.dispatch(ChatsActions.setChatLastMessageAction(msg.payload));
     this.dispatch(ChatsActions.increaseMessageCountAction(msg.payload));
-    this.dispatch(ChatActions.addMessage(msg.payload, this.account));
+    this.dispatch(ChatActions.addMessageThunk(msg.payload));
   };
 
   private handleChatMessageUpdateEvent = (msg: WsEvent<Message>): void => {

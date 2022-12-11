@@ -22,6 +22,7 @@ import {ChatsActions} from '../chats/chatsActions';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {PageableList} from '../../models/PageableList';
 import {ChatRenameDTO} from '../../models/dto/ChatRenameDTO';
+import {v4 as uuidV4} from 'uuid';
 
 const PREFIX = 'chat/';
 
@@ -48,10 +49,6 @@ export class ChatActions {
 
   static removeMembers = (members: ChatMember[]) => async (dispatch: AppDispatch) => {
     dispatch(chatSlice.actions.removeMembers(members));
-  };
-
-  static addMessage = (message: Message, account: UserAccount) => async (dispatch: AppDispatch) => {
-    dispatch(chatSlice.actions.setMessages({messages: [message], account}));
   };
 
   static updateMessage = (message: Message, account: UserAccount) => async (dispatch: AppDispatch) => {
@@ -253,7 +250,9 @@ export class ChatActions {
     PREFIX + 'sendMessage',
     async ({chatId, dto}, thunkAPI) => {
       const account = thunkAPI.getState().auth.account;
-      const message = buildMessageFromDTO(dto, chatId, account.id);
+      const id = uuidV4();
+      const message = buildMessageFromDTO(dto, id, chatId, account.id);
+      thunkAPI.dispatch(chatSlice.actions.addCreatedId(id));
       thunkAPI.dispatch(chatSlice.actions.setMessages({messages: [message], account}));
       ChatService.sendIndirectMessage(chatId, dto);
     },
@@ -278,6 +277,25 @@ export class ChatActions {
       thunkAPI.dispatch(chatSlice.actions.setMessages({messages: [deletedMessage], account}));
       await ChatService.deleteMessage(message.id);
       thunkAPI.dispatch(SnackActions.handleCode('chat.messageDeleted', 'info'));
+    },
+  );
+
+  static addMessageThunk = createAsyncThunk<void, Message, AsyncThunkConfig>(
+    PREFIX + 'addMessage',
+    async (message, thunkAPI) => {
+      const account = thunkAPI.getState().auth.account;
+      if (message.userId === account.id) {
+        const messages = thunkAPI.getState().chat.messages;
+        const createdIds = thunkAPI.getState().chat.createdIds;
+        const stubMessage = messages.find(
+          (m) => m.userId === account.id && createdIds.includes(m.id) && m.text === message.text,
+        );
+        if (stubMessage) {
+          thunkAPI.dispatch(chatSlice.actions.removeCreatedId(stubMessage.id));
+          thunkAPI.dispatch(chatSlice.actions.removeMessage(stubMessage));
+        }
+      }
+      thunkAPI.dispatch(chatSlice.actions.setMessages({messages: [message], account}));
     },
   );
 }

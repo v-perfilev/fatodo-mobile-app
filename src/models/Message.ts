@@ -106,9 +106,9 @@ export const buildMessageStatus = (
   date: DateUtils.getNowTime(),
 });
 
-export const buildMessageFromDTO = (dto: MessageDTO, chatId: string, userId: string): Message => ({
+export const buildMessageFromDTO = (dto: MessageDTO, id: string, chatId: string, userId: string): Message => ({
   ...dto,
-  id: '',
+  id,
   chatId,
   userId,
   isDeleted: false,

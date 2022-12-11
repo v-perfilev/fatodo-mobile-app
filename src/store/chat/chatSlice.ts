@@ -14,6 +14,7 @@ const initialState: ChatState = {
   chat: undefined,
   messages: [],
   chatItems: [],
+  createdIds: [],
   allLoaded: false,
   loading: false,
   shouldLoad: true,
@@ -81,6 +82,10 @@ const chatSlice = createSlice({
       }
     },
 
+    removeMessage: (state: ChatState, action: PayloadAction<Message>) => {
+      state.messages = state.messages.filter((m) => m.id !== action.payload.id);
+    },
+
     setMessageReaction: (
       state: ChatState,
       action: PayloadAction<{reaction: MessageReaction; account: UserAccount}>,
@@ -111,6 +116,14 @@ const chatSlice = createSlice({
           state.chatItems = convertMessagesToChatItems(state.messages, account);
         }
       }
+    },
+
+    addCreatedId: (state: ChatState, action: PayloadAction<string>) => {
+      state.createdIds = [...state.createdIds, action.payload];
+    },
+
+    removeCreatedId: (state: ChatState, action: PayloadAction<string>) => {
+      state.createdIds = state.createdIds.filter((id) => id !== action.payload);
     },
 
     calculateAllLoaded: (state: ChatState, action: PayloadAction<number>) => {
@@ -209,7 +222,7 @@ const filterMembers = (members: ChatMember[]): ChatMember[] => {
 };
 
 const filterMessages = (messages: Message[]): Message[] => {
-  return messages.filter(FilterUtils.uniqueByIdOrUserIdAndTextAndDateFilter).sort(ComparatorUtils.createdAtComparator);
+  return messages.filter(FilterUtils.uniqueByIdFilter).sort(ComparatorUtils.createdAtComparator);
 };
 
 const filterReactions = (reactions: MessageReaction[]): MessageReaction[] => {
