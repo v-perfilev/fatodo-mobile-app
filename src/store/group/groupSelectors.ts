@@ -20,6 +20,8 @@ class GroupSelectors {
       [getGroupState, getShowArchived],
       (state, showArchived) => (showArchived ? state.allArchivedItemsLoaded : state.allActiveItemsLoaded) as boolean,
     );
+
+  static shouldLoad = createSelector(getGroupState, (state) => state.shouldLoad as boolean);
 }
 
 export default GroupSelectors;

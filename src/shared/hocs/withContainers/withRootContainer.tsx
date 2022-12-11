@@ -11,7 +11,6 @@ import {AppState, NativeEventSubscription} from 'react-native';
 import {RootActions} from '../../../store/rootActions';
 import SplashScreen from 'react-native-splash-screen';
 import {flowRight} from 'lodash';
-import {navigationRef} from '../withNavigationContainer';
 
 export type WithRootProps = {
   ready: boolean;
@@ -42,6 +41,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   };
 
   const refresh = (): void => {
+    dispatch(RootActions.resetState());
     setTimeout(() => {
       dispatch(ContactsActions.fetchRelationsThunk());
       dispatch(ContactsActions.fetchOutcomingRequestsThunk());
@@ -49,14 +49,6 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
       dispatch(ChatsActions.fetchUnreadMessagesMapThunk());
       dispatch(EventsActions.fetchUnreadCountThunk());
     }, 1000);
-  };
-
-  const reset = (): void => {
-    if (navigationRef.getRootState()) {
-      !isAuthenticated && navigationRef.reset({index: 0, routes: [{name: 'Public'}]});
-      isAuthenticated && navigationRef.reset({index: 0, routes: [{name: 'Protected'}]});
-    }
-    dispatch(RootActions.resetState());
   };
 
   useEffect(() => {
@@ -69,7 +61,6 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   }, []);
 
   useEffect(() => {
-    !isActive && reset();
     isActive && isAuthenticated && refresh();
   }, [isActive, isAuthenticated]);
 

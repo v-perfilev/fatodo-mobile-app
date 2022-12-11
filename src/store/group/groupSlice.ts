@@ -13,6 +13,7 @@ const initialState: GroupState = {
   archivedItems: [],
   allActiveItemsLoaded: false,
   allArchivedItemsLoaded: false,
+  shouldLoad: true,
 };
 
 const groupSlice = createSlice({
@@ -111,6 +112,10 @@ const groupSlice = createSlice({
     calculateAllArchivedLoaded: (state: GroupState, action: PayloadAction<number>) => {
       state.allArchivedItemsLoaded = state.archivedItems.length === action.payload;
     },
+
+    setShouldLoad: (state: GroupState, action: PayloadAction<boolean>) => {
+      state.shouldLoad = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
@@ -121,6 +126,24 @@ const groupSlice = createSlice({
     });
     builder.addCase(GroupActions.fetchGroupThunk.fulfilled, (state, action) => {
       groupSlice.caseReducers.setGroup(state, action);
+      groupSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
+    });
+
+    /*
+    fetchGroupAfterRestart
+    */
+    builder.addCase(GroupActions.fetchGroupAfterRestartThunk.fulfilled, (state, action) => {
+      groupSlice.caseReducers.setGroup(state, action);
+      groupSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
+    });
+
+    /*
+    fetchActiveInitialItems
+    */
+    builder.addCase(GroupActions.fetchInitialActiveItemsThunk.fulfilled, (state, action) => {
+      groupSlice.caseReducers.resetActiveItems(state);
+      groupSlice.caseReducers.setActiveItems(state, {...action, payload: action.payload.data});
+      groupSlice.caseReducers.calculateAllActiveLoaded(state, {...action, payload: action.payload.count});
     });
 
     /*
@@ -138,6 +161,15 @@ const groupSlice = createSlice({
       groupSlice.caseReducers.resetActiveItems(state);
       groupSlice.caseReducers.setActiveItems(state, {...action, payload: action.payload.data});
       groupSlice.caseReducers.calculateAllActiveLoaded(state, {...action, payload: action.payload.count});
+    });
+
+    /*
+    fetchInitialArchivedItems
+    */
+    builder.addCase(GroupActions.fetchInitialArchivedItemsThunk.fulfilled, (state, action) => {
+      groupSlice.caseReducers.resetArchivedItems(state);
+      groupSlice.caseReducers.setArchivedItems(state, {...action, payload: action.payload.data});
+      groupSlice.caseReducers.calculateAllArchivedLoaded(state, {...action, payload: action.payload.count});
     });
 
     /*

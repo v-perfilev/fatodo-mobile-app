@@ -22,6 +22,8 @@ class ChatsSelectors {
     );
 
   static chatsInitialized = createSelector(getChatsState, (state) => state.chatsInitialized as boolean);
+
+  static shouldLoad = createSelector(getChatsState, (state) => state.shouldLoad as boolean);
 }
 
 export default ChatsSelectors;

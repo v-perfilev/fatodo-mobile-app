@@ -4,9 +4,6 @@ import ProtectedNavigator, {ProtectedParamList} from './ProtectedNavigator';
 import withDrawer from '../shared/hocs/withDrawer';
 import Sidebar from '../components/layouts/Sidebar';
 import {flowRight} from 'lodash';
-import {useAppSelector} from '../store/store';
-import AuthSelectors from '../store/auth/authSelectors';
-import {Box} from 'native-base';
 import AccountForm from '../screens/account/accountForm/AccountForm';
 import AccountSettingsForm from '../screens/account/accountSettingsForm/AccountSettingsForm';
 import AccountChangePasswordForm from '../screens/account/accountChangePasswordForm/AccountChangePasswordForm';
@@ -23,15 +20,12 @@ export type DrawerParamList = {
 const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const DrawerNavigator = () => {
-  const isActive = useAppSelector(AuthSelectors.isActive);
-  const MainComponent = isActive ? ProtectedNavigator : Box;
-
   return (
     <Drawer.Navigator
       screenOptions={{headerShown: false, lazy: false, drawerType: 'back', swipeEdgeWidth: 0}}
       drawerContent={Sidebar}
     >
-      <Drawer.Screen name="Default" component={MainComponent} />
+      <Drawer.Screen name="Default" component={ProtectedNavigator} />
       <Drawer.Screen name="AccountForm" component={AccountForm} />
       <Drawer.Screen name="AccountSettingsForm" component={AccountSettingsForm} />
       <Drawer.Screen name="AccountChangePasswordForm" component={AccountChangePasswordForm} />

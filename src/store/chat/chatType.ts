@@ -8,4 +8,5 @@ export type ChatState = {
   chatItems: ChatItem[];
   allLoaded: boolean;
   loading: boolean;
+  shouldLoad: boolean;
 };

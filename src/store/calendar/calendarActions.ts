@@ -14,6 +14,7 @@ const PREFIX = 'calendar/';
 export class CalendarActions {
   static reset = () => (dispatch: AppDispatch) => {
     dispatch(calendarSlice.actions.reset());
+    dispatch(calendarSlice.actions.setShouldLoad(true));
   };
 
   static setDate = (date: CalendarEnrichedDate) => (dispatch: AppDispatch) => {

@@ -12,6 +12,8 @@ class CommentsSelectors {
   static allLoaded = createSelector(getCommentsState, (state) => state.allLoaded as boolean);
 
   static loading = createSelector(getCommentsState, (state) => state.loading as boolean);
+
+  static shouldLoad = createSelector(getCommentsState, (state) => state.shouldLoad as boolean);
 }
 
 export default CommentsSelectors;

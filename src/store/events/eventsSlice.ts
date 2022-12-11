@@ -9,6 +9,7 @@ const initialState: EventsState = {
   events: [],
   unreadCount: 0,
   allLoaded: false,
+  shouldLoad: true,
 };
 
 const eventsSlice = createSlice({
@@ -122,6 +123,10 @@ const eventsSlice = createSlice({
     calculateAllLoaded: (state: EventsState, action: PayloadAction<number>) => {
       state.allLoaded = state.events.length === action.payload;
     },
+
+    setShouldLoad: (state: EventsState, action: PayloadAction<boolean>) => {
+      state.shouldLoad = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
@@ -131,6 +136,7 @@ const eventsSlice = createSlice({
       eventsSlice.caseReducers.setEvents(state, {...action, payload: action.payload.data});
       eventsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
       eventsSlice.caseReducers.setUnreadCount(state, {...action, payload: action.payload.unread});
+      eventsSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
     });
 
     /*

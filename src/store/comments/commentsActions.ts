@@ -14,6 +14,10 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 const PREFIX = 'comments/';
 
 export class CommentsActions {
+  static reset = () => async (dispatch: AppDispatch) => {
+    dispatch(commentsSlice.actions.setShouldLoad(true));
+  };
+
   static init = (targetId: string) => async (dispatch: AppDispatch) => {
     dispatch(commentsSlice.actions.reset());
     dispatch(commentsSlice.actions.setTargetId(targetId));
@@ -40,6 +44,19 @@ export class CommentsActions {
     {targetId: string; offset: number},
     AsyncThunkConfig
   >(PREFIX + 'fetchComments', async ({targetId, offset}, thunkAPI) => {
+    const response = await CommentService.getAllPageable(targetId, offset)
+      .then((response) => response)
+      .catch(() => ({data: {data: [], count: 0}}));
+    const commentUserIds = CommentUtils.extractUserIds(response.data.data);
+    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(commentUserIds));
+    return response.data;
+  });
+
+  static fetchCommentsAfterRestartThunk = createAsyncThunk<
+    PageableList<Comment>,
+    {targetId: string; offset: number},
+    AsyncThunkConfig
+  >(PREFIX + 'fetchCommentsAfterRestart', async ({targetId, offset}, thunkAPI) => {
     const response = await CommentService.getAllPageable(targetId, offset)
       .then((response) => response)
       .catch(() => ({data: {data: [], count: 0}}));

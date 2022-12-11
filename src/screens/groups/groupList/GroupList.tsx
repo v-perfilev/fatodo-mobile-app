@@ -5,7 +5,7 @@ import {GroupsActions} from '../../../store/groups/groupsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Group} from '../../../models/Group';
 import {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import PlusIcon from '../../../components/icons/PlusIcon';
@@ -27,9 +27,11 @@ const loaderStyle: StyleProp<ViewStyle> = {paddingTop};
 
 const GroupList = () => {
   const dispatch = useAppDispatch();
+  const isFocused = useIsFocused();
   const navigation = useNavigation<GroupNavigationProps>();
   const groups = useAppSelector(GroupsSelectors.groups);
   const groupsInitialized = useAppSelector(GroupsSelectors.groupsInitialized);
+  const shouldLoad = useAppSelector(GroupsSelectors.shouldLoad);
   const [sorting, setSorting] = useState<boolean>(false);
   const [loading, setLoading] = useDelayedState(!groupsInitialized);
   const listRef = useRef<FlatListType>();
@@ -41,7 +43,7 @@ const GroupList = () => {
    */
 
   const refresh = useCallback(async (): Promise<void> => {
-    await dispatch(GroupsActions.fetchGroupsThunk());
+    await dispatch(GroupsActions.refreshGroupsThunk());
   }, []);
 
   /*
@@ -80,6 +82,12 @@ const GroupList = () => {
   useEffect(() => {
     !groupsInitialized && dispatch(GroupsActions.fetchGroupsThunk()).finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (isFocused && groupsInitialized && shouldLoad) {
+      dispatch(GroupsActions.refreshGroupsThunk());
+    }
+  }, [isFocused, shouldLoad]);
 
   const buttons = useMemo<CornerButton[]>(
     () => [

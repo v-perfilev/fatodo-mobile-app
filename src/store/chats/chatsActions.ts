@@ -13,6 +13,10 @@ import {PageableList} from '../../models/PageableList';
 const PREFIX = 'chats/';
 
 export class ChatsActions {
+  static reset = () => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.setShouldLoad(true));
+  };
+
   static addChat = (chat: Chat) => async (dispatch: AppDispatch) => {
     dispatch(chatsSlice.actions.setChats([chat]));
   };

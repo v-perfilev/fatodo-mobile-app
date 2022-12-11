@@ -15,11 +15,20 @@ const PREFIX = 'group/';
 
 export class GroupActions {
   static reset = () => async (dispatch: AppDispatch) => {
-    dispatch(groupSlice.actions.reset());
+    dispatch(groupSlice.actions.setShouldLoad(true));
+  };
+
+  static resetActive = () => async (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.resetActiveItems());
+  };
+
+  static resetArchived = () => async (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.resetArchivedItems());
   };
 
   static setGroup = (group: Group) => async (dispatch: AppDispatch) => {
     dispatch(groupSlice.actions.setGroup(group));
+    dispatch(groupSlice.actions.setShouldLoad(false));
   };
 
   static removeGroup = (groupId: string) => async (dispatch: AppDispatch) => {
@@ -61,6 +70,29 @@ export class GroupActions {
     },
   );
 
+  static fetchGroupAfterRestartThunk = createAsyncThunk<Group, string, AsyncThunkConfig>(
+    PREFIX + 'fetchGroupAfterRestart',
+    async (groupId, thunkAPI) => {
+      const response = await ItemService.getGroup(groupId);
+      const groupUserIds = response.data.members.map((m) => m.userId);
+      thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk([response.data.id]));
+      groupUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(groupUserIds));
+      return response.data;
+    },
+  );
+
+  static fetchInitialActiveItemsThunk = createAsyncThunk<PageableList<Item>, {groupId: string}, AsyncThunkConfig>(
+    PREFIX + 'fetchInitialActiveItems',
+    async ({groupId}, thunkAPI) => {
+      const response = await ItemService.getItemsByGroupId(groupId, 0);
+      const itemIds = response.data.data.flatMap((i) => i.id);
+      const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
+      itemIds.length > 0 && thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk(itemIds));
+      itemUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+      return response.data;
+    },
+  );
+
   static fetchActiveItemsThunk = createAsyncThunk<
     PageableList<Item>,
     {groupId: string; offset?: number},
@@ -78,6 +110,18 @@ export class GroupActions {
     PREFIX + 'refreshActiveItems',
     async (groupId, thunkAPI) => {
       const response = await ItemService.getItemsByGroupId(groupId);
+      const itemIds = response.data.data.flatMap((i) => i.id);
+      const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
+      itemIds.length > 0 && thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk(itemIds));
+      itemUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+      return response.data;
+    },
+  );
+
+  static fetchInitialArchivedItemsThunk = createAsyncThunk<PageableList<Item>, {groupId: string}, AsyncThunkConfig>(
+    PREFIX + 'fetchInitialArchivedItems',
+    async ({groupId}, thunkAPI) => {
+      const response = await ItemService.getArchivedItemsByGroupId(groupId, 0);
       const itemIds = response.data.data.flatMap((i) => i.id);
       const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
       itemIds.length > 0 && thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk(itemIds));

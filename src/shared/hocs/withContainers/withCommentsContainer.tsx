@@ -1,6 +1,6 @@
 import React, {ComponentType, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {RouteProp, useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {useDelayedState} from '../../hooks/useDelayedState';
 import {ProtectedNavigationProps, ProtectedParamList} from '../../../navigators/ProtectedNavigator';
 import CommentsSelectors from '../../../store/comments/commentsSelectors';
@@ -15,12 +15,14 @@ export type WithCommentsProps = {
 
 const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (props: any) => {
   const dispatch = useAppDispatch();
+  const isFocused = useIsFocused();
   const navigation = useNavigation<ProtectedNavigationProps>();
   const [containerLoading, setContainerLoading] = useDelayedState(true, 500);
   const route = useRoute<RouteProp<ProtectedParamList, 'withComments'>>();
   const routeTargetId = route.params.targetId;
   const routeColorScheme = route.params.colorScheme;
   const targetId = useAppSelector(CommentsSelectors.targetId);
+  const shouldLoad = useAppSelector(CommentsSelectors.shouldLoad);
 
   const goBack = (): void => navigation.goBack();
 
@@ -32,6 +34,12 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
       .finally(() => setContainerLoading(false));
   };
 
+  const reloadComments = (): void => {
+    dispatch(CommentsActions.fetchCommentsAfterRestartThunk({targetId, offset: 0}))
+      .unwrap()
+      .catch(() => goBack());
+  };
+
   useEffect(() => {
     if (routeTargetId && routeTargetId !== targetId) {
       loadComments();
@@ -41,6 +49,12 @@ const withCommentsContainer = (Component: ComponentType<WithCommentsProps>) => (
       setContainerLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (isFocused && targetId && shouldLoad) {
+      reloadComments();
+    }
+  }, [isFocused, shouldLoad]);
 
   return <Component targetId={targetId} containerLoading={containerLoading} color={routeColorScheme} {...props} />;
 };

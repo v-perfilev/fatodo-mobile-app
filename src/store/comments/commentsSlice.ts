@@ -11,6 +11,7 @@ const initialState: CommentsState = {
   comments: [],
   allLoaded: false,
   loading: false,
+  shouldLoad: true,
 };
 
 const commentsSlice = createSlice({
@@ -58,6 +59,10 @@ const commentsSlice = createSlice({
     setLoading: (state: CommentsState, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
+
+    setShouldLoad: (state: CommentsState, action: PayloadAction<boolean>) => {
+      state.shouldLoad = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
@@ -70,9 +75,20 @@ const commentsSlice = createSlice({
       commentsSlice.caseReducers.setComments(state, {...action, payload: action.payload.data});
       commentsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
       commentsSlice.caseReducers.setLoading(state, {...action, payload: false});
+      commentsSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
     });
     builder.addCase(CommentsActions.fetchCommentsThunk.rejected, (state, action) => {
       commentsSlice.caseReducers.setLoading(state, {...action, payload: false});
+    });
+
+    /*
+    fetchCommentsAfterRestart
+    */
+    builder.addCase(CommentsActions.fetchCommentsAfterRestartThunk.fulfilled, (state, action) => {
+      commentsSlice.caseReducers.resetComments(state);
+      commentsSlice.caseReducers.setComments(state, {...action, payload: action.payload.data});
+      commentsSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
+      commentsSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
     });
 
     /*

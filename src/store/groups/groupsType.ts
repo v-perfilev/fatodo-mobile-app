@@ -9,4 +9,5 @@ export type GroupsState = {
   itemsLoading: [string, boolean][];
   itemsCollapsed: [string, boolean][];
   groupsInitialized: boolean;
+  shouldLoad: boolean;
 };

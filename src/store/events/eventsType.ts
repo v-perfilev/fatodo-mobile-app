@@ -4,4 +4,5 @@ export type EventsState = {
   events: Event[];
   unreadCount: number;
   allLoaded: boolean;
+  shouldLoad: boolean;
 };

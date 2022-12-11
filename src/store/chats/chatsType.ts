@@ -7,4 +7,5 @@ export type ChatsState = {
   unreadMap: [string, string[]][];
   allLoaded: boolean;
   chatsInitialized: boolean;
+  shouldLoad: boolean;
 };

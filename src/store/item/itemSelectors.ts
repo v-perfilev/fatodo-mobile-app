@@ -12,6 +12,8 @@ class ItemSelectors {
   static group = createSelector(getItemState, (state) => state.group as Group);
 
   static reminders = createSelector(getItemState, (state) => state.reminders as Reminder[]);
+
+  static shouldLoad = createSelector(getItemState, (state) => state.shouldLoad as boolean);
 }
 
 export default ItemSelectors;

@@ -26,6 +26,10 @@ import {ChatRenameDTO} from '../../models/dto/ChatRenameDTO';
 const PREFIX = 'chat/';
 
 export class ChatActions {
+  static reset = () => async (dispatch: AppDispatch) => {
+    dispatch(chatSlice.actions.setShouldLoad(true));
+  };
+
   static removeChat = (chatId: string) => async (dispatch: AppDispatch) => {
     dispatch(chatSlice.actions.removeChat(chatId));
   };
@@ -77,11 +81,35 @@ export class ChatActions {
     },
   );
 
+  static fetchChatAfterRestartThunk = createAsyncThunk<Chat, string, AsyncThunkConfig>(
+    PREFIX + 'fetchChatAfterRestart',
+    async (chatId, thunkAPI) => {
+      const response = await ChatService.getChatById(chatId);
+      const chatUserIds = ChatUtils.extractUserIds([response.data]);
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(chatUserIds));
+      await thunkAPI.dispatch(ChatActions.fetchMessagesAfterRestartThunk({chatId, offset: 0}));
+      return response.data;
+    },
+  );
+
   static fetchMessagesThunk = createAsyncThunk<
     {list: PageableList<Message>; account: UserAccount},
     {chatId: string; offset: number},
     AsyncThunkConfig
   >(PREFIX + 'fetchMessages', async ({chatId, offset}, thunkAPI) => {
+    const account = thunkAPI.getState().auth.account;
+    const response = await ChatService.getAllMessagesByChatIdPageable(chatId, offset);
+    const messages = response.data.data;
+    const messageUserIds = MessageUtils.extractUserIds(messages);
+    thunkAPI.dispatch(InfoActions.handleUserIdsThunk(messageUserIds));
+    return {list: response.data, account};
+  });
+
+  static fetchMessagesAfterRestartThunk = createAsyncThunk<
+    {list: PageableList<Message>; account: UserAccount},
+    {chatId: string; offset: number},
+    AsyncThunkConfig
+  >(PREFIX + 'fetchMessagesAfterRestart', async ({chatId, offset}, thunkAPI) => {
     const account = thunkAPI.getState().auth.account;
     const response = await ChatService.getAllMessagesByChatIdPageable(chatId, offset);
     const messages = response.data.data;

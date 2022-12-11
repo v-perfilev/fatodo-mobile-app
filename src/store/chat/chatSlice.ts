@@ -16,6 +16,7 @@ const initialState: ChatState = {
   chatItems: [],
   allLoaded: false,
   loading: false,
+  shouldLoad: true,
 };
 
 const chatSlice = createSlice({
@@ -119,8 +120,19 @@ const chatSlice = createSlice({
     setLoading: (state: ChatState, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
+
+    setShouldLoad: (state: ChatState, action: PayloadAction<boolean>) => {
+      state.shouldLoad = action.payload;
+    },
   },
   extraReducers: (builder) => {
+    /*
+    selectChat
+    */
+    builder.addCase(ChatActions.selectChatThunk.fulfilled, (state, action) => {
+      chatSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
+    });
+
     /*
     fetchChat
     */
@@ -130,6 +142,15 @@ const chatSlice = createSlice({
     });
     builder.addCase(ChatActions.fetchChatThunk.fulfilled, (state, action) => {
       chatSlice.caseReducers.setChat(state, action);
+      chatSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
+    });
+
+    /*
+    fetchChatAfterRestart
+    */
+    builder.addCase(ChatActions.fetchChatAfterRestartThunk.fulfilled, (state, action) => {
+      chatSlice.caseReducers.setChat(state, action);
+      chatSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
     });
 
     /*
@@ -148,6 +169,18 @@ const chatSlice = createSlice({
     });
     builder.addCase(ChatActions.fetchMessagesThunk.rejected, (state, action) => {
       chatSlice.caseReducers.setLoading(state, {...action, payload: false});
+    });
+
+    /*
+    fetchMessagesAfterRestart
+    */
+    builder.addCase(ChatActions.fetchMessagesAfterRestartThunk.fulfilled, (state, action) => {
+      const messages = action.payload.list.data;
+      const count = action.payload.list.count;
+      const account = action.payload.account;
+      chatSlice.caseReducers.resetMessages(state);
+      chatSlice.caseReducers.setMessages(state, {...action, payload: {messages, account}});
+      chatSlice.caseReducers.calculateAllLoaded(state, {...action, payload: count});
     });
 
     /*

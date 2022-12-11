@@ -42,8 +42,8 @@ const calendarSlice = createSlice({
       state.reminders = filterReminders([...action.payload, ...state.reminders]);
     },
 
-    setShouldLoad: (state: CalendarState) => {
-      state.shouldLoad = false;
+    setShouldLoad: (state: CalendarState, action: PayloadAction<boolean>) => {
+      state.shouldLoad = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -52,7 +52,7 @@ const calendarSlice = createSlice({
     */
     builder.addCase(CalendarActions.fetchRemindersThunk.pending, (state, action) => {
       calendarSlice.caseReducers.addLoadingKeys(state, {...action, payload: action.meta.arg});
-      calendarSlice.caseReducers.setShouldLoad(state);
+      calendarSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
     });
     builder.addCase(CalendarActions.fetchRemindersThunk.fulfilled, (state, action) => {
       calendarSlice.caseReducers.addLoadedKeys(state, {...action, payload: action.meta.arg});

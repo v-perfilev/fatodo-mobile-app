@@ -5,4 +5,5 @@ export type CommentsState = {
   comments: Comment[];
   allLoaded: boolean;
   loading: boolean;
+  shouldLoad: boolean;
 };

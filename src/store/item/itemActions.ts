@@ -16,7 +16,7 @@ const PREFIX = 'item/';
 
 export class ItemActions {
   static reset = () => async (dispatch: AppDispatch) => {
-    dispatch(itemSlice.actions.reset());
+    dispatch(itemSlice.actions.setShouldLoad(true));
   };
 
   static setGroup = (group: Group) => async (dispatch: AppDispatch) => {
@@ -25,6 +25,7 @@ export class ItemActions {
 
   static setItem = (item: Item) => async (dispatch: AppDispatch) => {
     dispatch(itemSlice.actions.setItem(item));
+    dispatch(itemSlice.actions.setShouldLoad(false));
     dispatch(ItemActions.fetchRemindersThunk(item.id));
   };
 
@@ -38,6 +39,18 @@ export class ItemActions {
 
   static fetchItemThunk = createAsyncThunk<Item, string, AsyncThunkConfig>(
     PREFIX + 'fetchItem',
+    async (itemId, thunkAPI) => {
+      const response = await ItemService.getItem(itemId);
+      const itemUserIds = [response.data.createdBy, response.data.lastModifiedBy];
+      thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
+      await thunkAPI.dispatch(ItemActions.fetchRemindersThunk(itemId));
+      await thunkAPI.dispatch(ItemActions.fetchGroupThunk(response.data.groupId));
+      return response.data;
+    },
+  );
+
+  static fetchItemAfterRestartThunk = createAsyncThunk<Item, string, AsyncThunkConfig>(
+    PREFIX + 'fetchItemAfterRestart',
     async (itemId, thunkAPI) => {
       const response = await ItemService.getItem(itemId);
       const itemUserIds = [response.data.createdBy, response.data.lastModifiedBy];

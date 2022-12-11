@@ -9,6 +9,7 @@ const initialState: ItemState = {
   item: undefined,
   group: undefined,
   reminders: [],
+  shouldLoad: true,
 };
 
 const itemSlice = createSlice({
@@ -44,6 +45,10 @@ const itemSlice = createSlice({
     setReminders: (state: ItemState, action: PayloadAction<Reminder[]>) => {
       state.reminders = action.payload;
     },
+
+    setShouldLoad: (state: ItemState, action: PayloadAction<boolean>) => {
+      state.shouldLoad = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
@@ -54,6 +59,15 @@ const itemSlice = createSlice({
     });
     builder.addCase(ItemActions.fetchItemThunk.fulfilled, (state, action) => {
       itemSlice.caseReducers.setItem(state, action);
+      itemSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
+    });
+
+    /*
+    fetchItemAfterRestart
+    */
+    builder.addCase(ItemActions.fetchItemAfterRestartThunk.fulfilled, (state, action) => {
+      itemSlice.caseReducers.setItem(state, action);
+      itemSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
     });
 
     /*

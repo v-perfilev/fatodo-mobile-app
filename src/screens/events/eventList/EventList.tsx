@@ -31,6 +31,7 @@ const EventList = () => {
   const events = useAppSelector(EventsSelectors.events);
   const unreadCount = useAppSelector(EventsSelectors.unreadCount);
   const allLoaded = useAppSelector(EventsSelectors.allLoaded);
+  const shouldLoad = useAppSelector(EventsSelectors.shouldLoad);
   const [loading, setLoading] = useDelayedState();
   const listRef = useRef<FlatListType>();
 
@@ -80,6 +81,12 @@ const EventList = () => {
   useEffect(() => {
     isFocused && loading && load().finally(() => setLoading(false));
   }, [isFocused]);
+
+  useEffect(() => {
+    if (isFocused && !loading && shouldLoad) {
+      refresh().finally();
+    }
+  }, [isFocused, shouldLoad]);
 
   useEffect(() => {
     isFocused && unreadCount > 0 && refreshUnread();

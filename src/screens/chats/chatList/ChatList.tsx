@@ -38,6 +38,7 @@ const ChatList = () => {
   const chatsInitialized = useAppSelector(ChatsSelectors.chatsInitialized);
   const allLoaded = useAppSelector(ChatsSelectors.allLoaded);
   const filteredChats = useAppSelector(ChatsSelectors.filteredChats);
+  const shouldLoad = useAppSelector(ChatsSelectors.shouldLoad);
   const [type, setType] = useState<ControlType>('regular');
   const [filter, setFilter] = useState<string>('');
   const [loading, setLoading] = useDelayedState(!chatsInitialized);
@@ -88,6 +89,13 @@ const ChatList = () => {
   useEffect(() => {
     isFocused && loading && load().finally(() => setLoading(false));
   }, [isFocused]);
+
+  useEffect(() => {
+    if (isFocused && !loading && shouldLoad) {
+      setFilter('');
+      load().finally();
+    }
+  }, [isFocused, shouldLoad]);
 
   useEffect(() => {
     const filterNotEmpty = filter?.trim().length > 0;

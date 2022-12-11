@@ -17,7 +17,7 @@ import CollapsableRefreshableFlatList, {
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {ProtectedNavigationProps} from '../../../navigators/ProtectedNavigator';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
 import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
@@ -40,9 +40,11 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
   const itemsSelector = useCallback(GroupSelectors.makeItemsSelector(), []);
   const allItemsLoadedSelector = useCallback(GroupSelectors.makeAllItemsLoadedSelector(), []);
   const dispatch = useAppDispatch();
+  const isFocused = useIsFocused();
   const account = useAppSelector(AuthSelectors.account);
   const items = useAppSelector((state) => itemsSelector(state, showArchived));
   const allItemsLoaded = useAppSelector((state) => allItemsLoadedSelector(state, showArchived));
+  const shouldLoad = useAppSelector(GroupSelectors.shouldLoad);
   const rootNavigation = useNavigation<ProtectedNavigationProps>();
   const groupNavigation = useNavigation<GroupNavigationProps>();
 
@@ -67,8 +69,8 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
 
   const initialLoad = useCallback(async (): Promise<void> => {
     showArchived
-      ? await dispatch(GroupActions.fetchArchivedItemsThunk({groupId, offset: 0}))
-      : await dispatch(GroupActions.fetchActiveItemsThunk({groupId, offset: 0}));
+      ? await dispatch(GroupActions.fetchInitialArchivedItemsThunk({groupId}))
+      : await dispatch(GroupActions.fetchInitialArchivedItemsThunk({groupId}));
   }, [items, showArchived]);
 
   const load = useCallback(async (): Promise<void> => {
@@ -111,6 +113,18 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
       initialLoad().finally();
     }
   }, [showArchived]);
+
+  useEffect(() => {
+    if (isFocused && shouldLoad) {
+      if (showArchived) {
+        dispatch(GroupActions.resetActive());
+        dispatch(GroupActions.fetchInitialArchivedItemsThunk({groupId}));
+      } else {
+        dispatch(GroupActions.resetArchived());
+        dispatch(GroupActions.fetchInitialActiveItemsThunk({groupId}));
+      }
+    }
+  }, [shouldLoad, isFocused]);
 
   const buttons = useMemo<CornerButton[]>(
     () => [

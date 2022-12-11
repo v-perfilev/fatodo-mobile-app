@@ -1,6 +1,6 @@
 import React, {ComponentType, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {RouteProp, useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {GroupNavigationProps, GroupParamList} from '../../../navigators/GroupNavigator';
 import {Group} from '../../../models/Group';
 import {ItemActions} from '../../../store/item/itemActions';
@@ -16,9 +16,11 @@ export type WithItemProps = {
 
 const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: any) => {
   const dispatch = useAppDispatch();
+  const isFocused = useIsFocused();
   const navigation = useNavigation<GroupNavigationProps>();
   const stateGroup = useAppSelector(ItemSelectors.group);
   const stateItem = useAppSelector(ItemSelectors.item);
+  const shouldLoad = useAppSelector(ItemSelectors.shouldLoad);
   const [containerLoading, setContainerLoading] = useDelayedState(true, 500);
   const route = useRoute<RouteProp<GroupParamList, 'withItem'>>();
   const routeItemId = route.params.itemId;
@@ -37,15 +39,20 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
   const goToGroupView = (): void => navigation.navigate('GroupView', {group});
 
   const setGroupAndItem = (): void => {
-    Promise.all([
-      dispatch(ItemActions.reset()),
-      dispatch(ItemActions.setGroup(routeGroup)),
-      dispatch(ItemActions.setItem(routeItem)),
-    ]).finally(() => setContainerLoading(false));
+    Promise.all([dispatch(ItemActions.setGroup(routeGroup)), dispatch(ItemActions.setItem(routeItem))]).finally(() =>
+      setContainerLoading(false),
+    );
   };
 
   const loadItem = (): void => {
     dispatch(ItemActions.fetchItemThunk(routeItemId))
+      .unwrap()
+      .catch(() => goBack())
+      .finally(() => setContainerLoading(false));
+  };
+
+  const reloadItem = (): void => {
+    dispatch(ItemActions.fetchItemAfterRestartThunk(stateItem.id))
       .unwrap()
       .catch(() => goBack())
       .finally(() => setContainerLoading(false));
@@ -70,6 +77,12 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
       goToGroupView();
     }
   }, [group, item]);
+
+  useEffect(() => {
+    if (isFocused && stateItem && shouldLoad) {
+      reloadItem();
+    }
+  }, [isFocused, shouldLoad]);
 
   return <Component containerLoading={containerLoading} group={group} item={item} {...props} />;
 };

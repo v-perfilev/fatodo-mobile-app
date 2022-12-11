@@ -7,4 +7,5 @@ export type GroupState = {
   archivedItems: Item[];
   allActiveItemsLoaded: boolean;
   allArchivedItemsLoaded: boolean;
+  shouldLoad: boolean;
 };

@@ -16,6 +16,7 @@ const initialState: GroupsState = {
   itemsLoading: [],
   itemsCollapsed: [],
   groupsInitialized: false,
+  shouldLoad: true,
 };
 
 const groupsSlice = createSlice({
@@ -160,6 +161,10 @@ const groupsSlice = createSlice({
     setGroupsInitialized: (state: GroupsState, action: PayloadAction<boolean>) => {
       state.groupsInitialized = action.payload;
     },
+
+    setShouldLoad: (state: GroupsState, action: PayloadAction<boolean>) => {
+      state.shouldLoad = action.payload;
+    },
   },
   extraReducers: (builder) => {
     /*
@@ -179,6 +184,17 @@ const groupsSlice = createSlice({
       groupsSlice.caseReducers.setGroups(state, action);
       groupsSlice.caseReducers.initializeCollapsed(state, {...action, payload: groupIds});
       groupsSlice.caseReducers.setGroupsInitialized(state, {...action, payload: true});
+      groupsSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
+    });
+
+    /*
+    refreshGroups
+    */
+    builder.addCase(GroupsActions.refreshGroupsThunk.fulfilled, (state, action) => {
+      const groupIds = action.payload.map((g) => g.id);
+      groupsSlice.caseReducers.setGroups(state, action);
+      groupsSlice.caseReducers.initializeCollapsed(state, {...action, payload: groupIds});
+      groupsSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
     });
 
     /*
@@ -199,6 +215,16 @@ const groupsSlice = createSlice({
     builder.addCase(GroupsActions.fetchItemsThunk.rejected, (state: GroupsState, action) => {
       const loadingMap: [string, boolean][] = action.meta.arg.map((groupId) => [groupId, false]);
       groupsSlice.caseReducers.setItemsLoading(state, {...action, payload: loadingMap});
+    });
+
+    /*
+    refreshItems
+    */
+    builder.addCase(GroupsActions.refreshItemsThunk.fulfilled, (state: GroupsState, action) => {
+      const itemsMap: [string, Item[]][] = action.payload.map((entry) => [entry[0], entry[1].data]);
+      groupsSlice.caseReducers.setItems(state, {...action, payload: itemsMap});
+      const countMap: [string, number][] = action.payload.map((entry) => [entry[0], entry[1].count]);
+      groupsSlice.caseReducers.setItemsCount(state, {...action, payload: countMap});
     });
 
     /*

@@ -40,6 +40,8 @@ class GroupsSelectors {
     );
 
   static groupsInitialized = createSelector(getGroupsState, (state) => state.groupsInitialized as boolean);
+
+  static shouldLoad = createSelector(getGroupsState, (state) => state.shouldLoad as boolean);
 }
 
 export default GroupsSelectors;
