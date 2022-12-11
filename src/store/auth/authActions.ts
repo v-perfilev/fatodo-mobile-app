@@ -14,10 +14,15 @@ import {SnackActions} from '../snack/snackActions';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {accountToUser, UserAccount, UserSettings} from '../../models/User';
 import {InfoActions} from '../info/infoActions';
+import {RootActions} from '../rootActions';
 
 const PREFIX = 'auth/';
 
 export class AuthActions {
+  static afterLogout = () => (dispatch: AppDispatch) => {
+    dispatch(authSlice.actions.reset());
+  };
+
   static setIsActive = (isActive: boolean) => (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.setIsActive(isActive));
   };
@@ -62,7 +67,7 @@ export class AuthActions {
     const account = thunkAPI.getState().auth.account;
     NotificationsRemote.unsubscribeFromFirebase(account?.id).finally();
     SecurityUtils.clearAuthToken();
-    thunkAPI.dispatch(authSlice.actions.reset());
+    thunkAPI.dispatch(RootActions.afterLogoutState());
   });
 
   static fetchAccountThunk = createAsyncThunk<UserAccount, void, AsyncThunkConfig>(

@@ -12,7 +12,11 @@ import {CalendarEnrichedDate} from '../../models/Calendar';
 const PREFIX = 'calendar/';
 
 export class CalendarActions {
-  static reset = () => (dispatch: AppDispatch) => {
+  static afterLogout = () => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.reset());
+  };
+
+  static afterRefresh = () => (dispatch: AppDispatch) => {
     dispatch(calendarSlice.actions.reset());
     dispatch(calendarSlice.actions.setShouldLoad(true));
   };

@@ -7,16 +7,33 @@ import {EventsActions} from './events/eventsActions';
 import {GroupActions} from './group/groupActions';
 import {GroupsActions} from './groups/groupsActions';
 import {ItemActions} from './item/itemActions';
+import {ContactsActions} from './contacts/contactsActions';
+import {UserActions} from './user/userActions';
+import {AuthActions} from './auth/authActions';
 
 export class RootActions {
-  static resetState = () => (dispatch: AppDispatch) => {
-    dispatch(CalendarActions.reset());
-    dispatch(ChatActions.reset());
-    dispatch(ChatsActions.reset());
-    dispatch(CommentsActions.reset());
-    dispatch(EventsActions.reset());
-    dispatch(GroupActions.reset());
-    dispatch(GroupsActions.reset());
-    dispatch(ItemActions.reset());
+  static afterRefreshState = () => (dispatch: AppDispatch) => {
+    dispatch(CalendarActions.afterRefresh());
+    dispatch(ChatActions.afterRefresh());
+    dispatch(ChatsActions.afterRefresh());
+    dispatch(CommentsActions.afterRefresh());
+    dispatch(EventsActions.afterRefresh());
+    dispatch(GroupActions.afterRefresh());
+    dispatch(GroupsActions.afterRefresh());
+    dispatch(ItemActions.afterRefresh());
+  };
+
+  static afterLogoutState = () => (dispatch: AppDispatch) => {
+    dispatch(AuthActions.afterLogout());
+    dispatch(CalendarActions.afterLogout());
+    dispatch(ChatActions.afterLogout());
+    dispatch(ChatsActions.afterLogout());
+    dispatch(CommentsActions.afterLogout());
+    dispatch(ContactsActions.afterLogout());
+    dispatch(EventsActions.afterLogout());
+    dispatch(GroupActions.afterLogout());
+    dispatch(GroupsActions.afterLogout());
+    dispatch(ItemActions.afterLogout());
+    dispatch(UserActions.afterLogout());
   };
 }

@@ -11,6 +11,10 @@ import {SnackActions} from '../snack/snackActions';
 const PREFIX = 'contacts/';
 
 export class ContactsActions {
+  static afterLogout = () => async (dispatch: AppDispatch) => {
+    dispatch(contactsSlice.actions.reset());
+  };
+
   static addIncomingRequest = (requesterId: string) => async (dispatch: AppDispatch) => {
     const request = ContactUtils.createStubIncomingRequest(requesterId);
     dispatch(contactsSlice.actions.addIncomingRequest(request));

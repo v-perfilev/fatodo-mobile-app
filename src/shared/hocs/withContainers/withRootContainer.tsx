@@ -41,7 +41,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   };
 
   const refresh = (): void => {
-    dispatch(RootActions.resetState());
+    dispatch(RootActions.afterRefreshState());
     setTimeout(() => {
       dispatch(ContactsActions.fetchRelationsThunk());
       dispatch(ContactsActions.fetchOutcomingRequestsThunk());

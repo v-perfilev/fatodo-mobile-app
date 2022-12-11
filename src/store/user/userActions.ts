@@ -5,12 +5,17 @@ import UserService from '../../services/UserService';
 import ContactService from '../../services/ContactService';
 import {InfoActions} from '../info/infoActions';
 import {ContactRelation} from '../../models/Contact';
-import {AsyncThunkConfig} from '../store';
+import {AppDispatch, AsyncThunkConfig} from '../store';
 import {Group} from '../../models/Group';
+import userSlice from './userSlice';
 
 const PREFIX = 'user/';
 
 export class UserActions {
+  static afterLogout = () => async (dispatch: AppDispatch) => {
+    dispatch(userSlice.actions.reset());
+  };
+
   static selectUserThunk = createAsyncThunk<User, User, AsyncThunkConfig>(
     PREFIX + 'selectUser',
     async (user: User, thunkAPI) => {

@@ -13,7 +13,10 @@ import {PageableList} from '../../models/PageableList';
 const PREFIX = 'chats/';
 
 export class ChatsActions {
-  static reset = () => async (dispatch: AppDispatch) => {
+  static afterLogout = () => async (dispatch: AppDispatch) => {
+    dispatch(chatsSlice.actions.reset());
+  };
+  static afterRefresh = () => async (dispatch: AppDispatch) => {
     dispatch(chatsSlice.actions.setShouldLoad(true));
   };
 
