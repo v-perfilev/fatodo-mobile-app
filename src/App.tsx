@@ -2,6 +2,7 @@ import './shared/i18n';
 import './shared/axios';
 import 'text-encoding';
 import 'react-native-gesture-handler';
+import 'react-native-get-random-values';
 
 import React from 'react';
 import {LogBox} from 'react-native';
