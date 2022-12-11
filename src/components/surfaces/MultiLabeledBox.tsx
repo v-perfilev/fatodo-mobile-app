@@ -84,7 +84,7 @@ const MultiLabeledBox = ({items, ...props}: MultiLabeledBoxProps) => {
           <Box width={labelWidth !== 0 ? labelWidth : undefined}>
             <MultiLabeledBoxLabel label={item.label} onLayout={handleLabelLayout(index)} {...props} />
           </Box>
-          <MultiLabeledBoxValue value={item.value} showNotSet={item.showNotSet} {...props} />
+          {labelWidth !== 0 && <MultiLabeledBoxValue value={item.value} showNotSet={item.showNotSet} {...props} />}
         </FHStack>
       ))}
     </FVStack>
