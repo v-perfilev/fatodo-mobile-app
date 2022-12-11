@@ -29,10 +29,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Splash screen
-        SplashScreen.show(this);
-        // Pass null instead of savedInstanceState because of bug in react-native-screen
-        super.onCreate(null);
         // Firebase notifications
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel("firebase_channel", "Fatodo",
@@ -52,6 +48,10 @@ public class MainActivity extends ReactActivity {
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(notificationChannel);
         }
+        // Splash screen
+        SplashScreen.show(this);
+        // Pass null instead of savedInstanceState because of bug in react-native-screen
+        super.onCreate(null);
     }
 
     /**
