@@ -5,6 +5,7 @@ import {GestureResponderEvent} from 'react-native';
 import VisibleOnIcon from '../icons/VisibleOnIcon';
 import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
 import {flowRight} from 'lodash';
+import IconButton from '../controls/IconButton';
 
 type FormikPasswordInputProps = FormikInputProps;
 
@@ -15,13 +16,14 @@ const FormikPasswordInput = (props: FormikPasswordInputProps) => {
 
   const toggleShowPassword = (e: GestureResponderEvent): void => {
     e.preventDefault();
+    e.stopPropagation();
     setShowPassword((prevState) => !prevState);
   };
 
   const InputRightElement = showPassword ? (
-    <VisibleOffIcon color="gray.300" size="md" mx="2" onPress={toggleShowPassword} />
+    <IconButton size="md" mx="2" onPress={toggleShowPassword} icon={<VisibleOffIcon />} />
   ) : (
-    <VisibleOnIcon color="gray.300" size="md" mx="2" onPress={toggleShowPassword} />
+    <IconButton size="md" mx="2" onPress={toggleShowPassword} icon={<VisibleOnIcon />} />
   );
 
   return (
