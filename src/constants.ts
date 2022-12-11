@@ -10,7 +10,6 @@ export const WS_ROOT_TOPIC = '/user/topic/root';
 
 // TIMEOUTS
 export const API_TIMEOUT = 60 * 1000;
-export const SAME_DATE_TIMEOUT = 5 * 1000;
 export const MARK_AS_READ_TIMEOUT = 1000;
 export const FLAT_LIST_REFRESH_TIMEOUT = 5 * 1000;
 

@@ -10,6 +10,7 @@ import {PageableList} from '../../models/PageableList';
 import {InfoActions} from '../info/infoActions';
 import {SnackActions} from '../snack/snackActions';
 import {createAsyncThunk} from '@reduxjs/toolkit';
+import {v4 as uuidV4} from 'uuid';
 
 const PREFIX = 'comments/';
 
@@ -25,10 +26,6 @@ export class CommentsActions {
   static init = (targetId: string) => async (dispatch: AppDispatch) => {
     dispatch(commentsSlice.actions.reset());
     dispatch(commentsSlice.actions.setTargetId(targetId));
-  };
-
-  static addComment = (comment: Comment) => async (dispatch: AppDispatch) => {
-    dispatch(commentsSlice.actions.setComments([comment]));
   };
 
   static updateComment = (comment: Comment) => async (dispatch: AppDispatch) => {
@@ -86,7 +83,9 @@ export class CommentsActions {
     PREFIX + 'sendComment',
     async ({targetId, dto}, thunkAPI) => {
       const userId = thunkAPI.getState().auth.account.id;
-      const comment = buildCommentFromDTO(dto, targetId, userId);
+      const id = uuidV4();
+      const comment = buildCommentFromDTO(dto, id, targetId, userId);
+      thunkAPI.dispatch(commentsSlice.actions.addCreatedId(id));
       thunkAPI.dispatch(commentsSlice.actions.setComments([comment]));
       CommentService.addComment(targetId, dto);
     },
@@ -136,6 +135,25 @@ export class CommentsActions {
       const reaction = buildCommentReaction(comment, account.id, 'DISLIKE');
       thunkAPI.dispatch(commentsSlice.actions.setCommentReaction(reaction));
       CommentService.dislikeCommentReaction(comment.id);
+    },
+  );
+
+  static addCommentThunk = createAsyncThunk<void, Comment, AsyncThunkConfig>(
+    PREFIX + 'addComment',
+    async (comment, thunkAPI) => {
+      const account = thunkAPI.getState().auth.account;
+      if (comment.userId === account.id) {
+        const comments = thunkAPI.getState().comments.comments;
+        const createdIds = thunkAPI.getState().comments.createdIds;
+        const stubComment = comments.find(
+          (c) => c.userId === account.id && createdIds.includes(c.id) && c.text === comment.text,
+        );
+        if (stubComment) {
+          thunkAPI.dispatch(commentsSlice.actions.removeCreatedId(stubComment.id));
+          thunkAPI.dispatch(commentsSlice.actions.removeComment(stubComment));
+        }
+      }
+      thunkAPI.dispatch(commentsSlice.actions.setComments([comment]));
     },
   );
 }

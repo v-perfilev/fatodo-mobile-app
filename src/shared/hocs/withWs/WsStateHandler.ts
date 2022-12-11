@@ -300,7 +300,7 @@ export class WsStateHandler {
    */
 
   private handleCommentCreateEvent = (msg: WsEvent<Comment>): void => {
-    this.dispatch(CommentsActions.addComment(msg.payload));
+    this.dispatch(CommentsActions.addCommentThunk(msg.payload));
     this.dispatch(InfoActions.incrementCommentCount(msg.payload.targetId));
     if (msg.payload.userId !== this.account.id) {
       this.dispatch(InfoActions.incrementUnreadCommentCount(msg.payload.targetId));
