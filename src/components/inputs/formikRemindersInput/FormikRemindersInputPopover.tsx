@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Reminder, ReminderPeriodicity} from '../../../models/Reminder';
-import {Box, Button, Modal, useColorModeValue} from 'native-base';
+import {Box, Modal, useColorModeValue} from 'native-base';
 import FormikRemindersInputToolbar from './FormikRemindersInputToolbar';
 import GhostButton from '../../controls/GhostButton';
 import FormikRemindersInputOnce from './FormikRemindersInputOnce';
@@ -12,6 +12,8 @@ import FormikRemindersInputYearly from './FormikRemindersInputYearly';
 import FVStack from '../../boxes/FVStack';
 import {LINEAR_GRADIENT} from '../../../shared/themes/ThemeFactory';
 import {DARK_BG, LIGHT_BG} from '../../../shared/themes/colors';
+import FHStack from '../../boxes/FHStack';
+import OutlinedButton from '../../controls/OutlinedButton';
 
 type FormikRemindersInputPopoverProps = {
   show: boolean;
@@ -41,7 +43,7 @@ const FormikRemindersInputPopover = ({show, handleClose}: FormikRemindersInputPo
           <FormikRemindersInputToolbar periodicity={periodicity} setPeriodicity={setPeriodicity} />
         </Modal.Header>
         <Box w="100%" h="3px" bg={LINEAR_GRADIENT} />
-        <Modal.Body bg={bg}>
+        <Modal.Body bg={bg} _scrollview={{bounces: false}}>
           <FVStack space="3" position="relative" width="100%" minH="225" alignItems="center">
             {periodicity === 'ONCE' && <FormikRemindersInputOnce setReminder={setReminder} />}
             {periodicity === 'DAILY' && <FormikRemindersInputDaily setReminder={setReminder} />}
@@ -51,14 +53,14 @@ const FormikRemindersInputPopover = ({show, handleClose}: FormikRemindersInputPo
           </FVStack>
         </Modal.Body>
         <Modal.Footer pt="0" borderTopWidth="0" bg={bg}>
-          <Button.Group space="3">
+          <FHStack space="2">
             <GhostButton colorScheme="secondary" onPress={close}>
               {t('item:actions.close')}
             </GhostButton>
-            <GhostButton colorScheme="primary" onPress={add} isDisabled={!reminder}>
+            <OutlinedButton colorScheme="primary" onPress={add} isDisabled={!reminder}>
               {t('item:actions.add')}
-            </GhostButton>
-          </Button.Group>
+            </OutlinedButton>
+          </FHStack>
         </Modal.Footer>
       </Modal.Content>
     </Modal>

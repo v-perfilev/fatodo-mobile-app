@@ -102,6 +102,7 @@ const FormikDateTimePicker = (props: FormikDateTimePickerProps) => {
 
       <PressableButton onPress={openPicker}>
         <ClearableTextInput
+          onPressIn={openPicker}
           type="text"
           onChangeText={handleInputChange}
           onBlur={handleBlur(name)}

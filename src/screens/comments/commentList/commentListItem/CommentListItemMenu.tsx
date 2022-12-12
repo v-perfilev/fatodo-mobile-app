@@ -6,6 +6,7 @@ import DeleteIcon from '../../../../components/icons/DeleteIcon';
 import ReactionsIcon from '../../../../components/icons/ReactionsIcon';
 import {Comment} from '../../../../models/Comment';
 import {useCommentDialogContext} from '../../../../shared/contexts/dialogContexts/CommentDialogContext';
+import {Platform} from 'react-native';
 
 type CommentListItemMenuProps = {
   comment: Comment;
@@ -48,7 +49,9 @@ const CommentListItemMenu = ({comment, isOwnComment}: CommentListItemMenuProps) 
     },
   ];
 
-  return <Menu trigger={MenuTrigger('md')} menuItems={menuItems} />;
+  const triggerSize = Platform.OS === 'ios' ? 'lg' : 'md';
+
+  return <Menu trigger={MenuTrigger(triggerSize)} menuItems={menuItems} />;
 };
 
 export default CommentListItemMenu;

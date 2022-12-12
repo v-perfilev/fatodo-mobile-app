@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {GestureResponderEvent} from 'react-native';
+import {GestureResponderEvent, Platform} from 'react-native';
 import {IInputProps, Input, useColorMode} from 'native-base';
 import CloseIcon from '../icons/CloseIcon';
 import IconButton from '../controls/IconButton';
@@ -53,7 +53,7 @@ const ClearableTextInput = ({value, onChangeText, isErrorColor, ...props}: Clear
         showClearButton && (
           <IconButton
             colorScheme={isErrorColor ? 'error' : undefined}
-            size="sm"
+            size={Platform.OS === 'ios' ? 'md' : 'sm'}
             p="1"
             icon={<CloseIcon />}
             mx="2"

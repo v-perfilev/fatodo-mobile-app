@@ -34,7 +34,9 @@ const ModalDialog = ({open, close, title, content, isErrorColor, actions, size}:
               {title}
             </Modal.Header>
             <Box w="100%" h="3px" bg={isErrorColor ? LINEAR_ERROR_GRADIENT : LINEAR_GRADIENT} />
-            <Modal.Body bg={bg}>{content}</Modal.Body>
+            <Modal.Body bg={bg} _scrollview={{bounces: false}}>
+              {content}
+            </Modal.Body>
             {actions && (
               <Modal.Footer bg={bg} pt="0" borderTopWidth="0">
                 <Button.Group space="2">{actions}</Button.Group>

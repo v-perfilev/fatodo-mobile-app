@@ -110,6 +110,7 @@ const ItemForm = ({group, item, reminders, request, cancel}: ItemFormProps) => {
     <Formik
       initialValues={initialValues(item, reminders, account)}
       validationSchema={validationSchema}
+      enableReinitialize
       onSubmit={handleSubmit}
     >
       {(formikProps) => (

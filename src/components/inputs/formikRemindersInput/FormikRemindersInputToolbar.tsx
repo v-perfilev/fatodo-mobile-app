@@ -10,6 +10,7 @@ import YearIcon from '../../icons/YearIcon';
 import FVStack from '../../boxes/FVStack';
 import FHStack from '../../boxes/FHStack';
 import IconButton from '../../controls/IconButton';
+import {Platform} from 'react-native';
 
 type FormikRemindersInputToolbarProps = {
   periodicity: ReminderPeriodicity;
@@ -42,14 +43,16 @@ const FormikRemindersInputToolbar = ({periodicity, setPeriodicity}: FormikRemind
   const monthVariant = periodicity === 'MONTHLY' ? 'solid' : undefined;
   const yearVariant = periodicity === 'YEARLY' ? 'solid' : undefined;
 
+  const p = Platform.OS === 'ios' ? 2 : 1;
+
   return (
     <FVStack alignItems="center" p="2">
       <FHStack space="1.5">
-        <IconButton variant={onceVariant} icon={<OnceIcon />} onPress={handleOnceClick} />
-        <IconButton variant={dayVariant} icon={<DayIcon />} onPress={handleDayClick} />
-        <IconButton variant={weekVariant} icon={<WeekIcon />} onPress={handleWeekClick} />
-        <IconButton variant={monthVariant} icon={<MonthIcon />} onPress={handleMonthClick} />
-        <IconButton variant={yearVariant} icon={<YearIcon />} onPress={handleYearClick} />
+        <IconButton padding={p} variant={onceVariant} icon={<OnceIcon />} onPress={handleOnceClick} />
+        <IconButton padding={p} variant={dayVariant} icon={<DayIcon />} onPress={handleDayClick} />
+        <IconButton padding={p} variant={weekVariant} icon={<WeekIcon />} onPress={handleWeekClick} />
+        <IconButton padding={p} variant={monthVariant} icon={<MonthIcon />} onPress={handleMonthClick} />
+        <IconButton padding={p} variant={yearVariant} icon={<YearIcon />} onPress={handleYearClick} />
       </FHStack>
       <PresenceTransition
         visible={show}

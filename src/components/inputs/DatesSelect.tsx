@@ -43,7 +43,9 @@ const DatesSelect = ({label, dates, setDates}: DatesSelectProps) => {
   return (
     <FormControl>
       {<FormControl.Label>{label}</FormControl.Label>}
-      <FContainer itemM="1">{monthDates}</FContainer>
+      <FContainer itemM="1" justifyContent="center">
+        {monthDates}
+      </FContainer>
     </FormControl>
   );
 };

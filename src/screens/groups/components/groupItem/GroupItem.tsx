@@ -43,7 +43,7 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
   return (
     <PressableButton onPress={goToItemView}>
       <FVStack p="4" space="2" {...props}>
-        <FHStack width={`${width - 32}px`} space="1" justifyContent="space-between" alignItems="center">
+        <FHStack grow width={`${width - 32}px`} space="1" justifyContent="space-between" alignItems="center">
           <FHStack grow>
             <Text numberOfLines={2} isTruncated>
               {item.title}

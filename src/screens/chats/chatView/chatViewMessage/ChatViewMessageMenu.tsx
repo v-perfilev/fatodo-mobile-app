@@ -7,6 +7,7 @@ import EyeIcon from '../../../../components/icons/EyeIcon';
 import EditIcon from '../../../../components/icons/EditIcon';
 import DeleteIcon from '../../../../components/icons/DeleteIcon';
 import ReactionsIcon from '../../../../components/icons/ReactionsIcon';
+import {Platform} from 'react-native';
 
 type ChatViewMessageMenuProps = {
   message: Message;
@@ -59,7 +60,9 @@ const ChatViewMessageMenu = ({message, isOutcoming}: ChatViewMessageMenuProps) =
     },
   ];
 
-  return <Menu trigger={MenuTrigger('md')} menuItems={menuItems} />;
+  const triggerSize = Platform.OS === 'ios' ? 'lg' : 'md';
+
+  return <Menu trigger={MenuTrigger(triggerSize)} menuItems={menuItems} />;
 };
 
 export default ChatViewMessageMenu;

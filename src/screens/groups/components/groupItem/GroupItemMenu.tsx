@@ -13,6 +13,7 @@ import PackageUpIcon from '../../../../components/icons/PackageUpIcon';
 import PackageDownIcon from '../../../../components/icons/PackageDownIcon';
 import EditIcon from '../../../../components/icons/EditIcon';
 import DeleteIcon from '../../../../components/icons/DeleteIcon';
+import {Platform} from 'react-native';
 
 type GroupItemMenuProps = {
   group: Group;
@@ -69,7 +70,9 @@ const GroupItemMenu = ({group, item, canEdit}: GroupItemMenuProps) => {
     },
   ];
 
-  return <Menu trigger={MenuTrigger('lg', group.color)} menuItems={menuItems} />;
+  const triggerSize = Platform.OS === 'ios' ? 'xl' : 'lg';
+
+  return <Menu trigger={MenuTrigger(triggerSize, group.color)} menuItems={menuItems} />;
 };
 
 export default GroupItemMenu;

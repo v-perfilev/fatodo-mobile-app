@@ -13,6 +13,7 @@ import {useGroupDialogContext} from '../../../../shared/contexts/dialogContexts/
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import {IIconButtonProps} from 'native-base';
+import {Platform} from 'react-native';
 
 type GroupListCardMenuButtonProps = IIconButtonProps & {
   group: Group;
@@ -61,7 +62,9 @@ const GroupListCardMenuButton = ({group}: GroupListCardMenuButtonProps) => {
     },
   ];
 
-  return <Menu trigger={MenuTrigger('lg', group.color)} menuItems={menuItems} />;
+  const triggerSize = Platform.OS === 'ios' ? 'xl' : 'lg';
+
+  return <Menu trigger={MenuTrigger(triggerSize, group.color)} menuItems={menuItems} />;
 };
 
 export default GroupListCardMenuButton;

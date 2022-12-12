@@ -62,7 +62,13 @@ const DateTimeSelect = ({label, setResult, mode, minimumDate}: DateTimeSelectPro
       <FormControl>
         {<FormControl.Label>{label}</FormControl.Label>}
         <PressableButton onPress={openPicker}>
-          <ClearableTextInput type="text" value={formattedValue} onChangeText={handleChangeText} editable={false} />
+          <ClearableTextInput
+            type="text"
+            value={formattedValue}
+            onPressIn={openPicker}
+            onChangeText={handleChangeText}
+            editable={false}
+          />
         </PressableButton>
       </FormControl>
 
