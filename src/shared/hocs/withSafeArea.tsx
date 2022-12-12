@@ -1,30 +1,18 @@
-import React, {ComponentType, memo, useEffect, useState} from 'react';
+import React, {ComponentType, memo} from 'react';
 import {flowRight} from 'lodash';
 import FBox from '../../components/boxes/FBox';
-import {Keyboard, Platform} from 'react-native';
+import {Platform} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const withSafeArea = (Component: ComponentType) => (props: any) => {
-  const [keyboardOpen, setKeyboardOpen] = useState<boolean>();
-  const safeAreaBottom = Platform.OS === 'ios' ? (keyboardOpen ? 0 : 5) : true;
-
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardOpen(true);
-    });
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardOpen(false);
-    });
-
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
+  const safeAreaBottom = Platform.OS === 'ios' ? 5 : true;
 
   return (
-    <FBox safeAreaTop safeAreaLeft safeAreaRight safeAreaBottom={safeAreaBottom}>
-      <Component {...props} />
-    </FBox>
+    <SafeAreaProvider>
+      <FBox safeAreaTop safeAreaLeft safeAreaRight safeAreaBottom={safeAreaBottom}>
+        <Component {...props} />
+      </FBox>
+    </SafeAreaProvider>
   );
 };
 

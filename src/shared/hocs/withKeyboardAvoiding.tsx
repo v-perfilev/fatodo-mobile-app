@@ -1,20 +1,27 @@
-import React, {ComponentType, memo} from 'react';
+import React, {ComponentType} from 'react';
 import {Platform, StyleProp, ViewStyle} from 'react-native';
-import {KeyboardAvoidingView} from 'native-base';
-import {flowRight} from 'lodash';
+import {KeyboardAvoidingView, useColorMode} from 'native-base';
+import {DARK_BG, LIGHT_BG} from '../themes/colors';
 
-const withKeyboardAvoiding = (Component: ComponentType) => (props: any) => {
-  const behavior = Platform.OS === 'ios' ? 'padding' : undefined;
+const withKeyboardAvoiding =
+  (offset = 0) =>
+  (Component: ComponentType) =>
+  (props: any) => {
+    const {colorMode} = useColorMode();
 
-  return (
-    <KeyboardAvoidingView behavior={behavior} style={styles}>
-      <Component {...props} />
-    </KeyboardAvoidingView>
-  );
-};
+    const backgroundColor = colorMode === 'light' ? LIGHT_BG : DARK_BG;
+    const behavior = Platform.OS === 'ios' ? 'padding' : undefined;
 
-const styles: StyleProp<ViewStyle> = {
+    return (
+      <KeyboardAvoidingView behavior={behavior} keyboardVerticalOffset={offset} style={styles(backgroundColor)}>
+        <Component {...props} />
+      </KeyboardAvoidingView>
+    );
+  };
+
+const styles = (backgroundColor: string): StyleProp<ViewStyle> => ({
   flex: 1,
-};
+  backgroundColor,
+});
 
-export default flowRight([memo, withKeyboardAvoiding]);
+export default withKeyboardAvoiding;

@@ -22,11 +22,12 @@ import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 import Header from '../../../components/layouts/Header';
 import CentredLoader from '../../../components/surfaces/CentredLoader';
+import withKeyboardAvoiding from '../../../shared/hocs/withKeyboardAvoiding';
 
 type CommentListProps = WithCommentsProps;
 
-const paddingTop = HEADER_HEIGHT;
-const paddingBottom = COMMENTS_INPUT_HEIGHT;
+const paddingTop = COMMENTS_INPUT_HEIGHT;
+const paddingBottom = HEADER_HEIGHT;
 const containerStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom};
 
@@ -108,4 +109,6 @@ const CommentList = ({containerLoading}: CommentListProps) => {
   );
 };
 
-export default flowRight([memo, withCommentsContainer, withThemeProvider, memo])(CommentList);
+export default flowRight([memo, withCommentsContainer, withThemeProvider, withKeyboardAvoiding(COMMENTS_INPUT_HEIGHT)])(
+  CommentList,
+);

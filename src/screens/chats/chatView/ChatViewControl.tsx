@@ -9,7 +9,7 @@ import {useTranslation} from 'react-i18next';
 import {ChatActions} from '../../../store/chat/chatActions';
 import ChatSelectors from '../../../store/chat/chatSelectors';
 import {CHATS_INPUT_HEIGHT} from '../../../constants';
-import {useColorModeValue} from 'native-base';
+import {Box, useColorModeValue} from 'native-base';
 import {DARK_BG, LIGHT_BG} from '../../../shared/themes/colors';
 import IconButton from '../../../components/controls/IconButton';
 
@@ -39,38 +39,41 @@ const ChatViewControl = () => {
   const borderBg = useColorModeValue('gray.200', 'gray.700');
 
   return (
-    <FHStack
-      position="absolute"
-      zIndex="200"
-      w="100%"
-      h={CHATS_INPUT_HEIGHT}
-      bottom="0"
-      p="2"
-      alignItems="center"
-      borderTopWidth="1"
-      borderTopColor={borderBg}
-      bgColor={bg}
-    >
-      <FBox px="2">
-        <ClearableTextInput
-          h="36px"
-          p="0"
-          variant="unstyled"
-          placeholder={t('chat:view.inputPlaceholder')}
-          placeholderTextColor="gray.400"
-          value={updater}
-          onChangeText={handleTextChange}
-        />
-      </FBox>
-      <IconButton
-        size="lg"
+    <>
+      <FHStack
+        position="absolute"
+        zIndex="200"
+        w="100%"
+        h={CHATS_INPUT_HEIGHT}
+        bottom="0"
         p="2"
-        icon={<SendMessageIcon />}
-        onPress={handleSend}
-        isDisabled={!isValid}
-        disabled={!isValid}
-      />
-    </FHStack>
+        alignItems="center"
+        borderTopWidth="1"
+        borderTopColor={borderBg}
+        bgColor={bg}
+      >
+        <FBox px="2">
+          <ClearableTextInput
+            h="36px"
+            p="0"
+            variant="unstyled"
+            placeholder={t('chat:view.inputPlaceholder')}
+            placeholderTextColor="gray.400"
+            value={updater}
+            onChangeText={handleTextChange}
+          />
+        </FBox>
+        <IconButton
+          size="lg"
+          p="2"
+          icon={<SendMessageIcon />}
+          onPress={handleSend}
+          isDisabled={!isValid}
+          disabled={!isValid}
+        />
+      </FHStack>
+      <Box position="absolute" zIndex="200" w="100%" bottom="0" height="1000" mb="-1000" bgColor={bg} />
+    </>
   );
 };
 
