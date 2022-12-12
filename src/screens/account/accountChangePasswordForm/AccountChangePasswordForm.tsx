@@ -15,6 +15,8 @@ import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import {ChangePasswordDTO} from '../../../models/dto/ChangePasswordDTO';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBar';
+import {flowRight} from 'lodash';
+import withKeyboardHeightAvoiding from '../../../shared/hocs/withKeyboardHeightAvoiding';
 
 export interface ChangePasswordFormValues {
   oldPassword: string;
@@ -91,4 +93,4 @@ const AccountChangePasswordForm = () => {
   );
 };
 
-export default memo(AccountChangePasswordForm);
+export default flowRight([memo, withKeyboardHeightAvoiding])(AccountChangePasswordForm);

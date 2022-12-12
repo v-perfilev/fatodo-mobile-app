@@ -23,7 +23,7 @@ import RefreshableFlatList, {
 import MessageListSkeleton from '../skeletons/MessageListSkeleton';
 import {flowRight} from 'lodash';
 import CentredLoader from '../../../components/surfaces/CentredLoader';
-import withKeyboardAvoiding from '../../../shared/hocs/withKeyboardAvoiding';
+import withKeyboardPaddingAvoiding from '../../../shared/hocs/withKeyboardPaddingAvoiding';
 
 type ChatViewProps = WithChatProps;
 
@@ -153,4 +153,4 @@ const ChatView = ({chat, containerLoading}: ChatViewProps) => {
   );
 };
 
-export default flowRight([memo, withChatContainer, withKeyboardAvoiding(CHATS_INPUT_HEIGHT)])(ChatView);
+export default flowRight([memo, withChatContainer, withKeyboardPaddingAvoiding(CHATS_INPUT_HEIGHT)])(ChatView);

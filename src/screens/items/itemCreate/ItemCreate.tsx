@@ -13,6 +13,7 @@ import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 import {Reminder} from '../../../models/Reminder';
+import withKeyboardHeightAvoiding from '../../../shared/hocs/withKeyboardHeightAvoiding';
 
 type ItemCreateProps = WithGroupProps;
 
@@ -42,4 +43,4 @@ const ItemCreate = ({group, containerLoading}: ItemCreateProps) => {
   );
 };
 
-export default flowRight([memo, withGroupContainer, withThemeProvider, memo])(ItemCreate);
+export default flowRight([memo, withGroupContainer, withThemeProvider, withKeyboardHeightAvoiding])(ItemCreate);

@@ -7,6 +7,8 @@ import {Group} from '../../../models/Group';
 import Header from '../../../components/layouts/Header';
 import {GroupActions} from '../../../store/group/groupActions';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
+import {flowRight} from 'lodash';
+import withKeyboardHeightAvoiding from '../../../shared/hocs/withKeyboardHeightAvoiding';
 
 const GroupCreate = () => {
   const dispatch = useAppDispatch();
@@ -31,4 +33,4 @@ const GroupCreate = () => {
   );
 };
 
-export default memo(GroupCreate);
+export default flowRight([memo, withKeyboardHeightAvoiding])(GroupCreate);

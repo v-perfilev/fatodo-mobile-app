@@ -19,6 +19,8 @@ import {AuthActions} from '../../../store/auth/authActions';
 import Separator from '../../../components/layouts/Separator';
 import SolidButton from '../../../components/controls/SolidButton';
 import {useAccountDialogContext} from '../../../shared/contexts/dialogContexts/AccountDialogContext';
+import {flowRight} from 'lodash';
+import withKeyboardHeightAvoiding from '../../../shared/hocs/withKeyboardHeightAvoiding';
 
 export interface AccountMainFormValues {
   username: string;
@@ -151,4 +153,4 @@ const AccountForm = () => {
   );
 };
 
-export default memo(AccountForm);
+export default flowRight([memo, withKeyboardHeightAvoiding])(AccountForm);

@@ -17,6 +17,8 @@ import FormikTimeFormatInput from '../../../components/inputs/FormikTimeFormatIn
 import FormikDateFormatInput from '../../../components/inputs/FormikDateFormatInput';
 import FormikSwitchInput from '../../../components/inputs/FormikSwitchInput';
 import Subtitle from '../../../components/layouts/Subtitle';
+import {flowRight} from 'lodash';
+import withKeyboardHeightAvoiding from '../../../shared/hocs/withKeyboardHeightAvoiding';
 
 export interface AccountSettingsFormValues {
   language: Language;
@@ -112,4 +114,4 @@ const AccountSettingsForm = () => {
   );
 };
 
-export default memo(AccountSettingsForm);
+export default flowRight([memo, withKeyboardHeightAvoiding])(AccountSettingsForm);

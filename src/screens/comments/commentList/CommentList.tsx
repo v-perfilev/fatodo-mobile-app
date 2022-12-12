@@ -22,7 +22,7 @@ import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 import Header from '../../../components/layouts/Header';
 import CentredLoader from '../../../components/surfaces/CentredLoader';
-import withKeyboardAvoiding from '../../../shared/hocs/withKeyboardAvoiding';
+import withKeyboardPaddingAvoiding from '../../../shared/hocs/withKeyboardPaddingAvoiding';
 
 type CommentListProps = WithCommentsProps;
 
@@ -109,6 +109,9 @@ const CommentList = ({containerLoading}: CommentListProps) => {
   );
 };
 
-export default flowRight([memo, withCommentsContainer, withThemeProvider, withKeyboardAvoiding(COMMENTS_INPUT_HEIGHT)])(
-  CommentList,
-);
+export default flowRight([
+  memo,
+  withCommentsContainer,
+  withThemeProvider,
+  withKeyboardPaddingAvoiding(COMMENTS_INPUT_HEIGHT),
+])(CommentList);

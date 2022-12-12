@@ -10,6 +10,7 @@ import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withConta
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
+import withKeyboardHeightAvoiding from '../../../shared/hocs/withKeyboardHeightAvoiding';
 
 type GroupEditProps = WithGroupProps;
 
@@ -43,4 +44,4 @@ const GroupEdit = ({group, containerLoading}: GroupEditProps) => {
   );
 };
 
-export default flowRight([memo, withGroupContainer, withThemeProvider, memo])(GroupEdit);
+export default flowRight([memo, withGroupContainer, withThemeProvider, withKeyboardHeightAvoiding])(GroupEdit);

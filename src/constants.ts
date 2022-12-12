@@ -27,6 +27,9 @@ export const REFRESH_HEIGHT = 150;
 export const MAX_REFRESH_HEIGHT = 200;
 export const TAB_HEIGHT = Platform.OS === 'android' ? 50 : 60;
 
+// KEYBOARD AVOIDING
+export const KEYBOARD_OFFSET = Platform.OS === 'android' ? 0 : 45;
+
 // LIST
 export const DEFAULT_FLAT_LIST_ITEM_HEIGHT = 100;
 

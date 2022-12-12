@@ -4,7 +4,7 @@ import {KeyboardAvoidingView, useColorMode} from 'native-base';
 import {DARK_BG, LIGHT_BG} from '../themes/colors';
 import FBox from '../../components/boxes/FBox';
 
-const withKeyboardAvoiding =
+const withKeyboardPaddingAvoiding =
   (offset = 0) =>
   (Component: ComponentType) =>
   (props: any) => {
@@ -27,4 +27,4 @@ const styles = (backgroundColor: string): StyleProp<ViewStyle> => ({
   backgroundColor,
 });
 
-export default withKeyboardAvoiding;
+export default withKeyboardPaddingAvoiding;
