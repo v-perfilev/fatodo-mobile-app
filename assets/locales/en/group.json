@@ -3,12 +3,6 @@
     "create": "Create group",
     "edit": "Edit group"
   },
-  "list": {
-    "groupsNotFound": "No groups yet"
-  },
-  "view": {
-    "itemsNotFound": "No items yet"
-  },
   "fields": {
     "title": {
       "label": "Title",

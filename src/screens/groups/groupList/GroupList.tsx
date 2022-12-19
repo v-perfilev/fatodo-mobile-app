@@ -91,10 +91,10 @@ const GroupList = () => {
 
   const buttons = useMemo<CornerButton[]>(
     () => [
-      {icon: <PlusIcon />, action: goToGroupCreate},
+      {icon: <PlusIcon />, action: goToGroupCreate, hidden: groups.length === 0},
       {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
     ],
-    [],
+    [groups.length],
   );
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableDraggableListChildrenProps) => (

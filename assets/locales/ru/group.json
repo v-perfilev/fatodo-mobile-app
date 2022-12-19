@@ -3,12 +3,6 @@
     "create": "Добавить группу",
     "edit": "Редактировать группу"
   },
-  "list": {
-    "groupsNotFound": "Пока групп нет"
-  },
-  "view": {
-    "itemsNotFound": "Пока записей нет"
-  },
   "fields": {
     "title": {
       "label": "Название",
@@ -28,9 +22,9 @@
     "archived": "Архив",
     "groups": "Группы",
     "view": "Открыть",
-    "createGroup": "Добавить группу",
-    "createItem": "Добавить запись",
-    "create": "Добавить",
+    "createGroup": "Создать группу",
+    "createItem": "Создать запись",
+    "create": "Создать",
     "edit": "Редактировать",
     "leave": "Покинуть",
     "delete": "Удалить",

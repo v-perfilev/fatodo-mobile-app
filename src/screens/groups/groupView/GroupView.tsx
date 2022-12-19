@@ -128,11 +128,11 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
 
   const buttons = useMemo<CornerButton[]>(
     () => [
-      {icon: <PlusIcon />, action: goToItemCreate, hidden: !canEdit},
+      {icon: <PlusIcon />, action: goToItemCreate, hidden: !canEdit || items.length === 0},
       {icon: <CommentsIcon />, action: goToComments},
       {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
     ],
-    [goToItemCreate, goToComments, canEdit],
+    [goToItemCreate, goToComments, canEdit, items],
   );
 
   const cornerManagement = useCallback(
@@ -149,7 +149,7 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
       header={<GroupViewHeader setShowArchived={setShowArchived} />}
       loading={containerLoading || (items.length === 0 && !allItemsLoaded)}
       loadingPlaceholder={<GroupViewListSkeleton />}
-      ListEmptyComponent={<GroupViewStub />}
+      ListEmptyComponent={<GroupViewStub group={group} canEdit={canEdit} />}
       ListFooterComponent={items.length > 0 && !allItemsLoaded ? <CentredLoader my="5" /> : undefined}
       ItemSeparatorComponent={Separator}
       data={items}
