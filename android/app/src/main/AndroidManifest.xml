@@ -18,7 +18,7 @@
         <!-- React Native Push Notifications Meta -->
         <meta-data android:name="com.dieam.reactnativepushnotification.notification_foreground" android:value="false"/>
         <meta-data android:name="com.dieam.reactnativepushnotification.notification_color"
-                   android:resource="@color/launch_screen_bg"/>
+                   android:resource="@color/main_color"/>
 
         <!-- Firebase Notifications Meta -->
         <meta-data
@@ -26,7 +26,7 @@
                 android:resource="@mipmap/splash_icon"/>
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_color"
-                android:resource="@color/launch_screen_bg"
+                android:resource="@color/main_color"
                 tools:replace="android:resource"
         />
         <meta-data
