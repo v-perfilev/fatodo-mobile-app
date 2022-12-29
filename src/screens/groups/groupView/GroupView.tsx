@@ -70,7 +70,7 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
   const initialLoad = useCallback(async (): Promise<void> => {
     showArchived
       ? await dispatch(GroupActions.fetchInitialArchivedItemsThunk({groupId}))
-      : await dispatch(GroupActions.fetchInitialArchivedItemsThunk({groupId}));
+      : await dispatch(GroupActions.fetchInitialActiveItemsThunk({groupId}));
   }, [items, showArchived]);
 
   const load = useCallback(async (): Promise<void> => {
