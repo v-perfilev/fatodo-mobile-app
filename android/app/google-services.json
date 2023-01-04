@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "914624356550-r1e71g4son7lv55g2ja0cav34k6diaq5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.fatodo",
+            "certificate_hash": "cad4c074c8146bf83904a7e459a01db8a46cf70d"
+          }
+        },
+        {
           "client_id": "914624356550-26u19gr0if8tl6no53cms82g06lugaii.apps.googleusercontent.com",
           "client_type": 3
         }
