@@ -7,6 +7,7 @@ import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 import InfoSelectors from '../../store/info/infoSelectors';
 import {ProtectedNavigationProps} from '../../navigators/ProtectedNavigator';
+import {useTranslation} from 'react-i18next';
 
 type ChatLinkProps = {
   chat?: ChatInfo;
@@ -21,7 +22,9 @@ export const ChatLink = ({chat, color = 'primary.500', text, noLink}: ChatLinkPr
   const memberIds = chat?.members.map((m) => m.userId) || [];
   const account = useAppSelector(AuthSelectors.account);
   const users = useAppSelector((state) => usersSelector(state, memberIds));
-  const title = text ? text : chat ? ChatUtils.getTitle(chat, users, account) : undefined;
+  const {t} = useTranslation();
+
+  const title = text ? text : chat ? ChatUtils.getTitle(chat, users, account, t) : undefined;
 
   const goToChat = (): void => navigation.navigate('ChatView', {chatId: chat?.id});
 

@@ -17,7 +17,9 @@ export const UserLink = ({user, color = 'primary.500', noLink}: UserLinkProps) =
   const {t} = useTranslation();
   const navigation = useNavigation<ProtectedNavigationProps>();
   const account = useAppSelector(AuthSelectors.account);
+
   const isAnotherUser = account.id !== user?.id;
+  const isNotDeleted = user && !user.deleted;
 
   const goToUser = (): void => navigation.navigate('UserView', {user});
 
@@ -28,8 +30,8 @@ export const UserLink = ({user, color = 'primary.500', noLink}: UserLinkProps) =
 
   return user ? (
     <Text
-      color={isAnotherUser && !noLink ? color : undefined}
-      onPress={isAnotherUser && !noLink ? goToUser : undefined}
+      color={isAnotherUser && isNotDeleted && !noLink ? color : undefined}
+      onPress={isAnotherUser && isNotDeleted && !noLink ? goToUser : undefined}
     >
       {text}
     </Text>

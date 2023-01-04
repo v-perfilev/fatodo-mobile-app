@@ -19,7 +19,7 @@ const ChatListMessageIncoming = ({message}: ChatListMessageIncomingProps) => {
   return (
     <FHStack space="1">
       <Text color="gray.400" fontWeight="bold" fontSize="xs">
-        {user?.username}:
+        {user?.deleted ? t('common:links.userDeleted') : user?.username}:
       </Text>
       {!message.isDeleted && (
         <FBox>

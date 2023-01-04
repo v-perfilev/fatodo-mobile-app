@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import {ProtectedNavigationProps} from '../../navigators/ProtectedNavigator';
 import PressableButton from '../controls/PressableButton';
 import {ColorScheme} from '../../shared/themes/ThemeFactory';
+import {useTranslation} from 'react-i18next';
 
 type UserViewProps = {
   user: User;
@@ -28,6 +29,8 @@ export const UserView = (props: UserViewProps) => {
   const {withUserPic = true, withUsername, withPaperBox, withInvertedBorder, onPressCallBack} = props;
   const navigation = useNavigation<ProtectedNavigationProps>();
   const account = useAppSelector(AuthSelectors.account);
+  const {t} = useTranslation();
+
   const isAnotherUser = account.id !== user?.id;
   const isNotDeleted = !user?.deleted;
 
@@ -47,7 +50,7 @@ export const UserView = (props: UserViewProps) => {
           invertedBorder={withInvertedBorder}
         />
       )}
-      {withUsername && <Text>{user?.username}</Text>}
+      {withUsername && <Text>{user?.deleted ? t('common:links.userDeleted') : user?.username}</Text>}
     </FHStack>
   );
 

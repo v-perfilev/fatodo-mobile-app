@@ -24,7 +24,7 @@ const ChatViewHeader = () => {
   const unreadMessageIdsSelector = useCallback(ChatsSelectors.makeUnreadMessageIdsSelector(), []);
   const usersSelector = useCallback(InfoSelectors.makeUsersSelector(), []);
   const navigation = useNavigation();
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
   const {
     showChatAddMembersDialog,
     showChatMembersDialog,
@@ -44,8 +44,8 @@ const ChatViewHeader = () => {
   }, [chat, unreadMessageIds]);
 
   const title = useMemo<string>(() => {
-    return chat ? ChatUtils.getTitle(chat, users, account) : '';
-  }, [chat, users, account]);
+    return ChatUtils.getTitle(chat, users, account, t) || t('common:links.userDeleted');
+  }, [chat, users, account, i18n.language]);
 
   const showMembers = (): void => {
     showChatMembersDialog(chat);

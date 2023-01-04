@@ -46,7 +46,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
         <FHStack space="3" alignItems="center">
           <FHStack grow space="3" alignItems="center">
             <Text color="primary.500" fontWeight="bold">
-              {user?.username}
+              {user?.deleted ? t('common:links.userDeleted') : user?.username}
             </Text>
           </FHStack>
           <Text color="gray.400" fontWeight="bold" fontSize="xs">

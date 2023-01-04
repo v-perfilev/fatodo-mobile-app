@@ -15,7 +15,9 @@ export class MessageUtils {
   ): string => {
     const username = messageUser?.username;
     const context = messageUser?.gender;
-    const usernames = paramUsers.map((u) => u.username).join(', ');
+    const usernames = paramUsers
+      .map((user) => (user.deleted ? t('common:links.userDeleted') : user.username))
+      .join(', ');
     const title = MessageUtils.extractTextFromParams(params);
     let text = '';
     if (

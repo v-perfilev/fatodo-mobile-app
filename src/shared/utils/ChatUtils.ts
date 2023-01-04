@@ -4,6 +4,7 @@ import {ViewToken} from 'react-native';
 import {MessageUtils} from './MessageUtils';
 import {FilterUtils} from './FilterUtils';
 import {Message} from '../../models/Message';
+import {TFunction} from 'i18next';
 
 export class ChatUtils {
   public static getDirectChatUser = (chat: Chat, users: User[], account: User): User => {
@@ -11,7 +12,7 @@ export class ChatUtils {
     return chat.isDirect && memberId ? users.find((u) => u.id === memberId) : undefined;
   };
 
-  public static getTitle = (chat: Chat | ChatInfo, users: User[], account: User): string => {
+  public static getTitle = (chat: Chat | ChatInfo, users: User[], account: User, t: TFunction): string => {
     return chat.title
       ? chat.title
       : chat.members
@@ -19,7 +20,7 @@ export class ChatUtils {
           .filter((id) => id !== account.id)
           .map((id) => users.find((u) => u.id === id))
           .filter(FilterUtils.notUndefinedFilter)
-          .map((user) => user.username)
+          .map((user) => (user.deleted ? t('common:links.userDeleted') : user.username))
           .join(', ');
   };
 
