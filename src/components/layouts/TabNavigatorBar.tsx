@@ -44,7 +44,7 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
 
   const height = TAB_HEIGHT;
   const androidSize = isFocused ? 8 : 7;
-  const iosSize = isFocused ? 10 : 9;
+  const iosSize = isFocused ? 9 : 8;
   const size = Platform.OS === 'android' ? androidSize : iosSize;
 
   return (
