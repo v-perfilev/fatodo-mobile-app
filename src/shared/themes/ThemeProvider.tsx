@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ThemeProviderProps = PropsWithChildren<{
   theme?: ITheme;
+  colorNotSet?: boolean;
 }>;
 
 type RootThemeProviderProps = PropsWithChildren<{}>;
@@ -51,14 +52,16 @@ const ThemeProviderChild = ({parentColorMode, children}: ThemeProviderChildProps
   return <>{children}</>;
 };
 
-const ThemeProvider = ({theme = defaultTheme, children}: ThemeProviderProps) => {
+const ThemeProvider = ({theme = defaultTheme, colorNotSet, children}: ThemeProviderProps) => {
   const {colorMode} = useColorMode();
   const preparedTheme: ITheme = {...theme, config: {initialColorMode: colorMode}};
 
-  return (
+  return !colorNotSet ? (
     <NativeBaseProvider theme={preparedTheme} config={config}>
       <ThemeProviderChild parentColorMode={colorMode}>{children}</ThemeProviderChild>
     </NativeBaseProvider>
+  ) : (
+    <>{children}</>
   );
 };
 

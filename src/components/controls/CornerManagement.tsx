@@ -117,6 +117,10 @@ const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementPro
     setAddButtons(buttons.filter((b) => b.additionalColumn));
   }, [buttons]);
 
+  useEffect(() => {
+    animateAllButtons();
+  }, [mainButtons, addButtons]);
+
   const viewStyle: StyleProp<ViewStyle> = {position: 'absolute', bottom: bottomPadding || 0, right: 0};
 
   return (

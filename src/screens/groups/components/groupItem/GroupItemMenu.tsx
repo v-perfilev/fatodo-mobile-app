@@ -72,7 +72,7 @@ const GroupItemMenu = ({group, item, canEdit}: GroupItemMenuProps) => {
 
   const triggerSize = Platform.OS === 'ios' ? 'xl' : 'lg';
 
-  return <Menu trigger={MenuTrigger(triggerSize, group.color)} menuItems={menuItems} />;
+  return <Menu trigger={MenuTrigger(triggerSize, group.color)} menuItems={menuItems} color={group.color} />;
 };
 
 export default GroupItemMenu;

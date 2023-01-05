@@ -172,7 +172,7 @@ const groupsSlice = createSlice({
     */
     builder.addCase(GroupsActions.fetchGroupThunk.fulfilled, (state, action) => {
       const groupId = action.payload.id;
-      groupsSlice.caseReducers.setGroups(state, {...action, payload: [action.payload]});
+      groupsSlice.caseReducers.addGroup(state, action);
       groupsSlice.caseReducers.initializeCollapsed(state, {...action, payload: [groupId]});
     });
 

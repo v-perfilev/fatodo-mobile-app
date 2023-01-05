@@ -94,13 +94,14 @@ const GroupList = () => {
       {icon: <PlusIcon />, action: goToGroupCreate, hidden: groups.length === 0},
       {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
     ],
-    [groups.length],
+    [groups],
   );
+
   const cornerManagement = useCallback(
     ({scrollY}: CollapsableRefreshableDraggableListChildrenProps) => (
       <CornerManagement buttons={buttons} scrollY={scrollY} />
     ),
-    [],
+    [buttons],
   );
 
   return (

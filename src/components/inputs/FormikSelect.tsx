@@ -3,7 +3,7 @@ import {FormControl, ScrollView, Text, useColorModeValue} from 'native-base';
 import Menu, {MenuItem} from '../controls/Menu';
 import PressableButton from '../controls/PressableButton';
 import PaperBox from '../surfaces/PaperBox';
-import {Dimensions, ListRenderItemInfo} from 'react-native';
+import {Dimensions, GestureResponderEvent, Keyboard, ListRenderItemInfo} from 'react-native';
 import FlatList from '../scrollable/FlatList';
 import withFormikWrapper, {FormikInputProps} from '../../shared/hocs/withFormikWrapper';
 import {flowRight} from 'lodash';
@@ -28,8 +28,13 @@ const FormikSelectTrigger =
   (option: string | ReactElement, borderColor?: string, isDisabled?: boolean) => (triggerProps: any) => {
     const filterPropsIfDisabled = (props: any): any => (!isDisabled ? props : undefined);
 
+    const onPress = (e: GestureResponderEvent): void => {
+      Keyboard.dismiss();
+      triggerProps.onPress(e);
+    };
+
     return (
-      <PressableButton {...filterPropsIfDisabled(triggerProps)}>
+      <PressableButton {...filterPropsIfDisabled({...triggerProps, onPressIn: onPress})}>
         <PaperBox
           minHeight={`${INPUT_MIN_HEIGHT}px`}
           justifyContent="center"

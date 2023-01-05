@@ -5,11 +5,13 @@ import CentredSpinner from '../surfaces/CentredSpinner';
 import FHStack from '../boxes/FHStack';
 import IconButton from './IconButton';
 import DotsVerticalIcon from '../icons/DotsVerticalIcon';
-import {ColorScheme} from '../../shared/themes/ThemeFactory';
+import {ColorScheme, ThemeFactory} from '../../shared/themes/ThemeFactory';
+import ThemeProvider from '../../shared/themes/ThemeProvider';
 
 export type MenuProps = PropsWithChildren<{
   trigger: (_props: any, state: {open: boolean}) => JSX.Element;
   menuItems?: MenuItemProps[];
+  color?: ColorScheme;
 }>;
 
 export type MenuItemProps = PropsWithChildren<{
@@ -41,15 +43,17 @@ export const MenuItem = ({action, icon, text, children, loading, disabled, hidde
   );
 };
 
-const Menu = ({trigger, menuItems, children}: MenuProps) => {
+const Menu = ({trigger, menuItems, color, children}: MenuProps) => {
   const showMenu = children || menuItems?.filter((menuElement) => !menuElement.hidden).length > 0;
 
   return showMenu ? (
     <NbMenu defaultIsOpen={false} trigger={trigger} borderRadius="xl" p="0" overflow="hidden">
-      {children}
-      {menuItems?.map((itemProps, index) => (
-        <MenuItem {...itemProps} key={index} />
-      ))}
+      <ThemeProvider theme={ThemeFactory.getTheme(color)} colorNotSet={!color}>
+        {children}
+        {menuItems?.map((itemProps, index) => (
+          <MenuItem {...itemProps} key={index} />
+        ))}
+      </ThemeProvider>
     </NbMenu>
   ) : null;
 };

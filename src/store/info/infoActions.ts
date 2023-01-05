@@ -114,9 +114,8 @@ export class InfoActions {
   static handleCommentThreadIdsThunk = createAsyncThunk<CommentThreadInfo[], string[], AsyncThunkConfig>(
     PREFIX + 'fetchCommentThreads',
     async (targetIds, thunkAPI) => {
-      const idsToLoad = extractIdsToLoad(targetIds, thunkAPI.getState().info.commentThreads);
-      return idsToLoad.length > 0
-        ? (await CommentService.getThreadInfoByTargetIds(idsToLoad)).data
+      return targetIds.length > 0
+        ? (await CommentService.getThreadInfoByTargetIds(targetIds)).data
         : thunkAPI.rejectWithValue(undefined);
     },
   );

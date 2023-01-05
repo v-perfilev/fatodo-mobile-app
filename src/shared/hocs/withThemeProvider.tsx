@@ -11,9 +11,10 @@ type WithThemeProviderProps = any & {
 
 const withThemeProvider = (Component: ComponentType) => (props: WithThemeProviderProps) => {
   const theme = ThemeFactory.getTheme(props.color || props.group?.color);
+  const colorSet = props.color || props.group?.color;
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} colorNotSet={!colorSet}>
       <Component {...props} />
     </ThemeProvider>
   );

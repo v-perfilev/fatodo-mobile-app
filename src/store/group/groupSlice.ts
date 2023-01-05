@@ -25,9 +25,7 @@ const groupSlice = createSlice({
     },
 
     setGroup: (state: GroupState, action: PayloadAction<Group>) => {
-      if (!state.group || state.group.id !== action.payload.id) {
-        state.group = action.payload;
-      }
+      state.group = action.payload;
     },
 
     removeGroup: (state: GroupState, action: PayloadAction<string>) => {

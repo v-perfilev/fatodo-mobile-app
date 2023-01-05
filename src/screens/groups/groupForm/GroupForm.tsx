@@ -1,5 +1,5 @@
 import React from 'react';
-import {Formik, FormikHelpers} from 'formik';
+import {Formik, FormikHelpers, FormikProps} from 'formik';
 import {Group} from '../../../models/Group';
 import {ColorScheme} from '../../../shared/themes/ThemeFactory';
 import * as Yup from 'yup';
@@ -79,7 +79,7 @@ const GroupForm = ({group, request, cancel}: GroupFormProps) => {
       validateOnMount
       onSubmit={handleSubmit}
     >
-      {(formikProps) => (
+      {(formikProps: FormikProps<any>) => (
         <FVStack grow space="3">
           <FormikTextInput
             name="title"
