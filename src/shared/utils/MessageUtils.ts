@@ -1,6 +1,7 @@
 import {TFunction} from 'i18next';
 import {EventMessageParams, EventMessageType, Message} from '../../models/Message';
 import {User} from '../../models/User';
+import {UserUtils} from './UserUtils';
 
 export class MessageUtils {
   public static parseEventMessage = (message: Message): EventMessageParams => {
@@ -15,9 +16,7 @@ export class MessageUtils {
   ): string => {
     const username = messageUser?.username;
     const context = messageUser?.gender;
-    const usernames = paramUsers
-      .map((user) => (user.deleted ? t('common:links.userDeleted') : user.username))
-      .join(', ');
+    const usernames = paramUsers.map((user) => UserUtils.getUsername(user, t)).join(', ');
     const title = MessageUtils.extractTextFromParams(params);
     let text = '';
     if (

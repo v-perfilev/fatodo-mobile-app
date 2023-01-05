@@ -6,6 +6,7 @@ import {Text} from 'native-base';
 import {useAppSelector} from '../../../../store/store';
 import InfoSelectors from '../../../../store/info/infoSelectors';
 import FBox from '../../../../components/boxes/FBox';
+import {UserUtils} from '../../../../shared/utils/UserUtils';
 
 type ChatListMessageIncomingProps = {
   message: Message;
@@ -19,7 +20,7 @@ const ChatListMessageIncoming = ({message}: ChatListMessageIncomingProps) => {
   return (
     <FHStack space="1">
       <Text color="gray.400" fontWeight="bold" fontSize="xs">
-        {user?.deleted ? t('common:links.userDeleted') : user?.username}:
+        {UserUtils.getUsername(user, t)}:
       </Text>
       {!message.isDeleted && (
         <FBox>

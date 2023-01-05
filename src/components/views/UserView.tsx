@@ -12,6 +12,7 @@ import {ProtectedNavigationProps} from '../../navigators/ProtectedNavigator';
 import PressableButton from '../controls/PressableButton';
 import {ColorScheme} from '../../shared/themes/ThemeFactory';
 import {useTranslation} from 'react-i18next';
+import {UserUtils} from '../../shared/utils/UserUtils';
 
 type UserViewProps = {
   user: User;
@@ -50,7 +51,7 @@ export const UserView = (props: UserViewProps) => {
           invertedBorder={withInvertedBorder}
         />
       )}
-      {withUsername && <Text>{user?.deleted ? t('common:links.userDeleted') : user?.username}</Text>}
+      {withUsername && <Text>{UserUtils.getUsername(user, t)}</Text>}
     </FHStack>
   );
 

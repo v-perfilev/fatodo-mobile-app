@@ -24,7 +24,7 @@ export const ChatLink = ({chat, color = 'primary.500', text, noLink}: ChatLinkPr
   const users = useAppSelector((state) => usersSelector(state, memberIds));
   const {t} = useTranslation();
 
-  const title = text ? text : chat ? ChatUtils.getTitle(chat, users, account, t) : undefined;
+  const title = text ? text : ChatUtils.getTitle(chat, users, account, t);
 
   const goToChat = (): void => navigation.navigate('ChatView', {chatId: chat?.id});
 

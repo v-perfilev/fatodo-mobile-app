@@ -12,6 +12,7 @@ import UserView from '../../../../components/views/UserView';
 import ChatViewMessageReactions from './ChatViewMessageReactions';
 import ChatViewMessageMenu from './ChatViewMessageMenu';
 import DateView from '../../../../components/views/DateView';
+import {UserUtils} from '../../../../shared/utils/UserUtils';
 
 type ChatViewMessageIncomingProps = {
   message: Message;
@@ -46,7 +47,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
         <FHStack space="3" alignItems="center">
           <FHStack grow space="3" alignItems="center">
             <Text color="primary.500" fontWeight="bold">
-              {user?.deleted ? t('common:links.userDeleted') : user?.username}
+              {UserUtils.getUsername(user, t)}
             </Text>
           </FHStack>
           <Text color="gray.400" fontWeight="bold" fontSize="xs">

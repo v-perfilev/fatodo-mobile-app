@@ -6,6 +6,7 @@ import {useTranslation} from 'react-i18next';
 import {Text} from 'native-base';
 import FCenter from '../boxes/FCenter';
 import MultiLabeledBox, {MultiLabeledBoxItem} from '../surfaces/MultiLabeledBox';
+import {UserUtils} from '../../shared/utils/UserUtils';
 
 type UserFullViewProps = {
   user: User;
@@ -34,7 +35,7 @@ export const UserFullView = ({user, account, withoutUsername}: UserFullViewProps
       </FCenter>
       {!withoutUsername && (
         <Text fontSize="xl" fontWeight="bold" color="primary.500" isTruncated>
-          {user.username}
+          {UserUtils.getUsername(user, t)}
         </Text>
       )}
       <MultiLabeledBox items={labeledItems} isTruncated />

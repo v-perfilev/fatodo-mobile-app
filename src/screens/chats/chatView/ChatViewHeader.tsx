@@ -44,7 +44,7 @@ const ChatViewHeader = () => {
   }, [chat, unreadMessageIds]);
 
   const title = useMemo<string>(() => {
-    return chat ? ChatUtils.getTitle(chat, users, account, t) : t('common:links.userDeleted');
+    return ChatUtils.getTitle(chat, users, account, t);
   }, [chat, users, account, i18n.language]);
 
   const showMembers = (): void => {

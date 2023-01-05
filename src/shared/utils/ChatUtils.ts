@@ -5,6 +5,7 @@ import {MessageUtils} from './MessageUtils';
 import {FilterUtils} from './FilterUtils';
 import {Message} from '../../models/Message';
 import {TFunction} from 'i18next';
+import {UserUtils} from './UserUtils';
 
 export class ChatUtils {
   public static getDirectChatUser = (chat: Chat, users: User[], account: User): User => {
@@ -13,14 +14,14 @@ export class ChatUtils {
   };
 
   public static getTitle = (chat: Chat | ChatInfo, users: User[], account: User, t: TFunction): string => {
-    return chat.title
+    return chat?.title
       ? chat.title
-      : chat.members
+      : chat?.members
           .map((m) => m.userId)
           .filter((id) => id !== account.id)
           .map((id) => users.find((u) => u.id === id))
           .filter(FilterUtils.notUndefinedFilter)
-          .map((user) => (user.deleted ? t('common:links.userDeleted') : user.username))
+          .map((user) => UserUtils.getUsername(user, t))
           .join(', ');
   };
 

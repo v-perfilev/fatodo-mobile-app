@@ -39,7 +39,7 @@ const CalendarViewRemindersItem = ({reminder}: CalendarViewRemindersItemProps) =
           {bulletView}
         </FBox>
         <FVStack grow>
-          <Text color="primary.500" fontSize="md" fontWeight="bold" isTruncated>
+          <Text color="gray.600" fontSize="md" fontWeight="bold" isTruncated>
             {itemView}
           </Text>
           <Text color="gray.400" fontSize="sm" fontWeight="bold" isTruncated>

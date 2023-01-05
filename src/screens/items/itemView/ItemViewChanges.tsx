@@ -8,6 +8,7 @@ import ItemSelectors from '../../../store/item/itemSelectors';
 import InfoSelectors from '../../../store/info/infoSelectors';
 import {DateFormatters} from '../../../shared/utils/DateFormatters';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import {UserUtils} from '../../../shared/utils/UserUtils';
 
 const ItemViewChanges = () => {
   const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
@@ -21,9 +22,9 @@ const ItemViewChanges = () => {
     return DateFormatters.formatDate(new Date(timestamp), account, 'FULL', 'FULL');
   };
 
-  const labeledBox = (label: string, text: string): ReactElement => (
+  const labeledBox = (label: string, content: string): ReactElement => (
     <LabeledBox label={label} color="gray.500" fontSize="sm">
-      {text}
+      {content}
     </LabeledBox>
   );
 
@@ -31,13 +32,13 @@ const ItemViewChanges = () => {
     <FVStack space="3">
       {creator && (
         <FHStack space="3" flexWrap="wrap">
-          {labeledBox(t('item:labels.createdBy'), creator.deleted ? t('common:links.userDeleted') : creator.username)}
+          {labeledBox(t('item:labels.createdBy'), UserUtils.getUsername(creator, t))}
           {labeledBox(t('item:labels.createdAt'), formatDate(item.createdAt))}
         </FHStack>
       )}
       {updater && item.createdAt !== item.lastModifiedAt && (
         <FHStack space="3" flexWrap="wrap">
-          {labeledBox(t('item:labels.updatedBy'), updater.deleted ? t('common:links.userDeleted') : updater.username)}
+          {labeledBox(t('item:labels.updatedBy'), UserUtils.getUsername(updater, t))}
           {labeledBox(t('item:labels.createdAt'), formatDate(item.lastModifiedAt))}
         </FHStack>
       )}

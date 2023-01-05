@@ -54,7 +54,7 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
           </Box>
         </FHStack>
         <FHStack grow>
-          <GroupItemChanges item={item} />
+          <GroupItemChanges group={group} item={item} />
         </FHStack>
         <FHStack grow justifyContent="space-between" alignItems="center">
           <FHStack space="2">

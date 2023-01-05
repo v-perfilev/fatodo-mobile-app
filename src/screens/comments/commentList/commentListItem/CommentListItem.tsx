@@ -12,6 +12,7 @@ import FVStack from '../../../../components/boxes/FVStack';
 import CommentListItemReactions from './CommentListItemReactions';
 import CommentListItemMenu from './CommentListItemMenu';
 import DateView from '../../../../components/views/DateView';
+import {UserUtils} from '../../../../shared/utils/UserUtils';
 
 type CommentListItemProps = {
   comment: Comment;
@@ -38,7 +39,7 @@ const CommentListItem = ({comment}: CommentListItemProps) => {
         <FHStack space="3" alignItems="center">
           <FHStack grow space="3" alignItems="center">
             <Text color="primary.500" fontWeight="bold">
-              {user?.username}
+              {UserUtils.getUsername(user, t)}
             </Text>
           </FHStack>
           <Text color="gray.400" fontWeight="bold" fontSize="xs">
