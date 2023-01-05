@@ -21,7 +21,7 @@ const DateParamView = ({date: paramDate}: DateParamViewProps) => {
     description = description.concat(time);
   }
 
-  if (paramDate.date && paramDate.month) {
+  if (paramDate.date && paramDate.month !== undefined) {
     if (paramDate.time) {
       description = description.concat(', ');
     }

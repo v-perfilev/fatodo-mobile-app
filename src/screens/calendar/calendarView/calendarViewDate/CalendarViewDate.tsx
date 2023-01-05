@@ -1,12 +1,11 @@
 import React, {memo, useEffect, useState} from 'react';
 import {CalendarEnrichedDate} from '../../../../models/Calendar';
-import {Box, useColorModeValue, useTheme} from 'native-base';
+import {Box, Text, useColorModeValue, useToken} from 'native-base';
 import PressableButton from '../../../../components/controls/PressableButton';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
 import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
 import AnimatedBox from '../../../../components/animated/AnimatedBox';
-import AnimatedText from '../../../../components/animated/AnimatedText';
 import CalendarViewDateReminders from './CalendarViewDateReminders';
 
 type CalendarViewDateProps = {
@@ -16,28 +15,10 @@ type CalendarViewDateProps = {
 
 const CalendarViewDate = ({date, activeMonthIndex}: CalendarViewDateProps) => {
   const {monthIndex, dateIndex, setDate} = useCalendarContext();
-  const theme = useTheme();
   const [rendered, setRendered] = useState<boolean>();
 
-  const white = theme.colors.white;
-  const primary300 = theme.colors.primary['300'];
-  const primary900 = theme.colors.primary['900'];
-  const gray50 = theme.colors.gray['50'];
-  const gray200 = theme.colors.gray['200'];
-  const gray300 = theme.colors.gray['300'];
-  const gray500 = theme.colors.gray['500'];
-  const gray700 = theme.colors.gray['700'];
-  const gray800 = theme.colors.gray['800'];
-
-  const {activeColor, inactiveColor} = useColorModeValue(
-    {activeColor: white, inactiveColor: gray500},
-    {activeColor: gray300, inactiveColor: gray300},
-  );
-
-  const {activeDateBg, activeMonthBg, inactiveMonthBg} = useColorModeValue(
-    {activeDateBg: primary300, activeMonthBg: gray50, inactiveMonthBg: gray200},
-    {activeDateBg: primary900, activeMonthBg: gray700, inactiveMonthBg: gray800},
-  );
+  const [gray300, gray600, primary500] = useToken('colors', ['gray.300', 'gray.600', 'primary.600']);
+  const fontColor = useColorModeValue('gray.600', 'gray.200');
 
   const handlePress = (): void => {
     setDate(date);
@@ -55,27 +36,35 @@ const CalendarViewDate = ({date, activeMonthIndex}: CalendarViewDateProps) => {
     return date.monthIndex === (activeMonthIndex !== undefined ? activeMonthIndex : monthIndex.value);
   });
 
-  const fontStyle = useAnimatedStyle(() => ({
-    color: isActiveDate.value ? activeColor : inactiveColor,
+  const bgStyle = useAnimatedStyle(() => ({
+    backgroundColor: isActiveMonth.value ? gray300 : gray600,
+    opacity: 0.15,
   }));
 
-  const bgStyle = useAnimatedStyle(() => ({
-    width: '100%',
-    height: '100%',
-    backgroundColor: isActiveDate.value ? activeDateBg : isActiveMonth.value ? activeMonthBg : inactiveMonthBg,
+  const borderStyle = useAnimatedStyle(() => ({
+    borderColor: primary500,
+    borderWidth: isActiveDate.value ? 2.5 : 0,
   }));
 
   return (
     <Box width={`${100 / 7}%`} height={CALENDAR_DATE_HEIGHT}>
       <PressableButton margin="1" onPress={handlePress}>
-        <AnimatedBox style={bgStyle} px="1" py="0.5" borderRadius="lg" overflow="hidden">
-          <AnimatedText style={fontStyle} fontSize="md" fontWeight="bold" textAlign="right">
+        <Box position="relative" width="100%" height="100%" px="1.5" py="0.5" borderRadius="lg" overflow="hidden">
+          <AnimatedBox position="absolute" top="0" left="0" bottom="0" right="0" style={bgStyle} />
+          <AnimatedBox
+            position="absolute"
+            top="0"
+            left="0"
+            bottom="0"
+            right="0"
+            borderRadius="lg"
+            style={borderStyle}
+          />
+          <Text color={fontColor} fontSize="md" fontWeight="bold" textAlign="right">
             {date.date}
-          </AnimatedText>
-          {rendered && date.reminders.length > 0 && (
-            <CalendarViewDateReminders reminders={date.reminders} isActiveDate={isActiveDate} />
-          )}
-        </AnimatedBox>
+          </Text>
+          {rendered && date.reminders.length > 0 && <CalendarViewDateReminders reminders={date.reminders} />}
+        </Box>
       </PressableButton>
     </Box>
   );

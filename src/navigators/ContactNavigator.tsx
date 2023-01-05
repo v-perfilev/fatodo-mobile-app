@@ -56,11 +56,21 @@ const ContactNavigator = () => {
   const routes = useMemo<ContactRoute[]>(() => buildRoutes(contactInfo), [contactInfo]);
 
   const renderBadge = (route: ContactRoute): ReactElement => {
-    return route.showBadgeAlways || route.count > 0 ? (
-      <Badge rounded="full" variant="solid" colorScheme="secondary">
-        {route.count > route.maxCount ? `${route.maxCount}+` : route.count}
-      </Badge>
-    ) : null;
+    if (route.showBadgeAlways) {
+      return (
+        <Text fontSize="sm" fontWeight="bold" color="secondary.500">
+          {route.count}
+        </Text>
+      );
+    } else if (route.count > 0) {
+      return (
+        <Badge rounded="full" variant="outline" colorScheme="secondary">
+          {route.count > route.maxCount ? `${route.maxCount}+` : route.count}
+        </Badge>
+      );
+    } else {
+      return null;
+    }
   };
 
   const backgroundColor = useColorModeValue(LIGHT_BG, DARK_BG);
@@ -80,7 +90,7 @@ const ContactNavigator = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <FHStack space="1" mt="3px">
+        <FHStack space="2" mt="3px" alignItems="center">
           <Text fontSize="md" color="primary.500">
             {t(`contact:${props.route.key}.title`)}
           </Text>
