@@ -1,10 +1,9 @@
-import {Platform} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 
 export const IS_DEVELOPMENT = __DEV__;
 
 // API
-// export const API_URL = __DEV__ ? 'https://fatodo-stage-api.persoff68.com' : 'https://api.fatodo.app';
-export const API_URL = 'https://api.fatodo.app';
+export const API_URL = __DEV__ ? 'https://fatodo-stage-api.persoff68.com' : 'https://api.fatodo.app';
 export const IMAGE_URL = API_URL + '/api/image/store/';
 export const WS_URL = API_URL + '/ws/';
 export const WS_ROOT_TOPIC = '/user/topic/root';
@@ -68,7 +67,7 @@ export const COMMENTS_INPUT_HEIGHT = 50;
 // CALENDAR
 export const CALENDAR_TITLE_HEIGHT = 40;
 export const CALENDAR_WEEKDAYS_HEIGHT = 40;
-export const CALENDAR_DATE_HEIGHT = 65;
+export const CALENDAR_DATE_HEIGHT = Math.max(65, Math.min(100, Dimensions.get('window').width / 7));
 export const CALENDAR_MARGIN_HEIGHT = 10;
 export const CALENDAR_LOAD_INDENT = 5;
 

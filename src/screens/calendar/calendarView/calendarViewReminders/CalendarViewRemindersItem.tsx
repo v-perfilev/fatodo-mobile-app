@@ -28,7 +28,7 @@ const CalendarViewRemindersItem = ({reminder}: CalendarViewRemindersItemProps) =
 
   const goToItem = (): void => navigation.navigate('Groups', {screen: 'ItemView', params: {itemId: item?.id}});
 
-  const bulletView = <Bullet colorScheme={group?.color} height="15px" />;
+  const bulletView = <Bullet colorScheme={group?.color} size="15px" />;
   const groupView = group ? <GroupLink group={group} noLink /> : null;
   const itemView = item ? <ItemLink item={item} noLink /> : null;
   const date = new Date(reminder.date);
