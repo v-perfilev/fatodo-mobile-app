@@ -31,7 +31,7 @@ const ChatViewMessageIncoming = ({message}: ChatViewMessageIncomingProps) => {
 
   return (
     <FHStack space="2" width="95%" mr="5%">
-      <Box mt="1.5">{user && <UserView user={user} picSize="sm" />}</Box>
+      <Box mt="1.5">{user && <UserView user={user} picSize="md" />}</Box>
       <FVStack
         shrink
         space="1"

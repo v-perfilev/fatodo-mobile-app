@@ -86,7 +86,7 @@ const CommentListItemReactions = ({comment, isOwnComment}: CommentListItemReacti
   };
 
   return (
-    <FVStack mt="1.5" space="1">
+    <FVStack mt="1.5" space="1" alignItems="flex-end">
       {Array.from(reactionMap.keys()).map(reaction)}
     </FVStack>
   );

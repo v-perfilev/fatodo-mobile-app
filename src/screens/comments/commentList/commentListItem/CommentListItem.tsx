@@ -30,10 +30,9 @@ const CommentListItem = ({comment}: CommentListItemProps) => {
   const bg = useColorModeValue('gray.50', 'gray.700');
 
   return (
-    <FHStack p="2" space="2">
+    <FHStack px="4" py="2" space="2">
       <FVStack mt="1.5" space="2">
-        {user && <UserView user={user} picSize="sm" />}
-        <CommentListItemReactions comment={comment} isOwnComment={isOwnComment} />
+        {user && <UserView user={user} picSize="md" />}
       </FVStack>
       <FVStack grow space="1" backgroundColor={bg} px="2" py="1.5" borderRadius="xl">
         <FHStack space="3" alignItems="center">
@@ -54,6 +53,7 @@ const CommentListItem = ({comment}: CommentListItemProps) => {
           </Text>
         )}
       </FVStack>
+      <CommentListItemReactions comment={comment} isOwnComment={isOwnComment} />
     </FHStack>
   );
 };

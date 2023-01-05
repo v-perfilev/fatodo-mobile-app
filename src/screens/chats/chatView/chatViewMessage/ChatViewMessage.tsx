@@ -28,7 +28,7 @@ const ChatViewMessage = ({message}: ChatViewMessageProps) => {
   }, [message]);
 
   return (
-    <FBox p="2">
+    <FBox px="4" py="2">
       {type === 'outcoming' && <ChatViewMessageOutcoming message={message} />}
       {type === 'incoming' && <ChatViewMessageIncoming message={message} />}
       {type === 'event' && <ChatViewMessageEvent message={message} />}

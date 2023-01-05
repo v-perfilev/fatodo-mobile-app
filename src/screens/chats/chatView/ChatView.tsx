@@ -2,7 +2,7 @@ import React, {memo, ReactElement, useCallback, useMemo, useRef} from 'react';
 import ChatViewControl from './ChatViewControl';
 import ChatViewHeader from './ChatViewHeader';
 import withChatContainer, {WithChatProps} from '../../../shared/hocs/withContainers/withChatContainer';
-import {CHATS_INPUT_HEIGHT, HEADER_HEIGHT, MARK_AS_READ_TIMEOUT} from '../../../constants';
+import {CHATS_INPUT_HEIGHT, DEFAULT_MARGIN, HEADER_HEIGHT, MARK_AS_READ_TIMEOUT} from '../../../constants';
 import {FlatListType} from '../../../components/scrollable/FlatList';
 import ChatViewStub from './ChatViewStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
@@ -27,7 +27,7 @@ import withKeyboardPaddingAvoiding from '../../../shared/hocs/withKeyboardPaddin
 
 type ChatViewProps = WithChatProps;
 
-const paddingTop = CHATS_INPUT_HEIGHT;
+const paddingTop = CHATS_INPUT_HEIGHT + DEFAULT_MARGIN;
 const paddingBottom = HEADER_HEIGHT;
 const containerStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom};

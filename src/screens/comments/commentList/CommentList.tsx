@@ -13,7 +13,7 @@ import CommentListItem from './commentListItem/CommentListItem';
 import {CornerButton} from '../../../models/CornerButton';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
-import {COMMENTS_INPUT_HEIGHT, HEADER_HEIGHT} from '../../../constants';
+import {COMMENTS_INPUT_HEIGHT, DEFAULT_MARGIN, HEADER_HEIGHT} from '../../../constants';
 import RefreshableFlatList, {
   RefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/RefreshableFlatList';
@@ -26,7 +26,7 @@ import withKeyboardPaddingAvoiding from '../../../shared/hocs/withKeyboardPaddin
 
 type CommentListProps = WithCommentsProps;
 
-const paddingTop = COMMENTS_INPUT_HEIGHT;
+const paddingTop = COMMENTS_INPUT_HEIGHT + DEFAULT_MARGIN;
 const paddingBottom = HEADER_HEIGHT;
 const containerStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom};
 const loaderStyle: StyleProp<ViewStyle> = {paddingTop, paddingBottom};

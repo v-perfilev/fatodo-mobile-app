@@ -9,7 +9,7 @@ type ChatViewDateProps = {
 
 const ChatViewDate = ({date}: ChatViewDateProps) => {
   return (
-    <FCenter p="2">
+    <FCenter px="4" py="2">
       <Text color="primary.500" fontWeight="bold">
         {date}
       </Text>
