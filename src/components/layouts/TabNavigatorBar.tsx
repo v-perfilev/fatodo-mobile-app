@@ -1,6 +1,6 @@
 import React from 'react';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {Badge, Pressable, Text} from 'native-base';
+import {Badge, Pressable, Text, useColorModeValue} from 'native-base';
 import {BottomTabDescriptorMap} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import {NavigationHelpers, ParamListBase, TabNavigationState} from '@react-navigation/native';
 import {BottomTabNavigationEventMap} from '@react-navigation/bottom-tabs/src/types';
@@ -25,11 +25,12 @@ type TabNavigatorItemProps = {
 
 const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, index}: TabNavigatorItemProps) => {
   const {t} = useTranslation();
+  const focusedColor = useColorModeValue('gray.600', 'gray.200');
   const {options} = descriptors[routeKey];
   const isFocused = state.index === index;
   const icon = options.tabBarIcon;
   const badge = options.tabBarBadge;
-  const color = isFocused ? 'primary.500' : 'gray.400';
+  const color = isFocused ? focusedColor : 'gray.400';
 
   const onPress = (): void => navigation.navigate(routeName);
 
