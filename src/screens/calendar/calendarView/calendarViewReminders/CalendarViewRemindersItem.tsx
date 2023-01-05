@@ -47,7 +47,7 @@ const CalendarViewRemindersItem = ({reminder}: CalendarViewRemindersItemProps) =
             {groupView}
           </Text>
         </FVStack>
-        <Box>
+        <Box minW="32px">
           <Text color="gray.400" fontSize="xs">
             <DateView date={date} timeFormat="FULL" />
           </Text>

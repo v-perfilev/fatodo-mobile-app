@@ -173,7 +173,7 @@ export class GroupActions {
     PREFIX + 'deleteItem',
     async (item, thunkAPI) => {
       await ItemService.deleteItem(item.id);
-      thunkAPI.dispatch(GroupsActions.removeItem(item));
+      thunkAPI.dispatch(GroupsActions.removeItem(item, true));
       thunkAPI.dispatch(SnackActions.handleCode('item.deleted', 'info'));
       return item.id;
     },

@@ -125,6 +125,7 @@ export const components = {
       fontSize: 'md',
       borderRadius: 'xl',
       minHeight: INPUT_MIN_HEIGHT,
+      _input: {selectionColor: 'primary.300:alpha.30'},
     },
   },
   Button: {

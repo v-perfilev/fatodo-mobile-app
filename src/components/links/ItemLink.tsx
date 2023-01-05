@@ -16,7 +16,7 @@ export const ItemLink = ({item, color = 'primary.500', noLink}: ItemLinkProps) =
   const goToItem = (): void => navigation.navigate('Groups', {screen: 'ItemView', params: {itemId: item?.id}});
 
   return item ? (
-    <Text color={!noLink ? color : undefined} onPress={noLink ? goToItem : undefined}>
+    <Text color={!noLink ? color : undefined} onPress={!noLink ? goToItem : undefined}>
       {item.title}
     </Text>
   ) : undefined;

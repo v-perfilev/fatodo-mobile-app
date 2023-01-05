@@ -1,12 +1,13 @@
 import React, {memo, useEffect, useState} from 'react';
 import {CalendarEnrichedDate} from '../../../../models/Calendar';
-import {Box, Text, useColorModeValue, useToken} from 'native-base';
+import {Box, useColorModeValue, useToken} from 'native-base';
 import PressableButton from '../../../../components/controls/PressableButton';
 import {useCalendarContext} from '../../../../shared/contexts/CalendarContext';
 import {useAnimatedStyle, useDerivedValue} from 'react-native-reanimated';
 import {CALENDAR_DATE_HEIGHT} from '../../../../constants';
 import AnimatedBox from '../../../../components/animated/AnimatedBox';
 import CalendarViewDateReminders from './CalendarViewDateReminders';
+import AnimatedText from '../../../../components/animated/AnimatedText';
 
 type CalendarViewDateProps = {
   date: CalendarEnrichedDate;
@@ -17,8 +18,15 @@ const CalendarViewDate = ({date, activeMonthIndex}: CalendarViewDateProps) => {
   const {monthIndex, dateIndex, setDate} = useCalendarContext();
   const [rendered, setRendered] = useState<boolean>();
 
-  const [gray300, gray600, primary500] = useToken('colors', ['gray.300', 'gray.600', 'primary.600']);
-  const fontColor = useColorModeValue('gray.600', 'gray.200');
+  const [gray200, gray300, gray400, gray600, primary500] = useToken('colors', [
+    'gray.200',
+    'gray.300',
+    'gray.400',
+    'gray.600',
+    'primary.600',
+  ]);
+  const activeFontColor = useColorModeValue(gray600, gray200);
+  const inactiveFontColor = useColorModeValue(gray400, gray400);
 
   const handlePress = (): void => {
     setDate(date);
@@ -35,6 +43,10 @@ const CalendarViewDate = ({date, activeMonthIndex}: CalendarViewDateProps) => {
   const isActiveMonth = useDerivedValue(() => {
     return date.monthIndex === (activeMonthIndex !== undefined ? activeMonthIndex : monthIndex.value);
   });
+
+  const fontStyle = useAnimatedStyle(() => ({
+    color: isActiveMonth.value ? activeFontColor : inactiveFontColor,
+  }));
 
   const bgStyle = useAnimatedStyle(() => ({
     backgroundColor: isActiveMonth.value ? gray300 : gray600,
@@ -60,9 +72,9 @@ const CalendarViewDate = ({date, activeMonthIndex}: CalendarViewDateProps) => {
             borderRadius="lg"
             style={borderStyle}
           />
-          <Text color={fontColor} fontSize="md" fontWeight="bold" textAlign="right">
+          <AnimatedText fontSize="md" fontWeight="bold" textAlign="right" style={fontStyle}>
             {date.date}
-          </Text>
+          </AnimatedText>
           {rendered && date.reminders.length > 0 && <CalendarViewDateReminders reminders={date.reminders} />}
         </Box>
       </PressableButton>

@@ -58,7 +58,7 @@ const ContactNavigator = () => {
   const renderBadge = (route: ContactRoute): ReactElement => {
     if (route.showBadgeAlways) {
       return (
-        <Text fontSize="sm" fontWeight="bold" color="secondary.500">
+        <Text fontSize="md" fontWeight="bold" color="secondary.500">
           {route.count}
         </Text>
       );
@@ -90,7 +90,7 @@ const ContactNavigator = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <FHStack space="2" mt="3px" alignItems="center">
+        <FHStack space="1" mt="3px" alignItems="center">
           <Text fontSize="md" color="primary.500">
             {t(`contact:${props.route.key}.title`)}
           </Text>

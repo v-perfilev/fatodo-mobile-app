@@ -98,7 +98,7 @@
   "editMessage": {
     "title": "Редактировать сообщение",
     "fields": {
-      "title": {
+      "text": {
         "label": "Текст",
         "required": "Обязательное поле"
       }

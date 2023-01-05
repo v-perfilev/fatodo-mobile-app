@@ -45,10 +45,10 @@ const CalendarViewDateReminders = ({reminders}: CalendarViewDateRemindersProps) 
   return (
     <FVStack flexGrow="1" onLayout={updateHeight}>
       {reminderColorsToShow.map((color, index) => (
-        <>
-          <Bullet colorScheme={color} size={`${itemHeight}px`} fullWidth key={index} />
+        <Box key={index}>
+          <Bullet colorScheme={color} size={`${itemHeight}px`} fullWidth />
           <Box height={`${itemHeight}px`} />
-        </>
+        </Box>
       ))}
       {showDots && (
         <FHStack space="1" justifyContent="center">

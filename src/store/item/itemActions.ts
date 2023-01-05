@@ -89,7 +89,7 @@ export class ItemActions {
     PREFIX + 'createItem',
     async ({dto}, thunkAPI) => {
       const response = await ItemService.createItem(dto);
-      thunkAPI.dispatch(GroupsActions.addItem(response.data));
+      thunkAPI.dispatch(GroupsActions.addItem(response.data, true));
       thunkAPI.dispatch(GroupActions.addItem(response.data));
       thunkAPI.dispatch(SnackActions.handleCode('item.created', 'info'));
       return response.data;

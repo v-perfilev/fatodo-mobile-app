@@ -70,9 +70,9 @@ export class GroupsActions {
     dispatch(groupsSlice.actions.removeMembers(members));
   };
 
-  static addItem = (item: Item) => (dispatch: AppDispatch) => {
+  static addItem = (item: Item, dontChangeCount?: boolean) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.addItem(item));
-    dispatch(groupsSlice.actions.incrementItemsCount(item.groupId));
+    !dontChangeCount && dispatch(groupsSlice.actions.incrementItemsCount(item.groupId));
     dispatch(calendarSlice.actions.reset());
   };
 
@@ -91,9 +91,9 @@ export class GroupsActions {
     }
   };
 
-  static removeItem = (item: Item) => (dispatch: AppDispatch) => {
+  static removeItem = (item: Item, dontChangeCount?: boolean) => (dispatch: AppDispatch) => {
     dispatch(groupsSlice.actions.removeItem(item));
-    dispatch(groupsSlice.actions.decrementItemsCount(item.groupId));
+    !dontChangeCount && dispatch(groupsSlice.actions.decrementItemsCount(item.groupId));
     dispatch(calendarSlice.actions.reset());
   };
 

@@ -17,7 +17,6 @@ import FormikGenderInput from '../../../components/inputs/FormikGenderInput';
 import ImageUpload from '../../../components/inputs/imageUpload/ImageUpload';
 import {AuthActions} from '../../../store/auth/authActions';
 import Separator from '../../../components/layouts/Separator';
-import SolidButton from '../../../components/controls/SolidButton';
 import {useAccountDialogContext} from '../../../shared/contexts/dialogContexts/AccountDialogContext';
 import {flowRight} from 'lodash';
 import withKeyboardHeightAvoiding from '../../../shared/hocs/withKeyboardHeightAvoiding';
@@ -144,9 +143,9 @@ const AccountForm = () => {
             )}
           </Formik>
           <Separator color="primary.500" />
-          <SolidButton colorScheme="error" onPress={showDeletePermanentlyDialog}>
+          <OutlinedButton colorScheme="error" onPress={showDeletePermanentlyDialog}>
             {t('account:actions.deletePermanently')}
-          </SolidButton>
+          </OutlinedButton>
         </FVStack>
       </SimpleScrollView>
     </>
