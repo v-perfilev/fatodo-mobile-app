@@ -6,7 +6,7 @@ import Bullet from '../../../../components/surfaces/Bullet';
 import GroupLink from '../../../../components/links/GroupLink';
 import ItemLink from '../../../../components/links/ItemLink';
 import FHStack from '../../../../components/boxes/FHStack';
-import {Box, Text} from 'native-base';
+import {Box, Text, useColorModeValue} from 'native-base';
 import FVStack from '../../../../components/boxes/FVStack';
 import DateView from '../../../../components/views/DateView';
 import FBox from '../../../../components/boxes/FBox';
@@ -24,6 +24,7 @@ const CalendarViewRemindersItem = ({reminder}: CalendarViewRemindersItemProps) =
   const navigation = useNavigation<TabNavigationProps>();
   const group = useAppSelector((state) => groupSelector(state, reminder.parentId));
   const item = useAppSelector((state) => itemSelector(state, reminder.targetId));
+  const itemColor = useColorModeValue('gray.600', 'gray.200');
 
   const goToItem = (): void => navigation.navigate('Groups', {screen: 'ItemView', params: {itemId: item?.id}});
 
@@ -39,7 +40,7 @@ const CalendarViewRemindersItem = ({reminder}: CalendarViewRemindersItemProps) =
           {bulletView}
         </FBox>
         <FVStack grow>
-          <Text color="gray.600" fontSize="md" fontWeight="bold" isTruncated>
+          <Text color={itemColor} fontSize="md" fontWeight="bold" isTruncated>
             {itemView}
           </Text>
           <Text color="gray.400" fontSize="sm" fontWeight="bold" isTruncated>

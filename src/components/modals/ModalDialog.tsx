@@ -1,6 +1,6 @@
 import {Box, Button, Center, KeyboardAvoidingView, Modal, useColorModeValue} from 'native-base';
 import React, {memo, ReactElement} from 'react';
-import {LINEAR_ERROR_GRADIENT, LINEAR_GRADIENT} from '../../shared/themes/ThemeFactory';
+import {LINEAR_ERROR_GRADIENT} from '../../shared/themes/ThemeFactory';
 import {SizeType} from 'native-base/lib/typescript/components/types';
 import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
 
@@ -25,15 +25,11 @@ const ModalDialog = ({open, close, title, content, isErrorColor, actions, size}:
       <KeyboardAvoidingView w="100%" behavior="position">
         <Center>
           <Modal.Content borderRadius="xl">
-            <Modal.CloseButton
-              rounded="3xl"
-              _pressed={{bgColor: `${color}.100:alpha.30`}}
-              _icon={{color: `${color}.500`}}
-            />
+            <Modal.CloseButton rounded="3xl" _pressed={{bgColor: 'gray.100:alpha.30'}} _icon={{color: 'gray.500'}} />
             <Modal.Header bg={bg} borderBottomWidth="0" _text={{color: `${color}.500`}}>
               {title}
             </Modal.Header>
-            <Box w="100%" h="3px" bg={isErrorColor ? LINEAR_ERROR_GRADIENT : LINEAR_GRADIENT} />
+            <Box w="100%" h={isErrorColor ? '3px' : '1px'} bg={isErrorColor && LINEAR_ERROR_GRADIENT} />
             <Modal.Body bg={bg} _scrollview={{bounces: false}}>
               {content}
             </Modal.Body>

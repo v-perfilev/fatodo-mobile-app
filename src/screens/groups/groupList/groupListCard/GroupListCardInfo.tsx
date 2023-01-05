@@ -13,6 +13,8 @@ import CommentsIcon from '../../../../components/icons/CommentsIcon';
 import InfoSelectors from '../../../../store/info/infoSelectors';
 import {useAppSelector} from '../../../../store/store';
 import {ProtectedNavigationProps} from '../../../../navigators/ProtectedNavigator';
+import {GroupUtils} from '../../../../shared/utils/GroupUtils';
+import AuthSelectors from '../../../../store/auth/authSelectors';
 
 type GroupListCardHeaderProps = {
   group: Group;
@@ -23,6 +25,7 @@ type GroupListCardHeaderProps = {
 const GroupListCardInfo = ({group, items, itemsCount}: GroupListCardHeaderProps) => {
   const commentThreadSelector = useCallback(InfoSelectors.makeCommentThreadSelector(), []);
   const commentThread = useAppSelector((state) => commentThreadSelector(state, group.id));
+  const account = useAppSelector(AuthSelectors.account);
   const {t} = useTranslation();
   const rootNavigation = useNavigation<ProtectedNavigationProps>();
   const groupNavigation = useNavigation<GroupNavigationProps>();
@@ -35,8 +38,10 @@ const GroupListCardInfo = ({group, items, itemsCount}: GroupListCardHeaderProps)
       colorScheme: group.color,
     });
 
+  const canEdit = group && GroupUtils.canEdit(account, group);
+
   const showButtonToGroupView = itemsCount !== items.length;
-  const showButtonToCreateItem = itemsCount === 0;
+  const showButtonToCreateItem = itemsCount === 0 && canEdit;
 
   return (
     <FHStack space="3" h="45px" px="4" my="1" alignItems="center">

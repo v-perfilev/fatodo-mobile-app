@@ -69,20 +69,21 @@ const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementPro
     buttons: CornerButton[],
     positions: SharedValue<number[]>,
     positionValues: RefObject<Animated.Value>[],
+    duration?: number,
   ): void => {
     const newPositions = calculatePositions(buttons, maxButtonsLength.current, onTop.current, directScroll.current);
     if (JSON.stringify(positions.value) !== JSON.stringify(newPositions)) {
       positions.value = newPositions;
       const createTiming = (position: number, index: number): CompositeAnimation =>
-        Animated.timing(positionValues[index].current, {toValue: position, useNativeDriver: true});
+        Animated.timing(positionValues[index].current, {toValue: position, duration, useNativeDriver: true});
       const animations = newPositions.map((position, index) => createTiming(position, index));
       Animated.parallel(animations).start();
     }
   };
 
-  const animateAllButtons = (): void => {
-    animateButtons(mainButtons, mainButtonPositions, mainPositionValues);
-    animateButtons(addButtons, additionalButtonPositions, additionalPositionValues);
+  const animateAllButtons = (duration?: number): void => {
+    animateButtons(mainButtons, mainButtonPositions, mainPositionValues, duration);
+    animateButtons(addButtons, additionalButtonPositions, additionalPositionValues, duration);
   };
 
   const handleScrollY = ({value}: {value: number}): void => {
@@ -118,7 +119,7 @@ const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementPro
   }, [buttons]);
 
   useEffect(() => {
-    animateAllButtons();
+    animateAllButtons(0);
   }, [mainButtons, addButtons]);
 
   const viewStyle: StyleProp<ViewStyle> = {position: 'absolute', bottom: bottomPadding || 0, right: 0};

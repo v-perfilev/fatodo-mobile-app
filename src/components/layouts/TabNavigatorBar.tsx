@@ -25,7 +25,7 @@ type TabNavigatorItemProps = {
 
 const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, index}: TabNavigatorItemProps) => {
   const {t} = useTranslation();
-  const focusedColor = useColorModeValue('gray.600', 'gray.200');
+  const focusedColor = useColorModeValue('gray.500', 'gray.300');
   const {options} = descriptors[routeKey];
   const isFocused = state.index === index;
   const icon = options.tabBarIcon;
@@ -43,7 +43,9 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
   );
 
   const height = TAB_HEIGHT;
-  const size = Platform.OS === 'android' ? 7 : 9;
+  const androidSize = isFocused ? 8 : 7;
+  const iosSize = isFocused ? 10 : 9;
+  const size = Platform.OS === 'android' ? androidSize : iosSize;
 
   return (
     <Pressable height={height} flex="1" p="1" onPress={onPress}>
