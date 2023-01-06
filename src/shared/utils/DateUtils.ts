@@ -21,8 +21,7 @@ export class DateUtils {
   };
 
   static getWeekdayNumbers = (): number[] => {
-    const firstDayOfWeek = moment().startOf('week').day();
-    return Array.from({length: 7}, (_, i) => (i + firstDayOfWeek) % 7);
+    return Array.from({length: 7}, (_, i) => i % 7);
   };
 
   static getDayNamesByNumbers = (numbers: number[]): string[] => {
