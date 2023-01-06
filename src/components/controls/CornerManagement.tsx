@@ -109,17 +109,14 @@ const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementPro
   };
 
   useEffect(() => {
-    scrollY?.addListener(handleScrollY);
-    return () => scrollY?.removeAllListeners();
-  }, []);
-
-  useEffect(() => {
     setMainButtons(buttons.filter((b) => !b.additionalColumn));
     setAddButtons(buttons.filter((b) => b.additionalColumn));
   }, [buttons]);
 
   useEffect(() => {
     animateAllButtons(0);
+    scrollY?.addListener(handleScrollY);
+    return () => scrollY?.removeAllListeners();
   }, [mainButtons, addButtons]);
 
   const viewStyle: StyleProp<ViewStyle> = {position: 'absolute', bottom: bottomPadding || 0, right: 0};
