@@ -23,7 +23,7 @@ const ChatViewMessageEvent = ({message}: ChatViewMessageEventProps) => {
 
   return (
     <FCenter mx="10%">
-      <Text color="gray.400" fontSize="sm">
+      <Text color="gray.400" fontSize="sm" textAlign="center">
         {text}
       </Text>
     </FCenter>
