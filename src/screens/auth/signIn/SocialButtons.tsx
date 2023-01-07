@@ -47,7 +47,8 @@ const SocialButtons = () => {
       <Separator />
       <FHStack space="5" justifyContent="center">
         <IconButton size="2xl" icon={<FacebookIcon />} onPress={facebookLogin} />
-        <IconButton size="2xl" icon={<GoogleIcon />} onPress={googleLogin} />
+        {/*TODO*/}
+        {/*<IconButton size="2xl" icon={<GoogleIcon />} onPress={googleLogin} />*/}
       </FHStack>
     </FVStack>
   );
