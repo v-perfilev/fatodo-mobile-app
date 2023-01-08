@@ -16,14 +16,9 @@
     "notRegistered": "User is not registered yet",
     "wrongPassword": "Wrong password, try again",
     "wrongProvider": {
-      "google": "User is registered with Google",
-      "facebook": "User is registered with Facebook"
-    },
-    "oauth2": {
-      "notRegistered": "User is not registered with remote provider",
-      "internal": "Something went wrong with remote provider",
-      "providerNotSupported": "You try to login with unsupported provider",
-      "wrongProvider": "User registered with another provider"
+      "GOOGLE": "User is registered with Google",
+      "FACEBOOK": "User is registered with Facebook",
+      "APPLE": "User is registered with Apple"
     }
   },
   "model": {

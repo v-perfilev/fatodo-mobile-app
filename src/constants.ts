@@ -3,7 +3,10 @@ import {Dimensions, Platform} from 'react-native';
 export const IS_DEVELOPMENT = __DEV__;
 
 // API
-export const API_URL = __DEV__ ? 'https://fatodo-stage-api.persoff68.com' : 'https://api.fatodo.app';
+export const API_URL_DEV = 'https://fatodo-stage-api.persoff68.com';
+export const API_URL_PROD = 'https://api.fatodo.app';
+export let API_URL = __DEV__ ? API_URL_DEV : API_URL_PROD;
+export const SET_API_URL = (url: string) => (API_URL = url);
 export const IMAGE_URL = API_URL + '/api/image/store/';
 export const WS_URL = API_URL + '/ws/';
 export const WS_ROOT_TOPIC = '/user/topic/root';

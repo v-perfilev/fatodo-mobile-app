@@ -43,5 +43,11 @@
   "comment": {
     "commentEdited": "Comment edited",
     "commentDeleted": "Comment deleted"
+  },
+  "security": {
+    "oauth2": {
+      "internal": "Something went wrong with remote provider",
+      "wrongProvider": "User registered directly, please login with the password"
+    }
   }
 }

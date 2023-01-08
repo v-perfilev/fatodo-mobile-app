@@ -11,6 +11,7 @@ import FVStack from '../../../components/boxes/FVStack';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import ColorModeSwitch from '../../../components/controls/ColorModeSwitch';
 import SocialButtons from './SocialButtons';
+import SignInDev from './SignInDev';
 
 const SignIn = () => {
   const navigation = useNavigation<AuthNavigationProps>();
@@ -20,8 +21,9 @@ const SignIn = () => {
   const goToSignUp = (): void => navigation.navigate('SignUp');
 
   return (
-    <SimpleScrollView>
-      <FCenter grow pt="10">
+    <SimpleScrollView position="relative">
+      <SignInDev />
+      <FCenter grow pt="10" pb="5">
         <FVStack space="5" w="90%" maxW="300px">
           <FCenter grow>
             <Logo withText />

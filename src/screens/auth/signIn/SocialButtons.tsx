@@ -7,10 +7,12 @@ import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
 import Separator from '../../../components/layouts/Separator';
 import IconButton from '../../../components/controls/IconButton';
-import GoogleIcon from '../../../components/icons/GoogleIcon';
 import {Linking} from 'react-native';
 import {useAppDispatch} from '../../../store/store';
 import {AuthActions} from '../../../store/auth/authActions';
+import AppleIcon from '../../../components/icons/AppleIcon';
+import GoogleIcon from '../../../components/icons/GoogleIcon';
+import {SnackActions} from '../../../store/snack/snackActions';
 
 const SocialButtons = () => {
   const dispatch = useAppDispatch();
@@ -24,14 +26,19 @@ const SocialButtons = () => {
     Linking.openURL(oAuth2Url).finally();
   };
 
-  const facebookLogin = (): void => oAuth2Login('facebook');
   const googleLogin = (): void => oAuth2Login('google');
+  const facebookLogin = (): void => oAuth2Login('facebook');
+  const appleLogin = (): void => oAuth2Login('apple');
 
   const handleOAuth2Redirect = ({url}: {url: string}): void => {
-    const regex = new RegExp('socialLogin/(.+)#_=_$');
-    const regexArray = regex.exec(url);
-    const token = regexArray.length === 2 ? regexArray[1] : undefined;
-    token && dispatch(AuthActions.socialLoginThunk(token));
+    let params: any = {};
+    let match;
+    const regex = new RegExp('socialLogin[?&]([^=#]+)=([^&#]*)#_=_$');
+    while ((match = regex.exec(url))) {
+      params[match[1]] = match[2];
+    }
+    params.feedbackCode && dispatch(SnackActions.handleCode(params.feedbackCode, 'warning'));
+    params.token && dispatch(AuthActions.socialLoginThunk(params.token));
   };
 
   useEffect(() => {
@@ -46,9 +53,9 @@ const SocialButtons = () => {
     <FVStack space="5">
       <Separator />
       <FHStack space="5" justifyContent="center">
+        <IconButton size="2xl" icon={<GoogleIcon />} onPress={googleLogin} />
         <IconButton size="2xl" icon={<FacebookIcon />} onPress={facebookLogin} />
-        {/*TODO*/}
-        {/*<IconButton size="2xl" icon={<GoogleIcon />} onPress={googleLogin} />*/}
+        <IconButton size="2xl" icon={<AppleIcon />} onPress={appleLogin} />
       </FHStack>
     </FVStack>
   );
