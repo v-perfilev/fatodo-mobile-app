@@ -19,6 +19,9 @@
     "header": "Change password",
     "submit": "Submit"
   },
+  "socialLogin": {
+    "label": "Sign in with"
+  },
   "settings": {
     "notificationsSubtitle": "Notifications"
   },

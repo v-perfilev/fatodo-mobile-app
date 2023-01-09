@@ -9,13 +9,17 @@ import Separator from '../../../components/layouts/Separator';
 import IconButton from '../../../components/controls/IconButton';
 import {Linking} from 'react-native';
 import {useAppDispatch} from '../../../store/store';
-import {AuthActions} from '../../../store/auth/authActions';
 import AppleIcon from '../../../components/icons/AppleIcon';
 import GoogleIcon from '../../../components/icons/GoogleIcon';
+import {Text, useColorModeValue} from 'native-base';
 import {SnackActions} from '../../../store/snack/snackActions';
+import {AuthActions} from '../../../store/auth/authActions';
+import {useTranslation} from 'react-i18next';
 
 const SocialButtons = () => {
   const dispatch = useAppDispatch();
+  const {t} = useTranslation();
+  const appleColor = useColorModeValue('black', 'white');
 
   const oAuth2Login = (provider: string): void => {
     const apiUrl = API_URL + '/api/oauth2/authorize/' + provider;
@@ -32,11 +36,9 @@ const SocialButtons = () => {
 
   const handleOAuth2Redirect = ({url}: {url: string}): void => {
     let params: any = {};
-    let match;
-    const regex = new RegExp('socialLogin[?&]([^=#]+)=([^&#]*)#_=_$');
-    while ((match = regex.exec(url))) {
-      params[match[1]] = match[2];
-    }
+    const regex = new RegExp('socialLogin[?&]([^=#]+)=([^&#]*)');
+    const match = regex.exec(url);
+    match && (params[match[1]] = match[2]);
     params.feedbackCode && dispatch(SnackActions.handleCode(params.feedbackCode, 'warning'));
     params.token && dispatch(AuthActions.socialLoginThunk(params.token));
   };
@@ -52,11 +54,14 @@ const SocialButtons = () => {
   return (
     <FVStack space="5">
       <Separator />
-      <FHStack space="5" justifyContent="center">
-        <IconButton size="2xl" icon={<GoogleIcon />} onPress={googleLogin} />
-        <IconButton size="2xl" icon={<FacebookIcon />} onPress={facebookLogin} />
-        <IconButton size="2xl" icon={<AppleIcon />} onPress={appleLogin} />
-      </FHStack>
+      <FVStack space="1" alignItems="center">
+        <Text color="gray.400">{t('account:socialLogin.label')}:</Text>
+        <FHStack space="7" justifyContent="center">
+          <IconButton size="2xl" icon={<GoogleIcon />} onPress={googleLogin} />
+          <IconButton size="2xl" icon={<FacebookIcon />} onPress={facebookLogin} />
+          <IconButton size="2xl" icon={<AppleIcon color={appleColor} />} onPress={appleLogin} />
+        </FHStack>
+      </FVStack>
     </FVStack>
   );
 };

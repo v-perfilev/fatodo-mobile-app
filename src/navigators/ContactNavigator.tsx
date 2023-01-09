@@ -64,7 +64,7 @@ const ContactNavigator = () => {
       );
     } else if (route.count > 0) {
       return (
-        <Badge rounded="full" variant="outline" colorScheme="secondary">
+        <Badge rounded="full" variant="solid" colorScheme="secondary">
           {route.count > route.maxCount ? `${route.maxCount}+` : route.count}
         </Badge>
       );

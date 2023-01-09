@@ -19,6 +19,9 @@
     "header": "Изменение пароля",
     "submit": "Отправить"
   },
+  "socialLogin": {
+    "label": "Войти через"
+  },
   "settings": {
     "notificationsSubtitle": "Уведомления"
   },

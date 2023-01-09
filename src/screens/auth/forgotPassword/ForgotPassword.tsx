@@ -19,7 +19,7 @@ const ForgotPassword = () => {
 
   return (
     <SimpleScrollView>
-      <FCenter grow pt="10">
+      <FCenter grow pt="10" pb="5">
         <FVStack space="5" w="90%" maxW="300">
           <FCenter grow>
             <Logo withText />
