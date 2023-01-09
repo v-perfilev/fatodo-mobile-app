@@ -53,7 +53,7 @@
   "default": {
     "welcome": {
       "title": "Welcome!",
-      "content": "You joined to Fatodo..."
+      "content": "You joined to Fatodo!"
     }
   },
   "item": {

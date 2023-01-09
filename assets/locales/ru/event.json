@@ -65,7 +65,7 @@
   "default": {
     "welcome": {
       "title": "Добро пожаловать!",
-      "content": "Вы присоединились к Fatodo..."
+      "content": "Вы присоединились к Fatodo!"
     }
   },
   "item": {
