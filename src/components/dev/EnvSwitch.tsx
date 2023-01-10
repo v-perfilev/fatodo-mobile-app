@@ -26,7 +26,7 @@ const counterReducer = (counter: CounterState, action: CounterAction) => {
 };
 
 const RESET_TIMEOUT = 500;
-const SWITCHING_THRESHOLD = 10;
+const SWITCHING_THRESHOLD = 15;
 
 const EnvSwitch = () => {
   const [env, setEnv] = useState<ENV>(IS_DEVELOPMENT ? 'dev' : 'prod');

@@ -8,16 +8,21 @@ import FHStack from '../../../components/boxes/FHStack';
 import Separator from '../../../components/layouts/Separator';
 import IconButton from '../../../components/controls/IconButton';
 import {Linking} from 'react-native';
-import {useAppDispatch} from '../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AppleIcon from '../../../components/icons/AppleIcon';
 import GoogleIcon from '../../../components/icons/GoogleIcon';
 import {Text, useColorModeValue} from 'native-base';
 import {SnackActions} from '../../../store/snack/snackActions';
 import {AuthActions} from '../../../store/auth/authActions';
 import {useTranslation} from 'react-i18next';
+import withInAppBrowser, {InAppBrowserProps} from '../../../shared/hocs/withInAppBrowser';
+import AuthSelectors from '../../../store/auth/authSelectors';
 
-const SocialButtons = () => {
+type SocialButtonsProps = InAppBrowserProps;
+
+const SocialButtons = ({openBrowser, closeBrowser}: SocialButtonsProps) => {
   const dispatch = useAppDispatch();
+  const loading = useAppSelector(AuthSelectors.loading);
   const {t} = useTranslation();
   const appleColor = useColorModeValue('black', 'white');
 
@@ -27,7 +32,7 @@ const SocialButtons = () => {
     const timezoneParam = 'timezone=' + DateUtils.getTimezone();
     const redirectParam = 'redirect=' + 'fatodo://socialLogin';
     const oAuth2Url = apiUrl + '?' + languageParam + '&' + timezoneParam + '&' + redirectParam;
-    Linking.openURL(oAuth2Url).finally();
+    openBrowser(oAuth2Url);
   };
 
   const googleLogin = (): void => oAuth2Login('google');
@@ -41,6 +46,7 @@ const SocialButtons = () => {
     match && (params[match[1]] = match[2]);
     params.feedbackCode && dispatch(SnackActions.handleCode(params.feedbackCode, 'warning'));
     params.token && dispatch(AuthActions.socialLoginThunk(params.token));
+    closeBrowser();
   };
 
   useEffect(() => {
@@ -57,13 +63,13 @@ const SocialButtons = () => {
       <FVStack space="1" alignItems="center">
         <Text color="gray.400">{t('account:socialLogin.label')}:</Text>
         <FHStack space="7" justifyContent="center">
-          <IconButton size="2xl" icon={<GoogleIcon />} onPress={googleLogin} />
-          <IconButton size="2xl" icon={<FacebookIcon />} onPress={facebookLogin} />
-          <IconButton size="2xl" icon={<AppleIcon color={appleColor} />} onPress={appleLogin} />
+          <IconButton size="2xl" icon={<GoogleIcon />} disabled={loading} onPress={googleLogin} />
+          <IconButton size="2xl" icon={<FacebookIcon />} disabled={loading} onPress={facebookLogin} />
+          <IconButton size="2xl" icon={<AppleIcon color={appleColor} />} disabled={loading} onPress={appleLogin} />
         </FHStack>
       </FVStack>
     </FVStack>
   );
 };
 
-export default SocialButtons;
+export default withInAppBrowser(SocialButtons);
