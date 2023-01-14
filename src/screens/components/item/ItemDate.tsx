@@ -3,11 +3,11 @@ import {Item} from '../../../models/Item';
 import {Text} from 'native-base';
 import DateView from '../../../components/views/DateView';
 
-type GroupItemDateProps = {
+type ItemDateProps = {
   item: Item;
 };
 
-const GroupItemDate = ({item}: GroupItemDateProps) => {
+const ItemDate = ({item}: ItemDateProps) => {
   const date = new Date(item.createdAt);
 
   return (
@@ -17,4 +17,4 @@ const GroupItemDate = ({item}: GroupItemDateProps) => {
   );
 };
 
-export default GroupItemDate;
+export default ItemDate;

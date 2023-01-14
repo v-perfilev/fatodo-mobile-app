@@ -6,12 +6,12 @@ import InfoSelectors from '../../../store/info/infoSelectors';
 import UserLink from '../../../components/links/UserLink';
 import {Group} from '../../../models/Group';
 
-type GroupItemUserProps = {
+type ItemUserProps = {
   group: Group;
   item: Item;
 };
 
-const GroupItemUser = ({group, item}: GroupItemUserProps) => {
+const ItemUser = ({group, item}: ItemUserProps) => {
   const userSelector = useCallback(InfoSelectors.makeUserSelector(), []);
   const user = useAppSelector((state) => userSelector(state, item.createdBy));
 
@@ -22,4 +22,4 @@ const GroupItemUser = ({group, item}: GroupItemUserProps) => {
   );
 };
 
-export default GroupItemUser;
+export default ItemUser;

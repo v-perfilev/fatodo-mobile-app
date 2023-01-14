@@ -22,7 +22,7 @@ import {ProtectedNavigationProps} from '../../../navigators/ProtectedNavigator';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
 import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import PlusIcon from '../../../components/icons/PlusIcon';
-import GroupItem from '../../components/groupItem/GroupItem';
+import ItemView from '../../components/item/ItemView';
 import GroupViewListSkeleton from '../skeletons/GroupViewListSkeleton';
 import CentredLoader from '../../../components/surfaces/CentredLoader';
 import Separator from '../../../components/layouts/Separator';
@@ -93,7 +93,7 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
   const keyExtractor = useCallback((item: Item): string => item.id, []);
   const renderItem = useCallback(
     (info: ListRenderItemInfo<Item>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <GroupItem item={info.item} group={group} canEdit={canEdit} onLayout={onLayout} />
+      <ItemView item={info.item} group={group} canEdit={canEdit} onLayout={onLayout} />
     ),
     [group],
   );

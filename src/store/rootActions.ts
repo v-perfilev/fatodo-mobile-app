@@ -10,6 +10,7 @@ import {ItemActions} from './item/itemActions';
 import {ContactsActions} from './contacts/contactsActions';
 import {UserActions} from './user/userActions';
 import {AuthActions} from './auth/authActions';
+import {ListActions} from './list/listActions';
 
 export class RootActions {
   static afterRefreshState = () => (dispatch: AppDispatch) => {
@@ -20,6 +21,7 @@ export class RootActions {
     dispatch(EventsActions.afterRefresh());
     dispatch(GroupActions.afterRefresh());
     dispatch(GroupsActions.afterRefresh());
+    dispatch(ListActions.afterRefresh());
     dispatch(ItemActions.afterRefresh());
   };
 
@@ -34,6 +36,7 @@ export class RootActions {
     dispatch(GroupActions.afterLogout());
     dispatch(GroupsActions.afterLogout());
     dispatch(ItemActions.afterLogout());
+    dispatch(ListActions.afterLogout());
     dispatch(UserActions.afterLogout());
   };
 }

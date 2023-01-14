@@ -61,6 +61,12 @@ export default class ItemService {
     return axios.get(url, {params, transformResponse});
   };
 
+  public static getItemList = (offset?: number, size?: number): AxiosPromise<PageableList<Item>> => {
+    const url = ItemService.baseUrl + '/list';
+    const params = {offset, size};
+    return axios.get(url, {params});
+  };
+
   public static getItemsByGroupId = (
     groupId: string,
     offset?: number,

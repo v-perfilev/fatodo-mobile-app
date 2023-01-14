@@ -6,11 +6,11 @@ import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import PressableButton from '../../../components/controls/PressableButton';
 
-type GroupItemGroupProps = {
+type ItemGroupProps = {
   group: Group;
 };
 
-const GroupItemGroup = ({group}: GroupItemGroupProps) => {
+const ItemGroup = ({group}: ItemGroupProps) => {
   const groupNavigation = useNavigation<GroupNavigationProps>();
 
   const theme = ThemeFactory.getTheme(group.color);
@@ -21,7 +21,7 @@ const GroupItemGroup = ({group}: GroupItemGroupProps) => {
 
   return (
     <PressableButton onPress={goToGroupView}>
-      <Box position="relative" px="3" pt="0.5" pb="1" borderRadius="lg" overflow="hidden">
+      <Box position="relative" px="2" pt="0.25" pb="0.5" borderRadius="lg" overflow="hidden">
         <Box
           position="absolute"
           left="0"
@@ -39,4 +39,4 @@ const GroupItemGroup = ({group}: GroupItemGroupProps) => {
   );
 };
 
-export default GroupItemGroup;
+export default ItemGroup;

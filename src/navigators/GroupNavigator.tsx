@@ -9,6 +9,7 @@ import ItemView from '../screens/items/itemView/ItemView';
 import GroupEdit from '../screens/groups/groupEdit/GroupEdit';
 import ItemCreate from '../screens/items/itemCreate/ItemCreate';
 import ItemEdit from '../screens/items/itemEdit/ItemEdit';
+import ItemList from '../screens/list/itemList/ItemList';
 
 type GroupRouteProps = {
   group?: Group;
@@ -22,6 +23,7 @@ type ItemRouteProps = {
 };
 
 export type GroupParamList = {
+  ItemList: undefined;
   GroupList: undefined;
   GroupView: GroupRouteProps;
   GroupCreate: undefined;
@@ -39,8 +41,9 @@ export type GroupNavigationProps = NativeStackNavigationProp<GroupParamList>;
 
 const GroupNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="GroupList">
-      <Stack.Screen name="GroupList" component={GroupList} />
+    <Stack.Navigator screenOptions={{headerShown: false, animation: 'slide_from_right'}} initialRouteName="ItemList">
+      <Stack.Screen name="ItemList" component={ItemList} options={{animation: 'none'}} />
+      <Stack.Screen name="GroupList" component={GroupList} options={{animation: 'none'}} />
       <Stack.Screen name="GroupView" component={GroupView} />
       <Stack.Screen name="GroupCreate" component={GroupCreate} />
       <Stack.Screen name="GroupEdit" component={GroupEdit} />

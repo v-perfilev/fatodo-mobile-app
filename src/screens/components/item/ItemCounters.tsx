@@ -11,12 +11,12 @@ import {useNavigation} from '@react-navigation/native';
 import {ProtectedNavigationProps} from '../../../navigators/ProtectedNavigator';
 import PriorityView from '../../../components/views/PriorityView';
 
-type GroupItemCountersProps = {
+type ItemCountersProps = {
   group: Group;
   item: Item;
 };
 
-const GroupItemGroup = ({group, item}: GroupItemCountersProps) => {
+const ItemCounters = ({group, item}: ItemCountersProps) => {
   const commentThreadSelector = useCallback(InfoSelectors.makeCommentThreadSelector(), []);
   const commentThread = useAppSelector((state) => commentThreadSelector(state, item.id));
 
@@ -43,4 +43,4 @@ const GroupItemGroup = ({group, item}: GroupItemCountersProps) => {
   );
 };
 
-export default GroupItemGroup;
+export default ItemCounters;

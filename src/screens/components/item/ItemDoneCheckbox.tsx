@@ -5,13 +5,13 @@ import {Item} from '../../../models/Item';
 import {ItemActions} from '../../../store/item/itemActions';
 import {useAppDispatch} from '../../../store/store';
 
-type GroupItemDoneCheckboxProps = {
+type ItemDoneCheckboxProps = {
   group: Group;
   item: Item;
   canEdit?: boolean;
 };
 
-const GroupItemDoneCheckbox = ({group, item, canEdit}: GroupItemDoneCheckboxProps) => {
+const ItemDoneCheckbox = ({group, item, canEdit}: ItemDoneCheckboxProps) => {
   const dispatch = useAppDispatch();
   const [statusLoading, setStatusLoading] = useState<boolean>(false);
   const toggleStatus = (): void => {
@@ -35,4 +35,4 @@ const GroupItemDoneCheckbox = ({group, item, canEdit}: GroupItemDoneCheckboxProp
   );
 };
 
-export default GroupItemDoneCheckbox;
+export default ItemDoneCheckbox;

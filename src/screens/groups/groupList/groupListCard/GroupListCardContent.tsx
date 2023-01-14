@@ -2,7 +2,6 @@ import React, {memo} from 'react';
 import {Item} from '../../../../models/Item';
 import GroupListCardSkeleton from '../../skeletons/GroupListCardSkeleton';
 import GroupListCardInfo from './GroupListCardInfo';
-import GroupItem from '../../../components/groupItem/GroupItem';
 import {Group} from '../../../../models/Group';
 import FVStack from '../../../../components/boxes/FVStack';
 import {Box} from 'native-base';
@@ -10,6 +9,7 @@ import {GroupUtils} from '../../../../shared/utils/GroupUtils';
 import {useAppSelector} from '../../../../store/store';
 import AuthSelectors from '../../../../store/auth/authSelectors';
 import Separator from '../../../../components/layouts/Separator';
+import ItemView from '../../../components/item/ItemView';
 
 type GroupListCardContentProps = {
   group: Group;
@@ -28,7 +28,7 @@ const GroupListCardContent = ({group, items, itemsCount, loading}: GroupListCard
       {!loading &&
         items.slice(0, 5).map((item, index) => (
           <Box key={index}>
-            <GroupItem item={item} group={group} canEdit={canEdit} />
+            <ItemView item={item} group={group} canEdit={canEdit} />
             <Separator />
           </Box>
         ))}

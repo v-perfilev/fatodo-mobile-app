@@ -8,6 +8,9 @@ import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import {GroupsActions} from '../../../store/groups/groupsActions';
 import IconButton from '../../../components/controls/IconButton';
+import {useNavigation} from '@react-navigation/native';
+import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
+import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 
 type GroupListHeaderProps = {
   sorting: boolean;
@@ -18,6 +21,11 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
   const dispatch = useAppDispatch();
   const groups = useAppSelector(GroupsSelectors.groups);
   const allCollapsed = useAppSelector(GroupsSelectors.itemsAllCollapsed);
+  const groupNavigation = useNavigation<GroupNavigationProps>();
+
+  const goToItemList = (): void => {
+    groupNavigation.replace('ItemList');
+  };
 
   const setAllCollapsed = (value: boolean): void => {
     dispatch(GroupsActions.setAllCollapsed(value));
@@ -57,7 +65,12 @@ const GroupListHeader = ({sorting, setSorting}: GroupListHeaderProps) => {
   };
 
   return (
-    <Header showAvatar hideGoBack>
+    <Header
+      showAvatar
+      hideGoBack
+      afterTitle={<ArrowDownIcon color="primary.500" size="lg" mt="1" />}
+      onTitleClick={goToItemList}
+    >
       {sorting ? (
         <>
           <IconButton size="2xl" icon={<CheckIcon />} onPress={saveSorting} />

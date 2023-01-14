@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useCallback, useMemo} from 'react';
+import React, {PropsWithChildren, ReactElement, useCallback, useMemo} from 'react';
 import {Text, useColorModeValue} from 'native-base';
 import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
@@ -15,7 +15,6 @@ import UserView from '../views/UserView';
 import {DARK_BG, LIGHT_BG} from '../../shared/themes/colors';
 import {accountToUser} from '../../models/User';
 import IconButton from '../controls/IconButton';
-import FBox from '../boxes/FBox';
 
 type HeaderProps = PropsWithChildren<{
   title?: string;
@@ -24,9 +23,21 @@ type HeaderProps = PropsWithChildren<{
   showLogo?: boolean;
   hideGoBack?: boolean;
   hideTitle?: boolean;
+  afterTitle?: ReactElement;
+  onTitleClick?: () => void;
 }>;
 
-const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBack, hideTitle}: HeaderProps) => {
+const Header = ({
+  children,
+  title,
+  imageFilename,
+  showAvatar,
+  showLogo,
+  hideGoBack,
+  hideTitle,
+  afterTitle,
+  onTitleClick,
+}: HeaderProps) => {
   const account = useAppSelector(AuthSelectors.account);
   const {toggleDrawer} = useDrawerContext();
   const {t} = useTranslation();
@@ -55,11 +66,14 @@ const Header = ({children, title, imageFilename, showAvatar, showLogo, hideGoBac
           {showLogo && <Logo size={10} />}
           {!hideTitle && imageFilename && <UrlPic file={imageFilename} size="43px" border="1" />}
           {!hideTitle && (
-            <FBox>
-              <Text fontWeight="400" fontSize="xl" lineHeight="xl" color="primary.500" isTruncated>
-                {label}
-              </Text>
-            </FBox>
+            <PressableButton onPress={onTitleClick}>
+              <FHStack space="1" alignItems="center">
+                <Text fontWeight="400" fontSize="xl" lineHeight="xl" color="primary.500" isTruncated>
+                  {label}
+                </Text>
+                {afterTitle}
+              </FHStack>
+            </PressableButton>
           )}
         </FHStack>
       )}
