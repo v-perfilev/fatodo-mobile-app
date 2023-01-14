@@ -13,7 +13,7 @@ type FormikSelectProps = FormikInputProps;
 
 type FormikSelectItemProps = {
   option: string;
-  options: Map<string, string | ReactElement>;
+  options: Map<string | number, string | ReactElement>;
   setCurrent: (current: string) => void;
 };
 

@@ -6,13 +6,14 @@ import FCenter from '../boxes/FCenter';
 
 type CheckboxInputProps = IPressableProps & {
   isSelected: boolean;
+  size?: number;
 };
 
-const CheckboxInput = ({isSelected, ...props}: CheckboxInputProps) => {
+const CheckboxInput = ({isSelected, size = 25, ...props}: CheckboxInputProps) => {
   return (
     <PressableButton {...props}>
-      <FCenter w="25px" h="25px" borderWidth="1" borderColor="secondary.500" borderRadius="5">
-        {isSelected && <CheckIcon color="primary.500" size="md" />}
+      <FCenter w={`${size}px`} h={`${size}px`} borderWidth="1" borderColor="secondary.500" borderRadius="5">
+        {isSelected && <CheckIcon color="primary.500" size={`${size}px`} />}
       </FCenter>
     </PressableButton>
   );

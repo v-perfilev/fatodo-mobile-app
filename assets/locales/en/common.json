@@ -30,21 +30,13 @@
     "YEARLY": "at {{time}} on {{date}}"
   },
   "statuses": {
-    "CREATED": "created",
-    "WORK_IN_PROGRESS": "in progress",
-    "COMPLETED": "completed",
-    "CLOSED": "closed"
-  },
-  "types": {
-    "TASK": "task",
-    "EVENT": "event",
-    "REPETITION": "repetition",
-    "NOTE": "note"
+    "workInProgress": "Work in progress",
+    "closed": "Closed"
   },
   "priorities": {
-    "LOW": "low",
-    "NORMAL": "normal",
-    "HIGH": "high"
+    "low": "Low",
+    "normal": "Normal",
+    "high": "High"
   },
   "links": {
     "userDeleted": "User deleted"

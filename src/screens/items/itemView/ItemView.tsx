@@ -18,12 +18,10 @@ import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import Separator from '../../../components/layouts/Separator';
 import {useTranslation} from 'react-i18next';
 import MultiLabeledBox, {MultiLabeledBoxItem} from '../../../components/surfaces/MultiLabeledBox';
-import StatusView from '../../../components/views/StatusView';
-import TypeView from '../../../components/views/TypeView';
 import PriorityView from '../../../components/views/PriorityView';
-import DateParamView from '../../../components/views/DateParamView';
 import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
+import StatusView from '../../../components/views/StatusView';
 
 type ItemViewProps = WithItemProps;
 
@@ -45,10 +43,8 @@ const ItemView = ({group, item, containerLoading}: ItemViewProps) => {
         ? [
             {label: t('item:labels.item'), value: item.title},
             {label: t('item:labels.group'), value: group?.title},
-            {label: t('item:labels.status'), value: <StatusView statusType={item.status} />},
-            {label: t('item:labels.type'), value: <TypeView type={item.type} />},
             {label: t('item:labels.priority'), value: <PriorityView priority={item.priority} />},
-            {label: t('item:labels.date'), value: item.date && <DateParamView date={item.date} />},
+            {label: t('item:labels.status'), value: <StatusView done={item.done} />},
           ]
         : [],
     [item, group, i18n.language],

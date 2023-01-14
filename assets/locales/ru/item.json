@@ -7,13 +7,10 @@
     "noDescription": "Без описания"
   },
   "labels": {
-    "status": "Статус",
-    "type": "Тип",
-    "date": "Дата",
     "priority": "Приоритет",
+    "status": "Статус",
     "description": "Описание",
     "reminders": "Напоминания",
-    "tags": "Тэги",
     "item": "Запись",
     "group": "Группа",
     "createdBy": "Добавлено",
@@ -26,39 +23,16 @@
       "label": "Название",
       "required": "Обязательное поле"
     },
-    "status": {
-      "label": "Статус",
-      "required": "Обязательное поле"
-    },
-    "type": {
-      "label": "Тип",
-      "required": "Обязательное поле"
-    },
     "priority": {
       "label": "Приоритет",
       "required": "Обязательное поле"
     },
-    "time": {
-      "label": "Время"
-    },
-    "date": {
-      "label": "Дата"
-    },
     "description": {
       "label": "Описание"
-    },
-    "tags": {
-      "label": "Теги"
     },
     "reminders": {
       "label": "Напоминания"
     }
-  },
-  "statuses": {
-    "created": "Создано",
-    "workInProgress": "В процессе",
-    "completed": "Завершено",
-    "closed": "Закрыто"
   },
   "actions": {
     "save": "Сохранить",

@@ -7,13 +7,10 @@
     "noDescription": "No description"
   },
   "labels": {
-    "status": "Status",
-    "type": "Type",
-    "date": "Date",
     "priority": "Priority",
+    "status": "Status",
     "description": "Description",
     "reminders": "Reminders",
-    "tags": "Tags",
     "item": "Item",
     "group": "Group",
     "createdBy": "Created by",
@@ -26,39 +23,16 @@
       "label": "Title",
       "required": "Required"
     },
-    "status": {
-      "label": "Status",
-      "required": "Required"
-    },
-    "type": {
-      "label": "Type",
-      "required": "Required"
-    },
     "priority": {
       "label": "Priority",
       "required": "Required"
     },
-    "time": {
-      "label": "Time"
-    },
-    "date": {
-      "label": "Date"
-    },
     "description": {
       "label": "Description"
-    },
-    "tags": {
-      "label": "Tags"
     },
     "reminders": {
       "label": "Reminders"
     }
-  },
-  "statuses": {
-    "created": "Created",
-    "workInProgress": "Work in progress",
-    "completed": "Completed",
-    "closed": "Closed"
   },
   "actions": {
     "save": "Save",

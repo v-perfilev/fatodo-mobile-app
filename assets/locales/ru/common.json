@@ -30,21 +30,13 @@
     "YEARLY": "в {{time}} {{date}}"
   },
   "statuses": {
-    "CREATED": "создана",
-    "WORK_IN_PROGRESS": "в процессе",
-    "COMPLETED": "завершена",
-    "CLOSED": "закрыта"
-  },
-  "types": {
-    "TASK": "задача",
-    "EVENT": "событие",
-    "REPETITION": "повторение",
-    "NOTE": "заметка"
+    "workInProgress": "В работе",
+    "closed": "Завершена"
   },
   "priorities": {
-    "LOW": "низкий",
-    "NORMAL": "средний",
-    "HIGH": "высокий"
+    "low": "Низкий",
+    "normal": "Средний",
+    "height": "Высокий"
   },
   "links": {
     "userDeleted": "Пользователь удалён"

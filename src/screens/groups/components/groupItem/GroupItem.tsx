@@ -4,9 +4,7 @@ import {Box, IBoxProps, Text} from 'native-base';
 import FVStack from '../../../../components/boxes/FVStack';
 import FHStack from '../../../../components/boxes/FHStack';
 import {Group} from '../../../../models/Group';
-import StatusView from '../../../../components/views/StatusView';
 import PriorityView from '../../../../components/views/PriorityView';
-import TypeView from '../../../../components/views/TypeView';
 import CommentsIcon from '../../../../components/icons/CommentsIcon';
 import GroupItemMenu from './GroupItemMenu';
 import GroupItemChanges from './GroupItemChanges';
@@ -58,9 +56,7 @@ const GroupItem = ({item, group, canEdit, ...props}: GroupItemProps) => {
         </FHStack>
         <FHStack grow justifyContent="space-between" alignItems="center">
           <FHStack space="2">
-            <TypeView type={item.type} fontSize="xs" colorScheme={group.color} fontColor="gray.400" />
             <PriorityView priority={item.priority} fontSize="xs" colorScheme={group.color} fontColor="gray.400" />
-            <StatusView statusType={item.status} fontSize="xs" colorScheme={group.color} fontColor="gray.400" />
           </FHStack>
           <FHStack space="3">
             {item.remindersCount > 0 && (

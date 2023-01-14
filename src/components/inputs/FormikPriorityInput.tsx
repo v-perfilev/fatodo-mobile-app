@@ -11,8 +11,8 @@ type FormikTypeInputProps = IFormControlProps &
     label?: string;
   };
 
-const prioritySelectMap = new Map<string, ReactElement>();
-itemPriorityTypes.forEach((p) => prioritySelectMap.set(p, <PriorityView priority={p} />));
+const prioritySelectMap = new Map<number, ReactElement>();
+itemPriorityTypes.forEach((p, index) => prioritySelectMap.set(index + 1, <PriorityView priority={p} />));
 
 const FormikTypeInput = (props: FormikTypeInputProps) => {
   return <FormikSelect options={prioritySelectMap} {...props} />;
