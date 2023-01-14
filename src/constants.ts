@@ -44,7 +44,7 @@ export const AVATARS_IN_CARD = 3;
 
 // SKELETONS
 export const GROUP_ITEM_SKELETONS_COUNT = 5;
-export const ITEM_SKELETON_HEIGHT = 122;
+export const GROUP_ITEM_SKELETON_HEIGHT = 87;
 export const EVENT_SKELETON_HEIGHT = 131;
 export const CONTACT_SKELETON_HEIGHT = 64;
 export const CHAT_SKELETON_HEIGHT = 64;

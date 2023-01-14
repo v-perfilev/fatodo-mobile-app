@@ -22,7 +22,7 @@ import {ProtectedNavigationProps} from '../../../navigators/ProtectedNavigator';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
 import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 import PlusIcon from '../../../components/icons/PlusIcon';
-import GroupItem from '../components/groupItem/GroupItem';
+import GroupItem from '../../components/groupItem/GroupItem';
 import GroupViewListSkeleton from '../skeletons/GroupViewListSkeleton';
 import CentredLoader from '../../../components/surfaces/CentredLoader';
 import Separator from '../../../components/layouts/Separator';

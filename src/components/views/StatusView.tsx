@@ -2,7 +2,7 @@ import React, {ReactElement, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Text} from 'native-base';
 import FHStack from '../boxes/FHStack';
-import CheckboxInput from '../controls/CheckboxInput';
+import Checkbox from '../controls/Checkbox';
 
 type StatusViewProps = {
   done: boolean;
@@ -12,7 +12,7 @@ export const StatusView = ({done}: StatusViewProps) => {
   const {t, i18n} = useTranslation();
 
   const getIcon = (done: boolean): ReactElement => {
-    return <CheckboxInput isSelected={done} size={20} />;
+    return <Checkbox checked={done} size={20} />;
   };
 
   const getText = (done: boolean): string => {

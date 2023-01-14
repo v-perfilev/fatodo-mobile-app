@@ -59,6 +59,10 @@ export class GroupActions {
     dispatch(groupSlice.actions.setItem(item));
   };
 
+  static updateItemArchived = (item: Item) => (dispatch: AppDispatch) => {
+    dispatch(groupSlice.actions.updateItemArchived(item));
+  };
+
   static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
     dispatch(groupSlice.actions.removeItem(itemId));
   };
@@ -155,16 +159,6 @@ export class GroupActions {
       const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
       itemIds.length > 0 && thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk(itemIds));
       itemUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
-      return response.data;
-    },
-  );
-
-  static updateItemArchivedThunk = createAsyncThunk<Item, Item, AsyncThunkConfig>(
-    PREFIX + 'updateItemArchived',
-    async (item, thunkAPI) => {
-      const response = await ItemService.updateItemArchived(item.id, !item.archived);
-      thunkAPI.dispatch(GroupActions.updateItem(response.data));
-      thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
       return response.data;
     },
   );

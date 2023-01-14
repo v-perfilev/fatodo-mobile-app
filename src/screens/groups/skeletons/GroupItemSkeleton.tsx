@@ -3,25 +3,24 @@ import FVStack from '../../../components/boxes/FVStack';
 import FHStack from '../../../components/boxes/FHStack';
 import {Skeleton} from 'native-base';
 import FBox from '../../../components/boxes/FBox';
-import {ITEM_SKELETON_HEIGHT} from '../../../constants';
+import {GROUP_ITEM_SKELETON_HEIGHT} from '../../../constants';
 
 const GroupItemSkeleton = () => {
   return (
-    <FVStack h={`${ITEM_SKELETON_HEIGHT}px`} px="4" py="5" space="4">
-      <FHStack alignItems="center">
-        <FBox>
-          <Skeleton w="90%" h="16px" rounded="xl" />
-        </FBox>
-        <FBox grow={false}>
-          <Skeleton w="25px" h="25px" rounded="full" />
-        </FBox>
-      </FHStack>
-      <Skeleton w="150px" h="12px" rounded="xl" />
-      <FHStack grow justifyContent="space-between" alignItems="center">
-        <Skeleton w="200px" h="14px" rounded="xl" />
-        <Skeleton w="50px" h="20px" rounded="xl" />
-      </FHStack>
-    </FVStack>
+    <FHStack h={`${GROUP_ITEM_SKELETON_HEIGHT}px`} px="4" py="5" space="3" alignItems="center">
+      <Skeleton w="30px" h="30px" rounded="md" />
+      <FBox>
+        <Skeleton w="80%" h="20px" rounded="xl" />
+      </FBox>
+      <FVStack h="100%" justifyContent="space-between" alignItems="flex-end" space="3">
+        <Skeleton w="50px" h="12px" rounded="xl" />
+        <FHStack space="3">
+          <Skeleton w="20px" h="20px" rounded="md" />
+          <Skeleton w="27px" h="20px" rounded="md" />
+          <Skeleton w="27px" h="20px" rounded="md" />
+        </FHStack>
+      </FVStack>
+    </FHStack>
   );
 };
 

@@ -100,6 +100,20 @@ const itemSlice = createSlice({
       itemSlice.caseReducers.setItem(state, action);
       itemSlice.caseReducers.setReminders(state, {...action, payload: action.meta.arg.reminders});
     });
+
+    /*
+    updateItemStatus
+    */
+    builder.addCase(ItemActions.updateItemStatusThunk.fulfilled, (state: ItemState, action) => {
+      itemSlice.caseReducers.setItem(state, action);
+    });
+
+    /*
+    updateItemArchived
+    */
+    builder.addCase(ItemActions.updateItemArchivedThunk.fulfilled, (state: ItemState, action) => {
+      itemSlice.caseReducers.setItem(state, action);
+    });
   },
 });
 

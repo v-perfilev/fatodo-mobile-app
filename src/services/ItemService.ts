@@ -96,8 +96,8 @@ export default class ItemService {
     return axios.put(url, dto);
   };
 
-  public static updateItemStatus = (id: string, status: string): AxiosPromise<Item> => {
-    const dto = {id, status};
+  public static updateItemStatus = (id: string, done: boolean): AxiosPromise<Item> => {
+    const dto = {id, done};
     const url = ItemService.baseUrl + '/item/status';
     return axios.put(url, dto);
   };

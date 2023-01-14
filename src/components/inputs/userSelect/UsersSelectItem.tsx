@@ -2,7 +2,7 @@ import React from 'react';
 import {User} from '../../../models/User';
 import {Text} from 'native-base';
 import UrlPic from '../../surfaces/UrlPic';
-import CheckboxInput from '../../controls/CheckboxInput';
+import Checkbox from '../../controls/Checkbox';
 import FHStack from '../../boxes/FHStack';
 
 type UsersSelectInputProps = {
@@ -18,7 +18,7 @@ const UsersSelectItem = ({user, isSelected, toggleSelected}: UsersSelectInputPro
         <UrlPic file={user.imageFilename} size="sm" border={1} />
         <Text isTruncated>{user.username}</Text>
       </FHStack>
-      <CheckboxInput onPress={toggleSelected} isSelected={isSelected} />
+      <Checkbox onPress={toggleSelected} checked={isSelected} />
     </FHStack>
   );
 };

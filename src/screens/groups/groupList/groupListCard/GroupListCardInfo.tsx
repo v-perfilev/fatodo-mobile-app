@@ -58,9 +58,9 @@ const GroupListCardInfo = ({group, items, itemsCount}: GroupListCardHeaderProps)
           </LinkButton>
         )}
       </FHStack>
-      <BoxWithIcon icon={<ItemsIcon color={`${group.color}.500`} size="md" />} text={itemsCount || 0} />
+      <BoxWithIcon icon={<ItemsIcon color={`${group.color}.500`} size="sm" />} text={itemsCount || 0} />
       <BoxWithIcon
-        icon={<CommentsIcon color={`${group.color}.500`} size="md" />}
+        icon={<CommentsIcon color={`${group.color}.500`} size="sm" />}
         text={commentThread?.count || 0}
         onPress={goToComments}
       />

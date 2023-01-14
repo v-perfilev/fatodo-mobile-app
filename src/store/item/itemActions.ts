@@ -106,4 +106,26 @@ export class ItemActions {
       return response.data;
     },
   );
+
+  static updateItemStatusThunk = createAsyncThunk<Item, Item, AsyncThunkConfig>(
+    PREFIX + 'updateItemStatus',
+    async (item, thunkAPI) => {
+      const response = await ItemService.updateItemStatus(item.id, !item.done);
+      thunkAPI.dispatch(GroupsActions.updateItem(response.data));
+      thunkAPI.dispatch(GroupActions.updateItem(response.data));
+      thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
+      return response.data;
+    },
+  );
+
+  static updateItemArchivedThunk = createAsyncThunk<Item, Item, AsyncThunkConfig>(
+    PREFIX + 'updateItemArchived',
+    async (item, thunkAPI) => {
+      const response = await ItemService.updateItemArchived(item.id, !item.archived);
+      thunkAPI.dispatch(GroupsActions.updateItemArchived(response.data));
+      thunkAPI.dispatch(GroupActions.updateItemArchived(response.data));
+      thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
+      return response.data;
+    },
+  );
 }

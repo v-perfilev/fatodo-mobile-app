@@ -4,13 +4,16 @@ import GroupListCardCollapseButton from './GroupListCardCollapseButton';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProps} from '../../../../navigators/GroupNavigator';
 import UrlPic from '../../../../components/surfaces/UrlPic';
-import GroupListCardMenuButton from './GroupListCardMenuButton';
 import {LINEAR_GRADIENT_FUNC, ThemeFactory} from '../../../../shared/themes/ThemeFactory';
 import {Group} from '../../../../models/Group';
 import FHStack from '../../../../components/boxes/FHStack';
 import GroupListCardDragButton from './GroupListCardDragButton';
 import PressableButton from '../../../../components/controls/PressableButton';
 import {DARK_BG, LIGHT_BG} from '../../../../shared/themes/colors';
+import GroupListCardCreateButton from './GroupListCardCreateButton';
+import {GroupUtils} from '../../../../shared/utils/GroupUtils';
+import {useAppSelector} from '../../../../store/store';
+import AuthSelectors from '../../../../store/auth/authSelectors';
 
 type GroupListCardHeaderProps = {
   group: Group;
@@ -20,6 +23,7 @@ type GroupListCardHeaderProps = {
 };
 
 const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHeaderProps) => {
+  const account = useAppSelector(AuthSelectors.account);
   const navigation = useNavigation<GroupNavigationProps>();
   const theme = ThemeFactory.getTheme(group.color);
 
@@ -28,6 +32,8 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
   const bg = useColorModeValue(LIGHT_BG, DARK_BG);
   const bgOpacity = useColorModeValue(0.2, 0.3);
   const titleColor = useColorModeValue(theme.colors.primary['500'], 'gray.100');
+
+  const canEdit = group && GroupUtils.canEdit(account, group);
 
   return (
     <PressableButton onPress={goToGroupView}>
@@ -57,14 +63,9 @@ const GroupListCardHeader = ({group, collapsed, sorting, drag}: GroupListCardHea
             {group.title}
           </Text>
           <FHStack grow space="1" alignItems="center" justifyContent="flex-end">
-            {sorting ? (
-              <GroupListCardDragButton drag={drag} colorScheme={group.color} />
-            ) : (
-              <>
-                <GroupListCardCollapseButton group={group} collapsed={collapsed} colorScheme={group.color} />
-                <GroupListCardMenuButton group={group} colorScheme={group.color} />
-              </>
-            )}
+            {sorting && <GroupListCardDragButton drag={drag} colorScheme={group.color} />}
+            {!sorting && canEdit && <GroupListCardCreateButton group={group} colorScheme={group.color} />}
+            {!sorting && <GroupListCardCollapseButton group={group} collapsed={collapsed} colorScheme={group.color} />}
           </FHStack>
         </FHStack>
       </Box>

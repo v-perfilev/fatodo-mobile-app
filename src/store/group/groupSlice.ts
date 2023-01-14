@@ -188,13 +188,6 @@ const groupSlice = createSlice({
     });
 
     /*
-    updateItemArchived
-    */
-    builder.addCase(GroupActions.updateItemArchivedThunk.fulfilled, (state, action) => {
-      groupSlice.caseReducers.updateItemArchived(state, action);
-    });
-
-    /*
     removeItem
     */
     builder.addCase(GroupActions.removeItemThunk.fulfilled, (state, action) => {
