@@ -93,7 +93,7 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
   const keyExtractor = useCallback((item: Item): string => item.id, []);
   const renderItem = useCallback(
     (info: ListRenderItemInfo<Item>, onLayout: (event: LayoutChangeEvent) => void): ReactElement => (
-      <ItemView item={info.item} group={group} canEdit={canEdit} onLayout={onLayout} />
+      <ItemView item={info.item} group={group} canEdit={!info.item.archived && canEdit} onLayout={onLayout} />
     ),
     [group],
   );

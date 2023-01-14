@@ -188,13 +188,6 @@ const groupSlice = createSlice({
     });
 
     /*
-    removeItem
-    */
-    builder.addCase(GroupActions.removeItemThunk.fulfilled, (state, action) => {
-      groupSlice.caseReducers.removeItem(state, action);
-    });
-
-    /*
     createGroup
     */
     builder.addCase(GroupActions.createGroupThunk.pending, (state) => {

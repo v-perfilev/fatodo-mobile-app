@@ -4,7 +4,7 @@ import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {Item} from '../../../models/Item';
 import {useAppDispatch} from '../../../store/store';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
-import {GroupActions} from '../../../store/group/groupActions';
+import {ItemActions} from '../../../store/item/itemActions';
 
 export type ItemDeleteDialogProps = {
   item: Item;
@@ -27,7 +27,7 @@ const ItemDeleteDialog = ({item, close, onSuccess = () => null}: ItemDeleteDialo
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(GroupActions.removeItemThunk(item))
+    dispatch(ItemActions.removeItemThunk(item))
       .unwrap()
       .then(() => {
         onSuccess();

@@ -4,7 +4,7 @@ import {Group} from '../../../models/Group';
 import ConfirmationDialog from '../../../components/modals/ConfirmationDialog';
 import {useAppDispatch} from '../../../store/store';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
-import {GroupsActions} from '../../../store/groups/groupsActions';
+import {GroupActions} from '../../../store/group/groupActions';
 
 export type GroupLeaveDialogProps = {
   group: Group;
@@ -27,7 +27,7 @@ const GroupLeaveDialog = ({group, show, close, onSuccess = () => null}: GroupLea
 
   const onAgree = (): void => {
     setLoading(true);
-    dispatch(GroupsActions.leaveGroupThunk(group.id))
+    dispatch(GroupActions.leaveGroupThunk(group.id))
       .unwrap()
       .then(() => {
         onSuccess();

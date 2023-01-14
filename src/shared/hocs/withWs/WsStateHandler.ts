@@ -15,6 +15,7 @@ import {GroupsActions} from '../../../store/groups/groupsActions';
 import {GroupActions} from '../../../store/group/groupActions';
 import {InfoActions} from '../../../store/info/infoActions';
 import {ItemActions} from '../../../store/item/itemActions';
+import {CalendarActions} from '../../../store/calendar/calendarActions';
 
 type HandlerFunc = (msg: WsEvent<any>) => void;
 
@@ -113,18 +114,21 @@ export class WsStateHandler {
     const item = msg.payload;
     this.dispatch(GroupsActions.addItem(item));
     this.dispatch(GroupActions.addItem(item));
+    this.dispatch(CalendarActions.reset());
   };
 
   private handleItemUpdateEvent = (msg: WsEvent<Item>): void => {
     const item = msg.payload;
     this.dispatch(GroupsActions.updateItem(item));
     this.dispatch(GroupActions.updateItem(item));
+    this.dispatch(CalendarActions.reset());
   };
 
   private handleItemUpdateArchivedEvent = (msg: WsEvent<Item>): void => {
     const item = msg.payload;
     this.dispatch(GroupsActions.updateItemArchived(item));
     this.dispatch(GroupActions.updateItem(item));
+    this.dispatch(CalendarActions.reset());
   };
 
   private handleItemDeleteEvent = (msg: WsEvent<Item>): void => {
@@ -132,11 +136,13 @@ export class WsStateHandler {
     this.dispatch(GroupsActions.removeItem(item));
     this.dispatch(GroupActions.removeItem(item.id));
     this.dispatch(ItemActions.removeItem(item.id));
+    this.dispatch(CalendarActions.reset());
   };
 
   private handleItemGroupCreateEvent = (msg: WsEvent<Group>): void => {
     const group = msg.payload;
     this.dispatch(GroupsActions.addGroup(group));
+    this.dispatch(CalendarActions.reset());
   };
 
   private handleItemGroupUpdateEvent = (msg: WsEvent<Group>): void => {
@@ -151,6 +157,7 @@ export class WsStateHandler {
     this.dispatch(GroupsActions.removeGroup(groupId));
     this.dispatch(GroupActions.removeGroup(groupId));
     this.dispatch(ItemActions.removeGroup(groupId));
+    this.dispatch(CalendarActions.reset());
   };
 
   private handleItemMemberAddEvent = (msg: WsEvent<GroupMember[]>): void => {

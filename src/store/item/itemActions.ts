@@ -11,6 +11,7 @@ import {Reminder} from '../../models/Reminder';
 import {SnackActions} from '../snack/snackActions';
 import {GroupsActions} from '../groups/groupsActions';
 import {GroupActions} from '../group/groupActions';
+import {ListActions} from '../list/listActions';
 
 const PREFIX = 'item/';
 
@@ -27,14 +28,14 @@ export class ItemActions {
     dispatch(itemSlice.actions.setGroup(group));
   };
 
+  static removeGroup = (groupId: string) => async (dispatch: AppDispatch) => {
+    dispatch(itemSlice.actions.removeGroup(groupId));
+  };
+
   static setItem = (item: Item) => async (dispatch: AppDispatch) => {
     dispatch(itemSlice.actions.setItem(item));
     dispatch(itemSlice.actions.setShouldLoad(false));
     dispatch(ItemActions.fetchRemindersThunk(item.id));
-  };
-
-  static removeGroup = (groupId: string) => async (dispatch: AppDispatch) => {
-    dispatch(itemSlice.actions.removeGroup(groupId));
   };
 
   static removeItem = (groupId: string) => async (dispatch: AppDispatch) => {
@@ -91,6 +92,7 @@ export class ItemActions {
       const response = await ItemService.createItem(dto);
       thunkAPI.dispatch(GroupsActions.addItem(response.data, true));
       thunkAPI.dispatch(GroupActions.addItem(response.data));
+      thunkAPI.dispatch(ListActions.addItem(response.data));
       thunkAPI.dispatch(SnackActions.handleCode('item.created', 'info'));
       return response.data;
     },
@@ -102,6 +104,7 @@ export class ItemActions {
       const response = await ItemService.updateItem(dto);
       thunkAPI.dispatch(GroupsActions.updateItem(response.data));
       thunkAPI.dispatch(GroupActions.updateItem(response.data));
+      thunkAPI.dispatch(ListActions.updateItem(response.data));
       thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
       return response.data;
     },
@@ -113,6 +116,7 @@ export class ItemActions {
       const response = await ItemService.updateItemStatus(item.id, !item.done);
       thunkAPI.dispatch(GroupsActions.updateItem(response.data));
       thunkAPI.dispatch(GroupActions.updateItem(response.data));
+      thunkAPI.dispatch(ListActions.updateItem(response.data));
       thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
       return response.data;
     },
@@ -124,8 +128,21 @@ export class ItemActions {
       const response = await ItemService.updateItemArchived(item.id, !item.archived);
       thunkAPI.dispatch(GroupsActions.updateItemArchived(response.data));
       thunkAPI.dispatch(GroupActions.updateItemArchived(response.data));
+      thunkAPI.dispatch(ListActions.updateItem(response.data));
       thunkAPI.dispatch(SnackActions.handleCode('item.edited', 'info'));
       return response.data;
+    },
+  );
+
+  static removeItemThunk = createAsyncThunk<string, Item, AsyncThunkConfig>(
+    PREFIX + 'deleteItem',
+    async (item, thunkAPI) => {
+      await ItemService.deleteItem(item.id);
+      thunkAPI.dispatch(GroupsActions.removeItem(item, true));
+      thunkAPI.dispatch(GroupActions.removeItem(item.id));
+      thunkAPI.dispatch(ListActions.removeItem(item.id));
+      thunkAPI.dispatch(SnackActions.handleCode('item.deleted', 'info'));
+      return item.id;
     },
   );
 }

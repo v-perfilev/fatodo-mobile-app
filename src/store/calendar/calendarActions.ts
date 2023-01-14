@@ -16,6 +16,10 @@ export class CalendarActions {
     dispatch(calendarSlice.actions.reset());
   };
 
+  static reset = () => (dispatch: AppDispatch) => {
+    dispatch(calendarSlice.actions.reset());
+  };
+
   static afterRefresh = () => (dispatch: AppDispatch) => {
     dispatch(calendarSlice.actions.reset());
     dispatch(calendarSlice.actions.setShouldLoad(true));

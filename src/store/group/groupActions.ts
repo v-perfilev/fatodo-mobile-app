@@ -5,11 +5,11 @@ import {Group, GroupMember} from '../../models/Group';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import ItemService from '../../services/ItemService';
 import {ArrayUtils} from '../../shared/utils/ArrayUtils';
-import groupsSlice from '../groups/groupsSlice';
 import {InfoActions} from '../info/infoActions';
 import {SnackActions} from '../snack/snackActions';
 import {PageableList} from '../../models/PageableList';
 import {GroupsActions} from '../groups/groupsActions';
+import {ListActions} from '../list/listActions';
 
 const PREFIX = 'group/';
 
@@ -163,21 +163,12 @@ export class GroupActions {
     },
   );
 
-  static removeItemThunk = createAsyncThunk<string, Item, AsyncThunkConfig>(
-    PREFIX + 'deleteItem',
-    async (item, thunkAPI) => {
-      await ItemService.deleteItem(item.id);
-      thunkAPI.dispatch(GroupsActions.removeItem(item, true));
-      thunkAPI.dispatch(SnackActions.handleCode('item.deleted', 'info'));
-      return item.id;
-    },
-  );
-
   static createGroupThunk = createAsyncThunk<Group, FormData, AsyncThunkConfig>(
     PREFIX + 'createGroup',
     async (formData, thunkAPI) => {
       const response = await ItemService.createGroup(formData);
       thunkAPI.dispatch(GroupsActions.createGroup(response.data));
+      thunkAPI.dispatch(ListActions.addGroup(response.data));
       thunkAPI.dispatch(SnackActions.handleCode('group.created', 'info'));
       return response.data;
     },
@@ -188,6 +179,7 @@ export class GroupActions {
     async (formData, thunkAPI) => {
       const response = await ItemService.updateGroup(formData);
       thunkAPI.dispatch(GroupsActions.updateGroup(response.data));
+      thunkAPI.dispatch(ListActions.updateGroup(response.data));
       thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
       return response.data;
     },
@@ -201,6 +193,7 @@ export class GroupActions {
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.addMembersToGroup(group.id, userIds);
       thunkAPI.dispatch(GroupsActions.updateGroup(updatedGroup));
+      thunkAPI.dispatch(ListActions.updateGroup(updatedGroup));
       thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
       return updatedGroup;
     },
@@ -213,6 +206,7 @@ export class GroupActions {
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.editGroupMember(group.id, member);
       thunkAPI.dispatch(GroupsActions.updateGroup(updatedGroup));
+      thunkAPI.dispatch(ListActions.updateGroup(updatedGroup));
       thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
       return updatedGroup;
     },
@@ -224,9 +218,32 @@ export class GroupActions {
       const updatedMembers = group.members.filter((m) => !userIds.includes(m.userId));
       const updatedGroup = {...group, members: updatedMembers};
       await ItemService.removeMembersFromGroup(group.id, userIds);
-      thunkAPI.dispatch(groupsSlice.actions.updateGroup(updatedGroup));
+      thunkAPI.dispatch(GroupsActions.updateGroup(updatedGroup));
+      thunkAPI.dispatch(ListActions.updateGroup(updatedGroup));
       thunkAPI.dispatch(SnackActions.handleCode('group.edited', 'info'));
       return updatedGroup;
+    },
+  );
+
+  static removeGroupThunk = createAsyncThunk<string, string, AsyncThunkConfig>(
+    PREFIX + 'deleteGroup',
+    async (groupId, thunkAPI) => {
+      await ItemService.deleteGroup(groupId);
+      thunkAPI.dispatch(GroupsActions.removeGroup(groupId));
+      thunkAPI.dispatch(ListActions.removeGroup(groupId));
+      thunkAPI.dispatch(SnackActions.handleCode('group.deleted', 'info'));
+      return groupId;
+    },
+  );
+
+  static leaveGroupThunk = createAsyncThunk<string, string, AsyncThunkConfig>(
+    PREFIX + 'leaveGroup',
+    async (groupId, thunkAPI) => {
+      await ItemService.leaveGroup(groupId);
+      thunkAPI.dispatch(GroupsActions.removeGroup(groupId));
+      thunkAPI.dispatch(ListActions.removeGroup(groupId));
+      thunkAPI.dispatch(SnackActions.handleCode('group.left', 'info'));
+      return groupId;
     },
   );
 }

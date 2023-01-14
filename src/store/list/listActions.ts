@@ -39,6 +39,18 @@ export class ListActions {
     dispatch(listSlice.actions.removeItems(groupId));
   };
 
+  static addItem = (item: Item) => (dispatch: AppDispatch) => {
+    dispatch(listSlice.actions.setItem(item));
+  };
+
+  static updateItem = (item: Item) => (dispatch: AppDispatch) => {
+    dispatch(listSlice.actions.setItem(item));
+  };
+
+  static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
+    dispatch(listSlice.actions.removeItem(itemId));
+  };
+
   static fetchGroupsThunk = createAsyncThunk<Group[], void, AsyncThunkConfig>(
     PREFIX + 'fetchGroups',
     async (_, thunkAPI) => {

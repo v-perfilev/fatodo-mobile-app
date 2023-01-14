@@ -226,28 +226,6 @@ const groupsSlice = createSlice({
       const countMap: [string, number][] = action.payload.map((entry) => [entry[0], entry[1].count]);
       groupsSlice.caseReducers.setItemsCount(state, {...action, payload: countMap});
     });
-
-    /*
-    removeGroup
-    */
-    builder.addCase(GroupsActions.removeGroupThunk.fulfilled, (state, action) => {
-      groupsSlice.caseReducers.removeGroup(state, action);
-      groupsSlice.caseReducers.removeItems(state, action);
-      groupsSlice.caseReducers.removeItemsCount(state, action);
-      groupsSlice.caseReducers.removeItemsLoading(state, action);
-      groupsSlice.caseReducers.removeCollapsed(state, action);
-    });
-
-    /*
-    leaveGroup
-    */
-    builder.addCase(GroupsActions.leaveGroupThunk.fulfilled, (state, action) => {
-      groupsSlice.caseReducers.removeGroup(state, action);
-      groupsSlice.caseReducers.removeItems(state, action);
-      groupsSlice.caseReducers.removeItemsCount(state, action);
-      groupsSlice.caseReducers.removeItemsLoading(state, action);
-      groupsSlice.caseReducers.removeCollapsed(state, action);
-    });
   },
 });
 
