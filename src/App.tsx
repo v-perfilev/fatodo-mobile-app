@@ -26,6 +26,7 @@ import RootNavigator from './navigators/RootNavigator';
 import withNotificationDisplay from './shared/hocs/withNotificationDisplay';
 import withSound from './shared/hocs/withSound';
 import withVersionCheck from './shared/hocs/withStartupModalDisplay';
+import withUrlListener from './shared/hocs/withUrlListener';
 
 // ignore some warnings
 const ignoredLogPatterns = [
@@ -77,6 +78,7 @@ export default flowRight([
   withSnackDisplay,
   withWsClient,
   withDialogs,
+  withUrlListener,
   withRootContainer,
   withVersionCheck,
 ])(App);

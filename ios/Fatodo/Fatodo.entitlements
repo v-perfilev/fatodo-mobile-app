@@ -4,5 +4,10 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:client.fatodo.app</string>
+		<string>applinks:fatodo-stage.persoff68.com</string>
+	</array>
 </dict>
 </plist>

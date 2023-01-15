@@ -81,6 +81,14 @@ export class AuthActions {
     },
   );
 
+  static activateThunk = createAsyncThunk<void, string, AsyncThunkConfig>(
+    PREFIX + 'activate',
+    async (code, thunkAPI) => {
+      await AuthService.activate(code);
+      thunkAPI.dispatch(SnackActions.handleCode('auth.activated', 'info'));
+    },
+  );
+
   static forgotPasswordThunk = createAsyncThunk<void, ForgotPasswordDTO, AsyncThunkConfig>(
     PREFIX + 'forgotPassword',
     async (dto, thunkAPI) => {

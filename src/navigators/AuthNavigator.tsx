@@ -6,8 +6,12 @@ import ForgotPassword from '../screens/auth/forgotPassword/ForgotPassword';
 import {flowRight} from 'lodash';
 import withSafeArea from '../shared/hocs/withSafeArea';
 
+type ActivationRouteProps = {
+  activationCode?: string;
+};
+
 export type AuthParamList = {
-  SignIn: undefined;
+  SignIn: ActivationRouteProps;
   SignUp: undefined;
   ForgotPassword: undefined;
 };

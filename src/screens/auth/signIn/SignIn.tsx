@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SignInForm from './SignInForm';
 import Logo from '../../../components/layouts/Logo';
 import LinkButton from '../../../components/controls/LinkButton';
 import {useTranslation} from 'react-i18next';
-import {useNavigation} from '@react-navigation/native';
-import {AuthNavigationProps} from '../../../navigators/AuthNavigator';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {AuthNavigationProps, AuthParamList} from '../../../navigators/AuthNavigator';
 import LanguageMenu from '../../../components/controls/LanguageMenu';
 import FCenter from '../../../components/boxes/FCenter';
 import FVStack from '../../../components/boxes/FVStack';
@@ -12,13 +12,22 @@ import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import ColorModeSwitch from '../../../components/controls/ColorModeSwitch';
 import SocialButtons from './SocialButtons';
 import SignInDev from './SignInDev';
+import {useAppDispatch} from '../../../store/store';
+import {AuthActions} from '../../../store/auth/authActions';
 
 const SignIn = () => {
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<AuthNavigationProps>();
   const {t} = useTranslation();
+  const route = useRoute<RouteProp<AuthParamList, 'SignIn'>>();
+  const activationCode = route.params.activationCode;
 
   const goToForgotPassword = (): void => navigation.navigate('ForgotPassword');
   const goToSignUp = (): void => navigation.navigate('SignUp');
+
+  useEffect(() => {
+    activationCode && dispatch(AuthActions.activateThunk(activationCode));
+  }, [activationCode]);
 
   return (
     <SimpleScrollView position="relative">

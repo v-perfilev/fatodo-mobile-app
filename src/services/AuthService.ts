@@ -7,6 +7,11 @@ import axios from '../shared/axios';
 export default class AuthService {
   private static baseUrl = '/api/auth';
 
+  public static activate = (code: string): AxiosPromise<void> => {
+    const url = AuthService.baseUrl + '/account/activate/' + code;
+    return axios.get(url);
+  };
+
   public static authenticate = (dto: LoginDTO): AxiosPromise<void> => {
     const url = AuthService.baseUrl + '/account/authenticate';
     return axios.post(url, dto);

@@ -43,10 +43,12 @@ const SocialButtons = ({openBrowser, closeBrowser}: SocialButtonsProps) => {
     let params: any = {};
     const regex = new RegExp('socialLogin[?&]([^=#]+)=([^&#]*)');
     const match = regex.exec(url);
-    match && (params[match[1]] = match[2]);
-    params.feedbackCode && dispatch(SnackActions.handleCode(params.feedbackCode, 'warning'));
-    params.token && dispatch(AuthActions.socialLoginThunk(params.token));
-    closeBrowser();
+    if (match) {
+      params[match[1]] = match[2];
+      params.feedbackCode && dispatch(SnackActions.handleCode(params.feedbackCode, 'warning'));
+      params.token && dispatch(AuthActions.socialLoginThunk(params.token));
+      closeBrowser();
+    }
   };
 
   useEffect(() => {

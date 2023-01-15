@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createNativeStackNavigator, NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useAppSelector} from '../store/store';
 import AuthSelectors from '../store/auth/authSelectors';
 import AuthNavigator, {AuthParamList} from './AuthNavigator';
@@ -16,6 +16,8 @@ export type RootParamList = {
 };
 
 const Stack = createNativeStackNavigator<RootParamList>();
+
+export type RootNavigationProps = NativeStackNavigationProp<RootParamList>;
 
 const RootNavigator = () => {
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
