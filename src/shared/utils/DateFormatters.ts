@@ -76,12 +76,13 @@ export class DateFormatters {
   ): string => {
     const timeFormat = account?.settings.timeFormat || 'H24';
     const dateFormat = account?.settings.dateFormat || 'YMD_DASH';
-    const formatArray: string[] = [];
+    let formatArray: string[] = [];
     if (timeFormatType) {
       formatArray.push(DateFormats.getTimeFormat(timeFormat));
     }
     if (dateFormatType === 'DEPENDS_ON_DAY') {
-      formatArray.push(DateFormats.getDependsOnDayFormat(date, dateFormat));
+      const formattedDate = DateFormats.getDependsOnDayFormat(date, dateFormat);
+      formattedDate && (formatArray = [formattedDate]);
       DateUtils.resetLocale('en');
     } else if (dateFormatType === 'FULL') {
       formatArray.push(DateFormats.getFullDateFormat(dateFormat));
