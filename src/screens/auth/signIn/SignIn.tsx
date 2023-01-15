@@ -20,7 +20,7 @@ const SignIn = () => {
   const navigation = useNavigation<AuthNavigationProps>();
   const {t} = useTranslation();
   const route = useRoute<RouteProp<AuthParamList, 'SignIn'>>();
-  const activationCode = route.params.activationCode;
+  const activationCode = route.params?.activationCode;
 
   const goToForgotPassword = (): void => navigation.navigate('ForgotPassword');
   const goToSignUp = (): void => navigation.navigate('SignUp');
