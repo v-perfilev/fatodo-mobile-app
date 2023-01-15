@@ -25,6 +25,7 @@ import ColoredStatusBar from './components/layouts/ColoredStatusBar';
 import RootNavigator from './navigators/RootNavigator';
 import withNotificationDisplay from './shared/hocs/withNotificationDisplay';
 import withSound from './shared/hocs/withSound';
+import withVersionCheck from './shared/hocs/withStartupModalDisplay';
 
 // ignore some warnings
 const ignoredLogPatterns = [
@@ -77,4 +78,5 @@ export default flowRight([
   withWsClient,
   withDialogs,
   withRootContainer,
+  withVersionCheck,
 ])(App);

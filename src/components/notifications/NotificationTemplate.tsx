@@ -37,7 +37,7 @@ const NotificationTemplate = ({image, title, author, content, onClick}: Notifica
 
   return (
     <PressableButton onPress={handlePress}>
-      <FVStack space="1" px="3" py="2" borderWidth="1" borderRadius="xl" borderColor={borderColor} bg={bg}>
+      <FVStack space="1" px="3" py="2" borderWidth="0.25" borderRadius="lg" borderColor={borderColor} bg={bg}>
         <FHStack justifyContent="space-between">
           <FHStack space="2" alignItems="center">
             {image}

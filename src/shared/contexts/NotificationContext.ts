@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {Ref, useContext} from 'react';
+import React, {Ref, useContext} from 'react';
 import {Event} from '../../models/Event';
 import {NotificationBaseMethods} from '../../components/notifications/NotificationBase';
 

@@ -6,6 +6,12 @@
       "clear": "Удалить"
     }
   },
+  "versionCheck": {
+    "androidMessage": "Новая версия Fatodo доступна на Google Play",
+    "iosVersion": "Новая версия Fatodo доступна на App Store",
+    "update": "Обновить",
+    "cancel": "Нет, спасибо"
+  },
   "usersSelect": {
     "usersNotFound": "Пользователи не найдены"
   },

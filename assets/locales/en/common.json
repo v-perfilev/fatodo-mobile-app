@@ -6,6 +6,12 @@
       "clear": "Clear"
     }
   },
+  "versionCheck": {
+    "androidMessage": "The new version of Fatodo is available on Google Play",
+    "iosVersion": "The new version of Fatodo is available on App Store",
+    "update": "Update the app",
+    "cancel": "No, thanks"
+  },
   "usersSelect": {
     "usersNotFound": "Users not found"
   },
