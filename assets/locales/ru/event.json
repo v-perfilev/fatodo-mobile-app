@@ -46,8 +46,8 @@
       "title": "Реакция на комментарий",
       "contentWithGroup": "<user/> отреагировал на Ваш комментарий к группе <group/>",
       "contentWithGroup_FEMALE": "<user/> отреагировала на Ваш комментарий к группе <group/>",
-      "contentWithItem": "<user/> отреагировал на Ваш комментарий к записи <item/>",
-      "contentWithItem_FEMALE": "<user/> отреагировала на Ваш комментарий к записи <item/>"
+      "contentWithItem": "<user/> отреагировал на Ваш комментарий к задаче <item/>",
+      "contentWithItem_FEMALE": "<user/> отреагировала на Ваш комментарий к задаче <item/>"
     }
   },
   "contact": {
@@ -70,9 +70,9 @@
   },
   "item": {
     "create": {
-      "title": "Новая запись",
-      "content": "<user/> создал запись <item/> в группе <group/>",
-      "content_FEMALE": "<user/> создала запись <item/> в группе <group/>"
+      "title": "Новая задача",
+      "content": "<user/> создал задачу <item/> в группе <group/>",
+      "content_FEMALE": "<user/> создала задачу <item/> в группе <group/>"
     },
     "groupCreate": {
       "title": "Новая группа",
@@ -105,14 +105,14 @@
       "content_FEMALE": "<user/> изменила роль пользователя <users/> в группе <group/>"
     },
     "update": {
-      "title": "Запись отредактирована",
-      "content": "<user/> отредактировал запись <item/> в группе <group/>",
-      "content_FEMALE": "<user/> отредактировала запись <item/> в группе <group/>"
+      "title": "Задача отредактирована",
+      "content": "<user/> отредактировал задача <item/> в группе <group/>",
+      "content_FEMALE": "<user/> отредактировала задача <item/> в группе <group/>"
     }
   },
   "reminder": {
     "title": "Напоминание",
-    "content": "Запись <item/> в группе <group/>"
+    "content": "Задача <item/> в группе <group/>"
   },
   "links": {
     "chat": "чат"

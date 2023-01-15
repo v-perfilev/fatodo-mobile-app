@@ -19,9 +19,9 @@
     "left": "You left the group"
   },
   "item": {
-    "created": "Item created",
-    "edited": "Item edited",
-    "deleted": "Item deleted"
+    "created": "Task created",
+    "edited": "Task edited",
+    "deleted": "Task deleted"
   },
   "contact": {
     "relationRemoved": "Relation removed",

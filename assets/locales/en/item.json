@@ -1,7 +1,7 @@
 {
   "headers": {
-    "create": "Create item in {{group}}",
-    "edit": "Edit item in {{group}}"
+    "create": "Create task in {{group}}",
+    "edit": "Edit task in {{group}}"
   },
   "view": {
     "noDescription": "No description"
@@ -11,7 +11,7 @@
     "status": "Status",
     "description": "Description",
     "reminders": "Reminders",
-    "item": "Item",
+    "item": "Task",
     "group": "Group",
     "createdBy": "Created by",
     "createdAt": "Created at",
@@ -37,15 +37,15 @@
   "actions": {
     "save": "Save",
     "cancel": "Cancel",
-    "create": "Create item",
+    "create": "Create task",
     "edit": "Edit",
     "delete": "Delete",
-    "list": "List of items",
+    "list": "List of tasks",
     "add": "Add",
     "close": "Close"
   },
   "deleteItem": {
-    "title": "Delete item",
-    "text": "Are you sure you want to delete item \"{{title}}\"?"
+    "title": "Delete task",
+    "text": "Are you sure you want to delete task \"{{title}}\"?"
   }
 }

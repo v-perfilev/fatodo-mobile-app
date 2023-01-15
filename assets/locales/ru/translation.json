@@ -1,6 +1,6 @@
 {
   "routes": {
-    "Groups": "Группы",
+    "Groups": "Задачи",
     "Calendar": "Календарь",
     "Contacts": "Контакты",
     "Chats": "Чаты",
@@ -10,9 +10,9 @@
     "GroupView": "Группа",
     "GroupCreate": "Создать группу",
     "GroupEdit": "Редактировать группу",
-    "ItemView": "Запись",
-    "ItemCreate": "Создать запись",
-    "ItemEdit": "Редактировать запись",
+    "ItemView": "Задача",
+    "ItemCreate": "Создать задачу",
+    "ItemEdit": "Редактировать задачу",
     "ContactList": "Контакты",
     "IncomingRequestList": "Входящие запросы",
     "OutcomingRequestList": "Исходящие запросы",

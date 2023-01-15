@@ -1,6 +1,6 @@
 {
   "item": {
-    "create": "New item",
+    "create": "New task",
     "createGroup": "New group",
     "addMembers": "Members added to group"
   },

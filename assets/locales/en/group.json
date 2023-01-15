@@ -20,13 +20,13 @@
     }
   },
   "actions": {
-    "showAll": "Show all items",
+    "showAll": "Show all tasks",
     "active": "Active",
     "archived": "Archived",
     "groups": "Groups",
     "view": "Open",
     "createGroup": "Create group",
-    "createItem": "Create item",
+    "createItem": "Create task",
     "create": "Create",
     "edit": "Edit",
     "leave": "Leave",

@@ -32,12 +32,12 @@
     "add": {
       "title": "Comment added",
       "contentWithGroup": "<user/> added comment in group <group/>",
-      "contentWithItem": "<user/> added comment in item <item/>"
+      "contentWithItem": "<user/> added comment in task <item/>"
     },
     "reaction": {
       "title": "Reaction on comment",
       "contentWithGroup": "<user/> reacted on your comment in group <group/>",
-      "contentWithItem": "<user/> reaction on your comment in item <item/>"
+      "contentWithItem": "<user/> reaction on your comment in task <item/>"
     }
   },
   "contact": {
@@ -58,8 +58,8 @@
   },
   "item": {
     "create": {
-      "title": "New item",
-      "content": "<user/> created item <item/> in group <group/>"
+      "title": "New task",
+      "content": "<user/> created task <item/> in group <group/>"
     },
     "groupCreate": {
       "title": "New group",
@@ -86,13 +86,13 @@
       "content": "<user/> changed role of <users/> in group <group/>"
     },
     "update": {
-      "title": "Item edited",
-      "content": "<user/> edited item <item/> in group <group/>"
+      "title": "Task edited",
+      "content": "<user/> edited task <item/> in group <group/>"
     }
   },
   "reminder": {
     "title": "Reminder",
-    "content": "Item <item/> in group <group/>"
+    "content": "Task <item/> in group <group/>"
   },
   "links": {
     "chat": "chat"

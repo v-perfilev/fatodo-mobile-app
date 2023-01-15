@@ -1,6 +1,6 @@
 {
   "routes": {
-    "Groups": "Groups",
+    "Groups": "Tasks",
     "Calendar": "Calendar",
     "Events": "Events",
     "Contacts": "Contacts",
@@ -10,9 +10,9 @@
     "GroupView": "Group",
     "GroupCreate": "Create group",
     "GroupEdit": "Edit group",
-    "ItemView": "Item",
-    "ItemCreate": "Create item",
-    "ItemEdit": "Edit item",
+    "ItemView": "Task",
+    "ItemCreate": "Create task",
+    "ItemEdit": "Edit task",
     "ContactList": "Contacts",
     "IncomingRequestList": "Incoming requests",
     "OutcomingRequestList": "Outcoming requests",
