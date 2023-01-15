@@ -20,10 +20,10 @@ type NotificationTemplateProps = {
 
 const NotificationTemplate = ({image, title, author, content, onClick}: NotificationTemplateProps) => {
   const {close} = useNotificationContext();
-  const titleColor = useColorModeValue('gray.600', 'gray.50');
+  const titleColor = useColorModeValue('gray.600', 'gray.100');
   const authorColor = useColorModeValue('primary.500', 'primary.600');
-  const borderColor = useColorModeValue('primary.300', 'gray.600');
-  const bg = useColorModeValue('gray.50', 'gray.600');
+  const bg = useColorModeValue('gray.50', 'gray.800');
+  const borderColor = useColorModeValue('gray.400', 'gray.500');
 
   const handlePress = (): void => {
     onClick();
