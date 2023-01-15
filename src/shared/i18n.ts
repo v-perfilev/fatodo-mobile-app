@@ -42,6 +42,9 @@ import calendarRU from '../../assets/locales/ru/calendar.json';
 // push
 import pushEN from '../../assets/locales/en/push.json';
 import pushRU from '../../assets/locales/ru/push.json';
+// list
+import listEN from '../../assets/locales/en/list.json';
+import listRU from '../../assets/locales/ru/list.json';
 
 require('moment/locale/en-gb.js');
 require('moment/locale/ru.js');
@@ -73,6 +76,7 @@ const resources = {
     event: eventEN,
     calendar: calendarEN,
     push: pushEN,
+    list: listEN,
   },
   ru: {
     translation: translationRU,
@@ -89,6 +93,7 @@ const resources = {
     event: eventRU,
     calendar: calendarRU,
     push: pushRU,
+    list: listRU,
   },
 };
 
@@ -112,6 +117,7 @@ i18next
       'user',
       'event',
       'calendar',
+      'list',
     ],
     defaultNS: 'translation',
     interpolation: {

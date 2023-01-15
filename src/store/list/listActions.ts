@@ -63,18 +63,6 @@ export class ListActions {
     },
   );
 
-  static fetchInitialItemsThunk = createAsyncThunk<PageableList<Item>, void, AsyncThunkConfig>(
-    PREFIX + 'fetchInitialItems',
-    async (_, thunkAPI) => {
-      const response = await ItemService.getItemList(0);
-      const itemIds = response.data.data.flatMap((i) => i.id);
-      const itemUserIds = response.data.data.flatMap((i) => [i.createdBy, i.lastModifiedBy]);
-      itemIds.length > 0 && thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk(itemIds));
-      itemUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(itemUserIds));
-      return response.data;
-    },
-  );
-
   static fetchItemsThunk = createAsyncThunk<PageableList<Item>, {offset?: number}, AsyncThunkConfig>(
     PREFIX + 'fetchItems',
     async ({offset}, thunkAPI) => {

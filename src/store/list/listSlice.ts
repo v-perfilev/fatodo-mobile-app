@@ -11,6 +11,7 @@ const initialState: ListState = {
   groups: [],
   items: [],
   allItemsLoaded: false,
+  listInitialized: false,
   shouldLoad: true,
 };
 
@@ -70,6 +71,10 @@ const listSlice = createSlice({
       state.allItemsLoaded = state.items.length === action.payload;
     },
 
+    setListInitialized: (state: ListState, action: PayloadAction<boolean>) => {
+      state.listInitialized = action.payload;
+    },
+
     setShouldLoad: (state: ListState, action: PayloadAction<boolean>) => {
       state.shouldLoad = action.payload;
     },
@@ -83,21 +88,13 @@ const listSlice = createSlice({
     });
 
     /*
-    fetchInitialItems
-    */
-    builder.addCase(ListActions.fetchInitialItemsThunk.fulfilled, (state, action) => {
-      listSlice.caseReducers.resetItems(state);
-      listSlice.caseReducers.setItems(state, {...action, payload: action.payload.data});
-      listSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
-      listSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
-    });
-
-    /*
     fetchItems
     */
     builder.addCase(ListActions.fetchItemsThunk.fulfilled, (state, action) => {
       listSlice.caseReducers.setItems(state, {...action, payload: action.payload.data});
       listSlice.caseReducers.calculateAllLoaded(state, {...action, payload: action.payload.count});
+      listSlice.caseReducers.setListInitialized(state, {...action, payload: true});
+      listSlice.caseReducers.setShouldLoad(state, {...action, payload: false});
     });
 
     /*

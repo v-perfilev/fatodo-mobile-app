@@ -12,6 +12,8 @@ class ListSelectors {
 
   static allItemsLoaded = createSelector(getListState, (state) => state.allItemsLoaded as boolean);
 
+  static listInitialized = createSelector(getListState, (state) => state.listInitialized as boolean);
+
   static shouldLoad = createSelector(getListState, (state) => state.shouldLoad as boolean);
 }
 

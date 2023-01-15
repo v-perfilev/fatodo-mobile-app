@@ -1,0 +1,12 @@
+{
+  "create": {
+    "title": "Create group or task",
+    "buttons": {
+      "createGroup": "Create group",
+      "createItem": "Create task"
+    }
+  },
+  "createItem": {
+    "title": "Select group"
+  }
+}

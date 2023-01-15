@@ -5,8 +5,7 @@ import {GroupsActions} from '../../../store/groups/groupsActions';
 import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 import {Group} from '../../../models/Group';
 import {DragEndParams, RenderItemParams, ScaleDecorator} from 'react-native-draggable-flatlist';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
+import {useIsFocused} from '@react-navigation/native';
 import GroupsSelectors from '../../../store/groups/groupsSelectors';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import {HEADER_HEIGHT} from '../../../constants';
@@ -20,6 +19,7 @@ import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import GroupListCard from './groupListCard/GroupListCard';
 import GroupListStub from './GroupListStub';
+import {useListDialogContext} from '../../../shared/contexts/dialogContexts/ListDialogContext';
 
 const paddingTop = HEADER_HEIGHT;
 const containerStyle: StyleProp<ViewStyle> = {paddingTop};
@@ -28,7 +28,7 @@ const loaderStyle: StyleProp<ViewStyle> = {paddingTop};
 const GroupList = () => {
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
-  const navigation = useNavigation<GroupNavigationProps>();
+  const {showCreateDialog} = useListDialogContext();
   const groups = useAppSelector(GroupsSelectors.groups);
   const groupsInitialized = useAppSelector(GroupsSelectors.groupsInitialized);
   const shouldLoad = useAppSelector(GroupsSelectors.shouldLoad);
@@ -36,7 +36,7 @@ const GroupList = () => {
   const [loading, setLoading] = useDelayedState(!groupsInitialized);
   const listRef = useRef<FlatListType>();
 
-  const goToGroupCreate = useCallback(() => navigation.navigate('GroupCreate'), []);
+  const openCreateDialog = useCallback(() => showCreateDialog(groups), [groups]);
 
   /*
   loaders
@@ -91,7 +91,7 @@ const GroupList = () => {
 
   const buttons = useMemo<CornerButton[]>(
     () => [
-      {icon: <PlusIcon />, action: goToGroupCreate, hidden: groups.length === 0},
+      {icon: <PlusIcon />, action: openCreateDialog, hidden: groups.length === 0},
       {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
     ],
     [groups],

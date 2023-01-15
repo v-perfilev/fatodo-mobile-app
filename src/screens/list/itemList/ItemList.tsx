@@ -21,6 +21,8 @@ import {ListActions} from '../../../store/list/listActions';
 import ItemListItem from './ItemListItem';
 import ItemListSkeleton from '../skeletons/ItemListSkeleton';
 import ItemListStub from './ItemListStub';
+import {useListDialogContext} from '../../../shared/contexts/dialogContexts/ListDialogContext';
+import {useDelayedState} from '../../../shared/hooks/useDelayedState';
 
 const paddingTop = HEADER_HEIGHT;
 const containerStyle: StyleProp<ViewStyle> = {paddingTop};
@@ -29,11 +31,16 @@ const loaderStyle: StyleProp<ViewStyle> = {paddingTop};
 const ItemList = () => {
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
+  const {showCreateDialog} = useListDialogContext();
+  const groups = useAppSelector(ListSelectors.groups);
   const items = useAppSelector(ListSelectors.items);
+  const listInitialized = useAppSelector(ListSelectors.listInitialized);
   const allItemsLoaded = useAppSelector(ListSelectors.allItemsLoaded);
   const shouldLoad = useAppSelector(ListSelectors.shouldLoad);
-
+  const [loading, setLoading] = useDelayedState(!listInitialized);
   const listRef = useRef<FlatListType>();
+
+  const openCreateDialog = useCallback(() => showCreateDialog(groups), [groups]);
 
   /*
   loaders
@@ -41,7 +48,7 @@ const ItemList = () => {
 
   const initialLoad = useCallback(async (): Promise<void> => {
     dispatch(ListActions.fetchGroupsThunk());
-    await dispatch(ListActions.fetchInitialItemsThunk());
+    await dispatch(ListActions.fetchItemsThunk({offset: 0}));
   }, []);
 
   const load = useCallback(async (): Promise<void> => {
@@ -76,24 +83,21 @@ const ItemList = () => {
    */
 
   useEffect(() => {
-    if (items.length === 0 && !allItemsLoaded) {
-      initialLoad().finally();
-    }
+    !listInitialized && initialLoad().finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
-    if (isFocused && shouldLoad) {
-      dispatch(ListActions.resetItems());
-      dispatch(ListActions.fetchInitialItemsThunk());
+    if (isFocused && listInitialized && shouldLoad) {
+      dispatch(ListActions.refreshItemsThunk());
     }
   }, [shouldLoad, isFocused]);
 
   const buttons = useMemo<CornerButton[]>(
     () => [
-      {icon: <PlusIcon />, action: console.log},
+      {icon: <PlusIcon />, action: openCreateDialog, hidden: items.length === 0},
       {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
     ],
-    [],
+    [items, openCreateDialog],
   );
 
   const cornerManagement = useCallback(
@@ -108,7 +112,7 @@ const ItemList = () => {
       contentContainerStyle={containerStyle}
       loaderStyle={loaderStyle}
       header={<ItemListHeader />}
-      loading={items.length === 0 && !allItemsLoaded}
+      loading={loading}
       loadingPlaceholder={<ItemListSkeleton />}
       ListEmptyComponent={<ItemListStub />}
       ListFooterComponent={items.length > 0 && !allItemsLoaded ? <CentredLoader my="5" /> : undefined}

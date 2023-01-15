@@ -5,5 +5,6 @@ export type ListState = {
   groups: Group[];
   items: Item[];
   allItemsLoaded: boolean;
+  listInitialized: boolean;
   shouldLoad: boolean;
 };
