@@ -60,7 +60,7 @@
                 android:launchMode="singleTask"
                 android:screenOrientation="portrait"
                 android:exported="true">
-            <intent-filter android:autoVerify="true">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
@@ -70,23 +70,13 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="fatodo"/>
             </intent-filter>
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="http" />
-                <data android:scheme="https"/>
-                <data android:host="client.fatodo.app"/>
-                <data android:pathPrefix="/activation/"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="http" />
-                <data android:scheme="https"/>
-                <data android:host="fatodo-stage.persoff68.com"/>
-                <data android:pathPrefix="/activation/"/>
+                <data android:scheme="https"
+                      android:host="client.fatodo.app"
+                      android:pathPrefix="/activation/"/>
             </intent-filter>
         </activity>
     </application>

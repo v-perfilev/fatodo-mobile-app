@@ -11,7 +11,6 @@ import FVStack from '../../../components/boxes/FVStack';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import ColorModeSwitch from '../../../components/controls/ColorModeSwitch';
 import SocialButtons from './SocialButtons';
-import SignInDev from './SignInDev';
 import {useAppDispatch} from '../../../store/store';
 import {AuthActions} from '../../../store/auth/authActions';
 
@@ -31,7 +30,6 @@ const SignIn = () => {
 
   return (
     <SimpleScrollView position="relative">
-      <SignInDev />
       <FCenter grow pt="10" pb="5">
         <FVStack space="5" w="90%" maxW="300px">
           <FCenter grow>
@@ -40,7 +38,9 @@ const SignIn = () => {
           <SignInForm />
           <FVStack space="2">
             <LinkButton onPress={goToForgotPassword}>{t('account:forgotPassword.header')}</LinkButton>
-            <LinkButton onPress={goToSignUp}>{t('account:register.header')}</LinkButton>
+            <LinkButton onPress={goToSignUp} _text={{fontWeight: 'bold'}}>
+              {t('account:register.header')}
+            </LinkButton>
           </FVStack>
           <SocialButtons />
         </FVStack>
