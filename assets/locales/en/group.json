@@ -3,6 +3,9 @@
     "create": "Create group",
     "edit": "Edit group"
   },
+  "archived": {
+    "itemsNotFound": "No archived tasks"
+  },
   "fields": {
     "title": {
       "label": "Title",

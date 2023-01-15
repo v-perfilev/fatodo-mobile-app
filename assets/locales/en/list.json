@@ -8,5 +8,8 @@
   },
   "createItem": {
     "title": "Select group"
+  },
+  "actions": {
+    "createGroupOrItem": "Create group or item"
   }
 }

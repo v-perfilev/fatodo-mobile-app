@@ -116,6 +116,7 @@ const filterItems = (items: Item[]): Item[] => {
   return items
     .filter(FilterUtils.withIdFilter)
     .filter(FilterUtils.uniqueByIdFilter)
+    .filter(FilterUtils.notArchivedFilter)
     .sort(ComparatorUtils.createdAtDescComparator);
 };
 

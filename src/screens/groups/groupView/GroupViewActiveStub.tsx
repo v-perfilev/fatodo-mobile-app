@@ -8,7 +8,7 @@ import {Group} from '../../../models/Group';
 import {useNavigation} from '@react-navigation/native';
 import {GroupNavigationProps} from '../../../navigators/GroupNavigator';
 
-type GroupViewStubProps = {
+type GroupViewActiveStubProps = {
   group: Group;
   canEdit: boolean;
 };
@@ -16,7 +16,7 @@ type GroupViewStubProps = {
 const img = require('../../../../assets/images/content-1.png');
 const size = 150;
 
-const GroupViewStub = ({group, canEdit}: GroupViewStubProps) => {
+const GroupViewActiveStub = ({group, canEdit}: GroupViewActiveStubProps) => {
   const {t} = useTranslation();
   const navigation = useNavigation<GroupNavigationProps>();
 
@@ -34,4 +34,4 @@ const GroupViewStub = ({group, canEdit}: GroupViewStubProps) => {
   );
 };
 
-export default GroupViewStub;
+export default GroupViewActiveStub;

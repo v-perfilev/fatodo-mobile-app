@@ -8,5 +8,8 @@
   },
   "createItem": {
     "title": "Выброр группы"
+  },
+  "actions": {
+    "createGroupOrItem": "Создать группу или задачу"
   }
 }

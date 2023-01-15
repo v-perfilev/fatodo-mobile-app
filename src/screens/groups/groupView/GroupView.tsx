@@ -3,7 +3,7 @@ import withGroupContainer, {WithGroupProps} from '../../../shared/hocs/withConta
 import GroupViewHeader from './GroupViewHeader';
 import {HEADER_HEIGHT} from '../../../constants';
 import {FlatListType} from '../../../components/scrollable/FlatList';
-import GroupViewStub from './GroupViewStub';
+import GroupViewActiveStub from './GroupViewActiveStub';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import GroupSelectors from '../../../store/group/groupSelectors';
 import {GroupActions} from '../../../store/group/groupActions';
@@ -28,6 +28,7 @@ import CentredLoader from '../../../components/surfaces/CentredLoader';
 import Separator from '../../../components/layouts/Separator';
 import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
+import GroupViewArchivedStub from './GroupViewArchivedStub';
 
 type GroupViewProps = WithGroupProps;
 
@@ -126,13 +127,18 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
     }
   }, [shouldLoad, isFocused]);
 
+  const stub = useMemo<ReactElement>(
+    () => (showArchived ? <GroupViewArchivedStub /> : <GroupViewActiveStub group={group} canEdit={canEdit} />),
+    [showArchived],
+  );
+
   const buttons = useMemo<CornerButton[]>(
     () => [
-      {icon: <PlusIcon />, action: goToItemCreate, hidden: !canEdit || items.length === 0},
+      {icon: <PlusIcon />, action: goToItemCreate, hidden: showArchived || !canEdit || items.length === 0},
       {icon: <CommentsIcon />, action: goToComments},
       {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
     ],
-    [goToItemCreate, goToComments, canEdit, items],
+    [goToItemCreate, goToComments, showArchived, canEdit, items],
   );
 
   const cornerManagement = useCallback(
@@ -149,7 +155,7 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
       header={<GroupViewHeader setShowArchived={setShowArchived} />}
       loading={containerLoading || (items.length === 0 && !allItemsLoaded)}
       loadingPlaceholder={<GroupViewListSkeleton />}
-      ListEmptyComponent={<GroupViewStub group={group} canEdit={canEdit} />}
+      ListEmptyComponent={stub}
       ListFooterComponent={items.length > 0 && !allItemsLoaded ? <CentredLoader my="5" /> : undefined}
       ItemSeparatorComponent={Separator}
       data={items}

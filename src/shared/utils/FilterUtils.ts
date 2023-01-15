@@ -11,6 +11,10 @@ export class FilterUtils {
     return !value.id || arr.findIndex((v) => v.id === value.id) === i;
   };
 
+  public static notArchivedFilter = (value: any): boolean => {
+    return !value.archived;
+  };
+
   public static uniqueByIdOrTypeAndDateFilter = (value: any, i: number, arr: any[]): boolean => {
     const idsEqual = (value: any, t: any): boolean => {
       return t.id === value.id;
