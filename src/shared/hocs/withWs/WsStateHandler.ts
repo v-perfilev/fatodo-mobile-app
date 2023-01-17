@@ -146,15 +146,21 @@ export class WsStateHandler {
 
   private handleItemGroupCreateEvent = (msg: WsEvent<Group>): void => {
     const group = msg.payload;
+    const memberIds = group.members.map((m) => m.userId);
     this.dispatch(ListActions.addGroup(group));
     this.dispatch(GroupsActions.addGroup(group));
+    this.dispatch(GroupsActions.fetchItemsThunk([group.id]));
+    this.dispatch(InfoActions.handleCommentThreadIdsThunk([group.id]));
+    this.dispatch(InfoActions.handleUserIdsThunk(memberIds));
     this.dispatch(CalendarActions.reset());
   };
 
   private handleItemGroupUpdateEvent = (msg: WsEvent<Group>): void => {
     const group = msg.payload;
+    const memberIds = group.members.map((m) => m.userId);
     this.dispatch(ListActions.updateGroup(group));
     this.dispatch(GroupsActions.updateGroup(group));
+    this.dispatch(InfoActions.handleUserIdsThunk(memberIds));
     this.dispatch(GroupActions.setGroup(group));
     this.dispatch(ItemActions.setGroup(group));
   };

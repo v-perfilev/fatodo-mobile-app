@@ -6,7 +6,6 @@ import ItemService from '../../services/ItemService';
 import {InfoActions} from '../info/infoActions';
 import {PageableList} from '../../models/PageableList';
 import {Group} from '../../models/Group';
-import groupsSlice from '../groups/groupsSlice';
 
 const PREFIX = 'list/';
 
@@ -20,9 +19,7 @@ export class ListActions {
   };
 
   static addGroup = (group: Group) => (dispatch: AppDispatch) => {
-    const memberIds = group.members.map((m) => m.userId);
-    dispatch(groupsSlice.actions.addGroup(group));
-    dispatch(InfoActions.handleUserIdsThunk(memberIds));
+    dispatch(listSlice.actions.addGroup(group));
     dispatch(listSlice.actions.setShouldLoad(true));
   };
 

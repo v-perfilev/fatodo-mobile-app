@@ -37,11 +37,7 @@ export class GroupsActions {
   };
 
   static addGroup = (group: Group) => (dispatch: AppDispatch) => {
-    const memberIds = group.members.map((m) => m.userId);
     dispatch(groupsSlice.actions.addGroup(group));
-    dispatch(GroupsActions.fetchItemsThunk([group.id]));
-    dispatch(InfoActions.handleCommentThreadIdsThunk([group.id]));
-    dispatch(InfoActions.handleUserIdsThunk(memberIds));
   };
 
   static updateGroup = (group: Group) => (dispatch: AppDispatch) => {
