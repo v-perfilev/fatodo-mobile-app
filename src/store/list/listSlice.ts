@@ -124,8 +124,7 @@ const filterItems = (items: Item[]): Item[] => {
     .filter(FilterUtils.withIdFilter)
     .filter(FilterUtils.uniqueByIdFilter)
     .filter(FilterUtils.notArchivedFilter)
-    .sort(ComparatorUtils.createdAtDescComparator)
-    .sort(ComparatorUtils.priorityDescComparator);
+    .sort(ComparatorUtils.itemsComparator);
 };
 
 export default listSlice;
