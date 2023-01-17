@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ComponentType, memo, useEffect, useRef} from 'react';
 import WsClient from '../../../components/ws/WsClient';
-import {WS_ROOT_TOPIC, WS_URL} from '../../../constants';
+import {API_CONFIG, WS_PATH, WS_ROOT_TOPIC} from '../../../constants';
 import {WsEvent} from '../../../models/Ws';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import {WsEventHandler} from './WsEventHandler';
@@ -42,7 +42,7 @@ const withWsClient = (Component: ComponentType) => (props: any) => {
   return (
     <>
       <Component {...props} />
-      <WsClient active={isActive} url={WS_URL} topics={[WS_ROOT_TOPIC]} onMessage={onMessage} />
+      <WsClient active={isActive} url={API_CONFIG.baseUrl + WS_PATH} topics={[WS_ROOT_TOPIC]} onMessage={onMessage} />
     </>
   );
 };

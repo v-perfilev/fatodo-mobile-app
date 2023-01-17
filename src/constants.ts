@@ -5,9 +5,11 @@ export const IS_DEVELOPMENT = __DEV__;
 // API
 export const API_URL_DEV = 'https://fatodo-stage-api.persoff68.com';
 export const API_URL_PROD = 'https://api.fatodo.app';
-export let API_URL = __DEV__ ? API_URL_DEV : API_URL_PROD;
-export const IMAGE_URL = API_URL + '/api/image/store/';
-export const WS_URL = API_URL + '/ws/';
+export const API_CONFIG = {
+  baseUrl: __DEV__ ? API_URL_DEV : API_URL_PROD,
+};
+export const IMAGE_PATH = '/api/image/store/';
+export const WS_PATH = '/ws/';
 export const WS_ROOT_TOPIC = '/user/topic/root';
 
 // TIMEOUTS

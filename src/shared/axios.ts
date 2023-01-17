@@ -1,5 +1,5 @@
 import axios, {AxiosError, AxiosPromise, AxiosRequestConfig, AxiosResponse} from 'axios';
-import {API_TIMEOUT, API_URL} from '../constants';
+import {API_CONFIG, API_TIMEOUT} from '../constants';
 import {SecurityUtils} from './utils/SecurityUtils';
 import {ResponseUtils} from './utils/ResponseUtils';
 import {TranslationUtils} from './utils/TranslationUtils';
@@ -8,7 +8,7 @@ import axiosRetry from 'axios-retry';
 import qs from 'qs';
 
 axios.defaults.timeout = API_TIMEOUT;
-axios.defaults.baseURL = API_URL;
+axios.defaults.baseURL = API_CONFIG.baseUrl;
 axios.defaults.paramsSerializer = (params: any) => qs.stringify(params, {arrayFormat: 'comma'});
 
 export const axiosDefault = axios.create();

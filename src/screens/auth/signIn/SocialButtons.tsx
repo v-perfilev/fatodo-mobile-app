@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import {API_URL} from '../../../constants';
 import FacebookIcon from '../../../components/icons/FacebookIcon';
 import {LanguageUtils} from '../../../shared/utils/LanguageUtils';
 import {DateUtils} from '../../../shared/utils/DateUtils';
@@ -17,6 +16,7 @@ import {AuthActions} from '../../../store/auth/authActions';
 import {useTranslation} from 'react-i18next';
 import withInAppBrowser, {InAppBrowserProps} from '../../../shared/hocs/withInAppBrowser';
 import AuthSelectors from '../../../store/auth/authSelectors';
+import {API_CONFIG} from '../../../constants';
 
 type SocialButtonsProps = InAppBrowserProps;
 
@@ -27,7 +27,7 @@ const SocialButtons = ({openBrowser, closeBrowser}: SocialButtonsProps) => {
   const appleColor = useColorModeValue('black', 'white');
 
   const oAuth2Login = (provider: string): void => {
-    const apiUrl = API_URL + '/api/oauth2/authorize/' + provider;
+    const apiUrl = API_CONFIG.baseUrl + '/api/oauth2/authorize/' + provider;
     const languageParam = 'language=' + LanguageUtils.getLanguage().toUpperCase();
     const timezoneParam = 'timezone=' + DateUtils.getTimezone();
     const redirectParam = 'redirect=' + 'fatodo://socialLogin';

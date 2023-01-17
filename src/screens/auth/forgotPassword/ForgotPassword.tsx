@@ -10,6 +10,7 @@ import FCenter from '../../../components/boxes/FCenter';
 import FVStack from '../../../components/boxes/FVStack';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import ColorModeSwitch from '../../../components/controls/ColorModeSwitch';
+import DevManagement from './DevManagement';
 
 const ForgotPassword = () => {
   const navigation = useNavigation<AuthNavigationProps>();
@@ -19,6 +20,7 @@ const ForgotPassword = () => {
 
   return (
     <SimpleScrollView>
+      <DevManagement />
       <FCenter grow pt="10" pb="5">
         <FVStack space="5" w="90%" maxW="300">
           <FCenter grow>

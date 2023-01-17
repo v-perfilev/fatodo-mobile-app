@@ -1,4 +1,4 @@
-import {IMAGE_URL} from '../../constants';
+import {API_CONFIG, IMAGE_PATH} from '../../constants';
 import {Platform} from 'react-native';
 
 export class ImageUtils {
@@ -7,7 +7,7 @@ export class ImageUtils {
   private static thumbnailPostfix = '/thumbnail';
 
   public static buildImageUri = (url: string, isThumbnail: boolean): string => {
-    return IMAGE_URL + url + (isThumbnail ? ImageUtils.thumbnailPostfix : '');
+    return API_CONFIG.baseUrl + IMAGE_PATH + url + (isThumbnail ? ImageUtils.thumbnailPostfix : '');
   };
 
   public static isUrl = (url: string): boolean => {
