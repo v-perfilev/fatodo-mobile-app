@@ -235,7 +235,8 @@ const filterItems = (items: Item[]): Item[] => {
   return items
     .filter(FilterUtils.withIdFilter)
     .filter(FilterUtils.uniqueByIdFilter)
-    .sort(ComparatorUtils.createdAtDescComparator);
+    .sort(ComparatorUtils.createdAtDescComparator)
+    .sort(ComparatorUtils.priorityDescComparator);
 };
 
 export default groupSlice;

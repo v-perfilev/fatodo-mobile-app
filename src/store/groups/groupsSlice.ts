@@ -238,7 +238,11 @@ const filterMembers = (members: GroupMember[]): GroupMember[] => {
 };
 
 const filterItems = (items: Item[]): Item[] => {
-  return items.filter(FilterUtils.uniqueByIdFilter).sort(ComparatorUtils.createdAtDescComparator);
+  return items
+    .filter(FilterUtils.withIdFilter)
+    .filter(FilterUtils.uniqueByIdFilter)
+    .sort(ComparatorUtils.createdAtDescComparator)
+    .sort(ComparatorUtils.priorityDescComparator);
 };
 
 export default groupsSlice;

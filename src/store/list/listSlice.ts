@@ -81,6 +81,13 @@ const listSlice = createSlice({
   },
   extraReducers: (builder) => {
     /*
+    fetchGroup
+    */
+    builder.addCase(ListActions.fetchGroupThunk.fulfilled, (state, action) => {
+      listSlice.caseReducers.addGroup(state, action);
+    });
+
+    /*
     fetchGroups
     */
     builder.addCase(ListActions.fetchGroupsThunk.fulfilled, (state, action) => {
@@ -117,7 +124,8 @@ const filterItems = (items: Item[]): Item[] => {
     .filter(FilterUtils.withIdFilter)
     .filter(FilterUtils.uniqueByIdFilter)
     .filter(FilterUtils.notArchivedFilter)
-    .sort(ComparatorUtils.createdAtDescComparator);
+    .sort(ComparatorUtils.createdAtDescComparator)
+    .sort(ComparatorUtils.priorityDescComparator);
 };
 
 export default listSlice;

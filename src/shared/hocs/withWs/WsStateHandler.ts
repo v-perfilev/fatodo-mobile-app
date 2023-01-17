@@ -16,6 +16,7 @@ import {GroupActions} from '../../../store/group/groupActions';
 import {InfoActions} from '../../../store/info/infoActions';
 import {ItemActions} from '../../../store/item/itemActions';
 import {CalendarActions} from '../../../store/calendar/calendarActions';
+import {ListActions} from '../../../store/list/listActions';
 
 type HandlerFunc = (msg: WsEvent<any>) => void;
 
@@ -112,6 +113,7 @@ export class WsStateHandler {
 
   private handleItemCreateEvent = (msg: WsEvent<Item>): void => {
     const item = msg.payload;
+    this.dispatch(ListActions.addItem(item));
     this.dispatch(GroupsActions.addItem(item));
     this.dispatch(GroupActions.addItem(item));
     this.dispatch(CalendarActions.reset());
@@ -119,6 +121,7 @@ export class WsStateHandler {
 
   private handleItemUpdateEvent = (msg: WsEvent<Item>): void => {
     const item = msg.payload;
+    this.dispatch(ListActions.updateItem(item));
     this.dispatch(GroupsActions.updateItem(item));
     this.dispatch(GroupActions.updateItem(item));
     this.dispatch(CalendarActions.reset());
@@ -126,6 +129,7 @@ export class WsStateHandler {
 
   private handleItemUpdateArchivedEvent = (msg: WsEvent<Item>): void => {
     const item = msg.payload;
+    this.dispatch(ListActions.updateItemArchived(item));
     this.dispatch(GroupsActions.updateItemArchived(item));
     this.dispatch(GroupActions.updateItem(item));
     this.dispatch(CalendarActions.reset());
@@ -133,6 +137,7 @@ export class WsStateHandler {
 
   private handleItemDeleteEvent = (msg: WsEvent<Item>): void => {
     const item = msg.payload;
+    this.dispatch(ListActions.removeItem(item.id));
     this.dispatch(GroupsActions.removeItem(item));
     this.dispatch(GroupActions.removeItem(item.id));
     this.dispatch(ItemActions.removeItem(item.id));
@@ -141,12 +146,14 @@ export class WsStateHandler {
 
   private handleItemGroupCreateEvent = (msg: WsEvent<Group>): void => {
     const group = msg.payload;
+    this.dispatch(ListActions.addGroup(group));
     this.dispatch(GroupsActions.addGroup(group));
     this.dispatch(CalendarActions.reset());
   };
 
   private handleItemGroupUpdateEvent = (msg: WsEvent<Group>): void => {
     const group = msg.payload;
+    this.dispatch(ListActions.updateGroup(group));
     this.dispatch(GroupsActions.updateGroup(group));
     this.dispatch(GroupActions.setGroup(group));
     this.dispatch(ItemActions.setGroup(group));
@@ -154,6 +161,7 @@ export class WsStateHandler {
 
   private handleItemGroupDeleteEvent = (msg: WsEvent<Group>): void => {
     const groupId = msg.payload.id;
+    this.dispatch(ListActions.removeGroup(groupId));
     this.dispatch(GroupsActions.removeGroup(groupId));
     this.dispatch(GroupActions.removeGroup(groupId));
     this.dispatch(ItemActions.removeGroup(groupId));
@@ -165,6 +173,7 @@ export class WsStateHandler {
     const memberIds = members.map((m) => m.userId);
     if (memberIds.includes(this.account.id)) {
       const groupId = msg.payload[0].groupId;
+      this.dispatch(ListActions.fetchGroupThunk(groupId));
       this.dispatch(GroupsActions.fetchGroupThunk(groupId));
     } else {
       this.dispatch(GroupsActions.addMembers(members));
@@ -177,6 +186,7 @@ export class WsStateHandler {
     const memberIds = members.map((m) => m.userId);
     if (memberIds.includes(this.account.id)) {
       const groupId = msg.payload[0].groupId;
+      this.dispatch(ListActions.removeGroup(groupId));
       this.dispatch(GroupsActions.removeGroup(groupId));
       this.dispatch(GroupActions.removeGroup(groupId));
       this.dispatch(ItemActions.removeGroup(groupId));
@@ -190,6 +200,7 @@ export class WsStateHandler {
     const member = msg.payload;
     if (member.userId === this.account.id) {
       const groupId = msg.payload.groupId;
+      this.dispatch(ListActions.removeGroup(groupId));
       this.dispatch(GroupsActions.removeGroup(groupId));
       this.dispatch(GroupActions.removeGroup(groupId));
       this.dispatch(ItemActions.removeGroup(groupId));

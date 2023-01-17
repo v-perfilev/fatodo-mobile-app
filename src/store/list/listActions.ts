@@ -19,10 +19,6 @@ export class ListActions {
     dispatch(listSlice.actions.setShouldLoad(true));
   };
 
-  static resetItems = () => async (dispatch: AppDispatch) => {
-    dispatch(listSlice.actions.resetItems());
-  };
-
   static addGroup = (group: Group) => (dispatch: AppDispatch) => {
     const memberIds = group.members.map((m) => m.userId);
     dispatch(groupsSlice.actions.addGroup(group));
@@ -47,9 +43,22 @@ export class ListActions {
     dispatch(listSlice.actions.setItem(item));
   };
 
+  static updateItemArchived = (item: Item) => (dispatch: AppDispatch) => {
+    if (item.archived) {
+      dispatch(listSlice.actions.removeItem(item.id));
+    } else {
+      dispatch(listSlice.actions.setItem(item));
+    }
+  };
+
   static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
     dispatch(listSlice.actions.removeItem(itemId));
   };
+
+  static fetchGroupThunk = createAsyncThunk<Group, string, AsyncThunkConfig>(PREFIX + 'fetchGroup', async (groupId) => {
+    const response = await ItemService.getGroup(groupId);
+    return response.data;
+  });
 
   static fetchGroupsThunk = createAsyncThunk<Group[], void, AsyncThunkConfig>(
     PREFIX + 'fetchGroups',
