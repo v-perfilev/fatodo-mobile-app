@@ -14,7 +14,7 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
-import {CornerButton} from '../../../models/CornerButton';
+import {CornerButton} from '../../../models/CornerManagement';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
@@ -29,6 +29,7 @@ import Separator from '../../../components/layouts/Separator';
 import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 import GroupViewArchivedStub from './GroupViewArchivedStub';
+import InfoSelectors from '../../../store/info/infoSelectors';
 
 type GroupViewProps = WithGroupProps;
 
@@ -42,6 +43,8 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
   const allItemsLoadedSelector = useCallback(GroupSelectors.makeAllItemsLoadedSelector(), []);
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
+  const commentThreadSelector = useCallback(InfoSelectors.makeCommentThreadSelector(), []);
+  const commentThread = useAppSelector((state) => commentThreadSelector(state, group?.id));
   const account = useAppSelector(AuthSelectors.account);
   const items = useAppSelector((state) => itemsSelector(state, showArchived));
   const allItemsLoaded = useAppSelector((state) => allItemsLoadedSelector(state, showArchived));
@@ -135,10 +138,10 @@ const GroupView = ({groupId, group, containerLoading}: GroupViewProps) => {
   const buttons = useMemo<CornerButton[]>(
     () => [
       {icon: <PlusIcon />, action: goToItemCreate, hidden: showArchived || !canEdit || items.length === 0},
-      {icon: <CommentsIcon />, action: goToComments},
+      {icon: <CommentsIcon />, action: goToComments, badgeNumber: commentThread?.count},
       {icon: <ArrowUpIcon />, action: scrollUp, color: 'trueGray', hideOnTop: true, additionalColumn: true},
     ],
-    [goToItemCreate, goToComments, showArchived, canEdit, items],
+    [goToItemCreate, goToComments, showArchived, canEdit, items, commentThread],
   );
 
   const cornerManagement = useCallback(

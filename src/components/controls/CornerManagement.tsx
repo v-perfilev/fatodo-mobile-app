@@ -1,6 +1,6 @@
-import {Box} from 'native-base';
+import {Badge, Box} from 'native-base';
 import {Animated, StyleProp, ViewStyle} from 'react-native';
-import {CornerButton} from '../../models/CornerButton';
+import {CornerButton} from '../../models/CornerManagement';
 import React, {memo, RefObject, useEffect, useRef, useState} from 'react';
 import IconButton from './IconButton';
 import {SharedValue, useSharedValue} from 'react-native-reanimated';
@@ -42,14 +42,29 @@ const createAnimatedValues = (positions: number[]): RefObject<Animated.Value>[] 
 
 const CornerManagementButton = ({button}: {button: CornerButton}) => {
   return (
-    <IconButton
-      icon={button.icon}
-      colorScheme={button.color}
-      onPressIn={button.action}
-      size="xl"
-      variant="solid"
-      p="3"
-    />
+    <Box position="relative">
+      {button.badgeNumber > 0 && (
+        <Badge
+          rounded="full"
+          variant="solid"
+          colorScheme="secondary"
+          position="absolute"
+          right="35px"
+          bottom="-5px"
+          zIndex={1}
+        >
+          {button.badgeNumber}
+        </Badge>
+      )}
+      <IconButton
+        icon={button.icon}
+        colorScheme={button.color}
+        onPressIn={button.action}
+        size="xl"
+        variant="solid"
+        p="3"
+      />
+    </Box>
   );
 };
 

@@ -12,7 +12,7 @@ import withItemContainer, {WithItemProps} from '../../../shared/hocs/withContain
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {useNavigation} from '@react-navigation/native';
 import {ProtectedNavigationProps} from '../../../navigators/ProtectedNavigator';
-import {CornerButton} from '../../../models/CornerButton';
+import {CornerButton} from '../../../models/CornerManagement';
 import CommentsIcon from '../../../components/icons/CommentsIcon';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import Separator from '../../../components/layouts/Separator';
@@ -22,12 +22,15 @@ import PriorityView from '../../../components/views/PriorityView';
 import {flowRight} from 'lodash';
 import withThemeProvider from '../../../shared/hocs/withThemeProvider';
 import StatusView from '../../../components/views/StatusView';
+import InfoSelectors from '../../../store/info/infoSelectors';
 
 type ItemViewProps = WithItemProps;
 
 const ItemView = ({group, item, containerLoading}: ItemViewProps) => {
   const {t, i18n} = useTranslation();
   const navigation = useNavigation<ProtectedNavigationProps>();
+  const commentThreadSelector = useCallback(InfoSelectors.makeCommentThreadSelector(), []);
+  const commentThread = useAppSelector((state) => commentThreadSelector(state, item?.id));
   const account = useAppSelector(AuthSelectors.account);
   const reminders = useAppSelector(ItemSelectors.reminders);
 
@@ -50,7 +53,16 @@ const ItemView = ({group, item, containerLoading}: ItemViewProps) => {
     [item, group, i18n.language],
   );
 
-  const buttons = useMemo<CornerButton[]>(() => [{icon: <CommentsIcon />, action: goToComments}], [goToComments]);
+  const buttons = useMemo<CornerButton[]>(
+    () => [
+      {
+        icon: <CommentsIcon />,
+        action: goToComments,
+        badgeNumber: commentThread?.count,
+      },
+    ],
+    [goToComments, commentThread],
+  );
 
   return (
     <>

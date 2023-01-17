@@ -8,7 +8,7 @@ import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react
 import CollapsableRefreshableFlatList, {
   CollapsableRefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
-import {CornerButton} from '../../../models/CornerButton';
+import {CornerButton} from '../../../models/CornerManagement';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {useIsFocused} from '@react-navigation/native';

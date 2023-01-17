@@ -14,7 +14,7 @@ import CollapsableDraggableList, {
   CollapsableRefreshableDraggableListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableDraggableList';
 import {StyleProp, ViewStyle} from 'react-native';
-import {CornerButton} from '../../../models/CornerButton';
+import {CornerButton} from '../../../models/CornerManagement';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import GroupListCard from './groupListCard/GroupListCard';

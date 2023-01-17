@@ -13,7 +13,7 @@ import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react
 import ContactListItem from './ContactListItem';
 import CollapsableRefreshableFlatList from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import CornerManagement from '../../../components/controls/CornerManagement';
-import {CornerButton} from '../../../models/CornerButton';
+import {CornerButton} from '../../../models/CornerManagement';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import {useIsFocused} from '@react-navigation/native';
 import Separator from '../../../components/layouts/Separator';

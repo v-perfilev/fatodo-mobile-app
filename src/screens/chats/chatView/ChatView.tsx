@@ -14,7 +14,7 @@ import {ChatItem, Message} from '../../../models/Message';
 import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle, ViewToken} from 'react-native';
 import ChatViewItem from './ChatViewItem';
 import {ChatUtils} from '../../../shared/utils/ChatUtils';
-import {CornerButton} from '../../../models/CornerButton';
+import {CornerButton} from '../../../models/CornerManagement';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import RefreshableFlatList, {

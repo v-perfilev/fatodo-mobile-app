@@ -16,7 +16,7 @@ import CollapsableRefreshableFlatList, {
   CollapsableRefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import CornerManagement from '../../../components/controls/CornerManagement';
-import {CornerButton} from '../../../models/CornerButton';
+import {CornerButton} from '../../../models/CornerManagement';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import {useChatDialogContext} from '../../../shared/contexts/dialogContexts/ChatDialogContext';

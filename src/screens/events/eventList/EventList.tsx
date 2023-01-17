@@ -13,7 +13,7 @@ import CollapsableRefreshableFlatList, {
   CollapsableRefreshableFlatListChildrenProps,
 } from '../../../components/scrollable/CollapsableRefreshableFlatList';
 import {HEADER_HEIGHT} from '../../../constants';
-import {CornerButton} from '../../../models/CornerButton';
+import {CornerButton} from '../../../models/CornerManagement';
 import ArrowUpIcon from '../../../components/icons/ArrowUpIcon';
 import Header from '../../../components/layouts/Header';
 import CornerManagement from '../../../components/controls/CornerManagement';

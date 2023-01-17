@@ -10,7 +10,7 @@ import CommentsSelectors from '../../../store/comments/commentsSelectors';
 import {CommentsActions} from '../../../store/comments/commentsActions';
 import {LayoutChangeEvent, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 import CommentListItem from './commentListItem/CommentListItem';
-import {CornerButton} from '../../../models/CornerButton';
+import {CornerButton} from '../../../models/CornerManagement';
 import ArrowDownIcon from '../../../components/icons/ArrowDownIcon';
 import CornerManagement from '../../../components/controls/CornerManagement';
 import {COMMENTS_INPUT_HEIGHT, DEFAULT_MARGIN, HEADER_HEIGHT} from '../../../constants';

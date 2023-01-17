@@ -72,7 +72,7 @@ export class GroupActions {
     async (groupId, thunkAPI) => {
       const response = await ItemService.getGroup(groupId);
       const groupUserIds = response.data.members.map((m) => m.userId);
-      thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk([response.data.id]));
+      thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk([groupId]));
       groupUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(groupUserIds));
       return response.data;
     },
@@ -83,7 +83,7 @@ export class GroupActions {
     async (groupId, thunkAPI) => {
       const response = await ItemService.getGroup(groupId);
       const groupUserIds = response.data.members.map((m) => m.userId);
-      thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk([response.data.id]));
+      thunkAPI.dispatch(InfoActions.handleCommentThreadIdsThunk([groupId]));
       groupUserIds.length > 0 && thunkAPI.dispatch(InfoActions.handleUserIdsThunk(groupUserIds));
       return response.data;
     },
