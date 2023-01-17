@@ -320,7 +320,7 @@ export class WsEventHandler {
     const event: Event = {type: EventType.CONTACT_ACCEPT_INCOMING, contactEvent, date: msg.date};
     this.dispatch(EventsActions.removeContactEvents(msg.payload.requesterId));
     this.dispatch(EventsActions.removeContactEvents(msg.payload.recipientId));
-    this.dispatch(EventsActions.addEvent(event, false));
+    this.dispatch(EventsActions.addEvent(event, true));
   };
 
   private handleContactAcceptOutcomingEvent = (msg: WsEvent<ContactRequest>): void => {
@@ -330,7 +330,7 @@ export class WsEventHandler {
     const event: Event = {type: EventType.CONTACT_ACCEPT_OUTCOMING, contactEvent, date: msg.date};
     this.dispatch(EventsActions.removeContactEvents(msg.payload.requesterId));
     this.dispatch(EventsActions.removeContactEvents(msg.payload.recipientId));
-    this.dispatch(EventsActions.addEvent(event, true));
+    this.dispatch(EventsActions.addEvent(event, false));
   };
 
   private handleContactDeclineEvent = (msg: WsEvent<ContactRequest>): void => {
