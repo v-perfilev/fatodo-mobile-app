@@ -140,24 +140,19 @@ const RefreshableContainer = ({refresh, parentScrollY, inverted, children}: Refr
   }, []);
 
   useEffect(() => {
-    parentScrollY?.addListener(({value}) => (scrollYValue.current = value));
-    return () => parentScrollY?.removeAllListeners();
-  }, []);
-
-  useEffect(() => {
-    parentScrollY?.addListener(({value}) => {
+    const parentScrollYId = parentScrollY?.addListener(({value}) => {
       scrollYValue.current = value;
       setEnabled(value === 0);
     });
-    scrollY.current?.addListener(({value}) => {
+    const scrollYId = scrollY.current?.addListener(({value}) => {
       scrollYValue.current = value;
       setEnabled(value === 0);
     });
-    extraScrollY.current?.addListener(({value}) => (extraScrollValue.current = value));
+    const extraScrollYId = extraScrollY.current?.addListener(({value}) => (extraScrollValue.current = value));
     return () => {
-      parentScrollY?.removeAllListeners();
-      scrollY.current?.removeAllListeners();
-      extraScrollY.current?.removeAllListeners();
+      parentScrollY?.removeListener(parentScrollYId);
+      scrollY.current?.removeListener(scrollYId);
+      extraScrollY.current?.removeListener(extraScrollYId);
     };
   }, []);
 

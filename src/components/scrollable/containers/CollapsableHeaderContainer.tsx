@@ -60,8 +60,8 @@ const CollapsableHeaderContainer = ({header, children}: CollapsableHeaderContain
   );
 
   useEffect(() => {
-    translateY.addListener(({value}) => (translateYNumber.current = value));
-    return () => translateY.removeAllListeners();
+    const id = translateY.addListener(({value}) => (translateYNumber.current = value));
+    return () => translateY.removeListener(id);
   }, [translateY]);
 
   const animatedHeaderStyle = {transform: [{translateY}]};

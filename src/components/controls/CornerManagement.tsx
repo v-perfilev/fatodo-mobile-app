@@ -115,8 +115,8 @@ const CornerManagement = ({buttons, scrollY, bottomPadding}: CornerManagementPro
 
   useEffect(() => {
     animateAllButtons(0);
-    scrollY?.addListener(handleScrollY);
-    return () => scrollY?.removeAllListeners();
+    const id = scrollY?.addListener(handleScrollY);
+    return () => scrollY?.removeListener(id);
   }, [mainButtons, addButtons]);
 
   const viewStyle: StyleProp<ViewStyle> = {position: 'absolute', bottom: bottomPadding || 0, right: 0};
