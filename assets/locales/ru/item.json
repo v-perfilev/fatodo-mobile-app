@@ -7,6 +7,7 @@
     "noDescription": "Без описания"
   },
   "labels": {
+    "archived": "В архиве",
     "priority": "Приоритет",
     "status": "Статус",
     "description": "Описание",

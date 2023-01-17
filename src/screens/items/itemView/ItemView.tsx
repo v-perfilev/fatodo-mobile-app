@@ -40,11 +40,15 @@ const ItemView = ({group, item, containerLoading}: ItemViewProps) => {
     navigation.navigate('CommentList', {targetId: item.id, colorScheme: group.color});
   }, [item, group]);
 
+  const title = useMemo<string>(() => {
+    return item.archived ? `${item.title} (${t('item:labels.archived')})` : item.title;
+  }, [item, i18n.language]);
+
   const labeledItems = useMemo<MultiLabeledBoxItem[]>(
     () =>
       item
         ? [
-            {label: t('item:labels.item'), value: item.title},
+            {label: t('item:labels.item'), value: title},
             {label: t('item:labels.group'), value: group?.title},
             {label: t('item:labels.priority'), value: <PriorityView priority={item.priority} />},
             {label: t('item:labels.status'), value: <StatusView done={item.done} />},
