@@ -8,6 +8,7 @@ import AuthSelectors from '../../../store/auth/authSelectors';
 import {GroupUtils} from '../../../shared/utils/GroupUtils';
 import ListSelectors from '../../../store/list/listSelectors';
 import {Item} from '../../../models/Item';
+import ItemListItemSkeleton from '../skeletons/ItemListItemSkeleton';
 
 type ItemListItemProps = {
   item: Item;
@@ -26,7 +27,12 @@ const ItemListItem = ({item, onLayout}: ItemListItemProps) => {
     return group && GroupUtils.canEdit(account, group);
   }, [group, account]);
 
-  return <Box onLayout={onLayout}>{group && <ItemView item={item} group={group} canEdit={canEdit} showGroup />}</Box>;
+  return (
+    <Box onLayout={onLayout}>
+      {group && <ItemView item={item} group={group} canEdit={canEdit} showGroup />}
+      {!group && <ItemListItemSkeleton />}
+    </Box>
+  );
 };
 
 export default ItemListItem;

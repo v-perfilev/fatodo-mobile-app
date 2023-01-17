@@ -41,7 +41,7 @@ const ItemView = ({group, item, containerLoading}: ItemViewProps) => {
   }, [item, group]);
 
   const title = useMemo<string>(() => {
-    return item.archived ? `${item.title} (${t('item:labels.archived')})` : item.title;
+    return item?.archived ? `${item?.title} (${t('item:labels.archived')})` : item?.title;
   }, [item, i18n.language]);
 
   const labeledItems = useMemo<MultiLabeledBoxItem[]>(

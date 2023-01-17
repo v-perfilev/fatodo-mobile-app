@@ -90,7 +90,7 @@ const ContactNavigator = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <FHStack space="1" mt="3px" alignItems="center">
+        <FHStack space="1.5" mt="3px" alignItems="center">
           <Text fontSize="md" color="primary.500">
             {t(`contact:${props.route.key}.title`)}
           </Text>
