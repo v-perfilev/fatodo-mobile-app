@@ -23,7 +23,24 @@
     "label": "Войти через"
   },
   "settings": {
-    "notificationsSubtitle": "Уведомления"
+    "labels": {
+      "notifications": "Уведомления",
+      "email": "Email",
+      "push": "Push"
+    },
+    "notifications": {
+      "reminder": "Напоминания",
+      "itemCreate": "Новые задачи",
+      "itemGroupCreate": "Новые группы",
+      "itemMemberAdd": "Новые пользователи в группах",
+      "chatCreate": "Новые чаты",
+      "chatMessageCreate": "Новые сообщения",
+      "chatReactionIncoming": "Реакции в чатах",
+      "contactRequestIncoming": "Новые запросы в контакты",
+      "contactAcceptOutcoming": "Принятые запросы в контакты",
+      "commentCreate": "Новые комментарии",
+      "commentReactionIncoming": "Реакции в комментариях"
+    }
   },
   "fields": {
     "user": {

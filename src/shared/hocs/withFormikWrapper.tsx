@@ -28,7 +28,19 @@ export type FormikInputProps = {
 const withFormikWrapper =
   (Component: ComponentType<FormikInputProps>) =>
   (props: WithFormikWrapperProps): ReactElement => {
-    const {name, values, errors, touched, setFieldValue, handleChange, handleBlur, isDisabled, label, options} = props;
+    const {
+      name,
+      values,
+      errors,
+      touched,
+      setFieldValue,
+      handleChange,
+      handleBlur,
+      isDisabled,
+      label,
+      options,
+      ...otherProps
+    } = props;
 
     const value = useMemo(() => values[name], [values]);
     const error = useMemo(() => errors[name], [errors]);
@@ -52,7 +64,7 @@ const withFormikWrapper =
       isDisabled,
     };
 
-    return <Component {...componentProps} />;
+    return <Component {...componentProps} {...otherProps} />;
   };
 
 export default withFormikWrapper;

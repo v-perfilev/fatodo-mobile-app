@@ -1,7 +1,6 @@
 import React, {memo} from 'react';
 import FVStack from '../../../components/boxes/FVStack';
 import {useAppDispatch} from '../../../store/store';
-import Header from '../../../components/layouts/Header';
 import {AuthActions} from '../../../store/auth/authActions';
 import {useTranslation} from 'react-i18next';
 import {Formik, FormikHelpers} from 'formik';
@@ -11,12 +10,10 @@ import {passwordValidator} from '../../../shared/validators';
 import i18n from '../../../shared/i18n';
 import {useNavigation} from '@react-navigation/native';
 import OutlinedButton from '../../../components/controls/OutlinedButton';
-import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import {ChangePasswordDTO} from '../../../models/dto/ChangePasswordDTO';
 import FormikPasswordInput from '../../../components/inputs/FormikPasswordInput';
 import {PasswordStrengthBar} from '../../../components/inputs/PasswordStrengthBar';
 import {flowRight} from 'lodash';
-import withKeyboardHeightAvoiding from '../../../shared/hocs/withKeyboardHeightAvoiding';
 
 export interface ChangePasswordFormValues {
   oldPassword: string;
@@ -50,47 +47,38 @@ const AccountChangePasswordForm = () => {
   };
 
   return (
-    <>
-      <Header />
-      <SimpleScrollView>
-        <Formik
-          initialValues={defaultChangePasswordFormValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {(formikProps) => (
-            <FVStack space="3">
-              <FormikPasswordInput
-                name="oldPassword"
-                label={t('account:fields.oldPassword.label')}
-                isDisabled={formikProps.isSubmitting}
-                {...formikProps}
-              />
-              <FormikPasswordInput
-                name="newPassword"
-                label={t('account:fields.newPassword.label')}
-                isDisabled={formikProps.isSubmitting}
-                {...formikProps}
-              />
-              <PasswordStrengthBar password={formikProps.values.newPassword} />
+    <Formik initialValues={defaultChangePasswordFormValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+      {(formikProps) => (
+        <FVStack space="3">
+          <FormikPasswordInput
+            name="oldPassword"
+            label={t('account:fields.oldPassword.label')}
+            isDisabled={formikProps.isSubmitting}
+            {...formikProps}
+          />
+          <FormikPasswordInput
+            name="newPassword"
+            label={t('account:fields.newPassword.label')}
+            isDisabled={formikProps.isSubmitting}
+            {...formikProps}
+          />
+          <PasswordStrengthBar password={formikProps.values.newPassword} />
 
-              <FHStack space="3" mt="3" justifyContent="flex-end">
-                <OutlinedButton
-                  colorScheme="primary"
-                  size="md"
-                  isLoading={formikProps.isSubmitting}
-                  isDisabled={!formikProps.isValid || formikProps.isSubmitting}
-                  onPress={formikProps.submitForm}
-                >
-                  {t('account:actions.save')}
-                </OutlinedButton>
-              </FHStack>
-            </FVStack>
-          )}
-        </Formik>
-      </SimpleScrollView>
-    </>
+          <FHStack space="3" mt="3" justifyContent="flex-end">
+            <OutlinedButton
+              colorScheme="primary"
+              size="md"
+              isLoading={formikProps.isSubmitting}
+              isDisabled={!formikProps.isValid || formikProps.isSubmitting}
+              onPress={formikProps.submitForm}
+            >
+              {t('account:actions.save')}
+            </OutlinedButton>
+          </FHStack>
+        </FVStack>
+      )}
+    </Formik>
   );
 };
 
-export default flowRight([memo, withKeyboardHeightAvoiding])(AccountChangePasswordForm);
+export default flowRight([memo])(AccountChangePasswordForm);

@@ -1,3 +1,5 @@
+import {EventType} from './Event';
+
 export const genders: Gender[] = ['MALE', 'FEMALE', 'DIVERSE'];
 export const timeFormats: TimeFormat[] = ['H12', 'H24'];
 export const dateFormats: DateFormat[] = ['YMD_DASH', 'MDY_SLASH', 'DMY_DASH', 'DMY_DOT', 'DMY_SLASH'];
@@ -15,6 +17,7 @@ export interface UserAccount {
   authorities: string[];
   info: UserInfo;
   settings: UserSettings;
+  notifications: UserNotifications;
 }
 
 export interface UserInfo {
@@ -29,7 +32,11 @@ export interface UserSettings {
   timezone: string;
   timeFormat: TimeFormat;
   dateFormat: DateFormat;
-  emailReminders: boolean;
+}
+
+export interface UserNotifications {
+  pushNotifications: EventType[];
+  emailNotifications: EventType[];
 }
 
 export interface User {

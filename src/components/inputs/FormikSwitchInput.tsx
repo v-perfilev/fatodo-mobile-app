@@ -5,14 +5,16 @@ import {flowRight} from 'lodash';
 import FHStack from '../boxes/FHStack';
 import {Platform} from 'react-native';
 
-type FormikSwitchInputProps = FormikInputProps;
+type FormikSwitchInputProps = FormikInputProps & {
+  fullWidth?: boolean;
+};
 
 const FormikSwitchInput = (props: FormikSwitchInputProps) => {
-  const {label, value, error, isTouched, isError, isDisabled, setValue} = props;
+  const {label, value, error, isTouched, isError, isDisabled, setValue, fullWidth} = props;
 
   return (
     <FormControl isInvalid={isTouched && isError} isDisabled={isDisabled}>
-      <FHStack space={1} alignItems="center">
+      <FHStack space={1} justifyContent={fullWidth ? 'space-between' : undefined} alignItems="center">
         {label && <FormControl.Label>{label}</FormControl.Label>}
         <Switch
           size={Platform.OS === 'android' ? 'md' : 'sm'}

@@ -28,15 +28,15 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
   const account = useAppSelector(AuthSelectors.account);
 
   const goToAccountForm = (): void => {
-    navigation.navigate('AccountForm');
+    navigation.navigate('AccountMain');
   };
 
   const goToAccountSettingsForm = (): void => {
-    navigation.navigate('AccountSettingsForm');
+    navigation.navigate('AccountSettings');
   };
 
   const goToAccountChangePasswordForm = (): void => {
-    navigation.navigate('AccountChangePasswordForm');
+    navigation.navigate('AccountChangePassword');
   };
 
   const logout = (): void => {
@@ -67,14 +67,14 @@ const Sidebar = ({navigation}: DrawerContentComponentProps) => {
 
         <FVStack flex="1" flexGrow="1" space="3" flexShrink="1">
           <GhostButton justifyContent="flex-start" onPress={goToAccountForm}>
-            {t('routes.AccountForm')}
+            {t('routes.AccountMain')}
           </GhostButton>
           <GhostButton justifyContent="flex-start" onPress={goToAccountSettingsForm}>
-            {t('routes.AccountSettingsForm')}
+            {t('routes.AccountSettings')}
           </GhostButton>
           {account.provider === 'LOCAL' && (
             <GhostButton justifyContent="flex-start" onPress={goToAccountChangePasswordForm}>
-              {t('routes.AccountChangePasswordForm')}
+              {t('routes.AccountChangePassword')}
             </GhostButton>
           )}
         </FVStack>

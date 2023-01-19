@@ -19,9 +19,9 @@
     "ChatList": "Chats",
     "ChatView": "Chat",
     "CommentList": "Comments",
-    "AccountForm": "Account",
-    "AccountSettingsForm": "Settings",
-    "AccountChangePasswordForm": "Change password",
+    "AccountMain": "Account",
+    "AccountSettings": "Settings",
+    "AccountChangePassword": "Change password",
     "UserView": "User",
     "EventList": "Events",
     "CalendarView": "Calendar"

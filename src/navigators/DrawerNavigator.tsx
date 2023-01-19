@@ -4,17 +4,17 @@ import ProtectedNavigator, {ProtectedParamList} from './ProtectedNavigator';
 import withDrawer from '../shared/hocs/withDrawer';
 import Sidebar from '../components/layouts/Sidebar';
 import {flowRight} from 'lodash';
-import AccountForm from '../screens/account/accountForm/AccountForm';
-import AccountSettingsForm from '../screens/account/accountSettingsForm/AccountSettingsForm';
-import AccountChangePasswordForm from '../screens/account/accountChangePasswordForm/AccountChangePasswordForm';
 import withSafeArea from '../shared/hocs/withSafeArea';
 import {NavigationProps} from './RootNavigator';
+import AccountMain from '../screens/account/accountMain/AccountMain';
+import AccountSettings from '../screens/account/accountSettings/AccountSettings';
+import AccountChangePassword from '../screens/account/accountChangePassword/AccountChangePassword';
 
 export type DrawerParamList = {
   Default: NavigationProps<ProtectedParamList>;
-  AccountForm: undefined;
-  AccountSettingsForm: undefined;
-  AccountChangePasswordForm: undefined;
+  AccountMain: undefined;
+  AccountSettings: undefined;
+  AccountChangePassword: undefined;
 };
 
 const Drawer = createDrawerNavigator<DrawerParamList>();
@@ -26,9 +26,9 @@ const DrawerNavigator = () => {
       drawerContent={Sidebar}
     >
       <Drawer.Screen name="Default" component={ProtectedNavigator} />
-      <Drawer.Screen name="AccountForm" component={AccountForm} />
-      <Drawer.Screen name="AccountSettingsForm" component={AccountSettingsForm} />
-      <Drawer.Screen name="AccountChangePasswordForm" component={AccountChangePasswordForm} />
+      <Drawer.Screen name="AccountMain" component={AccountMain} />
+      <Drawer.Screen name="AccountSettings" component={AccountSettings} />
+      <Drawer.Screen name="AccountChangePassword" component={AccountChangePassword} />
     </Drawer.Navigator>
   );
 };

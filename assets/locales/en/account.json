@@ -23,7 +23,24 @@
     "label": "Sign in with"
   },
   "settings": {
-    "notificationsSubtitle": "Notifications"
+    "labels": {
+      "notifications": "Notifications",
+      "email": "Email",
+      "push": "Push"
+    },
+    "notifications": {
+      "reminder": "Reminders",
+      "itemCreate": "New tasks",
+      "itemGroupCreate": "New groups",
+      "itemMemberAdd": "New members in groups",
+      "chatCreate": "New chats",
+      "chatMessageCreate": "New messages",
+      "chatReactionIncoming": "Reactions in chats",
+      "contactRequestIncoming": "New contact requests",
+      "contactAcceptOutcoming": "Accepted contact requests",
+      "commentCreate": "New comments",
+      "commentReactionIncoming": "Reactions in comments"
+    }
   },
   "fields": {
     "user": {
