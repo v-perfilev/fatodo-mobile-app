@@ -54,7 +54,7 @@ const notificationsToFormValues = ({
   pushChatMessageCreate: pushNotifications?.includes(EventType.CHAT_MESSAGE_CREATE),
   pushChatReactionIncoming: pushNotifications?.includes(EventType.CHAT_REACTION_INCOMING),
   pushContactRequestIncoming: pushNotifications?.includes(EventType.CONTACT_REQUEST_INCOMING),
-  pushContactAcceptOutcoming: pushNotifications?.includes(EventType.CONTACT_ACCEPT_INCOMING),
+  pushContactAcceptOutcoming: pushNotifications?.includes(EventType.CONTACT_ACCEPT_OUTCOMING),
   pushCommentCreate: pushNotifications?.includes(EventType.COMMENT_CREATE),
   pushCommentReactionIncoming: pushNotifications?.includes(EventType.COMMENT_REACTION_INCOMING),
 });
@@ -69,7 +69,7 @@ const formValuesToNotifications = (values: AccountNotificationsFormValues): User
   values.pushChatMessageCreate && notifications.pushNotifications.push(EventType.CHAT_MESSAGE_CREATE);
   values.pushChatReactionIncoming && notifications.pushNotifications.push(EventType.CHAT_REACTION_INCOMING);
   values.pushContactRequestIncoming && notifications.pushNotifications.push(EventType.CONTACT_REQUEST_INCOMING);
-  values.pushContactAcceptOutcoming && notifications.pushNotifications.push(EventType.CONTACT_ACCEPT_INCOMING);
+  values.pushContactAcceptOutcoming && notifications.pushNotifications.push(EventType.CONTACT_ACCEPT_OUTCOMING);
   values.pushCommentCreate && notifications.pushNotifications.push(EventType.COMMENT_CREATE);
   values.pushCommentReactionIncoming && notifications.pushNotifications.push(EventType.COMMENT_REACTION_INCOMING);
   return notifications;
