@@ -1,6 +1,6 @@
 {
   "name": "fatodo",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
