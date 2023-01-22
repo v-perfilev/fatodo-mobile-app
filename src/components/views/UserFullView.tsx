@@ -7,6 +7,7 @@ import {Text} from 'native-base';
 import FCenter from '../boxes/FCenter';
 import MultiLabeledBox, {MultiLabeledBoxItem} from '../surfaces/MultiLabeledBox';
 import {UserUtils} from '../../shared/utils/UserUtils';
+import FHStack from '../boxes/FHStack';
 
 type UserFullViewProps = {
   user: User;
@@ -34,9 +35,11 @@ export const UserFullView = ({user, account, withoutUsername}: UserFullViewProps
         <UrlPic size="2xl" file={user.imageFilename} border={1} />
       </FCenter>
       {!withoutUsername && (
-        <Text fontSize="xl" fontWeight="bold" color="primary.500" isTruncated>
-          {UserUtils.getUsername(user, t)}
-        </Text>
+        <FHStack space="1">
+          <Text fontSize="xl" fontWeight="bold" color="primary.500" isTruncated>
+            {UserUtils.getUsername(user, t)}
+          </Text>
+        </FHStack>
       )}
       <MultiLabeledBox items={labeledItems} isTruncated />
     </FVStack>
