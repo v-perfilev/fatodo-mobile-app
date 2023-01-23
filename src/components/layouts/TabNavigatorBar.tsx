@@ -37,7 +37,7 @@ const TabNavigatorItem = ({routeName, routeKey, state, descriptors, navigation, 
   const showBadgeNode = badge !== undefined && badge !== 0;
 
   const badgeNode = (
-    <Badge rounded="full" variant="solid" colorScheme="secondary" position="absolute" left={4} bottom={2} zIndex={1}>
+    <Badge rounded="full" variant="solid" colorScheme="secondary" position="absolute" left={4} bottom={1} zIndex={1}>
       {badge}
     </Badge>
   );

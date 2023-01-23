@@ -55,8 +55,8 @@ const ClearableTextInput = ({value, onChangeText, isErrorColor, ...props}: Clear
             colorScheme={isErrorColor ? 'error' : undefined}
             size={Platform.OS === 'ios' ? 'md' : 'sm'}
             p="1"
+            ml="2"
             icon={<CloseIcon />}
-            mx="2"
             onPress={clear}
           />
         )
