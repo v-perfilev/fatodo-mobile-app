@@ -5,7 +5,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import ItemService from '../../services/ItemService';
 import {InfoActions} from '../info/infoActions';
 import {PageableList} from '../../models/PageableList';
-import {Group} from '../../models/Group';
+import {Group, GroupMember} from '../../models/Group';
 
 const PREFIX = 'list/';
 
@@ -20,7 +20,6 @@ export class ListActions {
 
   static addGroup = (group: Group) => (dispatch: AppDispatch) => {
     dispatch(listSlice.actions.addGroup(group));
-    dispatch(listSlice.actions.setShouldLoad(true));
   };
 
   static updateGroup = (group: Group) => (dispatch: AppDispatch) => {
@@ -28,8 +27,8 @@ export class ListActions {
   };
 
   static removeGroup = (groupId: string) => (dispatch: AppDispatch) => {
-    dispatch(listSlice.actions.removeGroup(groupId));
     dispatch(listSlice.actions.removeItems(groupId));
+    dispatch(listSlice.actions.removeGroup(groupId));
   };
 
   static addItem = (item: Item) => (dispatch: AppDispatch) => {
@@ -50,6 +49,10 @@ export class ListActions {
 
   static removeItem = (itemId: string) => (dispatch: AppDispatch) => {
     dispatch(listSlice.actions.removeItem(itemId));
+  };
+
+  static updateMembers = (members: GroupMember[]) => (dispatch: AppDispatch) => {
+    dispatch(listSlice.actions.setMembers(members));
   };
 
   static fetchGroupThunk = createAsyncThunk<Group, string, AsyncThunkConfig>(PREFIX + 'fetchGroup', async (groupId) => {

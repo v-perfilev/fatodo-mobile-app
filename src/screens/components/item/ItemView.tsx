@@ -25,7 +25,7 @@ const ItemView = ({item, group, showGroup, canEdit, ...props}: ItemViewProps) =>
 
   const goToItemView = (): void => groupNavigation.navigate('ItemView', {group, item});
 
-  return (
+  return group ? (
     <PressableButton onPress={goToItemView}>
       <FHStack grow p="4" space="3" alignItems="center" {...props}>
         <ItemDoneCheckbox group={group} item={item} canEdit={canEdit} />
@@ -46,7 +46,7 @@ const ItemView = ({item, group, showGroup, canEdit, ...props}: ItemViewProps) =>
         </FVStack>
       </FHStack>
     </PressableButton>
-  );
+  ) : null;
 };
 
 export default ItemView;

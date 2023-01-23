@@ -218,6 +218,7 @@ export class WsStateHandler {
 
   private handleItemMemberRoleEvent = (msg: WsEvent<GroupMember>): void => {
     const member = msg.payload;
+    this.dispatch(ListActions.updateMembers([member]));
     this.dispatch(GroupsActions.updateMembers([member]));
     this.dispatch(GroupActions.updateMembers([member]));
   };

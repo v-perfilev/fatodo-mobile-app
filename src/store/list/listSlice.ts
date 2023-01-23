@@ -5,7 +5,7 @@ import {Item} from '../../models/Item';
 import {ListActions} from './listActions';
 import {FilterUtils} from '../../shared/utils/FilterUtils';
 import {ComparatorUtils} from '../../shared/utils/ComparatorUtils';
-import {Group} from '../../models/Group';
+import {Group, GroupMember} from '../../models/Group';
 
 const initialState: ListState = {
   groups: [],
@@ -56,15 +56,25 @@ const listSlice = createSlice({
       state.items = filterItems([action.payload, ...state.items]);
     },
 
-    removeItems: (state: ListState, action: PayloadAction<string>) => {
+    removeItem: (state: ListState, action: PayloadAction<string>) => {
       const item = state.items.find((i) => i.id === action.payload);
       if (item) {
         state.items = ArrayUtils.deleteValueWithId(state.items, item);
       }
     },
 
-    removeItem: (state: ListState, action: PayloadAction<string>) => {
+    removeItems: (state: ListState, action: PayloadAction<string>) => {
       state.items = state.items.filter((i) => i.groupId !== action.payload);
+    },
+
+    setMembers: (state: ListState, action: PayloadAction<GroupMember[]>) => {
+      const members = action.payload;
+      const groupId = members.length > 0 && members[0].groupId;
+      const group = state.groups.find((g) => g.id === groupId);
+      if (group) {
+        group.members = filterMembers([...members, ...group.members]);
+        state.groups = ArrayUtils.updateValueWithId(state.groups, group);
+      }
     },
 
     calculateAllLoaded: (state: ListState, action: PayloadAction<number>) => {
@@ -85,6 +95,7 @@ const listSlice = createSlice({
     */
     builder.addCase(ListActions.fetchGroupThunk.fulfilled, (state, action) => {
       listSlice.caseReducers.addGroup(state, action);
+      listSlice.caseReducers.setShouldLoad(state, {...action, payload: true});
     });
 
     /*
@@ -117,6 +128,10 @@ const listSlice = createSlice({
 
 const filterGroups = (groups: Group[]): Group[] => {
   return groups.filter(FilterUtils.uniqueByIdFilter);
+};
+
+const filterMembers = (members: GroupMember[]): GroupMember[] => {
+  return members.filter(FilterUtils.uniqueByUserIdFilter);
 };
 
 const filterItems = (items: Item[]): Item[] => {
