@@ -23,6 +23,7 @@ export type FormikInputProps = {
   onChange: (value: any) => void;
   onBlur: (value: any) => void;
   isDisabled: boolean;
+  isTrim?: boolean;
 };
 
 const withFormikWrapper =

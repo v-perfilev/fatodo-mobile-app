@@ -88,17 +88,25 @@ const SignUpForm = ({captchaToken, requestCaptchaToken, onSuccess}: SignUpFormPr
     >
       {(formikProps) => (
         <FVStack w="100%" space="3">
-          <FormikTextInput name="email" label={t('account:fields.email.label')} isDisabled={loading} {...formikProps} />
+          <FormikTextInput
+            name="email"
+            label={t('account:fields.email.label')}
+            isDisabled={loading}
+            isTrim
+            {...formikProps}
+          />
           <FormikTextInput
             name="username"
             label={t('account:fields.username.label')}
             isDisabled={loading}
+            isTrim
             {...formikProps}
           />
           <FormikPasswordInput
             name="password"
             label={t('account:fields.password.label')}
             isDisabled={loading}
+            isTrim
             {...formikProps}
           />
           <PasswordStrengthBar password={formikProps.values.password} />

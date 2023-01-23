@@ -71,7 +71,13 @@ const ForgotPasswordForm = ({captchaToken, requestCaptchaToken, onSuccess}: Forg
     >
       {(formikProps) => (
         <FVStack w="100%" space="3">
-          <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={loading} {...formikProps} />
+          <FormikTextInput
+            name="user"
+            label={t('account:fields.user.label')}
+            isDisabled={loading}
+            isTrim
+            {...formikProps}
+          />
           <SolidButton
             mt="5"
             size="lg"

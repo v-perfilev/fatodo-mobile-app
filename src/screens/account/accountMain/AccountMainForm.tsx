@@ -89,18 +89,21 @@ const AccountMainForm = () => {
             name="username"
             label={t('account:fields.username.label')}
             isDisabled={formikProps.isSubmitting}
+            isTrim
             {...formikProps}
           />
           <FormikTextInput
             name="firstname"
             label={t('account:fields.firstname.label')}
             isDisabled={formikProps.isSubmitting}
+            isTrim
             {...formikProps}
           />
           <FormikTextInput
             name="lastname"
             label={t('account:fields.lastname.label')}
             isDisabled={formikProps.isSubmitting}
+            isTrim
             {...formikProps}
           />
           <FormikGenderInput

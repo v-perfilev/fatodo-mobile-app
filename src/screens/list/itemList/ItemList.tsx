@@ -88,6 +88,7 @@ const ItemList = () => {
 
   useEffect(() => {
     if (isFocused && listInitialized && shouldLoad) {
+      dispatch(ListActions.fetchGroupsThunk());
       dispatch(ListActions.refreshItemsThunk());
     }
   }, [shouldLoad, isFocused]);

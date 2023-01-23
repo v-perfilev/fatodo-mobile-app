@@ -74,11 +74,18 @@ const SignInForm = ({captchaToken, requestCaptchaToken}: SignInFormProps) => {
     >
       {(formikProps) => (
         <FVStack w="100%" space="3">
-          <FormikTextInput name="user" label={t('account:fields.user.label')} isDisabled={loading} {...formikProps} />
+          <FormikTextInput
+            name="user"
+            label={t('account:fields.user.label')}
+            isDisabled={loading}
+            isTrim
+            {...formikProps}
+          />
           <FormikPasswordInput
             name="password"
             label={t('account:fields.password.label')}
             isDisabled={loading}
+            isTrim
             {...formikProps}
           />
           <SolidButton

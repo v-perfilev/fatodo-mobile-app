@@ -6,8 +6,13 @@ import {flowRight} from 'lodash';
 type FormikTextInputProps = FormikInputProps;
 
 const FormikTextInput = (props: FormikTextInputProps) => {
-  const {label, placeholder, value, error, isTouched, isError, isDisabled, onChange, onBlur} = props;
+  const {label, placeholder, value, error, isTouched, isError, isDisabled, isTrim, onChange, onBlur} = props;
   const {colorMode} = useColorMode();
+
+  const handleChange = (text: string): void => {
+    const newValue = isTrim ? text.trim() : text;
+    onChange(newValue);
+  };
 
   return (
     <FormControl isInvalid={isTouched && isError} isDisabled={isDisabled}>
@@ -17,7 +22,7 @@ const FormikTextInput = (props: FormikTextInputProps) => {
         autoCapitalize="none"
         keyboardAppearance={colorMode}
         placeholder={placeholder}
-        onChangeText={onChange}
+        onChangeText={handleChange}
         onBlur={onBlur}
         value={value}
       />
