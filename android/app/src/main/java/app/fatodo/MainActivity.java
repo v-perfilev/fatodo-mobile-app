@@ -12,6 +12,7 @@ import android.media.AudioAttributes;
 import androidx.core.app.NotificationCompat;
 import android.net.Uri;
 import android.content.ContentResolver;
+import android.content.pm.ActivityInfo;
 
 public class MainActivity extends ReactActivity {
 
@@ -52,6 +53,8 @@ public class MainActivity extends ReactActivity {
         SplashScreen.show(this);
         // Pass null instead of savedInstanceState because of bug in react-native-screen
         super.onCreate(null);
+        // Set portrait orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /**
