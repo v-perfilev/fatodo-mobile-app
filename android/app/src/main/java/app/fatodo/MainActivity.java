@@ -54,7 +54,9 @@ public class MainActivity extends ReactActivity {
         // Pass null instead of savedInstanceState because of bug in react-native-screen
         super.onCreate(null);
         // Set portrait orientation
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (android.os.Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     /**

@@ -21,10 +21,11 @@ export type RootNavigationProps = NativeStackNavigationProp<RootParamList>;
 
 const RootNavigator = () => {
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
+  const account = useAppSelector(AuthSelectors.account);
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false, animation: 'none'}}>
-      {isAuthenticated ? (
+      {isAuthenticated && account ? (
         <Stack.Screen name="Protected" component={DrawerNavigator} />
       ) : (
         <Stack.Screen name="Public" component={AuthNavigator} />
