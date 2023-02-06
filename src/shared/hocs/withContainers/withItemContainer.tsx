@@ -84,7 +84,7 @@ const withItemContainer = (Component: ComponentType<WithItemProps>) => (props: a
     }
   }, [isFocused, shouldLoad]);
 
-  return <Component containerLoading={containerLoading} group={group} item={item} {...props} />;
+  return <Component containerLoading={containerLoading || !group || !item} group={group} item={item} {...props} />;
 };
 
 export default withItemContainer;
