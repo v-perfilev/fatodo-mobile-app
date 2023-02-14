@@ -15,6 +15,8 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {accountToUser, UserAccount, UserNotifications, UserSettings} from '../../models/User';
 import {InfoActions} from '../info/infoActions';
 import {RootActions} from '../rootActions';
+import {ActivityDTO} from '../../models/dto/ActivityDTO';
+import AnalyticsService from '../../services/ActivityService';
 
 const PREFIX = 'auth/';
 
@@ -146,6 +148,13 @@ export class AuthActions {
       await UserService.deleteAccountPermanently(userId);
       await thunkAPI.dispatch(AuthActions.logoutThunk());
       thunkAPI.dispatch(SnackActions.handleCode('auth.afterDeleteAccount', 'info'));
+    },
+  );
+
+  static writeActivityThunk = createAsyncThunk<void, ActivityDTO, AsyncThunkConfig>(
+    PREFIX + 'activity',
+    async (dto) => {
+      await AnalyticsService.writeActivity(dto);
     },
   );
 }

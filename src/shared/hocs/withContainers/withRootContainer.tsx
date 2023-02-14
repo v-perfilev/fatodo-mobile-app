@@ -1,4 +1,4 @@
-import React, {ComponentType, memo, useEffect, useLayoutEffect, useState} from 'react';
+import React, {ComponentType, memo, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
@@ -7,10 +7,13 @@ import {EventsActions} from '../../../store/events/eventsActions';
 import NotificationsRemote from '../../push/notificationsRemote';
 import {AuthActions} from '../../../store/auth/authActions';
 import {SecurityUtils} from '../../utils/SecurityUtils';
-import {AppState, NativeEventSubscription} from 'react-native';
+import {AppState, NativeEventSubscription, Platform} from 'react-native';
 import {RootActions} from '../../../store/rootActions';
 import SplashScreen from 'react-native-splash-screen';
 import {flowRight} from 'lodash';
+import {ActivityDTO} from '../../../models/dto/ActivityDTO';
+import {ACTIVITY_TIMEOUT} from '../../../constants';
+import {getUniqueId} from 'react-native-device-info';
 
 export type WithRootProps = {
   ready: boolean;
@@ -22,6 +25,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
   const isActive = useAppSelector(AuthSelectors.isActive);
   const [ready, setReady] = useState(false);
+  const activityTimerId = useRef<NodeJS.Timer>();
 
   const login = (): void => {
     const tryToLogin = async (token: string): Promise<void> => {
@@ -51,6 +55,16 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
     }, 1000);
   };
 
+  const writeActivity = (): void => {
+    getUniqueId().then((deviceId) => {
+      if (deviceId) {
+        const deviceType = Platform.OS === 'android' ? 'ANDROID' : 'IOS';
+        const dto: ActivityDTO = {deviceType, deviceId};
+        dispatch(AuthActions.writeActivityThunk(dto));
+      }
+    });
+  };
+
   useEffect(() => {
     login();
   }, []);
@@ -61,7 +75,12 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   }, []);
 
   useEffect(() => {
-    isActive && isAuthenticated && refresh();
+    if (isActive && isAuthenticated) {
+      refresh();
+      activityTimerId.current = setInterval(() => writeActivity(), ACTIVITY_TIMEOUT);
+    } else {
+      clearInterval(activityTimerId.current);
+    }
   }, [isActive, isAuthenticated]);
 
   useEffect(() => {
