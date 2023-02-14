@@ -77,7 +77,8 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   useEffect(() => {
     if (isActive && isAuthenticated) {
       refresh();
-      activityTimerId.current = setInterval(() => writeActivity(), ACTIVITY_TIMEOUT);
+      writeActivity();
+      activityTimerId.current = setInterval(writeActivity, ACTIVITY_TIMEOUT);
     } else {
       clearInterval(activityTimerId.current);
     }
