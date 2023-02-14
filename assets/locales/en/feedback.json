@@ -22,6 +22,7 @@
     }
   },
   "model": {
+    "databaseError": "Error on server",
     "exists": "Object already exists",
     "duplicated": "At least one of unique fields is duplicated",
     "notFound": "Object not found",
