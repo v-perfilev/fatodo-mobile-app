@@ -65,7 +65,7 @@ const ChatCreateDialog = ({show, close}: ChatCreateDialogProps) => {
 
   const isUserIdListEmpty = userIds.length === 0;
 
-  const content = <UsersSelect allowedIds={contactIds} setUserIds={setUserIds} />;
+  const content = <UsersSelect contactIds={contactIds} setUserIds={setUserIds} />;
 
   const actions = (
     <>

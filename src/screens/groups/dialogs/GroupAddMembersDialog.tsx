@@ -53,7 +53,7 @@ const GroupAddMembersDialog = ({group, show, close}: GroupAddMembersDialogProps)
 
   const isUserIdListEmpty = userIds.length === 0;
 
-  const content = group && <UsersSelect allowedIds={contactIds} setUserIds={setUserIds} />;
+  const content = group && <UsersSelect contactIds={contactIds} setUserIds={setUserIds} />;
 
   const actions = (
     <>

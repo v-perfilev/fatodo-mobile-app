@@ -13,6 +13,7 @@
     "cancel": "Нет, спасибо"
   },
   "usersSelect": {
+    "contactsNotFound": "Для начала добавьте хотя бы одного пользователя в список контактов",
     "usersNotFound": "Пользователи не найдены"
   },
   "reminders": {
@@ -42,7 +43,7 @@
   "priorities": {
     "low": "Низкий",
     "normal": "Средний",
-    "height": "Высокий"
+    "high": "Высокий"
   },
   "links": {
     "userDeleted": "Пользователь удалён"
