@@ -3,7 +3,7 @@ import {Dimensions, Platform} from 'react-native';
 export const IS_DEVELOPMENT = __DEV__;
 
 // API
-export const API_URL_DEV = 'https://fatodo-stage-api.persoff68.com';
+export const API_URL_DEV = 'https://api.fatodo.app';
 export const API_URL_PROD = 'https://api.fatodo.app';
 export const API_CONFIG = {
   baseUrl: __DEV__ ? API_URL_DEV : API_URL_PROD,
@@ -13,7 +13,7 @@ export const WS_PATH = '/ws/';
 export const WS_ROOT_TOPIC = '/user/topic/root';
 
 // TIMEOUTS
-export const API_TIMEOUT = 60 * 1000;
+export const API_TIMEOUT = 10 * 1000;
 export const MARK_AS_READ_TIMEOUT = 1000;
 export const FLAT_LIST_REFRESH_TIMEOUT = 5 * 1000;
 export const ACTIVITY_TIMEOUT = 10 * 1000;

@@ -28,11 +28,12 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   const activityTimerId = useRef<NodeJS.Timer>();
 
   const login = (): void => {
-    const tryToLogin = async (token: string): Promise<void> => {
-      token && (await dispatch(AuthActions.setIsAuthenticated()));
+    const tryToLogin = async (): Promise<void> => {
+      const token = await SecurityUtils.getAuthToken();
       token && (await dispatch(AuthActions.fetchAccountThunk()));
+      token && (await dispatch(AuthActions.setIsAuthenticated()));
     };
-    SecurityUtils.getAuthToken().then((token) => tryToLogin(token).finally(() => setReady(true)));
+    tryToLogin().finally(() => setReady(true));
   };
 
   const getAppStatusSubscription = (): NativeEventSubscription => {
