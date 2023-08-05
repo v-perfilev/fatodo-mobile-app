@@ -2,13 +2,15 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {PRIVACY_POLICY_URL} from '../../constants';
 import LinkButton from '../../components/controls/LinkButton';
-import {Linking} from 'react-native';
+import withInAppBrowser, {InAppBrowserProps} from '../../shared/hocs/withInAppBrowser';
 
-const PrivacyPolicyLink = () => {
+type PrivacyPolicyLink = InAppBrowserProps;
+
+const PrivacyPolicyLink = ({openBrowser}: PrivacyPolicyLink) => {
   const {t} = useTranslation();
 
   const openPrivacyPolicyInBrowser = (): void => {
-    Linking.openURL(PRIVACY_POLICY_URL).finally();
+    openBrowser(PRIVACY_POLICY_URL);
   };
 
   return (
@@ -18,4 +20,4 @@ const PrivacyPolicyLink = () => {
   );
 };
 
-export default PrivacyPolicyLink;
+export default withInAppBrowser(PrivacyPolicyLink);

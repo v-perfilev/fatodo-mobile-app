@@ -3,7 +3,7 @@ import {Dimensions, Platform} from 'react-native';
 export const IS_DEVELOPMENT = __DEV__;
 
 // URLs
-export const PRIVACY_POLICY_URL = 'https://fatodo.app/data/fatodo-privacy-policy.pdf';
+export const PRIVACY_POLICY_URL = 'https://fatodo.app/data/fatodo-privacy-policy.html';
 
 // API
 export const API_URL_DEV = 'https://api.fatodo.app';
