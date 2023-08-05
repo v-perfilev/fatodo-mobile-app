@@ -3,10 +3,11 @@ import {flowRight} from 'lodash';
 import VersionCheck from 'react-native-version-check';
 import StartupModalBase from '../../components/startupModals/StartupModalBase';
 import StartupModalVersion from '../../components/startupModals/StartupModalVersion';
-import {WithRootProps} from './withContainers/withRootContainer';
+import {useAppSelector} from '../../store/store';
+import AuthSelectors from '../../store/auth/authSelectors';
 
-const withStartupModalDisplay = (Component: ComponentType<WithRootProps>) => (props: WithRootProps) => {
-  const {ready} = props;
+const withStartupModalDisplay = (Component: ComponentType) => (props: any) => {
+  const appStatus = useAppSelector(AuthSelectors.appStatus);
   const [show, setShow] = useState<boolean>(false);
   const [storeUrl, setStoreUrl] = useState<string>();
 
@@ -19,8 +20,8 @@ const withStartupModalDisplay = (Component: ComponentType<WithRootProps>) => (pr
   }, []);
 
   useEffect(() => {
-    ready && storeUrl && setShow(true);
-  }, [ready, storeUrl]);
+    appStatus === 'READY' && storeUrl && setShow(true);
+  }, [appStatus, storeUrl]);
 
   return (
     <>

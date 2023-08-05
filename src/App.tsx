@@ -56,15 +56,11 @@ setupAxiosInterceptors({
   handleResponse: axiosActions.handleResponse,
 });
 
-type AppProps = {
-  ready: boolean;
-};
-
-const App = ({ready}: AppProps) => {
+const App = () => {
   return (
     <>
       <ColoredStatusBar />
-      {ready && <RootNavigator />}
+      <RootNavigator />
     </>
   );
 };

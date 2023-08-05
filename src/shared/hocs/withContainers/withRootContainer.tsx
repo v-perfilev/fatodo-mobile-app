@@ -1,4 +1,4 @@
-import React, {ComponentType, memo, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {ComponentType, memo, useEffect, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../store/store';
 import AuthSelectors from '../../../store/auth/authSelectors';
 import {ContactsActions} from '../../../store/contacts/contactsActions';
@@ -6,7 +6,6 @@ import {ChatsActions} from '../../../store/chats/chatsActions';
 import {EventsActions} from '../../../store/events/eventsActions';
 import NotificationsRemote from '../../push/notificationsRemote';
 import {AuthActions} from '../../../store/auth/authActions';
-import {SecurityUtils} from '../../utils/SecurityUtils';
 import {AppState, NativeEventSubscription, Platform} from 'react-native';
 import {RootActions} from '../../../store/rootActions';
 import SplashScreen from 'react-native-splash-screen';
@@ -24,16 +23,19 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   const account = useAppSelector(AuthSelectors.account);
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
   const isActive = useAppSelector(AuthSelectors.isActive);
-  const [ready, setReady] = useState(false);
+  const appStatus = useAppSelector(AuthSelectors.appStatus);
   const activityTimerId = useRef<NodeJS.Timer>();
 
+  const hideSplashScreen = (): void => {
+    setTimeout(() => SplashScreen.hide(), 500);
+  };
+
+  const checkHealth = (): void => {
+    dispatch(AuthActions.checkHealthThunk());
+  };
+
   const login = (): void => {
-    const tryToLogin = async (): Promise<void> => {
-      const token = await SecurityUtils.getAuthToken();
-      token && (await dispatch(AuthActions.fetchAccountThunk()));
-      token && (await dispatch(AuthActions.setIsAuthenticated()));
-    };
-    tryToLogin().finally(() => setReady(true));
+    dispatch(AuthActions.loginThunk());
   };
 
   const getAppStatusSubscription = (): NativeEventSubscription => {
@@ -67,13 +69,14 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   };
 
   useEffect(() => {
-    login();
+    checkHealth();
   }, []);
 
   useEffect(() => {
-    const appStateSubscription = getAppStatusSubscription();
-    return () => appStateSubscription.remove();
-  }, []);
+    appStatus === 'UNHEALTHY' && hideSplashScreen();
+    appStatus === 'HEALTHY' && login();
+    appStatus === 'READY' && hideSplashScreen();
+  }, [appStatus]);
 
   useEffect(() => {
     if (isActive && isAuthenticated) {
@@ -89,11 +92,12 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
     account && NotificationsRemote.subscribeToFirebase(account.id).finally();
   }, [account]);
 
-  useLayoutEffect(() => {
-    ready && setTimeout(() => SplashScreen.hide(), 500);
-  }, [ready]);
+  useEffect(() => {
+    const appStateSubscription = getAppStatusSubscription();
+    return () => appStateSubscription.remove();
+  }, []);
 
-  return <Component ready={ready} {...props} />;
+  return <Component {...props} />;
 };
 
 export default flowRight([memo, withRootContainer]);

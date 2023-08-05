@@ -17,6 +17,7 @@ import {InfoActions} from '../info/infoActions';
 import {RootActions} from '../rootActions';
 import {ActivityDTO} from '../../models/dto/ActivityDTO';
 import AnalyticsService from '../../services/ActivityService';
+import HealthService from '../../services/HealthService';
 
 const PREFIX = 'auth/';
 
@@ -29,8 +30,8 @@ export class AuthActions {
     dispatch(authSlice.actions.setIsActive(isActive));
   };
 
-  static setIsAuthenticated = () => (dispatch: AppDispatch) => {
-    dispatch(authSlice.actions.setIsAuthenticated(true));
+  static setIsAuthenticated = (isAuthenticated: boolean) => (dispatch: AppDispatch) => {
+    dispatch(authSlice.actions.setIsAuthenticated(isAuthenticated));
   };
 
   static setLoading = (value: boolean) => (dispatch: AppDispatch) => {
@@ -64,6 +65,12 @@ export class AuthActions {
       await thunkAPI.dispatch(AuthActions.fetchAccountThunk());
     },
   );
+
+  static loginThunk = createAsyncThunk<void, void, AsyncThunkConfig>(PREFIX + 'login', async (_, thunkAPI) => {
+    const token = await SecurityUtils.getAuthToken();
+    token && (await thunkAPI.dispatch(AuthActions.fetchAccountThunk()));
+    token && (await thunkAPI.dispatch(AuthActions.setIsAuthenticated(true)));
+  });
 
   static logoutThunk = createAsyncThunk<void, void, AsyncThunkConfig>(PREFIX + 'logout', async (_, thunkAPI) => {
     const account = thunkAPI.getState().auth.account;
@@ -157,4 +164,8 @@ export class AuthActions {
       await AnalyticsService.writeActivity(dto);
     },
   );
+
+  static checkHealthThunk = createAsyncThunk<void, void, AsyncThunkConfig>(PREFIX + 'healthCheck', async () => {
+    await HealthService.check();
+  });
 }

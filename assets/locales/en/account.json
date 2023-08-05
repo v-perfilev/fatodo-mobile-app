@@ -1,4 +1,8 @@
 {
+  "unhealthy": {
+    "message": "Opps! Looks like there is a problem with connection to the server. :-(",
+    "tryAgain": "Try again..."
+  },
   "login": {
     "header": "Log in",
     "submit": "Log in"

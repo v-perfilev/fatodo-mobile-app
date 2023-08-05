@@ -1,11 +1,12 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {AuthState} from './authType';
+import {AppStatus, AuthState} from './authType';
 import {AuthActions} from './authActions';
 import {UserAccount} from '../../models/User';
 
 const initialState: AuthState = {
   isActive: true,
   isAuthenticated: false,
+  appStatus: 'LOADING',
   account: undefined,
   loading: false,
 };
@@ -16,6 +17,7 @@ const authSlice = createSlice({
   reducers: {
     reset: (state: AuthState) => {
       Object.assign(state, initialState);
+      state.appStatus = 'READY';
     },
 
     setIsActive: (state: AuthState, action: PayloadAction<boolean>) => {
@@ -24,6 +26,10 @@ const authSlice = createSlice({
 
     setIsAuthenticated: (state: AuthState, action: PayloadAction<boolean>) => {
       state.isAuthenticated = action.payload;
+    },
+
+    setAppStatus: (state: AuthState, action: PayloadAction<AppStatus>) => {
+      state.appStatus = action.payload;
     },
 
     setAccount: (state: AuthState, action: PayloadAction<UserAccount>) => {
@@ -35,6 +41,34 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    /*
+    checkHealthy
+    */
+    builder.addCase(AuthActions.checkHealthThunk.pending, (state, action) => {
+      authSlice.caseReducers.setLoading(state, {...action, payload: true});
+      authSlice.caseReducers.setAppStatus(state, {...action, payload: 'LOADING'});
+    });
+    builder.addCase(AuthActions.checkHealthThunk.fulfilled, (state, action) => {
+      authSlice.caseReducers.setLoading(state, {...action, payload: true});
+      authSlice.caseReducers.setAppStatus(state, {...action, payload: 'HEALTHY'});
+    });
+    builder.addCase(AuthActions.checkHealthThunk.rejected, (state, action) => {
+      authSlice.caseReducers.setLoading(state, {...action, payload: false});
+      authSlice.caseReducers.setAppStatus(state, {...action, payload: 'UNHEALTHY'});
+    });
+
+    /*
+    login
+     */
+    builder.addCase(AuthActions.loginThunk.fulfilled, (state, action) => {
+      authSlice.caseReducers.setLoading(state, {...action, payload: false});
+      authSlice.caseReducers.setAppStatus(state, {...action, payload: 'READY'});
+    });
+    builder.addCase(AuthActions.loginThunk.rejected, (state, action) => {
+      authSlice.caseReducers.setLoading(state, {...action, payload: false});
+      authSlice.caseReducers.setAppStatus(state, {...action, payload: 'READY'});
+    });
+
     /*
     register
     */

@@ -17,6 +17,7 @@ export const API_TIMEOUT = 10 * 1000;
 export const MARK_AS_READ_TIMEOUT = 1000;
 export const FLAT_LIST_REFRESH_TIMEOUT = 5 * 1000;
 export const ACTIVITY_TIMEOUT = 10 * 1000;
+export const HEALTH_TIMEOUT = 2 * 1000;
 
 // AUTHORIZATION
 export const AUTHORIZATION_HEADER = 'authorization';
