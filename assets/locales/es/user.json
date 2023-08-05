@@ -1,19 +1,19 @@
 {
   "commonGroups": {
-    "header": "Common groups",
-    "noCommonGroups": "You have no common groups"
+    "header": "Grupos en común",
+    "noCommonGroups": "No tienes grupos en común"
   },
   "commonContacts": {
-    "header": "Common contacts",
-    "noCommonContacts": "You have no common contacts"
+    "header": "Contactos en común",
+    "noCommonContacts": "No tienes contactos en común"
   },
   "actions": {
-    "sendContactRequest": "Send contact request",
-    "acceptContactRequest": "Accept contact request",
-    "declineContactRequest": "Decline contact request",
-    "cancelContactRequest": "Cancel contact request",
-    "waitContactAccepting": "Waiting for contact accepting",
-    "removeContact": "Remove contact",
-    "sendMessage": "Send message"
+    "sendContactRequest": "Enviar solicitud de contacto",
+    "acceptContactRequest": "Aceptar solicitud de contacto",
+    "declineContactRequest": "Rechazar solicitud de contacto",
+    "cancelContactRequest": "Cancelar solicitud de contacto",
+    "waitContactAccepting": "Esperando aceptación de contacto",
+    "removeContact": "Eliminar contacto",
+    "sendMessage": "Enviar mensaje"
   }
 }

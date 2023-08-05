@@ -1,33 +1,33 @@
 {
   "list": {
-    "inputPlaceholder": "Type your comment...",
-    "commentsNotFound": "No comments yet"
+    "inputPlaceholder": "Escribe tu comentario...",
+    "commentsNotFound": "Aún no hay comentarios"
   },
   "comment": {
-    "deleted": "Comment deleted",
+    "deleted": "Comentario eliminado",
     "actions": {
-      "reactions": "Reactions",
-      "edit": "Edit",
-      "delete": "Delete"
+      "reactions": "Reacciones",
+      "edit": "Editar",
+      "delete": "Eliminar"
     }
   },
   "reactions": {
-    "title": "Reactions to the comment",
-    "reactionsNotFound": "No reactions yet"
+    "title": "Reacciones al comentario",
+    "reactionsNotFound": "Aún no hay reacciones"
   },
   "editComment": {
-    "title": "Edit comment",
+    "title": "Editar comentario",
     "fields": {
       "text": {
-        "label": "Text",
-        "required": "Required"
+        "label": "Texto",
+        "required": "Requerido"
       }
     },
-    "send": "Edit",
-    "cancel": "Cancel"
+    "send": "Editar",
+    "cancel": "Cancelar"
   },
   "deleteComment": {
-    "title": "Delete comment",
-    "text": "Are you sure you want to delete the comment?"
+    "title": "Eliminar comentario",
+    "text": "¿Estás seguro de que quieres eliminar el comentario?"
   }
 }

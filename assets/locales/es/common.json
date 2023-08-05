@@ -1,51 +1,51 @@
 {
   "imageUpload": {
     "buttons": {
-      "upload": "Upload",
-      "update": "Update",
-      "clear": "Clear"
+      "upload": "Cargar",
+      "update": "Actualizar",
+      "clear": "Limpiar"
     }
   },
   "versionCheck": {
-    "androidMessage": "The new version of Fatodo is available on Google Play",
-    "iosVersion": "The new version of Fatodo is available on App Store",
-    "update": "Update the app",
-    "cancel": "No, thanks"
+    "androidMessage": "La nueva versión de Fatodo está disponible en Google Play",
+    "iosVersion": "La nueva versión de Fatodo está disponible en App Store",
+    "update": "Actualizar la aplicación",
+    "cancel": "No, gracias"
   },
   "usersSelect": {
-    "contactsNotFound": "First you need to at least one user to your contact list",
-    "usersNotFound": "Users not found"
+    "contactsNotFound": "Primero necesitas agregar al menos un usuario a tu lista de contactos",
+    "usersNotFound": "Usuarios no encontrados"
   },
   "reminders": {
     "fields": {
-      "time": "Time",
-      "date": "Date",
-      "weekdays": "Days of week",
-      "monthdays": "Days of month"
+      "time": "Hora",
+      "date": "Fecha",
+      "weekdays": "Días de la semana",
+      "monthdays": "Días del mes"
     },
     "periodicity": {
-      "ONCE": "once",
-      "DAILY": "daily",
-      "WEEKLY": "weekly",
-      "MONTHLY": "monthly",
-      "YEARLY": "yearly"
+      "ONCE": "una vez",
+      "DAILY": "diario",
+      "WEEKLY": "semanal",
+      "MONTHLY": "mensual",
+      "YEARLY": "anual"
     },
-    "ONCE": "at {{time}} on {{date}}",
-    "DAILY": "at {{time}}",
-    "WEEKLY": "at {{time}} on {{weekDays}}",
-    "MONTHLY": "at {{time}} on {{monthDates}} of every month",
-    "YEARLY": "at {{time}} on {{date}}"
+    "ONCE": "a las {{time}} del {{date}}",
+    "DAILY": "a las {{time}}",
+    "WEEKLY": "a las {{time}} los {{weekDays}}",
+    "MONTHLY": "a las {{time}} los días {{monthDates}} de cada mes",
+    "YEARLY": "a las {{time}} el {{date}}"
   },
   "statuses": {
-    "workInProgress": "Work in progress",
-    "closed": "Closed"
+    "workInProgress": "En progreso",
+    "closed": "Cerrado"
   },
   "priorities": {
-    "low": "Low",
+    "low": "Baja",
     "normal": "Normal",
-    "high": "High"
+    "high": "Alta"
   },
   "links": {
-    "userDeleted": "User deleted"
+    "userDeleted": "Usuario eliminado"
   }
 }
