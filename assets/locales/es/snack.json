@@ -1,0 +1,53 @@
+{
+  "auth": {
+    "registered": "You have registered, the activation link was sent to your email address",
+    "activated": "Account was successfully activated, now you can sign in!",
+    "afterForgotPassword": "The link for changing password was sent to your email address",
+    "afterResetPassword": "The password was changed, now you can sign in!",
+    "afterChangePassword": "Password was changed",
+    "afterUpdateAccount": "Account data updated",
+    "afterDeleteAccount": "Account permanently deleted"
+  },
+  "image": {
+    "tooSmall": "Too small image selected"
+  },
+  "group": {
+    "created": "Group created",
+    "edited": "Group edited",
+    "deleted": "Group deleted",
+    "sorted": "Groups resorted",
+    "left": "You left the group"
+  },
+  "item": {
+    "created": "Task created",
+    "edited": "Task edited",
+    "deleted": "Task deleted"
+  },
+  "contact": {
+    "relationRemoved": "Relation removed",
+    "requestSent": "Contact request sent",
+    "requestRemoved": "Contact request removed",
+    "requestAccepted": "Contact request accepted",
+    "requestDeclined": "Contact request declined"
+  },
+  "chat": {
+    "created": "Chat created",
+    "edited": "Chat edited",
+    "renamed": "Chat renamed",
+    "deleted": "Chat deleted",
+    "cleared": "Chat history deleted",
+    "left": "You left the chat",
+    "messageEdited": "Message edited",
+    "messageDeleted": "Message deleted"
+  },
+  "comment": {
+    "commentEdited": "Comment edited",
+    "commentDeleted": "Comment deleted"
+  },
+  "security": {
+    "oauth2": {
+      "internal": "Something went wrong with remote provider",
+      "wrongProvider": "User registered directly, please login with the password"
+    }
+  }
+}
