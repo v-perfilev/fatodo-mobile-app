@@ -11,6 +11,7 @@ import FVStack from '../../../components/boxes/FVStack';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import ColorModeSwitch from '../../../components/controls/ColorModeSwitch';
 import DevManagement from './DevManagement';
+import PrivacyPolicyLink from '../PrivacyPolicyLink';
 
 const ForgotPassword = () => {
   const navigation = useNavigation<AuthNavigationProps>();
@@ -35,6 +36,7 @@ const ForgotPassword = () => {
       <FVStack space="5" pb="5">
         <LanguageMenu />
         <ColorModeSwitch />
+        <PrivacyPolicyLink />
       </FVStack>
     </SimpleScrollView>
   );

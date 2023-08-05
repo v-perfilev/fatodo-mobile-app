@@ -46,6 +46,7 @@
     "high": "High"
   },
   "links": {
-    "userDeleted": "User deleted"
+    "userDeleted": "User deleted",
+    "privacyPolicy": "Privacy policy"
   }
 }

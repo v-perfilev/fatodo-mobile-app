@@ -46,6 +46,7 @@
     "high": "Alta"
   },
   "links": {
-    "userDeleted": "Usuario eliminado"
+    "userDeleted": "Usuario eliminado",
+    "privacyPolicy": "Política de privacidad"
   }
 }

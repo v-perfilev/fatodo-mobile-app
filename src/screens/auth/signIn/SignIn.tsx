@@ -11,6 +11,7 @@ import FVStack from '../../../components/boxes/FVStack';
 import SimpleScrollView from '../../../components/scrollable/SimpleScrollView';
 import ColorModeSwitch from '../../../components/controls/ColorModeSwitch';
 import SocialButtons from './SocialButtons';
+import PrivacyPolicyLink from '../PrivacyPolicyLink';
 
 const SignIn = () => {
   const navigation = useNavigation<AuthNavigationProps>();
@@ -39,6 +40,7 @@ const SignIn = () => {
       <FVStack space="5" pb="5">
         <LanguageMenu />
         <ColorModeSwitch />
+        <PrivacyPolicyLink />
       </FVStack>
     </SimpleScrollView>
   );
