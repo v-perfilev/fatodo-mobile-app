@@ -7,7 +7,7 @@ import {useAppSelector} from '../../store/store';
 import AuthSelectors from '../../store/auth/authSelectors';
 
 const withStartupModalDisplay = (Component: ComponentType) => (props: any) => {
-  const appStatus = useAppSelector(AuthSelectors.appStatus);
+  const serverState = useAppSelector(AuthSelectors.serverState);
   const [show, setShow] = useState<boolean>(false);
   const [storeUrl, setStoreUrl] = useState<string>();
 
@@ -20,8 +20,8 @@ const withStartupModalDisplay = (Component: ComponentType) => (props: any) => {
   }, []);
 
   useEffect(() => {
-    appStatus === 'READY' && storeUrl && setShow(true);
-  }, [appStatus, storeUrl]);
+    serverState === 'HEALTHY' && storeUrl && setShow(true);
+  }, [serverState, storeUrl]);
 
   return (
     <>

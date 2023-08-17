@@ -13,7 +13,7 @@ import {AuthActions} from '../../store/auth/authActions';
 const img = require('../../../assets/images/content-2.png');
 const size = 200;
 
-const UnhealthyPlaceholder = () => {
+const UnhealthyScreen = () => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector(AuthSelectors.loading);
   const {t} = useTranslation();
@@ -43,4 +43,4 @@ const UnhealthyPlaceholder = () => {
   );
 };
 
-export default UnhealthyPlaceholder;
+export default UnhealthyScreen;

@@ -20,14 +20,14 @@ export type WithRootProps = {
 
 const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: any) => {
   const dispatch = useAppDispatch();
+  const serverState = useAppSelector(AuthSelectors.serverState);
   const account = useAppSelector(AuthSelectors.account);
   const isAuthenticated = useAppSelector(AuthSelectors.isAuthenticated);
   const isActive = useAppSelector(AuthSelectors.isActive);
-  const appStatus = useAppSelector(AuthSelectors.appStatus);
   const activityTimerId = useRef<NodeJS.Timer>();
 
   const hideSplashScreen = (): void => {
-    setTimeout(() => SplashScreen.hide(), 500);
+    setTimeout(() => SplashScreen.hide(), 100);
   };
 
   const checkHealth = (): void => {
@@ -69,14 +69,18 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   };
 
   useEffect(() => {
+    hideSplashScreen();
     checkHealth();
   }, []);
 
   useEffect(() => {
-    appStatus === 'UNHEALTHY' && hideSplashScreen();
-    appStatus === 'HEALTHY' && login();
-    appStatus === 'READY' && hideSplashScreen();
-  }, [appStatus]);
+    serverState === 'HEALTHY' && login();
+  }, [serverState]);
+
+  useEffect(() => {
+    const appStateSubscription = getAppStatusSubscription();
+    return () => appStateSubscription.remove();
+  }, []);
 
   useEffect(() => {
     if (isActive && isAuthenticated) {
@@ -86,16 +90,11 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
     } else {
       clearInterval(activityTimerId.current);
     }
-  }, [isActive, isAuthenticated]);
+  }, [isAuthenticated, isActive]);
 
   useEffect(() => {
-    account && NotificationsRemote.subscribeToFirebase(account.id).finally();
-  }, [account]);
-
-  useEffect(() => {
-    const appStateSubscription = getAppStatusSubscription();
-    return () => appStateSubscription.remove();
-  }, []);
+    isAuthenticated && NotificationsRemote.subscribeToFirebase(account.id).finally();
+  }, [isAuthenticated, account]);
 
   return <Component {...props} />;
 };

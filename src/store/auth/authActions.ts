@@ -30,10 +30,6 @@ export class AuthActions {
     dispatch(authSlice.actions.setIsActive(isActive));
   };
 
-  static setIsAuthenticated = (isAuthenticated: boolean) => (dispatch: AppDispatch) => {
-    dispatch(authSlice.actions.setIsAuthenticated(isAuthenticated));
-  };
-
   static setLoading = (value: boolean) => (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.setLoading(value));
   };
@@ -69,7 +65,6 @@ export class AuthActions {
   static loginThunk = createAsyncThunk<void, void, AsyncThunkConfig>(PREFIX + 'login', async (_, thunkAPI) => {
     const token = await SecurityUtils.getAuthToken();
     token && (await thunkAPI.dispatch(AuthActions.fetchAccountThunk()));
-    token && (await thunkAPI.dispatch(AuthActions.setIsAuthenticated(true)));
   });
 
   static logoutThunk = createAsyncThunk<void, void, AsyncThunkConfig>(PREFIX + 'logout', async (_, thunkAPI) => {

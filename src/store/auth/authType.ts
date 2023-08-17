@@ -1,11 +1,12 @@
 import {UserAccount} from '../../models/User';
 
-export type AppStatus = 'READY' | 'HEALTHY' | 'UNHEALTHY' | 'LOADING';
+export type ServerState = 'PENDING' | 'UNHEALTHY' | 'HEALTHY';
+export type NavigatorState = 'PENDING' | 'UNHEALTHY' | 'PUBLIC' | 'PROTECTED';
 
 export type AuthState = {
   isActive: boolean;
-  isAuthenticated: boolean;
-  appStatus: AppStatus;
+  serverState: ServerState;
+  navigatorState: NavigatorState;
   account: UserAccount;
   loading: boolean;
 };
