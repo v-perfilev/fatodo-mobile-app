@@ -64,7 +64,11 @@ export class AuthActions {
 
   static loginThunk = createAsyncThunk<void, void, AsyncThunkConfig>(PREFIX + 'login', async (_, thunkAPI) => {
     const token = await SecurityUtils.getAuthToken();
-    token && (await thunkAPI.dispatch(AuthActions.fetchAccountThunk()));
+    if (token) {
+      await thunkAPI.dispatch(AuthActions.fetchAccountThunk());
+    } else {
+      return thunkAPI.rejectWithValue(undefined);
+    }
   });
 
   static logoutThunk = createAsyncThunk<void, void, AsyncThunkConfig>(PREFIX + 'logout', async (_, thunkAPI) => {
