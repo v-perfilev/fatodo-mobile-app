@@ -1,0 +1,52 @@
+{
+  "imageUpload": {
+    "buttons": {
+      "upload": "Upload",
+      "update": "Update",
+      "clear": "Clear"
+    }
+  },
+  "versionCheck": {
+    "androidMessage": "The new version of Fatodo is available on Google Play",
+    "iosVersion": "The new version of Fatodo is available on App Store",
+    "update": "Update the app",
+    "cancel": "No, thanks"
+  },
+  "usersSelect": {
+    "contactsNotFound": "First you need to at least one user to your contact list",
+    "usersNotFound": "Users not found"
+  },
+  "reminders": {
+    "fields": {
+      "time": "Time",
+      "date": "Date",
+      "weekdays": "Days of week",
+      "monthdays": "Days of month"
+    },
+    "periodicity": {
+      "ONCE": "once",
+      "DAILY": "daily",
+      "WEEKLY": "weekly",
+      "MONTHLY": "monthly",
+      "YEARLY": "yearly"
+    },
+    "ONCE": "at {{time}} on {{date}}",
+    "DAILY": "at {{time}}",
+    "WEEKLY": "at {{time}} on {{weekDays}}",
+    "MONTHLY": "at {{time}} on {{monthDates}} of every month",
+    "YEARLY": "at {{time}} on {{date}}"
+  },
+  "statuses": {
+    "workInProgress": "Work in progress",
+    "closed": "Closed"
+  },
+  "priorities": {
+    "low": "Low",
+    "normal": "Normal",
+    "high": "High"
+  },
+  "links": {
+    "userDeleted": "User deleted",
+    "privacyPolicy": "Privacy policy"
+  }
+}

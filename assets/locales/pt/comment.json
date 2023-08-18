@@ -1,0 +1,33 @@
+{
+  "list": {
+    "inputPlaceholder": "Type your comment...",
+    "commentsNotFound": "No comments yet"
+  },
+  "comment": {
+    "deleted": "Comment deleted",
+    "actions": {
+      "reactions": "Reactions",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  },
+  "reactions": {
+    "title": "Reactions to the comment",
+    "reactionsNotFound": "No reactions yet"
+  },
+  "editComment": {
+    "title": "Edit comment",
+    "fields": {
+      "text": {
+        "label": "Text",
+        "required": "Required"
+      }
+    },
+    "send": "Edit",
+    "cancel": "Cancel"
+  },
+  "deleteComment": {
+    "title": "Delete comment",
+    "text": "Are you sure you want to delete the comment?"
+  }
+}
