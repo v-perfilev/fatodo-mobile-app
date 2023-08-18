@@ -4,8 +4,8 @@
     <item android:drawable="@drawable/gradient_bg"/>
 
     <item
-            android:width="150dp"
-            android:height="150dp"
+            android:width="240dp"
+            android:height="320dp"
             android:drawable="@mipmap/splash_icon"
             android:gravity="center"/>
 
