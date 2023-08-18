@@ -22,6 +22,11 @@ import HealthService from '../../services/HealthService';
 const PREFIX = 'auth/';
 
 export class AuthActions {
+  static setStateToPending = () => (dispatch: AppDispatch) => {
+    dispatch(authSlice.actions.setNavigatorState('PENDING'));
+    dispatch(authSlice.actions.setServerState('PENDING'));
+  };
+
   static afterLogout = () => (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.reset());
   };

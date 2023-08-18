@@ -5,8 +5,8 @@ import {UserAccount} from '../../models/User';
 
 const initialState: AuthState = {
   isActive: true,
-  serverState: 'PENDING',
-  navigatorState: 'PENDING',
+  serverState: 'HEALTHY',
+  navigatorState: 'PUBLIC',
   account: undefined,
   loading: false,
 };
@@ -17,8 +17,6 @@ const authSlice = createSlice({
   reducers: {
     reset: (state: AuthState) => {
       Object.assign(state, initialState);
-      state.serverState = 'HEALTHY';
-      state.navigatorState = 'PUBLIC';
     },
 
     setIsActive: (state: AuthState, action: PayloadAction<boolean>) => {

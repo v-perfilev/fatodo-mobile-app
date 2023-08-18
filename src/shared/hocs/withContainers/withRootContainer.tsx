@@ -26,8 +26,12 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   const isActive = useAppSelector(AuthSelectors.isActive);
   const activityTimerId = useRef<NodeJS.Timer>();
 
+  const init = (): void => {
+    dispatch(AuthActions.setStateToPending());
+  };
+
   const hideSplashScreen = (): void => {
-    setTimeout(() => SplashScreen.hide(), 100);
+    setTimeout(() => SplashScreen.hide(), 30);
   };
 
   const checkHealth = (): void => {
@@ -69,6 +73,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   };
 
   useEffect(() => {
+    init();
     hideSplashScreen();
     checkHealth();
   }, []);
