@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_72" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,10 +20,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="SplashIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kw9-MC-z2I">
-                                <rect key="frame" x="123.66666666666669" y="371" width="183" height="190"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="SplashIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kw9-MC-z2I">
+                                <rect key="frame" x="114" y="331" width="202" height="270"/>
                             </imageView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="lM0-y2-oZh"/>
                         <constraints>
                             <constraint firstItem="kw9-MC-z2I" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="LBO-DF-Ofk"/>
                             <constraint firstItem="kw9-MC-z2I" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="x3h-mD-3n7"/>
@@ -36,6 +38,6 @@
     </scenes>
     <resources>
         <image name="SplashBG" width="333.33334350585938" height="666.66668701171875"/>
-        <image name="SplashIcon" width="183" height="190"/>
+        <image name="SplashIcon" width="288" height="310.5"/>
     </resources>
 </document>
