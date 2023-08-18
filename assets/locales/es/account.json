@@ -4,12 +4,12 @@
     "tryAgain": "Intentar de nuevo..."
   },
   "login": {
-    "header": "Iniciar sesión",
+    "header": "Acceso",
     "submit": "Iniciar sesión"
   },
   "register": {
-    "header": "Registrarse",
-    "submit": "Registrarse"
+    "header": "Registro",
+    "submit": "Inscribirse"
   },
   "forgotPassword": {
     "header": "¿Olvidaste tu contraseña?",
