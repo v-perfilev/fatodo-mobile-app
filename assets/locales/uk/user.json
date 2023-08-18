@@ -1,19 +1,19 @@
 {
   "commonGroups": {
-    "header": "Common groups",
-    "noCommonGroups": "You have no common groups"
+    "header": "Спільні групи",
+    "noCommonGroups": "У вас немає спільних груп"
   },
   "commonContacts": {
-    "header": "Common contacts",
-    "noCommonContacts": "You have no common contacts"
+    "header": "Спільні контакти",
+    "noCommonContacts": "У вас немає спільних контактів"
   },
   "actions": {
-    "sendContactRequest": "Send contact request",
-    "acceptContactRequest": "Accept contact request",
-    "declineContactRequest": "Decline contact request",
-    "cancelContactRequest": "Cancel contact request",
-    "waitContactAccepting": "Waiting for contact accepting",
-    "removeContact": "Remove contact",
-    "sendMessage": "Send message"
+    "sendContactRequest": "Додати до списку контактів",
+    "acceptContactRequest": "Прийняти запит",
+    "declineContactRequest": "Відхилити запит",
+    "cancelContactRequest": "Скасувати запит",
+    "waitContactAccepting": "Очікування підтвердження",
+    "removeContact": "Видалити контакт",
+    "sendMessage": "Відправити повідомлення"
   }
 }

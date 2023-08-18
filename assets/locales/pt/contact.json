@@ -1,41 +1,41 @@
 {
   "relations": {
-    "title": "Contacts",
-    "remove": "Remove",
-    "relationsNotFound": "No contacts yet"
+    "title": "Contatos",
+    "remove": "Remover",
+    "relationsNotFound": "Ainda não há contatos"
   },
   "outcoming": {
-    "title": "Outcoming",
-    "remove": "Remove",
-    "requestsNotFound": "No outcoming requests"
+    "title": "Solicitações Enviadas",
+    "remove": "Remover",
+    "requestsNotFound": "Nenhuma solicitação enviada"
   },
   "incoming": {
-    "title": "Incoming",
-    "accept": "Accept",
-    "decline": "Decline",
-    "requestsNotFound": "No incoming requests"
+    "title": "Solicitações Recebidas",
+    "accept": "Aceitar",
+    "decline": "Recusar",
+    "requestsNotFound": "Nenhuma solicitação recebida"
   },
   "addContact": {
-    "title": "Add user to list of contacts",
+    "title": "Adicionar usuário à lista de contatos",
     "fields": {
       "user": {
-        "label": "Username / Email",
-        "required": "Required",
-        "current": "Enter identifier of another user",
-        "notRegistered": "User not registered"
+        "label": "Nome de usuário / E-mail",
+        "required": "Campo obrigatório",
+        "current": "Digite o identificador de outro usuário",
+        "notRegistered": "Usuário não registrado"
       },
       "message": {
-        "label": "Message"
+        "label": "Mensagem"
       }
     },
-    "send": "Send request",
-    "cancel": "Cancel"
+    "send": "Enviar solicitação",
+    "cancel": "Cancelar"
   },
   "removeContact": {
-    "title": "Remove contact",
-    "text": "Are you sure you want to remove \"{{username}}\" from contact list?"
+    "title": "Remover contato",
+    "text": "Tem certeza de que deseja remover \"{{username}}\" da lista de contatos?"
   },
   "actions": {
-    "addContact": "Add contact"
+    "addContact": "Adicionar contato"
   }
 }

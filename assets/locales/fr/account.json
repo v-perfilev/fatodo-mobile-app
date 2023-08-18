@@ -1,144 +1,144 @@
 {
   "unhealthy": {
-    "message": "Opps! Looks like there is a problem with connection to the server. :-(",
-    "tryAgain": "Try again..."
+    "message": "Oups ! Il semble y avoir un problème de connexion au serveur. :-(",
+    "tryAgain": "Réessayer..."
   },
   "login": {
-    "header": "Log in",
-    "submit": "Log in"
+    "header": "Connexion",
+    "submit": "Se connecter"
   },
   "register": {
-    "header": "Sign up",
-    "submit": "Sign up"
+    "header": "Inscription",
+    "submit": "S'inscrire"
   },
   "forgotPassword": {
-    "header": "Forgot password?",
-    "submit": "Request code"
+    "header": "Mot de passe oublié ?",
+    "submit": "Demander le code"
   },
   "resetPassword": {
-    "header": "Reset password",
-    "submit": "Submit"
+    "header": "Réinitialiser le mot de passe",
+    "submit": "Soumettre"
   },
   "changePassword": {
-    "header": "Change password",
-    "submit": "Submit"
+    "header": "Changer le mot de passe",
+    "submit": "Soumettre"
   },
   "socialLogin": {
-    "label": "Sign in with"
+    "label": "Se connecter avec"
   },
   "settings": {
     "labels": {
       "notifications": "Notifications",
-      "email": "Email",
-      "push": "Push"
+      "email": "E-mail",
+      "push": "Pousser"
     },
     "notifications": {
-      "reminder": "Reminders",
-      "itemCreate": "New tasks",
-      "itemGroupCreate": "New groups",
-      "itemMemberAdd": "New members in groups",
-      "chatCreate": "New chats",
-      "chatMessageCreate": "New messages",
-      "chatReactionIncoming": "Reactions in chats",
-      "contactRequestIncoming": "New contact requests",
-      "contactAcceptOutcoming": "Accepted contact requests",
-      "commentCreate": "New comments",
-      "commentReactionIncoming": "Reactions in comments"
+      "reminder": "Rappels",
+      "itemCreate": "Nouvelles tâches",
+      "itemGroupCreate": "Nouveaux groupes",
+      "itemMemberAdd": "Nouveaux membres dans les groupes",
+      "chatCreate": "Nouveaux chats",
+      "chatMessageCreate": "Nouveaux messages",
+      "chatReactionIncoming": "Réactions dans les chats",
+      "contactRequestIncoming": "Nouvelles demandes de contact",
+      "contactAcceptOutcoming": "Demandes de contact acceptées",
+      "commentCreate": "Nouveaux commentaires",
+      "commentReactionIncoming": "Réactions dans les commentaires"
     }
   },
   "fields": {
     "user": {
-      "label": "Username / Email",
-      "required": "Required"
+      "label": "Nom d'utilisateur / E-mail",
+      "required": "Requis"
     },
     "password": {
-      "label": "Password",
-      "required": "Required",
-      "invalid": "Can contain only uppercase and lowercase characters and numbers",
-      "strength": "Should contain uppercase and lowercase characters and numbers",
-      "min8": "Can not be shorter than 8 characters",
-      "max20": "Can not be longer than 20 characters"
+      "label": "Mot de passe",
+      "required": "Requis",
+      "invalid": "Peut contenir uniquement des lettres majuscules et minuscules ainsi que des chiffres",
+      "strength": "Doit contenir des lettres majuscules et minuscules ainsi que des chiffres",
+      "min8": "Ne peut pas être plus court que 8 caractères",
+      "max20": "Ne peut pas être plus long que 20 caractères"
     },
     "oldPassword": {
-      "label": "Current password"
+      "label": "Mot de passe actuel"
     },
     "newPassword": {
-      "label": "New password"
+      "label": "Nouveau mot de passe"
     },
     "repeatPassword": {
-      "label": "Confirm password",
-      "required": "Required",
-      "notEqual": "Passwords are not equals"
+      "label": "Confirmer le mot de passe",
+      "required": "Requis",
+      "notEqual": "Les mots de passe ne correspondent pas"
     },
     "email": {
-      "label": "Email",
-      "required": "Required",
-      "notValid": "Should contain correct email",
-      "notUnique": "Should be unique"
+      "label": "E-mail",
+      "required": "Requis",
+      "notValid": "Doit contenir une adresse e-mail correcte",
+      "notUnique": "Doit être unique"
     },
     "username": {
-      "label": "Username",
-      "required": "Required",
-      "invalid": "Can contain only uppercase and lowercase characters and numbers",
-      "min5": "Can not be shorter than 5 characters",
-      "max20": "Can not be longer than 20 characters",
-      "notUnique": "Should be unique"
+      "label": "Nom d'utilisateur",
+      "required": "Requis",
+      "invalid": "Peut contenir uniquement des lettres majuscules et minuscules ainsi que des chiffres",
+      "min5": "Ne peut pas être plus court que 5 caractères",
+      "max20": "Ne peut pas être plus long que 20 caractères",
+      "notUnique": "Doit être unique"
     },
     "firstname": {
-      "label": "Firstname"
+      "label": "Prénom"
     },
     "lastname": {
-      "label": "Lastname"
+      "label": "Nom de famille"
     },
     "language": {
-      "label": "Language",
-      "required": "Required"
+      "label": "Langue",
+      "required": "Requis"
     },
     "gender": {
-      "label": "Gender",
+      "label": "Genre",
       "options": {
-        "MALE": "Male",
-        "FEMALE": "Female",
-        "DIVERSE": "Diverse"
+        "MALE": "Masculin",
+        "FEMALE": "Féminin",
+        "DIVERSE": "Divers"
       }
     },
     "timeFormat": {
-      "label": "Time format",
+      "label": "Format de l'heure",
       "options": {
-        "H12": "12-hour",
-        "H24": "24-hour"
+        "H12": "12 heures",
+        "H24": "24 heures"
       }
     },
     "dateFormat": {
-      "label": "Date format",
+      "label": "Format de la date",
       "options": {
-        "YMD_DASH": "yyyy-mm-dd",
-        "MDY_SLASH": "mm/dd/yyyy",
-        "DMY_DASH": "dd-mm-yyyy",
-        "DMY_DOT": "dd.mm.yyyy",
-        "DMY_SLASH": "dd/mm/yyyy"
+        "YMD_DASH": "aaaa-mm-jj",
+        "MDY_SLASH": "mm/jj/aaaa",
+        "DMY_DASH": "jj-mm-aaaa",
+        "DMY_DOT": "jj.mm.aaaa",
+        "DMY_SLASH": "jj/mm/aaaa"
       }
     },
     "timezone": {
-      "label": "Timezone",
-      "required": "Required"
+      "label": "Fuseau horaire",
+      "required": "Requis"
     },
     "emailReminders": {
-      "label": "Email reminders"
+      "label": "Rappels par e-mail"
     },
     "image": {
       "label": "Image"
     }
   },
   "deletePermanently": {
-    "title": "Delete account",
-    "text": "If you want to delete your account type \"{{username}}\"",
-    "confirm": "Delete",
-    "cancel": "Cancel"
+    "title": "Supprimer le compte",
+    "text": "Si vous voulez supprimer votre compte, tapez \"{{username}}\"",
+    "confirm": "Supprimer",
+    "cancel": "Annuler"
   },
   "actions": {
-    "save": "Save",
-    "deletePermanently": "Delete account permanently",
-    "logout": "Log out"
+    "save": "Enregistrer",
+    "deletePermanently": "Supprimer le compte définitivement",
+    "logout": "Déconnexion"
   }
 }

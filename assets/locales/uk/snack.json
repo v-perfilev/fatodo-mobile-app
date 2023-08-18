@@ -1,53 +1,53 @@
 {
   "auth": {
-    "registered": "You have registered, the activation link was sent to your email address",
-    "activated": "Account was successfully activated, now you can sign in!",
-    "afterForgotPassword": "The link for changing password was sent to your email address",
-    "afterResetPassword": "The password was changed, now you can sign in!",
-    "afterChangePassword": "Password was changed",
-    "afterUpdateAccount": "Account data updated",
-    "afterDeleteAccount": "Account permanently deleted"
+    "registered": "Ви успішно зареєструвалися. Посилання для активації облікового запису відправлено на вашу електронну адресу.",
+    "activated": "Обліковий запис успішно активований. Тепер ви можете увійти!",
+    "afterForgotPassword": "Посилання для зміни пароля відправлено на вашу електронну адресу.",
+    "afterResetPassword": "Пароль змінено. Тепер ви можете увійти!",
+    "afterChangePassword": "Пароль успішно змінений.",
+    "afterUpdateAccount": "Дані облікового запису змінено.",
+    "afterDeleteAccount": "Обліковий запис остаточно видалений."
   },
   "image": {
-    "tooSmall": "Too small image selected"
+    "tooSmall": "Вибрано занадто маленьке зображення."
   },
   "group": {
-    "created": "Group created",
-    "edited": "Group edited",
-    "deleted": "Group deleted",
-    "sorted": "Groups resorted",
-    "left": "You left the group"
+    "created": "Групу додано.",
+    "edited": "Групу відредаговано.",
+    "deleted": "Групу видалено.",
+    "sorted": "Порядок груп змінено.",
+    "left": "Ви покинули групу."
   },
   "item": {
-    "created": "Task created",
-    "edited": "Task edited",
-    "deleted": "Task deleted"
+    "created": "Завдання додано.",
+    "edited": "Завдання відредаговано.",
+    "deleted": "Завдання видалено."
   },
   "contact": {
-    "relationRemoved": "Relation removed",
-    "requestSent": "Contact request sent",
-    "requestRemoved": "Contact request removed",
-    "requestAccepted": "Contact request accepted",
-    "requestDeclined": "Contact request declined"
+    "relationRemoved": "Контакт видалено.",
+    "requestSent": "Запит надіслано.",
+    "requestRemoved": "Запит видалено.",
+    "requestAccepted": "Запит підтверджено.",
+    "requestDeclined": "Запит відхилено."
   },
   "chat": {
-    "created": "Chat created",
-    "edited": "Chat edited",
-    "renamed": "Chat renamed",
-    "deleted": "Chat deleted",
-    "cleared": "Chat history deleted",
-    "left": "You left the chat",
-    "messageEdited": "Message edited",
-    "messageDeleted": "Message deleted"
+    "created": "Чат створено.",
+    "edited": "Чат відредаговано.",
+    "renamed": "Чат перейменовано.",
+    "deleted": "Чат видалено.",
+    "cleared": "Історія чату видалена.",
+    "left": "Ви покинули чат.",
+    "messageEdited": "Повідомлення відредаговано.",
+    "messageDeleted": "Повідомлення видалено."
   },
   "comment": {
-    "commentEdited": "Comment edited",
-    "commentDeleted": "Comment deleted"
+    "commentEdited": "Коментар відредаговано.",
+    "commentDeleted": "Коментар видалено."
   },
   "security": {
     "oauth2": {
-      "internal": "Something went wrong with remote provider",
-      "wrongProvider": "User registered directly, please login with the password"
+      "internal": "Помилка на віддаленому сервері авторизації.",
+      "wrongProvider": "Користувач зареєстрований у Fatodo. Використовуйте пароль."
     }
   }
 }

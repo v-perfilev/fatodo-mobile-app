@@ -1,133 +1,139 @@
 {
   "common": {
-    "direct": "Direct"
+    "direct": "Дірект"
   },
   "list": {
-    "chatsNotFound": "No chats yet"
+    "chatsNotFound": "Наразі немає жодних чатів"
   },
   "view": {
-    "messagesNotFound": "No messages yet",
-    "inputPlaceholder": "Type your message..."
+    "messagesNotFound": "Наразі немає жодних повідомлень",
+    "inputPlaceholder": "Введіть повідомлення..."
   },
   "menu": {
-    "showMembers": "Members",
-    "addMembers": "Add members",
-    "renameChat": "Rename chat",
-    "cleanChat": "Clean chat",
-    "markAsRead": "Mark all as read",
-    "leaveChat": "Leave chat",
-    "deleteChat": "Delete chat"
+    "showMembers": "Користувачі",
+    "addMembers": "Запросити",
+    "renameChat": "Перейменувати чат",
+    "markAsRead": "Відзначити все як прочитане",
+    "cleanChat": "Очистити чат",
+    "leaveChat": "Покинути чат",
+    "deleteChat": "Видалити чат"
   },
   "message": {
-    "deleted": "Message deleted",
+    "deleted": "Повідомлення видалено",
     "actions": {
-      "reactions": "Reactions",
-      "readStatuses": "Read",
-      "edit": "Edit",
-      "delete": "Delete"
+      "reactions": "Реакції",
+      "readStatuses": "Прочитали",
+      "edit": "Редагувати",
+      "delete": "Видалити"
     }
   },
   "event": {
-    "CREATE_DIRECT_CHAT": "{{username}} created direct chat with {{usernames}}",
-    "CREATE_CHAT": "{{username}} created chat with {{usernames}}",
-    "RENAME_CHAT": "{{username}} renamed the chat to \"{{title}}\"",
-    "LEAVE_CHAT": "{{username}} left the chat",
-    "CLEAR_CHAT": "You cleared the chat history",
-    "ADD_MEMBERS": "{{username}} added new members to the chat: {{usernames}}",
-    "DELETE_MEMBERS": "{{username}} deleted members from the chat: {{usernames}}"
+    "CREATE_DIRECT_CHAT": "{{username}} створив дірект-чат з {{usernames}}",
+    "CREATE_DIRECT_CHAT_FEMALE": "{{username}} створила дірект-чат з {{usernames}}",
+    "CREATE_CHAT": "{{username}} створив чат з {{usernames}}",
+    "CREATE_CHAT_FEMALE": "{{username}} створила чат з {{usernames}}",
+    "RENAME_CHAT": "{{username}} перейменував чат на \"{{title}}\"",
+    "RENAME_CHAT_FEMALE": "{{username}} перейменувала чат на \"{{title}}\"",
+    "LEAVE_CHAT": "{{username}} покинув чат",
+    "LEAVE_CHAT_FEMALE": "{{username}} покинула чат",
+    "CLEAR_CHAT": "Ви очистили історію чату",
+    "ADD_MEMBERS": "{{username}} додав до чату нових користувачів: {{usernames}}",
+    "ADD_MEMBERS_FEMALE": "{{username}} додала до чату нових користувачів: {{usernames}}",
+    "DELETE_MEMBERS": "{{username}} видалив з чату користувачів: {{usernames}}",
+    "DELETE_MEMBERS_FEMALE": "{{username}} видала з чату користувачів: {{usernames}}"
   },
   "actions": {
-    "createChat": "Create chat",
-    "back": "Back"
+    "createChat": "Створити чат",
+    "back": "Повернутися до попередньої сторінки"
   },
   "createChat": {
-    "title": "Create chat",
+    "title": "Створити чат",
     "fields": {
       "users": {
-        "label": "Users",
-        "current": "Enter identifier of another user",
-        "notRegistered": "User not registered"
+        "label": "Користувачі",
+        "current": "Введіть ідентифікатор іншого користувача",
+        "notRegistered": "Користувач не зареєстрований"
       }
     },
-    "send": "Create",
-    "cancel": "Cancel"
+    "send": "Створити",
+    "cancel": "Скасувати"
   },
   "renameChat": {
-    "title": "Rename chat",
+    "title": "Перейменувати чат",
     "fields": {
       "title": {
-        "label": "Title",
-        "required": "Required"
+        "label": "Назва",
+        "required": "Обов'язкове поле"
       }
     },
-    "send": "Rename",
-    "cancel": "Cancel"
+    "send": "Перейменувати",
+    "cancel": "Скасувати"
   },
   "members": {
-    "title": "Chat members",
-    "usersNotFound": "Users not found",
+    "title": "Користувачі в чаті",
+    "usersNotFound": "Користувачі не знайдені",
     "buttons": {
-      "addUsers": "Add members"
+      "addUsers": "Додати користувачів"
     }
   },
   "addMembers": {
-    "title": "Add chat members",
+    "title": "Додавання користувачів до чату",
     "buttons": {
-      "send": "Add members",
-      "cancel": "Cancel"
+      "send": "Додати користувачів",
+      "cancel": "Скасувати"
     }
   },
   "removeMember": {
-    "title": "Remove user from chat",
-    "text": "Are you sure you want to delete user {{username}} from chat?"
+    "title": "Видалення користувача",
+    "text": "Ви впевнені, що хочете видалити користувача {{username}} з чату?"
   },
   "reactions": {
-    "title": "Reactions to the message",
-    "reactionsNotFound": "No reactions yet"
+    "title": "Реакції на повідомлення",
+    "reactionsNotFound": "Поки немає жодних реакцій"
   },
   "readStatuses": {
-    "title": "Read",
-    "readStatusesNotFound": "Nobody has read this message"
+    "title": "Прочитали",
+    "readStatusesNotFound": "Поки ніхто не прочитав"
   },
   "editMessage": {
-    "title": "Edit message",
+    "title": "Редагувати повідомлення",
     "fields": {
       "text": {
-        "label": "Text",
-        "required": "Required"
+        "label": "Текст",
+        "required": "Обов'язкове поле"
       }
     },
-    "send": "Edit",
-    "cancel": "Cancel"
+    "send": "Редагувати",
+    "cancel": "Скасувати"
   },
   "directMessage": {
-    "title": "Direct message",
+    "title": "Пряме повідомлення",
     "fields": {
       "username": {
-        "label": "User"
+        "label": "Користувач"
       },
       "text": {
-        "label": "Text",
-        "required": "Required"
+        "label": "Текст",
+        "required": "Обов'язкове поле"
       }
     },
-    "send": "Send",
-    "cancel": "Cancel"
+    "send": "Надіслати",
+    "cancel": "Скасувати"
   },
   "clearChat": {
-    "title": "Clear chat",
-    "text": "Are you sure you want to clear the chat?"
+    "title": "Очищення чату",
+    "text": "Ви впевнені, що хочете очистити чат?"
   },
   "leaveChat": {
-    "title": "Leave chat",
-    "text": "Are you sure you want to leave the chat?"
+    "title": "Вихід з чату",
+    "text": "Ви впевнені, що хочете покинути чат?"
   },
   "deleteChat": {
-    "title": "Delete chat",
-    "text": "Are you sure you want to delete the chat?"
+    "title": "Видалення чату",
+    "text": "Ви впевнені, що хочете видалити чат?"
   },
   "deleteMessage": {
-    "title": "Delete message",
-    "text": "Are you sure you want to delete the message?"
+    "title": "Видалення повідомлення",
+    "text": "Ви впевнені, що хочете видалити повідомлення?"
   }
 }

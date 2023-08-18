@@ -1,48 +1,48 @@
 {
-  "default": "Error on server",
-  "connection": "Connection with server failed",
+  "default": "Erreur sur le serveur",
+  "connection": "Échec de la connexion au serveur",
   "form": {
-    "invalid": "Form data is invalid"
+    "invalid": "Les données du formulaire ne sont pas valides"
   },
   "auth": {
-    "alreadyActivated": "Account is already activated",
-    "notActivated": "Account is not activated",
-    "wrongPassword": "Wrong current password",
-    "wrongProvider": "Operation not possible for your account provider"
+    "alreadyActivated": "Le compte est déjà activé",
+    "notActivated": "Le compte n'est pas activé",
+    "wrongPassword": "Mot de passe actuel incorrect",
+    "wrongProvider": "Opération non possible pour votre fournisseur de compte"
   },
   "security": {
-    "forbidden": "Access is forbidden",
-    "unauthorized": "You are unauthorized",
-    "notRegistered": "User is not registered yet",
-    "wrongPassword": "Wrong password, try again",
+    "forbidden": "Accès interdit",
+    "unauthorized": "Vous n'êtes pas autorisé",
+    "notRegistered": "L'utilisateur n'est pas encore enregistré",
+    "wrongPassword": "Mauvais mot de passe, réessayez",
     "wrongProvider": {
-      "GOOGLE": "User is registered with Google",
-      "FACEBOOK": "User is registered with Facebook",
-      "APPLE": "User is registered with Apple"
+      "GOOGLE": "L'utilisateur est enregistré avec Google",
+      "FACEBOOK": "L'utilisateur est enregistré avec Facebook",
+      "APPLE": "L'utilisateur est enregistré avec Apple"
     }
   },
   "model": {
-    "databaseError": "Error on server",
-    "exists": "Object already exists",
-    "duplicated": "At least one of unique fields is duplicated",
-    "notFound": "Object not found",
-    "invalid": "Object contains invalid parameter"
+    "databaseError": "Erreur sur le serveur",
+    "exists": "L'objet existe déjà",
+    "duplicated": "Au moins l'un des champs uniques est dupliqué",
+    "notFound": "Objet non trouvé",
+    "invalid": "L'objet contient un paramètre non valide"
   },
   "permission": {
-    "restricted": "Not enough rights to perform this operation",
-    "usersNotAllowed": "Users not from contact list"
+    "restricted": "Pas assez de droits pour effectuer cette opération",
+    "usersNotAllowed": "Utilisateurs non autorisés dans la liste de contacts"
   },
   "service": {
     "group": {
-      "invalid": "Group contains invalid data"
+      "invalid": "Le groupe contient des données non valides"
     }
   },
   "contact": {
     "relation": {
-      "exists": "Relation already exists"
+      "exists": "La relation existe déjà"
     },
     "request": {
-      "exists": "Request already sent"
+      "exists": "La demande a déjà été envoyée"
     }
   }
 }

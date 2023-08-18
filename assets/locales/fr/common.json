@@ -1,52 +1,52 @@
 {
   "imageUpload": {
     "buttons": {
-      "upload": "Upload",
-      "update": "Update",
-      "clear": "Clear"
+      "upload": "Télécharger",
+      "update": "Mettre à jour",
+      "clear": "Effacer"
     }
   },
   "versionCheck": {
-    "androidMessage": "The new version of Fatodo is available on Google Play",
-    "iosVersion": "The new version of Fatodo is available on App Store",
-    "update": "Update the app",
-    "cancel": "No, thanks"
+    "androidMessage": "La nouvelle version de Fatodo est disponible sur Google Play",
+    "iosVersion": "La nouvelle version de Fatodo est disponible sur l'App Store",
+    "update": "Mettre à jour l'application",
+    "cancel": "Non, merci"
   },
   "usersSelect": {
-    "contactsNotFound": "First you need to at least one user to your contact list",
-    "usersNotFound": "Users not found"
+    "contactsNotFound": "Commencez par ajouter au moins un utilisateur à votre liste de contacts",
+    "usersNotFound": "Utilisateurs non trouvés"
   },
   "reminders": {
     "fields": {
-      "time": "Time",
+      "time": "Heure",
       "date": "Date",
-      "weekdays": "Days of week",
-      "monthdays": "Days of month"
+      "weekdays": "Jours de la semaine",
+      "monthdays": "Jours du mois"
     },
     "periodicity": {
-      "ONCE": "once",
-      "DAILY": "daily",
-      "WEEKLY": "weekly",
-      "MONTHLY": "monthly",
-      "YEARLY": "yearly"
+      "ONCE": "une fois",
+      "DAILY": "quotidiennement",
+      "WEEKLY": "hebdomadaire",
+      "MONTHLY": "mensuel",
+      "YEARLY": "annuel"
     },
-    "ONCE": "at {{time}} on {{date}}",
-    "DAILY": "at {{time}}",
-    "WEEKLY": "at {{time}} on {{weekDays}}",
-    "MONTHLY": "at {{time}} on {{monthDates}} of every month",
-    "YEARLY": "at {{time}} on {{date}}"
+    "ONCE": "à {{time}} le {{date}}",
+    "DAILY": "à {{time}}",
+    "WEEKLY": "à {{time}} les {{weekDays}}",
+    "MONTHLY": "à {{time}} le {{monthDates}} de chaque mois",
+    "YEARLY": "à {{time}} le {{date}}"
   },
   "statuses": {
-    "workInProgress": "Work in progress",
-    "closed": "Closed"
+    "workInProgress": "Travail en cours",
+    "closed": "Fermé"
   },
   "priorities": {
-    "low": "Low",
+    "low": "Faible",
     "normal": "Normal",
-    "high": "High"
+    "high": "Élevée"
   },
   "links": {
-    "userDeleted": "User deleted",
-    "privacyPolicy": "Privacy policy"
+    "userDeleted": "Utilisateur supprimé",
+    "privacyPolicy": "Politique de confidentialité"
   }
 }

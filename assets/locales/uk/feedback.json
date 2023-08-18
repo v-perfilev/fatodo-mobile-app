@@ -1,48 +1,48 @@
 {
-  "default": "Error on server",
-  "connection": "Connection with server failed",
+  "default": "Помилка на сервері",
+  "connection": "Помилка з'єднання з сервером",
   "form": {
-    "invalid": "Form data is invalid"
+    "invalid": "Форма містить некоректні дані"
   },
   "auth": {
-    "alreadyActivated": "Account is already activated",
-    "notActivated": "Account is not activated",
-    "wrongPassword": "Wrong current password",
-    "wrongProvider": "Operation not possible for your account provider"
+    "alreadyActivated": "Обліковий запис вже був активований",
+    "notActivated": "Обліковий запис не активований",
+    "wrongPassword": "Неправильний пароль",
+    "wrongProvider": "Неможливо виконати операцію"
   },
   "security": {
-    "forbidden": "Access is forbidden",
-    "unauthorized": "You are unauthorized",
-    "notRegistered": "User is not registered yet",
-    "wrongPassword": "Wrong password, try again",
+    "forbidden": "Доступ заборонено",
+    "unauthorized": "Ви не авторизовані",
+    "notRegistered": "Користувач з вказаними даними не зареєстрований",
+    "wrongPassword": "Неправильний пароль, спробуйте ще раз",
     "wrongProvider": {
-      "GOOGLE": "User is registered with Google",
-      "FACEBOOK": "User is registered with Facebook",
-      "APPLE": "User is registered with Apple"
+      "GOOGLE": "Користувач зареєстрований через Google",
+      "FACEBOOK": "Користувач зареєстрований через Facebook",
+      "APPLE": "Користувач зареєстрований через Apple"
     }
   },
   "model": {
-    "databaseError": "Error on server",
-    "exists": "Object already exists",
-    "duplicated": "At least one of unique fields is duplicated",
-    "notFound": "Object not found",
-    "invalid": "Object contains invalid parameter"
+    "databaseError": "Помилка на сервері",
+    "exists": "Завдання вже існує",
+    "duplicated": "Принаймні одне поле містить некоректні дані",
+    "notFound": "Завдання не знайдене",
+    "invalid": "Завдання містить некоректні параметри"
   },
   "permission": {
-    "restricted": "Not enough rights to perform this operation",
-    "usersNotAllowed": "Users not from contact list"
+    "restricted": "Недостатньо прав для виконання операції",
+    "usersNotAllowed": "Користувачі не зі списку контактів"
   },
   "service": {
     "group": {
-      "invalid": "Group contains invalid data"
+      "invalid": "Група містить некоректні дані"
     }
   },
   "contact": {
     "relation": {
-      "exists": "Relation already exists"
+      "exists": "Користувач вже у списку контактів"
     },
     "request": {
-      "exists": "Request already sent"
+      "exists": "Запит вже був відправлений раніше"
     }
   }
 }

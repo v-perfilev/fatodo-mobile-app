@@ -1,83 +1,83 @@
 {
   "headers": {
-    "create": "Create group",
-    "edit": "Edit group"
+    "create": "Додати групу",
+    "edit": "Редагувати групу"
   },
   "archived": {
-    "itemsNotFound": "No archived tasks"
+    "itemsNotFound": "Немає завдань у архіві"
   },
   "fields": {
     "title": {
-      "label": "Title",
-      "required": "Required"
+      "label": "Назва",
+      "required": "Обов'язкове поле"
     },
     "color": {
-      "label": "Color",
-      "required": "Required"
+      "label": "Колір",
+      "required": "Обов'язкове поле"
     },
     "image": {
-      "label": "Image"
+      "label": "Зображення"
     }
   },
   "actions": {
-    "showAll": "Show all tasks",
-    "active": "Active",
-    "archived": "Archived",
-    "groups": "Groups",
-    "view": "Open",
-    "createGroup": "Create group",
-    "createItem": "Create task",
-    "create": "Create",
-    "edit": "Edit",
-    "leave": "Leave",
-    "delete": "Delete",
-    "members": "Members",
-    "addMembers": "Add members",
-    "moveToArchive": "Move to archive",
-    "removeFromArchive": "Remove from archive",
-    "save": "Save",
-    "update": "Update",
-    "cancel": "Cancel",
-    "refresh": "Refresh",
-    "collapse": "Collapse",
-    "reorder": "Reorder"
+    "showAll": "Показати всі завдання",
+    "active": "Активні",
+    "archived": "Архів",
+    "groups": "Групи",
+    "view": "Відкрити",
+    "createGroup": "Створити групу",
+    "createItem": "Створити завдання",
+    "create": "Створити",
+    "edit": "Редагувати",
+    "leave": "Покинути",
+    "delete": "Видалити",
+    "members": "Учасники",
+    "addMembers": "Додати учасників",
+    "moveToArchive": "Перенести до архіву",
+    "removeFromArchive": "Видалити з архіву",
+    "save": "Зберегти",
+    "update": "Змінити",
+    "cancel": "Скасувати",
+    "refresh": "Оновити",
+    "collapse": "Згорнути",
+    "reorder": "Сортувати"
   },
   "roles": {
-    "admin": "Administrator",
-    "edit": "Editor",
-    "read": "Reader"
+    "admin": "Адміністратор",
+    "edit": "Редактор",
+    "read": "Читач"
   },
   "members": {
-    "title": "Group members",
-    "usersNotFound": "Users not found",
+    "title": "Користувачі у групі",
+    "usersNotFound": "Користувачі не знайдені",
     "buttons": {
-      "addUsers": "Add members"
+      "addUsers": "Додати користувачів"
     }
   },
   "addMembers": {
-    "title": "Add group members",
+    "title": "Запросити до групи",
     "buttons": {
-      "send": "Add members",
-      "cancel": "Cancel"
+      "send": "Запросити",
+      "cancel": "Скасувати"
     }
   },
   "editMember": {
-    "title": "Edit group member",
+    "title": "Зміна користувача в групі",
     "buttons": {
-      "send": "Edit",
-      "cancel": "Cancel"
+      "send": "Змінити",
+      "cancel": "Скасувати"
     }
   },
   "removeMember": {
-    "title": "Remove user from group",
-    "text": "Are you sure you want to delete user {{username}} from group?"
+    "title": "Видалення користувача",
+    "text": "Ви впевнені, що хочете видалити користувача {{username}} з групи?"
   },
   "leaveGroup": {
-    "title": "Leave group",
-    "text": "Are you sure you want to leave the group \"{{title}}\"?"
+    "title": "Вихід з групи",
+    "text": "Ви впевнені, що хочете залишити групу \"{{title}}\"?"
   },
   "deleteGroup": {
-    "title": "Delete group",
-    "text": "Are you sure you want to delete the group \"{{title}}\"?"
+    "title": "Видалення групи",
+    "text": "Ви впевнені, що хочете видалити групу \"{{title}}\"?"
   }
 }

@@ -1,52 +1,52 @@
 {
   "headers": {
-    "create": "Create task in {{group}}",
-    "edit": "Edit task in {{group}}"
+    "create": "Criar tarefa em {{group}}",
+    "edit": "Editar tarefa em {{group}}"
   },
   "view": {
-    "noDescription": "No description"
+    "noDescription": "Nenhuma descrição"
   },
   "labels": {
-    "archived": "Archived",
-    "priority": "Priority",
+    "archived": "Arquivado",
+    "priority": "Prioridade",
     "status": "Status",
-    "description": "Description",
-    "reminders": "Reminders",
-    "item": "Task",
-    "group": "Group",
-    "createdBy": "Created by",
-    "createdAt": "Created at",
-    "updatedBy": "Updated by",
-    "updatedAt": "Updated at"
+    "description": "Descrição",
+    "reminders": "Lembretes",
+    "item": "Tarefa",
+    "group": "Grupo",
+    "createdBy": "Criado por",
+    "createdAt": "Criado em",
+    "updatedBy": "Atualizado por",
+    "updatedAt": "Atualizado em"
   },
   "fields": {
     "title": {
-      "label": "Title",
-      "required": "Required"
+      "label": "Título",
+      "required": "Obrigatório"
     },
     "priority": {
-      "label": "Priority",
-      "required": "Required"
+      "label": "Prioridade",
+      "required": "Obrigatório"
     },
     "description": {
-      "label": "Description"
+      "label": "Descrição"
     },
     "reminders": {
-      "label": "Reminders"
+      "label": "Lembretes"
     }
   },
   "actions": {
-    "save": "Save",
-    "cancel": "Cancel",
-    "create": "Create task",
-    "edit": "Edit",
-    "delete": "Delete",
-    "list": "List of tasks",
-    "add": "Add",
-    "close": "Close"
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "create": "Criar tarefa",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "list": "Lista de tarefas",
+    "add": "Adicionar",
+    "close": "Fechar"
   },
   "deleteItem": {
-    "title": "Delete task",
-    "text": "Are you sure you want to delete task \"{{title}}\"?"
+    "title": "Excluir tarefa",
+    "text": "Tem certeza de que deseja excluir a tarefa \"{{title}}\"?"
   }
 }

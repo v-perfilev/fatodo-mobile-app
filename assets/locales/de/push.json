@@ -1,21 +1,21 @@
 {
   "item": {
-    "create": "New task",
-    "createGroup": "New group",
-    "addMembers": "Members added to group"
+    "create": "Neue Aufgabe",
+    "createGroup": "Neue Gruppe",
+    "addMembers": "Mitglieder zur Gruppe hinzugefügt"
   },
   "chat": {
-    "create": "New chat",
-    "createMessage": "New message",
-    "reaction": "New chat reaction"
+    "create": "Neuer Chat",
+    "createMessage": "Neue Nachricht",
+    "reaction": "Neue Chat-Reaktion"
   },
   "contact": {
-    "request": "New contact request",
-    "requestAccept": "Contact request accepted"
+    "request": "Neue Kontaktanfrage",
+    "requestAccept": "Kontaktanfrage angenommen"
   },
   "comment": {
-    "create": "New comment",
-    "reaction": "New comment reaction"
+    "create": "Neuer Kommentar",
+    "reaction": "Neue Kommentar-Reaktion"
   },
-  "reminder": "Reminder"
+  "reminder": "Erinnerung"
 }

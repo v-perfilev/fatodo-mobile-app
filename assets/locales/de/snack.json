@@ -1,53 +1,53 @@
 {
   "auth": {
-    "registered": "You have registered, the activation link was sent to your email address",
-    "activated": "Account was successfully activated, now you can sign in!",
-    "afterForgotPassword": "The link for changing password was sent to your email address",
-    "afterResetPassword": "The password was changed, now you can sign in!",
-    "afterChangePassword": "Password was changed",
-    "afterUpdateAccount": "Account data updated",
-    "afterDeleteAccount": "Account permanently deleted"
+    "registered": "Sie haben sich registriert, der Aktivierungslink wurde an Ihre E-Mail-Adresse gesendet",
+    "activated": "Konto wurde erfolgreich aktiviert, jetzt können Sie sich anmelden!",
+    "afterForgotPassword": "Der Link zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse gesendet",
+    "afterResetPassword": "Das Passwort wurde geändert, jetzt können Sie sich anmelden!",
+    "afterChangePassword": "Passwort wurde geändert",
+    "afterUpdateAccount": "Kontodaten aktualisiert",
+    "afterDeleteAccount": "Konto dauerhaft gelöscht"
   },
   "image": {
-    "tooSmall": "Too small image selected"
+    "tooSmall": "Zu kleines Bild ausgewählt"
   },
   "group": {
-    "created": "Group created",
-    "edited": "Group edited",
-    "deleted": "Group deleted",
-    "sorted": "Groups resorted",
-    "left": "You left the group"
+    "created": "Gruppe erstellt",
+    "edited": "Gruppe bearbeitet",
+    "deleted": "Gruppe gelöscht",
+    "sorted": "Gruppen neu sortiert",
+    "left": "Sie haben die Gruppe verlassen"
   },
   "item": {
-    "created": "Task created",
-    "edited": "Task edited",
-    "deleted": "Task deleted"
+    "created": "Aufgabe erstellt",
+    "edited": "Aufgabe bearbeitet",
+    "deleted": "Aufgabe gelöscht"
   },
   "contact": {
-    "relationRemoved": "Relation removed",
-    "requestSent": "Contact request sent",
-    "requestRemoved": "Contact request removed",
-    "requestAccepted": "Contact request accepted",
-    "requestDeclined": "Contact request declined"
+    "relationRemoved": "Beziehung entfernt",
+    "requestSent": "Kontaktanfrage gesendet",
+    "requestRemoved": "Kontaktanfrage entfernt",
+    "requestAccepted": "Kontaktanfrage akzeptiert",
+    "requestDeclined": "Kontaktanfrage abgelehnt"
   },
   "chat": {
-    "created": "Chat created",
-    "edited": "Chat edited",
-    "renamed": "Chat renamed",
-    "deleted": "Chat deleted",
-    "cleared": "Chat history deleted",
-    "left": "You left the chat",
-    "messageEdited": "Message edited",
-    "messageDeleted": "Message deleted"
+    "created": "Chat erstellt",
+    "edited": "Chat bearbeitet",
+    "renamed": "Chat umbenannt",
+    "deleted": "Chat gelöscht",
+    "cleared": "Chatverlauf gelöscht",
+    "left": "Sie haben den Chat verlassen",
+    "messageEdited": "Nachricht bearbeitet",
+    "messageDeleted": "Nachricht gelöscht"
   },
   "comment": {
-    "commentEdited": "Comment edited",
-    "commentDeleted": "Comment deleted"
+    "commentEdited": "Kommentar bearbeitet",
+    "commentDeleted": "Kommentar gelöscht"
   },
   "security": {
     "oauth2": {
-      "internal": "Something went wrong with remote provider",
-      "wrongProvider": "User registered directly, please login with the password"
+      "internal": "Bei der Kommunikation mit dem externen Dienst ist etwas schiefgelaufen",
+      "wrongProvider": "Benutzer wurde direkt registriert, bitte melden Sie sich mit dem Passwort an"
     }
   }
 }

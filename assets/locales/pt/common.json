@@ -1,52 +1,52 @@
 {
   "imageUpload": {
     "buttons": {
-      "upload": "Upload",
-      "update": "Update",
-      "clear": "Clear"
+      "upload": "Enviar",
+      "update": "Atualizar",
+      "clear": "Limpar"
     }
   },
   "versionCheck": {
-    "androidMessage": "The new version of Fatodo is available on Google Play",
-    "iosVersion": "The new version of Fatodo is available on App Store",
-    "update": "Update the app",
-    "cancel": "No, thanks"
+    "androidMessage": "A nova versão do Fatodo está disponível no Google Play",
+    "iosVersion": "A nova versão do Fatodo está disponível na App Store",
+    "update": "Atualizar o aplicativo",
+    "cancel": "Não, obrigado"
   },
   "usersSelect": {
-    "contactsNotFound": "First you need to at least one user to your contact list",
-    "usersNotFound": "Users not found"
+    "contactsNotFound": "Primeiro, adicione pelo menos um usuário à sua lista de contatos",
+    "usersNotFound": "Usuários não encontrados"
   },
   "reminders": {
     "fields": {
-      "time": "Time",
-      "date": "Date",
-      "weekdays": "Days of week",
-      "monthdays": "Days of month"
+      "time": "Hora",
+      "date": "Data",
+      "weekdays": "Dias da semana",
+      "monthdays": "Dias do mês"
     },
     "periodicity": {
-      "ONCE": "once",
-      "DAILY": "daily",
-      "WEEKLY": "weekly",
-      "MONTHLY": "monthly",
-      "YEARLY": "yearly"
+      "ONCE": "uma vez",
+      "DAILY": "diariamente",
+      "WEEKLY": "semanalmente",
+      "MONTHLY": "mensalmente",
+      "YEARLY": "anualmente"
     },
-    "ONCE": "at {{time}} on {{date}}",
-    "DAILY": "at {{time}}",
-    "WEEKLY": "at {{time}} on {{weekDays}}",
-    "MONTHLY": "at {{time}} on {{monthDates}} of every month",
-    "YEARLY": "at {{time}} on {{date}}"
+    "ONCE": "às {{time}} no dia {{date}}",
+    "DAILY": "às {{time}}",
+    "WEEKLY": "às {{time}} nos {{weekDays}}",
+    "MONTHLY": "às {{time}} no dia {{monthDates}} de cada mês",
+    "YEARLY": "às {{time}} no dia {{date}}"
   },
   "statuses": {
-    "workInProgress": "Work in progress",
-    "closed": "Closed"
+    "workInProgress": "Trabalho em andamento",
+    "closed": "Fechado"
   },
   "priorities": {
-    "low": "Low",
+    "low": "Baixa",
     "normal": "Normal",
-    "high": "High"
+    "high": "Alta"
   },
   "links": {
-    "userDeleted": "User deleted",
-    "privacyPolicy": "Privacy policy"
+    "userDeleted": "Usuário excluído",
+    "privacyPolicy": "Política de Privacidade"
   }
 }

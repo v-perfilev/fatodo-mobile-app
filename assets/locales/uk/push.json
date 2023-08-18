@@ -1,21 +1,21 @@
 {
   "item": {
-    "create": "New task",
-    "createGroup": "New group",
-    "addMembers": "Members added to group"
+    "create": "Нове завдання",
+    "createGroup": "Нова група",
+    "addMembers": "Користувачі додані до групи"
   },
   "chat": {
-    "create": "New chat",
-    "createMessage": "New message",
-    "reaction": "New chat reaction"
+    "create": "Новий чат",
+    "createMessage": "Нове повідомлення",
+    "reaction": "Нова реакція у чаті"
   },
   "contact": {
-    "request": "New contact request",
-    "requestAccept": "Contact request accepted"
+    "request": "Новий запит на контакти",
+    "requestAccept": "Запит на контакти схвалено"
   },
   "comment": {
-    "create": "New comment",
-    "reaction": "New comment reaction"
+    "create": "Новий коментар",
+    "reaction": "Нова реакція у коментарях"
   },
-  "reminder": "Reminder"
+  "reminder": "Нагадування"
 }

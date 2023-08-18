@@ -1,52 +1,52 @@
 {
   "imageUpload": {
     "buttons": {
-      "upload": "Upload",
-      "update": "Update",
-      "clear": "Clear"
+      "upload": "Завантажити",
+      "update": "Змінити",
+      "clear": "Видалити"
     }
   },
   "versionCheck": {
-    "androidMessage": "The new version of Fatodo is available on Google Play",
-    "iosVersion": "The new version of Fatodo is available on App Store",
-    "update": "Update the app",
-    "cancel": "No, thanks"
+    "androidMessage": "Нова версія Fatodo доступна на Google Play",
+    "iosVersion": "Нова версія Fatodo доступна на App Store",
+    "update": "Оновити",
+    "cancel": "Ні, дякую"
   },
   "usersSelect": {
-    "contactsNotFound": "First you need to at least one user to your contact list",
-    "usersNotFound": "Users not found"
+    "contactsNotFound": "Спершу додайте хоча б одного користувача до списку контактів",
+    "usersNotFound": "Користувачі не знайдені"
   },
   "reminders": {
     "fields": {
-      "time": "Time",
-      "date": "Date",
-      "weekdays": "Days of week",
-      "monthdays": "Days of month"
+      "time": "Час",
+      "date": "Дата",
+      "weekdays": "Дні тижня",
+      "monthdays": "Дні місяця"
     },
     "periodicity": {
-      "ONCE": "once",
-      "DAILY": "daily",
-      "WEEKLY": "weekly",
-      "MONTHLY": "monthly",
-      "YEARLY": "yearly"
+      "ONCE": "одноразово",
+      "DAILY": "щоденно",
+      "WEEKLY": "щотижня",
+      "MONTHLY": "щомісяця",
+      "YEARLY": "щорічно"
     },
-    "ONCE": "at {{time}} on {{date}}",
-    "DAILY": "at {{time}}",
-    "WEEKLY": "at {{time}} on {{weekDays}}",
-    "MONTHLY": "at {{time}} on {{monthDates}} of every month",
-    "YEARLY": "at {{time}} on {{date}}"
+    "ONCE": "о {{time}} {{date}}",
+    "DAILY": "о {{time}}",
+    "WEEKLY": "о {{time}} у {{weekDays}}",
+    "MONTHLY": "о {{time}} {{monthDates}} кожного місяця",
+    "YEARLY": "о {{time}} {{date}}"
   },
   "statuses": {
-    "workInProgress": "Work in progress",
-    "closed": "Closed"
+    "workInProgress": "У роботі",
+    "closed": "Завершена"
   },
   "priorities": {
-    "low": "Low",
-    "normal": "Normal",
-    "high": "High"
+    "low": "Низький",
+    "normal": "Середній",
+    "high": "Високий"
   },
   "links": {
-    "userDeleted": "User deleted",
-    "privacyPolicy": "Privacy policy"
+    "userDeleted": "Користувача видалено",
+    "privacyPolicy": "Політика конфіденційності"
   }
 }

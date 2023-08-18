@@ -1,12 +1,12 @@
 {
   "list": {
-    "noReminders": "No reminders on selected date"
+    "noReminders": "Немає нагадувань на обрану дату"
   },
   "selectDate": {
-    "title": "Select date",
+    "title": "Оберіть дату",
     "buttons": {
-      "send": "Select",
-      "cancel": "Cancel"
+      "send": "Обрати",
+      "cancel": "Скасувати"
     }
   }
 }

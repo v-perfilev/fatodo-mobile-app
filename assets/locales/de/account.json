@@ -1,116 +1,116 @@
 {
   "unhealthy": {
-    "message": "Opps! Looks like there is a problem with connection to the server. :-(",
-    "tryAgain": "Try again..."
+    "message": "Oops! Es scheint ein Problem mit der Verbindung zum Server zu geben. :-(",
+    "tryAgain": "Erneut versuchen..."
   },
   "login": {
-    "header": "Log in",
-    "submit": "Log in"
+    "header": "Anmeldung",
+    "submit": "Anmelden"
   },
   "register": {
-    "header": "Sign up",
-    "submit": "Sign up"
+    "header": "Registrierung",
+    "submit": "Registrieren"
   },
   "forgotPassword": {
-    "header": "Forgot password?",
-    "submit": "Request code"
+    "header": "Passwort vergessen?",
+    "submit": "Code anfordern"
   },
   "resetPassword": {
-    "header": "Reset password",
-    "submit": "Submit"
+    "header": "Passwort zurücksetzen",
+    "submit": "Absenden"
   },
   "changePassword": {
-    "header": "Change password",
-    "submit": "Submit"
+    "header": "Passwort ändern",
+    "submit": "Absenden"
   },
   "socialLogin": {
-    "label": "Sign in with"
+    "label": "Mit folgendem anmelden"
   },
   "settings": {
     "labels": {
-      "notifications": "Notifications",
-      "email": "Email",
+      "notifications": "Benachrichtigungen",
+      "email": "E-Mail",
       "push": "Push"
     },
     "notifications": {
-      "reminder": "Reminders",
-      "itemCreate": "New tasks",
-      "itemGroupCreate": "New groups",
-      "itemMemberAdd": "New members in groups",
-      "chatCreate": "New chats",
-      "chatMessageCreate": "New messages",
-      "chatReactionIncoming": "Reactions in chats",
-      "contactRequestIncoming": "New contact requests",
-      "contactAcceptOutcoming": "Accepted contact requests",
-      "commentCreate": "New comments",
-      "commentReactionIncoming": "Reactions in comments"
+      "reminder": "Erinnerungen",
+      "itemCreate": "Neue Aufgaben",
+      "itemGroupCreate": "Neue Gruppen",
+      "itemMemberAdd": "Neue Mitglieder in Gruppen",
+      "chatCreate": "Neue Chats",
+      "chatMessageCreate": "Neue Nachrichten",
+      "chatReactionIncoming": "Reaktionen in Chats",
+      "contactRequestIncoming": "Neue Kontaktanfragen",
+      "contactAcceptOutcoming": "Akzeptierte Kontaktanfragen",
+      "commentCreate": "Neue Kommentare",
+      "commentReactionIncoming": "Reaktionen in Kommentaren"
     }
   },
   "fields": {
     "user": {
-      "label": "Username / Email",
-      "required": "Required"
+      "label": "Benutzername / E-Mail",
+      "required": "Erforderlich"
     },
     "password": {
-      "label": "Password",
-      "required": "Required",
-      "invalid": "Can contain only uppercase and lowercase characters and numbers",
-      "strength": "Should contain uppercase and lowercase characters and numbers",
-      "min8": "Can not be shorter than 8 characters",
-      "max20": "Can not be longer than 20 characters"
+      "label": "Passwort",
+      "required": "Erforderlich",
+      "invalid": "Kann nur Groß- und Kleinbuchstaben sowie Zahlen enthalten",
+      "strength": "Sollte Groß- und Kleinbuchstaben sowie Zahlen enthalten",
+      "min8": "Darf nicht kürzer als 8 Zeichen sein",
+      "max20": "Darf nicht länger als 20 Zeichen sein"
     },
     "oldPassword": {
-      "label": "Current password"
+      "label": "Aktuelles Passwort"
     },
     "newPassword": {
-      "label": "New password"
+      "label": "Neues Passwort"
     },
     "repeatPassword": {
-      "label": "Confirm password",
-      "required": "Required",
-      "notEqual": "Passwords are not equals"
+      "label": "Passwort bestätigen",
+      "required": "Erforderlich",
+      "notEqual": "Passwörter stimmen nicht überein"
     },
     "email": {
-      "label": "Email",
-      "required": "Required",
-      "notValid": "Should contain correct email",
-      "notUnique": "Should be unique"
+      "label": "E-Mail",
+      "required": "Erforderlich",
+      "notValid": "Sollte eine korrekte E-Mail-Adresse enthalten",
+      "notUnique": "Sollte eindeutig sein"
     },
     "username": {
-      "label": "Username",
-      "required": "Required",
-      "invalid": "Can contain only uppercase and lowercase characters and numbers",
-      "min5": "Can not be shorter than 5 characters",
-      "max20": "Can not be longer than 20 characters",
-      "notUnique": "Should be unique"
+      "label": "Benutzername",
+      "required": "Erforderlich",
+      "invalid": "Kann nur Groß- und Kleinbuchstaben sowie Zahlen enthalten",
+      "min5": "Darf nicht kürzer als 5 Zeichen sein",
+      "max20": "Darf nicht länger als 20 Zeichen sein",
+      "notUnique": "Sollte eindeutig sein"
     },
     "firstname": {
-      "label": "Firstname"
+      "label": "Vorname"
     },
     "lastname": {
-      "label": "Lastname"
+      "label": "Nachname"
     },
     "language": {
-      "label": "Language",
-      "required": "Required"
+      "label": "Sprache",
+      "required": "Erforderlich"
     },
     "gender": {
-      "label": "Gender",
+      "label": "Geschlecht",
       "options": {
-        "MALE": "Male",
-        "FEMALE": "Female",
-        "DIVERSE": "Diverse"
+        "MALE": "Männlich",
+        "FEMALE": "Weiblich",
+        "DIVERSE": "Divers"
       }
     },
     "timeFormat": {
-      "label": "Time format",
+      "label": "Zeitformat",
       "options": {
-        "H12": "12-hour",
-        "H24": "24-hour"
+        "H12": "12-Stunden",
+        "H24": "24-Stunden"
       }
     },
     "dateFormat": {
-      "label": "Date format",
+      "label": "Datumsformat",
       "options": {
         "YMD_DASH": "yyyy-mm-dd",
         "MDY_SLASH": "mm/dd/yyyy",
@@ -120,25 +120,25 @@
       }
     },
     "timezone": {
-      "label": "Timezone",
-      "required": "Required"
+      "label": "Zeitzone",
+      "required": "Erforderlich"
     },
     "emailReminders": {
-      "label": "Email reminders"
+      "label": "E-Mail-Erinnerungen"
     },
     "image": {
-      "label": "Image"
+      "label": "Bild"
     }
   },
   "deletePermanently": {
-    "title": "Delete account",
-    "text": "If you want to delete your account type \"{{username}}\"",
-    "confirm": "Delete",
-    "cancel": "Cancel"
+    "title": "Konto löschen",
+    "text": "Wenn du dein Konto löschen möchtest, tippe \"{{username}}\"",
+    "confirm": "Löschen",
+    "cancel": "Abbrechen"
   },
   "actions": {
-    "save": "Save",
-    "deletePermanently": "Delete account permanently",
-    "logout": "Log out"
+    "save": "Speichern",
+    "deletePermanently": "Konto dauerhaft löschen",
+    "logout": "Ausloggen"
   }
 }

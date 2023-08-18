@@ -1,52 +1,52 @@
 {
   "headers": {
-    "create": "Create task in {{group}}",
-    "edit": "Edit task in {{group}}"
+    "create": "Aufgabe in {{group}} erstellen",
+    "edit": "Aufgabe in {{group}} bearbeiten"
   },
   "view": {
-    "noDescription": "No description"
+    "noDescription": "Keine Beschreibung"
   },
   "labels": {
-    "archived": "Archived",
-    "priority": "Priority",
+    "archived": "Archiviert",
+    "priority": "Priorität",
     "status": "Status",
-    "description": "Description",
-    "reminders": "Reminders",
-    "item": "Task",
-    "group": "Group",
-    "createdBy": "Created by",
-    "createdAt": "Created at",
-    "updatedBy": "Updated by",
-    "updatedAt": "Updated at"
+    "description": "Beschreibung",
+    "reminders": "Erinnerungen",
+    "item": "Aufgabe",
+    "group": "Gruppe",
+    "createdBy": "Erstellt von",
+    "createdAt": "Erstellt am",
+    "updatedBy": "Aktualisiert von",
+    "updatedAt": "Aktualisiert am"
   },
   "fields": {
     "title": {
-      "label": "Title",
-      "required": "Required"
+      "label": "Titel",
+      "required": "Erforderlich"
     },
     "priority": {
-      "label": "Priority",
-      "required": "Required"
+      "label": "Priorität",
+      "required": "Erforderlich"
     },
     "description": {
-      "label": "Description"
+      "label": "Beschreibung"
     },
     "reminders": {
-      "label": "Reminders"
+      "label": "Erinnerungen"
     }
   },
   "actions": {
-    "save": "Save",
-    "cancel": "Cancel",
-    "create": "Create task",
-    "edit": "Edit",
-    "delete": "Delete",
-    "list": "List of tasks",
-    "add": "Add",
-    "close": "Close"
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "create": "Aufgabe erstellen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "list": "Aufgabenliste",
+    "add": "Hinzufügen",
+    "close": "Schließen"
   },
   "deleteItem": {
-    "title": "Delete task",
-    "text": "Are you sure you want to delete task \"{{title}}\"?"
+    "title": "Aufgabe löschen",
+    "text": "Sind Sie sicher, dass Sie die Aufgabe \"{{title}}\" löschen möchten?"
   }
 }

@@ -1,15 +1,15 @@
 {
   "create": {
-    "title": "Create group or task",
+    "title": "Створити групу або завдання",
     "buttons": {
-      "createGroup": "Create group",
-      "createItem": "Create task"
+      "createGroup": "Створити групу",
+      "createItem": "Створити завдання"
     }
   },
   "createItem": {
-    "title": "Select group"
+    "title": "Вибір групи"
   },
   "actions": {
-    "createGroupOrItem": "Create group or task"
+    "createGroupOrItem": "Створити групу або завдання"
   }
 }

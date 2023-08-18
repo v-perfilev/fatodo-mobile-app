@@ -1,48 +1,48 @@
 {
-  "default": "Error on server",
-  "connection": "Connection with server failed",
+  "default": "Erro no servidor",
+  "connection": "Falha na conexão com o servidor",
   "form": {
-    "invalid": "Form data is invalid"
+    "invalid": "Os dados do formulário não são válidos"
   },
   "auth": {
-    "alreadyActivated": "Account is already activated",
-    "notActivated": "Account is not activated",
-    "wrongPassword": "Wrong current password",
-    "wrongProvider": "Operation not possible for your account provider"
+    "alreadyActivated": "A conta já está ativada",
+    "notActivated": "A conta não está ativada",
+    "wrongPassword": "Senha atual incorreta",
+    "wrongProvider": "Operação não permitida para o seu provedor de conta"
   },
   "security": {
-    "forbidden": "Access is forbidden",
-    "unauthorized": "You are unauthorized",
-    "notRegistered": "User is not registered yet",
-    "wrongPassword": "Wrong password, try again",
+    "forbidden": "Acesso proibido",
+    "unauthorized": "Você não está autorizado",
+    "notRegistered": "O usuário ainda não está registrado",
+    "wrongPassword": "Senha incorreta, tente novamente",
     "wrongProvider": {
-      "GOOGLE": "User is registered with Google",
-      "FACEBOOK": "User is registered with Facebook",
-      "APPLE": "User is registered with Apple"
+      "GOOGLE": "O usuário está registrado com o Google",
+      "FACEBOOK": "O usuário está registrado com o Facebook",
+      "APPLE": "O usuário está registrado com a Apple"
     }
   },
   "model": {
-    "databaseError": "Error on server",
-    "exists": "Object already exists",
-    "duplicated": "At least one of unique fields is duplicated",
-    "notFound": "Object not found",
-    "invalid": "Object contains invalid parameter"
+    "databaseError": "Erro no servidor",
+    "exists": "O objeto já existe",
+    "duplicated": "Pelo menos um dos campos únicos está duplicado",
+    "notFound": "Objeto não encontrado",
+    "invalid": "O objeto contém um parâmetro inválido"
   },
   "permission": {
-    "restricted": "Not enough rights to perform this operation",
-    "usersNotAllowed": "Users not from contact list"
+    "restricted": "Não há permissões suficientes para realizar esta operação",
+    "usersNotAllowed": "Usuários que não estão na lista de contatos não são permitidos"
   },
   "service": {
     "group": {
-      "invalid": "Group contains invalid data"
+      "invalid": "O grupo contém dados inválidos"
     }
   },
   "contact": {
     "relation": {
-      "exists": "Relation already exists"
+      "exists": "A relação já existe"
     },
     "request": {
-      "exists": "Request already sent"
+      "exists": "O pedido já foi enviado"
     }
   }
 }

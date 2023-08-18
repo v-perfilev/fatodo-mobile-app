@@ -1,41 +1,41 @@
 {
   "relations": {
-    "title": "Contacts",
-    "remove": "Remove",
-    "relationsNotFound": "No contacts yet"
+    "title": "Контакти",
+    "remove": "Видалити",
+    "relationsNotFound": "Поки немає контактів"
   },
   "outcoming": {
-    "title": "Outcoming",
-    "remove": "Remove",
-    "requestsNotFound": "No outcoming requests"
+    "title": "Вихідні",
+    "remove": "Видалити",
+    "requestsNotFound": "Немає вихідних запитів"
   },
   "incoming": {
-    "title": "Incoming",
-    "accept": "Accept",
-    "decline": "Decline",
-    "requestsNotFound": "No incoming requests"
+    "title": "Вхідні",
+    "accept": "Прийняти",
+    "decline": "Відхилити",
+    "requestsNotFound": "Немає вхідних запитів"
   },
   "addContact": {
-    "title": "Add user to list of contacts",
+    "title": "Додати користувача до списку контактів",
     "fields": {
       "user": {
-        "label": "Username / Email",
-        "required": "Required",
-        "current": "Enter identifier of another user",
-        "notRegistered": "User not registered"
+        "label": "Ім'я користувача / Email",
+        "required": "Обов'язкове поле",
+        "current": "Введіть ідентифікатор іншого користувача",
+        "notRegistered": "Користувач не зареєстрований"
       },
       "message": {
-        "label": "Message"
+        "label": "Повідомлення"
       }
     },
-    "send": "Send request",
-    "cancel": "Cancel"
+    "send": "Відправити запит",
+    "cancel": "Скасувати"
   },
   "removeContact": {
-    "title": "Remove contact",
-    "text": "Are you sure you want to remove \"{{username}}\" from contact list?"
+    "title": "Видалення контакта",
+    "text": "Ви впевнені, що хочете видалити \"{{username}}\" зі списку контактів?"
   },
   "actions": {
-    "addContact": "Add contact"
+    "addContact": "Додати контакт"
   }
 }

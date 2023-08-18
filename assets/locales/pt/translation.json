@@ -1,43 +1,43 @@
 {
   "routes": {
-    "Groups": "Tasks",
-    "Calendar": "Calendar",
-    "Events": "Events",
-    "Contacts": "Contacts",
+    "Groups": "Tarefas",
+    "Calendar": "Calendário",
+    "Events": "Eventos",
+    "Contacts": "Contatos",
     "Chats": "Chats",
-    "ItemList": "Tasks",
-    "GroupList": "Groups",
-    "GroupView": "Group",
-    "GroupCreate": "Create group",
-    "GroupEdit": "Edit group",
-    "ItemView": "Task",
-    "ItemCreate": "Create task",
-    "ItemEdit": "Edit task",
-    "ContactList": "Contacts",
-    "IncomingRequestList": "Incoming requests",
-    "OutcomingRequestList": "Outcoming requests",
+    "ItemList": "Tarefas",
+    "GroupList": "Grupos",
+    "GroupView": "Grupo",
+    "GroupCreate": "Criar grupo",
+    "GroupEdit": "Editar grupo",
+    "ItemView": "Tarefa",
+    "ItemCreate": "Criar tarefa",
+    "ItemEdit": "Editar tarefa",
+    "ContactList": "Contatos",
+    "IncomingRequestList": "Solicitações recebidas",
+    "OutcomingRequestList": "Solicitações enviadas",
     "ChatList": "Chats",
     "ChatView": "Chat",
-    "CommentList": "Comments",
-    "AccountMain": "Account",
-    "AccountSettings": "Settings",
-    "AccountChangePassword": "Change password",
-    "UserView": "User",
-    "EventList": "Events",
-    "CalendarView": "Calendar"
+    "CommentList": "Comentários",
+    "AccountMain": "Conta",
+    "AccountSettings": "Configurações",
+    "AccountChangePassword": "Alterar senha",
+    "UserView": "Usuário",
+    "EventList": "Eventos",
+    "CalendarView": "Calendário"
   },
   "buttons": {
-    "agree": "Agree",
-    "disagree": "Disagree"
+    "agree": "Concordar",
+    "disagree": "Discordar"
   },
   "inputs": {
-    "search": "Search",
-    "filter": "Filter"
+    "search": "Pesquisar",
+    "filter": "Filtrar"
   },
   "salutations": {
-    "you": "You"
+    "you": "Você"
   },
   "additional": {
-    "fieldNotSet": "Not set"
+    "fieldNotSet": "Não definido"
   }
 }

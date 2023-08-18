@@ -1,12 +1,12 @@
 {
   "list": {
-    "noReminders": "No reminders on selected date"
+    "noReminders": "Aucun rappel pour la date sélectionnée"
   },
   "selectDate": {
-    "title": "Select date",
+    "title": "Sélectionner une date",
     "buttons": {
-      "send": "Select",
-      "cancel": "Cancel"
+      "send": "Sélectionner",
+      "cancel": "Annuler"
     }
   }
 }

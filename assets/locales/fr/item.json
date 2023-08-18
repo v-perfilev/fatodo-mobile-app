@@ -1,52 +1,52 @@
 {
   "headers": {
-    "create": "Create task in {{group}}",
-    "edit": "Edit task in {{group}}"
+    "create": "Créer une tâche dans {{group}}",
+    "edit": "Modifier une tâche dans {{group}}"
   },
   "view": {
-    "noDescription": "No description"
+    "noDescription": "Pas de description"
   },
   "labels": {
-    "archived": "Archived",
-    "priority": "Priority",
-    "status": "Status",
+    "archived": "Archivé",
+    "priority": "Priorité",
+    "status": "Statut",
     "description": "Description",
-    "reminders": "Reminders",
-    "item": "Task",
-    "group": "Group",
-    "createdBy": "Created by",
-    "createdAt": "Created at",
-    "updatedBy": "Updated by",
-    "updatedAt": "Updated at"
+    "reminders": "Rappels",
+    "item": "Tâche",
+    "group": "Groupe",
+    "createdBy": "Créé par",
+    "createdAt": "Créé le",
+    "updatedBy": "Mis à jour par",
+    "updatedAt": "Mis à jour le"
   },
   "fields": {
     "title": {
-      "label": "Title",
-      "required": "Required"
+      "label": "Titre",
+      "required": "Obligatoire"
     },
     "priority": {
-      "label": "Priority",
-      "required": "Required"
+      "label": "Priorité",
+      "required": "Obligatoire"
     },
     "description": {
       "label": "Description"
     },
     "reminders": {
-      "label": "Reminders"
+      "label": "Rappels"
     }
   },
   "actions": {
-    "save": "Save",
-    "cancel": "Cancel",
-    "create": "Create task",
-    "edit": "Edit",
-    "delete": "Delete",
-    "list": "List of tasks",
-    "add": "Add",
-    "close": "Close"
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "create": "Créer une tâche",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "list": "Liste des tâches",
+    "add": "Ajouter",
+    "close": "Fermer"
   },
   "deleteItem": {
-    "title": "Delete task",
-    "text": "Are you sure you want to delete task \"{{title}}\"?"
+    "title": "Supprimer la tâche",
+    "text": "Êtes-vous sûr de vouloir supprimer la tâche \"{{title}}\" ?"
   }
 }

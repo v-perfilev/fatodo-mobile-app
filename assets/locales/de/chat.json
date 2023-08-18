@@ -1,133 +1,133 @@
 {
   "common": {
-    "direct": "Direct"
+    "direct": "Direkt"
   },
   "list": {
-    "chatsNotFound": "No chats yet"
+    "chatsNotFound": "Noch keine Chats"
   },
   "view": {
-    "messagesNotFound": "No messages yet",
-    "inputPlaceholder": "Type your message..."
+    "messagesNotFound": "Noch keine Nachrichten",
+    "inputPlaceholder": "Geben Sie Ihre Nachricht ein..."
   },
   "menu": {
-    "showMembers": "Members",
-    "addMembers": "Add members",
-    "renameChat": "Rename chat",
-    "cleanChat": "Clean chat",
-    "markAsRead": "Mark all as read",
-    "leaveChat": "Leave chat",
-    "deleteChat": "Delete chat"
+    "showMembers": "Mitglieder anzeigen",
+    "addMembers": "Mitglieder hinzufügen",
+    "renameChat": "Chat umbenennen",
+    "cleanChat": "Chat leeren",
+    "markAsRead": "Alle als gelesen markieren",
+    "leaveChat": "Chat verlassen",
+    "deleteChat": "Chat löschen"
   },
   "message": {
-    "deleted": "Message deleted",
+    "deleted": "Nachricht gelöscht",
     "actions": {
-      "reactions": "Reactions",
-      "readStatuses": "Read",
-      "edit": "Edit",
-      "delete": "Delete"
+      "reactions": "Reaktionen",
+      "readStatuses": "Gelesen",
+      "edit": "Bearbeiten",
+      "delete": "Löschen"
     }
   },
   "event": {
-    "CREATE_DIRECT_CHAT": "{{username}} created direct chat with {{usernames}}",
-    "CREATE_CHAT": "{{username}} created chat with {{usernames}}",
-    "RENAME_CHAT": "{{username}} renamed the chat to \"{{title}}\"",
-    "LEAVE_CHAT": "{{username}} left the chat",
-    "CLEAR_CHAT": "You cleared the chat history",
-    "ADD_MEMBERS": "{{username}} added new members to the chat: {{usernames}}",
-    "DELETE_MEMBERS": "{{username}} deleted members from the chat: {{usernames}}"
+    "CREATE_DIRECT_CHAT": "{{username}} hat einen Direktchat mit {{usernames}} erstellt",
+    "CREATE_CHAT": "{{username}} hat einen Chat mit {{usernames}} erstellt",
+    "RENAME_CHAT": "{{username}} hat den Chat in \"{{title}}\" umbenannt",
+    "LEAVE_CHAT": "{{username}} hat den Chat verlassen",
+    "CLEAR_CHAT": "Sie haben den Chatverlauf geleert",
+    "ADD_MEMBERS": "{{username}} hat neue Mitglieder zum Chat hinzugefügt: {{usernames}}",
+    "DELETE_MEMBERS": "{{username}} hat Mitglieder aus dem Chat entfernt: {{usernames}}"
   },
   "actions": {
-    "createChat": "Create chat",
-    "back": "Back"
+    "createChat": "Chat erstellen",
+    "back": "Zurück"
   },
   "createChat": {
-    "title": "Create chat",
+    "title": "Chat erstellen",
     "fields": {
       "users": {
-        "label": "Users",
-        "current": "Enter identifier of another user",
-        "notRegistered": "User not registered"
+        "label": "Benutzer",
+        "current": "Geben Sie die Kennung eines anderen Benutzers ein",
+        "notRegistered": "Benutzer nicht registriert"
       }
     },
-    "send": "Create",
-    "cancel": "Cancel"
+    "send": "Erstellen",
+    "cancel": "Abbrechen"
   },
   "renameChat": {
-    "title": "Rename chat",
+    "title": "Chat umbenennen",
     "fields": {
       "title": {
-        "label": "Title",
-        "required": "Required"
+        "label": "Titel",
+        "required": "Erforderlich"
       }
     },
-    "send": "Rename",
-    "cancel": "Cancel"
+    "send": "Umbenennen",
+    "cancel": "Abbrechen"
   },
   "members": {
-    "title": "Chat members",
-    "usersNotFound": "Users not found",
+    "title": "Chat-Mitglieder",
+    "usersNotFound": "Benutzer nicht gefunden",
     "buttons": {
-      "addUsers": "Add members"
+      "addUsers": "Mitglieder hinzufügen"
     }
   },
   "addMembers": {
-    "title": "Add chat members",
+    "title": "Chat-Mitglieder hinzufügen",
     "buttons": {
-      "send": "Add members",
-      "cancel": "Cancel"
+      "send": "Mitglieder hinzufügen",
+      "cancel": "Abbrechen"
     }
   },
   "removeMember": {
-    "title": "Remove user from chat",
-    "text": "Are you sure you want to delete user {{username}} from chat?"
+    "title": "Benutzer aus dem Chat entfernen",
+    "text": "Sind Sie sicher, dass Sie den Benutzer {{username}} aus dem Chat löschen möchten?"
   },
   "reactions": {
-    "title": "Reactions to the message",
-    "reactionsNotFound": "No reactions yet"
+    "title": "Reaktionen auf die Nachricht",
+    "reactionsNotFound": "Noch keine Reaktionen"
   },
   "readStatuses": {
-    "title": "Read",
-    "readStatusesNotFound": "Nobody has read this message"
+    "title": "Gelesen",
+    "readStatusesNotFound": "Niemand hat diese Nachricht gelesen"
   },
   "editMessage": {
-    "title": "Edit message",
+    "title": "Nachricht bearbeiten",
     "fields": {
       "text": {
         "label": "Text",
-        "required": "Required"
+        "required": "Erforderlich"
       }
     },
-    "send": "Edit",
-    "cancel": "Cancel"
+    "send": "Bearbeiten",
+    "cancel": "Abbrechen"
   },
   "directMessage": {
-    "title": "Direct message",
+    "title": "Direktnachricht",
     "fields": {
       "username": {
-        "label": "User"
+        "label": "Benutzer"
       },
       "text": {
         "label": "Text",
-        "required": "Required"
+        "required": "Erforderlich"
       }
     },
-    "send": "Send",
-    "cancel": "Cancel"
+    "send": "Senden",
+    "cancel": "Abbrechen"
   },
   "clearChat": {
-    "title": "Clear chat",
-    "text": "Are you sure you want to clear the chat?"
+    "title": "Chat leeren",
+    "text": "Sind Sie sicher, dass Sie den Chat leeren möchten?"
   },
   "leaveChat": {
-    "title": "Leave chat",
-    "text": "Are you sure you want to leave the chat?"
+    "title": "Chat verlassen",
+    "text": "Sind Sie sicher, dass Sie den Chat verlassen möchten?"
   },
   "deleteChat": {
-    "title": "Delete chat",
-    "text": "Are you sure you want to delete the chat?"
+    "title": "Chat löschen",
+    "text": "Sind Sie sicher, dass Sie den Chat löschen möchten?"
   },
   "deleteMessage": {
-    "title": "Delete message",
-    "text": "Are you sure you want to delete the message?"
+    "title": "Nachricht löschen",
+    "text": "Sind Sie sicher, dass Sie die Nachricht löschen möchten?"
   }
 }

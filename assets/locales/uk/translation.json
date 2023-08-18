@@ -1,43 +1,43 @@
 {
   "routes": {
-    "Groups": "Tasks",
-    "Calendar": "Calendar",
-    "Events": "Events",
-    "Contacts": "Contacts",
-    "Chats": "Chats",
-    "ItemList": "Tasks",
-    "GroupList": "Groups",
-    "GroupView": "Group",
-    "GroupCreate": "Create group",
-    "GroupEdit": "Edit group",
-    "ItemView": "Task",
-    "ItemCreate": "Create task",
-    "ItemEdit": "Edit task",
-    "ContactList": "Contacts",
-    "IncomingRequestList": "Incoming requests",
-    "OutcomingRequestList": "Outcoming requests",
-    "ChatList": "Chats",
-    "ChatView": "Chat",
-    "CommentList": "Comments",
-    "AccountMain": "Account",
-    "AccountSettings": "Settings",
-    "AccountChangePassword": "Change password",
-    "UserView": "User",
-    "EventList": "Events",
-    "CalendarView": "Calendar"
+    "Groups": "Задачі",
+    "Calendar": "Календар",
+    "Contacts": "Контакти",
+    "Chats": "Чати",
+    "Events": "Події",
+    "ItemList": "Задачі",
+    "GroupList": "Групи",
+    "GroupView": "Група",
+    "GroupCreate": "Створити групу",
+    "GroupEdit": "Редагувати групу",
+    "ItemView": "Завдання",
+    "ItemCreate": "Створити завдання",
+    "ItemEdit": "Редагувати завдання",
+    "ContactList": "Контакти",
+    "IncomingRequestList": "Вхідні запити",
+    "OutcomingRequestList": "Вихідні запити",
+    "ChatList": "Чати",
+    "ChatView": "Чат",
+    "CommentList": "Коментарі",
+    "AccountMain": "Обліковий запис",
+    "AccountSettings": "Налаштування",
+    "AccountChangePassword": "Змінити пароль",
+    "UserView": "Користувач",
+    "EventList": "Події",
+    "CalendarView": "Календар"
   },
   "buttons": {
-    "agree": "Agree",
-    "disagree": "Disagree"
+    "agree": "Підтвердити",
+    "disagree": "Скасувати"
   },
   "inputs": {
-    "search": "Search",
-    "filter": "Filter"
+    "search": "Пошук",
+    "filter": "Фільтр"
   },
   "salutations": {
-    "you": "You"
+    "you": "Ви"
   },
   "additional": {
-    "fieldNotSet": "Not set"
+    "fieldNotSet": "Не встановлено"
   }
 }

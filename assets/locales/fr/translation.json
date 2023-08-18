@@ -1,43 +1,43 @@
 {
   "routes": {
-    "Groups": "Tasks",
-    "Calendar": "Calendar",
-    "Events": "Events",
+    "Groups": "Tâches",
+    "Calendar": "Calendrier",
+    "Events": "Événements",
     "Contacts": "Contacts",
     "Chats": "Chats",
-    "ItemList": "Tasks",
-    "GroupList": "Groups",
-    "GroupView": "Group",
-    "GroupCreate": "Create group",
-    "GroupEdit": "Edit group",
-    "ItemView": "Task",
-    "ItemCreate": "Create task",
-    "ItemEdit": "Edit task",
+    "ItemList": "Tâches",
+    "GroupList": "Groupes",
+    "GroupView": "Groupe",
+    "GroupCreate": "Créer un groupe",
+    "GroupEdit": "Modifier le groupe",
+    "ItemView": "Tâche",
+    "ItemCreate": "Créer une tâche",
+    "ItemEdit": "Modifier la tâche",
     "ContactList": "Contacts",
-    "IncomingRequestList": "Incoming requests",
-    "OutcomingRequestList": "Outcoming requests",
+    "IncomingRequestList": "Demandes entrantes",
+    "OutcomingRequestList": "Demandes sortantes",
     "ChatList": "Chats",
     "ChatView": "Chat",
-    "CommentList": "Comments",
-    "AccountMain": "Account",
-    "AccountSettings": "Settings",
-    "AccountChangePassword": "Change password",
-    "UserView": "User",
-    "EventList": "Events",
-    "CalendarView": "Calendar"
+    "CommentList": "Commentaires",
+    "AccountMain": "Compte",
+    "AccountSettings": "Paramètres",
+    "AccountChangePassword": "Changer le mot de passe",
+    "UserView": "Utilisateur",
+    "EventList": "Événements",
+    "CalendarView": "Calendrier"
   },
   "buttons": {
-    "agree": "Agree",
-    "disagree": "Disagree"
+    "agree": "Accepter",
+    "disagree": "Refuser"
   },
   "inputs": {
-    "search": "Search",
-    "filter": "Filter"
+    "search": "Recherche",
+    "filter": "Filtrer"
   },
   "salutations": {
-    "you": "You"
+    "you": "Vous"
   },
   "additional": {
-    "fieldNotSet": "Not set"
+    "fieldNotSet": "Non défini"
   }
 }

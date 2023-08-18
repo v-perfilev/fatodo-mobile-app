@@ -3,131 +3,131 @@
     "direct": "Direct"
   },
   "list": {
-    "chatsNotFound": "No chats yet"
+    "chatsNotFound": "Aucun chat pour le moment"
   },
   "view": {
-    "messagesNotFound": "No messages yet",
-    "inputPlaceholder": "Type your message..."
+    "messagesNotFound": "Aucun message pour le moment",
+    "inputPlaceholder": "Tapez votre message..."
   },
   "menu": {
-    "showMembers": "Members",
-    "addMembers": "Add members",
-    "renameChat": "Rename chat",
-    "cleanChat": "Clean chat",
-    "markAsRead": "Mark all as read",
-    "leaveChat": "Leave chat",
-    "deleteChat": "Delete chat"
+    "showMembers": "Membres",
+    "addMembers": "Ajouter des membres",
+    "renameChat": "Renommer le chat",
+    "cleanChat": "Effacer le chat",
+    "markAsRead": "Marquer tout comme lu",
+    "leaveChat": "Quitter le chat",
+    "deleteChat": "Supprimer le chat"
   },
   "message": {
-    "deleted": "Message deleted",
+    "deleted": "Message supprimé",
     "actions": {
-      "reactions": "Reactions",
-      "readStatuses": "Read",
-      "edit": "Edit",
-      "delete": "Delete"
+      "reactions": "Réactions",
+      "readStatuses": "Lus",
+      "edit": "Éditer",
+      "delete": "Supprimer"
     }
   },
   "event": {
-    "CREATE_DIRECT_CHAT": "{{username}} created direct chat with {{usernames}}",
-    "CREATE_CHAT": "{{username}} created chat with {{usernames}}",
-    "RENAME_CHAT": "{{username}} renamed the chat to \"{{title}}\"",
-    "LEAVE_CHAT": "{{username}} left the chat",
-    "CLEAR_CHAT": "You cleared the chat history",
-    "ADD_MEMBERS": "{{username}} added new members to the chat: {{usernames}}",
-    "DELETE_MEMBERS": "{{username}} deleted members from the chat: {{usernames}}"
+    "CREATE_DIRECT_CHAT": "{{username}} a créé un chat direct avec {{usernames}}",
+    "CREATE_CHAT": "{{username}} a créé un chat avec {{usernames}}",
+    "RENAME_CHAT": "{{username}} a renommé le chat en \"{{title}}\"",
+    "LEAVE_CHAT": "{{username}} a quitté le chat",
+    "CLEAR_CHAT": "Vous avez effacé l'historique du chat",
+    "ADD_MEMBERS": "{{username}} a ajouté de nouveaux membres au chat : {{usernames}}",
+    "DELETE_MEMBERS": "{{username}} a supprimé des membres du chat : {{usernames}}"
   },
   "actions": {
-    "createChat": "Create chat",
-    "back": "Back"
+    "createChat": "Créer un chat",
+    "back": "Retour"
   },
   "createChat": {
-    "title": "Create chat",
+    "title": "Créer un chat",
     "fields": {
       "users": {
-        "label": "Users",
-        "current": "Enter identifier of another user",
-        "notRegistered": "User not registered"
+        "label": "Utilisateurs",
+        "current": "Entrez l'identifiant d'un autre utilisateur",
+        "notRegistered": "Utilisateur non enregistré"
       }
     },
-    "send": "Create",
-    "cancel": "Cancel"
+    "send": "Créer",
+    "cancel": "Annuler"
   },
   "renameChat": {
-    "title": "Rename chat",
+    "title": "Renommer le chat",
     "fields": {
       "title": {
-        "label": "Title",
-        "required": "Required"
+        "label": "Titre",
+        "required": "Champ requis"
       }
     },
-    "send": "Rename",
-    "cancel": "Cancel"
+    "send": "Renommer",
+    "cancel": "Annuler"
   },
   "members": {
-    "title": "Chat members",
-    "usersNotFound": "Users not found",
+    "title": "Membres du chat",
+    "usersNotFound": "Utilisateurs introuvables",
     "buttons": {
-      "addUsers": "Add members"
+      "addUsers": "Ajouter des membres"
     }
   },
   "addMembers": {
-    "title": "Add chat members",
+    "title": "Ajouter des membres au chat",
     "buttons": {
-      "send": "Add members",
-      "cancel": "Cancel"
+      "send": "Ajouter des membres",
+      "cancel": "Annuler"
     }
   },
   "removeMember": {
-    "title": "Remove user from chat",
-    "text": "Are you sure you want to delete user {{username}} from chat?"
+    "title": "Supprimer un utilisateur du chat",
+    "text": "Êtes-vous sûr de vouloir supprimer l'utilisateur {{username}} du chat ?"
   },
   "reactions": {
-    "title": "Reactions to the message",
-    "reactionsNotFound": "No reactions yet"
+    "title": "Réactions au message",
+    "reactionsNotFound": "Aucune réaction pour le moment"
   },
   "readStatuses": {
-    "title": "Read",
-    "readStatusesNotFound": "Nobody has read this message"
+    "title": "Lus",
+    "readStatusesNotFound": "Personne n'a lu ce message"
   },
   "editMessage": {
-    "title": "Edit message",
+    "title": "Éditer le message",
     "fields": {
       "text": {
-        "label": "Text",
-        "required": "Required"
+        "label": "Texte",
+        "required": "Champ requis"
       }
     },
-    "send": "Edit",
-    "cancel": "Cancel"
+    "send": "Éditer",
+    "cancel": "Annuler"
   },
   "directMessage": {
-    "title": "Direct message",
+    "title": "Message direct",
     "fields": {
       "username": {
-        "label": "User"
+        "label": "Utilisateur"
       },
       "text": {
-        "label": "Text",
-        "required": "Required"
+        "label": "Texte",
+        "required": "Champ requis"
       }
     },
-    "send": "Send",
-    "cancel": "Cancel"
+    "send": "Envoyer",
+    "cancel": "Annuler"
   },
   "clearChat": {
-    "title": "Clear chat",
-    "text": "Are you sure you want to clear the chat?"
+    "title": "Effacer le chat",
+    "text": "Êtes-vous sûr de vouloir effacer le chat ?"
   },
   "leaveChat": {
-    "title": "Leave chat",
-    "text": "Are you sure you want to leave the chat?"
+    "title": "Quitter le chat",
+    "text": "Êtes-vous sûr de vouloir quitter le chat ?"
   },
   "deleteChat": {
-    "title": "Delete chat",
-    "text": "Are you sure you want to delete the chat?"
+    "title": "Supprimer le chat",
+    "text": "Êtes-vous sûr de vouloir supprimer le chat ?"
   },
   "deleteMessage": {
-    "title": "Delete message",
-    "text": "Are you sure you want to delete the message?"
+    "title": "Supprimer le message",
+    "text": "Êtes-vous sûr de vouloir supprimer le message ?"
   }
 }

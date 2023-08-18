@@ -1,144 +1,144 @@
 {
   "unhealthy": {
-    "message": "Opps! Looks like there is a problem with connection to the server. :-(",
-    "tryAgain": "Try again..."
+    "message": "Ой! Не вдається встановити з'єднання з сервером. :-(",
+    "tryAgain": "Спробувати ще раз..."
   },
   "login": {
-    "header": "Log in",
-    "submit": "Log in"
+    "header": "Вхід",
+    "submit": "Увійти"
   },
   "register": {
-    "header": "Sign up",
-    "submit": "Sign up"
+    "header": "Реєстрація",
+    "submit": "Зареєструватися"
   },
   "forgotPassword": {
-    "header": "Forgot password?",
-    "submit": "Request code"
+    "header": "Забули пароль?",
+    "submit": "Запитати код"
   },
   "resetPassword": {
-    "header": "Reset password",
-    "submit": "Submit"
+    "header": "Відновлення пароля",
+    "submit": "Відправити"
   },
   "changePassword": {
-    "header": "Change password",
-    "submit": "Submit"
+    "header": "Зміна пароля",
+    "submit": "Відправити"
   },
   "socialLogin": {
-    "label": "Sign in with"
+    "label": "Увійти через"
   },
   "settings": {
     "labels": {
-      "notifications": "Notifications",
+      "notifications": "Сповіщення",
       "email": "Email",
       "push": "Push"
     },
     "notifications": {
-      "reminder": "Reminders",
-      "itemCreate": "New tasks",
-      "itemGroupCreate": "New groups",
-      "itemMemberAdd": "New members in groups",
-      "chatCreate": "New chats",
-      "chatMessageCreate": "New messages",
-      "chatReactionIncoming": "Reactions in chats",
-      "contactRequestIncoming": "New contact requests",
-      "contactAcceptOutcoming": "Accepted contact requests",
-      "commentCreate": "New comments",
-      "commentReactionIncoming": "Reactions in comments"
+      "reminder": "Нагадування",
+      "itemCreate": "Нові завдання",
+      "itemGroupCreate": "Нові групи",
+      "itemMemberAdd": "Нові користувачі в групах",
+      "chatCreate": "Нові чати",
+      "chatMessageCreate": "Нові повідомлення",
+      "chatReactionIncoming": "Реакції в чатах",
+      "contactRequestIncoming": "Нові запити в контакти",
+      "contactAcceptOutcoming": "Прийняті запити в контакти",
+      "commentCreate": "Нові коментарі",
+      "commentReactionIncoming": "Реакції в коментарях"
     }
   },
   "fields": {
     "user": {
-      "label": "Username / Email",
-      "required": "Required"
+      "label": "Ім'я користувача / Email",
+      "required": "Обов'язкове поле"
     },
     "password": {
-      "label": "Password",
-      "required": "Required",
-      "invalid": "Can contain only uppercase and lowercase characters and numbers",
-      "strength": "Should contain uppercase and lowercase characters and numbers",
-      "min8": "Can not be shorter than 8 characters",
-      "max20": "Can not be longer than 20 characters"
+      "label": "Пароль",
+      "required": "Обов'язкове поле",
+      "invalid": "Може містити лише великі та малі латинські літери та цифри",
+      "strength": "Повинен містити великі та малі латинські літери та цифри",
+      "min8": "Не може бути коротше 8 символів",
+      "max20": "Не може бути довше 20 символів"
     },
     "oldPassword": {
-      "label": "Current password"
+      "label": "Старий пароль"
     },
     "newPassword": {
-      "label": "New password"
+      "label": "Новий пароль"
     },
     "repeatPassword": {
-      "label": "Confirm password",
-      "required": "Required",
-      "notEqual": "Passwords are not equals"
+      "label": "Повторіть пароль",
+      "required": "Обов'язкове поле",
+      "notEqual": "Паролі не співпадають"
     },
     "email": {
       "label": "Email",
-      "required": "Required",
-      "notValid": "Should contain correct email",
-      "notUnique": "Should be unique"
+      "required": "Обов'язкове поле",
+      "notValid": "Поле містить некоректний email",
+      "notUnique": "Поле повинно бути унікальним"
     },
     "username": {
-      "label": "Username",
-      "required": "Required",
-      "invalid": "Can contain only uppercase and lowercase characters and numbers",
-      "min5": "Can not be shorter than 5 characters",
-      "max20": "Can not be longer than 20 characters",
-      "notUnique": "Should be unique"
+      "label": "Ім'я користувача",
+      "required": "Обов'язкове поле",
+      "invalid": "Може містити лише великі та малі латинські літери та цифри",
+      "min5": "Не може бути коротше 5 символів",
+      "max20": "Не може бути довше 20 символів",
+      "notUnique": "Поле повинно бути унікальним"
     },
     "firstname": {
-      "label": "Firstname"
+      "label": "Ім'я"
     },
     "lastname": {
-      "label": "Lastname"
+      "label": "Прізвище"
     },
     "language": {
-      "label": "Language",
-      "required": "Required"
+      "label": "Мова",
+      "required": "Обов'язкове поле"
     },
     "gender": {
-      "label": "Gender",
+      "label": "Стать",
       "options": {
-        "MALE": "Male",
-        "FEMALE": "Female",
-        "DIVERSE": "Diverse"
+        "MALE": "Чоловіча",
+        "FEMALE": "Жіноча",
+        "DIVERSE": "Не вказувати"
       }
     },
     "timeFormat": {
-      "label": "Time format",
+      "label": "Формат часу",
       "options": {
-        "H12": "12-hour",
-        "H24": "24-hour"
+        "H12": "12 годин",
+        "H24": "24 години"
       }
     },
     "dateFormat": {
-      "label": "Date format",
+      "label": "Формат дати",
       "options": {
-        "YMD_DASH": "yyyy-mm-dd",
-        "MDY_SLASH": "mm/dd/yyyy",
-        "DMY_DASH": "dd-mm-yyyy",
-        "DMY_DOT": "dd.mm.yyyy",
-        "DMY_SLASH": "dd/mm/yyyy"
+        "YMD_DASH": "рррр-мм-дд",
+        "MDY_SLASH": "мм/дд/рррр",
+        "DMY_DASH": "дд-мм-рррр",
+        "DMY_DOT": "дд.мм.рррр",
+        "DMY_SLASH": "дд/мм/рррр"
       }
     },
     "timezone": {
-      "label": "Timezone",
-      "required": "Required"
+      "label": "Часовий пояс",
+      "required": "Обов'язкове поле"
     },
     "emailReminders": {
-      "label": "Email reminders"
+      "label": "Email нагадування"
     },
     "image": {
-      "label": "Image"
+      "label": "Зображення"
     }
   },
   "deletePermanently": {
-    "title": "Delete account",
-    "text": "If you want to delete your account type \"{{username}}\"",
-    "confirm": "Delete",
-    "cancel": "Cancel"
+    "title": "Видалення аккаунта",
+    "text": "Якщо ви хочете видалити свій аккаунт, наберіть \"{{username}}\"",
+    "confirm": "Видалити",
+    "cancel": "Скасувати"
   },
   "actions": {
-    "save": "Save",
-    "deletePermanently": "Delete account permanently",
-    "logout": "Log out"
+    "save": "Зберегти",
+    "deletePermanently": "Видалити аккаунт назавжди",
+    "logout": "Вийти"
   }
 }
