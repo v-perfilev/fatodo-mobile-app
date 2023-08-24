@@ -31,7 +31,7 @@ const withRootContainer = (Component: ComponentType<WithRootProps>) => (props: a
   };
 
   const hideSplashScreen = (): void => {
-    setTimeout(() => SplashScreen.hide(), 30);
+    setTimeout(() => SplashScreen.hide(), 500);
   };
 
   const checkHealth = (): void => {
