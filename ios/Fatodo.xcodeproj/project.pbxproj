@@ -572,7 +572,7 @@
 				CODE_SIGN_ENTITLEMENTS = Fatodo/FatodoDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = LXS45ZYGU6;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Fatodo/Info.plist;
@@ -610,7 +610,7 @@
 				CODE_SIGN_ENTITLEMENTS = Fatodo/Fatodo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = LXS45ZYGU6;
 				INFOPLIST_FILE = Fatodo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Fatodo;
