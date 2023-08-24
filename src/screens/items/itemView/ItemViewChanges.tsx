@@ -39,7 +39,7 @@ const ItemViewChanges = () => {
       {updater && item.createdAt !== item.lastModifiedAt && (
         <FHStack space="3" flexWrap="wrap">
           {labeledBox(t('item:labels.updatedBy'), UserUtils.getUsername(updater, t))}
-          {labeledBox(t('item:labels.createdAt'), formatDate(item.lastModifiedAt))}
+          {labeledBox(t('item:labels.updatedAt'), formatDate(item.lastModifiedAt))}
         </FHStack>
       )}
     </FVStack>
