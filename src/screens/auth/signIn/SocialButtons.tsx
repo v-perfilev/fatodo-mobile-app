@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import FacebookIcon from '../../../components/icons/FacebookIcon';
 import {LanguageUtils} from '../../../shared/utils/LanguageUtils';
 import {DateUtils} from '../../../shared/utils/DateUtils';
 import FVStack from '../../../components/boxes/FVStack';
@@ -36,7 +35,6 @@ const SocialButtons = ({openBrowser, closeBrowser}: SocialButtonsProps) => {
   };
 
   const googleLogin = (): void => oAuth2Login('google');
-  const facebookLogin = (): void => oAuth2Login('facebook');
   const appleLogin = (): void => oAuth2Login('apple');
 
   const handleOAuth2Redirect = ({url}: {url: string}): void => {
@@ -66,7 +64,6 @@ const SocialButtons = ({openBrowser, closeBrowser}: SocialButtonsProps) => {
         <Text color="gray.400">{t('account:socialLogin.label')}:</Text>
         <FHStack space="7" justifyContent="center">
           <IconButton size="2xl" icon={<GoogleIcon />} disabled={loading} onPress={googleLogin} />
-          <IconButton size="2xl" icon={<FacebookIcon />} disabled={loading} onPress={facebookLogin} />
           <IconButton size="2xl" icon={<AppleIcon color={appleColor} />} disabled={loading} onPress={appleLogin} />
         </FHStack>
       </FVStack>
