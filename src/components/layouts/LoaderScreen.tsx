@@ -7,7 +7,7 @@ const LoaderScreen = () => {
   return (
     <SimpleScrollView position="relative">
       <FCenter grow>
-        <Loader size={70} />
+        <Loader size={50} />
       </FCenter>
     </SimpleScrollView>
   );
