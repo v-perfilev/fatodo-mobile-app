@@ -28,7 +28,6 @@ export const AUTHORIZATION_PREFIX = 'Bearer ';
 
 // CAPTCHA
 export const BASE_URL = 'https://fatodo.app';
-***REMOVED***
 
 // HEADER AND TAB
 export const HEADER_HEIGHT = 55;
